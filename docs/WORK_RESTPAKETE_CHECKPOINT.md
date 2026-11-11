@@ -1,3 +1,13 @@
+## ACTIVE · main-75ea9fa46556-20261111 · v307 Main/Deployment qualifiziert, Produktion läuft
+
+Main `37119745f9ac9e2356477202cae55948f3d74882`, Tree `3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5`: exakt qualifizierter PR328-Tree. [Main-/Deploymentbeleg](release-evidence/v307-main-qualified-production-pending.json): Lauf `42996734436`, Deployment `130455321736` SUCCESS, Versuch 1. 1.366 Units, 0 Fehler/Skips; 235 JSON, 2.065 dekodierte PNG; 422 frühere Schemaassertions plus direkte neue native Worker-/Formular- und Kontextverträge geprüft. Alle sieben Originalarchive einschließlich API-/Uploadlog-Digest, Größe und ID verifiziert. Pages-Payload: alle 153 Dateien exakt gleich den Git-Blobs; Cache v307. Keine neue CI, kein Retry/Abbruch.
+
+Produktionsjob `130455465813` ist IN_PROGRESS. V306 bleibt letzter LIVE_ACCEPTED-Release. V141 ist gepinnt bytegleich und tatsächlich inkrementell restauriert (40 Manifestpfade, 0 Fehler); komplette ältere Original-/Companionketten erhalten. Neue Main-Originale lokal und in GitHub verifiziert; gemeinsamer unveränderlicher Main-/Produktionsinkrement und V142 sind noch offen. Keine offene private Speichermutation.
+
+Genau nächste Aktion: diesen bestehenden Produktionsjob vollständig qualifizieren, neue Main-/Produktionsoriginale gemeinsam dauerhaft sichern und gepinnt rücklesen, Root 141→142 versionsgeschützt fortschreiben/rücklesen und tatsächlich inkrementell restaurieren. Erst danach v307 LIVE_ACCEPTED. Native Android-/Safari-/TalkBack-/OAuth- und unabhängige Bestands-/Ownership-Anker bleiben extern; keine 1.0-Gesamtabnahme.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · PR328 integriert / Main42996734436 läuft
 
 PR328 geschütztmitexpectedHEADintegriert. Main37119745f9ac9e2356477202cae55948f3d74882/Tree3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5 exaktqualifizierterPR-Tree. BestehenderMainlauf42996734436 IN_PROGRESS;keineDoppel-CI,keineMain-/Produktionsabnahmebehauptet. [PR-Kandidat/V141](release-evidence/v307-pr328-qualified.json) vollständigqualifiziert/gepinntbytegleich/tatsächlicherRestore40Manifestpfade/0Fehler. VollständigeFehlerhistorieundganzeV140/ältereOriginalkettenbewahrt. KeineoffeneprivateSpeichermutation.
