@@ -1,5 +1,11 @@
 # EFF03 – Sieben-Tage-Ziel für den vollständigen bestehenden Entwicklungsumfang
 
+## Ausführung: Bündelung und Wiederaufnahme · 11.11.2026
+
+Fachlich vollständige Pakete weiter bündeln; darin kleine prüfbare Entwicklungsschritte und nötige gezielte Gegenproben ausführen. **Kurze dauerhafte Zwischenstände** am nächsten ohnehin sicheren Wiederaufnahmepunkt, vor längerer externer CI-Wartezeit oder tatsächlicher Unterbrechung im bestehenden eigenen Checkpointkopf sichern. Minimal: Owner, Branch/SHA, tatsächlich geprüfter Stand, offene Gates/Run-IDs, bestätigte oder offene Sicherung und genau nächste Aktion. Nur lokale Arbeit nicht als dauerhaft gesichert ausgeben. Frische Datei-SHAs und Rückprüfung bleiben Pflicht.
+
+Keine starren Datei-/Zeilen-/Promptgrenzen, keine neue Rotation, keine zusätzliche Roadmap oder Release-/Vollsicherungs-/Full-CI-Pflicht pro Zwischenschritt. Bestehende Sicherungsverträge erfüllen und neue Originale erhalten; vollständige vorgeschriebene Abschlusstests am eingefrorenen gemeinsamen Kandidaten. [Konkrete aktive Präzisierung](WORK_EFFICIENCY_PLAN_2026-11-01.md#aktive-präzisierung-bündelung-mit-kurzen-zwischenständen--11112026). Wochenumfang, Abnahmeanforderungen und alleinige Zuständigkeit bleiben erhalten.
+
 ## Rotationsversuch beendet · 11.11.2026
 
 Die versuchte automatische Chatrotation ist **nicht aktiv**: Der verfügbare Adapter konnte eigenständige neue Chats nicht einstellen oder nachweisen. Die angelegte Aufgabe bleibt deaktiviert. Daraus gelten **keine 45-/60-/90-Minuten-Arbeits-, Stopp- oder Übergabepflichten**. Der alleinige Hauptagent setzt den autorisierten Arbeitsplan fort; reguläre Übergabe nur bei tatsächlicher Kontext-/Technikgrenze oder Nutzerauftrag am sicheren Punkt. Keine Abgabe in Erwartung eines automatischen Nachfolgers. Alle bestehenden fachlichen Schutzverträge bleiben erhalten; keine weitere Rotationsentwicklung ohne neuen Auftrag.
