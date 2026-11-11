@@ -1,0 +1,195 @@
+{
+  "status": "PR_QUALIFIED",
+  "owner": "main-0981e24cc507-20261111",
+  "version": 308,
+  "PR": 329,
+  "head": "dde8cac4b366e61d73794f36b20953433338d247",
+  "tree": "f8de9bb981a350b87215f8ac7c70ac268d749ea7",
+  "testedMerge": "cb19a44cae4ceb4ca25835882ec09789bddd723a",
+  "run": 43016219473,
+  "attempt": 1,
+  "walletRun": 43016219168,
+  "unitTests": 1380,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "nativeEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "actualIDBEncryptedUIRestoreAndPostCommitVaultPreferencesCases": true,
+  "sourceReview": "Bounded helper occurs after successful reset and after all accepted restore metadata operations; failed portfolio commits retain rollback; post-commit metadata failures retain visible draft and truthfully keep committed model. Drive callback covered by source adapter; no OAuth claim.",
+  "artifacts": [
+    {
+      "id": 13854075840,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1NDA3NTg0MA==",
+      "name": "release-gates-cb19a44cae4ceb4ca25835882ec09789bddd723a",
+      "size_in_bytes": 65817734,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13854075840",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13854075840/zip",
+      "expired": false,
+      "digest": "sha256:6dcf7d32e22ff83c3226ae815fa58fac714454d858a49b39284adb97ec359047",
+      "created_at": "2026-11-11T12:13:07Z",
+      "updated_at": "2026-11-11T12:13:07Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    },
+    {
+      "id": 13853874123,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1Mzg3NDEyMw==",
+      "name": "cross-engine-gates-cb19a44cae4ceb4ca25835882ec09789bddd723a-3",
+      "size_in_bytes": 69330337,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853874123",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853874123/zip",
+      "expired": false,
+      "digest": "sha256:d78698dc41bd93d2d175f362a30960fa0e8ceb96795f06226d6acd10ad2e7881",
+      "created_at": "2026-11-11T12:26:37Z",
+      "updated_at": "2026-11-11T12:26:37Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    },
+    {
+      "id": 13853566361,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1MzU2NjM2MQ==",
+      "name": "cross-engine-gates-cb19a44cae4ceb4ca25835882ec09789bddd723a-2",
+      "size_in_bytes": 12409097,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853566361",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853566361/zip",
+      "expired": false,
+      "digest": "sha256:a722513263b2dbd098854eb201d1c246ed529c9b0f6ff16fc4c3b392eeed662e",
+      "created_at": "2026-11-11T12:05:11Z",
+      "updated_at": "2026-11-11T12:05:11Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    },
+    {
+      "id": 13853330783,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1MzMzMDc4Mw==",
+      "name": "ci-stage-cb19a44cae4ceb4ca25835882ec09789bddd723a",
+      "size_in_bytes": 556,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853330783",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13853330783/zip",
+      "expired": false,
+      "digest": "sha256:baf128d0172abec9c7fb6e92b63994f47241df919ad7bff96fbb6dd3fb173bc0",
+      "created_at": "2026-11-11T11:57:40Z",
+      "updated_at": "2026-11-11T11:57:40Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    },
+    {
+      "id": 13852789252,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1Mjc4OTI1Mg==",
+      "name": "cross-engine-gates-cb19a44cae4ceb4ca25835882ec09789bddd723a-1",
+      "size_in_bytes": 59995755,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13852789252",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13852789252/zip",
+      "expired": false,
+      "digest": "sha256:3cdc4697341f630c0a645751e17d0bb816aef47ee6d126f135945307fd09ab56",
+      "created_at": "2026-11-11T12:10:00Z",
+      "updated_at": "2026-11-11T12:10:00Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    },
+    {
+      "id": 13852739823,
+      "node_id": "MDg6QXJ0aWZhY3QxMzg1MjczOTgyMw==",
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933144,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13852739823",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13852739823/zip",
+      "expired": false,
+      "digest": "sha256:5ff71227c278ad0dec583bc3a70527d7b18a4cd901920251abe3f9113441d76a",
+      "created_at": "2026-11-11T12:13:08Z",
+      "updated_at": "2026-11-11T12:13:08Z",
+      "expires_at": "2027-02-09T11:57:31Z",
+      "workflow_run": {
+        "id": 43016219473,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "fix/k3-settings-replacement-v308-b180b1102417",
+        "head_sha": "dde8cac4b366e61d73794f36b20953433338d247"
+      }
+    }
+  ],
+  "summary": {
+    "artifacts": 6,
+    "reports": 238,
+    "png": 2068,
+    "assertions": 452
+  },
+  "diagnosticContextReview": {
+    "metadataOnly": 3,
+    "storageFixture": 42,
+    "providerRetirement": 2,
+    "touchEvents": 2,
+    "longPress": 1,
+    "allDirectlyClassified": true,
+    "toolUnknownsRemainDiagnosticNotAutomaticPass": 50
+  },
+  "allNewImagesReviewed": [
+    "settings-replacement/chromium.png",
+    "settings-replacement/firefox.png",
+    "settings-replacement/webkit.png"
+  ],
+  "all12ArchivesSizeDigestCRCAndUploadLogsVerified": true,
+  "history": {
+    "supersededHead": "3bd46d59591ce32b8ac2f856620d79522e367d1b",
+    "run": 43012561165,
+    "conclusion": "CI_SUCCESS_BUT_PRODUCT_FINDINGS_NOT_ACCEPTED",
+    "retainedArchives": 6,
+    "correctedPostCommitSourceTestsPass": true
+  },
+  "releaseAcceptance": false,
+  "limits": [
+    "Main/deploy/real production and post-release backup/restore remain pending",
+    "No real OAuth/device/independent holdings acceptance",
+    "v307 remains last LIVE_ACCEPTED"
+  ],
+  "backup": {
+    "version": 143,
+    "previousVersion": 142,
+    "bytes": 405749760,
+    "sha256": "0798424695a3c7482eeaa36d3fdcbb7413aa75cc21f170b48ea2a00fd3ffef81",
+    "exactCreatedFileIdVersionAndReadbackBytesVerified": true,
+    "entirePreviousRootAndAllOlderChainsPreserved": true,
+    "immutableIncrementBytes": 422840320,
+    "immutableIncrementSha256": "1f60257e8eede2ca8ed81e66ccf06b3278cf55276b1085b186f5d0682e65eaea",
+    "immutableManifestPaths": 49,
+    "additionalPreTakeoverOriginalBytes": 423905280,
+    "additionalPreTakeoverOriginalSha256": "0b656902a14c7e09e57bc605f781a1aa32e4db5fedaf46a131638eeb36562f97",
+    "additionalManifestPaths": 62,
+    "actualIncrementalRestoreAndExtractedReadbackPaths": 116,
+    "restoreFailures": 0,
+    "historicalUnchangedFullRestoresReused": true
+  }
+}
