@@ -1,3 +1,13 @@
+## ACTIVE · main-40aba94dd4bd-20261111 · alleiniger Hauptauftrag · 11.11.2026
+
+Kontrollierte reguläre HND01-Übernahme von auto-k6c-20261111-0208 (STOPPED/HANDOVER_READY). Vor erster Mutation bestätigt: Main9ab3653fc508fa35fe0f20ecf56a14004f837d3e/Treeca1ec2ac2babb708dee3ee35a21e30f437f9ae66; erwarteter Checkpoint-HEAD7b88a31ddda83401ae15d8de33b18d7c7901c426. Heads vollständig gelesen; nur historische Drafts157/161 offen; PR326-Review und Kommentare gelesen; keine laufende oder wartende Action, kein konkurrierender Produktwriter oder ungesichertes Produkt-WIP belegt. v305 bleibt LIVE_ACCEPTED. V138-Metadaten frisch bestätigt (Version138/405585920Bytes), vorhandener gepinnter Restorebeleg59Pfade/0Fehler; keine neue Sicherung oder erneute Vollabnahme behauptet.
+
+Neue verbindliche Nutzerentscheidung: vollständiger Ein-Agenten-Hauptauftrag gemäß [EFF03](WORK_EFFICIENCY_PLAN_2026-11-01.md). Vier Automatisierungen/Webhooks laut Nutzer deaktiviert; keine separate Kandidaten-QA-/Webhook-Pflicht mehr. Alle technischen/finanziellen/CI/Main/Produktion/Backup/Restoregates erhalten. Historische Nachweise unten unverändert.
+
+Nächste Aktion: konkrete normale K1–K6-Kernlücke gegen aktuellen v305-Code reproduzieren und als zusammenhängendes Paket implementieren/testen; externe Original-/Gerätenachweise offen halten. Kein Produktbranch oder PR begonnen, keine offene Speichermutation.
+
+---
+
 ## STOPPED / HANDOVER_READY · auto-k6c-20261111-0208 · K6-TRUST-C Inventur dokumentiert
 
 Reguläre kurze HND01-R-Abgabe nach genau EINEM begrenzten, unveränderlichen Leseschritt. Alleinige HND01-Schreibverantwortung vollständig abgegeben; **kein aktiver Produktwriter aus dieser Ausführung**, kein offenes/ungesichertes WIP. Vorgänger93890745b277 hatte regulär abgegeben; nach kollisionsfreier Übernahme wurde ausschließlich der in #298 bereits beauftragte kleine Runtime-/Lizenz-Repositoryinventurpunkt bearbeitet. [Redigierter K6-C-Befund](https://github.com/joke0071/foliolab-open/issues/298#issuecomment-6784038991). Root-/Worker-`package.json` ohne Runtime-Abhängigkeiten; index/SW nur lokale Assets, eigene MIT-Lizenz; Drittanbieter-API-Datenbedingungen/Bildprovenienz bleiben UNKNOWN. Keine belegte fehlende gebündelte Drittanbieter-Lizenz im begrenzten Lesescope; **keine** juristische Freigabe, keine Gesamt-Assetprüfung oder Security-PASS. Keine NOTICE-/Produktänderung ohne konkrete Pflicht.

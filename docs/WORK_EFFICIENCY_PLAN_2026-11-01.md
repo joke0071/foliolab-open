@@ -1,3 +1,15 @@
+## EFF03 – Ein-Agenten-Modell · verbindliche Nutzerentscheidung 11.11.2026
+
+Der automatisierte Zwei-Agenten-Versuch ist beendet. Ein alleiniger HND01-Hauptagent verantwortet Planung, Architektur, Implementierung, eigene QA, Regression, CI, PRs, Integration, Deployment, tatsächliche Produktionsabnahme, private Sicherung, Restore und Dokumentation. Die vier zugehörigen ChatGPT-Automatisierungen einschließlich GitHub-Webhooks sind laut ausdrücklicher Nutzerentscheidung deaktiviert; keine neue Automatisierung wird eingerichtet.
+
+Die organisatorische Pflicht zu einem separaten QA-Agenten, QA_READY/QA_ACCEPTED-Webhooks oder einer automatischen Übergabe entfällt. Vorhandene historische Pilot-/Review-/Releasebelege bleiben unverändert erhalten. Ältere widersprechende Zwei-Agenten-/Einzelschritt-/Rotationsaufträge unten und in alten Nachfolgerprompts sind historisch und durch diese Entscheidung ersetzt.
+
+Vollständigen fachlich zusammenhängenden Kandidaten fertigstellen, SHA und Prüfvertrag fixieren, notwendige Tests selbst ausführen und bestehende unabhängige maschinelle Nachweise auswerten. Vor Integration Reviews UND Kommentare frisch lesen und konkrete Befunde klären. Zusätzliche unabhängige fachliche Prüfung nur gezielt bei unklaren oder besonders kritischen Problemen anfordern. Keine pauschale neue QA-Pflicht.
+
+Alle technischen Qualitäts-, Finanz-, Decimal-/Journal-/UNKNOWN-FX-, CAS-/Mehrtab-, Identitäts-, CI-, Main-, Produktions-, Backup- und Restore-Gates bleiben unverändert. Unveränderte gültige Belege gezielt wiederverwenden; externe Original-/Geräte-/OAuth-Grenzen offen lassen. GitHub ausschließlich über das verbundene Plugin; Checkpointbranch niemals vollständig mergen. Keine zusätzlichen kostenpflichtigen Work-Credit-Käufe.
+
+Kontinuierlich seriell an K1–K6 arbeiten; keine Abgabe nach bloßen Leseschritten oder erzwungene Rotation nach einem einzelnen Release. Kurze wiederaufnehmbare Checkpoints; regulärer Sitzungswechsel bei tatsächlichen technischen Grenzen oder zunehmender Kontextlast am sicheren Punkt mit vollständigem Nachfolgerprompt.
+
 ## Fortschreibung – 10.11.2026 EFF03-Zwei-Agenten-Pilot PR326/v305 abgeschlossen
 
 **v305 LIVE_ACCEPTED und V138 tatsächlich wiederhergestellt.** [Abnahme](release-evidence/v305-live-accepted.json), [Messreview](release-evidence/eff03-pr326-pilot-result.json), [reguläre HND01-R-Abgabe](HANDOVER_93890745b277_2026-11-10.md). Zwei fachlich zusammengehörige Backup-/Safari-Copy-Änderungen; Hauptagent allein Code/Integration/Sicherung, unabhängige QA nur lesend plus ein redigiertes SHA-gebundenes PR-Review. DEV_ACTIVE→QA_READY→QA_ACCEPTED→MERGE_READY→LIVE_ACCEPTED real durchlaufen; Hauptagent hat Reviews UND Kommentare selbst frisch gelesen.0Produktbefunde,0Korrekturrevisionen nach Freeze, keine CI-Retries/Abbrüche/Duplikat-Messläufe. Bestehende QA-Automatisierung unverändert, keine neue Plattform oder weitere Automatisierung.
