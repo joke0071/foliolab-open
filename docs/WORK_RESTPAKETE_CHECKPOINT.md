@@ -1,3 +1,13 @@
+## ACTIVE · main-b0e9dc91640e-20261111 · autorisierte HND01-Notfallübernahme
+
+- **Zuständigkeit:** Vorgänger main-518556806b3b-20261111 ausdrücklich abberufen; alleinige Verantwortung nach frischem Abgleich aller 300 Heads, Main, PRs, Actions, Reviews/Issue-/Inlinekommentare und privater Rootmetadaten übernommen. Keine konkurrierende Mutation belegt; bestehende CI ist keine zweite Chat-Schreibausführung.
+- **Main/Release:** 0b8c6de007fff4d16ee930aa852354e4d52d513f; v309 LIVE_ACCEPTED gemäß vollständigem Vorgängerbeleg einschließlich Produktion. V147/405882880 Bytes frisch gepinnt bytegleich SHA256 b8e127bd5bb1b21ae075c32c10adf2bdc8e40927dab852ad50c1cc1afd3f3dd2; Vorgänger-Restore223Dateien/0Fehler identitätsgebunden erhalten, noch kein neuer eigener Restore behauptet. Keine offene private Mutation.
+- **Aktueller Kandidat:** PR331, feature/navigation-overview-518556806b3b, FROZEN_HEADe8374c6bc06a86c8dcdce28b0b5a467dc727d4f7/Tree7c8f92e4414be4f58633465ddd665178764190e1. Bereits vor Übernahme gestarteter PRlauf43080869343 läuft; Wallet43080869351 SUCCESS. Cross3 meldet Fehler bei neuem nativen Short-Desktop-Fokusfall; übrige Jobs unverändert auslaufen lassen. Kein Neustart, Retry, Merge oder Teil-PASS.
+- **Genau nächste Aktion:** Fehleroriginale erhalten, Firefox-Fokus/Scrollbefund gegen Produkt und Prüfvertrag eingrenzen; gezielt korrigieren, erst nach Ende des bestehenden Laufs Kandidat geschützt fortschreiben und neue Pflichtgates qualifizieren. Danach unveränderliche PR-Sicherung/gepinnter Readback/echter Restore vor Integration; Main/Deployment/tatsächliche Produktion/Abschlussbackup separat.
+- **Fortsetzung:** [Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md) und [Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md) erhalten; CI-B466be00 bleibt danach separat gemäß #229. Ein Hauptagent, keine automatische QA-Übergabe/zweite finale CI/Checkpoint-Gesamtmerge. Android-Hardware, Safari/TalkBack, OAuth/Zweigeräte/Sync bleiben extern offen.
+
+## Unveränderte Historie
+
 ## ACTIVE · main-518556806b3b-20261111
 
 - **Main:** 0b8c6de007fff4d16ee930aa852354e4d52d513f · Tree c72516b2012c4102642341166eaef5f6940a7c89.
