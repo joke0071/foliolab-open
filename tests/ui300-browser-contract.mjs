@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {navigationFocusBrowserContract} from './navigation-focus-browser-contract.mjs';
 import {mkdir,writeFile} from 'node:fs/promises';
 /** Presentation contract shared with the existing mandatory delivered UI suite. */
 export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
@@ -13,6 +14,7 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
   const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();return dates;
  });
  await p.reload();await ready();await nav('dashboard');const before=await record();
+ await navigationFocusBrowserContract({p,nav,record,engine});
  assert.equal(await p.locator('#sidebarPortfolioStatus').getAttribute('hidden'),'','healthy sidebar has no permanent success card');
  assert.equal(await p.locator('.sidebar-bottom:visible').count(),0,'no visible success replacement');
  assert.equal(await p.getByText('Unabhängig · Ohne Benutzerkonto',{exact:true}).count(),0,'redundant account subtitle removed');
