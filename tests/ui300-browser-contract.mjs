@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
 import {navigationFocusBrowserContract} from './navigation-focus-browser-contract.mjs';
 import {pwaUpdateDraftBrowserContract} from './pwa-update-draft-browser-contract.mjs';
+import {settingsReplacementBrowserContract} from './settings-replacement-browser-contract.mjs';
 import {mkdir,writeFile} from 'node:fs/promises';
 /** Presentation contract shared with the existing mandatory delivered UI suite. */
 export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
  await pwaUpdateDraftBrowserContract({p,engine});
+ await settingsReplacementBrowserContract({p,engine});
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const dates=await p.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js');
