@@ -7,6 +7,7 @@ import {browserGateDeadline,waitForAppServiceWorker} from './browser-gate-deadli
 // suite. Static async imports start those browsers together; keep every gate,
 // but finish one module before starting the next against the same live host.
 for(const check of [
+ './browser-navigation-installation.mjs',
  './browser-header-status.mjs',
  './browser-missing-position-value.mjs',
  './browser-chart-tooltip.mjs',
