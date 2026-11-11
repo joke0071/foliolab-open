@@ -1,3 +1,11 @@
+## ACTIVE · main-0981e24cc507-20261111 · PR329 integriert / Main43023136886 läuft
+
+PR329 mitexpectedHEAD geschütztintegriert. Main0be4c7f07a60e1d17ce5a5691261a52810701329/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7 exaktqualifizierterKandidat. BestehenderMainlauf43023136886 IN_PROGRESS, keineDoppel-CI/Abbrüche. [PR-/V143-Abnahme](release-evidence/v308-pr329-qualified.json) unverändert; echterinkrementellerRestore116Manifestdateien/0Fehler. v307bleibtletzterLIVE_ACCEPTED; Main/Deploy/tatsächlicheProduktion und Releasebackup noch offen. Keine offeneprivateSchreiboperation.
+
+Genau nächsteAktion: laufendenMain einschließlichDeploy/echter3EngineProduktion qualifizieren, neueOriginale gebündeltunveränderlichsichern/rücklesen/Rootgeschütztfortschreiben/Restore; erst danachv308LIVE_ACCEPTED. WährendFreeze ausschließlich unabhängigenP-CI-B-Folgeschnitt getrenntvorbereiten und einmaligen26Scope-Restabgleich lesendverfeinern, keinezweitefinaleCI/Integration. GitHub-Commit-Workflow-Wrapper liefertMainpushlaufnicht; beiMainstatus tatsächlicheActions-REST-Runliste/RunID nutzen, keinenneuenLauf erzeugen. AlleinigerOwner/Ein-Agenten-Modell unverändert.
+
+---
+
 ## ACTIVE · main-0981e24cc507-20261111 · PR329 qualifiziert / V143 verifiziert
 
 [PR329-Abnahme](release-evidence/v308-pr329-qualified.json): korrigierter HEADdde8cac4b366e61d73794f36b20953433338d247/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7; getesteter Mergecb19a44cae4ceb4ca25835882ec09789bddd723a gleicher Tree. PR43016219473/Wallet43016219168SUCCESS,Versuch1;1380Units/0Fehler/0Skips;238JSON/2068dekodiertePNG/452expliziteErgebnisvergleiche plus50direktklassifizierteDiagnostikkontexte. Neue tatsächliche IDB-/verschlüsselte UI-Restore-/post-commitVault-/Präferenzfälle3Engines und drei neue320pxAnsichten direkt geprüft. Alle12OriginalZIPs beider Kandidaten einschließlichUploadlogs erhalten/geprüft; ersterKandidat fachlich NICHT akzeptiert.
