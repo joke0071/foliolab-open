@@ -1,3 +1,11 @@
+## ACTIVE · main-75ea9fa46556-20261111 · PR328 integriert / Main42996734436 läuft
+
+PR328 geschütztmitexpectedHEADintegriert. Main37119745f9ac9e2356477202cae55948f3d74882/Tree3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5 exaktqualifizierterPR-Tree. BestehenderMainlauf42996734436 IN_PROGRESS;keineDoppel-CI,keineMain-/Produktionsabnahmebehauptet. [PR-Kandidat/V141](release-evidence/v307-pr328-qualified.json) vollständigqualifiziert/gepinntbytegleich/tatsächlicherRestore40Manifestpfade/0Fehler. VollständigeFehlerhistorieundganzeV140/ältereOriginalkettenbewahrt. KeineoffeneprivateSpeichermutation.
+
+Genau nächsteAktion: diesenMainlauf einschließlichDeployment/echter3Engine-Produktion auswerten,Assets/Identität/Finanz-/IDB-/CAS-/Offline-/Restore-/A11y-Nachweisequalifizieren,neueMain-/Produktionsoriginalezusammenunveränderlichsichern,Root141→142geschütztfortschreiben/gepinntrücklesen/tatsächlichinkrementellrestaurieren. v306bleibtletzterLIVE_ACCEPTEDbisallePflichtgatesbelegt;keinweiteresProduktpaketwährendReleaseabschluss.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · PR328 qualifiziert / V141 verifiziert / Integration vorbereitet
 
 [PR328-Kandidatenabnahme](release-evidence/v307-pr328-qualified.json): HEAD8c5d11e8370d0d1e4071ffe9f03127ba27c61475/Tree3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5; getesteterMerge19aeb661bafa12e884f7aac063c550a6a50d16a7 gleicherTree; PR42992039252/Wallet42992039325SUCCESSVersuch1.1366Units/0Fehler/0Skips;235JSON/2065dekodiertePNG/422historischeSchemaassertions+direkte neueNative-/Formular-/Kontextprüfung. NativeWorkerentwürfe undsynthetischeausgelieferteHandler3EnginesPASS,exakteDaten/Revision,0Providerrequests. Alle6neuenOriginalZIPs/API-/Uploadlogsqualifiziert. ErsterKandidat42990255793FAILdurchzweiTestassertionsfalscheRecordebene; korrigiert/Produktunverändert,keineRetries/Abbrüche;alle5Fehlerhistorienarchiveebenfallsbewahrt.
