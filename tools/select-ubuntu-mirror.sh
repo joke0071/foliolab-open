@@ -6,8 +6,8 @@ kind=${1:-}
 codename=${2:-}
 [[ "$codename" =~ ^[a-z]+$ ]] || { echo 'Invalid Ubuntu codename' >&2; exit 2; }
 case "$kind" in
-  archive) hosts=(archive.ubuntu.com us.archive.ubuntu.com) ;;
-  security) hosts=(security.ubuntu.com archive.ubuntu.com us.archive.ubuntu.com) ;;
+  archive) hosts=(archive.ubuntu.com us.archive.ubuntu.com mirrors.edge.kernel.org) ;;
+  security) hosts=(security.ubuntu.com archive.ubuntu.com us.archive.ubuntu.com mirrors.edge.kernel.org) ;;
   *) echo 'Expected archive or security' >&2; exit 2 ;;
 esac
 pocket=$codename

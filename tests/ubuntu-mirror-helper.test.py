@@ -51,7 +51,15 @@ sys.exit(6)
         result,calls=self.run_helper('archive')
         self.assertEqual(result.returncode,1)
         self.assertEqual(result.stdout,'')
-        self.assertEqual(len(calls),2)
+        self.assertEqual(len(calls),3)
+
+    def test_ubuntu_domain_dns_failure_selects_independent_mirror(self):
+        for mode,pocket,count in [('archive','noble',3),('security','noble-security',4)]:
+            result,calls=self.run_helper(mode,'mirrors.edge.kernel.org')
+            self.assertEqual(result.returncode,0)
+            self.assertEqual(result.stdout,'https://mirrors.edge.kernel.org/ubuntu/\n')
+            self.assertEqual(len(calls),count)
+            self.assertTrue(calls[-1].endswith('/dists/'+pocket+'/InRelease'))
 
     def test_html_is_not_an_inrelease(self):
         result,calls=self.run_helper('archive','archive.ubuntu.com','yes')

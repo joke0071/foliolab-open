@@ -179,7 +179,7 @@ test('Ubuntu mirror amendment rejects removed probes, non-HTTPS alternatives and
  ]) { assert.notEqual(changed,source);assert.throws(()=>validate(changed)); }
 });
 
-test('Ubuntu mirror selector succeeds and fails safely under six isolated network simulations',()=>{
+test('Ubuntu mirror selector succeeds and fails safely under seven isolated network simulations',()=>{
  const result=spawnSync('python3',[new URL('./ubuntu-mirror-helper.test.py',import.meta.url).pathname],{encoding:'utf8'});
  assert.equal(result.status,0,result.stdout+result.stderr);
 });
