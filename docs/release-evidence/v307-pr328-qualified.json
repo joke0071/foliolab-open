@@ -1,0 +1,114 @@
+{
+  "status": "PR_CANDIDATE_QUALIFIED_NOT_RELEASE_ACCEPTED",
+  "owner": "main-75ea9fa46556-20261111",
+  "PR": 328,
+  "head": "8c5d11e8370d0d1e4071ffe9f03127ba27c61475",
+  "testedMerge": "19aeb661bafa12e884f7aac063c550a6a50d16a7",
+  "tree": "3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5",
+  "base": "8a5c5c2d164b87831814be8fe0258356928d1abc",
+  "PRRun": 42992039252,
+  "walletRun": 42992039325,
+  "attempt": 1,
+  "mandatoryJobsSuccess": true,
+  "plan": {
+    "stage": "INTEGRATION",
+    "full": true,
+    "baseIsAncestor": true
+  },
+  "unitTests": 1366,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "jsonReports": 235,
+  "decodedPNG": 2065,
+  "explicitPriorSchemaComparisons": 422,
+  "additionalNewContractsDirectlyReviewed": true,
+  "contextReportsReviewed": {
+    "metadataIDB": 3,
+    "controlledStorage": 42,
+    "providerRetirement": 2,
+    "touch": 2,
+    "longPress": 2
+  },
+  "newNativeWorkerEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "newDeliveredHandlerEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "syntheticControllerEventsExplicitlyLabeled": true,
+  "providerRequests": 0,
+  "canonicalBytesAndRevisionInvariants": true,
+  "artifacts": [
+    {
+      "id": 13844006551,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933197,
+      "digest": "sha256:841d6b18f5ca0db47e055d8dda64a57e3b0a216d883e861dcdf10398c3e9fe02"
+    },
+    {
+      "id": 13843390242,
+      "name": "cross-engine-gates-19aeb661bafa12e884f7aac063c550a6a50d16a7-2",
+      "size_in_bytes": 12409407,
+      "digest": "sha256:d45a45634297de609b389de963c04959579e34a3091a7c223a999a43f624725c"
+    },
+    {
+      "id": 13843258888,
+      "name": "cross-engine-gates-19aeb661bafa12e884f7aac063c550a6a50d16a7-3",
+      "size_in_bytes": 68781954,
+      "digest": "sha256:08d1b181efbbdd5aed475a6b3a4457cb48f534f40527444451523ddc332ebdd3"
+    },
+    {
+      "id": 13843091198,
+      "name": "cross-engine-gates-19aeb661bafa12e884f7aac063c550a6a50d16a7-1",
+      "size_in_bytes": 60009526,
+      "digest": "sha256:78aab81a36e1c02519aa99c3badd1dad4d3588e901deb3287236ccf987b7147b"
+    },
+    {
+      "id": 13842564896,
+      "name": "release-gates-19aeb661bafa12e884f7aac063c550a6a50d16a7",
+      "size_in_bytes": 65565180,
+      "digest": "sha256:ff6df00c79d3426cb9a9f168f05bdc7ec44cc76e3c00295dbdd5f4ce5dfb8d95"
+    },
+    {
+      "id": 13842027506,
+      "name": "ci-stage-19aeb661bafa12e884f7aac063c550a6a50d16a7",
+      "size_in_bytes": 571,
+      "digest": "sha256:263b21d78f903493e67cd44e3693f01507d13c6a21375c90349455c9fd426550"
+    }
+  ],
+  "history": {
+    "firstRun": 42990255793,
+    "firstHead": "5035a9345aecb7cad16a2cc26db83c9c8e25425c",
+    "status": "FAILED_NEW_TEST_ASSERTION_LAYER",
+    "correction": "Two assertions now read canonical record.settings rather than intentionally redacted raw.settings. Product code unchanged.",
+    "noIdenticalRetryOrAbort": true,
+    "allOriginalsRetained": true
+  },
+  "backup": {
+    "version": 141,
+    "previousVersion": 140,
+    "bytes": 405678080,
+    "sha256": "13f81b2e5e4b9941093198cf4dfa77016ef392379a059c447d3521c36b123282",
+    "pinnedReadbackVerified": true,
+    "entirePreviousRootAndAllHistoricalChainsPreserved": true,
+    "immutableIncrement": {
+      "bytes": 380221440,
+      "sha256": "0985b0ddf3332a87183a0547930b4b3405f846b80fa54e412d2aca0f770111ea",
+      "manifestPaths": 35,
+      "pinnedReadbackVerified": true
+    },
+    "actualIncrementalRestoreManifestPaths": 40,
+    "restoreFailures": 0,
+    "unchangedHistoricalFullRestoreEvidenceReused": true
+  },
+  "preMergeReviewsAndComments": [],
+  "limits": [
+    "Main/deployment/actual production acceptance and final release backup pending",
+    "Native Android/Safari/TalkBack/OAuth and independent original ownership remain external",
+    "Not FolioLab 1.0 overall acceptance"
+  ]
+}
