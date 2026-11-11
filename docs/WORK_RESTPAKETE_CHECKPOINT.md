@@ -1,3 +1,13 @@
+## ACTIVE · main-a845c64598ab-20261111 · PR330 korrigiert / neue Pflicht-CI läuft
+
+KorrigierterHEADaf7673336a08a7da79e45eb2c551d0cc271d4593/Tree646689659d4febbf7625ca56812fd8735fe4294a, [PR330](https://github.com/joke0071/foliolab-open/pull/330); neue automatische Läufe43040242297(PR)/43040242290(Wallet) IN_PROGRESS. Produktcode exakt ersterKandidat; ausschließlichneuerBrowservertrag undBefunddokumentkorrigiert. PermanenterDialoghandler entscheidetgenaueinmal, statt ListenerimlaufendenEventzuwechseln; aufvollständigbeendetenSubmitwarten. GeänderteBrowsersyntaxPASS; identische1385Unit-/Produkt-/Syntaxaussagengezieltwiederverwendet. NativeAbnahmediesesSHAsnochOFFEN.
+
+ErsterHEAD9c19de226357de67fc3d4327d02d148041d92fc1/Run43038133160 vollständigbeendet/FAIL,nichtakzeptiert. ChromiumhatgeschütztenEditor/gesperrtenBetragsbypassbereitsdurchlaufen, scheiterteimneuenAbbruchtestandoppelterDialogbehandlung. DreiCross-Jobs separatvorTestsamDNSfürarchive.ubuntu.com/bestehendem8-Minuten-Installationslimitgescheitert. Alle5FehleroriginalZIPsidentitätsgebundenmitDigest/Größe/CRCgeprüft/lokalerhalten, Test-/Cross-/Walletlogs erhalten. KeinAbbruch/RetrydesaltenLaufs; keineWorkflow-/Gate-/Timeoutänderung. Bei erneutemInfrastrukturfehlernichtblindidentischwiederholen.
+
+v308/V144LIVE_ACCEPTED/verifiziertunverändert; keineoffeneprivateMutation. BeideKandidaten/FehleroriginaleinderkommendengemeinsamenPR-Sicherungsphasedauerhafterhalten/gepinntlesen/Rootgeschütztfortschreiben/tatsächlichrestaurieren. Genau nächsteAktion: bestehendeneueCIqualifizierenundnachEndealleReviews/Kommentareprüfen; nurvollständigqualifiziertenSHAintegrieren,danachMain/Deploy/echteProduktionseparat. AndroidHardwarebleibtexternoffen; CI-B466be00 unverändert,Navigations-/Installations-/Dashboardpaketfolgt. KeinzweiterProduktwriter.
+
+---
+
 ## ACTIVE · main-a845c64598ab-20261111 · PR330 eingefroren / Pflicht-CI läuft
 
 [PR330](https://github.com/joke0071/foliolab-open/pull/330), HEAD9c19de226357de67fc3d4327d02d148041d92fc1/Tree dadecf3ad968a89a1755d91b1e921bfe6338b164, BasisMain0be4c7f07a60e1d17ce5a5691261a52810701329. [Zusammenhängender Fach-/Prüfvertrag](https://github.com/joke0071/foliolab-open/blob/9c19de226357de67fc3d4327d02d148041d92fc1/docs/K3_STARTUP_REFERENCES_2026-11-11.md): vorhandener Verwaltungseditor für sämtlicheStichtage; geschützteOriginale ausschließlichNotizänderung mit bestehenderRevision, Datum/Betrag/Quelle/Qualität/Aufschlüsselungen geschützt; manuelleKorrekturbestätigungAbbrechen erhältEntwurf. Startverzögerung animiertweiter, tatsächlicherFehler stoppt/beibehältFehlertext, ReducedMotion unverändert.
