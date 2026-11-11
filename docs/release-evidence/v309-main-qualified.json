@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "MAIN_QUALIFIED_PRODUCTION_PENDING",
+  "owner": "main-518556806b3b-20261111",
+  "release": 309,
+  "lastLiveAccepted": 308,
+  "main": "0b8c6de007fff4d16ee930aa852354e4d52d513f",
+  "tree": "c72516b2012c4102642341166eaef5f6940a7c89",
+  "run": 43067473948,
+  "attempt": 1,
+  "unit": {
+    "tests": 1387,
+    "pass": 1387,
+    "fail": 0,
+    "skipped": 0
+  },
+  "mainRequiredJobs": "SUCCESS",
+  "fastJob": "EXPECTED_SKIPPED: non-PR RELEASE stage ciContract=false",
+  "stage": "RELEASE",
+  "archives": 7,
+  "reports": 238,
+  "png": 2071,
+  "explicitComparisons": 542,
+  "digestFindings": 0,
+  "digestDisposition": "UNKNOWN; all 50 exact pairs independently classified",
+  "pages": {
+    "files": 153,
+    "exactGitblobs": true
+  },
+  "deployment": {
+    "job": 130702719863,
+    "result": "SUCCESS"
+  },
+  "production": {
+    "job": 130702880980,
+    "result": "IN_PROGRESS"
+  },
+  "backup": {
+    "version": 146,
+    "newMainProductionOriginals": "PENDING grouped immutable increment, pinned readback, guarded V147 and actual restore"
+  },
+  "releaseAccepted": false,
+  "hardwareAndroid": false
+}

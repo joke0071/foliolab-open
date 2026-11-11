@@ -1,3 +1,13 @@
+## ACTIVE · main-518556806b3b-20261111 · v309 Main/Deploy qualifiziert / tatsächliche Produktion läuft
+
+[Main-/Deploy-Nachweis](release-evidence/v309-main-qualified.json): Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89, Run43067473948 Versuch1. Alle verpflichtenden Mainjobs SUCCESS,1387Units/0Fehler/0Skips. FAST erwartungsgemäß SKIPPED bei NonPR-RELEASE/ciContract=false. Sieben Originalarchive API/Uploadlog/Digest/Bytes/CRC exakt zugeordnet;238JSON/2071PNG/542Vergleiche,0Findings und50 separat direkt eingeordnete Adapterkontexte. Verdichterdisposition bleibt UNKNOWN, kein automatischer PASS. Pages153Dateien exakt zu Main-Gitblobs und qualifizierten Quellen; Referenzansichten30PNG bytegleich zu geprüften PR-Originalen, neue drei verzögerte Loaderansichten direkt geprüft. Deployment130702719863 SUCCESS.
+
+Tatsächlicher Produktionsjob130702880980 am bestehenden Mainlauf läuft auf https://foliolab.unperfekt.at/; keine Doppel-CI, keine erneute Integration. **v308 bleibt LIVE_ACCEPTED.** Neue Main-/Produktionsoriginale erst nach vollständiger Produktionsqualifikation gebündelt unveränderlich sichern, gepinnt rücklesen, Root146→147 versionsgeschützt fortschreiben/rücklesen und echten inkrementellen Restore samt extrahiertem Readback durchführen. V146 frisch unverändert, keine offene private Mutation.
+
+Isolierter Folgeschnitt B remote erhalten: feature/navigation-overview-518556806b3b HEADd505ae31b497f63467f94fe2d986fa2705d81d7e/Tree7ffa0131ba73f6967c43bccd0e302d99a8523a51. Unterstreichung/Übersicht/kompakte Details/Mehr-Installation/Hinweis samt Negativfällen vorbereitet. Fünf gezielte Präferenztests PASS, native Browser-/Sichtprüfung noch offen; kein Freeze/PR/finale Folge-CI während Produktion A. CI-B466be00 nur zurückgestellt erhalten. Frisch300Heads mit erwarteten relevanten SHAs, nur historische Drafts157/161 offen, PR330Reviews/Issue-/Inlinekommentare leer, nur eigener Mainlauf aktiv; kein konkurrierender Writer belegt. Alleiniger Owner unverändert. Kein Hardware-/OAuth-/Zweigeräte-/Sync-PASS.
+
+---
+
 ## ACTIVE · main-518556806b3b-20261111 · v309 Mainabnahme / isoliertes Navigations-WIP
 
 Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89 unverändert, bestehender Mainlauf43067473948 läuft. Chromium sowie Cross1/2 SUCCESS; Cross3 noch IN_PROGRESS. Erste fünf Originalarchive einmal heruntergeladen/API-Digest/Bytes zugeordnet, drei fertige Testgruppen inhaltlich vorgeprüft; Teilprüfungen sind keine Gesamtfreigabe. v308 bleibt LIVE_ACCEPTED. V146 unverändert/keine offene private Mutation; Main/Deploy/tatsächliche Drei-Engine-Produktion und gebündelte Sicherung/V147/Readback/Restore bleiben vor v309LIVE_ACCEPTED verpflichtend.
