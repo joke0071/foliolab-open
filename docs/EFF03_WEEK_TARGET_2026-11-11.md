@@ -1,5 +1,13 @@
 # EFF03 – Sieben-Tage-Ziel für den vollständigen bestehenden Entwicklungsumfang
 
+## Aktive Ausführung: geplante Rotation · 11.11.2026
+
+Nutzerauftrag: eine aktivierte Entwicklungsautomation „FolioLab Entwicklung mit Übergabe“ mit90-Minuten-Takt ab11.11.2026,21:25Europe/Vienna. Pro Lauf45Minuten Arbeit und15Minuten Übergabereserve als Ziel für höchstens60Minuten verstrichene Zeit. Vollständiger [aktueller Vertrag](WORK_EFFICIENCY_PLAN_2026-11-01.md#aktive-nutzerentscheidung-geplante-rotation--11112026) hat Vorrang vor älteren Verboten fester Rotation/dieser einzelnen Automation; keine separate QA-/Webhookschleife.
+
+Der bisherige Owner übergibt am nächsten sicheren Punkt selbst; der Nachfolger übernimmt ausschließlich nach aktueller STOPPED/HANDOVER_READY-Abgabe und frischem geschütztem HND01-Abgleich. Kein automatischer Widerruf bei Hänger, kein hart erzwungener60-Minuten-Abbruch. Fehlende Abgabe führt zu lesender Blockermeldung statt zweitem Writer. CI darf mit exakten IDs weiterlaufen und sicher übergeben werden; offene Mutationen dürfen es nicht. Nach Abgabe keinerlei weitere Schreibaktion des Vorgängers.
+
+Der erste tatsächliche Tasklauf und zwei reguläre Übergänge müssen neue Ausführungs-/Chatidentität, korrekte Ownerfolge und Wiederaufnahme belegen. Bis dahin ist nur Einrichtung bestätigt. Keine Zusatz-CI für diese Prozessprüfung. Fachliche Paketpriorität, gesamter Wochenumfang und alle Abnahmeanforderungen bleiben erhalten; keine Pflicht, einen vollständigen Release in einen Lauf zu pressen.
+
 ## Ausführungsstand · 11.11.2026 · v309 abgeschlossen
 
 [v309 LIVE_ACCEPTED](release-evidence/v309-live-accepted.json), Main0b8c6de0, V147 geprüft/gepinnt rückgelesen, tatsächlicher inkrementeller Restore223Dateien/0Fehler. Stichtagsbearbeitung gemäß Herkunftsschutz und verzögerter Loader in drei Produktionsengines qualifiziert; reales Android bleibt offen. Bestehender nativer Main-/Deploy-/Produktionslauf70Min10Sek Wandzeit, summierte Jobzeit107Min02Sek; längster Main-Cross29Min11Sek, Produktionsjob40Min23Sek. Aktive Agentenzeit nicht belastbar gemessen. Originale früh einmal zugeordnet ausgewertet und gemeinsam unveränderlich gesichert; kein Zusatzlauf für Statistik. Nächstes zusammenhängendes Navigations-/Dashboard-/Installationspaket remote vorbereitet; noch keine finale CI/Abnahme. P-CI-B danach separat gemäß #229. Keine neue Scope-Gesamtfertigmeldung oder neue Wochenprognose.
