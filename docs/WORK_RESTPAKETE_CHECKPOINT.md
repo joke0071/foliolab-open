@@ -1,3 +1,13 @@
+## ACTIVE · main-40aba94dd4bd-20261111 · Main/Deploy qualifiziert / echte Produktion läuft
+
+Main8a5c5c2d164b87831814be8fe0258356928d1abc/Tree501c94e126088bfcddd79f26501cf9520f11e3a3 exaktqualifizierterPR327-Tree. [Main-/Deploymentbeleg](release-evidence/v306-main-qualified-production-pending.json): bestehenderLauf42977860611/Deploy130389898728 SUCCESS,Versuch1;1356Units/0Fehler/0Skips;232JSON/2065dekodiertePNG/479explizitePrüfungen+50direkteKontextberichte;153PagesdateienexaktGitblobs,alle7Originalarchive/API-/Uploadlogbelegeverifiziert. DirekteöffentlicheProduktionsgegenprobe(neuesH1-Fokusziel)PASS,keinErsatzfürPflichtgates.
+
+Livejob130390010383 IN_PROGRESS (gewöhnlicheProduktionssuite,3Engines); **v305 bleibtletzterLIVE_ACCEPTED**. V139dauerhaftrückgelesen/Restore50Pfade/0Fehler; vollständigeV138/Originalkettenbewahrt. NeueMainoriginalelokalverifiziert undinGitHubvorhanden,abschließenderprivaterMain-/ProduktionsinkrementnochOFFEN. KeineoffeneprivatSpeichermutation,keineRetries/Abbrüche/Doppel-CI.
+
+Genau nächsteAktion: bestehendenLivejobvollständigauswerten,Originale/TLS-/Assets-/3Engine-/Finanz-/IDB-/Offline-/Restore-/A11y-Nachweiseprüfen; qualifizierteMain-/Produktionsoriginalegemeinsamunveränderlichprivatsichern,Root139→140versionsgeschütztfortschreiben/gepinntrücklesen/tatsächlichinkrementellrestaurieren; erst danachLIVE_ACCEPTED. BegrenzteK3-QuellcodeprobeAnbieter-Quota/RetryPASS,nur simuliert,keinbelegterweitererProduktdelta.
+
+---
+
 ## ACTIVE · main-40aba94dd4bd-20261111 · PR327 integriert / Main42977860611 läuft
 
 [Qualifizierter Kandidat samt V139](release-evidence/v306-pr327-qualified.json) geschütztintegriert. Main8a5c5c2d164b87831814be8fe0258356928d1abc/Tree501c94e126088bfcddd79f26501cf9520f11e3a3 exaktqualifizierterTree. BestehenderMainlauf42977860611 gestartet/nochkeineMain-/Produktionsabnahme,keineDoppel-CI. v305bleibtletzterLIVE_ACCEPTED. V139gepinntbytegleich/echterinkrementellerRestore50Pfade/0Fehler;keineoffeneSpeichermutation.
