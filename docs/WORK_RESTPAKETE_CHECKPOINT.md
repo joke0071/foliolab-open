@@ -1,3 +1,11 @@
+## ACTIVE · main-518556806b3b-20261111 · PR330 integriert / Main43067473948 läuft
+
+PR330 mit expectedHEAD5d755b89 geschützt integriert. **Main0b8c6de007fff4d16ee930aa852354e4d52d513f / Treec72516b2012c4102642341166eaef5f6940a7c89** ist exakt der qualifizierte Kandidat. Bestehender automatischer Mainlauf **43067473948 IN_PROGRESS**; keine Doppel-CI oder Abbrüche. [PR-Abnahme und V146](release-evidence/v309-pr330-qualified.json) unverändert gültig:1387Units, dreiEngines,239JSON/2094PNG/609Vergleiche/50direktgeprüfteKontexte; tatsächlicher inkrementeller Restore92Dateien/0Fehler. V146frischgepinnt/ByteReadback bestätigt, keine offene private Mutation.
+
+**v308 bleibt letzter LIVE_ACCEPTED.** Genau nächste Aktion: diesen Mainlauf samt Deployment und tatsächlicher Drei-Engine-Produktion vollständig qualifizieren, neue Originale einmal zugeordnet prüfen und gebündelt unveränderlich sichern; Root146→147 geschützt fortschreiben/gepinnt rücklesen/tatsächlich restaurieren. Erst dannv309LIVE_ACCEPTED. CI-B466be00 bleibt unverändert erhalten und gegenüber den funktionalen Nutzerbefunden zurückgestellt. Nächstes Nutzerpaket: Navigation einschließlich Installation, Dashboard und kompakte Details gemäß Wochenplan; aktuell nur lesende Vorarbeit. Kein Checkpoint-Gesamtmerge, kein zusätzlicher Agent, keine Automation. Hardware-/OAuth-/Zweigeräte-/Sync-Abnahmen bleiben extern offen.
+
+---
+
 ## ACTIVE · main-518556806b3b-20261111 · PR330 qualifiziert / V146 verifiziert / Integration vorbereitet
 
 PR330 ist am exakten HEAD **5d755b89ae6a2139493194da38f3611e17d45284 / Tree c72516b2012c4102642341166eaef5f6940a7c89** qualifiziert. Getesteter Merge995145e017185964997994125d9aa5c25207c5e0 hat denselben Tree. PR43060854022 und Wallet43060854039 SUCCESS, Versuch1;1387Units/0Fehler/0Skips. Sieben Originalarchive/API-Digests/Größen/Uploadlogs vollständig zugeordnet;239JSON/2094dekodiertePNG/609expliziteVergleiche,50Diagnosekontexte separat direkt eingeordnet. Bestehender Verdichter bleibt ehrlich UNKNOWN für diese Adapterkontexte; kein automatischer PASS. Stichtags-/Loaderfälle in drei Engines, neue synthetische Ansichten geprüft; kein Android-Hardware-PASS. [Kandidatenabnahme](release-evidence/v309-pr330-qualified.json).
