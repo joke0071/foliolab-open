@@ -1,3 +1,15 @@
+## Aktive Präzisierung: Bündelung mit kurzen Zwischenständen · 11.11.2026
+
+Fachlich zusammenhängende Änderungen weiterhin zu einem vollständigen Kandidaten bündeln. Innerhalb des Pakets kleine prüfbare Entwicklungsschritte mit gezielten nötigen Gegenproben ausführen; daraus entstehen keine zusätzlichen Releases oder vollständigen Pflichtläufe pro Zwischenschritt. Keine pauschalen Grenzen von1–2Dateien,150–300Zeilen oder4–5Prompts.
+
+**Kurzen dauerhaften Zwischenstand an echten Wiederaufnahmepunkten sichern:** wenn ein sinnvoller Teilschritt remote erhalten ist, vor längerer externer CI-Wartezeit oder vor einer tatsächlichen Unterbrechung/Übergabe. Bestehenden eigenen Checkpointkopf aktualisieren und Belege verlinken; keine neue Zustandsdatei/zweite Roadmap, kein Vollbericht nach jedem Toolaufruf. Bereits aktuelle Zwischenstände nicht erneut schreiben. Kleine Codezwischenstände müssen die geltenden Sicherungsverträge erfüllen, lösen aber allein keinen neuen Release-/Backupzyklus aus.
+
+Der kompakte Stand nennt: Owner und Zuständigkeit, Branch/Commit (ggf.Tree), was tatsächlich geprüft ist, was noch offen ist, laufende PR-/Run-IDs, bestätigten Sicherungsstand bzw.offene Sicherung sowie genau nächste Aktion. **IMPLEMENTIERT, GEZIELT_GEPRÜFT, CI_LÄUFT und VOLLSTÄNDIG_ABGENOMMEN nicht gleichsetzen.** Nur lokaler Scratch ist keine dauerhafte Wiederaufnahmebasis; ausstehendes Pushen/Sichern ausdrücklich offenlassen. Frische Datei-SHAs vor Schreibzugriff verwenden und gespeicherte Änderungen rückprüfen.
+
+Gemeinsame vorgeschriebene Abschlusstests am vollständigen eingefrorenen Kandidaten durchführen; notwendige Prüfungen während der Entwicklung bleiben erhalten. Bestehende Freeze-/SHA-/CI-/Produktions-/Finanz-/Daten-/Sicherungs-/Restoreverträge und alleiniger Owner bleiben bindend. Chatwechsel nur am sicheren Punkt bei tatsächlichem Bedarf; keine neue Rotation/Automation.
+
+Erfolg ohne zusätzlichen Messprozess beurteilen: Kann ein Nachfolger den nächsten Schritt aus dem knappen Stand zuverlässig aufnehmen, ohne Gesamtneuanalyse oder verlorene Originale? Vermeidbare Wiederholungen/Neuanalysen bei ohnehin nötiger Übergabe vermerken; keine ungemessene Hänger- oder Zeitersparnis behaupten.
+
 ## Rotationsversuch beendet · 11.11.2026
 
 Die versuchte automatische Chatrotation ist **nicht aktiv**: Der verfügbare Adapter konnte eigenständige neue Chats nicht einstellen oder nachweisen. Die angelegte Aufgabe bleibt deaktiviert. Daraus gelten **keine 45-/60-/90-Minuten-Arbeits-, Stopp- oder Übergabepflichten**. Der alleinige Hauptagent setzt den autorisierten Arbeitsplan fort; reguläre Übergabe nur bei tatsächlicher Kontext-/Technikgrenze oder Nutzerauftrag am sicheren Punkt. Keine Abgabe in Erwartung eines automatischen Nachfolgers. Alle bestehenden fachlichen Schutzverträge bleiben erhalten; keine weitere Rotationsentwicklung ohne neuen Auftrag.
