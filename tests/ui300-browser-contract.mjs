@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import {navigationFocusBrowserContract} from './navigation-focus-browser-contract.mjs';
+import {pwaUpdateDraftBrowserContract} from './pwa-update-draft-browser-contract.mjs';
 import {mkdir,writeFile} from 'node:fs/promises';
 /** Presentation contract shared with the existing mandatory delivered UI suite. */
 export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
+ await pwaUpdateDraftBrowserContract({p,engine});
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const dates=await p.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js');
@@ -78,3 +80,4 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
  await scan('UI300 partial automatic snapshot');await p.screenshot({path:`${out}/${engine}-partial-observation.png`,fullPage:true});
  await writeFile(`${out}/report-${engine}.json`,JSON.stringify({engine,result:'PASS',base:p.url().split('?')[0],checks:['7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping','healthy and offline sidebar success fully hidden; meaningful status paths retained','no hero or tiles; brand and five semantic destinations retained','zero group chip hidden','exact selected-period endpoints; explicit cashflow scope','200% text stress/short viewport (not physical zoom or hardware)','offline actual reload; exact canonical bytes/revision','partial automatic snapshot remains unavailable without writes']},null,2));
 }
+

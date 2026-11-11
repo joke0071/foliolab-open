@@ -5,6 +5,7 @@ import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,firefox,webkit} from 'playwright';
 import {waitForAsyncReadiness} from './browser-async-readiness.mjs';
+import {pwaUpdateDraftNativeContract} from './pwa-update-draft-native-contract.mjs';
 
 const sw=await readFile('sw.js','utf8'),cache=sw.match(/const CACHE='([^']+)'/)[1];
 const oldCache='foliolab-open-synthetic-previous';
@@ -161,7 +162,8 @@ try{
    assert.match(await page.locator('#snapshotList').textContent(),/1\.234/);
    assert.deepEqual(await record(),before,'offline reload/navigation preserves exact record');
    assert.deepEqual(errors,[]);result.checks.push('updated offline reload and historical reference remain accessible; exact record preserved; no page errors');
-   result.assetHashes=hashes;result.result='PASS';console.log(engine+': PWA UPDATE warm HTTP cache/current asset hashes/old cache removal/exact IDB/offline PASS');
+   result.draftUpdate=await pwaUpdateDraftNativeContract({browser,base,setGeneration:value=>{generation=value;},cache});
+   result.assetHashes=hashes;result.result='PASS';console.log(engine+': PWA UPDATE warm HTTP cache/current asset hashes/old cache removal/exact IDB/offline/draft protection PASS');
   }catch(error){
    result.result='FAIL';result.error=String(error).slice(0,2000);
    // Failure-only evidence: do not poll, retry or change the original gate.
@@ -189,3 +191,4 @@ try{
   finally{await browser.close();await writeFile('artifacts/gates/pwa-update/report.json',JSON.stringify(report,null,2));}
  }
 }finally{await new Promise(resolve=>server.close(resolve));}
+
