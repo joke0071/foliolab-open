@@ -1,3 +1,11 @@
+## ACTIVE · main-75ea9fa46556-20261111 · nächstes K3/K4-Paket abgegrenzt
+
+V307/V142 bleiben vollständig LIVE_ACCEPTED/verifiziert. Frische Mainprüfung bestätigt37119745f9ac9e2356477202cae55948f3d74882; keine neue Produktintegration oder private Speichermutation. [Fachpaket und gemeinsame Prüfliste](K3_SETTINGS_REPLACEMENT_2026-11-11.md): API-Formular nach bestätigtem vollständigem Reset und ausdrücklich angenommenem Konfigurationsrestore an das übernommene Modell anpassen und maskieren; gewöhnliche Entwürfe bei Rendern/abgelehnter Konfiguration/Fehler erhalten. Bestehende RPC-/Frequenzdarstellung ist bereits synchron, kein Neubau.
+
+Quellcode-Gegenprobe mit tatsächlich ausgeführten deleteAll/render/renderSettings/apiSettingsHasDraft und DOM-/Speicheradaptern reproduziert leeren Modellschlüssel bei weiterhin altem Formularwert und dadurch falschem Entwurfsstatus nach bestätigtem Reset. Kein nativer Browser-/Produktions-PASS daraus. Noch kein neuer Kandidat oder PR. Genau nächste Aktion: reale Source-Handler-Negativ-/Positivfälle festlegen, begrenzten gemeinsamen Formularabgleich implementieren und den isolierten echten Browser-/verschlüsselten Restorevertrag in die bestehende Drei-Engine-Suite integrieren. Nach vollständiger Paketfertigstellung SHA einfrieren und alle Pflichtphasen samt Sicherung/Restore erfüllen. Keine zusätzlichen Agenten/Automatisierungen, keine Änderung an Daten-/Installationsidentität.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · v307 LIVE_ACCEPTED / V142 verifiziert
 
 [V307-Abnahme](release-evidence/v307-live-accepted.json): Main `37119745f9ac9e2356477202cae55948f3d74882`, Tree `3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5`. PR328-Kandidat `8c5d11e8370d0d1e4071ffe9f03127ba27c61475` vollständig qualifiziert; PR42992039252/Wallet42992039325/Main42996734436/Deployment130455321736/Produktion130455465813 SUCCESS, jeweils Versuch1. 1.366 Units ohne Fehler/Skips; neue native Workerfälle und tatsächliche ausgelieferte Formularhandler in drei Engines geprüft. Main: 235 JSON/2065 dekodierte PNG, 153 Pages-Dateien exakt Git-Blobs. Produktion: 175 JSON/1407 dekodierte PNG, 154 Asset-Hashes, gewöhnliches TLS, 18 Axe/0 Verstöße. Alle acht Main-/Produktionsoriginale und Uploadlogs geprüft. Erster PR-Testfehler mit Korrektur der Record-Ebene vollständig in V141 erhalten; keine identischen Retries/Abbrüche.
