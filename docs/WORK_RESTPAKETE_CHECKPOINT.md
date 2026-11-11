@@ -1,3 +1,15 @@
+## ACTIVE · main-0981e24cc507-20261111 · v308 Main läuft / unabhängiger CI-B-WIP gesichert
+
+Zwei fremde reinePlanungsnachträgea6657aa/d513874frischgeprüftundvollständigerhalten: ausschließlichEffizienz-/Wochenplan,keineOwner-/Checkpoint-/Produkt-/Main-/Workflow-/Sicherungsänderung. ErwarteterRefabgleichverhinderteÜberschreibung; aufneuenCheckpoint-HEADd513874rekonstruiert.
+
+Main0be4c7f07a60e1d17ce5a5691261a52810701329/Run43023136886: Chromium/Cross1/Cross2SUCCESS, Cross3IN_PROGRESS; Deploy/echteProduktion noch ausstehend. KeineDoppel-CI/Abbrüche. v307bleibtLIVE_ACCEPTED, V143bytegleich/tatsächlicherRestore116Manifestdateien/0Fehler unverändert; keineoffeneprivateSchreiboperation.
+
+Einziger unabhängiger FolgeschnittP-CI-B vorbereitet: [Commit466be00d49d3a5308cb28075dd7572e4d0ce596b](https://github.com/joke0071/foliolab-open/commit/466be00d49d3a5308cb28075dd7572e4d0ce596b), Branchchore/ci-b-balance-0981e24cc507, Tree65c2cba306f5b7b8ddac335fc9f3e5f98ea9ae88. Genau eine unveränderteUI-quality-Zeile Cross3→EndeCross2; alleanderenWorkflowbytes/altenManifest-/Hashassertions erhalten,26lokaleCI-VerträgeundBashSyntaxPASS. StrikteTestnormalisierung erlaubt ausschließlichdiesePlatzierung,keineHashneuberechnung. KeinePR/finaleCI/Integration gestartet; BranchtriggertlautvollständiggelesenenWorkflowköpfenkeinePushCI. Nachv308abgleichen/vollqualifizieren; konkreteWorkflow-Mergefreigabegemäß#229bleibtnötig.
+
+Neue aktuelleNutzerentscheidungen: Kleinstbestandsgrenze frei einstellbar,StandardallePositionensichtbar; realeTestgeräte:nurAndroid(keinSafari/iOS); bestehendeDrive-VerbindungfunktioniertlautNutzer,keineTokenablauf-/Zweigeräte-/Syncabnahmedaraus. Imvorbereiteten26Scope-Restabgleichberücksichtigen,keinezweiteRoadmap. Genau nächsteAktionbleibtv308Main/Deploy/echteProduktion/Originalsicherung/Readback/Restore abschließen;danachbestehendenWochenplanundCI-Bfortführen. EinOwner/Ein-Agenten-Modell.
+
+---
+
 ## ACTIVE · main-0981e24cc507-20261111 · PR329 integriert / Main43023136886 läuft
 
 PR329 mitexpectedHEAD geschütztintegriert. Main0be4c7f07a60e1d17ce5a5691261a52810701329/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7 exaktqualifizierterKandidat. BestehenderMainlauf43023136886 IN_PROGRESS, keineDoppel-CI/Abbrüche. [PR-/V143-Abnahme](release-evidence/v308-pr329-qualified.json) unverändert; echterinkrementellerRestore116Manifestdateien/0Fehler. v307bleibtletzterLIVE_ACCEPTED; Main/Deploy/tatsächlicheProduktion und Releasebackup noch offen. Keine offeneprivateSchreiboperation.
