@@ -1,3 +1,13 @@
+## ACTIVE / PR335_MERGE_READY / V154 · work-02f19cd404ef-20261112
+
+[PR335 vollständig qualifiziert](release-evidence/pr335-pwa-document-identity-qualified.json): HEADa7375960accf2c925b4e9c1ae675884c42f55000, Treee55ffa96f641345759eb3779b00de6187c8671b8, getesteterMergeb8e966a702ad60a368eedd024690f635ef1748ae. Lauf43327370275/Wallet43327370336 SUCCESS,Versuch1; Node20.20.2/22.23.4 je1392/0Fehler/0Skips. NeuePWA-Berichte inChromium/Firefox/WebKit ausdrücklichPASS. 6OriginalZIPs exaktAPI-Digest/Größe/CRC;241eindeutigeJSON/2089dekodiertePNG/877explizitePointer,0Findings/0unbekannteAdapter; Verdichter keineAutomatikfreigabe. TemporärerZuordnungsfehler mehrererZeitstempelpfade vollständig erhalten und einszueins korrigiert bei unveränderten unabhängigenErwartungen, keinTest-/Toolpatch oderCIretry. Relevante unverändertev311/PR334-Fach-/Sichtaussagen wiederverwendet; Reviews/Kommentareleer.
+
+**V154 vollständig gepinnt/restauriert:**406364160Bytes/SHA256 `0db2cab4e08f7dc95ebec54fd8a0b4ab71e6ca061e53619dc3d42883e40fb4d9`;30Manifestpfade/32Dateien exakt nachgelesen/6OriginalZIPs wiedergeöffnet/0Fehler. PR335CompanionV0/212551680Bytes/SHA256 `82433903f2f6e65708b883cd5aa978b663b6eb36aba214f94ecd4dae6ef3fc48`, gepinnt/25Pfade als neuerInkrement tatsächlichrestauriert. ExakteV153 und alleKetten erhalten; unverändertesRestoreprogramm, keinealteVollrestorewiederholung, keineoffeneprivateMutation.
+
+Mainfa705d04e338364040c60957fff9632309afefe6 bleibt DEPLOYED/PRODUCTION_FAILED, Run43315231787FAIL; keinToolingLIVE_ACCEPTED. v311App/Main8ecc49f… historischvollständigqualifiziert. Genau nächsteAktion: frischerOwner/Main/PR/Reviews/Kommentare/Actions/Sicherungsabgleich, PR335 amexaktenHEAD regulärintegrieren, Treevergleichen und EINEN neuenMainlauf samtDeploy/tatsächlicherProduktion vollständigqualifizieren; neueOriginal-/Readback-/Restoregates schließen. KeineMainretry/zweitefinaleCI. UI-R4 bleibt isoliertauf97ea17b… vorbereitet, danachgegenakzeptiertenMain abgleichen. PR332BLOCKED/CSV44pxUrsacheUNKNOWN;157/161/Queues/Originale geschützt, Flatex-Entdoppelungzurückgestellt. KeineWorkflowänderung/Automation/zweiterWriter.
+
+## Unveränderte Historie
+
 ## ACTIVE / PR335_PWA_DOCUMENT_IDENTITY_FROZEN / V153 · work-02f19cd404ef-20261112
 
 [Fehlstand und Sicherung vollständig belegt](release-evidence/pr334-main-production-failure.json): Mainfa705d04e338364040c60957fff9632309afefe6, Run43315231787 FAILURE; **kein Tooling-LIVE_ACCEPTED**. v311-Appabschluss8ecc49f… bleibt qualifiziert, Lauf/SW-Version unverändert getrennt. NeueMain-/ProduktionsFAIL-Originale und Korrekturbelege vollständig immutable gepinnt/restauriert.
