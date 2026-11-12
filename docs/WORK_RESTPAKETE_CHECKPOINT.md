@@ -1,3 +1,13 @@
+## ACTIVE / PR335_INTEGRATED_MAIN_PENDING / V154 · work-02f19cd404ef-20261112
+
+PR335 am qualifiziertenHEAD regulärintegriert. Main `a27cde2f802c26bfec41190911d88bd1d7d8e325`, Tree `e55ffa96f641345759eb3779b00de6187c8671b8` exakt qualifizierterPR-Tree; Elternfa705d04… unda7375960… erhalten. EIN neuerMainlauf `43332355188` IN_PROGRESS, keinRetry/Abbruch/zweitefinaleCI. App/SW bleibtv311, da nurPWA-Test/Dokumentation geändert. **Noch kein neuerMain-/Produktions-PASS; fehlgeschlagenerV2-Mainfa705/run43315231787 bleibtFAIL.**
+
+[PR335-Abnahme/V154 vollständig belegt](release-evidence/pr335-pwa-document-identity-qualified.json): Pflichtlauf43327370275/Wallet43327370336 SUCCESS,Node20.20.2/22.23.4 je1392/0/0, neuePWA-Fälle inallen3CI-EnginesPASS,241eindeutigeJSON/2089dekodiertePNG/877explizitePointer/0Findings/0unbekannteAdapter;keineAuto-Freigabe. V154/406364160Bytes/SHA256 `0db2cab4e08f7dc95ebec54fd8a0b4ab71e6ca061e53619dc3d42883e40fb4d9` gepinnt/30Manifestpfade/32Dateien/6ZIPs erneutfehlerfrei/0Fehler. ExakteV153 undalleOriginalketten einschließlichMain-/ProduktionsFAIL erhalten. KeineoffeneprivateMutation.
+
+Genau nächsteAktion: bestehendenMainlauf43332355188/Deploy/tatsächlicheProduktion vollständigqualifizieren, neueOriginale einmalsichern/gepinntlesen/tatsächlichinkrementellrestaurieren undRootabschluss; erst dannToolingMainmitPWA-Korrektur abnehmen. KeinebereitsgültigeidentischePrüfungwiederholen,keineErwartung ausneuenErgebnissenableiten. UI-R4 weiterhinisoliertauf97ea17b5e4bfc390e1ef6c5fc68ea4c7dde096aa vorbereitet,keinPR/finaleCI; nachakzeptiertemMain abgleichen. PR332BLOCKED/CSV44pxUrsacheUNKNOWN;157/161/historischeQueues/Originalketten geschützt. FlatexEntdoppelungzurückgestellt,keineWorkflowänderung/Automation/zweiterWriter. ZuständigkeitACTIVE.
+
+## Unveränderte Historie
+
 ## ACTIVE / PR335_MERGE_READY / V154 · work-02f19cd404ef-20261112
 
 [PR335 vollständig qualifiziert](release-evidence/pr335-pwa-document-identity-qualified.json): HEADa7375960accf2c925b4e9c1ae675884c42f55000, Treee55ffa96f641345759eb3779b00de6187c8671b8, getesteterMergeb8e966a702ad60a368eedd024690f635ef1748ae. Lauf43327370275/Wallet43327370336 SUCCESS,Versuch1; Node20.20.2/22.23.4 je1392/0Fehler/0Skips. NeuePWA-Berichte inChromium/Firefox/WebKit ausdrücklichPASS. 6OriginalZIPs exaktAPI-Digest/Größe/CRC;241eindeutigeJSON/2089dekodiertePNG/877explizitePointer,0Findings/0unbekannteAdapter; Verdichter keineAutomatikfreigabe. TemporärerZuordnungsfehler mehrererZeitstempelpfade vollständig erhalten und einszueins korrigiert bei unveränderten unabhängigenErwartungen, keinTest-/Toolpatch oderCIretry. Relevante unverändertev311/PR334-Fach-/Sichtaussagen wiederverwendet; Reviews/Kommentareleer.
