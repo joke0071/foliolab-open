@@ -1,0 +1,90 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "release": 310,
+  "owner": "work-4f3aff7885f4-20261112",
+  "main": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "tree": "b57812513269c1c62918709c323e976bb75be9f7",
+  "pullRequest": 331,
+  "mainQualification": {
+    "reused": "v310-main-work-qualified.json",
+    "unchanged": true,
+    "units": 1392,
+    "failures": 0,
+    "skips": 0,
+    "json": 241,
+    "png": 2089,
+    "resultAssertions": 563,
+    "pagesFilesExactlyMatchedGit": 154
+  },
+  "production": {
+    "run": 43177468857,
+    "attempt": 2,
+    "job": 131250361388,
+    "conclusion": "success",
+    "jobStartedAt": "2026-11-12T14:30:58Z",
+    "jobCompletedAt": "2026-11-12T15:19:00Z",
+    "artifact": {
+      "id": 13955884726,
+      "bytes": 140594871,
+      "sha256": "f44d23553a5316b576f0b1e30898e3a777fcf290035d8c5ceb6fd86a60d6a9a2",
+      "createdAt": "2026-11-12T15:18:57Z"
+    },
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "json": 181,
+    "pngDecoded": 1431,
+    "resultAssertions": 386,
+    "findings": [],
+    "assetAliasesExactlyMatchedMain": 155,
+    "ordinaryTLS": true,
+    "coreProxyCertificateException": false,
+    "visualReview": "18 navigation/installation views and 6 all-unknown/unknown-FX views directly reviewed",
+    "financialReview": "Independent inherited contract retained; finance/Decimal/UNKNOWN-FX/journal/CAS/IDB/fresh restore/offline/PWA/Axe gates PASS",
+    "helperCorrection": "Original helper retained. Root empty JSON pointer fixed. Date.now diagnostic suffix normalized as per-engine multiset only; exact report count and386 assertions retained.",
+    "storageDiagnostics": 33,
+    "otherDiagnosticContexts": 17
+  },
+  "originalFailure": {
+    "artifact": 13926440918,
+    "preservedUnchanged": true,
+    "sha256": "f3e3288a5e812c05fba4d03748f01069937b795ee166c1717afe6c37ab8a3910",
+    "cause": "UNKNOWN; later success does not explain original503 or Work429"
+  },
+  "backup": {
+    "version": 149,
+    "bytes": 405964800,
+    "sha256": "f8367bb12307d83a790ce6e32dfd40b16056d0b052a12e2f48b0382a81539a19",
+    "pinnedExactReadback": true,
+    "rootManifestFiles": 5,
+    "immutableProductionPart": {
+      "version": 0,
+      "bytes": 142182400,
+      "sha256": "f70ebb94c313756ee01e179c4638271141c7e939842639110142ce4fc7cee799",
+      "manifestFiles": 10,
+      "pinnedExactReadback": true
+    },
+    "actualIncrementalRestore": true,
+    "extractedFileReadback": 182,
+    "failures": 0,
+    "restore252Repeated": false,
+    "allHistoricalChainsPreserved": true,
+    "fullHistoricalPayloadRequiresCompanions": true,
+    "privateRestoreReceiptSaved": true
+  },
+  "limits": [
+    "Real Android/installation/Safari/TalkBack/OAuth/two-device tests remain OPEN without actual execution",
+    "No whole checkpoint branch merge",
+    "No automation or CI restart/retry triggered"
+  ],
+  "timing": {
+    "productionJobSeconds": 2882,
+    "chromiumStepSeconds": 772,
+    "crossProductionStepSeconds": 2020,
+    "activeWorkSeconds": null,
+    "workCreditCost": null
+  },
+  "next": "P-CI-B466be00 rebase/reconcile as bounded one-command move against accepted main; full reviewable candidate and mandatory checks before concrete #229 workflow merge approval."
+}

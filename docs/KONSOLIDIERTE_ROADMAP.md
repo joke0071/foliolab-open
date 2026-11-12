@@ -1,3 +1,11 @@
+## Fortschreibung · 12.11.2026 · v310 LIVE_ACCEPTED / V149
+
+[v310-Abnahme](release-evidence/v310-live-accepted.json): Übersicht, Navigation, kompakte Konten-/Depotdetails und Installationseintritt unter Mehr in Chromium/Firefox/WebKit tatsächlich produktiv qualifiziert. Main ae0778fa31f035516b6da82de4084c757c0481ed, Tree b57812513269c1c62918709c323e976bb75be9f7; bestehender Versuch2 vollständigSUCCESS,181JSON/1431PNG/386Ergebnisassertions/155exakteAssetaliasse/gewöhnlichesTLS und direkteSichtprüfung. UrsprünglicheFehleroriginale erhalten;503/429-UrsachenweiterUNKNOWN. V149geschützt/gepinntbytegleich,neuerinkrementellerRestore+DateiReadback182Manifestdateien/0Fehler;alleälterenPayloadkettenbewahrt.
+
+BegrenzterUI-Schnittabgenommen;Gesamt-K3/K5/K6 undalle41ScopesnichtpauschalDONE. RealeAndroid-/Installations-/Safari-/TalkBack-/OAuth-/Zweigerätenachweisebleibenexternoffen. AlsnächstesvorbereitetesP-CI-B466be00gegenakzeptiertenMainqualifizieren;konkreteWorkflow-Mergefreigabegemäß#229erstnachfertigemReviewkandidaten. AktuellerOwnerundgenaueGatesnurim[Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md),[Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md)unverändert.
+
+## Unveränderte historische Fortschreibungen
+
 ## Fortschreibung · 11.11.2026 · v309 LIVE_ACCEPTED / V147
 
 [v309-Abnahme](release-evidence/v309-live-accepted.json): PR330/Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89 vollständig einschließlich tatsächlicher Drei-Engine-Produktion qualifiziert. Alle Stichtage haben den vorhandenen Bearbeitungseinstieg; eindeutig manuelle Werte behalten bestätigte Datum-/Betragskorrekturen, geschützte Originale ausschließlich revisionsbewahrende Notizkorrekturen. Verzögerung lässt den Loader weiter animieren; tatsächliche Fehler stoppen ihn, Reduced Motion bleibt respektiert. Hardware-Android bleibt extern ungeprüft.
