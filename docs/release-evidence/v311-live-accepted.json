@@ -1,0 +1,83 @@
+{
+  "release": 311,
+  "status": "LIVE_ACCEPTED",
+  "owner": "work-02f19cd404ef-20261112",
+  "main": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+  "tree": "402785455ce8b2eac3dd21d799b178e5ace4a087",
+  "pr": 333,
+  "run": 43289733942,
+  "attempt": 1,
+  "liveJob": 131450179576,
+  "allRequiredJobs": "SUCCESS",
+  "priorQualification": {
+    "source": "WORK_RESTPAKETE_CHECKPOINT.md prior v311_MAIN_GATED and v311_PRODUCTION_PENDING; production companion MANIFEST.json",
+    "prHead": "e9dafc5b14ecb47733e91831bfdf74085173685c",
+    "units": 1392,
+    "unitFailures": 0,
+    "unitSkips": 0,
+    "mainOriginals": 7,
+    "mainJSON": 241,
+    "mainPNG": 2089,
+    "mainExplicitPassReports": 157,
+    "mainOriginalCompanionSha256": "8d5a594c96ba01ea89bf457cbe1180c6b009cc39fedc74b7a67b8cff09ad564d",
+    "mainCompanionBytes": 210810880,
+    "repeatedTests": false,
+    "reusedProductionVisualReview": [
+      "ui-audit-controls/{chromium,firefox,webkit}-calendar-390.png",
+      "history-followup/{chromium,firefox,webkit}-history-390.png",
+      "history-followup/chromium-history-1440.png"
+    ]
+  },
+  "production": {
+    "artifactId": 13980438514,
+    "bytes": 140640062,
+    "sha256": "ccd4af00febf29830810339f02294c2e3a001f5abfe24f5247972114ff6a8e76",
+    "zipCRC": "PASS",
+    "json": 181,
+    "pngDecoded": 1431,
+    "explicitPassFields": 287,
+    "predecessorPassedResultReports": 143,
+    "errorFields": [],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "liveReportSHA": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+    "cache": "foliolab-open-v311",
+    "proxyCertificateException": false,
+    "assetHashes": 155,
+    "scope": "Existing successful production run and exact stored original qualified; no browser suite rerun.",
+    "companion": {
+      "bytes": 140646400,
+      "sha256": "63325ddd40243aa642bdc520e572dd1311eb68ac71c5091a4a76956733fc9f98",
+      "pinnedVersion": 0,
+      "actualRestoreFiles": 2
+    }
+  },
+  "durable": {
+    "rootVersion": 151,
+    "bytes": 406210560,
+    "sha256": "f9fc3ef18d1ef09e55ad44ae408b85f307bba4cc9d9361e7ea3303f53e4a5421",
+    "pinnedByteReadback": "exact",
+    "priorRootPreserved": "complete V150 byte-identical; all inherited chains and six supplemental companion references retained",
+    "closureCompanion": {
+      "bytes": 51200,
+      "sha256": "2c70575a531f0ff22e545f57a003c7bf062e24d3afce33224c44399708ecf989",
+      "pinnedVersion": 0
+    },
+    "unchangedRestoreProgram": true,
+    "verifiedManifestPaths": 8,
+    "actualIncrementalRestoreReadbackFiles": 10,
+    "finalRestoreFailures": 0,
+    "stagingFailure": "First invocation lacked staged closure companion and failed before extraction; exact pinned companion staged, unchanged program then passed.",
+    "priorFullRestoreRepeated": false,
+    "rootAloneIsFullPayloadSet": false
+  },
+  "limits": [
+    "PR332 remains BLOCKED; original CSV>=44px failure cause UNKNOWN.",
+    "Historical queues43095194276/43095194257 and PR157/161 unchanged.",
+    "Native Android/Safari/TalkBack/OAuth/two-device and independent original anchors remain external.",
+    "No new candidate, tests, retry, workflow, product or deployment mutation for this closure."
+  ]
+}
