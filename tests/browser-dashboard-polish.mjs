@@ -70,7 +70,8 @@ try {
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="history"]').click();
  assert.match(await page.locator('#pageTitle').innerText(),/Vermögensentwicklung/);
- await page.locator('#historyCalendarDisclosure>summary').click();
+ await page.locator('#chartPeriods .period-more>summary').click();
+ await page.locator('#chartPeriods [data-open-history-calendar]').click();
  assert.ok(await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').count());
  await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').click();
  await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-21"]').click();
