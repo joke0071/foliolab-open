@@ -1,3 +1,11 @@
+## ACTIVE / PR333_CORRECTION · work-59e2072e4b9a-20261112
+
+Alleinige HND01-Zuständigkeit nach ausdrücklichem Nutzerauftrag übernommen; Vorgänger STOPPED/HANDOVER_READY. Frischer Pluginabgleich: Main ae0778fa31f035516b6da82de4084c757c0481ed, Checkpoint 6d19cc71151471c6d80c9a1975fd349050c97ef2, PR333 72dd15cfa2913a86336a1c303207ecffae6ad861; offene PR333/332/161/157 und Kommentare/PR333-Reviews geprüft. Keine neue konkurrierende CI; historische Queues unangetastet. Rootmetadaten V150/406005760 Bytes bestätigt, private Schreib-/Restorefähigkeit noch ungeprüft. Keine Automation/zweiter Writer.
+
+Original Run43270995239 Versuch1 FAILURE erhalten. Test verwendet nach Refactoring undefiniertes toggle; zusätzlicher kurzer mobiler Test öffnet verstecktes Summary. Nächste Aktion: beide Zugänge ohne Assertionslockerung korrigieren und gezielte Kalender-/Fokus-/Geometrieproben vor Kandidatenfreeze. PR332 BLOCKED, CSV44px Pflicht bleibt. Kein Merge/Deployment/LIVE_ACCEPTED behauptet; v310 bleibt akzeptiert. K4-10000 und ältere Restores nicht wiederholen.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY · work-6cd3cd3dad56-20261112 · K3/K4 Abschlusszuordnung + neuer lokaler K4-Restorebeleg
 
 - **Konkreter Abschluss:** [bestehende Einstellungs-Taskkarte](K3_SETTINGS_REPLACEMENT_2026-11-11.md) nachgeführt: korrigierterPR329/v308-Reset-/Dateirestoreablauf bereits vollständig angenommen, kein neuerCodeerforderlich. NeunAppabschnitte/elfganzeKern-/Testmodule bis aktuellemMainbytegleich; ursprünglicheKriterien einzelnmitPR/Main/Produktion/V144/Restorezugeordnet. Nur begrenzterlokalerAblaufDONE; interneDrive-Callbackprüfungbelegt, echteOAuth-/Gerätegrenzenoffen. KanonischeK3/K4-Zeilen trennenImplementierung/interneAbnahme/externeNachweise, GesamtstatusweiterPARTIAL.
