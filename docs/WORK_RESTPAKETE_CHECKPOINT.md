@@ -1,3 +1,12 @@
+## ACTIVE · main-5c187e36faa9-20261111 · PR331 Integration freigeprüft
+
+- Main `0b8c6de007fff4d16ee930aa852354e4d52d513f` / v309 LIVE_ACCEPTED; PR331 HEAD `9bd5d951f53bf2b5e6084c21362f71f0529059d5` / Tree `b57812513269c1c62918709c323e976bb75be9f7` unverändert. PR43167251956 und Wallet43167251852 vollständig SUCCESS. Frische PR-/Main-/Kommentar-/Review-/Actions-/Privatprüfung ohne Konkurrenz; PR mergeable/clean.
+- [PR-Original-, Fach-, Sicht-, Sicherungs- und Restoreabnahme](release-evidence/v310-pr331-qualified-restored.json): sechs ZIPs/241JSON/2089PNG,1392Units/0Fehler/0Skips,563Ergebnisassertions/0Findings,50 separat geprüfte Diagnosekontexte. Alle drei unveränderlichen PR-Originalteile Version0 gepinnt rückgelesen.
+- **V148 tatsächlich abgeschlossen:** expected_current_version=147 eingehalten;405923840Bytes/SHA256`930ea3df0d91b80439166bb0e3c2754bdfb2b2879b15ff52d948dff29757d89c`, exakteVersion148 gepinnt bytegleich; tatsächliche inkrementelle Extraktion und anschließender Datei-Readback252Manifestpfade/0Fehler. Alle älteren Original-/Companion-/Oracle-/Korrekturketten erhalten. Keine offene private Operation.
+- Genau nächste Aktion: PR331 am erwartetenHEAD integrieren, resultierendenMain/Tree und regulärenMainlauf eindeutig binden. Danach vollständigeMain-/Deployment-/tatsächlicheDreiEngine-Produktion und Abschlussbackup separat. Kein v310 LIVE_ACCEPTED aus PR-Gates; Hardwaregrenzen unverändert. Keine weitereRecovery/Automation/Checkpoint-Gesamtintegration.
+
+## Unveränderte Historie
+
 ## ACTIVE · main-5c187e36faa9-20261111 · autorisierte Wiederaufnahme nach Cloud-Zugriffsprüfung
 
 - Jochen hat am 12.11.2026 ausdrücklich die alleinige Wiederübernahme hier bestätigt. Codex Cloud hat laut Nutzerbericht keinen Owner übernommen und keine Projektmutation ausgeführt; vollständiger Library-Versionszugriff fehlt dort. Die reguläre Abgabe bleibt als Historie erhalten; kein paralleler Hauptagent und keine reaktivierte Automation.
