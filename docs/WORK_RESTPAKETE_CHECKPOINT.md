@@ -1,3 +1,12 @@
+## ACTIVE / SCOPE_RECONCILIATION · work-6cd3cd3dad56-20261112 · K3/K4 Einstellungen
+
+- **Übernahme:** Vorgänger work-2b419e9c7372-20261112 ist STOPPED/HANDOVER_READY. Frisch geprüft: Checkpoint3c06c1852b2f668800997fba3a69133d36f55646,304Heads, Mainae0778fa31f035516b6da82de4084c757c0481ed; offenePR332/161/157, Reviews/Kommentare und Actions gelesen. PR332/HEAD71dfb05d und Diagnose00968bc5 unverändert; ursprünglicherRun43256977609/Versuch1FAIL, historischeQueues43095194276/43095194257 unangetastet. Kein konkurrierender neuer Produktwriter belegt. Rootmetadaten frischV150/406005760Bytes; keine private Mutation. Private Schreib-/Restorefähigkeit in dieser Sitzung ungeprüft, keine technische Vollübernahmebehauptung.
+- **Konkreter Ablauf:** bestehende Taskkarte [K3/K4 Einstellungen nach Reset/Restore](K3_SETTINGS_REPLACEMENT_2026-11-11.md). Implementierung und korrigierter v308-Release sind bereits belegt; Taskkarte und K3/K4-Zeilen spiegeln den begrenzten Abschluss noch nicht vollständig. Genau offene Arbeit: Zuordnung der vorhandenen Kriterien zu PR-/Main-/Produktions-/Sicherungsbelegen und Prüfung der relevanten Identität bis aktuellemMain. Keine neue Gesamtinventur, kein künstlicher Produktpatch/Versionsbump/CI-Lauf.
+- **Grenzen:** CI-B gesichertgeparkt/BLOCKED; CSV>=44px-Befund fürbetroffeneFolgekandidaten offen, UrsacheUNKNOWN. Keine neueGeometrieprobe/Retry/Gatelockerung/Workflowänderung/Automation. v310LIVE_ACCEPTED, V149/V150 undRestore252 nichtwiederholen. AlleOriginal-/Companionkettenbewahren; CheckpointbranchniemalsgesamtMainmergen. EchteAndroid-/Installation-/Safari-/TalkBack-/OAuth-/Zweigerätebelegebleibenextern.
+- **Genau nächste Aktion:** relevanten v308→v310-Quell-/Test-/Workflowimpact konkret abgleichen, vorhandene Taskkarte/kanonischeK3/K4-Zeilen mit Implementierung/internerAbnahme/externenNachweisen fortschreiben; nur tatsächlich belegtenTeilumfang schließen. Nochkeine neueAbnahmebehauptung.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY · work-2b419e9c7372-20261112 · PR332 BLOCKED / exakte lokale Beobachtung PASS
 
 - **Aktueller Stand:** v310 LIVE_ACCEPTED unverändert, Main ae0778fa31f035516b6da82de4084c757c0481ed. PR332/HEAD71dfb05d5dae6a7e5d7c3979120462e0862fe7e2 und Diagnosebranch00968bc55c2ca910eb27038cbd9a0e4052ba4b17 unverändert; Original43256977609/Versuch1 bleibtFAIL. Keine neue CI/Retry/Merge/Deployment/Automation. FreshRef-/PR-/Kommentar-/Review-/Actionsabgleich ohne konkurrierende Mutation. Keine offene private Mutation.
