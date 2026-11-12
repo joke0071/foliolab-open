@@ -1,0 +1,24 @@
+{
+  "status": "DIAGNOSTIC_PREPARED_NOT_EXECUTED_IN_CI",
+  "candidatePR": 332,
+  "candidateHead": "71dfb05d5dae6a7e5d7c3979120462e0862fe7e2",
+  "failedJob": 131317838339,
+  "failedRun": 43256977609,
+  "failedArtifact": 13963370574,
+  "artifactSha256": "cdc61e8fc9681f8f2ad2e52705105c1fd19e52bb16ff96f86e66508a575580e8",
+  "failure": "browser-navigation-installation.mjs:101 CSV action rectangle height>=44 false at430;320 and390 screenshot originals present",
+  "cause": "UNKNOWN; original predicate did not record the rectangle",
+  "localProbes": {
+    "geometryOnly": "PASS, all five widths, two buttons exactly44px",
+    "wholeInstrumentedNavigation": "PASS with axe4.10.3 and Chromium141 existing shell",
+    "limitations": "Local Node24/Playwright1.62.1 controller differs from CI Node22/Playwright1.56.1; instrumentation can alter timing; no original cause established",
+    "systemChrome": "blocked by Unix process singleton socket EPERM; existing headless shell starts"
+  },
+  "preparation": "Capture same rect before exact>=44 return only on failure; dump computed styles/ancestor visibility/open rectangles and screenshot after assertion failure. No wait, retry, new timeout, threshold, product or workflow change.",
+  "newCITriggered": false,
+  "workflowMergeApproval": false,
+  "diagnosticCommit": "00968bc55c2ca910eb27038cbd9a0e4052ba4b17",
+  "cross2Status": "IN_PROGRESS",
+  "rootVersion": 149,
+  "originalBackupCompletion": "PENDING"
+}
