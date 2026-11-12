@@ -1,0 +1,26 @@
+{
+  "status": "LOCAL_CANDIDATE_ONLY",
+  "sourcePreparation": "466be00d49d3a5308cb28075dd7572e4d0ce596b",
+  "base": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "baseTree": "b57812513269c1c62918709c323e976bb75be9f7",
+  "baselineRun": 43177468857,
+  "baselineAttempt": 1,
+  "baselineJobSeconds": {
+    "test": 1007,
+    "cross1": 507,
+    "cross2": 530,
+    "cross3": 1437
+  },
+  "localContractTests": 28,
+  "failures": 0,
+  "skips": 0,
+  "workflowChange": "one unchanged two-engine UI-quality command Cross3->end-of-Cross2",
+  "allOtherWorkflowBytesIdentical": true,
+  "historicalManifestsAndSealedHashesUnchanged": true,
+  "productRuntimeChanged": false,
+  "requiresConcreteWorkflowMergeApproval": true,
+  "releaseAccepted": false,
+  "measuredSavings": null,
+  "workCredits": null,
+  "qualificationPlan": "One required regular PR and, after exact approval, required Main as after observations. All original artifacts/engine union/direct views/immutable backup/pinned readback/restore mandatory."
+}
