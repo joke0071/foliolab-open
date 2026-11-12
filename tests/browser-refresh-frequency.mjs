@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+import {observeLiveStartup} from './live-startup-diagnostics.mjs';
 const base=process.env.ETF_SOURCE_BASE||'http://127.0.0.1:4173/';
 const origin=new URL(base).protocol==='https:'?new URL(base).origin:'https://frequency.example.test';
 const stateKey='foliolab-open-auto-refresh-v2',results=[];
@@ -49,7 +50,9 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   await page.reload();await ready(page);
  };
  const settled=async success=>{await page.waitForFunction(({key,success})=>{const s=JSON.parse(localStorage.getItem(key));return !!s&&(success?s.lastSuccessAt!==null:s.failures>0)&&!document.getElementById('refreshAll').disabled;},{key:stateKey,success},{timeout:45000});};
+ let startupCapture=null;
  try{
+  startupCapture=await observeLiveStartup(page,base);
   await page.goto(origin+'/');await ready(page);
   // Real old IDB records: normalization must not create a revision or rewrite bytes.
   for(const [legacy,want] of [[false,'off'],[true,'daily'],[null,'daily']]){
@@ -130,6 +133,12 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   assert.deepEqual(errors,[]);results.push({engine,result:'PASS',legacyReadOnly:true,frequencies:4,widths:[320,360,390,412,430,768,1440],axe:true,quota:true,multitab:true,partialNoRepeat:true,stalePreferenceNonmutation:true,walletWithAndWithoutQuote:true,offlineDenialNetworkSaveFailure:true,textScale200:true});
   writeFileSync('artifacts/gates/refresh-frequency/'+engine+'.json',JSON.stringify(results.at(-1),null,2));
   console.log('K2 '+engine+' assertions PASS');
+ }catch(error){
+  const failure={engine,result:'FAIL',scope:'Refresh-frequency failure diagnostics only; all original assertions and deadlines retained',error:String(error)};
+  if(startupCapture)try{failure.startupDiagnostics=await startupCapture();}catch(captureError){failure.diagnosticError=String(captureError);}
+  writeFileSync('artifacts/gates/refresh-frequency/'+engine+'-failure.json',JSON.stringify(failure,null,2));
+  await page.screenshot({path:'artifacts/gates/refresh-frequency/'+engine+'-failure.png',timeout:5000}).catch(()=>{});
+  throw error;
  }finally{await context.unrouteAll({behavior:'ignoreErrors'});await context.close();await browser.close();}
 }
 mkdirSync('artifacts/gates/refresh-frequency',{recursive:true});writeFileSync('artifacts/gates/refresh-frequency/report.json',JSON.stringify({base,synthetic:true,results},null,2));
