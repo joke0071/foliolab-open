@@ -1,0 +1,88 @@
+{
+  "status": "PRODUCTION_FAIL_ORIGINALS_DURABLY_PRESERVED_NO_RELEASE_APPROVAL",
+  "owner": "work-02f19cd404ef-20261112",
+  "main": "fa705d04e338364040c60957fff9632309afefe6",
+  "tree": "755c06fbe451d62d3775c73f766afc141b9acbdf",
+  "run": 43315231787,
+  "attempt": 1,
+  "liveJob": 131535864525,
+  "conclusion": "failure",
+  "appSWVersion": 311,
+  "priorAcceptedAppMain": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+  "mainJobsAndDeploy": "SUCCESS",
+  "productionChromium": "SUCCESS",
+  "productionCross": "FAILURE",
+  "failure": {
+    "engine": "webkit",
+    "file": "tests/pwa-update-draft-browser-contract.mjs",
+    "line": 23,
+    "actualTimeOrigin": 1794524427356,
+    "expectedTimeOrigin": 1794524427355,
+    "draftAssertionImmediatelyBefore": "passed",
+    "cause": "Not proven; historical WebKit timeOrigin drift is matching hypothesis",
+    "reference": "https://bugs.webkit.org/show_bug.cgi?id=258572"
+  },
+  "productionOriginal": {
+    "artifact": 13991613817,
+    "bytes": 132532430,
+    "sha256": "7bc2bf8d14bcd93f0418f58526e89b24b9513e1f8696797545596be2ae68500c",
+    "digestSizeCRC": "exact",
+    "jsonInventory": 170,
+    "pngDecoded": 1346,
+    "unqualifiedMissingExpectedJSON": 11,
+    "unqualifiedMissingExpectedPNG": 85,
+    "liveAssetHashesMatchQualifiedV311": 155,
+    "cache": "foliolab-open-v311",
+    "proxyCertificateException": false
+  },
+  "durable": {
+    "rootVersion": 153,
+    "bytes": 406312960,
+    "sha256": "64356ac2db8170a299ceb8cd3ec948fcc345cc7ea8e90269fd23a90cfc41b57f",
+    "pinnedByteReadback": "exact",
+    "restoreProgram": "unchanged",
+    "verifiedManifestPaths": 21,
+    "extractedReadbackFiles": 23,
+    "failures": 0,
+    "completePriorV152Preserved": true,
+    "priorFullRestoreRepeated": false,
+    "rootAloneCompletePayloadSet": false,
+    "mainCompanion": {
+      "bytes": 211118080,
+      "sha256": "5dff950332f91d4da786d18d356ceaffb6a9555201e7a6b4524b36eaf379db76",
+      "version": 0,
+      "actualRestorePaths": 16
+    },
+    "productionFailCompanion": {
+      "bytes": 133027840,
+      "sha256": "21514c31de7f914e9a663035c4175246c85dbb434d4dca9ef5255eda79d55bb1",
+      "version": 0,
+      "actualRestorePaths": 7
+    },
+    "correctivePreparationCompanion": {
+      "bytes": 61440,
+      "sha256": "a0a7cf13987a3f44a59aeffbff4d0af46c3f7bdc6e96269e3f2bb38d83876956",
+      "version": 0,
+      "actualRestorePaths": 16
+    },
+    "initialUpload": "First process session ended without receipt; fresh canonical metadata still152; protected expected152 reconciliation committed exactly153."
+  },
+  "correctiveCandidate": {
+    "pr": 335,
+    "head": "a7375960accf2c925b4e9c1ae675884c42f55000",
+    "tree": "e55ffa96f641345759eb3779b00de6187c8671b8",
+    "testedMerge": "b8e966a702ad60a368eedd024690f635ef1748ae",
+    "run": 43327370275,
+    "walletRun": 43327370336,
+    "status": "FROZEN_QUALIFICATION_PENDING",
+    "changedFiles": 2,
+    "local": "V2 static scoped PASS, targeted shared PWA contract Chromium/Firefox PASS; WebKit locally blocked, no CI/production acceptance"
+  },
+  "releaseApproval": false,
+  "limits": [
+    "PR332 BLOCKED; original CSV44px cause UNKNOWN",
+    "PR157/161 and all originals/queues preserved",
+    "UI-R4 only isolated preparation97ea17b; no PR/final CI",
+    "No workflow change, Automation, second writer or unchanged retry"
+  ]
+}

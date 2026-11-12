@@ -1,3 +1,15 @@
+## ACTIVE / PR335_PWA_DOCUMENT_IDENTITY_FROZEN / V153 · work-02f19cd404ef-20261112
+
+[Fehlstand und Sicherung vollständig belegt](release-evidence/pr334-main-production-failure.json): Mainfa705d04e338364040c60957fff9632309afefe6, Run43315231787 FAILURE; **kein Tooling-LIVE_ACCEPTED**. v311-Appabschluss8ecc49f… bleibt qualifiziert, Lauf/SW-Version unverändert getrennt. NeueMain-/ProduktionsFAIL-Originale und Korrekturbelege vollständig immutable gepinnt/restauriert.
+
+**RootV153 vollständig gepinnt bytegleich und tatsächlich inkrementell restauriert:**406312960Bytes/SHA256 `64356ac2db8170a299ceb8cd3ec948fcc345cc7ea8e90269fd23a90cfc41b57f`;21Manifestpfade/23extrahierteDateien nachgelesen/0Fehler. ExakteV152 und alle Altketten erhalten; neueMain-/FAIL-/UI-R4-Kurzcompanions verknüpft. UnverändertesRestoreprogramm, keine alteVollrestorewiederholung; Rootallein unvollständigerPayloadsatz. ErsterUploadprozess ohneReceipt verloren/Version152 unverändert, geschützter erwarteter152-Abgleich schrieb genau153. Keine offene privateMutation.
+
+[PR335](https://github.com/joke0071/foliolab-open/pull/335) EINZIGER eingefrorenerKandidat: Branch fix/pwa-document-identity-02f19cd404ef, HEAD `a7375960accf2c925b4e9c1ae675884c42f55000`, Tree `e55ffa96f641345759eb3779b00de6187c8671b8`, getesteterMerge `b8e966a702ad60a368eedd024690f635ef1748ae`. Genau bestehenderPWA-Test+Prüfvertrag, keineApp/SW/Workflow/Rootpackageänderung. Pflichtlauf43327370275 undWallet43327370336 gestartet, noch keinPR-/Release-PASS. VorFreeze V2-Vorprüfer/geänderterVertrag inChromium/Firefox gezieltPASS; beideGitblobs exakt lokaleBytes. Direkte strikteDocumentidentität/positiveReloadkontrollen statt Millisekundenstellvertreter; übrigeAssertions unverändert. WebKit lokal vorStart BLOCKED; Ursache desOriginallaufs bleibt passendeDrifthypothese, nichtbewiesen. Vorbereitungscompanion V0/61440Bytes/SHA256a0a7cf13987a3f44a59aeffbff4d0af46c3f7bdc6e96269e3f2bb38d83876956 gepinnt/16Pfade überV153 tatsächlichrestauriert.
+
+Genau nächste Aktion: diese bestehendenPR335-Läufe/Originale und Reviews/Kommentare vollständig qualifizieren, neueOriginale sichern/gepinntlesen/restaurieren und erforderlichenRootabschluss; nurdanach Integration amexaktenHEAD, neuerMain/Deploy/tatsächlicheProduktion. KeinenunverändertenMainretry oderzweitefinaleCI. UI-R4 bleibt EIN isolierterFolgeschnitt auf97ea17b5e4bfc390e1ef6c5fc68ea4c7dde096aa vorbereitet, erstnachakzeptierterKorrektur abgleichen. PR332 BLOCKED/CSV44px-UrsacheUNKNOWN;157/161/historischeQueues/Originalketten geschützt; Flatex-Entdoppelungzurückgestellt. KeineAutomation/zweiterWriter/Workflowänderung. Zuständigkeit ACTIVE.
+
+## Unveränderte Historie
+
 ## ACTIVE / V2_MAIN_PRODUCTION_FAIL / PWA_IDENTITY_FIX_PREPARED · work-02f19cd404ef-20261112
 
 Main `fa705d04e338364040c60957fff9632309afefe6`, Run43315231787/Versuch1 inzwischen COMPLETED/FAILURE. Main-Tests/Cross1–3/Deploy und Produktions-Chromium SUCCESS; Livejob131535864525 Cross-Produktionsschritt FAIL. **Kein Tooling-Main-LIVE_ACCEPTED, kein Retry.** App-/SW311 und zuvor vollständig qualifizierter v311-Stand8ecc49f… bleiben getrennt ausgewiesen.
