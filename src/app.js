@@ -2411,8 +2411,22 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
    feedback.scrollIntoView({block:'nearest'});
   }
   finally{editorSubmitting=false;button.disabled=Boolean(loadFailure||editor?.submitBlocked);}
- });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){if(b.dataset.filter==='__review'){openQualityReview();return;}filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;qualityReviewLimit=50;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;qualityReviewLimit=50;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
- $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
+ });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){if(b.dataset.filter==='__review'){openQualityReview();return;}filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;qualityReviewLimit=50;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;qualityReviewLimit=50;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{
+  const calendar=e.target.closest('[data-open-history-calendar]');
+  if(calendar){
+   const popup=$('historyCalendarDisclosure');popup.open=!popup.open;
+   if(popup.open){renderSnapshotCalendar();$('historyCalendarPrev').focus({preventScroll:true});}
+   return;
+  }
+  const b=e.target.closest('[data-range]');
+  if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}
+ });
+ $('historyCalendarDisclosure').addEventListener('toggle',()=>{
+  const opened=$('historyCalendarDisclosure').open;
+  const trigger=$('chartPeriods').querySelector('[data-open-history-calendar]');
+  if(trigger)trigger.setAttribute('aria-expanded',String(opened));
+  if(opened)renderSnapshotCalendar();
+ });
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
  $('historyCalendarReset').addEventListener('click',()=>{calendarSelection=[];range='all';$('historyCalendarDisclosure').open=false;renderHistory();});
@@ -2423,8 +2437,8 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   else{calendarSelection=[calendarSelection[0],day].sort();range='calendar';$('historyCalendarDisclosure').open=false;}
   renderHistory();
  });
- document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!e.composedPath().includes(popup))popup.open=false;});
- document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;popup.querySelector('summary')?.focus();}});
+ document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!e.composedPath().includes(popup)&&!e.target.closest('[data-open-history-calendar]'))popup.open=false;});
+ document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;const desktop=popup.querySelector('summary');const mobile=$('chartPeriods').querySelector('.period-more>summary');(desktop?.getClientRects().length?desktop:mobile)?.focus();}});
 
   $('exportBackup').addEventListener('click',()=>{try{downloadBackup();}catch(error){notify(String(error.message||error),true);}});$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);
   $('backupChangeToggle').addEventListener('click',async()=>{

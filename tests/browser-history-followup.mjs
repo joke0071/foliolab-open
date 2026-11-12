@@ -27,9 +27,12 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.match(await p.locator('#snapshotManager>summary').innerText(),/Historische Referenzwerte/);
   assert.deepEqual(await p.locator('#historyBasis option').evaluateAll(es=>es.map(e=>[e.value,e.textContent])),[['auto','Automatisch – belegte Quellen'],['observed','Erfasste Stichtage'],['partial','Rekonstruierte Positionen']]);
   assert.equal(await p.locator('#historyBasis').inputValue(),'auto');
-  assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
+  const historyPeriods=['7 T','1 M','3 M','6 M','1 J','3 J','5 J'];
+  const expectedPeriods=width=>[...historyPeriods,...(width<=720?['Kalender']:[]),'Max'];
+  assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(390));
   for(const width of [320,390,768,1024,1440]){
    await p.setViewportSize({width,height:900});await nav('history');
+   assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(width),'history presets and mobile calendar at '+width);
    assert.ok(await p.locator('#historyBasis').isVisible());
    const control=await p.locator('.history-basis').evaluate(e=>{const r=e.getBoundingClientRect(),s=e.querySelector('select').getBoundingClientRect();return {width:r.width,height:r.height,selectHeight:s.height,right:r.right};});
    assert.ok(control.width<=331&&control.height<=(width<=360?70:60)&&control.selectHeight>=44&&control.right<=width,'compact accessible source control '+JSON.stringify(control));

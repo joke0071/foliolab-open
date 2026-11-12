@@ -76,8 +76,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
       const periods=await geometry('#chartPeriods button');
       assert.equal(periods.length,width>=721?8:width<=374?5:6,'visible presets; remaining ones sit in "Mehr" on phones');
       assert.equal(new Set(periods.map(b=>b.top)).size,1,'compact single-row presets');
-      const toggle=p.locator('#historyCalendarDisclosure>summary');await toggle.click();
-      await geometry('#historyCalendarDisclosure>summary');await geometry('#historyCalendarPanel button');
+      const focusTarget=p.locator(width<=720?'#chartPeriods .period-more>summary':'#historyCalendarDisclosure>summary');
+      if(width<=720){
+       await focusTarget.click();
+       await geometry('#chartPeriods [data-open-history-calendar]');
+       await p.locator('#chartPeriods [data-open-history-calendar]').click();
+      }else{
+       await p.locator('#historyCalendarDisclosure>summary').click();
+       await geometry('#historyCalendarDisclosure>summary');
+      }
+      await geometry('#historyCalendarPanel button');
       assert.ok(await p.locator('#historyCalendarPanel').evaluate(e=>{const r=e.getBoundingClientRect();return e.scrollWidth<=e.clientWidth&&r.left>=0&&r.right<=innerWidth;}),'bounded seven-day calendar');
       const contrast=await p.locator('.history-calendar-weekdays,#historyCalendarHint').evaluateAll(es=>es.map(e=>{
        const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number),lum=c=>c.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
@@ -86,17 +94,21 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
       }));assert.ok(contrast.every(r=>r>=4.5),'actual small calendar text contrast '+contrast);
       const month=await p.locator('#historyCalendarMonth').innerText();await p.locator('#historyCalendarPrev').click();assert.notEqual(await p.locator('#historyCalendarMonth').innerText(),month);
       await scan('open calendar '+width);await p.screenshot({path:out+'/'+engine+'-calendar-'+width+'.png'});
-      await p.keyboard.press('Escape');assert.ok(await toggle.evaluate(e=>document.activeElement===e));
+      await p.keyboard.press('Escape');assert.ok(await focusTarget.evaluate(e=>document.activeElement===e),'Escape returns focus to the visible calendar entry at '+width);
      }
     }
    }
    assert.deepEqual(await record(),before,'navigation,focus,calendar and labels preserve exact record/settings/revision');
   }
-  await p.setViewportSize({width:320,height:360});await nav('history');await p.locator('#historyCalendarDisclosure>summary').click();
+  await p.setViewportSize({width:320,height:360});await nav('history');
+  const shortMore=p.locator('#chartPeriods .period-more>summary');await shortMore.click();
+  const shortCalendar=p.locator('#chartPeriods [data-open-history-calendar]');await geometry('#chartPeriods [data-open-history-calendar]');await shortCalendar.click();
+  assert.equal(await p.locator('#historyCalendarDisclosure').getAttribute('open'),'','short mobile calendar opens from More');
   await p.locator('#historyCalendarPanel').evaluate(root=>{for(const [e,size]of [...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]))e.style.fontSize=size*1.5+'px';});
   await geometry('#historyCalendarPanel button');await p.locator('#historyCalendarReset').focus();await p.locator('#historyCalendarReset').scrollIntoViewIfNeeded();
   assert.ok(await p.locator('#historyCalendarReset').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),'short enlarged-text reset remains reachable');
-  await scan('320x360 synthetic150percent calendar text');await p.keyboard.press('Escape');assert.deepEqual(errors,[]);
+  await scan('320x360 synthetic150percent calendar text');await p.keyboard.press('Escape');
+  assert.ok(await shortMore.evaluate(e=>document.activeElement===e),'short enlarged calendar Escape returns to More');assert.deepEqual(errors,[]);
   report.engines.push({engine,result:'PASS',scans,checks:['50empty/filled views','real44px nonoverlapping scoped controls','seven-day320px calendar','balanced4+4 wealth presets','calendar4.5contrast','exact accessible donor amount and visible SVG focus','short height/enlarged text/reset/Escape focus','exact IndexedDB nonmutation']});
   console.log(engine+': UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS');
  }finally{await browser.close();}

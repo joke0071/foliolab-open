@@ -2137,3 +2137,12 @@
  .dashboard-providers .provider-account-head>div{flex:1 1 100%}
  #dashboardPage .dashboard-providers .aggregate-account-value{max-width:100%;margin-right:auto}
 }
+
+/* Mobile history: the calendar lives in the period "Mehr" menu, not as a separate icon. */
+@media(max-width:720px){
+ #historyPage .history-calendar-popover>summary{display:none!important}
+ #historyPage .history-actions{flex:0 0 0;width:0;min-width:0;gap:0}
+ #historyPage .history-chart-period .period-more-list [data-open-history-calendar]{
+  min-width:90px;min-height:44px;white-space:nowrap
+ }
+}

@@ -14,6 +14,7 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  for(const range of ['month','quarter','year','all']) assert.match(generated,new RegExp('data-range="'+range+'"'));
  assert.match(app,/renderChartPeriodButtons\('wealth','data-range',range\)/);
  assert.match(html,/id="historyCalendarDisclosure"/);
+ assert.match(app,/data-open-history-calendar/);
  assert.match(html,/id="historyCalendarGrid"/);
  assert.match(html,/id="addSnapshot" aria-label="Stichtag hinzufügen"/);
  assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary><span class="history-disclosure-title">[\s\S]*?Historische Referenzwerte<\/span><\/summary>/);
