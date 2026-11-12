@@ -1,3 +1,13 @@
+## ACTIVE · main-5c187e36faa9-20261111 · PR331 integriert / Main-Prüfung läuft
+
+- **Main:** `ae0778fa31f035516b6da82de4084c757c0481ed`, Tree `b57812513269c1c62918709c323e976bb75be9f7` exakt gleich qualifiziertem PR331-Tree; Eltern0b8c6de0+9bd5d951. PR331 mit expectedHEAD regulär gemergt; kein Checkpoint-Gesamtmerge.
+- **Regulärer Lauf:** [43177468857](https://github.com/joke0071/foliolab-open/actions/runs/43177468857) seit12.11.07:44:21UTC IN_PROGRESS, exakterMainSHA. Noch kein Main-/Deployment-/Produktionspass. v309 bleibt letzter LIVE_ACCEPTED-Release.
+- **Vor Integration abgeschlossen:** [PR331-Qualifikation/V148/Restore](release-evidence/v310-pr331-qualified-restored.json). Alle3unveränderlichenPR-Teile gepinnt; RootV148405923840Bytes/SHA256930ea3df0d91b80439166bb0e3c2754bdfb2b2879b15ff52d948dff29757d89c; tatsächlicher Restore/Datei-Readback252Manifestpfade/0Fehler. Keine offene private Operation.
+- **Genau nächste Aktion:** bestehende volleMain-CI auswerten, fertigeOriginale einmal identitätsgebunden vorprüfen. DanachDeployment und tatsächlicheDreiEngine-Produktion separat vollständigqualifizieren; abschließendeimmutableOriginalsicherung/gepinnterReadback/RootV149geschützt/erforderlicherRestore vorv310LIVE_ACCEPTED. AktuelleSollinventare154Site-Dateien/155Assetaliasse;Main7Archive241JSON2089PNG,Produktion1Archiv181JSON1431PNG. Keine Doppelstarts/Automation/Teil-PASS. AlteQueueunangetastet.
+- **Zuständigkeit:** alleinigerOwner nachausdrücklichautorisiertemRückwechsel;Cloudhatnichtübernommen. HardwareAndroid/Installation/Safari/TalkBack/OAuth/Zweigeräte/Syncoffen. CI-Bdanachgemäßkonkreter#229-Grenze;Wochenplanerhalten.
+
+## Unveränderte Historie
+
 ## ACTIVE · main-5c187e36faa9-20261111 · PR331 Integration freigeprüft
 
 - Main `0b8c6de007fff4d16ee930aa852354e4d52d513f` / v309 LIVE_ACCEPTED; PR331 HEAD `9bd5d951f53bf2b5e6084c21362f71f0529059d5` / Tree `b57812513269c1c62918709c323e976bb75be9f7` unverändert. PR43167251956 und Wallet43167251852 vollständig SUCCESS. Frische PR-/Main-/Kommentar-/Review-/Actions-/Privatprüfung ohne Konkurrenz; PR mergeable/clean.
