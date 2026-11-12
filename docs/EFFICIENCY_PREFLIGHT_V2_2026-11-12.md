@@ -1,0 +1,11 @@
+# Begrenzter statischer Testvorprüfer V2
+
+Übernahme des fertigen Pakets aus PR332-Kommentaren6834807451 und6835132436 nach vollständig abgeschlossenem v311. Basis Main8ecc49f91c2c193e9391ef6f15460e6a40eb10c2. Genau ein Anwendungsweg: V1 plus V2-Delta. V1 SHA256f1bfeebd33b9bf93367e804965e6324b2fcefece3981bec7d1d7da13251065a0; Delta SHA256cd6e5b1c00e722d1dcf967f5557139d1de42851f8de6c278defda5669ea97a4f. Aus den resultierenden Dateien rekonstruierter Vollpatch22897Bytes/SHA256d4d946a4640a81f2ddd75403a49bf09c3ceecd11df13c96a9b4b2c838ce5c9be exakt; Vollpatch nicht zusätzlich angewandt.
+
+Lokale tatsächliche Qualifikation: Node24.22.1,TypeScript5.8.3 lokal ausschließlich unter tools/preflight installiert,48Tests/48PASS/0FAIL/0SKIP. Frühversuch vor Abschluss der Compilerinstallation:24HygieneprüfungenPASS,Compiler-TestsBLOCKED; erst nach abgeschlossener Installation vollständiger48erLaufPASS. Kein Produktbefund daraus. Nodeabweichung zu CI22 sichtbar; keine22-Kompatibilität daraus behauptet.
+
+V2 umfasst regulär→Symlink BLOCKED/Exit2 statt NOT_APPLICABLE und Symlink→regulär geprüft. Syntax-/Namensprüfung ist keine Importauflösung, Typ-/Realm-/Browser-/A11y-/Finanz-/Releaseabnahme. Bestehende gezielte Browserfälle bleiben bei tatsächlich geändertem Verhalten Pflicht. Keine App-/Browserbedienung in diesem Paket verändert; kein künstlicher neuer Browserfall. Bei Änderungen des Werkzeugs Selbsttests ausführen; geänderte.mjs-Testskripte vorFreeze ausdrücklich auswählen.
+
+.gitignore-Basis exakt Blob9b55145af5bece1165ad252f010476a4a3f33a7f. Nur neueRootausgaben ignoriert; bestehende getrackte Belege bleiben sichtbar,allePrivatregeln/dreiFixtureausnahmen erhalten. KeineRootpackage-/Workflow-/Produkt-/SWänderung,keine neueCI-Stufe/FAST-Ausnahme/Plattform. Paketdateien unverändert aus V2 übernommen,keineLock-/node_modules-Dateien eingecheckt.
+
+Prüfvertrag: vorhandene unveränderte Integrationsgates am eingefrorenen SHA; lokale48PASS sind keineIntegrationsfreigabe. Main-/Deploy-/Produktions-/Original-/Versions-/Readback-/Restorepflichten bleiben erhalten. PR332 bleibt unabhängig BLOCKED;157/161 und historischeQueues geschützt. Flatex-Direkt-/Wrapperentdoppelung zurückgestellt,keinWorkflowfreigabeersatz. Nutzen erst an ohnehin nötigen regulären Abschlüssen beobachten; keineErsparnisbehauptung/Statistikläufe.

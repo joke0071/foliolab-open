@@ -40,3 +40,9 @@ originals/
 !/tests/fixtures/flh03/january.csv
 !/tests/fixtures/flh03/overlap.csv
 !/docs/perf-evidence/2026-10-31/render-v238/fixture.json.gz
+
+# Generated local output; tracked historical evidence remains tracked.
+/artifacts/
+/_site/
+/test-results/
+/playwright-report/
