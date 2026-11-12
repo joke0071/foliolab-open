@@ -19,5 +19,29 @@ try{
  const nc=await browser.newContext({viewport:{width:390,height:900}}),np=await nc.newPage();let release,entered;const hold=new Promise(resolve=>{release=resolve;}),seen=new Promise(resolve=>{entered=resolve;});
  await nc.route('**/src/atomic-storage.js',async route=>{entered();await hold;await route.continue();});const networkCapture=await observeLiveStartup(np,base);await np.goto(base,{waitUntil:'commit'});await seen;await np.locator('#appStartup').waitFor();const network=await networkCapture();
  assert.equal(network.state.readyAt,null);assert.equal(network.state.mobileNav.more,false);assert.match(network.state.startup.text,/Portfolio wird geladen/);assert.ok(network.pendingRequests.some(x=>x.url.endsWith('/src/atomic-storage.js')));release();await np.locator('#mobileNav [data-page="more"]').click();reports.push({case:'held module response versus storage wait',network});await nc.close();
- await mkdir('artifacts/gates/live-diagnostics',{recursive:true});await writeFile('artifacts/gates/live-diagnostics/report.json',JSON.stringify({result:'PASS',browser:browser.version(),scope:'Controlled local negatives only; no inferred CI root cause',reports},null,2));console.log('PASS: network vs initialization stall distinguished, original timeout retained, ready state and exact IDB bytes preserved');
+ // v310 production original: the entry module received 503 before initNav.
+ // Reproduce that transport failure once; never turn its later independent
+ // successful HTTP hash probe into proof that the initial module loaded.
+ const fc=await browser.newContext({viewport:{width:390,height:900}}),fp=await fc.newPage();let moduleRequests=0;
+ await fc.route('**/src/browser-portfolio-storage.js',route=>{moduleRequests++;return route.fulfill({status:503,contentType:'text/html',body:'Synthetic unavailable module'});});
+ const failureCapture=await observeLiveStartup(fp,base);await fp.goto(base,{waitUntil:'networkidle'});
+ await fp.waitForFunction(()=>!document.getElementById('appStartupHelp').hidden);
+ const failure=await failureCapture();
+ assert.equal(moduleRequests,1,'a failed module is not silently retried');
+ assert.equal(failure.state.readyAt,null);assert.equal(failure.state.startup.hidden,false);
+ assert.match(failure.state.startup.text,/nicht vollständig gestartet/);
+ assert.equal(failure.state.mobileNav.buttons,0);assert.equal(failure.state.sidebarNav.buttons,0);
+ assert.ok(failure.badResponses.some(r=>r.url.endsWith('/src/browser-portfolio-storage.js')&&r.status===503));
+ const later=await fc.request.get(new URL('src/browser-portfolio-storage.js',base).href);
+ assert.equal(later.status(),200,'an independent later HTTP probe can succeed');
+ assert.equal(await later.text(),await (await import('node:fs/promises')).readFile('src/browser-portfolio-storage.js','utf8'));
+ const afterProbe=await failureCapture();assert.equal(afterProbe.state.mobileNav.buttons,0);assert.equal(afterProbe.state.readyAt,null);
+ assert.equal((await fp.evaluate(()=>indexedDB.databases())).some(db=>db.name==='foliolab-open-portfolio'),false,'module failure creates no substitute portfolio');
+ reports.push({case:'one initial storage module 503; later exact HTTP bytes do not recover the failed document',failure,afterProbe,moduleRequests,exactLaterModuleBytes:true,noPortfolioCreated:true});await fc.close();
+ const sc=await browser.newContext({viewport:{width:390,height:900}}),sp=await sc.newPage(),successCapture=await observeLiveStartup(sp,base);
+ await sp.goto(base,{waitUntil:'networkidle'});await sp.locator('#mobileNav [data-page="more"]').click();
+ const success=await successCapture();assert.ok(success.state.readyAt>0);assert.equal(success.state.startup.hidden,true);
+ assert.equal(success.state.mobileNav.buttons,5);assert.equal(success.state.sidebarNav.buttons,5);assert.deepEqual(success.badResponses,[]);
+ reports.push({case:'separate fresh profile without injected transport failure starts with unchanged navigation',success});await sc.close();
+ await mkdir('artifacts/gates/live-diagnostics',{recursive:true});await writeFile('artifacts/gates/live-diagnostics/report.json',JSON.stringify({result:'PASS',browser:browser.version(),scope:'Controlled local negatives only; no inferred CI root cause',reports},null,2));console.log('PASS: network vs initialization stall and initial module 503 distinguished; later HTTP bytes do not mask failure; independent fresh startup succeeds');
 }finally{await browser.close();}
