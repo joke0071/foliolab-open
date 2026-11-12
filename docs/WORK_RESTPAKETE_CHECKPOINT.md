@@ -1,3 +1,13 @@
+## ACTIVE / v311_PRODUCTION_PENDING · work-pr333-20261112-1942
+
+Main `8ecc49f91c2c193e9391ef6f15460e6a40eb10c2`, Run43289733942: 1392 Units/0 Fehler/0 Skips, Chromium und Cross1/2/3 SUCCESS; Deploy SUCCESS. Sieben Main-OriginalZIPs inkl. Pages exakt GitHub-Digest/CRC, 241 JSON/2089 PNG/157 explizite PASS/0 Fehlerflag; 154 deployte Bytes mit exakten Gitblobs verglichen. Immutable Main-Companion `FolioLab_v311_Main_originals_2026-11-12.tar` Version0/210810880 Bytes/SHA256 `8d5a594c96ba01ea89bf457cbe1180c6b009cc39fedc74b7a67b8cff09ad564d` gepinnt bytegleich; sieben ZIPs neu geöffnet/0 Fehler. Live-Job131450179576 ist noch IN_PROGRESS in Chromium. **Noch kein LIVE_ACCEPTED.** Root V150 unverändert; Produktionsoriginal/-restore und Root V151 ausstehend.
+
+K4-V4 gezielter Beleg nun [kanonisch](release-evidence/k4-v4-targeted-fresh-restore-2026-11-12.json) und Roadmap PARTIAL aktualisiert; v299-v5-UNKNOWN-/Journal-Beleg zugeordnet. Keine Wiederholung der 10.000-Probe. PR332 BLOCKED, PR157/161 geschützt; externe Android/Safari/TalkBack/OAuth/Zweigeräte offen.
+
+Genau nächste Aktion: laufenden Live-Job zu Ende qualifizieren, Produktionsoriginal sichern/gepinnt lesen/tatsächlich inkrementell restaurieren; dann Root V151 unter Erhalt aller Ketten, Releasebeleg und Abschlusscheckpoint. Bei Live-FAIL Original/Ursache sichern und keine Freigabe.
+
+## Unveränderte Historie
+
 ## ACTIVE / v311_MAIN_GATED · work-pr333-20261112-1942
 
 PR333/e9dafc5b14ecb47733e91831bfdf74085173685c vollständig qualifiziert: getesteter Merge a8c712457ad1540ce59a8a15648bb289134e3bdd; Run43284855838/Wallet43284855802 SUCCESS, 1392 Units/0 Fehler/0 Skips, Chromium+Cross1/2/3 PASS. 6 Originalartefakte/210206324 ZIP-Bytes, 241 JSON/2089 PNG, 157 explizite PASS-Berichte/0 Fehlerflag, CRC+Digest exakt; mobile/desktop Kalenderbilder in drei Engines direkt gesehen. Fehlversuche Run43270995239 (undefiniertes toggle) und43282998079 (alte Menüerwartung) bleiben als zehn Original-ZIPs/225729829 Bytes erhalten. Zwei immutable private Companion-TARs Version0: FAIL 225751040 Bytes/SHA256 efba1c84281b6b487b164cd013acca331bdf8fa1d3118ef6b86f0044ed7b3664, PR-PASS 210216960 Bytes/SHA256 081cbe1818cbe817fbd51060869b85f3b575b7c93ec4acd40c783f46e3941817; jeweils gepinnt bytegleich und neu zehn bzw. sechs ZIPs/0 Fehler restauriert. Root V150/406005760 Bytes/SHA256 94114dd06f1c69804cde9c976d4cfd3b4e84fc771d0365578c5f443a40ee7230 gepinnt gelesen, noch unverändert. PR333 regulär gemergt: Main 8ecc49f91c2c193e9391ef6f15460e6a40eb10c2, Mainlauf43289733942 läuft; noch kein Deployment/Produktion/LIVE_ACCEPTED.
