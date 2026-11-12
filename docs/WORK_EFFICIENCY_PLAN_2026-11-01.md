@@ -2,7 +2,7 @@
 
 ## Aktive Prozessregeln
 
-**Fortschreibung 12.11.2026, Nutzerauftrag 17:12 MEZ:** Effizienz und Stabilität gemeinsam verbessern; keine pauschale Prozentgewichtung. Maßstab ist das sicher vollständig abgenommene Nutzerergebnis, nicht die Anzahl von Änderungen, Commits, Tests oder Releases. Diese organisatorische Fortschreibung ändert keine Produkt-, Workflow-, Test-, Sicherungs- oder Freigabelogik und übernimmt keine HND01-Zuständigkeit. Der laufende eingefrorene Release wird nicht umgeplant.
+**Fortschreibung 12.11.2026, Nutzeraufträge 17:12 und 17:52 MEZ:** Effizienz und Stabilität gemeinsam verbessern; keine pauschale Prozentgewichtung. Maßstab ist das sicher vollständig abgenommene Nutzerergebnis, nicht die Anzahl von Änderungen, Commits, Tests oder Releases. Diese organisatorische Fortschreibung ändert keine Produkt-, Workflow-, Test-, Sicherungs- oder Freigabelogik und übernimmt keine HND01-Zuständigkeit. Der laufende eingefrorene Release wird nicht umgeplant.
 
 **Einstieg und Quellen:** frischen [Checkpointkopf](WORK_RESTPAKETE_CHECKPOINT.md) und nur die für dessen nächste Aktion relevanten Deltas lesen. Owner/SHAs/Releasezustand ausschließlich dort; Scope-Status ausschließlich in der [kanonischen Roadmap](KONSOLIDIERTE_ROADMAP.md), Prioritäten und vollständiger Wochenumfang im [Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md). Dieser Einstieg ist für organisatorische Widersprüche maßgeblich. Keine zweite Roadmap und keine neue Gesamtinventur.
 
@@ -18,6 +18,12 @@ Zusammenführen nur bei gemeinsamem Ziel, zusammenhängendem Prüfvertrag und na
 
 **Kleine Schritte innerhalb des Pakets:** gerichtete Repros, Negativfälle, Units und Syntax während der Umsetzung. An echten Wiederaufnahmepunkten im vorhandenen eigenen Checkpoint knapp Owner, Branch/SHA, geprüften Stand, offene Gates/Run-IDs, Sicherungsstand und nächste ausführbare Aktion sichern. Kein zusätzlicher Full-CI-/Release-/Vollsicherungszyklus je Zwischenstand und keine künstliche Sitzungsgrenze. Erst vollständigen Kandidaten einfrieren; danach keine kosmetischen Erweiterungen oder Prozessänderungen auf seine Ref. Ein notwendiger Fehlerfix wird als neue Revision mit Originalbefund und erneuter Qualifikation der betroffenen Aussagen behandelt.
 
+### Vorhandene Funktionen zum Abschluss bringen
+
+Am nächsten sicheren Priorisierungspunkt: bestätigte P0/P1-Fehler zuerst, danach bereits implementierte, mit vertretbarem Rest intern abschließbare Nutzerabläufe vor zusätzlichem Neubau oder optionaler Infrastruktur. Abhängigkeiten und Risiko mitberücksichtigen; nicht bloß leicht schließbare Zählpunkte sammeln. Der vollständige Wochenumfang einschließlich Folgepaketen bleibt beauftragt. Laufende Freeze-/Abnahmegrenzen bleiben bestehen.
+
+Für den nächsten gewählten Scope im vorhandenen Taskvertrag nur vorhandenen Code/Abnahmebeleg, exakt fehlendes Kriterium und nächste Aktion abgleichen: **Implementierung, interne Verifikation oder externer Nachweis**. Bereits vorhandenen Restabgleich fortschreiben, keine neue Gesamtauditserie. PARTIAL/VERIFY bedeutet weder fehlender Code noch automatisch „fast fertig“. Fehlt nur ein Nachweis, diesen gezielt erbringen; Produktcode nur bei belegter Lücke ändern. Ist der genaue Umfang bereits vollständig gültig belegt, den vorhandenen Scope-/Issueabschluss nachführen statt einen künstlichen Produktcommit, SW-Bump oder Zusatzlauf auszulösen. Neue Änderungen behalten alle vorgeschriebenen Gates.
+
 ### Früh prüfen, ohne eine neue Vorabnahme zu bauen
 
 Vor der Implementierung im bestehenden PR-/Taskvertrag kurz Ziel/Nichtziel, Risiko- und Commitgrenze, überprüfbare Erfolg-/Abbruch-/Fehlerfälle sowie notwendige Original-/Geräte-/Zugriffsvoraussetzungen festhalten. Vorhandene Kriterien weiterverwenden; kein neues Formularsystem. Bei Persistenz auch Fehler **nach** dem Commit prüfen: gespeicherter Zustand, Revision, Rückmeldung und Entwurf. Kein vollständiges Datenrollback behaupten, wenn der Commit bereits erfolgt ist.
@@ -29,6 +35,14 @@ Geänderte UI vor Freeze gezielt nativ ansehen: betroffene schmale/kurze Ansicht
 Vor einer beabsichtigten technischen Vollübernahme einmal prüfen, ob die für den nächsten Abschnitt tatsächlich nötigen Fähigkeiten verfügbar sind: verbundener GitHub-Zugriff, ausführbare benötigte Tests sowie bei anstehendem Abschluss der bestehende private Versions-/Readback-/Restoreweg. Vorhandene aktuelle Fähigkeitsnachweise nutzen; kein Probe-Release, keine Testmutation privater Daten, keine erneute Komplettsicherung zur Zugriffsprobe. Ungeprüfte Schreib-/Restorefähigkeit bleibt ausdrücklich ungeprüft.
 
 Fehlende Fähigkeiten als konkrete Grenze dokumentieren, nicht erst am Releaseende entdecken oder durch einen Ownertext als vorhanden erklären. Soweit autorisiert, sichere isolierte Vorarbeit ermöglichen; vollständige technische Übernahme erst nach geklärter Zuständigkeit und erforderlichen Zugriffen behaupten. Keine Konten-/Cloud-/OAuth-Neueinrichtung oder Tokenweitergabe als vermeintliche Prozessoptimierung. Externe Android-/Safari-/TalkBack-/OAuth-/Zweigeräte-/Originalnachweise früh gebündelt mit Teststand, Aktion, Sollnachweis und Zuständigkeit vorbereiten; Drive-Backup ist kein Sync-PASS.
+
+### Entwicklung, interne Abnahme und externe Nachweise getrennt
+
+Bei der nächsten regulären Bearbeitung in der **bestehenden Scope-Zeile bzw. ihrem Belegindex** drei Aussagen getrennt führen: Implementierung vollständig/Rest/UNKNOWN; interne Pflichtabnahme bestanden/offen/fehlgeschlagen; externe Nachweise erbracht/ausstehend/nicht erforderlich laut Vertrag. Jede Aussage benötigt Beleg oder konkrete Grenze. Das sind keine neuen Scope-IDs oder Ersatzstatus: DONE bleibt an sämtliche Kriterien gebunden; kein pauschaler Prozentwert aus Teilstatus.
+
+Im vorhandenen externen Protokoll Gerät-/Account-/Originalzugang von der tatsächlich fehlenden Durchführung unterscheiden; Teststand, konkrete Nutzeraktion, Sollnachweis und Zuständigkeit einmal verlinken. Vorhandenes Android ist kein fehlendes Gerät, aber auch kein Test-PASS. Fehlende Geräteabnahme blockiert nur nachweislich davon abhängige Zusagen/Freigaben; unabhängige sichere Entwicklung und Abschlüsse dürfen weitergehen. Pflichtprüfungen nicht nachträglich auslagern. Insbesondere N-DRIVE nicht als „nur extern offen“ führen, solange Sync-Implementierung oder interne Konflikt-/Recoveryprüfungen fehlen.
+
+Statusberichte trennen Code-Rest, interne Abnahme und externe Wartebedingung. Gleichgewichtete Scope-Abschlussquoten sind keine Aufwands- oder Terminprognose; kein Wechsel zwischen 1.0- und Gesamtumfang ohne Kennzeichnung. Termine nur aus konkretem Rest, Kapazität und Abhängigkeiten ableiten, andernfalls UNKNOWN.
 
 ### Prüfung, Originale und Wiederaufnahme
 
@@ -50,12 +64,17 @@ Keine blinden Retries, CI-Abbrüche oder Doppelstarts. Ein gezielter Wiederholun
 
 | Priorität | Nächster sinnvoller Schritt | Entscheidungsgrenze |
 | --- | --- | --- |
-| Laufendes Nutzerpaket | Aktuellen Abschluss laut Checkpoint mit bestehenden Originalen und sämtlichen Pflichtgates fertigstellen. | Diese Fortschreibung verändert keinen Freeze, Owner, Release- oder Sicherungsstatus. |
-| P-CI-B | Erhaltenen Balancingkandidaten gegen akzeptierten Main und reale Cross-/Chromium-/Setupzeiten qualifizieren; nächsten längsten Job berücksichtigen. | Eigener begrenzter Kandidat nach konkretem #229-Vertrag; keine Produktänderung beimischen. Alle Aufrufe/Engines/Assertions/Fristen/Artefakte erhalten. |
-| P-CI-C | Erst danach tatsächlichen verbleibenden Produktionsengpass und isolierte Parallelisierung bewerten. | Kein automatischer Folgeumbau. Nur bei begründetem Nettonutzen, isolierten Profilen/Ports/Seeds/Speicher-/Artefaktpfaden, gleichem ausgeliefertem SHA und zwingendem Gesamt-AND-Gate. |
-| Externe Abnahmen | Vorhandene A01–A10-/TalkBack-/OAuth-/Zweigeräteprotokolle gesammelt ausführbar vorbereiten. | Höchstens 30 Minuten zusätzliche Vorbereitung im Gesamtbudget; keine Pflichtgrenze wegdefinieren und kein zweites Checklistenwerkzeug. |
+| Laufender Kandidat/Blocker | Bestehenden Prüf-/Diagnosevertrag am nächsten sicheren Punkt schließen oder begründet gesichert parken. | Kein Eingriff in Freeze, Owner oder laufende Tests; offene Fehler/Gates bleiben erhalten. |
+| Nächster Produktabschluss | Bereits implementierten vollständigen Ablauf anhand des konkret fehlenden Kriteriums abschließen. | Bestehende Belege nutzen; kein Neubau allein aus offenem Issue, kein zusätzlicher Release nur für Statuspflege. |
+| P-CI-B, bedingt | Verbleibenden Zusatzaufwand gegen erwartete Verkürzung des gesamten Pflichtwegs prüfen; nur den begrenzten Balancingkandidaten qualifizieren. | Keine dauerhafte Voraussetzung für unabhängige Produktarbeit. Eigener #229-Vertrag; alle Aufrufe/Engines/Assertions/Fristen/Artefakte erhalten. |
+| P-CI-C, bedingt | Nur bei nachgewiesen relevantem verbleibendem Produktionsengpass gesondert bewerten. | Kein automatischer Folgeumbau. Nettonutzen, isolierte Profile/Ports/Seeds/Speicher-/Artefaktpfade, gleicher ausgelieferter SHA und Gesamt-AND-Gate erforderlich. |
+| Externe Abnahmen | Vorhandene A01–A10-/TalkBack-/OAuth-/Zweigeräteprotokolle gebündelt mit ausführbarer Nutzeraktion verlinken. | Höchstens 30 Minuten zusätzliche Vorbereitung im Gesamtbudget; Entwicklungsrest separat, keine Pflichtgrenze wegdefinieren. |
 
 **Optimierungen müssen sich lohnen:** gemeinsame bestehende Aufwandgrenze von höchstens einem halben aktiven Entwicklungstag für den ersten kleinen Optimierungsschnitt, nicht erneut je Idee oder Tabelle. Vor technischem Umbau erwartete Verringerung des tatsächlich blockierenden Gesamtwegs gegen Einrichtung, Qualifikation, Auswertung und neue Fehlerrisiken abwägen. Keine scheinpräzise Prozentgewichtung von Effizienz/Stabilität. Bei fehlender plausibler Amortisation oder wachsendem Umbau dokumentiert zurückstellen und Produktarbeit fortsetzen; der Scope bleibt offen, nicht DONE.
+
+Bereits verbrauchter Diagnose-/Einrichtungsaufwand zählt weiter; Chatwechsel oder neue Teilideen erneuern das Budget nicht. Für weitere optionale Arbeit den **verbleibenden** Aufwand und erwarteten Nutzen über die tatsächlich noch nötigen regulären Läufe getrennt nach aktiver Arbeit, Gesamtwandzeit und Runnerverbrauch abwägen. Bereits investierte Arbeit allein rechtfertigt keine Fortsetzung; kürzere Einzeljobs oder ein fehlgeschlagener Gesamtlauf sind kein Erfolgsbeleg.
+
+Ist der Nettonutzen nicht plausibel oder das gemeinsame Budget ausgeschöpft, stellt der alleinige Hauptowner die Optimierung am sicheren Punkt mit Originalen, offener Ursache und Wiederaufnahmebedingung dokumentiert zurück; kein laufender Test wird deshalb abgebrochen. Erst nach eindeutigem Parkstatus des bisherigen aktiven Kandidaten darf der reguläre Folgekandidat dessen Platz übernehmen; keine zweite finale CI. Der ungeklärte Produkt-/Testbefund bleibt für alle betroffenen Kandidaten offen: weder Branchwechsel noch „CI-Optimierung geparkt“ erlaubt das Umgehen einer fehlgeschlagenen Pflichtprüfung. Neue belegte P0/P1-Fehler bleiben vorrangig.
 
 Vorher/Nachher an 2–3 geeigneten **regulär ohnehin nötigen** Läufen beobachten; keine Statistik-Duplikate. Bei regulärem Paketabschluss kompakt Durchlauf-/CI-/Queue-/Produktionszeit, aktive Umsetzung/Auswertung/Sicherung soweit tatsächlich verfügbar, Korrekturen nach Freeze samt Ursache und erneute Prüfungen/Übergaben erfassen. Zeit bis zur sicheren Gesamtabnahme und Fehlervermeidung zählen, nicht nur ein kürzerer Einzeljob. Unterschiedliche Scopes/Umgebungen offenlegen; unbekannte Werte UNKNOWN, Runnerzeit nicht als Work-Credits ausgeben. Wiederholte paketbedingte Korrekturen sprechen für engere Abgrenzung, reine Infrastrukturprobleme beweisen keine falsche Paketgröße.
 
