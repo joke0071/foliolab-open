@@ -1,3 +1,15 @@
+## ACTIVE / V2_MAIN_GATED_PRODUCTION_PENDING · work-02f19cd404ef-20261112
+
+Main `fa705d04e338364040c60957fff9632309afefe6`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf`, Run43315231787/Versuch1: Test/Chromium/Cross1–3 und Deploy SUCCESS; Node22 1392/0 Fehler/0 Skips. Livejob131535864525 läuft noch in Chromium; **kein neuer Produktions-/LIVE_ACCEPTED-PASS**. Keine Testwiederholung, zweite finale CI oder Workflowänderung.
+
+Sieben Main-OriginalZIPs exakt API-Digest/Größe/CRC; unabhängige qualifizierte PR334-Inventare exakt:241JSON/2089 fehlerfrei dekodiertePNG,871 explizite Pointer/0 Findings/0 unbekannte Adapter. Verdichter gewährt keine automatische Freigabe. Pages154 Gitblobs exakt unveränderte Runtime, App/SW bleibt v311. Neuer immutable Companion `FolioLab_V2_Main_originals_2026-11-12.tar` V0/211118080Bytes/SHA256 `5dff950332f91d4da786d18d356ceaffb6a9555201e7a6b4524b36eaf379db76`, gepinnt bytegleich/16 Manifestpfade tatsächlich restauriert/17 Dateien/7 ZIPs erneut fehlerfrei geöffnet. Keine offene private Mutation. V152/406261760Bytes/SHA256c57331ef27868c2596fdb279402555ec85f4b995c368ead8078166caf0e35a66 bleibt unverändert; neue Companions erst nach vollständiger Produktion in V153 verknüpfen.
+
+UI-R4 einziger vorbereiteter Folgeschnitt: Branch feature/ui-r4-display-filter-02f19cd404ef, aktueller HEAD `97ea17b5e4bfc390e1ef6c5fc68ea4c7dde096aa`; noch kein PR/Freeze/finaleCI. Gezielter Chromium/Firefox-Vertrag einschließlich320x360/200%-Text/langem Betrag/Fokus/Axe/44px PASS; WebKit vor Start BLOCKED libGLESv2.so.2. Zusatzcompanion `FolioLab_UI_R4_short_view_followup_2026-11-12.tar` V0/92160Bytes/SHA256 `e4d4c0b50c768dfe89f9954134dfca821727bf7e2c83e1e3d50df2088ab2b3e9`, gepinnt/7 Manifestpfade tatsächlich restauriert, künftig V153-Verknüpfung. B0 weiterhin vollständig V152-verknüpft. Kein WebKit-/CI-/Produktions-/Release-PASS für UI-R4.
+
+Genau nächste Aktion: bestehenden Livejob131535864525 abschließen lassen, neue Produktionsoriginale identitätsgebunden qualifizieren/einmal sichern/gepinnt lesen/tatsächlich restaurieren, V153 unter Erhalt exakter V152/aller Originalketten geschützt schließen; erst dann Tooling-Main abnehmen. Danach UI-R4 gegen akzeptierten Main regulär einfrieren. PR332 bleibt BLOCKED/CSV44px-Ursache UNKNOWN;157/161 und historische Queues geschützt; Flatex-Entdoppelung zurückgestellt. Keine Automation/zweiter Writer. Zuständigkeit bleibt ACTIVE.
+
+## Unveränderte Historie
+
 ## ACTIVE / V2_MAIN_PENDING / UI-R4_PREPARED · work-02f19cd404ef-20261112
 
 Main `fa705d04e338364040c60957fff9632309afefe6`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf`; V2 über PR334 integriert, Mainlauf `43315231787` läuft. Noch kein neuer Main-/Produktions-PASS. v311-Appabschluss/V151 und PR334/V152 bereits vollständig qualifiziert/gepinnt/restauriert; keine offene private Mutation.
