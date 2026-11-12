@@ -1,5 +1,5 @@
 {
-  "status": "LIVE_JOB_RECHECK_PRECONDITIONS_VERIFIED_NOT_TRIGGERED",
+  "status": "LIVE_JOB_RECHECK_TRIGGERED_IN_PROGRESS",
   "owner": "work-0df17fb9958a-20261112",
   "head": "ae0778fa31f035516b6da82de4084c757c0481ed",
   "tree": "b57812513269c1c62918709c323e976bb75be9f7",
@@ -47,5 +47,8 @@
   "workflowChanged": false,
   "newFullCI": false,
   "hardwareClaims": false,
-  "releaseApproval": false
+  "releaseApproval": false,
+  "newAttempt": 2,
+  "newLiveJob": 131250361388,
+  "trigger": "Exactly one rerun_workflow_job for original failed live job131055225553; accepted and actual job131250361388 started14:30:58UTC. Other success jobs in latest attempt retain their original07:44/08:08timestamps, not freshly rerun or requalified."
 }
