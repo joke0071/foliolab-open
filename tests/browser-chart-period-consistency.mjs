@@ -38,7 +38,8 @@ const verifyTargets=async(root,width)=>{
  await summary.click();
  await checkAxe(root,width,'disclosure open');
  const extra=root.locator('.period-more-list button:visible');
- assert.deepEqual(await extra.allTextContents(),narrow?['1 J','3 J','5 J']:['3 J','5 J']);
+ const history=(await root.getAttribute('id'))==='chartPeriods';
+ assert.deepEqual(await extra.allTextContents(),[...(narrow?['1 J','3 J','5 J']:['3 J','5 J']),...(history?['Kalender']:[])]);
  const extraRects=await extra.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return [r.width,r.height];}));
  assert.ok(extraRects.every(([w,h])=>w>=44&&h>=44),'Disclosure targets below 44px at '+width+': '+JSON.stringify(extraRects));
  await summary.click();
@@ -113,7 +114,9 @@ try{
   }
   await page.locator('#mobileNav [data-page="history"]:visible, #sidebarNav [data-page="history"]:visible').click();
   const history=page.locator('#chartPeriods');
-  assert.deepEqual(await history.locator('button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
+  assert.deepEqual(await history.locator('button').allTextContents(),width<=720?
+   ['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Kalender','Max']:
+   ['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
   assert.equal(await history.locator('[aria-pressed="true"]').count(),1);
   assert.ok(await history.locator('[data-range="week"]').isDisabled(),'same sparse weekly coverage in both views');
   const layout=await page.locator('#historyPage .history-controls').evaluate(el=>{
