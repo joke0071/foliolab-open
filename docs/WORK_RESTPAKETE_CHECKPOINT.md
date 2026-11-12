@@ -1,3 +1,12 @@
+## ACTIVE · main-5c187e36faa9-20261111 · autorisierte Wiederaufnahme nach Cloud-Zugriffsprüfung
+
+- Jochen hat am 12.11.2026 ausdrücklich die alleinige Wiederübernahme hier bestätigt. Codex Cloud hat laut Nutzerbericht keinen Owner übernommen und keine Projektmutation ausgeführt; vollständiger Library-Versionszugriff fehlt dort. Die reguläre Abgabe bleibt als Historie erhalten; kein paralleler Hauptagent und keine reaktivierte Automation.
+- Frisch alle300Heads, Main, PR331, Kommentare/Reviews, Actions und private Versionsstände abgeglichen. Main `0b8c6de007fff4d16ee930aa852354e4d52d513f`/v309 LIVE_ACCEPTED; PR331 HEAD `9bd5d951f53bf2b5e6084c21362f71f0529059d5`/Tree `b57812513269c1c62918709c323e976bb75be9f7` unverändert. Neue Läufe43167251956/43167251852 SUCCESS. Alte Queue bleibt unangetastete Historie. Keine Konkurrenz belegt.
+- Bestehende eigene PR-Qualifikation und alle drei gepinnten unveränderlichen Originalteile wiederverwendet. Root V147/405882880Bytes sowie Teile Version0/307466240+384276480+221634560Bytes frisch bestätigt. Keine offene private Operation.
+- Genau nächste Aktion: V148 mit expected_current_version=147 erstellen, gepinnt rücklesen, tatsächlicher inkrementeller Restore und Readback von252 erwarteten Manifestpfaden. Erst danach frischer Integrationsabgleich; Main/Deployment/tatsächliche Drei-Engine-Produktion/Abschlussbackup separat. Alle bestehenden Schutzverträge und Hardwaregrenzen unverändert. Checkpointbranch nie vollständig nach Main mergen.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY · main-5c187e36faa9-20261111 · Abgabe an Codex Cloud
 
 - **Nutzerauftrag:** Jochen hat ausdrücklich „Gib an codex cloud ab“ beauftragt. Der bisherige alleinige Owner beendet mit dieser regulären HND01-Abgabe seine Entwicklungs-, Integrations-, QA-, Sicherungs- und Release-Schreibarbeit. Keine automatische Rotation und kein paralleler Hauptagent. [Verbindliche Übergabe und nächste Schritte](HANDOVER_5c187e36faa9_CODEX_CLOUD_2026-11-12.md).
