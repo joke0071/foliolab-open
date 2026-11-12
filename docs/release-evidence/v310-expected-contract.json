@@ -1,0 +1,26 @@
+{
+  "status": "EXPECTATIONS_ONLY_NOT_OBSERVED",
+  "base": "0b8c6de007fff4d16ee930aa852354e4d52d513f",
+  "source": "Qualified v309 inventory plus explicitly added navigation/installation native module; unchanged normal INTEGRATION/RELEASE workflow",
+  "unitTestsExpected": 1392,
+  "siteFilesExpected": 154,
+  "liveAssetAliasesIncludingWorkerExpected": 155,
+  "phases": {
+    "PR": {"archives": 6, "json": 241, "png": 2089},
+    "Main": {"archives": 7, "json": 241, "png": 2089},
+    "Production": {"archives": 1, "json": 181, "png": 1431}
+  },
+  "newReportPattern": "navigation-installation/{chromium,firefox,webkit}.json",
+  "newPngPerEngine": ["320", "390", "430", "768", "1440", "desktop-install-hint"],
+  "reportExpected": {
+    "result": "PASS",
+    "widths": [320, 390, 430, 768, 1440],
+    "breakpoints": [980, 1180],
+    "syntheticInstallEvents": true,
+    "physicalAndroid": false,
+    "realInstallation": false
+  },
+  "unknownContextsRequireIndependentReview": true,
+  "allExistingGatesRemainMandatory": true,
+  "releaseApproval": false
+}

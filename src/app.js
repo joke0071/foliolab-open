@@ -1,3 +1,4 @@
+import {createInstallHintPreference} from './install-hint-preference.js';
 import {createSharedImportUI} from './shared-import-ui.js';
 import {bindNativeFlatexSourceContext} from './flatex-native.js';
 import {flatexNativeSourceContextMarkup} from './flatex-native-ui.js';
@@ -90,6 +91,8 @@ import {createCompleteBackup,unpackCompleteBackup,portableDrivePreferences,COMPL
 import {hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup,isPasswordBackup,adoptBackupPassword} from './backup-vault.js';
 import {openingCashInput} from './account-opening.js';
 import {setPositionArchived} from './portfolio-edit-actions.js';
+const installHintPreference=createInstallHintPreference();
+let installPromptBusy=false;
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 document.getElementById('appStartupText').textContent='Lokale Daten werden vorbereitet …';
@@ -2703,10 +2706,41 @@ $('apiSettings').addEventListener('submit',async e=>{
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
   window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
   document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
+   if(installPromptBusy)return;
    const prompt=installPrompt;if(!prompt){showInstallHelp();return;}
-   installPrompt=null;updateInstallControls();
+   installPromptBusy=true;installPrompt=null;updateInstallControls();
    try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
+   finally{installPromptBusy=false;updateInstallControls();restoreInstallFocus(button);}
   }));
+  // Firefox can leave a programmatically focused hint below a short sidebar.
+  // Scroll only this existing sidebar, never the portfolio page or its data.
+  const revealInstallHintFocus=()=>{
+   const sidebar=$('sidebarInstallHint').closest('.sidebar'),target=document.activeElement;
+   if(!sidebar||!$('sidebarInstallHint').contains(target)||!target?.getClientRects().length)return;
+   const box=sidebar.getBoundingClientRect(),r=target.getBoundingClientRect();
+   const top=Math.max(0,box.top)+6,bottom=Math.min(innerHeight,box.bottom)-6;
+   if(r.bottom>bottom)sidebar.scrollTop+=r.bottom-bottom;
+   else if(r.top<top)sidebar.scrollTop-=top-r.top;
+  };
+  // Native focus scrolling does not consistently account for the mobile sticky bars.
+  const revealDashboardPeriodFocus=()=>{
+   const target=document.activeElement;
+   if(!$('miniChartPeriods').contains(target)||!target?.getClientRects().length)return;
+   const header=document.querySelector('.mobile-header'),nav=$('mobileNav');
+   const headerVisible=Boolean(header?.getClientRects().length),navVisible=Boolean(nav?.getClientRects().length);
+   if(!headerVisible&&!navVisible)return;
+   const top=(headerVisible?Math.max(0,header.getBoundingClientRect().bottom):0)+6;
+   const bottom=(navVisible?Math.min(innerHeight,nav.getBoundingClientRect().top):innerHeight)-6;
+   const r=target.getBoundingClientRect(),delta=r.top<top?r.top-top:r.bottom>bottom?r.bottom-bottom:0;
+   if(delta)window.scrollBy({top:delta,left:0,behavior:'auto'});
+  };
+  $('miniChartPeriods').addEventListener('focusin',revealDashboardPeriodFocus);
+  window.addEventListener('resize',revealDashboardPeriodFocus);
+  $('sidebarInstallHint').addEventListener('focusin',revealInstallHintFocus);
+  window.addEventListener('resize',revealInstallHintFocus);
+  $('dismissInstallHint').addEventListener('click',()=>{
+   installHintPreference.dismiss();updateInstallControls();restoreInstallFocus(null);
+  });
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
@@ -2839,14 +2873,31 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 const standaloneMedia=matchMedia('(display-mode: standalone)');
+const installDesktopMedia=matchMedia('(min-width: 721px)');
 function installHelpHTML(){
  const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
  const steps=ios?'<li>In Safari unten oder oben auf „Teilen“ tippen.</li><li>„Zum Home-Bildschirm“ wählen.</li><li>Mit „Hinzufügen“ bestätigen.</li>':'<li>Im Browsermenü nach „App installieren“ oder „Zum Startbildschirm hinzufügen“ suchen.</li><li>Das Angebot bestätigen, falls es dein Browser anzeigt.</li>';
  return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Je nach Gerät und Browser können installierte App und Browser denselben oder getrennten Speicher nutzen. Sichere vor der Installation ein Backup und prüfe danach deine Daten. Browserdaten bitte nicht löschen und die App nicht deinstallieren, solange deine Sicherung nicht geprüft ist.</p>';
 }
 function showInstallHelp(){showDialog('FolioLab als App verwenden','INSTALLATION',installHelpHTML(),null,{readOnly:true});$('saveDialog').hidden=true;}
-function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,direct=Boolean(installPrompt);document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=standalone||document.documentElement.dataset.appInstalled==='1';const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';});}
-updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);
+function restoreInstallFocus(origin){
+ const target=origin?.isConnected&&origin.getClientRects().length?origin:document.querySelector('#sidebarNav [data-page="more"]:not([hidden]),#mobileNav [data-page="more"]:not([hidden])');
+ if(target?.getClientRects().length)target.focus({preventScroll:true});
+ else document.querySelector('#mobileNav [data-page="more"]')?.focus({preventScroll:true});
+}
+function updateInstallControls(){
+ const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1',direct=Boolean(installPrompt);
+ const hint=$('sidebarInstallHint'),section=$('installAppSection'),active=document.activeElement;
+ document.querySelectorAll('[data-install-action]').forEach(button=>{
+  button.hidden=installed;button.disabled=installPromptBusy;
+  const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';
+  button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';
+ });
+ hint.hidden=installed||!direct||installPromptBusy||!installDesktopMedia.matches||installHintPreference.dismissed;
+ section.hidden=installed;
+ if((hint.hidden&&hint.contains(active))||(section.hidden&&section.contains(active)))restoreInstallFocus(null);
+}
+updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
 performance.mark('foliolab-interactive');

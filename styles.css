@@ -2053,3 +2053,87 @@
 /* Keep the More label whole at normal size; enlarged text still gets the wider em-based target. */
 .chart-period .period-more{min-width:max(48px,3.6em)}
 .chart-period .period-more>summary{white-space:nowrap;overflow-wrap:normal}
+.sidebar{overflow-y:auto}
+.sidebar-footer{margin-top:auto;display:grid;gap:10px;min-width:0}
+.sidebar-footer .sidebar-bottom{margin-top:0}
+.sidebar-install-hint{display:flex;align-items:center;gap:2px;padding:5px;border:1px solid #e0e9df;border-radius:11px;background:#f5f8f4;color:#345b43}
+#sidebarInstallHint[hidden],#installAppSection[hidden],[data-install-action][hidden]{display:none!important}
+.sidebar-install-action,.install-hint-dismiss{border:0;background:transparent;color:inherit;min-height:44px;cursor:pointer}
+.sidebar-install-action{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:6px;text-align:left;font-size:12px;font-weight:650;line-height:1.4;border-radius:7px}
+.sidebar-install-action svg,.install-entry svg{width:20px;height:20px;flex-shrink:0}
+.sidebar-install-action:hover,.install-hint-dismiss:hover{background:#eaf1e8}
+.install-hint-dismiss{width:44px;flex:0 0 44px;display:grid;place-items:center;padding:10px;border-radius:7px}
+.install-hint-dismiss svg{width:16px;height:16px}
+.sidebar .nav button.active{box-shadow:none;background:transparent;color:#245b3f;font-weight:850}
+.sidebar .nav button.active span{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.sidebar .nav button.active svg{stroke-width:2.4}
+.sidebar .nav button.active:hover{background:#f2f7f2}
+.install-settings-panel{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;padding:18px 22px}
+.install-settings-panel h2{font-size:16px;margin:0}
+.install-settings-panel .small-help{margin:5px 0 0}
+.install-entry{min-height:44px;white-space:normal;flex:0 0 auto}
+#dashboardPage .dashboard-overview{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+#dashboardPage .dashboard-side{display:grid;gap:16px;min-width:0;align-content:start}
+#dashboardPage .dashboard-overview>.panel,#dashboardPage .dashboard-side>.panel{min-width:0;align-self:start}
+#dashboardPage .dashboard-providers{margin-top:0;padding:18px}
+#dashboardPage .dashboard-allocation{padding:18px}
+#dashboardPage .dashboard-allocation .allocation-layout{min-height:0;gap:12px;flex-wrap:wrap}
+#dashboardPage .dashboard-allocation .donut{font-size:10px;width:14.2em;height:14.2em;flex:0 0 14.2em;max-width:100%}
+#dashboardPage .dashboard-allocation .donut-inner{width:9.6em;height:9.6em}
+#dashboardPage .dashboard-allocation .allocation-center>strong{white-space:normal;overflow-wrap:anywhere}
+#dashboardPage .dashboard-allocation .alloc-legend{min-width:0;flex:1 1 160px}
+#dashboardPage .dashboard-allocation .alloc-legend-row{min-height:44px;padding:6px 4px}
+.dashboard-providers .panel-head{gap:8px;margin-bottom:10px;align-items:start}
+.dashboard-providers .panel-head h2{font-size:16px;line-height:1.35}
+.dashboard-providers .panel-head>.link-button{min-height:44px;white-space:normal;text-align:right;padding:0}
+.dashboard-providers .provider-row{display:grid;grid-template-columns:minmax(0,1fr) auto 10px;gap:8px;min-height:52px;padding:10px 0}
+.dashboard-providers .provider-l{gap:8px;min-width:0}
+.dashboard-providers .provider-l>div{min-width:0}
+.dashboard-providers .provider-mark{width:30px;height:30px;border-radius:8px;font-size:13px}
+.dashboard-providers .provider-name{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;font-size:12px;line-height:1.35}
+.dashboard-providers .provider-note{font-size:10px;line-height:1.4}
+#dashboardPage .dashboard-providers .provider-total{font-size:13px;line-height:1.35;max-width:none;overflow-wrap:anywhere}
+.dashboard-providers .aggregate-provider-note{grid-column:1/-1}
+#dashboardPage .dashboard-providers .aggregate-account-value{min-width:0;max-width:50%;flex-shrink:1}
+#dashboardPage .dashboard-providers .aggregate-account-value strong{white-space:normal;overflow-wrap:anywhere}
+.dashboard-providers .provider-holding .provider-holding-right{min-width:0;max-width:52%;flex-shrink:1;white-space:normal;text-align:right}
+.dashboard-providers .provider-holding-right strong{overflow-wrap:anywhere}
+.dashboard-providers .provider-detail{margin:0;padding:2px 0 8px;border-left:0}
+.dashboard-providers .provider-account{padding:8px 0 0;margin:0}
+.dashboard-providers .provider-account-head{gap:6px;flex-wrap:wrap;align-items:center;padding:6px 0}
+.dashboard-providers .provider-account-head>div{min-width:0;flex:1}
+.dashboard-providers .provider-account-head strong{overflow-wrap:anywhere}
+.dashboard-providers .provider-account-head>.link-button{min-height:44px;white-space:normal;margin-left:auto}
+.dashboard-providers .provider-holdings{padding-left:0}
+.dashboard-providers .provider-position-accordion>summary{min-height:44px;padding:8px 4px;margin-inline:-4px}
+.dashboard-providers .provider-position-detail{padding:8px 0 10px}
+.dashboard-providers .position-detail-grid{gap:8px 10px;padding:10px;border-radius:9px;background:#f4f8f3}
+.dashboard-providers .position-share{margin-top:8px}
+.dashboard-providers .position-share-track{height:4px}
+.dashboard-providers .position-detail-note,.dashboard-providers .position-detail-source{font-size:11px;line-height:1.45;margin-top:8px}
+.dashboard-providers .position-period{margin-top:10px;gap:6px}
+.dashboard-providers .position-period button{min-height:44px}
+.dashboard-providers .position-history-compact>summary{color:#4d6756}
+.dashboard-providers .position-history-plot{margin-top:8px}
+.dashboard-providers .position-history-chart.chart-area{height:146px;margin-top:8px}
+.dashboard-providers .position-booking-history{margin-top:8px}
+.dashboard-providers .position-booking-history>summary{min-height:44px;padding:4px 0}
+.dashboard-providers .position-booking-history .history-row{padding:8px 0}
+.dashboard-providers .position-csv-actions{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px;margin-top:8px}
+.dashboard-providers .position-csv-import,.dashboard-providers .position-csv-remove{width:auto;max-width:100%;flex:0 1 auto;min-height:44px;padding:8px 10px}
+/* Eight desktop period targets need 386px before card padding. Keep accounts
+   full width below 1180px, and reserve 430px for their card in the wide grid. */
+@media(min-width:1180px){#dashboardPage .dashboard-overview{grid-template-columns:minmax(0,1.55fr) minmax(430px,1fr)}}
+@media(max-width:720px){.install-settings-panel{align-items:flex-start;flex-wrap:wrap;padding:16px}#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
+@media(max-width:420px){#dashboardPage .dashboard-allocation .donut{width:12.8em;height:12.8em;flex-basis:12.8em}#dashboardPage .dashboard-allocation .donut-inner{width:8.8em;height:8.8em}}
+@media(max-width:360px){#dashboardPage .dashboard-allocation .alloc-legend{flex:1 1 auto}}
+
+/* Narrow account cards keep readable names above values and actions. */
+@media(max-width:540px){
+ .dashboard-providers .provider-row{grid-template-columns:minmax(0,1fr) 10px}
+ .dashboard-providers .provider-l{grid-column:1;grid-row:1}
+ #dashboardPage .dashboard-providers .provider-total{grid-column:1;grid-row:2;justify-self:start;text-align:left;margin-left:0;white-space:normal;max-width:100%}
+ .dashboard-providers .provider-chevron{grid-column:2;grid-row:1/span 2}
+ .dashboard-providers .provider-account-head>div{flex:1 1 100%}
+ #dashboardPage .dashboard-providers .aggregate-account-value{max-width:100%;margin-right:auto}
+}
