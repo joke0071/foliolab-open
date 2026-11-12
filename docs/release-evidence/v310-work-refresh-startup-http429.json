@@ -1,0 +1,344 @@
+{
+  "engine": "chromium",
+  "result": "FAIL",
+  "scope": "Refresh-frequency failure diagnostics only; all original assertions and deadlines retained",
+  "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "startupDiagnostics": {
+    "elapsedMs": 74541,
+    "pendingRequests": [],
+    "pendingCount": 0,
+    "failedRequests": [
+      {
+        "url": "https://foliolab.unperfekt.at/src/position-search.js",
+        "type": "script",
+        "startedMs": 43298,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/asset-wizard.js",
+        "type": "script",
+        "startedMs": 43298,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/public-instruments-client.js",
+        "type": "script",
+        "startedMs": 43299,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/refresh-frequency.js",
+        "type": "script",
+        "startedMs": 43314,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+        "type": "script",
+        "startedMs": 43316,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/market-diagnostics.js",
+        "type": "script",
+        "startedMs": 43317,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/quote-quality.js",
+        "type": "script",
+        "startedMs": 43318,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/browser-portfolio-storage.js",
+        "type": "script",
+        "startedMs": 43319,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/transactions.js",
+        "type": "script",
+        "startedMs": 43320,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/shared-flatex-ui.js",
+        "type": "script",
+        "startedMs": 43486,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/wallet-identity.js",
+        "type": "script",
+        "startedMs": 43348,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/legacy-quote-audit.js",
+        "type": "script",
+        "startedMs": 43349,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/staking-catalog.js",
+        "type": "script",
+        "startedMs": 43350,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/wallet-visibility.js",
+        "type": "script",
+        "startedMs": 43351,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/csv-import.js",
+        "type": "script",
+        "startedMs": 43351,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/csv-batch.js",
+        "type": "script",
+        "startedMs": 43352,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-import.js",
+        "type": "script",
+        "startedMs": 43353,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-reconciliation.js",
+        "type": "script",
+        "startedMs": 43354,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-settlement-audit.js",
+        "type": "script",
+        "startedMs": 43358,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-cash-audit.js",
+        "type": "script",
+        "startedMs": 43359,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-review-export.js",
+        "type": "script",
+        "startedMs": 43360,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-backfill.js",
+        "type": "script",
+        "startedMs": 43362,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-cost-basis.js",
+        "type": "script",
+        "startedMs": 43362,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/defi.js",
+        "type": "script",
+        "startedMs": 43372,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/complete-backup.js",
+        "type": "script",
+        "startedMs": 43373,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/backup-vault.js",
+        "type": "script",
+        "startedMs": 43374,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/account-opening.js",
+        "type": "script",
+        "startedMs": 43375,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/portfolio-edit-actions.js",
+        "type": "script",
+        "startedMs": 43375,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/decimal.js",
+        "type": "script",
+        "startedMs": 43430,
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/shared-import.js",
+        "type": "script",
+        "startedMs": 43480,
+        "error": "net::ERR_ABORTED"
+      }
+    ],
+    "badResponses": [
+      {
+        "url": "https://foliolab.unperfekt.at/src/position-search.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/asset-wizard.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/public-instruments-client.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/refresh-frequency.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/market-diagnostics.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/quote-quality.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/browser-portfolio-storage.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/transactions.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/shared-flatex-ui.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/wallet-identity.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/legacy-quote-audit.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/staking-catalog.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/wallet-visibility.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/csv-import.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/csv-batch.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-import.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-reconciliation.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-settlement-audit.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-cash-audit.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-review-export.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-backfill.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/flatex-cost-basis.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/defi.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/complete-backup.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/backup-vault.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/account-opening.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/portfolio-edit-actions.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/decimal.js",
+        "status": 429
+      },
+      {
+        "url": "https://foliolab.unperfekt.at/src/shared-import.js",
+        "status": 429
+      }
+    ],
+    "state": {
+      "url": "https://foliolab.unperfekt.at/",
+      "documentState": "complete",
+      "readyAt": null,
+      "startup": {
+        "exists": true,
+        "hidden": false,
+        "text": "FolioLab konnte nicht vollständig gestartet werden.",
+        "helpHidden": false
+      },
+      "storageText": "Browser-Speicher wird geprüft.",
+      "mobileNav": {
+        "exists": true,
+        "buttons": 0,
+        "more": false,
+        "display": "grid",
+        "width": 390,
+        "height": 14
+      },
+      "sidebarNav": {
+        "exists": true,
+        "buttons": 0,
+        "more": false,
+        "display": "grid",
+        "width": 0,
+        "height": 0
+      },
+      "serviceWorkerControlled": false
+    }
+  }
+}
