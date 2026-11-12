@@ -1,0 +1,59 @@
+{
+  "status": "BLOCKED_DIAGNOSTIC_LOCAL_PASS_ORIGINAL_CAUSE_UNKNOWN",
+  "owner": "work-2b419e9c7372-20261112",
+  "candidatePR": 332,
+  "candidateHead": "71dfb05d5dae6a7e5d7c3979120462e0862fe7e2",
+  "diagnosticCommit": "00968bc55c2ca910eb27038cbd9a0e4052ba4b17",
+  "originalRun": 43256977609,
+  "originalJob": 131317838339,
+  "originalArtifact": 13963370574,
+  "productGitBlobsVerified": 155,
+  "gitBlobMismatches": 0,
+  "exactDiagnosticTestBlob": "77d15a5d90286c786064fca660b5eba81c7b52c0",
+  "local": {
+    "node": "24.22.1",
+    "playwright": "1.56.1",
+    "axe": "4.10.3",
+    "chromiumShell": 1194,
+    "fullPreparedNavigationTest": "PASS",
+    "negativeControls": {
+      "baseline44": true,
+      "height43": false,
+      "displayNone0": false
+    },
+    "limitations": [
+      "Node differs from CI22",
+      "Local PASS does not reconstruct original geometry or cause",
+      "No new CI execution or final candidate qualification"
+    ],
+    "harnessCorrections": [
+      "First attempt before assertions failed ERR_CONNECTION_REFUSED because server/test ran in separate command network namespaces; server and test then colocated",
+      "One trailing staging newline removed; exact 155 Git blobs verified before final source verification",
+      "Negative-control harness initially passed function as string; corrected to actual callable",
+      "Closed native details do not guarantee zero descendant rectangle; explicit display:none used for deterministic zero-height negative control; this is not an original-cause claim"
+    ]
+  },
+  "ciCapability": {
+    "githubPluginReadWrite": true,
+    "dispatchAvailable": false,
+    "rerunCannotUseNewDiagnosticCommit": true,
+    "newFullCIStarted": false
+  },
+  "release": 310,
+  "privateRootVersion": 150,
+  "identicalAcceptanceOrRestoreRepeated": false,
+  "workflowMergeApproval": false,
+  "productOrWorkflowModified": false,
+  "next": "Obtain a supported targeted execution of the exact diagnostic ref in the CI runtime (Node22/PW1.56.1/Chromium1194), with separate artifact identity. Do not rerun old job or start an unchanged full candidate for a probe. If no such execution is accessible, keep original cause UNKNOWN and candidate BLOCKED.",
+  "backup": {
+    "newImmutableCompanionTitle": "FolioLab_PR332_exact_local_diagnosis_2026-11-12.tar",
+    "version": 0,
+    "bytes": 645120,
+    "sha256": "cc5e861a755a5855bdc85ca8dbd2dc2b7326df580092a1347d0bbe26d54ca102",
+    "pinnedByteReadback": true,
+    "newDiagnosticOnlyRestoreFiles": 17,
+    "failures": 0,
+    "rootUnchanged": 150,
+    "olderOriginalCompanionChainsPreserved": true
+  }
+}
