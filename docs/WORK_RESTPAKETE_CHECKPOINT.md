@@ -1,3 +1,13 @@
+## ACTIVE / V2_MAIN_PENDING / UI-R4_PREPARED · work-02f19cd404ef-20261112
+
+Main `fa705d04e338364040c60957fff9632309afefe6`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf`; V2 über PR334 integriert, Mainlauf `43315231787` läuft. Noch kein neuer Main-/Produktions-PASS. v311-Appabschluss/V151 und PR334/V152 bereits vollständig qualifiziert/gepinnt/restauriert; keine offene private Mutation.
+
+Einziger isolierter Folgeschnitt jetzt zusätzlich gitbasiert gesichert: Branch `feature/ui-r4-display-filter-02f19cd404ef`, HEAD `7dd4f912683c0302a9b032af733864d55c3a7968`, Tree `712e2ebcdbedf9b47bb7741c7dc34d39266479d2`, auf aktuellem Main aufgebaut. [Vorbereitungsvertrag](https://github.com/joke0071/foliolab-open/blob/feature/ui-r4-display-filter-02f19cd404ef/docs/UI_R4_POSITION_VALUE_FILTER_2026-11-12.md). Neun Dateien einschließlich erforderlichem SWv312-Bump und Taskkarte; keine PR, kein Freeze und keine zweite finale CI. Die vorher gepinnten lokalen semantischen Belege betreffen identische UI-/Testdateien vor diesem reinen SW-Revision-/Dokumentationsdelta. Chromium/Firefox gezielt PASS, WebKit lokal vor Start BLOCKED (libGLESv2.so.2); kein Gesamt-PASS. Privater Vorbereitungscompanion und alle Erstbefunde bleiben in V152 verknüpft/44 Pfade tatsächlich restauriert.
+
+Genau nächste Aktion bleibt: bestehenden Mainlauf/Deployment/tatsächliche Produktion vollständig qualifizieren, neue Originale sichern/gepinnt lesen und inkrementell restaurieren. Danach UI-R4 gegen tatsächlich akzeptierten Stand prüfen und regulär als EINEN Kandidaten einfrieren. Keine zweite finale CI, keine Flatex-Entdoppelung oder Workflowänderung. PR332 BLOCKED/CSV44px-Ursache UNKNOWN;157/161, historische Queues und alle Originalketten erhalten.
+
+## Unveränderte Historie
+
 ## ACTIVE / V2_INTEGRATED_MAIN_PENDING · work-02f19cd404ef-20261112
 
 PR334 geschützt regulär integriert. Main `fa705d04e338364040c60957fff9632309afefe6`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf` exakt qualifizierter PR-Tree; beide Eltern erhalten (8ecc49f… und62c747e…). Bestehender Mainlauf `43315231787` IN_PROGRESS. Keine neue finale CI, kein Retry/Abbruch. App-/SW-Version bleibt v311, da nur geprüfte Tool-/Doku-/Ignoredateien geändert sind. **Noch kein Main-/Produktions-PASS für diesen Tooling-Commit.**
