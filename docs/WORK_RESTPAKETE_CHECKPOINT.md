@@ -1,3 +1,13 @@
+## ACTIVE / RELEASE_GATED · work-f6d608c6b515-20261112 · Fortsetzung nach archiviertem Work-Agenten
+
+- Jochen hat die Fortsetzung einschließlich Entwicklung, QA, CI, Integration, Deployment, Produktionsabnahme, Sicherung/Restore/Dokumentation ausdrücklich erneut beauftragt; frühere Cloud-Schreibbeauftragung beendet. Der archivierte Work-Vorgänger work-0df17fb9958a-20261112 ist für diese Fortsetzung abgelöst. Ein alleiniger Writer, keine neue Automation.
+- Frischer Kollisionsabgleich: Main ae0778fa31f035516b6da82de4084c757c0481ed, Checkpoint c0661822ef6f3d34ff0801f4f230cb9eaf686453, vollständige matching-refs, offene historische Drafts157/161, PR331 samt Kommentaren/Reviews/Inlinekommentaren und letzte30Actions gelesen. Kein neuer konkurrierender Produktwrite belegt. Alte Queues43095194276/43095194257 unangetastet; bestehender Livejob131250361388/Run43177468857/Versuch2 läuft und wird nicht dupliziert.
+- Beide ausdrücklich genannten Originalarchive frisch materialisiert und SHA256 exakt gegen Vorgängerbelege bestätigt: Produktionsteil546c0469d0ddf81b21f26fd3b84c711bfb6ebeac96cfdf21095e36ad9a1cab13; HTTP429-Diagnose2fa4ac7803a96530aae1f1c5e4e0a4177658ae94c822f07dbd42ed1f55b906bf. Originale gelesen; Work429-Herkunft und ursprünglicheGitHub503-Herkunft bleiben UNKNOWN. Kein Produktpatch/Retry/Gatelockerung.
+- v309 bleibt letzter LIVE_ACCEPTED. Mainqualifikation des identischen SHA wird aus gebundenem Vorgängerbeleg wiederverwendet, nicht als neuer Testlauf ausgegeben. Root V148 latest wird für Fortsetzung materialisiert; Restore252 abgeschlossen/nicht wiederholen; V149 noch offen/nicht begonnen, keine private Schreiboperation offen.
+- Genau nächste Aktion: bestehenden Versuch2 vollständig lesen/qualifizieren; neues Artefakt über separateID/Job/Versuch/Zeiten binden, unveränderte181JSON/1431PNG/155Assetaliasse und alle Fach-/DreiEngine-/TLSgates prüfen. Danach immutable Produktionsoriginalteil/gepinntesReadback, geschützteV148→149-Fortschreibung/gepinntesReadback/tatsächlicher neuerinkrementellerRestore. Erst dann LIVE_ACCEPTED. Bei Fehler ursächlich begrenzt prüfen, keine Retryschleife.
+
+## Unveränderte Historie
+
 ## ACTIVE / RELEASE_GATED · work-0df17fb9958a-20261112 · Main qualifiziert / GitHub-Livejob Versuch2 läuft
 
 - **Alleinige Zuständigkeit:** Cloud-Stopp ausdrücklich durch Jochen bestätigt; geschützte Ownerübernahme gespeichert und exakt rückgelesen. Kein zweiter Writer, keine Automation. Frischer Main-/PR-/Review-/Kommentar-/Actionsabgleich ohne Konkurrenz.
