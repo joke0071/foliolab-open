@@ -1,0 +1,85 @@
+{
+  "pr": 334,
+  "owner": "work-02f19cd404ef-20261112",
+  "status": "PR_QUALIFIED_V152_DURABLE_VERIFIED",
+  "base": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+  "head": "62c747eef680af98ebfa125214e47b570f3e2fd5",
+  "tree": "755c06fbe451d62d3775c73f766afc141b9acbdf",
+  "testedMerge": "614733de9faf0c3c71b1626892ab5e1df15de105",
+  "run": 43308222507,
+  "walletRun": 43308222357,
+  "attempt": 1,
+  "allRequiredJobs": "SUCCESS",
+  "units": {
+    "node20": 1392,
+    "node22": 1392,
+    "failures": 0,
+    "skips": 0
+  },
+  "toolLocal": {
+    "node": "24.22.1",
+    "typescript": "5.8.3",
+    "tests": 48,
+    "pass": 48,
+    "fail": 0,
+    "skip": 0
+  },
+  "fullPatchSHA256": "d4d946a4640a81f2ddd75403a49bf09c3ceecd11df13c96a9b4b2c838ce5c9be",
+  "applicationPath": "V1 plus V2 delta once; reconstructed full V2 was not additionally applied",
+  "unchangedRuntime": true,
+  "workflowChanges": false,
+  "rootPackageChanges": false,
+  "originalArtifacts": 6,
+  "expectedOriginalsSource": "independently qualified v311 Main companion; unchanged test/runtime/workflow/code/dependency scope",
+  "json": 241,
+  "png": 2089,
+  "summaryPointers": 871,
+  "summaryFindings": 0,
+  "summaryUnknownAdapters": 0,
+  "summaryReleaseApproval": false,
+  "newSyntheticViewsSeen": [
+    "chromium-calendar-390",
+    "firefox-calendar-390",
+    "webkit-calendar-390"
+  ],
+  "otherViews": "reused qualified v311 relevant source statements, no behavior change",
+  "reviews": [],
+  "comments": [],
+  "blockedOtherPRs": [
+    332,
+    157,
+    161
+  ],
+  "limitations": [
+    "No production acceptance of the new tooling Main yet.",
+    "UI-R4 is a separate prepared companion, no second final CI or PR.",
+    "Original PR332 CSV44px cause remains UNKNOWN.",
+    "External Android/Safari/TalkBack/OAuth/two-device boundaries unchanged."
+  ],
+  "pngDecoded": 2089,
+  "durable": {
+    "rootVersion": 152,
+    "bytes": 406261760,
+    "sha256": "c57331ef27868c2596fdb279402555ec85f4b995c368ead8078166caf0e35a66",
+    "pinnedReadback": "exact",
+    "verifiedManifestPaths": 34,
+    "actualExtractedReadbackFiles": 36,
+    "failures": 0,
+    "priorFullRestoreRepeated": false,
+    "originalCompanion": {
+      "bytes": 211261440,
+      "sha256": "02fff0743c985c32a5d455c18ea253fd1a4c0a3007ff2598e1e73621eeddb4b8",
+      "version": 0,
+      "pinnedReadback": "exact",
+      "actualRestoreManifestPaths": 29
+    },
+    "preparedUIR4": {
+      "bytes": 1576960,
+      "sha256": "da3167ad8ced154714efde70595da1438ab3bba7d716c58fce645de404db1404",
+      "version": 0,
+      "pinnedReadback": "exact",
+      "actualRestoreManifestPaths": 44,
+      "noPRorFinalCI": true
+    }
+  }
+}
