@@ -1,0 +1,41 @@
+{
+  "status": "TAKEOVER_CONFIRMED_PRODUCTION_PENDING",
+  "owner": "work-f6d608c6b515-20261112",
+  "head": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "tree": "b57812513269c1c62918709c323e976bb75be9f7",
+  "run": 43177468857,
+  "attempt": 2,
+  "job": 131250361388,
+  "chromiumStep": "SUCCESS",
+  "crossProductionStep": "IN_PROGRESS",
+  "newArtifact": "PENDING",
+  "lastLiveAccepted": 309,
+  "privateRootVersion": 148,
+  "restore252Repeated": false,
+  "v149Started": false,
+  "mainPagesGitBlobsVerified": 154,
+  "mainPartManifestVerified": 14,
+  "workPartManifestVerified": 144,
+  "http429PartManifestVerified": 9,
+  "source503": "UNKNOWN",
+  "source429": "UNKNOWN",
+  "newWorkCounterprobe": {
+    "status": 200,
+    "bytes": 14787,
+    "mainByteEqual": true,
+    "ordinaryTLS": true,
+    "notReleaseAcceptance": true
+  },
+  "takeoverPreparation": {
+    "bytes": 460800,
+    "sha256": "c29820db337bef9e86e55e65f28738b682fe969e7778569a066b3efdfd4ed2e5",
+    "immutableVersion": 0,
+    "pinnedReadback": true,
+    "manifestPaths": 7,
+    "failures": 0
+  },
+  "releaseApproval": false,
+  "productChanged": false,
+  "workflowChanged": false,
+  "newTestRunTriggered": false
+}
