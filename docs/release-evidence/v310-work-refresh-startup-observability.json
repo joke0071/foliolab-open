@@ -1,0 +1,19 @@
+{
+  "status": "DIAGNOSTIC_ONLY_PREPARED_NOT_PRODUCT_PATCH",
+  "owner": "work-0df17fb9958a-20261112",
+  "base": "d2669e7057bf2242daf0d0e4ce3f039d9ae61d46",
+  "product": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "originalDiagnoseBranchPreserved": true,
+  "originalLiveRun": 43177468857,
+  "originalLiveAttempt": 1,
+  "workReceipt": "work-0df17fb9958a-v310-production-recheck-1",
+  "observed": "Refresh-frequency initial readiness timeout, exact original network cause UNKNOWN. Work core/loading/UI/cash/source gates passed only partially; fresh controlled same startup passed after15803ms without bad responses.",
+  "change": "Reuse existing observeLiveStartup observer in refresh-frequency test. On failure retain error, network/DOM state and bounded screenshot, then rethrow original error. Every existing assertion and timeout retained.",
+  "validation": "Node syntax check and focused diff review only. No new full test/CI/release executed on diagnostic source.",
+  "next": "Review exact diff, then at most one targeted instrumented refresh-frequency reproduction to obtain or exclude concrete module/network/storage stall evidence; not a blind full production retry. Original failed gates remain unresolved until explained and all required outcomes qualified.",
+  "productFilesModified": false,
+  "workflowModified": false,
+  "assertionsRemoved": false,
+  "timeLimitsRelaxed": false,
+  "releaseApproval": false
+}
