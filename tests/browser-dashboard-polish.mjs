@@ -76,7 +76,9 @@ try {
  await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').click();
  await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-21"]').click();
  assert.equal(await page.locator('#historyCalendarDisclosure').getAttribute('open'),null);
- await page.locator('#historyCalendarDisclosure>summary').click();
+ await page.locator('#chartPeriods .period-more>summary').click();
+ await page.locator('#chartPeriods [data-open-history-calendar]').click();
+ assert.equal(await page.locator('#historyCalendarDisclosure').getAttribute('open'),'');
  assert.equal(await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-20"]').getAttribute('aria-pressed'),'true');
  await page.locator('#historyCalendarReset').click();
  assert.equal(await page.locator('#chartPeriods [data-range="all"]').getAttribute('aria-pressed'),'true');
