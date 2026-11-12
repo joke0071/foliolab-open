@@ -34,6 +34,16 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
    assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
    await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-'+width+'.png'});
   }
+  await p.setViewportSize({width:320,height:360});
+  await p.locator('#positionValueFilter').fill('999999999999.123456789012345678');
+  await p.locator('.position-value-filter').evaluate(root=>{for(const el of root.querySelectorAll('span,input,p'))el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*2)+'px';});
+  await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
+  assert.equal(await p.locator('#positionValueFilter').inputValue(),'999999999999.123456789012345678');
+  assert.equal(await p.locator('#positionValueFilter').getAttribute('aria-invalid'),'false');
+  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  assert.ok(await p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('header')?.getBoundingClientRect();return document.activeElement===el&&r.top>=Math.max(0,header?.bottom||0)&&r.bottom<=nav.top&&r.height>=44;}),'short computed200percent view keeps focused field clear of navigation/header');
+  assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
+  await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-320x360-text200.png'});
   assert.deepEqual(await record(),filterBefore,'display filtering preserves exact raw/revision/settings');
   await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');
   writeFileSync('artifacts/gates/position-value-filter/'+engine+'.json',JSON.stringify({engine,result:'PASS',scope:'Synthetic UI-R4 display-only filter',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged']},null,2));

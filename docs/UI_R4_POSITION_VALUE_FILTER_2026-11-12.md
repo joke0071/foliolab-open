@@ -35,3 +35,8 @@ Lokale Originale und Zwischensourcen werden im privaten Vorbereitungscompanion e
 ## Nächste Aktion
 
 PR334 zuerst vollständig abschließen. Danach diesen vorbereiteten Scope gegen dessen akzeptierten Main abgleichen, SW-Revision setzen und als einen regulären vollständigen UI-R4-Kandidaten qualifizieren. Keine zweite finale CI parallel. Bereits gültige identische gezielte Belege nicht wiederholen; geänderte Testskripte vor Freeze mit V2 prüfen. Alle PR-/Main-/Produktions-/Original-/Versions-/Readback-/Restoregates bleiben erhalten. PR332 BLOCKED, PR157/161 und historische Queues geschützt.
+
+
+## Ergänzende kurze Ansicht
+
+Der tatsächliche geteilte Vertrag wurde anschließend in Chromium141 und Firefox157 mit 320×360, synthetisch verdoppelten Textgrößen und einer 31-stelligen EUR-Eingabe ausgeführt: vollständiger Eingabewert und gültiger Zustand, kein horizontaler Seitenoverflow, fokussiertes mindestens44px-Feld frei von Kopf- und Fußnavigation, Axe und exakte IDB-Invarianz PASS. Beide kurzen Ansichten direkt gesehen. Das ist berechneter Textstress, keine physische Zoom-/Android-/Safariabnahme. Vorher neue/geänderte.mjs-Dateien mit V2 geprüft. WebKit bleibt lokal vor Start blockiert; keine zusätzliche finale CI.
