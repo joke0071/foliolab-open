@@ -1,0 +1,51 @@
+{
+  "status": "LIVE_JOB_RECHECK_PRECONDITIONS_VERIFIED_NOT_TRIGGERED",
+  "owner": "work-0df17fb9958a-20261112",
+  "head": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "tree": "b57812513269c1c62918709c323e976bb75be9f7",
+  "run": 43177468857,
+  "originalAttempt": 1,
+  "jobToRerun": 131055225553,
+  "scope": "Exactly the existing failed live-acceptance job once. No Main test/deploy restart; all original commands/assertions/55-minute job and8-minute browser-install deadline unchanged.",
+  "reason": "Original CI initial module HTTP503; Main qualification completed. Work actual core/loading and several UI/source suites passed, but unproxied launch and then moduleHTTP429 prevent full local production qualification. HTTP429 source UNKNOWN; no product patch justified.",
+  "originals": {
+    "originalArtifactId": 13926440918,
+    "bytes": 307538,
+    "sha256": "f3e3288a5e812c05fba4d03748f01069937b795ee166c1717afe6c37ab8a3910",
+    "originalRunAttemptRetained": true,
+    "immutableMainAndFailPartPinnedReadback": true,
+    "immutableWorkPartialPartPinnedReadback": true
+  },
+  "artifactAttemptSeparation": {
+    "actualUploadActionCommit": "ea165f8d65b6e75b540449e92b4886f43607fa02",
+    "actionVersion": "4.6.2",
+    "dependency": "@actions/artifact ^2.3.2",
+    "version232DistributedClientContract": "Explicitly documents multiple same-named artifacts for reruns; new artifact is separately identified. Same-attempt duplicate restriction does not establish a rerun collision.",
+    "source": "https://github.com/actions/toolkit/blob/874d9103df85b9bb9d28d1e110950c7759c164ae/packages/artifact/src/internal/client.ts",
+    "actualActionPackage": "https://github.com/actions/upload-artifact/blob/ea165f8d65b6e75b540449e92b4886f43607fa02/package.json",
+    "protocol": "Retain old13926440918 by ID/digest; after recheck require different new artifact ID, exact head/run/new job+attempt/timestamps and matching downloaded bytes/CRC. Do not select merely by latest name. No delete/overwrite option."
+  },
+  "mainQualification": {
+    "unitTests": 1392,
+    "unitFailures": 0,
+    "unitSkips": 0,
+    "reports": 241,
+    "pngDecoded": 2089,
+    "assertions": 563,
+    "findings": 0,
+    "diagnosticContextsSeparatelyReviewed": 50,
+    "pagesExactFiles": 154,
+    "pwaExactHashesPerEngine": 154
+  },
+  "backup": {
+    "rootVersion": 148,
+    "restore252": "COMPLETE_NOT_REPEATED",
+    "V149": "OPEN_NOT_STARTED"
+  },
+  "onFailure": "Retain new exact originals and inspect concrete failure; no retry loop or gate weakening.",
+  "productChanged": false,
+  "workflowChanged": false,
+  "newFullCI": false,
+  "hardwareClaims": false,
+  "releaseApproval": false
+}
