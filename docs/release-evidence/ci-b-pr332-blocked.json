@@ -1,5 +1,5 @@
 {
-  "status": "DIAGNOSTIC_PREPARED_NOT_EXECUTED_IN_CI",
+  "status": "BLOCKED_HANDOVER_READY",
   "candidatePR": 332,
   "candidateHead": "71dfb05d5dae6a7e5d7c3979120462e0862fe7e2",
   "failedJob": 131317838339,
@@ -18,7 +18,72 @@
   "newCITriggered": false,
   "workflowMergeApproval": false,
   "diagnosticCommit": "00968bc55c2ca910eb27038cbd9a0e4052ba4b17",
-  "cross2Status": "IN_PROGRESS",
-  "rootVersion": 149,
-  "originalBackupCompletion": "PENDING"
+  "allCurrentJobsCompleted": true,
+  "workflowConclusion": "failure",
+  "walletCanaryCross123": "success",
+  "unitTests": 1394,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "artifactIds": [
+    13961796769,
+    13961364213,
+    13963370574,
+    13962282993,
+    13963231649,
+    13962244393
+  ],
+  "allOriginalArtifactApiDigestsAndSizesMatch": true,
+  "jsonParsed": 179,
+  "pngDecoded": 1670,
+  "cross23": {
+    "inheritedAssertions": 316,
+    "controlledFixtures": 22,
+    "reportImageUnion": "exact",
+    "visualViewsReviewed": 12
+  },
+  "canary": {
+    "axeScans": 66,
+    "findings": 0,
+    "visualViewsReviewed": 3
+  },
+  "backup": {
+    "rootVersion": 150,
+    "bytes": 406005760,
+    "sha256": "94114dd06f1c69804cde9c976d4cfd3b4e84fc771d0365578c5f443a40ee7230",
+    "pinnedReadback": true,
+    "rootManifestFiles": 5,
+    "newActualIncrementalRestore": true,
+    "extractedFileReadback": 36,
+    "failures": 0,
+    "immutableParts": [
+      {
+        "bytes": 111226880,
+        "sha256": "63de902be30b139ae0862a3037f43c5bc1bdb316924feab2fb41a50549fcb904",
+        "version": 0,
+        "manifestFiles": 25,
+        "pinnedReadback": true
+      },
+      {
+        "bytes": 69478400,
+        "sha256": "dc29a3bd9bb877ded0ebb726de0e1e979af3d001db42b6b92c5c8ee38373e72f",
+        "version": 0,
+        "manifestFiles": 6,
+        "pinnedReadback": true
+      }
+    ],
+    "allPreviousChainsPreserved": true,
+    "previousRestore252OrV149Repeated": false,
+    "privateReceiptSaved": true
+  },
+  "jobSeconds": {
+    "chromiumFailed": 328,
+    "cross1": 667,
+    "cross2": 1088,
+    "cross3": 767,
+    "canary": 79
+  },
+  "performanceClaim": "No successful total CI improvement established because full workflow FAIL; no Main-after observation or credit estimate",
+  "productVersionAccepted": 310,
+  "noMergeOrDeploymentOrRetry": true,
+  "privateWriteOpen": false
 }

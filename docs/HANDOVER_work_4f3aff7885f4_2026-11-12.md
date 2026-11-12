@@ -1,0 +1,11 @@
+Setze FolioLab Open selbstständig fort: https://github.com/joke0071/foliolab-open. Lies zuerst den aktuellen Kopf von docs/WORK_RESTPAKETE_CHECKPOINT.md auf feature/flh05-import-foundation und die aktiven Projektregeln. GitHub ausschließlich über das verbundene Plugin; Checkpointbranch niemals vollständig nach main mergen. Bestehende Autorisierung gilt. Keine Automation oder Doppel-CI.
+
+Vorgänger work-4f3aff7885f4-20261112 hat STOPPED/HANDOVER_READY erklärt. Vor Schreibzugriffen Owner, aktuelle SHAs, PRs, Kommentare, Reviews, Actions und private Version frisch prüfen.
+
+v310 ist LIVE_ACCEPTED. Main ae0778fa31f035516b6da82de4084c757c0481ed, Tree b57812513269c1c62918709c323e976bb75be9f7. Produktion43177468857/Versuch2 vollständig qualifiziert, V149/182-Dateien-Restore abgeschlossen. Diese identischen Abnahmen und Restore252 nicht wiederholen.
+
+Neuester Root V150:406005760Bytes/SHA25694114dd06f1c69804cde9c976d4cfd3b4e84fc771d0365578c5f443a40ee7230. Gepinnt bytegleich, neuer tatsächlicher inkrementeller Restore/Datei-Readback36Manifestdateien/0Fehler abgeschlossen. Alle6 PR332-Originalarchive in2immutable Companionteilen; alle älteren Original-/Oracle-/Korrektur-/historischen Payloadketten erhalten. Root allein ist kein vollständiger Payloadsatz.
+
+PR332/CI-B bleibt BLOCKED auf71dfb05d5dae6a7e5d7c3979120462e0862fe7e2. Run43256977609/Versuch1 beendetFAIL:1394Units/0Fehler/0Skips,Wallet/Canary/Cross1–3SUCCESS;Chromium131317838339 scheitert am CSV-Aktionsrechteck>=44px bei430px. Original13963370574 erhalten;Geometrie fehlt,UrsacheUNKNOWN. Lokale44px-Gegenproben erklären sie nicht. KeinRetry/Merge/Deployment.
+
+Diagnostikbranch diagnostic/pr332-csv-height-4f3aff7885f4 auf00968bc55c2ca910eb27038cbd9a0e4052ba4b17 gespeichert/rückgelesen,noch nicht inCI ausgeführt. Er erfasst das tatsächlich geprüfte Rechteck bei exakt unverändertem>=44-Prädikat;keineWartezeit oderGatelockerung. Nächste Aktion: konkreten offenen Befund mit dieser Beobachtung ursächlich klären und einen begründeten Prüfweg festlegen;keineblindeFull-CI-/Retryschleife. Workflow-Merge erst nach vollständiger Qualifikation und konkreter#229-Freigabe. Neue reinePlanfortschreibung0370d1ca ist erhalten/angewandt. RealeAndroid-/Installations-/Safari-/TalkBack-/OAuth-/Zweigerätebelege bleiben offen.
