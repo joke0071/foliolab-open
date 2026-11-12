@@ -1,3 +1,11 @@
+## ACTIVE / DIAGNOSIS_ONLY · work-2b419e9c7372-20261112 · PR332 BLOCKED
+
+- **Übernahme:** Nutzerauftrag nach STOPPED/HANDOVER_READY von work-4f3aff7885f4-20261112. Frischer Pluginabgleich: Checkpoint f87be6763c521a5ecd309668fcb5155fe00e6072, Main ae0778fa31f035516b6da82de4084c757c0481ed, PR332 HEAD71dfb05d5dae6a7e5d7c3979120462e0862fe7e2 und Diagnose00968bc55c2ca910eb27038cbd9a0e4052ba4b17 unverändert; offene PRs332/161/157, Kommentare/Reviews gelesen, keine neue laufende CI oder konkurrierende Mutation belegt. Private Rootmetadaten frisch V150/406005760Bytes bestätigt; keine private Schreiboperation begonnen.
+- **Arbeitsgrenze:** gezielte isolierte Diagnostik, keine neue finale CI, kein Retry/Merge/Deployment/Automation. Aktive EFF03-Regeln gelesen. Vorhandenes Chromium141-Shell und aus lokalem Cache verfügbare exakte Playwright1.56.1/Axe4.10.3 sind ausführbar zu prüfen; HostNode24 weicht weiter von CI22 ab. Private Schreib-/Restorefähigkeit noch nicht neu ausgeübt; keine technische Gesamtfreigabe daraus.
+- **Nächste Aktion:** exakten vorbereiteten Test und Produktquellen identitätsprüfen, unveränderte >=44-Messung gezielt ausführen; nur einen konkreten neuen Befund ursächlich weiterverfolgen. Fehlende Originalgeometrie bleibt UNKNOWN. v310/V149/V150-Abnahmen und Restore252 nicht wiederholen; sämtliche Original-/Companionketten erhalten. #229-Freigabe bleibt vor Workflow-Merge erforderlich.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY · work-4f3aff7885f4-20261112 · v310 LIVE_ACCEPTED / V150 · PR332 BLOCKED
 
 - **Abschluss:** [v310 LIVE_ACCEPTED](release-evidence/v310-live-accepted.json). Main `ae0778fa31f035516b6da82de4084c757c0481ed`, Tree `b57812513269c1c62918709c323e976bb75be9f7`. Bestehende Produktion43177468857/Versuch2/Job131250361388 vollständig qualifiziert:181JSON/1431PNG/386Assertions/155exakteAssetaliasse, gewöhnlichesTLS, direkteSichtprüfung und alle Finanz-/UNKNOWN-/Journal-/CAS-/Restore-/Offline-/PWA-/Axe-Gates. V149 gepinnt/182-Dateien-Restore abgeschlossen; identische Main-/Produktionsabnahme und Restore252 nicht wiederholen.
