@@ -76,8 +76,15 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
       const periods=await geometry('#chartPeriods button');
       assert.equal(periods.length,width>=721?8:width<=374?5:6,'visible presets; remaining ones sit in "Mehr" on phones');
       assert.equal(new Set(periods.map(b=>b.top)).size,1,'compact single-row presets');
-      const toggle=p.locator('#historyCalendarDisclosure>summary');await toggle.click();
-      await geometry('#historyCalendarDisclosure>summary');await geometry('#historyCalendarPanel button');
+      if(width<=720){
+       await p.locator('#chartPeriods .period-more>summary').click();
+       await geometry('#chartPeriods [data-open-history-calendar]');
+       await p.locator('#chartPeriods [data-open-history-calendar]').click();
+      }else{
+       await p.locator('#historyCalendarDisclosure>summary').click();
+       await geometry('#historyCalendarDisclosure>summary');
+      }
+      await geometry('#historyCalendarPanel button');
       assert.ok(await p.locator('#historyCalendarPanel').evaluate(e=>{const r=e.getBoundingClientRect();return e.scrollWidth<=e.clientWidth&&r.left>=0&&r.right<=innerWidth;}),'bounded seven-day calendar');
       const contrast=await p.locator('.history-calendar-weekdays,#historyCalendarHint').evaluateAll(es=>es.map(e=>{
        const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number),lum=c=>c.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
