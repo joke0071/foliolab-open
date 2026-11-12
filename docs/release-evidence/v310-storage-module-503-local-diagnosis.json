@@ -1,0 +1,209 @@
+{
+  "status": "LOCAL_DIAGNOSIS_AND_BOUNDED_RECHECK_PREPARED_NOT_LIVE_ACCEPTED",
+  "owner": "codex-v310-20261112",
+  "date": "2026-11-12",
+  "base": {
+    "head": "ae0778fa31f035516b6da82de4084c757c0481ed",
+    "tree": "b57812513269c1c62918709c323e976bb75be9f7",
+    "lastLiveAccepted": "v309"
+  },
+  "originalFailure": {
+    "run": 43177468857,
+    "attempt": 1,
+    "job": 131055225553,
+    "artifact": 13926440918,
+    "sha256": "f3e3288a5e812c05fba4d03748f01069937b795ee166c1717afe6c37ab8a3910",
+    "failure": "Navigation timeout after initial browser module response HTTP503 for /src/browser-portfolio-storage.js",
+    "readyAt": null,
+    "menuButtons": 0,
+    "independentAssetHashMatches": 155,
+    "firefoxWebkitLiveSteps": "SKIPPED",
+    "serverCdnRunnerRootCause": "UNKNOWN"
+  },
+  "analysis": {
+    "selector": "Still valid in unchanged app; initNav cannot execute when entry module dependency fails",
+    "productPatchJustified": false,
+    "reason": "Original records HTTP503; controlled local 503 reproduces failed startup and empty menus; independent subsequent exact HTTP response does not recover the failed document; separate fresh profile starts normally",
+    "transience": "Current normal-TLS HTTP200 exact checkout bytes demonstrates later endpoint availability, not origin of original503 or complete production recovery"
+  },
+  "currentOrdinaryTlsProbe": {
+    "at": "2026-11-12T13:09:50Z",
+    "path": "https://foliolab.unperfekt.at/src/browser-portfolio-storage.js",
+    "status": 200,
+    "contentType": "application/javascript; charset=utf-8",
+    "bytes": 14787,
+    "sha256": "f81f7384b549c41679c391efbfbbdc79dc26a18b5d2c26c7f435d6a752183a90",
+    "tlsVerificationDisabled": false
+  },
+  "localChecks": {
+    "unitTests": 1392,
+    "failures": 0,
+    "skips": 0,
+    "syntax": "PASS",
+    "diagnosticUnitTests": 6,
+    "diagnosticUnitFailures": 0,
+    "extendedControlledBrowserDiagnostic": "PASS: held write lock, held module, initial503, later independent exact HTTP bytes, no replacement portfolio, independent fresh startup",
+    "navigationInstallationChromium": {
+      "result": "PASS",
+      "widths": [
+        320,
+        390,
+        430,
+        768,
+        1440
+      ],
+      "breakpoints": [
+        980,
+        1180
+      ],
+      "syntheticProviders": 12,
+      "syntheticPositions": 90,
+      "textScale": "synthetic150%",
+      "axeOverflowFocusAndExactIDB": "PASS",
+      "directVisualReview": [
+        320,
+        1440
+      ]
+    },
+    "localCore": {
+      "base": "http://127.0.0.1:4173/",
+      "result": "PASS",
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 155,
+      "scope": "Local synthetic UI/edit/restore/plain+encrypted/offline/SW/IDB; NOT actual production acceptance"
+    },
+    "newDiagnosticSourceSha256": "af771908b52d13f948625775616d9ae8507ba908f84b43d58ba184b5c7d9a9da"
+  },
+  "archivePreservation": {
+    "count": 8,
+    "location": "Cloud workspace work/v310-originals, not durable private Library",
+    "transportSizeDigestCrc": "PASS",
+    "mainJson": 241,
+    "mainPngDecoded": 2089,
+    "pagesExactGitFiles": 154,
+    "productionFailureJson": 1,
+    "productionPngDecoded": 6,
+    "substantiveMainOutcomeQualification": "OPEN",
+    "privateImmutableWriteAndPinnedReadback": "OPEN",
+    "archives": [
+      {
+        "id": 13926440918,
+        "name": "production-live-acceptance-ae0778fa31f035516b6da82de4084c757c0481ed",
+        "bytes": 307538,
+        "sha256": "f3e3288a5e812c05fba4d03748f01069937b795ee166c1717afe6c37ab8a3910",
+        "crc": "PASS",
+        "counts": {
+          "json": 1,
+          "png": 6
+        }
+      },
+      {
+        "id": 13926260095,
+        "name": "dialog-visual-reference",
+        "bytes": 935058,
+        "sha256": "6602039f97ce424050ac8a5295b32e24da65f85b82be9767a50a69745583150c",
+        "crc": "PASS",
+        "counts": {
+          "png": 20
+        }
+      },
+      {
+        "id": 13926097112,
+        "name": "github-pages",
+        "bytes": 571240,
+        "sha256": "9f7dfbeb638b97712108de9d92e660f6da0e5316038756eda15d831755d1e962",
+        "crc": "PASS",
+        "counts": {},
+        "pagesExactFiles": 154
+      },
+      {
+        "id": 13925932820,
+        "name": "cross-engine-gates-ae0778fa31f035516b6da82de4084c757c0481ed-3",
+        "bytes": 70271411,
+        "sha256": "e95b6794884c3ff1295a33e4012810c0f5f25a630375cf095074f903ea78626c",
+        "crc": "PASS",
+        "counts": {
+          "png": 762,
+          "json": 105
+        }
+      },
+      {
+        "id": 13925927023,
+        "name": "release-gates-ae0778fa31f035516b6da82de4084c757c0481ed",
+        "bytes": 66340588,
+        "sha256": "5e3e7649d4cd7097a15de0d4403b682968bf4d2f34aa6da9f7e77950fdd7baa9",
+        "crc": "PASS",
+        "counts": {
+          "json": 98,
+          "png": 715
+        }
+      },
+      {
+        "id": 13925636349,
+        "name": "cross-engine-gates-ae0778fa31f035516b6da82de4084c757c0481ed-2",
+        "bytes": 12594813,
+        "sha256": "1eb13c7e2cc22859c47f12d6db3eb72983004772416abe052ceffe5d057eea41",
+        "crc": "PASS",
+        "counts": {
+          "json": 22,
+          "png": 100
+        }
+      },
+      {
+        "id": 13925431240,
+        "name": "cross-engine-gates-ae0778fa31f035516b6da82de4084c757c0481ed-1",
+        "bytes": 60045805,
+        "sha256": "fb39bc85d278a3054d287b9027ffac229167fce929fb1c65f74c3f9ce87b204e",
+        "crc": "PASS",
+        "counts": {
+          "png": 492,
+          "json": 15
+        }
+      },
+      {
+        "id": 13923949460,
+        "name": "ci-stage-ae0778fa31f035516b6da82de4084c757c0481ed",
+        "bytes": 354,
+        "sha256": "8dc14e162a0f1b21b7767ebfff5120a969c4c7f91b49c709c3c3c0b52c3b8b52",
+        "crc": "PASS",
+        "counts": {
+          "json": 1
+        }
+      }
+    ]
+  },
+  "recheckPlan": {
+    "scope": "One justified execution of unchanged actual production acceptance, all Chromium/Firefox/WebKit/core/finance/IDB/CAS/UNKNOWN-FX/backup/restore/axe/PWA/offline/asset assertions and deadlines retained",
+    "preconditions": [
+      "Fresh exact main/head/tree, ownership, comments/reviews and active-run collision checks",
+      "Retain original attempt1 FAIL ZIP/log/metadata separately and prove artifact output identity/attempt separation before rerunning a job with the same artifact name",
+      "Ordinary TLS and all matching current published asset bytes; fresh isolated synthetic profiles; no real portfolios or credentials"
+    ],
+    "action": "Use only the existing failed live job if attempt-specific immutable artifact preservation is proven; otherwise prepare a separate equivalent execution with explicit receipt. No full Main rerun, PR reopen, empty commit or workflow modification.",
+    "triggered": false,
+    "onRecurrentFailure": "Preserve new originals; investigate exact response/test error; no retry loop",
+    "completion": "Full substantive main/live qualification, immutable private originals with pinned readback, protected V148->V149 and actual required incremental restore before LIVE_ACCEPTED"
+  },
+  "retention": {
+    "recovery28": "Newer work index not located here; no completion assertion. Location requested; targeted Drive metadata search did not identify it. Does not block local development.",
+    "missingOriginalZips": 2,
+    "missingOldRootVersions": 8,
+    "status": "OPEN_SEPARATE_RETENTION_GAPS"
+  },
+  "backup": {
+    "V148": "Completed predecessor identity-bound proof retained; no repetition",
+    "Restore252": "Completed predecessor proof retained; no repetition",
+    "V149": "OPEN_NOT_STARTED",
+    "privateLibraryVersionTools": "UNAVAILABLE_IN_CURRENT_TOOL_CATALOG",
+    "blockedAction": "Protected private V149 write/readback/restore and resulting LIVE_ACCEPTED"
+  },
+  "workflowModified": false,
+  "productFilesModified": false,
+  "finalFullCiTriggered": false,
+  "hardwareAndroid": false,
+  "realInstallation": false,
+  "safariHardware": false,
+  "talkBack": false,
+  "oauthTwoDeviceSync": false
+}
