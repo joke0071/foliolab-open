@@ -98,7 +98,25 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet','compact summary never invents an EUR valuation for unknown FX');
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
-   assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>e.getBoundingClientRect().height>=44));
+   // Capture the exact rectangle used by the unchanged >=44 predicate.
+   // No polling, forced layout state, retry or relaxed threshold is introduced.
+   try{
+    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>{
+     const rect=e.getBoundingClientRect();
+     const measured={viewport:{width:innerWidth,height:innerHeight,scrollY},target:{html:e.outerHTML,connected:e.isConnected,rect:rect.toJSON()},ancestors:[],capturedAt:performance.now()};
+     if(rect.height<44){
+      const describe=node=>{const r=node.getBoundingClientRect(),style=getComputedStyle(node);return {tag:node.tagName,id:node.id,className:node.className,hidden:node.hidden,open:node.open??null,rect:r.toJSON(),display:style.display,visibility:style.visibility,minHeight:style.minHeight,transform:style.transform};};
+      measured.target={...measured.target,...describe(e)};
+      for(let parent=e.parentElement;parent;parent=parent.parentElement)measured.ancestors.push(describe(parent));
+      window.__folioNavCsvHeightFailure=measured;
+     }
+     return rect.height>=44;
+    }));
+   }catch(error){
+    const measured=await layout.evaluate(()=>window.__folioNavCsvHeightFailure??null);
+    writeFileSync(`artifacts/gates/navigation-installation/${engine}-csv-height-failure.json`,JSON.stringify({engine,width,result:'FAIL',error:String(error),measured},null,2));
+    await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-csv-height-failure.png`,fullPage:true});throw error;
+   }
    if(width<=430){
     assert.ok(await layout.locator('#providerOverview>.provider-accordion').first().evaluate(root=>{const row=root.querySelector(':scope>.provider-row'),name=row.querySelector('.provider-l>div');return name.getBoundingClientRect().width>=row.getBoundingClientRect().width*.55;}),'narrow provider name retains readable width beside the separate value row');
     assert.ok(await layout.locator('.provider-account-head').first().evaluate(head=>head.querySelector(':scope>div').getBoundingClientRect().width>=head.getBoundingClientRect().width*.8),'narrow account name retains a full row above value and positions action');
