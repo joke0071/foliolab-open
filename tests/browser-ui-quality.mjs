@@ -1,3 +1,4 @@
+import {positionValueFilterBrowserContract} from './position-value-filter-browser-contract.mjs';
 import {manageList} from './browser-management-mode.mjs';
 import {localeDisplayBrowserContract} from './locale-display-browser-contract.mjs';
 import {ui300BrowserContract} from './ui300-browser-contract.mjs';
@@ -148,6 +149,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await structuredQualityBrowserContract({p,nav,record,scan,engine,scans});
   await ui300BrowserContract({p,nav,record,scan,engine,scans});
   await localeDisplayBrowserContract({p,nav,record,scan,engine,scans});
+  await positionValueFilterBrowserContract({p,nav,record,scan,engine,scans});
   assert.deepEqual(errors,[]);
   report.engines.push({engine,status:'PASS',scans,textScale:'synthetic 150% computed-text stress,320x360; not physical Android',checks:['direct deduplicated review/dedicated quality review/7 widths + compact UI300/archived scopes/no writes/offline/real editor progress','all five pages','archive visible without detail disclosure','44px actions,separator and focus clearance,no overlaps','liquidity below providers and closed','mobile labeled history records/desktop table','focused exact decimal disclosure','Escape/focus return','zero exact IndexedDB record mutations']});console.log(engine+': UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS');
  }finally{writeFileSync('artifacts/gates/ui-quality.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}

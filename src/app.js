@@ -57,7 +57,7 @@ import {discoverSecurityListings,rankListings,listingCompatibility} from './secu
 import {scanBitcoinAccount} from './bitcoin-hd.js';
 import {oldProviderQuote,valuationWarnings,valuationHeadline,valuationIssues} from './valuation-status.js';
 import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} from './allocation-ui.js';
-import {searchAndSortPositions,positionListScope} from './position-search.js';
+import {searchAndSortPositions,positionListScope,positionValueThreshold,filterSmallPositionValues} from './position-search.js';
 import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFrequency,refreshSettings,beginAutoRefresh,refreshScope,REFRESH_LOCK} from './refresh-frequency.js';
@@ -106,6 +106,7 @@ let otherTabChangedPortfolio=false;
 let referenceSelecting=false,selectedReferenceIds=[],referenceVisibleIds=[],referenceMatchingIds=[],referenceLimit=100,referenceRemovalReceipt=null;
 let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
 let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],positionArchiveView='active';
+let positionValueFilterRaw='',positionValueFilterExact='0',positionValueFilterError='';
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const transferMatchingUI=createTransferMatchingUI({restoreFocus:restoreBookingTransferFocus,getModel:()=>model,assertCurrent:async()=>{assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();},commit:async draft=>{assertBookingWritable();model=draft;await save();},onCreate:kind=>$(kind==='cash'?'addWizard':'addBooking').click(),canCreate:kind=>!$(kind==='cash'?'addWizard':'addBooking').disabled});
@@ -454,7 +455,11 @@ function renderPositions(){
  $('positionFilters').innerHTML=[['all','Alle'],['__review','Prüfbereich'+(allReview.length?' ('+allReview.length+')':'')],...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
  const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
- const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
+ const matching=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
+ const visible=filterSmallPositionValues(matching,positionValueFilterExact);
+ $('positionValueFilter').value=positionValueFilterRaw;
+ $('positionValueFilter').setAttribute('aria-invalid',String(Boolean(positionValueFilterError)));
+ $('positionValueFilterHint').textContent=(positionValueFilterError?positionValueFilterError+' ':'')+(matching.length-visible.length)+' von '+matching.length+' Treffern ausgeblendet. Nur Anzeige; Summen unverändert. Nicht bewertete Positionen und Verbindlichkeiten bleiben sichtbar.';
  positionMatchingIds=visible.map(p=>p.id);renderPositionSelection();
  const list=visible.slice(0,positionLimit).map(p=>{
   const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(a=>a.id===p.accountId),stale=oldProviderQuote(p),quality=priceQuality(p);
@@ -497,7 +502,7 @@ function renderPositions(){
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
-  empty(filter==='all'?(model.positions.length?(positionArchiveView==='archived'?'Keine archivierten Treffer.':positionArchiveView==='all'?'Keine Treffer in dieser Ansicht.':'Keine aktiven Treffer. Bei Bedarf unter „Ansicht“ archivierte Positionen anzeigen.'):'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
+  empty(matching.length?'Keine Positionen ab dieser Anzeigegrenze. Leere die Grenze, um alle Treffer zu sehen.':filter==='all'?(model.positions.length?(positionArchiveView==='archived'?'Keine archivierten Treffer.':positionArchiveView==='all'?'Keine Treffer in dieser Ansicht.':'Keine aktiven Treffer. Bei Bedarf unter „Ansicht“ archivierte Positionen anzeigen.'):'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
    'Keine Positionen bei diesem Anbieter.');
 }
 function selectionCoverage(selected,pageIds,scopeIds){
@@ -2411,7 +2416,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
    feedback.scrollIntoView({block:'nearest'});
   }
   finally{editorSubmitting=false;button.disabled=Boolean(loadFailure||editor?.submitBlocked);}
- });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){if(b.dataset.filter==='__review'){openQualityReview();return;}filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;qualityReviewLimit=50;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;qualityReviewLimit=50;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{
+ });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){if(b.dataset.filter==='__review'){openQualityReview();return;}filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;qualityReviewLimit=50;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;qualityReviewLimit=50;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionValueFilter').addEventListener('input',e=>{positionValueFilterRaw=e.target.value;try{positionValueFilterExact=positionValueThreshold(positionValueFilterRaw);positionValueFilterError='';}catch(error){positionValueFilterError=error.message+' Die bisherige Anzeigegrenze bleibt aktiv.';}positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{
   const calendar=e.target.closest('[data-open-history-calendar]');
   if(calendar){
    const popup=$('historyCalendarDisclosure');popup.open=!popup.open;
