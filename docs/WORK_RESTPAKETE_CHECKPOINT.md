@@ -1,3 +1,13 @@
+## ACTIVE / V2_INTEGRATED_MAIN_PENDING · work-02f19cd404ef-20261112
+
+PR334 geschützt regulär integriert. Main `fa705d04e338364040c60957fff9632309afefe6`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf` exakt qualifizierter PR-Tree; beide Eltern erhalten (8ecc49f… und62c747e…). Bestehender Mainlauf `43315231787` IN_PROGRESS. Keine neue finale CI, kein Retry/Abbruch. App-/SW-Version bleibt v311, da nur geprüfte Tool-/Doku-/Ignoredateien geändert sind. **Noch kein Main-/Produktions-PASS für diesen Tooling-Commit.**
+
+v311-Appabschluss und V151 vollständig belegt; PR334-Abnahme und V152 ebenfalls vollständig gepinnt/restauriert gemäß [Beleg](release-evidence/pr334-preflight-v2-qualified.json). V152:406261760 Bytes/SHA256 `c57331ef27868c2596fdb279402555ec85f4b995c368ead8078166caf0e35a66`,34 Manifestpfade/36 Dateien/0 Fehler. UI-R4 ist der einzige isoliert vorbereitete Folgeschnitt, privat gepinnt/44 Pfade tatsächlich restauriert; keine zweite PR/Full-CI. Details und offene WebKit-Umgebungsgrenze im vorherigen Kopf.
+
+Genau nächste Aktion: vorhandenen Mainlauf einschließlich Deployment und tatsächlicher Produktion qualifizieren; neue Originale einmal sichern, gepinnt lesen und erforderlichen inkrementellen Restore schließen. Unveränderte alte Aussagen nicht erneut abnehmen. Danach den vorbereiteten UI-R4-Schnitt gegen diesen akzeptierten Main abgleichen, erforderlichen SW-Bump und normalen vollständigen Kandidaten herstellen. PR332 bleibt BLOCKED/CSV44px-Ursache UNKNOWN;157/161 und historische Queues erhalten. Keine Workflowänderung, Flatex-Entdoppelung zurückgestellt, keine Automation oder weiterer Writer.
+
+## Unveränderte Historie
+
 ## ACTIVE / PR334_MERGE_READY / V152 · work-02f19cd404ef-20261112
 
 [PR334 vollständig qualifiziert](release-evidence/pr334-preflight-v2-qualified.json): HEAD `62c747eef680af98ebfa125214e47b570f3e2fd5`, Tree `755c06fbe451d62d3775c73f766afc141b9acbdf`, getesteter Merge `614733de9faf0c3c71b1626892ab5e1df15de105`. Lauf43308222507/Wallet43308222357 SUCCESS, Versuch1; Node20.20.2 und Node22 je1392 Tests/0 Fehler/0 Skips. Chromium und Cross1–3 SUCCESS. Sechs OriginalZIPs exakt API-Digest/Größe/CRC; unabhängige v311-Inventare exakt,241 JSON/2089 dekodierte PNG. Vorhandener Verdichter:871 explizite JSON-Pointer/0 Findings/0 unbekannte Adapter, keine automatische Freigabe. Drei neue synthetische Kalenderansichten direkt gesehen; identische relevante Alt-Sicht-/Fachaussagen wiederverwendet. Reviews/Kommentare leer. Genau7 Tool-/Doku-/Ignoredateien; Runtime/Workflow/Rootpackage unverändert.
