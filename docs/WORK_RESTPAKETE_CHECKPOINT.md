@@ -1,3 +1,11 @@
+## ACTIVE / PR333_CORRECTION · work-pr333-20261112-1942
+
+Jochen beauftragt ausdrücklich die alleinige Fortsetzung nach Ende des bisherigen Agenten. Frischer Kollisionsabgleich: Main ae0778fa31f035516b6da82de4084c757c0481ed; Checkpoint-HEAD fde4ed7ae4841bb8b5ec560582c2829241c5ef4c; PR333 HEAD 72dd15cfa2913a86336a1c303207ecffae6ad861, Draft; PR332/161/157 unverändert offen; PR333-Kommentare/Reviews/Threads leer. Run43270995239 Versuch1 beendet FAILURE; Wallet SUCCESS, Cross1/2 SUCCESS, Chromium/Cross3 FAIL an undefiniertem toggle. Der zuletzt dokumentierte Owner work-59e2072e4b9a-20261112 hat nach seiner Übernahme keine weitere Produkt- oder Checkpointmutation hinterlassen; Nutzer meldet Vorgänger beendet. Kein zweiter Writer/Automation; vor jeder Refmutation erneuter Lease-Abgleich. Root V150/406005760 Bytes nur aus bestehendem Beleg; aktueller privater Readback/Restore noch offen. Keine Releasefreigabe.
+
+Nächste Aktion: beide betroffenen Browser-Testzugänge mit erhaltenen Assertions korrigieren, gezielte mobile Kalender-/Menü-/44px-Proben; danach vollständigen Kandidaten qualifizieren. PR332 bleibt BLOCKED, historische Drafts geschützt, K4-10000-Beleg wiederverwenden.
+
+## Unveränderte Historie
+
 ## ACTIVE / PR333_CORRECTION · work-59e2072e4b9a-20261112
 
 Alleinige HND01-Zuständigkeit nach ausdrücklichem Nutzerauftrag übernommen; Vorgänger STOPPED/HANDOVER_READY. Frischer Pluginabgleich: Main ae0778fa31f035516b6da82de4084c757c0481ed, Checkpoint 6d19cc71151471c6d80c9a1975fd349050c97ef2, PR333 72dd15cfa2913a86336a1c303207ecffae6ad861; offene PR333/332/161/157 und Kommentare/PR333-Reviews geprüft. Keine neue konkurrierende CI; historische Queues unangetastet. Rootmetadaten V150/406005760 Bytes bestätigt, private Schreib-/Restorefähigkeit noch ungeprüft. Keine Automation/zweiter Writer.
