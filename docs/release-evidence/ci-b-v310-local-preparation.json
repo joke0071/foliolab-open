@@ -1,0 +1,15 @@
+{
+  "status": "LOCAL_PREPARATION_ONLY",
+  "base": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "originalCandidate": "466be00d49d3a5308cb28075dd7572e4d0ce596b",
+  "workflowDelta": "One unchanged UI_QUALITY_ENGINES=firefox,webkit command moved from Cross3 start to Cross2 end; all other workflow bytes equal current Main",
+  "targetedContractTests": 24,
+  "passed": 24,
+  "failed": 0,
+  "skipped": 0,
+  "initialHarnessIssue": "One current v309 fixture helper absent from isolated local preparation; added exact current Main helper, reran only failed mirror simulation test successfully",
+  "remoteWip": false,
+  "remoteCiStarted": false,
+  "workflowMergeApproval": false,
+  "measuredSavings": null
+}
