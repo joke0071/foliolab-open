@@ -1,0 +1,102 @@
+{
+  "status": "LOCAL_TARGETED_PASS",
+  "scope": "K4: actual within-limit 10000-booking plain/encrypted fresh UI restore",
+  "date": "2026-11-12",
+  "owner": "work-6cd3cd3dad56-20261112",
+  "main": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "productGitblobsExactlyMatched": 154,
+  "implementationChanged": false,
+  "workflowChanged": false,
+  "inheritedAssertionsChanged": false,
+  "finalCIStarted": false,
+  "environment": {
+    "node": "24.22.1",
+    "ciNode": "22 (not exercised)",
+    "playwright": "1.56.1",
+    "browser": "Chromium141.0.7390.37/headless-shell1194",
+    "origin": "isolated loopback HTTP; no production claim"
+  },
+  "fixture": {
+    "bytes": 9270601,
+    "sha256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+    "version": 3,
+    "bookings": 10000,
+    "journalEntries": 10000,
+    "expectedEUR": "1000"
+  },
+  "checks": [
+    {
+      "name": "fresh plain UI restore",
+      "result": "PASS",
+      "elapsedMS": 17189,
+      "revision": 2,
+      "rawBytes": 14241319,
+      "rawSha256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7",
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "externalCashFlows": 10000,
+      "expectedEUR": "1000",
+      "actualEUR": "1000"
+    },
+    {
+      "name": "actual reload retains exact raw/settings/revision",
+      "result": "PASS"
+    },
+    {
+      "name": "invalid journal counterpart retains exact record/revision",
+      "result": "PASS",
+      "message": "Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich."
+    },
+    {
+      "name": "fresh actual encrypted UI file restore",
+      "result": "PASS",
+      "revision": 2,
+      "rawBytes": 14241319,
+      "rawSha256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7",
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "externalCashFlows": 10000,
+      "expectedEUR": "1000",
+      "actualEUR": "1000"
+    },
+    {
+      "name": "fresh encrypted restore actual reload exact",
+      "result": "PASS"
+    }
+  ],
+  "encryptedUIExport": {
+    "bytes": 12361244,
+    "sha256": "43a3fa184135abc2fc4a1a8054efa812a12182948912acbd37c0fca5f448baaa"
+  },
+  "independentOracle": "10000 deposits ×10 integer cents =100000 cents =1000 EUR; all10000 linked journal and flow identities checked; exact source structures compared; no expected financial values derived from restored values",
+  "visualReview": "Both synthetic More-page actual restore screenshots viewed directly; no broad visual/hardware acceptance",
+  "failedAttempt": {
+    "number": 1,
+    "stage": "page.goto",
+    "result": "net::ERR_CONNECTION_REFUSED",
+    "applicationStages": 0,
+    "originalPreserved": true,
+    "concreteTransportCorrection": "Serve identical static product files in the same Node process/network namespace as Playwright; separate attempt2 outputs; no product/test-predicate change"
+  },
+  "preparation": "Initial long-ID draft exceeded password-plaintext size and did not yet expand template flows; never used for native acceptance. Final fixture contains all10000 matching external flows, shorter synthetic identifiers and fits unchanged limits.",
+  "backup": {
+    "companionTitle": "FolioLab_K4_10000_local_restore_2026-11-12.tar",
+    "version": 0,
+    "bytes": 24258560,
+    "sha256": "8681fe357930020d724883073f5e98e081a04bdd9d20af910c95a01c7fccd2d8",
+    "pinnedByteReadback": true,
+    "actualNewExtractedFileReadback": 172,
+    "failures": 0,
+    "privateReceiptSaved": true,
+    "rootV150Unchanged": true,
+    "allOlderOriginalCompanionChainsPreserved": true,
+    "restore252Repeated": false
+  },
+  "limits": [
+    "Local Chromium evidence only; no new PR/Main/production qualification and no physical Android/Safari/TalkBack/OAuth/two-device proof",
+    "Ordinary version3 synthetic deposit fixture only; not a 10000-case v1/v2/v4/v5 or arbitrary-event acceptance",
+    "K4 remains PARTIAL; other internal version/update and external criteria remain open",
+    "PR332 remains BLOCKED/parked; CSV>=44px at430px causeUNKNOWN and binding for affected followup candidates; no retry/gate relaxation"
+  ],
+  "next": "For the existing K4 v1-v5 criterion, reconcile the already accepted v5 UNKNOWN/journal FreshRestore evidence with its unchanged relevant source/test identity; execute only a concretely missing case, not another full inventory or identical accepted restore."
+}
