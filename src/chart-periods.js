@@ -64,6 +64,19 @@ const rangeOf=el=>el.getAttribute('data-range')||el.getAttribute('data-mini-rang
 export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
  doc.querySelectorAll('.period-more').forEach(more=>{
   const group=more.parentElement,list=more.querySelector('.period-more-list'),summary=more.querySelector('summary');
+  // On phones, the existing history calendar is accessed from the period More menu.
+  // Dashboard periods retain their original options; desktop keeps the direct calendar.
+  const calendar=list.querySelector('[data-open-history-calendar]');
+  if(group.id==='chartPeriods'&&!match(WIDE)){
+   if(!calendar){
+    const button=doc.createElement('button');
+    button.type='button';button.dataset.openHistoryCalendar='';
+    button.setAttribute('aria-controls','historyCalendarDisclosure');
+    button.setAttribute('aria-expanded',String(Boolean(doc.getElementById('historyCalendarDisclosure')?.open)));
+    button.setAttribute('aria-label','Kalender zur Zeitraumwahl öffnen');
+    button.textContent='Kalender';list.append(button);
+   }
+  }else calendar?.remove();
   const half=[...group.querySelectorAll('button')].find(b=>rangeOf(b)==='year');
   if(half){
    if(match(NARROW)&&!match(WIDE)){if(half.parentElement!==list)list.prepend(half);}
