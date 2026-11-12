@@ -1,0 +1,27 @@
+{
+  "status": "FROZEN_PR_IN_PROGRESS",
+  "pullRequest": 332,
+  "head": "71dfb05d5dae6a7e5d7c3979120462e0862fe7e2",
+  "tree": "8a09493441d20da5fb859afca7ae7f3e2a7f3bc1",
+  "testedMerge": "431d31cdc441719688c7459b6d260cfc49310609",
+  "base": "ae0778fa31f035516b6da82de4084c757c0481ed",
+  "runtimeVersion": 310,
+  "runs": [
+    {
+      "id": 43256978296,
+      "name": "Wallet scan checks",
+      "status": "in_progress"
+    },
+    {
+      "id": 43256977609,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "status": "in_progress"
+    }
+  ],
+  "localContractTests": 28,
+  "localFailures": 0,
+  "fullPRQualification": "PENDING",
+  "immutablePRBackupRestore": "PENDING",
+  "concreteWorkflowMergeApproval": "REQUIRED_AFTER_QUALIFICATION",
+  "autoMerge": false
+}
