@@ -1,0 +1,41 @@
+{
+  "scope": "K4 v4 archived deposit with nonempty journal FreshRestore",
+  "status": "LOCAL_TARGETED_PASS",
+  "main": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+  "sourceGitBlobs": 155,
+  "sourceMismatch": 0,
+  "fixture": {
+    "version": 4,
+    "synthetic": true,
+    "archivedDeposit": true,
+    "openingEUR": "100",
+    "depositEUR": "20",
+    "expectedNativeEUR": "120",
+    "journalEntries": [
+      "20",
+      "-20"
+    ],
+    "rawSHA256": "a6294cf6742de91d5cb718b69c34abdc48a8371ea837a89af0bb952ebdc28df8",
+    "fixtureBytesRetained": false
+  },
+  "execution": {
+    "browser": "Chromium 141 headless shell",
+    "node": "24.22.1",
+    "playwright": "1.62.1",
+    "path": "actual file restore UI, fresh profile",
+    "revisionCount": 1,
+    "reloadExact": true,
+    "externalRequests": 0,
+    "pageErrors": 0
+  },
+  "backup": {
+    "title": "FolioLab_K4_v4_targeted_2026-11-12.tar",
+    "sha256": "8621c154ed171fd3f39b6182f349f24a998fa8f13b0b911baf3d31d2a99d19ab",
+    "bytes": 61440,
+    "pinnedReadback": true,
+    "incrementalRestoreFiles": 4,
+    "errors": 0
+  },
+  "reuse": "v299 v5 UNKNOWN and nonempty USD journal encrypted FreshRestore evidence and unchanged pertinent browser tests; v310/v311 general gates",
+  "limits": "K4 PARTIAL; no v1-v5 overall, PR/Main/production or device gate from this local case; Node/Playwright differ from CI; fixture bytes not retained; K4 10000 case already completed and not repeated."
+}
