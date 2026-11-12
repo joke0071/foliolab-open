@@ -1,0 +1,15 @@
+{
+  "name": "foliolab-static-preflight",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Optional local JavaScript test preflight; not a release gate",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "typescript": "5.8.3"
+  },
+  "scripts": {
+    "test": "node --test *.test.cjs"
+  }
+}
