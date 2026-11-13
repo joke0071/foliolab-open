@@ -1,0 +1,214 @@
+{
+  "scope": "UI-ALLOC01 / N-UI-PLUS",
+  "date": "2026-11-13",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN",
+  "original_contract": "https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6562657245",
+  "base": {
+    "commit": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+    "tree": "e55ffa96f641345759eb3779b00de6187c8671b8"
+  },
+  "implementation": {
+    "files": {
+      "src/allocation-ui.js": {
+        "bytes": 10110,
+        "git_blob": "e1e60302869e2f928978d71a878efb98a2c5252d",
+        "sha256": "726779845c33f27f77dde7f227479861e848ffae0f402be86e3f56ea3ff118a9"
+      },
+      "src/dashboard-ui.js": {
+        "bytes": 16735,
+        "git_blob": "da2482821704827e0eb0ec27163b8fbe0ac79429",
+        "sha256": "4aeedf666640a592de010647ba301c0a9835d70c4ca46d0980a315ed30a6119e"
+      },
+      "styles.css": {
+        "bytes": 180694,
+        "git_blob": "9b74e9eede5fbf30fbb132dbf95ebb878b87dbea",
+        "sha256": "685f60867c2e11441d9f877de2dbcb4166eb363a52f0344ccf329a630796e400"
+      },
+      "tests/account-allocation.test.mjs": {
+        "bytes": 7700,
+        "git_blob": "2d365b4403543de50a48db93192c1d4804768cbc",
+        "sha256": "b818cdbaf57da98ff6adce705685d8cc19a1ab471d14dbbdb4196031d1d2c6e9"
+      },
+      "tests/browser-account-allocation.mjs": {
+        "bytes": 6036,
+        "git_blob": "6c1cde4272799cc9325aa1261774f684bf3ce310",
+        "sha256": "9f9733544ed90eafd7492017fd316981ab690ecfb880b736bb55abc1ee307c38"
+      }
+    },
+    "semantics": [
+      "Read-only percentage of positive valued assets including cash within the corresponding account/depot.",
+      "Excluded contributions and liabilities have no ring share; a negative callback value is also omitted and explicitly labelled.",
+      "Any missing/UNKNOWN/nonfinite asset EUR value suppresses every share in that account; unavailable is never numeric zero.",
+      "Known zero gets 0% only with a positive, complete denominator. Empty, all-zero and negative-only totals show unavailable.",
+      "Stale/derived/unconfirmed quote or FX provenance qualifies percentages as based on saved valuations; existing aggregate quality notes remain.",
+      "Archived positions retain existing economic contribution. Simple 1:1 savings cash rendering is unchanged.",
+      "Only existing details summary is interactive. Static SVG and readable percent text add no listener, animation, request, model write or focus stop.",
+      "Existing provider-share detail remains explicitly provider based; the new row is explicitly account/depot based."
+    ]
+  },
+  "validation": {
+    "runtime": "Node v24.22.1",
+    "command": "node --test tests/account-allocation.test.mjs tests/allocation-ui.test.mjs tests/dashboard-ui.test.mjs tests/valuation-status.test.mjs",
+    "tests": 30,
+    "pass": 30,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "new_tests": 9,
+    "existing_tests": 21,
+    "syntax": {
+      "pass": [
+        "src/allocation-ui.js",
+        "src/dashboard-ui.js",
+        "tests/account-allocation.test.mjs",
+        "tests/browser-account-allocation.mjs"
+      ]
+    },
+    "independent_oracles": {
+      "depot_values_EUR": [
+        400,
+        300,
+        200,
+        100
+      ],
+      "shares_percent": [
+        40,
+        30,
+        20,
+        10
+      ],
+      "mixed_account_values_EUR": [
+        400,
+        100
+      ],
+      "mixed_account_shares_percent": [
+        80,
+        20
+      ],
+      "other_cash_account_EUR": 5000,
+      "other_provider_EUR": 9000,
+      "USD_value_native": 250,
+      "USD_EUR_rate": 0.8,
+      "USD_share_percent": 20,
+      "EUR_peer": 800
+    },
+    "initial_run": {
+      "tests": 30,
+      "pass": 28,
+      "fail": 2,
+      "cause": "Two new fixtures attempted negative quantities rejected by existing createPosition before the target helper ran. Corrected to legal positions with explicit negative valuation callbacks. Financial validation unchanged.",
+      "original_log_file_captured": false
+    },
+    "input_integrity": {
+      "baseline_files": 71,
+      "unchanged_files_independently_Git_blob_verified": 68,
+      "mismatches": 0,
+      "baseline_manifest": {
+        "src/dashboard-ui.js": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb",
+        "src/allocation-ui.js": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+        "src/model.js": "3ab1397af6870f1b356f9696451170697eafbf36",
+        "src/quote-quality.js": "3ec1f74b2c10caef09a400592db05a5db1dda9d6",
+        "tests/dashboard-ui.test.mjs": "ab50d31d24dd276ef25f69faee6260250dc01415",
+        "tests/allocation-ui.test.mjs": "8236403ad1f67f1949d56136a69904721c30a96c",
+        "styles.css": "7457647c53f26c3dac76ef7f9043b29ea9ed8aa0",
+        "tests/valuation-status.test.mjs": "bdabf36472a54bd6c6d0a1980634b5a0a9a1d130",
+        "package.json": "76c6961ae4d56593a8f9721de12fc84823b45d88",
+        "src/cash-terms-ui.js": "4809fc05f141d39ad7e378c44d6e7a287995024c",
+        "src/valuation-status.js": "cfbb845f8ecc6fdbf2847e675054f29e6e0eac41",
+        "src/kraken-withdrawal-evidence.js": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107",
+        "src/interest-scenario.js": "332037a4d578c8128121f799165db3a749a82239",
+        "src/decimal.js": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+        "src/kraken-solana-bridge.js": "782cab38bb79daa0886c6ab66559f61792279dd1",
+        "src/kraken-ethereum-bridge.js": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+        "src/historical-portfolio-value.js": "3a49409f21ed1e51c18b641127d461a4898423d1",
+        "src/kraken-bitcoin-bridge.js": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+        "src/refresh-frequency.js": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3",
+        "src/purchase-evidence.js": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+        "src/cash-terms.js": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+        "src/wallet-history-state.js": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+        "src/transactions.js": "306dfd8f06b41f4e6414ecbb248124fbfb726402",
+        "src/fx-state.js": "0c0239573d9306da2f7d66da21ad8537ce123783",
+        "src/assets.js": "054ba656af6145f96bf93a566009ed40f45603cb",
+        "src/defi.js": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+        "src/unified-bitcoin.js": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+        "src/import-identity.js": "9c80c33266d3c769d0185e3e89cf182c192f1406",
+        "src/wallet-identity.js": "7337ad57a531189676f747fdf6d1a925170f4004",
+        "src/flatex-net-settlement.js": "320637c48fc98ebaecc7c46b1a21266767c964e6",
+        "src/native-staking-networks.js": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+        "src/position-history.js": "20afdf678e520b2b361d6c1c02a6604f5130659f",
+        "src/retired-providers.js": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+        "src/reference-listings.js": "3ba091983e64a631ad187ebb302299380db49c02",
+        "src/historical-csv.js": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+        "src/bitpanda-withdrawal-evidence.js": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+        "src/coin-identity.js": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+        "src/booking-history.js": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+        "src/format.js": "251c4e369b3b47aa56e5efb8e65f7106a987f9b7",
+        "src/flatex-settlement-audit.js": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+        "src/solana-history.js": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+        "src/security-sources.js": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+        "src/request-cache.js": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+        "src/flatex-native-ui.js": "d52e116b9280147495316666289962d21988ba3c",
+        "src/wallet-history-core.js": "edcbe5570a903271d07ddc637bd876071e85a40a",
+        "src/position-icons.js": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+        "src/wallet-history-valuation.js": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+        "src/flatex-net-reconciliation.js": "2d39c199135dc9348271271c60b36876c4660936",
+        "src/flatex-native.js": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+        "src/kraken-link-bridge.js": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+        "src/ethereum-fallback.js": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+        "src/csv-import.js": "6522fca91a5b58a1d9f468e7c499bab93153378f",
+        "src/crypto-fallbacks.js": "1151f42b1315241805923b848a7a2efdf65528ac",
+        "src/ledger-live.js": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+        "src/history-evidence-cache.js": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+        "src/historical-position-value.js": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+        "src/flatex-settlements.js": "16214b0406a740200585f726e9c9b90cb6007dec",
+        "src/solana-rpc.js": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+        "src/alpha-vantage.js": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+        "src/flatex-reconciliation.js": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+        "src/csv-records.js": "a38aad028a30776022c6c8950a2699a6694962b4",
+        "src/wallet-history-days.js": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+        "src/market.js": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+        "src/eodhd-worker-client.js": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+        "src/link-explorer-evidence.js": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+        "src/marketstack.js": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+        "src/bitcoin-hd.js": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+        "src/bnb-token-scanner.js": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+        "src/public-instruments-client.js": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+        "src/staking-discovery.js": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+        "src/xrpl-assets.js": "db6c208030f0d21c528cafaf47d4a51b22055e53"
+      }
+    },
+    "limitations": [
+      "Node only; no native browser launch, rendering/screenshot/axe/real keyboard/touch/zoom/IDB/Windows/Android/PWA claim.",
+      "No full Node suite, npm check/full CI, PR, wallet, main, deployment or production acceptance.",
+      "K4 legacy/restore proofs not rerun. No new crypto/storage/backup review."
+    ]
+  },
+  "prepared_native": {
+    "script": "tests/browser-account-allocation.mjs",
+    "syntax_only": true,
+    "executed": false,
+    "command": "With the exact candidate checked out and existing approved tools, serve the repository on 127.0.0.1:4173; then timeout 120s env BROWSER=chromium FOLIOLAB_TEST_SHA=<exact-candidate-SHA> node tests/browser-account-allocation.mjs",
+    "scope": [
+      "Existing explicit legacy synthetic installation, refresh off; 40/30/20/10 in depot plus separate 5000 EUR savings.",
+      "320/360/390/412/430/768/1440px containment and 44px summary target; synthetic screenshots.",
+      "Keyboard Enter/touch details toggling; static ring adds no focus stop; CSS text enlargement approximation.",
+      "UNKNOWN FX countercase suppresses all shares, raw legacy portfolio invariant within each read-only case.",
+      "Host BEGIN/STAGE/PASS/FAIL report written before risk awaits; cleanup outcome separate."
+    ],
+    "not_covered": [
+      "Native script has not run or been qualified.",
+      "No IDB/restore/device evidence; fixture intentionally tests retained legacy mode.",
+      "Real Windows Chrome AND Edge/Android system font, physical touch, PWA, offline, hardware lifecycle remain separate.",
+      "Existing regression/engine/finance/storage/release gates retained; no workflow alteration or trigger."
+    ]
+  },
+  "gates": {
+    "native_approval": "NOT_GRANTED",
+    "CI": "NOT_STARTED",
+    "main_release_gate": "OPEN",
+    "roadmap": "N-UI-PLUS PLANNED unchanged",
+    "SW": "UNCHANGED",
+    "UI_R4": "UNCHANGED",
+    "K4": "PARTIAL unchanged"
+  }
+}

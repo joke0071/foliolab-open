@@ -2138,6 +2138,17 @@
  #dashboardPage .dashboard-providers .aggregate-account-value{max-width:100%;margin-right:auto}
 }
 
+/* Account weights are static presentation within the existing detail summary. */
+.dashboard-providers .has-account-allocation{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.dashboard-providers .has-account-allocation .provider-holding-right{display:grid;grid-template-columns:minmax(0,1fr) auto auto;max-width:none;width:100%;gap:6px}
+.dashboard-providers .has-account-allocation .provider-holding-right>strong{min-width:0;white-space:normal;overflow-wrap:anywhere}
+.dashboard-providers .account-allocation{display:grid;justify-items:center;gap:2px;color:#456451;font-size:10px;line-height:1.3;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dashboard-providers .account-allocation svg{display:block;width:36px;height:36px;overflow:visible}
+.dashboard-providers .account-allocation-track{opacity:.18}
+.dashboard-providers .account-allocation-note{font-size:11px;line-height:1.45;color:#4d6756;margin:3px 0 6px;overflow-wrap:anywhere}
+@media(max-width:540px){.dashboard-providers .has-account-allocation{grid-template-columns:minmax(0,1fr);gap:4px}}
+@media(forced-colors:active){.dashboard-providers .account-allocation-track{stroke:GrayText;opacity:1}}
+
 /* Mobile history: the calendar lives in the period "Mehr" menu, not as a separate icon. */
 @media(max-width:720px){
  #historyPage .history-calendar-popover>summary{display:none!important}
