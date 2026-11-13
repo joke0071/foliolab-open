@@ -2,10 +2,14 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED / HANDOVER_READY · work-alloc01-331fb5cfdd75-20261113.
-Autorisierter serieller UI-ALLOC01-Code-/Node-Schnitt abgeschlossen;
-nächster Schritt native Darstellung/Bedienung benötigt konkrete Freigabe.
-Keine laufende eigene Schreiboperation,keinHintergrundbetrieb,keineZusatzagenten.
+ACTIVE · work-autonomous-b9a10762f97b-20261113.
+Alleiniger HND01-Writer; Übernahme durch Nutzerauftrag vom 13.11.2026 autorisiert.
+Vorgänger work-alloc01-331fb5cfdd75-20261113 STOPPED/HANDOVER_READY.
+Keine Zusatzagenten, parallelen Stränge oder Hintergrundautomation.
+Aktiver Umfang: UI-ALLOC01 lokale Chromiumqualifikation am exakten933c3667
+nach ausdrücklicher120s-Freigabe; anschließend maximal ein unabhängiger
+serieller Folgeschnitt nach konkret fehlendem Roadmapkriterium.
+Keine Actions-/Merge-/Release-/allgemeine native Freigabe.
 Kollision gegen280da5bd geklärt: Vorgängerwork-eff ausdrücklichSTOPPED,
 Zentral/Main/UI-R4/FLH04-Arbeitsref vor Mutation unverändert;
 neuerOwner an29eb605e mit expectedSHA gespeichert und exakt rückgelesen.
@@ -64,8 +68,7 @@ Alle6Dateien vollständigexakt rückgelesen; keineLöschung und
 alle1115übrigenMain-Dateiblobs unverändert. SW/Workflow unverändert.
 Kein K4-/IDB-/Browser-/Geräte-/Kryptoreview-/Release-PASS.
 
-Konkreter nächster Entscheidungspunkt: gezielten nativenUI-ALLOC01-Lauf
-am EXAKTEN Kandidaten freigeben; bisher NICHT autorisiert/NICHT gestartet.
+Aktueller Auftrag: gezielter lokaler Chromiumlauf am EXAKTEN Kandidaten ausdrücklich autorisiert; noch NICHT gestartet. Vorher reguläre Laufzeitvoraussetzungen prüfen. Historischer Vorgängerbeleg bleibt unverändert gepinnt.
 Vorbereiteter syntaxgeprüfterPfad tests/browser-account-allocation.mjs:
 synthetisches explizitesLegacyprofil,AutoRefreshoff,40/30/20/10+separatesCash,
 320/360/390/412/430/768/1440px,Geometrie/44pxZiel,TastaturEnter/Touch,
@@ -82,7 +85,7 @@ N-UI-PLUS bleibtPLANNED,keinDONE/LIVE_ACCEPTED;Mainreleasegateoffen.
 K4-Legacyc5dc913d wiederverwenden,native/UI-FreshRestore weiterhinohneFreigabe.
 K3v308/UI-R4/P-CI-B ohne neueDeltas nicht erneut inventarisieren.
 Operatorwartepunkt oben unverändert;keineerneuteGerätefrage.
-Keine neuenNativeruns/Actions/Retry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump.
+Nur UI-ALLOC01 lokal wie ausdrücklich im aktuellen Nutzerauftrag freigegeben; keine anderen Nativeruns/Actions/Retry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump.
 UnabhängigeFolgearbeit nur nach konkret fehlendemRoadmapkriterium;
 kein künstlicherNeubau/erneuteTestserie für blockierteAbschlussbelege.
 
@@ -175,7 +178,7 @@ Einstiegsabgleich316Heads,0IN_PROGRESS,historischeQueues43095194276/43095194257.
 PR332/161/157 samt Reviews/Inline/Conversation332/161/157/335 frisch gelesen.
 Zwischenzeitlicher Zentralabschluss0f0981c nach STOPPED/HANDOVER_READY gezielt integriert. Vor Mutation relevante Deltas und expectedSHA prüfen. Bei Kollision nicht überschreiben.
 
-## Abschluss dieses UI-ALLOC01-Schnitts
+## Gepinnter Vorgängerabschluss dieses UI-ALLOC01-Schnitts (historisch)
 
 LokaleImplementierung undgezielteNodeprüfung abgeschlossen,Kandidat exakt
 rückgelesen und hier identitätsgebunden erhalten. Nächste konkrete nativeAbnahme
