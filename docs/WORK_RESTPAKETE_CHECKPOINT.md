@@ -1,3 +1,219 @@
+## STOPPED / HANDOVER_READY / FLH04_WRAP_AUTHORITY_BYTES_SPECIFIED / RELEASE_BLOCKED · work-25790c57cd29-20261113
+
+Mit diesem zentralen Abschluss sämtliche eigenen Schreibaktivitäten beendet; kein Hintergrundbetrieb oder bereits laufender Nachfolger. Unmittelbarer Vorgänger work-196cef9db7a8-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine Zusatzagenten/Parallelisierung/Automation/zweiter Writer/PR/finale CI/Workflowänderung/Runner/Retry/Merge/Release/aktive Sync.
+
+FLH04 **7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf / Tree 6ef292b10caa2956791f0fe157137b31a3da2d00**; genau5Deltadateien (2neu/3Dokumenteergänzt) vollständig gepinnt bytegleich rückgelesen. [Kandidatenbytevertrag](https://github.com/joke0071/foliolab-open/blob/7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf/docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_CONTRACT.md), [öffentliche Kodierungsvektoren](https://github.com/joke0071/foliolab-open/blob/7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf/docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_VECTORS.json). Kein Produktcode geändert; letzterCode10edebbf66cb021107cd1ae52b03bd82380c9e32/Tree5c43f4b41ac864d246b8adbe2ac3214e3d6b7559.
+
+Konkrete binäre Domain-/Rollen-/Versions-/Längen-/Portfolio-/Epochen-/Autoritäts-/Wrapvorgängerbindung, signierter Wrapgrant zusätzlich zur GruppenAEAD, vollständige signierte Autoritäts-/Mitgliedschaftszustände, Passwortwechsel/Rotation/Antwortverlust/A-Verlust und neuer ausschließlich prepared-locked Erzeugungsweg spezifiziert. State→Envelope→Grant vermeidet Hashzirkel. KDF/Cipher/Unicode/EinmalKEK/Budget nur reviewbedürftiger Kandidat. A/Wprivat getrennt non-extractable, A nicht portabel; A-Verlust ohne qualifizierten Nachfolger blockiert dieselbe Autorität. Kein Wrap-/Signatur-/Aussteller-/Entsperrcode. format1prepared-Anker unverändert/gesperrt.
+
+Tatsächliche Prüfung ausschließlich Kodierung/SHA256:12öffentliche synthetische Werte durch getrennte temporäre Python-/Nodeprogramme exakt rekonstruiert,5Strukturformen akzeptiert/5gezielte Parserfehlerformen abgewiesen,Node24.22.1. KeinKDF/AEAD/Signatur/App/IDB/Browser-/Sicherheits-PASS; beideProgramme eigenerOwner, KEINunabhängigesKryptoreview. Keine historischenTests wiederholt/addiert. NativeHarnessunverändert/NICHTGESTARTET, bekanntenAF_UNIX-Fehlstartnichtwiederholt.
+
+**Nächste Gatearbeit:** exakten Kandidaten unabhängig kryptografisch reviewen, wie Ausstellervertrag1 VOR Umhüllungscode verlangt. Native Schlüssel-/Keyslot-Lifecyclebindung in geeigneter zugelassener Umgebung qualifizieren; CryptoKeytausch zwischen Challenge/Commit bleibt ungelöst, exakteEnvelopebytes keinKey-CAS. Danach nur jeweils freigegebene weiterhin gesperrte Erzeugung; keine Selbstfreigabe/Entsperrung. Individuelle Revisionssignaturbytes separat offen.
+
+Frischer Schlussabgleich311Heads: ausschließlich eigeneÄnderungenFLH04/Checkpoint; Maina27cde2f802c26bfec41190911d88bd1d7d8e325/Treee55ffa96f641345759eb3779b00de6187c8671b8,PR332/157/161/UI-R4 sowie sämtliche Reviews/Inline-/Conversationkommentare unverändert.0IN_PROGRESS,nurhistorischeQueues43095194276/43095194257. Mainrun43332355188FAILURE/UrsacheUNKNOWN/RELEASE_GATE_OPEN,keinneuerMain-/ReleasePASS.
+
+In dieser Sitzung nur private Sicherungsmetadaten gelesen:RootV155/406425600Bytes,CompanionsV0/12748800+212408320Bytes. Keine privatenBytes/Uploads/Readbacks/Restores/Schreibfähigkeitsnachweise; aufgezeichneteSHA256nichtneuprivatgeprüft. AlleOriginalketten erhalten, keinidentischesVollbackup. A1/A2/Snapshotgrenzenunverändert;OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNALmitCode-/internemAbnahmerest.
+
+### Vollständiger kopierbarer Übergabeauftrag
+
+```text
+FOLIOLAB OPEN – GESCHÜTZTE HND01-FORTSETZUNG NACH SYNC-BYTEVERTRAG
+
+Repository https://github.com/joke0071/foliolab-open
+GitHub ausschließlich verbundenes Plugin.
+Vorgänger work-25790c57cd29-20261113: STOPPED/HANDOVER_READY.
+Alle eigenen Schreibaktivitäten beendet, kein Hintergrundbetrieb.
+Ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen.
+Keine Zusatzagenten, Parallelisierung, Automation, zweiter Writer oder zweite finale CI.
+Keine erneute unmittelbare Vorgängerbestätigung nötig.
+Nur nach frischem kollisionsfreiem Abgleich allein übernehmen.
+
+REFERENZEN FRISCH PRÜFEN
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325
+Tree e55ffa96f641345759eb3779b00de6187c8671b8
+FLH04 feature/flh04-revisions-20261113-b5ddfe1c
+HEAD 7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf
+Tree 6ef292b10caa2956791f0fe157137b31a3da2d00
+Ausgang 30567f35359341cf2cf5ab64c2fbfc8a4441ff79
+Letzter Produktcode 10edebbf66cb021107cd1ae52b03bd82380c9e32
+Codetree 5c43f4b41ac864d246b8adbe2ac3214e3d6b7559
+Vorcodevertrag 1756f016ecabe2a8adef9bf8745f99e5605b475d
+Zentral feature/flh05-import-foundation:
+aktuellen HEAD/Tree frisch lesen; finale IDs im Sitzungsabschluss.
+Aktiver Zwischencommit ec503ec8675bfe2a3ddc39bd7964326258bb458b
+Zentralen Checkpointbranch niemals vollständig nach Main mergen.
+Owner/Main/Arbeitsbranch/Checkpoint/alle Heads/offene PRs/Reviews UND
+Inline-/Conversationkommentare/Actions/private Sicherungsmetadaten abgleichen.
+expectedSHA und gepinntes Byte-Readback verwenden.
+Zuletzt311Heads, ausschließlich eigene Änderungen FLH04/Checkpoint.
+PR332/157/161/UI-R4 unverändert,0IN_PROGRESS,
+nur historische Queues43095194276/43095194257.
+Keine pauschalen Test-/Branch-/Artefakt-/Originallöschungen.
+
+QUELLEN GEZIELT IN DIESER REIHENFOLGE
+Zentral:
+docs/WORK_RESTPAKETE_CHECKPOINT.md – aktuellen Kopf
+docs/WORK_EFFICIENCY_PLAN_2026-11-01.md – aktive Regeln
+docs/KONSOLIDIERTE_ROADMAP.md – N-DRIVE
+docs/EFF03_WEEK_TARGET_2026-11-11.md
+FLH04:
+docs/FLH04_WORK_CHECKPOINT.md
+docs/FLH04_ENROLLMENT_ISSUER_CONTRACT.md – besonders7/8 und Reviewpflicht1
+docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_CONTRACT.md
+docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_VECTORS.json
+docs/FLH04_SYNC_ARCHITECTURE.md – letzte Verträge
+docs/FLH04_SNAPSHOT_CONTRACT.md
+docs/FLH04_SNAPSHOT_ALLOWLIST_ONCE_2026-11-13.md
+Keine Gesamtinventur, keine Wiederimplementierung fertiger Module.
+
+NEUER TATSÄCHLICHER STAND
+Geschlossener KANDIDATENBYTEVERTRAG für Epochenwrapper und Autoritätszustände.
+REVIEW_REQUIRED / NOT_IMPLEMENTED / NOT_AUTHORIZED.
+Binäre feste Domain-/Versions-/Feld-/Längenregeln statt JSONsignatur.
+Volle Portfolio-/Epoche-/Root-/A-/State-/Wrapvorgängerbindung in AAD.
+Signierter Wrapgrant zusätzlich zur Gruppen-AEAD; Passwortleser kein A/Writer.
+Vollständige signierte Mitgliedschaftszustände; A-Wechsel mit altem+neuem A.
+State→Envelope→Grant vermeidet Hashzirkel.
+KDF/Cipher/Unicode/Einmal-KEK/IV-/Ressourcenregeln konkret,
+ALLE Parameter nur reviewbedürftiger Suitekandidat.
+PBKDF2-SHA256/600000→temporär32Bytes→HKDF→AES256GCM,
+kein Backupparameter-/Sicherheits-PASS daraus.
+A/Wprivat getrennt direkt non-extractable, niemals aus Passwort/E ableiten.
+A privat nicht portabel. A-Verlust ohne qualifizierten Nachfolger blockiert
+dieselbe Autorität; keine Passwort-/Backup-/Seedrettung erfinden.
+Passwortwechsel/alte Zugangsdaten/Epochenrotation/Antwortverlust spezifiziert.
+Neuer format2 prepared-locked Erzeugungsweg NUR SPEZIFIZIERT,
+kein Umhüllungs-/Signatur-/Aussteller-/Entsperrcode/Appaufruf.
+Bestehende format1prepared-Anker erhalten/gesperrt; kein Upgrade/Adopt/
+Überschreiben/Löschen/automatische Neuanlage.
+Alle5Deltadateien am FLH04Commit gepinnt vollständig bytegleich rückgelesen.
+Produktcode unverändert.
+
+TATSÄCHLICHE BEGRENZTE PRÜFUNG
+12öffentliche synthetische Kodierungs-/SHA256-Werte mit getrennten
+temporären Python-/Nodeprogrammen exakt rekonstruiert.
+5Strukturformen akzeptiert,5gezielte Parserfehlerformen abgewiesen.
+Node24.22.1; beideProgramme vomselbenOwner, KEIN unabhängigesReview.
+Dummycipher ohneAEADausgabe/Signaturen; öffentliche synthetische EBytes.
+Kein KDF/AEAD/Signatur/Appmodule/IDB/Netz im Vektorcheck.
+Keine App-/Browser-/Kryptotests, keine neuen CI22/Wallet20/ReleasePASS.
+Historische3/50/andereTests nicht wiederholt/addiert.
+Keine PR/Workflowänderung/CI/Runner/Retry/Merge/Release/Syncaktivierung.
+NativeHarness unverändert/NICHTGESTARTET.
+Bekannten AF_UNIX→EPERM-Fehlstart im unveränderten Executor nicht wiederholen.
+
+GENAU NÄCHSTE GATEARBEIT
+Exakten Kandidaten 7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf unabhängig kryptografisch
+reviewen lassen: Parameter/Passwortkodierung/Entropie-/Einmal-KEK-/Klonannahmen,
+ECommitment/HMACKohärenz/SPKI/ECDSA/Malleabilität/State-/Grantgraph/
+Rollback-/Widerruf/A-Verluststrategie; Vektoren nur Kodierungsbeleg.
+AusstellervertragAbschnitt1 verlangt Review VOR Umhüllungscode.
+Keine eigene Selbstfreigabe, keine Zusatzagenten als vorgetäuschtes Review.
+Danach nur jeweils freigegebenen weiterhin GESPERRTEN Erzeugungsweg umsetzen.
+Alternative unabhängige Gatearbeit: NativeKeypersistenz/Keyslot-Lifecycle
+in geeigneter bereits zugelassener Umgebung qualifizieren.
+CryptoKeyAustausch zwischen Challenge und Commit bleibt UNGELÖST.
+ExakteEnvelopebytes und LifecycleIDs sind kein vollständigerKey-CAS.
+Keine Entsperrung vor Lösung/Nativebeleg und allen bisherigen Pflichtgates.
+Vollständiger individueller Revisionssignatur-/Framevertrag separat OFFEN.
+Gruppenframev1 nicht still umdeuten; Mitgliedertabelle reicht nicht.
+
+BESTEHENDE SCHUTZGRENZEN
+prepareLocalSyncAnchor bleibt isoliert format1/prepared-locked,
+keine Zustimmung/Enrollment/Writerautorisierung.
+Nur lebender syncEnrollmentRequired:true-Record ohne Outbox/Anker;
+count schützt vorhandene undefined/null. Vier lokale128BitIDs,
+256BitHKDFMaterial, separater non-extractableP256Writerkey.
+Roharray finally überschrieben, keine universelle Löschzusage.
+Vollständigen aktuellen Portfolio-/Presencepreimage nachCrypto in EINER
+records-readwrite-Transaktion neu vergleichen, keineCryptoawait darin.
+oncomplete einzige Erfolgsgrenze.
+Keine Callerkeys/IDs/verifiedFlags/öffentlicheReceipt-/Key-/UnlockAPI.
+Unbekannte Recordfelder/Settings/undefined/NaN/-0 blockieren.
+VorhandeneAnker auchbeiRetry/Antwortverlust nichtübernehmen/ersetzen/löschen.
+Edit/Restore/Tombstone/Recovery erhalten Anker+Sperre,
+ursprünglichePortfolioBindung ungültig.
+NormalesBackup/Restore portiertkeineWriter-/A-/SyncKeys/Identität.
+Nicht extrahierbareKeys keineGeräteattestation/FullCloneabwehr.
+adoptPortfolioRecord Vollrecord+Outbox atomar,
+InstallationssperreVORLocalStorageMarker.
+Outboxcapture/begin/recover/planApply/Metadatencommit blockierenSperre;
+vollständigesexpectedPortfolio statt nurCAS.
+A1: alteFrames niemals anneuerenCAS auchbeigleichenFinanzbytes,
+planApply.applyAuthorized=false.
+A2: Storage.confirm vollständiggesperrt bis echterRemoteherkunftsadapter,
+remoteAnchor/acknowledgedLocalRevision=null.
+KeinEncoder/Transport/RemoteApply/aktiveSync,keinezweiteDB/
+LocalStorageOutbox/DBVersionsänderung.
+Snapshotnurv3/v4Kern:3.500.000UTF8Bytes/100.000Strukturwerte/Tiefe16.
+UnbekannteFelder/Credentials/Normalisierung/unsupported blockierenganzePayload;
+keineKürzung/Teilsnapshots.
+VolleSnapshot-Outbox/v5/History/Beleg/FinanzApply/Key/Nonce/Rotation/
+Recovery/Graph/Transport/Konkurrenz/Pagination/KonfliktUI und
+OAuth/Operator/Origin/Scope/Zweigeräte/Kryptoreview/Browser/PWA/A11y/
+Produktion/Sicherung/Readback/Restore offen.
+OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE.
+N-DRIVEBLOCKED_EXTERNAL mit weiteremCode-/internemAbnahmerest.
+
+ERLEDIGTEN BACKUPABGLEICH NICHT WIEDERHOLEN
+backup-vault.js/crypto-backup.js/complete-backup.js gezielt gelesen,
+Quellenblobs/Tabelle in Ausstellervertrag7.
+Muster raw→wrap→non-extractableImport→persistieren→finallyraw.fill(0)
+nutzen, aber BackupDEK/festerBackupAAD/eigeneVaultDB/öffentlicheBackupAPIs
+keinSyncwrapper. Keine Module verändert/neugeprüft.
+BackupV2beobachtetPBKDF2SHA256/310000,16Salt,AES256GCM/12IV,
+V1andererVertrag/210000; keineSyncparameterfreigabe.
+complete-backup kann APIzugänge enthalten; keineSyncKeyportierung.
+
+PRODUKTIONSBLOCKER
+Mainrun43332355188 COMPLETED/FAILURE,UrsacheUNKNOWN,RELEASE_GATE_OPEN.
+Mainunverändert,keinneuerMain-/ReleasePASS.
+Historischeakzeptiertev3118ecc49f91c2c193e9391ef6f15460e6a40eb10c2:
+6Appbaumwurzeln+.github/packageidentisch; nuridentischeKomponenten
+historischwiederverwenden,fehlgeschlageneTestsbleibenFAIL.
+docs/PR335_PRODUCTION_DIAGNOSIS_2026-11-13_773870884cef.md,
+neuesterAbschnittBegrenzterGitHub-Runnerweg.
+KrakenTestblob5cd2025e30423997b5d99660a98e96cb22154b3f
+Helperblob7ee6568522425c1a4bcb7549d3be68abda96c09f
+Originaljob131591512462:Ubuntu24.04Image20261101.360,
+Node22.23.4/PW1.56.1/ChromiumHeadlessShell141.0.7390.37/build1194.
+VollständigenKrakenablauf inklVorkontexte erhalten,
+UH03_SCENARIOSunset/HISTORY_ENGINESchromium.
+VorJEDEMgotoRequests/Responses/TLS-/Fetchfehler/WorkerLifecycle,
+20000ms/Assertionsunverändert,vorhandenenWrappernutzen.
+IsolierterHelperPASSkeinReleasePASS.
+VorhandenerDiagnoseworkflow decktvollenAblaufnichtab.
+ErstengenreviewbarenLauncher-/Workflowdelta+exaktenSHA vorbereiten,
+dann konkrete#229-Freigabe; keineWorkflowänderung/Runner/RetryohneAuftrag.
+LokalesSocketverbot erklärtGitHubFehlernicht.
+
+GESCHÜTZTE REFERENZEN
+PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2/CSV44pxBLOCKED
+PR15708714cc602110bae479083b3d38fa1adc9be280c
+Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74
+UI-R460c1ab098449151b475563c9fc822b9a5e9a9152
+
+SICHERUNGEN
+In dieserSitzung nur frischeVersion-/Größenmetadaten,
+SHA256aufgezeichnet/NICHTneuausprivatenBytesgeprüft.
+RootV155/406425600Bytes
+749f072638409f4643fa9ed0763c4ceaa18bb89fa2557585624953f47722e234
+FAILCompanionV0/12748800Bytes
+459e5236c9f3d41d16c00bb5cdc5920929044608c19435cc8e64188e78777169
+MainOriginalCompanionV0/212408320Bytes
+af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c
+KeineprivatenTransfers/Uploads/Readbacks/Restores/Schreibfähigkeitbehaupten.
+Rootalleinunvollständig;alleOriginal-/Oracle-/Companion-/Restorekettenbewahren.
+KeinidentischesVollbackupalleinwegenChatwechsel.
+
+Seriellselbstständigweiterarbeiten. UnabhängigeArbeitnichtamReleaseblocker
+anhalten. KeineUmhüllungsimplementierungvorvertraglichemReview.
+AmEndetatsächlichenStand/SHAs/Gatessichern,eigeneSchreibaktivitätenbeenden,
+STOPPED/HANDOVER_READY setzenundvollständigenÜbergabepromptausgeben.
+```
+
+## Unveränderte Historie
+
 ## ACTIVE / FLH04_WRAP_AUTHORITY_BYTE_CONTRACT / RELEASE_BLOCKED · work-25790c57cd29-20261113
 
 Alleinige serielle HND01-Verantwortung für diesen isolierten Vertragsschnitt nach frischem kollisionsfreiem Abgleich übernommen. Unmittelbarer Vorgänger work-196cef9db7a8-20261113 STOPPED/HANDOVER_READY; keine erneute Vorgängerbestätigung benötigt. Ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine Zusatzagenten/Parallelisierung/Automation/zweiter Writer/PR/finale CI/Workflowänderung/Runner/Retry/Merge/Release/aktive Sync.
