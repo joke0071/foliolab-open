@@ -745,3 +745,165 @@ Recovery/CI22/Wallet20/PR/Main/Produktions-/externeAbnahme.
 Playwright-Projektimport ERR_MODULE_NOT_FOUND; kein Browserstart/keine Umgehung.
 Kryptoreview EXTERNAL_REVIEW_PENDING am unveränderten exakten Kandidaten;
 Snapshotimpact unter src nur sync-snapshot.js, keine Krypto-/Autoritätsfreigabe.
+
+## Exklusiver Keyslot-/Writer-Lifecyclekandidat K1 · 13.11.2026
+
+work-9df7d4dd8c06-20261113; gepinnte Produktbasis
+3f79ad2d620723013621c861c0eb98f01589f1ca /
+Tree359a87764cbf50ef9a2de82ea4b551505fdc1db1.
+**KANDIDAT / NICHT IMPLEMENTIERT / NICHT QUALIFIZIERT.**
+K1 ist konkret prüfbar, aber keine geschlossene CryptoKey-CAS-Lösung:
+seine exklusive Writerabdeckung ist am Produktstand nicht durchgesetzt.
+Die Ablehnungsmatrix oben und Ausstellervertrag Abschnitt4 bleiben unverändert.
+Kein Architekturentscheid, keine neue Autorisierung und kein Kryptoreviewabschluss.
+
+### Konkreter Mechanismus und Geltungsbereich
+
+K1 untersucht EINEN exklusiven Web-Lock für die gesamte bestehende
+foliolab-open-portfolio/records-Linie im selben Storage-Bucket, nicht pro Tab,
+Writer-ID, Epoch-ID oder nachträglich aus dem Portfolio abgeleiteten wechselnden Namen.
+Ein noch festzulegender konstanter interner Ressourcenname muss für alle
+Keyslotbenutzer identisch sein; er ist keine Autorität und enthält keine Finanzdaten.
+Alle beteiligten Fenster und Worker müssten denselben privaten Adapter verwenden.
+Ein Keyslot-/Lifecyclevorgang erwirbt den Lock VOR dem ersten IDB-Read und hält ihn
+durch sämtliche Cryptoawaits bis zum abgeschlossenen Commit bzw. dessen Klärung.
+Crypto läuft zwischen kurzen IDB-Transaktionen, niemals innerhalb einer offenen
+readwrite-Transaktion. Kein Polling/Keepalive/Lease/TTL/LocalStorage-Fallback,
+kein Lock-steal und kein neuer Runner oder Store.
+
+Der Adapter darf keine allgemeine withLock(callback)-, putKey-, callerKey- oder
+unlock-API exponieren. Nur fachlich geschlossene Operationen und privat im
+Lockcallback erzeugte flüchtige Fähigkeiten; nicht serialisierbar, keine frei
+nachbaubaren Flags. Außen übergebene Objekte vor dem ersten Await vollständig
+ablösen. Lockcallback wartet die gesamte interne Arbeit; keine abgetrennten Tasks,
+keine frei ausführbaren Callbacks während der Schlüsselarbeit. Ein Wiederanlauf
+erwirbt neu, liest neu, prüft neu und kann keinen alten Token reaktivieren.
+Fehlende Web-Locks-Fähigkeit blockiert diesen Pfad, nicht die unabhängige lokale
+Portfolioverwaltung. Lockbeobachtung per query() ist kein Besitzbeweis.
+
+**Kerninvariante, die erst noch bewiesen werden muss:** Von der ersten vollständigen
+Erfassung von P bis tx.oncomplete kann KEIN zulässiger Writer den tatsächlich
+verwendeten Keyslot ersetzen, löschen oder umformen. Damit wäre Schlüsselidentität
+durch qualifizierte Nichtmutation gebunden, nicht durch JSON/Lifecycle/Digest.
+Die vorhandenen Challenges müssten weiterhin Material-/Attributkohärenz der
+gelesenen Schlüssel beweisen. Ein Lock ersetzt keine Challenge, Signatur,
+Mitgliedschaft, Autorisierung oder atomare Prüfung aller übrigen Preimages.
+
+### Vollständiger Operationslebenszyklus des Kandidaten
+
+| Operation | Vorgeschlagene zwingende Regel / unverändert fehlende Freigabe |
+| --- | --- |
+| Bestehender format1-prepared-locked | Ganz blockieren; nicht übernehmen, ändern, ersetzen oder löschen. Bestehendes prepareLocalSyncAnchor bleibt isolierte Vorbereitung ohne K1-Garantie. Keine Nachrüstung bestehender Schlüssel durch Metadaten. |
+| Neue zulässige Linie | Erst nach eigenem gültigem Enrollment-/Reviewvertrag, abwesender Outbox/Anker/allen vorgesehenen Slots und vollständigem P. Neu erzeugte Keys nur durch private Routine; atomare Neuanlage mit count/add-Schutz. Dies ist KEIN Auftrag zur Implementierung dieses Erzeugungs-/Ausstellerpfads. |
+| Capture / Verifikation / Begin | Vollständigen gebundenen Lifecycle unter demselben Lock lesen; sämtliche verwendeten Slots während der gesamten Prüfung unveränderlich. Erfassung R/S/D und Framebeleg nach obigem Vertrag; Rawguards im vorhandenen Code bleiben unverändert. |
+| Rotation / Widerruf | Ebenfalls exklusiv; neue Schlüsselerzeugung/Generation und Übergang nur mit eigenem reviewtem Vertrag. Keine in-place-Ersetzung alter Schlüssel. Alte Frames/Keys unverändert history-only erhalten; Referenz-/Rechteübergang atomar an vollständiges Parent-P binden. Keine neue Rotation hier freigegeben. |
+| Recovery / Adoption / Restore / Delete | Keine Autoritäts-/Writerportierung, kein Wiederverwenden alter Fähigkeiten. Vorhandene Portfoliooperationen behalten CAS/Fence/Outboxinvalidierung; jeder künftige Keyslot-/Lifecyclewriter müsste K1 vollständig erfüllen. Format1 bleibt erhalten. Neue Finanzrevision oder Fenceänderung entwertet den Versuch über P. |
+| Abort / Quota vor Commit | Gesamte IDB-Transaktion abbrechen, kein Send/Unlock/Apply; Originale erhalten. Lock erst nach Transaktionsende freigeben. |
+| tx.oncomplete / Antwortverlust | Erst oncomplete dauerhaft. Keine Neuverschlüsselung/zweite Neuanlage als Retry. Bei unklarem Ausgang neu exklusiv lesen und Operation/Frames/Lifecycle prüfen; neueren CAS nicht bestätigen. |
+| PageClose / Prozessende | Keine fremde Lockübernahme per steal. Nach Ende gespeicherten Zustand neu lesen/verifizieren; kein rekonstruierter flüchtiger Beleg. Crash-/Powerlossdurabilität bleibt separat nativ nachzuweisen. |
+| Slotcleanup / DB-Löschung | Nicht durch K1 freigegeben. Kein clear/delete/DB-Neuanlegen als Lock- oder Recoverylösung; Original-/Identitäts-/Restoreverträge gelten weiter. |
+
+Nach jedem Cryptoawait werden Presence und vollständige vergleichbare Formen von P
+erneut gelesen und streng verglichen. Dann EIN records-readwrite-Commit mit denselben
+Prüfungen. read/get allein genügt nicht: count bindet fehlend gegen belegtes
+undefined/null, und zusätzliche/unbekannte Slots blockieren. Unbekannte Formen
+dürfen weder serialisiert wegfallen noch normalisiert werden. Der Kandidat braucht
+eine geschlossene Slotliste und Attributformen; zusätzliche Slots sind kein
+automatisch transportierbares Metadatum. Privates P inklusive aller Credentials,
+Challengeeingaben, R/S/D und Preimagedigests bleiben flüchtig/lokal und aus Logs fern.
+
+Normale Portfoliosaves dürfen zwischen den kurzen IDB-Transaktionen stattfinden;
+unveränderter Revision-/Vollpreimagevergleich muss den Versuch dann verwerfen.
+Same-CAS-Änderungen werden ebenfalls vollständig geprüft. Ein zusätzliches
+Keyslotlock alleine verhindert kein Same-CAS-/ABA-Verhalten fremder ungebundener
+Writer. Darauf darf die Behauptung vollständiger Bindung nicht aufgebaut werden.
+
+### Gezielter Istcodeabgleich und tatsächliche Lücke
+
+Vollständig gepinnt gelesen und unabhängig Gitblob-SHA1-geprüft:
+atomic-storage b8bc22967d451150801cd8ac1fd847a768c37ca2,
+sync-local-anchor 815f2ac2ccd0e507bcf4dbefbaf6a07b5332afa4,
+sync-outbox-storage e2f4341934f33f81f16fdb731d57d6bf0c40525e,
+sync-outbox-state ba713bb111a74c1d3d7e1b4f2ca884fbd804cc9d,
+browser-portfolio-storage c383901ffe000b82f3a97c1f08460748dbe228eb,
+Ausstellervertrag 4e0c446e70a828cd0cfcf81b1600a556cd7c509a,
+Harness 88529dbbc1748e48c0f1c9c973fe4c0e03550691.
+
+prepareLocalSyncAnchor hat privaten Neuanlagewriter mit Presence-/Portfolio-Prüfung,
+aber keinen solchen exklusiven Lebenszyklus. Bestehende vorhandene Slots werden
+korrekt verweigert; das verhindert nicht spätere externe Keyslotmutationen.
+PortfolioStorage.withLocalLock verwendet einen anderen vorhandenen Lockpfad;
+normale IDB-Saves und Outboxadapter sind dadurch kein exklusiver Keyslotwriter.
+atomic-storage exportiert den DBzugang; ein allgemeiner IDB-Zugriff ist technisch
+weiter möglich. Die gelesenen Module reichen daher NICHT als vollständiger
+Nachweis aller App-/Alt-Tab-/Worker-/Recovery-/Cleanupwriter. Teilweise vorhandene
+lokale Quellkopien wurden nicht als vollständiger Repositorynachweis behandelt.
+Kein allgemeiner neuer Gesamtaudit und keine neue Abnahme aus Quelltext.
+
+**Konkreter Gegenablauf gegen K1 ohne Writerabschluss:**
+A hält den Web-Lock, liest K0 und besteht Challenge; B verwendet eine unabhängige
+records-Transaktion ohne denselben Lock und ersetzt K0 durch K1 mit identischen
+JSON-/Lifecycle-/Envelopebytes und Attributen; A prüft nur diese vergleichbaren
+Werte und committet. K1-Lock und Metadaten allein würden diesen Ablauf NICHT
+ablehnen. Gleiches gilt für einen Lock-steal mit weiterlaufendem altem Callback.
+Das ist ein aus API-/Codegrenzen abgeleitetes Gegenbeispiel, kein ausgeführter
+nativer Repro und keine neue Produktfehlermeldung.
+
+Web Locks ist laut Primärspezifikation kooperative Koordination; query() ist nur
+eine Momentaufnahme, steal kann alte Callbacks ohne Exklusivitätsgarantie
+weiterlaufen lassen. IDB liefert keine daraus abgeleitete Slot-ACL.
+Quellen am 13.11.2026 gelesen:
+https://www.w3.org/TR/2026/WD-web-locks-20261112/ (Einleitung, request/steal/query),
+https://www.w3.org/TR/2026/WD-IndexedDB-3-20261030/ (Transaktionen/Objectstore).
+Eigene Schlussfolgerung: K1 ist unter unveränderter Ablehnungsmatrix erst dann
+tragfähig, wenn sämtliche zulässigen Writer nachweislich beteiligt sind und der
+Keytauschgegenfall tatsächlich nicht zu einem falschen Commit führen kann.
+Feindlicher Same-Realm-Code liegt außerhalb des bestehenden Kryptothreatmodells;
+das darf normale Alt-Tab-/Worker-/Recovery-/Testwriter oder unqualifizierte
+Racefälle nicht nachträglich aus dem Pflichtumfang ausschließen.
+
+**Entscheidung dieser Bearbeitung:** K1 NICHT als gelöst/implementierbar abgenommen.
+Kein Produktcode, keine Sperrlockerung, keine Änderung des Ausstellervertrags4.
+Die nächste Facharbeit ist der konkrete nachweisbare Abschluss der Writerabdeckung
+oder ein anderer vollständiger Mechanismus, der den Gegenablauf unter dem
+unveränderten Vertrag ausschließt. Nur den Locknamen hinzuzufügen genügt nicht.
+Keine Annahme, ein Browser-PASS allein könne diese logische Lücke schließen.
+
+### Native Prüfzuordnung und konkret bereitzustellender Testplatz
+
+Aktuelle Sitzung: Node24.22.1; runtimeeigener Playwright1.62.1 samt playwright-core
+vorhanden, Systempfad /usr/bin/chromium vorhanden. Kein erfolgreicher Projektimport,
+kein gewählter/gestarteter nativer Engineprozess und keine funktionsfähige
+Browser-/Socketausführung dadurch belegt. NoNewPrivs1/Seccomp2 entspricht der
+bekannten AF_UNIX-Fehlumgebung; kein identischer Fehlstart wiederholt. Kein
+environment_status-Werkzeug in dieser Sitzung angeboten. Keine Sicherheits-,
+Sandbox-/TLS-/Zertifikats-/Timeoutumgehung oder pauschale Installation versucht.
+ENVIRONMENT_BLOCKED für diese native Abnahme; andere zulässige Umgebungen UNKNOWN.
+
+Jochen muss, soweit kein zugelassener vorhandener Testplatz zugeordnet werden kann,
+GENAU einen zugänglichen Testplatz zuordnen: Playwright mit fest gewähltem
+ENGINE=chromium (oder ausdrücklich firefox/webkit), regulär startbarem Browser,
+lokalem vertrauenswürdigem HTTP-Testorigin, echten IDB/WebCrypto/Web-Locks-Fähigkeiten,
+zwei Seiten im selben BrowserContext und unverändertem Repositorystand.
+Keine Secrets in Chat. Vor Ausführung SHA/Tree, Node-/Playwright-/Engineversion und
+Startvoraussetzungen festhalten. Vorhandenen tests/browser-sync-outbox.mjs und
+tests/storage-origin.html verwenden; KEIN neuer Runner/Workflow/CI-Trigger.
+Eine Projektauflösung von Playwright darf nur regulär zugeordnet werden; ein
+Installations-/Startversuch ist kein Abnahme-PASS.
+
+| Sollnachweis am exakten Kandidaten | Bestehender Harness / noch konkret fehlender Beitrag |
+| --- | --- |
+| Native Original-Raw-Outbox, zwei Seiten/CAS, PageClose/Reopen/Reverify | Bestehender Harness unverändert vorgesehen; noch nicht ausgeführt. Reopen im selben Context ist kein Prozessneustart. |
+| prepared-locked-Keypersistenz und Kohärenz | Vorhandene anchor-proof-Gegenprüfung nach Page-Reopen; kein Enrollment/Unlock. |
+| P-Präsenz, Same-CAS und tatsächliche Keyslotraces an JEDER Cryptoawaitgrenze | Im vorhandenen Harness erst nach tragfähigem Mechanismus gezielt erweitern: K0/K1 mit gleichen Metadaten, unterschiedliche HKDF-/Writerkeys, Presence/Attribute/Zusatzslots, Alt-Tab/Worker und fremder Writer. Bestehender Harness deckt K1 oder Snapshotintegration NICHT ab. Kein neuer Runner. |
+| Lockverlust/steal/Close und konkurrierende Lifecycleänderung | Falscher Commit muss ausgeschlossen bzw. Versuch vollständig verworfen sein; nicht bloß erfolgreicher Lockcallback. Keine automatische Übernahme oder TTL. |
+| oncomplete plus Antwortverlust und neuer Save | Tatsächlich gespeicherten Frame, Original-CAS, Parent, vollständigen Lifecycle und fehlende doppelte Neuanlage lesen/verifizieren. Kein fiktives Rollback. |
+| Prozesscrash, reale Quota, Recovery | Separat qualifizieren und als Voraussetzung des zugeordneten Testplatzes benennen. Injizierte Fehler bleiben begrenzte Faultinjection. |
+
+Kryptoreview unverändert: bestehendes Paket fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
+Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2/Tree44ff9c4d60fb22b9519b4b0b344a91045f97f28e,
+REVIEW_READY/EXTERNAL_REVIEW_PENDING. Jochen benennt unabhängigen qualifizierten
+Prüfer und nötigen Zugang/Budget; kein Paketneubau, Selbst-/KI-Reviewabschluss oder
+externe Beauftragung. K1 ist zusätzliche ungeprüfte nachgelagerte Vorarbeit und
+keine Änderung oder pauschale Erweiterung des gepinnten Reviewgegenstands.
+Alle A1/A2/prepared-locked/Snapshot-/Produktions-/Sicherungsgrenzen bleiben gültig.
