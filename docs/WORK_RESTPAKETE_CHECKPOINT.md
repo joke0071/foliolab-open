@@ -1,3 +1,11 @@
+## ACTIVE / FLH04_NORMAL_RESTORE_LIFECYCLE / RELEASE_BLOCKED · work-64ba30c2c554-20261113
+
+Alleinige serielle HND01-Verantwortung nach ausdrücklichem Nutzerauftrag und frischem Abgleich übernommen. Unmittelbarer Vorgänger work-0910b01a3280-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine tatsächliche konkurrierende Mutation belegt. Main a27cde2f802c26bfec41190911d88bd1d7d8e325, FLH04 d3255e5b2971d7b6fc82e0592e284623a4e36547, Ausgangscheckpoint5d220d2bbe4e0105bc456a744c33e21f02b909ab. PR332/157/161 samt Reviews/Kommentaren, UI-R4 und Actions frisch abgeglichen: unverändert,0IN_PROGRESS,nur historischeQueues43095194276/43095194257. RootV155 und beide CompanionsV0 frisch nur per Library-Metadaten in Version/Größe bestätigt; kein Transfer/Readback/Restore/Upload/Schreibfähigkeitsnachweis.
+
+Node24.22.1 verfügbar. Bekannter Chromium-AF_UNIX→EPERM-Fehlstart wird im unveränderten Executor nicht wiederholt; keine geeignete neue native Umgebung nachgewiesen. Native IDB/CAS/Crash/Quota/Mehrtab/Recovery bleiben ENVIRONMENT_BLOCKED/TEST_BLOCKED, isolierte unabhängige Entwicklung erlaubt. Nächster begrenzter Schnitt: normale Restore-/Importersetzungswege gegen vorhandenen save/CAS gezielt verfolgen; Lifecyclegrund vor Code definieren und atomare Invalidierung samt Erhalt aller verschlüsselten Originalframes absichern. Keine Syncaktivierung, Encoder/Transport/Apply, DB-/LocalStorage-/Workflowänderung, Agenten/Automation/PR/CI/Merge/Release. A1/A2/Snapshotgrenzen und sämtliche Finanz-/Backup-/Pflichtgates gelten fort.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY / FLH04_A1_GUARD_IMPLEMENTED / A2_REMOTE_CONFIRMATION_BLOCKED / RELEASE_BLOCKED · work-0910b01a3280-20261113
 
 Eigene alleinige HND01-Verantwortung und alle eigenen Schreibaktivitäten mit diesem gepinnten Abschluss beendet. Keine Hintergrundarbeit/Nachfolgerübernahme. Beide einmaligen Zusatzaufträge abgeschlossen; keine neue Parallelisierung. Ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen.
