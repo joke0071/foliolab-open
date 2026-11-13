@@ -1,3 +1,19 @@
+## STOPPED / HANDOVER_READY / RESTORE_AND_ORPHAN_GUARDS_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
+
+Eigene Produkt-/Codeaktivitäten beendet; keine Hintergrundarbeit/Nachfolgerübernahme. Zentraler Abschluss folgt als reine HND01-Dokumentation. Unmittelbarer Vorgänger ausdrücklich STOPPED; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine neuen Agenten/Automation/PR/CI/Merge/Release/Syncaktivierung.
+
+**Gesichert:** Restorecommitc7e8dbefbfd3a2f6a5f648991c24f8b25a93c662/Tree2c12245deff1eb89a5b16d5212adbe6a8d964475, alle7Deltadateien gepinnt bytegleich. LetzterCodecommit5e08f4d085a8f5cb646122eedcefed19b859e7e0/Tree92314eee7613bd8bbba9ab5c83e8d6158ed5135d, alle5Folgedeltadateien gepinnt bytegleich; App/NativeHarness gegenüberc7e8unverändert. Gesamt gegenüberMain23Dateien=20neu+atomic-storage/browser-portfolio-storage/app geändert. Danach ausschließlich dieserSchlusscheckpoint.
+
+**Fortschritt:** beide normaleBackuprestorepfade tragen intent:restore bisPortfolioStorage/atomaremIDBCommit, invalidieren alteOutbox selbstbeiidentischenBytes, alleOriginalframes/Versucheerhalten. GewöhnlicheFinanz-/CSV-Saves bleibenNachfolger. Fehlender/tombstoneterPortfolio-Record invalidiert vorhandeneLiniebeiNeuanlage als portfolio-reinitialized. MarkerloseNew-/Migration-Adoption verweigert beobachteteverwaistelebende/fehlendePortfoliozuordnung; expliziteTombstonemigrationerhalten. KeinevolleInstallationsidentität: readonlyResumeprüfung+Marker sind KEINatomarerCutover; nebenläufigeErfassungdabei braucht echtenInstallations-/Enrollmentpreimagevertrag. KeinneuesEnrollment/Key-/Senderrecht.
+
+**Tatsächlich:**40verschiedeneNode24.22.1-TestsPASS/0FAIL/0SKIP/0CANCELLED=8Zustand+25Transaktions-/Factorydouble+3PortfolioStorage+4Legacy/CAS;11neu. LetzterbetroffenerLauf32PASS,8unveränderteZustandsbelegeausvorherigemSchnitt. Syntax5DateienPASS,81unveränderteEingabenblobgenau/App-RücknahmediffexaktOriginal. Altes52/63/41nichtvollständigwiederholt. NativeHarnessumRestore-/Fehlerinjektionergänzt,NURSyntax/NICHTGESTARTET. KeinUI-/echterIDB-/Crash-/Quota-/Mehrtab-/Cutover-/Remote-/Geräte-/FullCI-/ProduktionsPASS. Node24abweichendCI22/Wallet20.
+
+**NächsterSchritt:** atomare vertrauenswürdigeInstallations-/Enrollmentpreimagebindung konkretisieren (Portfolio/Epoche/Gerät/lokaleLinie/CAS/CryptoAwait); nebenläufigeOutboxerfassungwährendmarkerloserAdoptionnichtdurchBytes/CAS/Markerfreigeben. AlternativgeeignetezugelasseneNativeIDB-Abnahme,keinenbekanntenAF_UNIX→EPERM-Fehlstartwiederholen/keineUmgehung. A1/A2 unverändert; Snapshot-Outboxbindung/volle v5/History/Beleg-/FinanzApply-/Key-/Encoder-/Nonce-/Rotation/Recovery-/Graph-/Transport-/UI-Arbeit und allePflichtgatesoffen. OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNAL.
+
+FrischerSchlussabgleich:Maina27cde2/Run43332355188FAILURE/PARKED/RELEASE_BLOCKED;PR332/157/161/UI-R4unverändert,Reviews/KommentareohneGegenauftrag,0IN_PROGRESS,nurhistorischeQueues43095194276/43095194257. RootV155/406425600Bytes,FAILCompanionV0/12748800Bytes,MainOriginalCompanionV0/212408320Bytes frischNURMetadaten. KeinprivaterTransfer/neueSicherung/Readback/Restore/Schreibfähigkeitsnachweis. Rootalleinunvollständig,alleOriginalkettenundSchutzverträgeerhalten. VollständigerÜbergabeauftragimzentralenCheckpoint.
+
+## Unveränderte Historie
+
 ## ACTIVE / RESTORE_AND_ORPHAN_GUARDS_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
 
 Zwei eng zusammenhängende lokale Lifecyclekorrekturen gemäß vorherigem Vertrag. Restorecode c7e8dbefbfd3a2f6a5f648991c24f8b25a93c662/Tree2c12245deff1eb89a5b16d5212adbe6a8d964475, alle7Deltadateien bytegleich rückgelesen. Folgevertrag8aa399c6: bei fehlendem/tombstonetem Portfolio reinitialisiert atomarerCommit vorhandeneOutbox als portfolio-reinitialized; markerlose New-/Migration-Adoption verweigert beobachteteverwaisteLinie, ohne neueIdentitäten oderOutbox anzulegen. AlleOriginalframes/Versucheerhalten.
