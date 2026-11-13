@@ -2,17 +2,17 @@
 
 ## Zuständigkeit und Auftrag
 
-ACTIVE · work-autonomous-b9a10762f97b-20261113.
-Alleiniger HND01-Writer; Übernahme durch Nutzerauftrag vom 13.11.2026 autorisiert.
+STOPPED / HANDOVER_READY · work-autonomous-b9a10762f97b-20261113.
+Alleinige Schreibarbeit beendet; Übernahme war durch Nutzerauftrag vom 13.11.2026 autorisiert.
 Vorgänger work-alloc01-331fb5cfdd75-20261113 STOPPED/HANDOVER_READY.
 Keine Zusatzagenten, parallelen Stränge oder Hintergrundautomation.
-Aktiver Umfang: UI-ALLOC01 lokale Chromiumqualifikation am exakten933c3667
-nach ausdrücklicher120s-Freigabe; anschließend maximal ein unabhängiger
-serieller Folgeschnitt nach konkret fehlendem Roadmapkriterium.
+UI-ALLOC01 lokalENVIRONMENT_BLOCKED; ein unabhängigerDrive-Restore-Schnitt
+lokal implementiert undgezieltNodegeprüft. Keine offenen eigenen Mutationen
+oder gestarteten lokalen Server/Browserprozesse.
 Keine Actions-/Merge-/Release-/allgemeine native Freigabe.
 Kollision gegen280da5bd geklärt: Vorgängerwork-eff ausdrücklichSTOPPED,
 Zentral/Main/UI-R4/FLH04-Arbeitsref vor Mutation unverändert;
-neuerOwner an29eb605e mit expectedSHA gespeichert und exakt rückgelesen.
+damaligerOwner an29eb605e mit expectedSHA gespeichert und exakt rückgelesen.
 Überholtes unverknüpftes Objektd72be4b9 bleibt verworfen/keineLease;
 nicht nachträglich übernehmen. Ältere work-pr333-Ausführung weiterhin
 technisch ungeklärt; keine abhängige Release-/Nativeaktion hier.
@@ -36,60 +36,77 @@ Dieser Checkpoint ist der aktuelle Einstieg, keine append-only Chronik. Bei Änd
 
 Für tatsächliche OAuth-Fälle bleiben zulässiger Testaccount/Testdatei/Operationen erforderlich; keine Token im Chat. Unabhängiger Kryptoprüfer/Zugang/Budget weiterhin nicht zugeordnet, nur für abhängigen Reviewumfang relevant. Konkrete Broker-/AT-/Barausgleich-Originalklassen erst bei aktiver Fallwahl nach gezieltem Originalindexabgleich anfordern.
 
-## Nächste ausführbare Arbeit
+## Aktueller Arbeitsstand und erste offene Aktion
 
-UI-ALLOC01-Codekandidat [933c3667](https://github.com/joke0071/foliolab-open/commit/933c366793e7f4bcd068c55701d4b1c39c638a35),
+**Eingefrorener UI-ALLOC01-Kandidat933c366793e7f4bcd068c55701d4b1c39c638a35**,
 Tree82556544576a05e1ed9973be6c023a939edaa2fd, ParentMaina27cde2f.
-[Lokaler Ergebnis-/Quellbeleg](https://github.com/joke0071/foliolab-open/blob/933c366793e7f4bcd068c55701d4b1c39c638a35/docs/release-evidence/ui-alloc01-local-2026-11-13.json).
-Keine neueBranch/PR/Kandidatenref; der gepinnte Verweis erhält den Kandidaten.
-UI-R4-60c1ab09 bleibt geschützt und unverändert,keinVermischen.
+Unverändert und nicht mit UI-R4 oder folgendem Restore-Schnitt vermischt.
+[Originaler lokaler Beleg](https://github.com/joke0071/foliolab-open/blob/933c366793e7f4bcd068c55701d4b1c39c638a35/docs/release-evidence/ui-alloc01-local-2026-11-13.json):
+30NodeTests/Syntax laut Vorgänger, hier NICHT erneut ausgeführt.
+Statischer36pxKonto-/Depotring; positiveAnlagen inkl.zugehörigemCash,
+UNKNOWN sperrt alleAnteile im Konto; Ausschluss/Verbindlichkeit/negativeWerte
+ohneAnteil, Qualitätshinweise/Archiveffekt/1:1Sparguthaben erhalten.
+KeineFinanz-/Persistenz-/Requestmutation oder neueInteraktion.
 
-Vorher fehlend: normale Konto-/Depotpositionszeile ohne direkt sichtbaren Anteil.
-Jetzt: statischer36pxRing+Prozenttext,positiveAnlagen inkl. zugehörigemGuthaben;
-keine Verdünnung durch andereKonten/Anbieter. Ausschlüsse/Verbindlichkeiten/
-negativeBeiträge ohne Anteil; Archiveffekt wirtschaftlich unverändert.
-Jeder fehlende/UNKNOWN/nichtfiniteEUR-Anlagenwert sperrt sämtlicheProzente
-desbetroffenenKontos,statt bekanntePeers als vollständige100% auszugeben.
-Null nur bei vollständigem positivemNenner0%; gespeicherte unsichere Kurs-/FX-
-Qualität ausdrücklich gekennzeichnet. BestehendeQualitätshinweise und
-einfaches1:1Sparguthaben erhalten. Keine Finanz-/Persistenz-/Requestmutation.
-Anteil am Anbieter im Detail bleibt eigenständig als solcher beschriftet.
+**Neue ausdrückliche lokale Freigabe:** Nutzerabschnitt3/4 erlaubt den
+einmaligen exakten Chromiumlauf und begründete geänderteFolgerevisionen
+innerhalb120s, rein synthetisch, Server127.0.0.1:4173, Cleanup.
+Diese Zustimmung nicht erneut allgemein anfordern.
+**Tatsächlich ENVIRONMENT_BLOCKED; NICHT GESTARTET,0Browserstarts.**
+[Frischer Vorprüfungsbeleg](release-evidence/ui-alloc01-environment-2026-11-13.json).
+Commit/Tree/Parent frisch bestätigt, lokalerHarness6036Bytes/Gitblob
+6c1cde4272799cc9325aa1261774f684bf3ce310 exakt; vollständigeBrowserbereitstellung
+wegen fehlenderVoraussetzungen NICHT erfolgt.
+Node24.22.1/Playwright1.62.1 vorhanden, erwarteterChromium1234 fehlt.
+SystemChromium156.0.8078.79 vorhanden; bereits socket(AF_UNIX,SOCK_STREAM)
+scheitert mit EPERM1 VOR bind. AF_INET nicht erreicht.
+KeinServerstart,keinAF_UNIX-Browserfehlstart,keineInstallation/Umgehung.
+KeinScreenshot-/Sicht-/Axe-/Browser-/IDB-/Geräte-/Restore-/ReleasePASS.
+NativeFreigabe nicht als ausgeführt/erfolgreich/verbraucht führen.
+Erster offenerUI-Schritt: reguläreSocket-/Harnessumgebung herstellen,
+passendeEingänge exakt bereitstellen/verifizieren, dann original120sLauf.
+Kein unveränderterRetry oder GitHub-Ersatztrigger.
 
-Node24.22.1:30/30PASS,0FAIL/0SKIP/0CANCELLED;
-9neueFallgruppen+21bestehendeDashboard/Allokations/Bewertungsregressionen.
-Syntax4SkriptePASS. Unabhängige40/30/20/10-,80/20- undFX20/80-Sollwerte;
-UNKNOWN/Null/negativ/Ausschluss/Archiv/1000Positionen/Nichtmutation geprüft.
-ErsterLauf28/30:2neueFixtures scheiterten VOR Zielaufruf am vorhandenen
-Verbot negativerMengen. Gegenfälle auf legalePositionen mit expliziten
-negativenBewertungscallbacks korrigiert; Finanzvalidierung unverändert.
-71Eingänge gepinnt,68unveränderteEingänge unabhängigGitblobgeprüft.
-Kandidatänderung exakt6Dateien:2Produktmodule+CSS+2Tests+ErgebnisJSON.
-Alle6Dateien vollständigexakt rückgelesen; keineLöschung und
-alle1115übrigenMain-Dateiblobs unverändert. SW/Workflow unverändert.
-Kein K4-/IDB-/Browser-/Geräte-/Kryptoreview-/Release-PASS.
+**Ein isolierter serieller Folgeschnitt (nicht eingefroren):**
+[Drive-Restore-Ergebnis775bbddd](https://github.com/joke0071/foliolab-open/commit/775bbdddb5a01b8ed400ea8add9848b1aadc4aa8),
+vollerSHA775bbdddb5a01b8ed400ea8add9848b1aadc4aa8, Tree4db8a537abb2f952ac9e0b41d9894be786aea551, ParentMaina27cde2f.
+[Teilbeleg und Manifest](https://github.com/joke0071/foliolab-open/blob/775bbdddb5a01b8ed400ea8add9848b1aadc4aa8/docs/release-evidence/drive-restore-outcome-local-2026-11-13.json).
+Vorherreproduziert: Passwortübernahmefehler NACH bestätigterDatenübernahme
+meldete fälschlich „Wiederherstellung fehlgeschlagen“.
+Jetzt: bestätigtesPortfolio, Passwortübernahme und Abschlussanzeige getrennt;
+App markiert Fehler erst NACH aufgelöstem save/recover mit restoreCommitted,
+Originalursache erhalten. VorCommit keinMarker/keineErfolgsmeldung.
+Keine automatischeWiederholung/Rücknahme/neueSync/Kryptografie.
+BestehendeCAS-/Bestätigungs-/Rollback-/Entwurfs-/Vaultpfade unverändert.
 
-Aktueller Auftrag: gezielter lokaler Chromiumlauf am EXAKTEN Kandidaten ausdrücklich autorisiert; noch NICHT gestartet. Vorher reguläre Laufzeitvoraussetzungen prüfen. Historischer Vorgängerbeleg bleibt unverändert gepinnt.
-Vorbereiteter syntaxgeprüfterPfad tests/browser-account-allocation.mjs:
-synthetisches explizitesLegacyprofil,AutoRefreshoff,40/30/20/10+separatesCash,
-320/360/390/412/430/768/1440px,Geometrie/44pxZiel,TastaturEnter/Touch,
-Textvergrößerungsapproximation undUNKNOWN-Gegenfall,kanonischeBytes invariant.
-Hostberichte vor riskantenAwaits;Cleanup getrennt.
-Bei vorhandener zulässiger Testumgebung/Server127.0.0.1:4173:
-`timeout 120s env BROWSER=chromium FOLIOLAB_TEST_SHA=933c366793e7f4bcd068c55701d4b1c39c638a35 node tests/browser-account-allocation.mjs`.
-Dies ist ein reviewbarerAusführungsauftrag,keinStart/Retry-/CItrigger.
-Legacyfixture ist ausdrücklich KEIN IDB/Restore-/FreshInstallbeleg.
-NativeSicht/Axe/echteSystemschrift/WindowsChromeUND Edge/Android bleiben offen;
-bestehendeEngine-/PR-/Wallet-/Main-/Produktionsgates nicht ersetzt.
-N-UI-PLUS bleibtPLANNED,keinDONE/LIVE_ACCEPTED;Mainreleasegateoffen.
+Node24.22.1 final51/51PASS,0FAIL/0SKIP/0CANCELLED:
+10neueTests+41bestehendeDrive/Settings/CompleteBackup/BackupLimitfälle.
+Erfolg,Abbruch,Decrypt-/Commitablehnung,postCommitEinstellungen/
+Passwort/Dialogfehler undRecoverymarkierung geprüft.
+Syntax4PASS;71Eingänge,67unverändert unabhängig gegenGitblobs exakt.
+OriginalFAIL1/1 erhalten; separaterSetupfehler45PASS/1MODULEFAIL
+wegen noch nicht materialisiertemcrypto-backup.js erhalten und durch
+exakte unveränderteMain-Eingänge behoben. Zwischen49PASS nicht addieren.
+Exakt9geänderte/ergänzteDateien:2Produktmodule+2Tests+JSON+4Originalprotokolle;
+alle9vollständig exakt an775bbddd rückgelesen,ComparegegenMain exakt9,
+keineLöschung/Workflow/SW/UI-ALLOC01/UI-R4-Vermischung.
 
-K4-Legacyc5dc913d wiederverwenden,native/UI-FreshRestore weiterhinohneFreigabe.
-K3v308/UI-R4/P-CI-B ohne neueDeltas nicht erneut inventarisieren.
-Operatorwartepunkt oben unverändert;keineerneuteGerätefrage.
-Nur UI-ALLOC01 lokal wie ausdrücklich im aktuellen Nutzerauftrag freigegeben; keine anderen Nativeruns/Actions/Retry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump.
-UnabhängigeFolgearbeit nur nach konkret fehlendemRoadmapkriterium;
-kein künstlicherNeubau/erneuteTestserie für blockierteAbschlussbelege.
+Das sind Node-/VM-/Backend-Doubles, KEIN nativerIDB-/Recovery-/OAuth-/
+Geräte-/Vault-v2-/Kryptoreviewbeleg.
+Konkrete nativeGegenfälle im Teilbeleg vorbereitet, NICHT autorisiert/gestartet.
+DieserFolgeschnitt bleibt LOCAL_NODE_VALIDATED_NATIVE_NOT_AUTHORIZED_NOT_FROZEN.
+K4PARTIAL/E-OAUTHBLOCKED_EXTERNAL/N-UI-PLUSPLANNED bleiben erhalten.
+Keine neueBranch/PR/Kandidatenref; beideObjekte durch gepinnteVerweise erhalten.
 
-## Jüngster fachlicher Fortschritt: K4-Legacy
+**Aktuelle Grenze:** ein eingefrorenerUI-Kandidat und ein isolierterFolgeschnitt
+sind vorhanden. Keine weiteren ungeprüftenKandidaten sammeln.
+Erst lokaleUI-Umgebung bzw. konkrete nativeFolgeschnittfreigabe klären.
+Bereits bekannteAlternativen ohneneueDeltas unverändert:
+K3Einstellungsablaufv308abgenommen,K4nativeLegacyoffen/UI-R4geschützt,
+P-CI-BWorkflowentscheidung+CSV44pxoffen.
+Kein zusätzlicherCodepatch zur Beschäftigung oder erneuteGesamtinventur.
+
+## Erhaltener vorheriger K4-Legacy-Teilbeleg
 
 Vorgänger work-k4legacy-049fda0c2e36-20261113 ist STOPPED/HANDOVER_READY.
 Dessen zwischenzeitlicher Abschluss 0f0981c wurde vor dieser Änderung gelesen und vollständig erhalten; kein fremder Stand zurückgesetzt.
@@ -108,8 +125,9 @@ Originale und vollständige Gegenproben-/Byte-/Gitblob-Nachweise im gepinnten Vo
 ## Gesicherte Stände
 
 Zentralbranch: feature/flh05-import-foundation.
-Einstiegsbasis diesesUI-Schnitts:280da5bd1a9a9e38530f90a3929d305cef112d74;
-eigenerOwnercheckpoint29eb605e26d6a41ac9ae54a889ad1366311cbbe0.
+HistorischeEinstiegsbasis desUI-ALLOC01-Codes:280da5bd1a9a9e38530f90a3929d305cef112d74;
+VorgängerOwnercheckpoint29eb605e26d6a41ac9ae54a889ad1366311cbbe0.
+EigeneÜbernahme dieserSitzung:f91415ddaab23dc4ef4d99915adba03bee1e8562.
 Aktuelle eigene Commitidentität aus dem gepinnten Leseergebnis beziehen, nicht aus einer selbstreferenziellen SHA im Inhalt.
 
 | Geschützter Stand | SHA |
@@ -164,7 +182,7 @@ Kein Merge/Deploy/Release/SWBump/LIVE_ACCEPTED aus diesem Prozessauftrag.
 
 ## Sicherungen und Abgleich
 
-Frisch NUR Metadaten bestätigt:
+ÜbernommenerVorgänger-Metadatenstand an b9f7e7c6, hier NICHT erneut geprüft:
 RootV155/406425600Bytes;FAILV0/12748800;MainOriginalV0/212408320;
 KrakenDiagnoseV0/2181120.
 Jüngere C1OriginalV0/624640,LifecycleOriginalV0/788480,
@@ -174,18 +192,32 @@ Alle Original-/Companion-/Manifest-/Readback-/Restoreketten bleiben verbindlich.
 Root allein ist kein vollständiger Ersatz; kein neuer Vollbackup/Vollrestore.
 Private Locators bleiben privat. Kein technischer Releasevollübernahmebeweis.
 
-Einstiegsabgleich316Heads,0IN_PROGRESS,historischeQueues43095194276/43095194257.
-PR332/161/157 samt Reviews/Inline/Conversation332/161/157/335 frisch gelesen.
+HistorischerVorgängerabgleich lautb9f7e7c6:316Heads,0IN_PROGRESS,
+historischeQueues43095194276/43095194257;damals PR332/161/157 samt
+Reviews/Inline/Conversation332/161/157/335 gelesen. KeinfrischerGesamtabgleich
+oder technischeAufklärung ältererAusführungen durch dieseSitzung.
 Zwischenzeitlicher Zentralabschluss0f0981c nach STOPPED/HANDOVER_READY gezielt integriert. Vor Mutation relevante Deltas und expectedSHA prüfen. Bei Kollision nicht überschreiben.
 
-## Gepinnter Vorgängerabschluss dieses UI-ALLOC01-Schnitts (historisch)
+## Tatsächliches Sitzungsende
 
-LokaleImplementierung undgezielteNodeprüfung abgeschlossen,Kandidat exakt
-rückgelesen und hier identitätsgebunden erhalten. Nächste konkrete nativeAbnahme
-ohneFreigabe offen; deshalb reguläresSitzungsende ohneChatwechselzwang.
-Schlussdelta:Main/UI-R4/FLH04-Arbeitsref unverändert,0IN_PROGRESS,
-neuesterRun43500770689 weiterhinFAILURE;keine neueAusführung.
-Keine privateTransfer-/Readback-/Restoreprüfung in diesemSchnitt.
-BisherigeOriginal-/Companionketten gemäß gepinntenVorgängerbelegen erhalten;
-hier kein neuerVollbackup/Vollrestore oder technischeReleasevollübernahme.
-Vollständiger kompakterFolgeprompt direkt imChat,keineGesamtchronikkopie.
+Endgrund: lokaleSocketvoraussetzung für freigegebenesUI-ALLOC01 fehlt.
+Der eine zulässige isolierteFolgeschnitt ist intern gezieltNodegeprüft;
+dessen notwendige nativeAbnahme ist durch diesenAuftrag nicht freigegeben.
+Die geprüftenNachbarwege benötigen konkreteEingaben/Freigaben oder sind
+bereits abgenommen/geschützt. Ein dritter ungeprüfterKandidat würde die
+ausdrücklicheSammlungsgrenze überschreiten; kein belegter weiterer
+autorisierterSchritt innerhalbderzweiaktuellenSchnitte offen.
+Keine künstlicheMindestlaufzeit/Chatrotation oder Paketabschluss als Endgrund.
+
+VollständigerVorgängerzustand unverändert gepinnt:
+[b9f7e7c6](https://github.com/joke0071/foliolab-open/blob/b9f7e7c6ba52e8cb713a6c28a41f3c656c74a7e0/docs/WORK_RESTPAKETE_CHECKPOINT.md).
+EigeneOwnerübernahmef91415dd expectedSHA-geschützt und exakt rückgelesen.
+KeinevollständigeprivateSicherung/Readback-/Restoreprüfung oder technische
+Releasevollübernahme in dieserSitzung behauptet.
+Originalfehler und finaleNodekonsole im775bbdddTeilbeleg dauerhaft gepinnt;
+lokaleScratchkopien allein werden nicht als unabhängigesBackup ausgegeben.
+KeineZusatzagenten/Automation/Folgesitzung; keineausgelöstenActions.
+
+FrischerSchlussdelta dieserSitzung:Maina27cde2f/UI-R460c1ab09/
+FLH04-Arbeitsref435ab9a8 unverändert;0IN_PROGRESS.
+NeuesterRun43500770689/1 weiterhinCOMPLETED/FAILURE,keinNeustart.

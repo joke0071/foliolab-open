@@ -1,0 +1,60 @@
+{
+  "scope": "UI-ALLOC01",
+  "date": "2026-11-13",
+  "result": "ENVIRONMENT_BLOCKED",
+  "executed": false,
+  "nativeLaunchAttempts": 0,
+  "httpServerStarted": false,
+  "candidate": {
+    "sha": "933c366793e7f4bcd068c55701d4b1c39c638a35",
+    "tree": "82556544576a05e1ed9973be6c023a939edaa2fd",
+    "parent": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+    "parent_tree": "e55ffa96f641345759eb3779b00de6187c8671b8",
+    "identity": "Git commit metadata freshly read; exact local harness bytes verified. Full browser-serving checkout was not materialized after failed environment preflight."
+  },
+  "harness": {
+    "path": "tests/browser-account-allocation.mjs",
+    "bytes": 6036,
+    "git_blob": "6c1cde4272799cc9325aa1261774f684bf3ce310",
+    "sha256": "9f9733544ed90eafd7492017fd316981ab690ecfb880b736bb55abc1ee307c38",
+    "changed": false
+  },
+  "authorization": {
+    "source": "Explicit user instruction sections 3/4 in this active session",
+    "browser": "local Chromium only",
+    "timeout_seconds": 120,
+    "synthetic_only": true,
+    "command": "timeout 120s env BROWSER=chromium FOLIOLAB_TEST_SHA=933c366793e7f4bcd068c55701d4b1c39c638a35 node tests/browser-account-allocation.mjs",
+    "state": "NOT_STARTED_PREREQUISITES_FAILED; no execution/retry consumed; no permission for any other native scope"
+  },
+  "preflight": {
+    "node": "v24.22.1",
+    "playwright": "1.62.1",
+    "default_chromium": "/home/agent/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+    "default_executable_exists": false,
+    "system_chromium": "Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)",
+    "system_executable": "/usr/bin/chromium",
+    "socket": {
+      "operation": "socket(AF_UNIX, SOCK_STREAM)",
+      "result": "PermissionError",
+      "errno": 1,
+      "error": "Operation not permitted",
+      "bind_reached": false,
+      "AF_INET": "NOT_REACHED",
+      "nativeChromiumStarted": false
+    },
+    "original_socket_output": "Traceback (most recent call last):\n  File \"<stdin>\", line 4, in <module>\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py\", line 233, in __init__\n    _socket.socket.__init__(self, family, type, proto, fileno)\nPermissionError: [Errno 1] Operation not permitted\n",
+    "system_version_stderr": "/usr/bin/chromium: 9: [: 5225713664: unexpected operator",
+    "conclusion": "Harness default engine missing; independently, local AF_UNIX socket creation is denied. No browser launch, server start, installation, sandbox/TLS/certificate workaround or unchanged retry."
+  },
+  "retained_evidence": {
+    "node": "30/30 from pinned predecessor report; reused, not rerun",
+    "source": "https://github.com/joke0071/foliolab-open/blob/933c366793e7f4bcd068c55701d4b1c39c638a35/docs/release-evidence/ui-alloc01-local-2026-11-13.json"
+  },
+  "unproven": [
+    "All UI-ALLOC01 native geometry/keyboard/touch/zoom/UNKNOWN/browser-byte assertions and screenshots remain unexecuted.",
+    "No screenshot sight review, axe, IDB, restore/fresh install, Windows Chrome/Edge, Android/PWA or hardware claim.",
+    "No CI/PR/main/production release acceptance."
+  ],
+  "next": "Provision an ordinary approved environment with working local sockets and the exact harness Chromium dependency. Verify source/input bytes against pinned candidate before the original 120s run; no unchanged failed startup."
+}
