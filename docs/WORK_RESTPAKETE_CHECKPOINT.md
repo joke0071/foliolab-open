@@ -2,12 +2,12 @@
 
 ## Zuständigkeit und Auftrag
 
-ACTIVE · work-toast-prepare-77bcb76dd357-20261113. Ein alleiniger HND01-Writer; keine Zusatzagenten oder Automation.
+STOPPED / HANDOVER_READY · work-toast-prepare-77bcb76dd357-20261113.
+Ein alleiniger HND01-Writer; keine Zusatzagenten oder Automation.
 Vorgänger work-bounded-b7bbb8ab7737-20261113 STOPPED/HANDOVER_READY.
-Neuer Auftrag ausschließlich: exaktes Toastdelta und vorhandene Belege prüfen; minimale native Qualifikation vorbereiten, NICHT auslösen.
-Vor Übernahme frisch bestätigt: Zentralref21ed0d42, Maina27cde2f, FLH04435ab9a8;0IN_PROGRESS; letzte vier Diagnosen unverändert terminal/Versuch1.
-Vollständiger Vorgänger unverändert [21ed0d42](https://github.com/joke0071/foliolab-open/blob/21ed0d42cc84050db11224fb5ae711af14c2f3ea/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-Historische Abschluss-/Freigabeangaben unten sind keine neue Ausführungsautorisierung.
+Übernahmef93c36b51758d04f721898ebd1264a96dc4a541a expectedSHA-geschützt, vollständig exakt rückgelesen.
+Auftrag gezielt abgeschlossen: Toastdelta/Belege geprüft und minimale native Qualifikation vorbereitet; NICHT ausgelöst.
+Vollständiger Vorgänger [21ed0d42](https://github.com/joke0071/foliolab-open/blob/21ed0d42cc84050db11224fb5ae711af14c2f3ea/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 Vollständiger Einstieg und historische Fach-/Originalverträge unverändert gepinnt:
 [fa0cfd3f](https://github.com/joke0071/foliolab-open/blob/fa0cfd3fd8be58caedc77c3b2b48909dd4ca2ebf/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 [Jüngster vollständiger Zwischenstand b546a245](https://github.com/joke0071/foliolab-open/blob/b546a2450fc9816b9b0795eb7b833da3d3b47565/docs/WORK_RESTPAKETE_CHECKPOINT.md).
@@ -69,18 +69,24 @@ LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN.
 DergeänderteToastistNICHTnativbelegt;alteScreenshotszeigenweiterhindenaltenText.
 Originaler775bbdddProduktnachweisundToastnachfolgernichtalskombiniertenNativePASSausgeben.
 
-## Ausführungsbudget und nächste Aktion
+## Vorbereitung und nächste Aktion
 
-Neu ausgelöste Diagnosen4/4. UIundRestorejeinitial+begründeteKorrekturvollständigverbraucht.
-AllevierLäufeterminalundvollständigausgewertet/originalgesichert;keineweiterenActions.
-KeineReruns/neuenTrigger/FullCI/ProduktionsprüfungausdiesemAuftrag.
-AutorisierterUmfangabgeschlossen:beidegetrenntenbegrenztenQualifikationenundgenauein
-belegterlokalerFolgeschnitt.Sitzungsende,weilweitereNative/CI/Produktintegration
-undweitereFolgekandidatennichtdurchdiesenAuftragautorisiertsind.
-KeinekünstlicheWartezeit/Testsammlung/verlängerteProzessrunde.
-NächsterkonkreterBedarf:Toastdelta04960e74gezieltnativqualifizieren;dafürneueausdrückliche
-Ausführungsautorisierungerforderlich.KeinneuerTriggerausverbrauchtemVierlaufbudget.
-VorjederFortsetzungCheckpoint/Owner/Refsdeltaslesen;keinpauschalesÜbernahmebestätigen.
+[Konkreter Prüfvertrag und bytegleiche Vorbereitungskopien](release-evidence/drive-restore-toast-native-preparation-2026-11-13.md).
+Quelled70d81e160c412703fb6e9b3b72b31915cc9eebd/Tree9980a6980ca4dd7a1304a52b7498edc6b3a16728,Parent04960e74:
+nur korrigierter bestehender Fünffallharness plus unveränderte CSS-Testfixture.
+Produktbytes unverändert. Echter Toast-DOM-Beobachter, neue Text-/Abwesenheitsassertions;
+alle31 bisherigen Assertionzeilen, fünf Fälle, unabhängigerIDB-Readback erhalten.
+Ausführungsentwurf0b4aa1d64daddea7cccad5bfcb29d2f8bd234b89/Treed75cd59c75fe7e72886aaab8d980e94b50509cb3,
+Parentd70d81e160c412703fb6e9b3b72b31915cc9eebd; exakt eine Workflowdatei.
+Beide nur als Gitobjekte; keine neue Ref/kein Trigger, NICHT eingefroren.
+SyntaxHarnessExit0,YAMLParsePASS; vollständige Rücklese/ComparePASS.
+Kein nativer Lauf/neue Screenshots; vorhandene19NodeTests hier nur geprüft, nicht erneut ausgeführt.
+
+Diagnosebudget4/4 unverändert verbraucht. Keine neueAction/Rerun/Ersatztrigger/FullCI.
+Nächster Schritt ist ausschließlich eine neue ausdrückliche Ausführungsautorisierung für den
+konkret vorbereiteten Stand und genau einen Lauf/Versuch1; bis dahin keine Ausführung.
+Diese Vorbereitung ist keine Freigabe. Keine Produktintegration oder neue Facharbeit eröffnet.
+Sitzungsende wegen vollständig erledigtem Vorbereitungsauftrag und ausdrücklicher Ausführungsgrenze.
 
 ## Geschützte Stände und Grenzen
 
@@ -107,7 +113,7 @@ Originalerhalt,CAS,Konflikt-/Finanz-/UNKNOWNFX-/Journal-/Backup-/Restoreverträg
 KeinePrivatimporte/Appdatenlöschung,Credentials,öffentlichenPrivatlocators,Konten,
 bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
 
-## Sicherung und Wiederaufnahme
+## Historische Sicherungsangaben aus21ed0d42; nicht erneut geprüft
 
 Bestehender separaterOriginalarchivweg verfügbar und für beideUILäufe benutzt;
 keine neueAblage/Vollsicherung/privateZugriffsprobemutation.
@@ -125,4 +131,12 @@ UI-R4undweitereSchutzkandidatenwurdennurbestehendverwendet/nichtmutiert;
 keinefrischeVollPR/Reviewinventurbehauptet.
 VollständigerVorgängerzustandvorSchlussunverändertgepinnt:
 [b39cb341](https://github.com/joke0071/foliolab-open/blob/b39cb3418e4dc1e6e995f3c8bf01e8c10eb97d47/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-STOPPED/HANDOVER_READY:autorisierteSchnittefertig;offenePlattform/Integration/Releasegateserhalten.
+## Schlussdelta dieser Vorbereitung
+
+Vor Schlussmutation Zentralreff93c36b5 eigen/unverändert; Maina27cde2f undFLH04435ab9a8 frisch unverändert.
+Letzte vier Diagnosen unverändert terminal/Versuch1;0IN_PROGRESS beim Einstieg.
+HistorischeQueues43095194276/43095194257 frisch weiterhinQUEUED/unberührt.
+Keine weiteren Schutzrefs/PR-/Reviewgesamtinventur behauptet. Roadmap unverändert.
+Keine Sicherungsoriginale heruntergeladen oder verändert; historische Sicherungsangaben oben nur übernommen.
+Keine eigenen Server/Browser/externenJobs gestartet; keine Automation oder Zusatzagenten.
+STOPPED/HANDOVER_READY: Vorbereitung abgeschlossen; neue native Ausführung ausdrücklich nicht autorisiert.
