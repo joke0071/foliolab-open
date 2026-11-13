@@ -315,3 +315,51 @@ OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mit internem/externalemRest.
 Keine nativeBrowser/IDB/CryptoKey/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
 CI22/Wallet20/Geräte/PR/Main/Produktions-/externeAbnahme oder aktiveIntegration.
 Kryptoreview/Keyslotrace/A1/A2/prepared-locked/Budgets/Releasegates unverändert.
+
+## Generische CSV-EUR-Cashkette · vor Code · 13.11.2026
+
+Owner work-f1798d3a9454-20261113; Basis4876bf0e6af9757e1c9b602d953ca5d25fac2d84.
+Vorhanden: validateImportSource prüft Herkunft, provenCashImport bindet exakt die
+sechs generischen Geldereignisse deposit/withdraw/dividend/interest/fee/tax an
+Quellzeile, bookingOwnership, Fingerprint und Journal. validateJournalEntry prüft
+Remove-v2 samt Originalbooking/-journal/-flows; removedImportSources verhindert
+Wiederanlage. prepareBookingUndo bleibt exakter lokaler Preimage-/Receiptvertrag.
+Fehlend ist nur verlustfreie Snapshotabdeckung dieses vollständigen Belegablaufs.
+
+Kleinster vollständiger Scope: kanonische generic-csv-Geldbuchungen, die bestehenden
+provenCashImport erfüllen, plus ausschließlich reine importierte Remove-v2-Audits
+derselben Klasse mit allen originals und null-afterBookings. Auch gebündelte
+Rücknahme und Koexistenz bisher unterstützter v3/v4/UH02-v5-Inhalte gehören dazu.
+Kein allgemeines CSV, manuelle Edit-/Notiz-/Remove-v1-Historie, Misch-Audit,
+Broker-/Native-/Withdrawal-/Bridge-/pending-/Resume-Scope. Kein neuer Finanzkern,
+keine Importfreigabe oder Eigentums-/Zustimmungsentscheidung. Snapshot transportiert
+keine flüchtigen Undo-Receipts; bereits vorhandener Receipt funktioniert nur bei
+weiterhin exakt identischem Modell, niemals durch neue Snapshotautorität.
+
+Geschlossene generic-csv-importSource-Allowlist und kompakte kanonische JSON-
+sourcePayload-Zeile (type/date/positionId/quantity/unitPrice/feeEUR/taxEUR/fxRate/
+cashPositionId/notes/externalId), strikt Stringfelder. ownedSnapshot bleibt exakt
+an bookingOwnership durch provenCashImport gebunden. Audit/Originalbooking/-journal/
+-flow rekursiv geschlossen; keine rekursiven Managementaudits in Originals.
+safeImport/validateImportSource/provenCashImport/Journal-/Reimport-/Undo-Validatoren
+unverändert wiederverwenden. Vollständig unverändernder Vergleich bleibt Pflicht.
+
+Erfolg: alle sechs Ereignisklassen hin/zurück, aktive und gelöschte Herkunft,
+gebündelte Rücknahme, sichere Reimportduplikate/gelöschte Quellkonflikte, vorhandenes
+lokales Undo, Archiv und UH02-Koexistenz. Sämtliche IDs/Quellbytes/Decimale/null/
+Abwesenheiten/UNKNOWN unverändert. Kein stiller Verlust von Audit/Rücknahmeherkunft.
+Ablehnung Encoder UND Decoder: fremde Quellen/Typen, unbekannte Felder an jeder
+Ebene oder in JSON-Strings, nichtkanonische Payloads/Normalisierung, manipulierte
+Ownership/Fingerprint/Journal/Flüsse, abgeschnittene oder gemischte Audits,
+Budgetüberschreitungen. Ein Fehler blockiert ganz ohne Quellmutation/Pruning.
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 unverändert.
+
+Dateien: src/sync-snapshot.js; neue tests/sync-snapshot-csv-cash.test.mjs;
+bestehender Vertrag/Fachcheckpoint und gezielter lokaler Prüfbeleg. Bestehende
+Tests unverändert; betroffene Snapshot-Suiten und vorhandene import-cash-removal-
+Suite prüfen. Gültige weitere Validatorbelege nicht neu addieren.
+Kryptoimpact zum exakten Kandidaten17a5a190d472f1f07b3508e6f35194371fe95eb2:
+nachgelagerte Snapshotfeldabdeckung, keine Änderung seiner Byte-/Autoritätsverträge
+oder Selbstfreigabe. REVIEW_READY/EXTERNAL_REVIEW_PENDING unverändert.
+Keine Storage-/Outbox-/Anker-/Krypto-/Appintegration oder aktiveSync.
+NativePersistenz/Keyslotrace/CI/Release/externeGates bleiben offen.
