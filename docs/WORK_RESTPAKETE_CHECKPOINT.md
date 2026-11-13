@@ -43,7 +43,19 @@ Historische51NodePASS nicht wiederholt, kein nativerBeleg daraus.
 [Vorbereiteter begrenzter Prüfkandidat](release-evidence/drive-restore-outcome-preparation-2026-11-13.json):
 Quelle8067ec3bfdd686ee475458e179401a679305690a/Treeabf2767b8c4f0ce15db4e82909fe121d5f3cc4eb,
 Ausführung59085dac146d4ce24937501f5fcf9aac5b21404a/Tree0ba284e87f21f4b814dc14c762b91e52245ed576,
-neuerTriggertest/restore-outcome-b7bbb8ab7737-initial-20261113 noch NICHTangelegt.
+initialTriggertest/restore-outcome-b7bbb8ab7737-initial-20261113 verbraucht: Run43514448489/1COMPLETED_FAILURE.
+Erfolg mit echterIDBRevision2→3PASS;Commitfallkanonischunverändert/keinMarker,
+aberHarnessFAILdurchdoppeltenAbort nachabgebrochenerTransaktion. CleanupPASS.
+Einstellungen/Passwort/Anzeige imInitiallaufnicht erreicht.
+OriginalZIP619676Bytes/SHA2562fe039e520448863c0ad976dc20de60d288de5aca904207ebc5a7180f944085f,
+15innerManifestdateiengeprüft,separatesArchivV0/2856960/SHA2560d7f175ceeb7f83d409b71874c1744298dada95ed6086f04fbbc81aff4e462c0
+gepinntbytegleich rückgelesen,18Preservationeinträgeverifiziert.
+NotwendigeKorrektur: echtenputRequestzuerst,startdanachAbort;keineAssertionabgeschwächt.
+FallzustandvorAssertionszusätzlichsichern. Syntax/gerichteterput→abortOrderingtestPASS.
+Korrekturquelle4ba5cd84145aca866f4e55fae91690bd93b5a713/Tree58359de68f486c751b413cf3dd579f74706433ab,
+Ausführung23e9afa4c4a0e6195fe3517675b54ce17d957952/Treed7fe1ba8fd76c1a4f3d31a732f1bffcf5db17fcf,
+neuerTriggertest/restore-outcome-b7bbb8ab7737-correction-20261113 nochNICHTangelegt.
+Produktweiterhin775bbdddunverändert;zusätzlichnurHarnessdelta.
 Produkt unverändert; nur2Testdateien, Ausführungsdelta ausschließlichDiagnoseworkflow.
 156Eingänge unabhängig an exaktenGitblobs geprüft; Syntax/legales123.45EURCashfixture/
 Konfigurationsroundtrip/gezielte statischeCallbackbindungen PASS.
@@ -55,14 +67,14 @@ vorherigerUILaufCOMPLETED_SUCCESS. Keine weiterenLäufe gestartet.
 
 ## Ausführungsbudget und nächste Aktion
 
-Neu ausgelöste Diagnosen2/4. UIinitial+Korrektur vollständig verbraucht.
-Restoreinitial autorisiert, danach höchstens eine belegte notwendigeKorrektur.
+Neu ausgelöste Diagnosen3/4. UIinitial+Korrektur vollständig verbraucht.
+Restoreinitialverbraucht;genaueinebelegtenotwendigeKorrekturausführungbleibtautorisiert.
 Niemals gleichzeitig; einJob/Chromium/25min, UI120s undRestore360s+15sKill;
 Cleanup/Report/Upload innerhalbJobbudget. KeinRerun/unveränderterRetry/Ersatztrigger.
 BestehendeTrigger weder verschieben/löschen/wiederverwenden.
 Vor neuemTrigger Ref/Runs frisch lesen; unklaren Ausgang zuerst lesend klären.
 VorherigeOriginale müssen vollständig ausgewertet und dauerhaft gesichert sein.
-NächsterSchritt: vorbereitetenRestoreinitial nach frischemRef-/Runabgleich einmal triggern.
+NächsterSchritt: vorbereitetenRestorekorrekturlauf nach frischemRef-/Runabgleich einmal triggern.
 Danach vollständig auswerten/sichern, konkret begründeteKorrektur oder parken;
 erst dann höchstens einen unabhängigen lokalenRoadmapfolgeschnitt, keineweitereCI dafür.
 
