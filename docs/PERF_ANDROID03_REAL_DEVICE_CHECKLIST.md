@@ -5,6 +5,21 @@
 
 **Status: EXTERNAL / noch nicht durchgeführt.** Die automatisierte Baseline ist ausdrücklich EMULATED. Ein Desktop-Chromium mit CPU4x ersetzt weder Android-Prozessstart noch installierte PWA, Energiesparen, TalkBack oder längeren Hintergrundbetrieb.
 
+## Offener Operatorpunkt · 13.11.2026
+
+**OPEN / OPERATOR_INPUT_PENDING:** Isolierte Testprofile auf Windows Chrome,
+Windows Edge und Android Chrome/PWA sowie deren Versionen sind derzeit nicht
+bestätigt. Unbekannte Angaben bleiben UNKNOWN. Bis zu neuen Nutzerangaben keine
+erneute Geräte-/Versionsabfrage. Kein Import in ein unbestätigtes Privatprofil,
+kein Ersetzen/Löschen des Privatportfolios und keine Löschung von Appdaten.
+
+Einzelfälle können je tatsächlich bestätigter Plattform separat beginnen.
+Plattformübergreifender Gerätewechsel braucht zwei bestätigte isolierte Endpunkte.
+Bestehende 10k-Fixture (Soll1000EUR) und OperatorZIP unverändert wiederverwenden;
+TalkBack optional. Dieser offene Teilauftrag blockiert nur abhängige Gerätebelege,
+nicht unabhängige lokale Entwicklung. Kein Geräte-/Versionsschluss aus Chatgerät,
+Main, Cachekennung oder Emulation.
+
 ## Konkreter erster Operatorauftrag · 13.11.2026
 
 **Vorarbeit abgeschlossen, Geräteausführung weiterhin OPEN.** Die neue gebündelte

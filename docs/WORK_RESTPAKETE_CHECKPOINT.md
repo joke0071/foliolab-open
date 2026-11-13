@@ -1,3 +1,77 @@
+## STOPPED / HANDOVER_READY / K4_LEGACY_NODE_PROOF / OPERATOR_INPUT_PENDING · work-k4legacy-049fda0c2e36-20261113
+
+Nutzerpräzisierung angewandt: Windows Chrome UND Edge sowie Android Chrome/PWA;
+Safari/TalkBack DEFERRED_USER. Bestätigte isolierte Profile und Versionen fehlen:
+OPEN/OPERATOR_INPUT_PENDING, unbekannte Versionen UNKNOWN. Keine erneute Frage
+bis neue Angaben. Privatportfolio nie ersetzen/löschen; keine Appdatenlöschung.
+Einzelfälle separat pro bestätigter Plattform, Gerätewechsel erst mit zwei
+isolierten zuordenbaren Endpunkten. Bestehende Android03-Checkliste entsprechend
+ergänzt; vorhandenes 10k-Soll1000EUR/OperatorZIP unverändert, kein neuer Paketbau.
+
+Unabhängig bearbeitet: K4-v1/v2-Rest aus kanonischer Matrix, ohne native Ausführung.
+Vorher fehlte gemeinsame gezielte Node-Gegenprobe für Archiv+UNKNOWN-FX+
+Eröffnungsbestände+Altbeleg/CAS sowie den vorhandenen verschlüsselten Legacyleser.
+Vorhandene Implementierung wiederverwendet; KEIN bestätigter neuer Produktfehler.
+Aktueller Main a27cde2f/Tree e55ffa96f641345759eb3779b00de6187c8671b8;
+nicht den älteren Produktcode des Zentralbranches als aktuellen Main geprüft.
+
+Reviewbarer TEST-ONLY-Kandidat c5dc913d752ba2ca5b8d358ffb61f9165b2f1b25,
+Tree156f3428bad4832ad7db91851cdc0dcb326a2d3e; erster lokaler Teil06e0375c
+ist erhaltener Parent. Nur tests/accounts-migration.test.mjs und
+[Originalergebnis/Quellmanifest](https://github.com/joke0071/foliolab-open/blob/c5dc913d752ba2ca5b8d358ffb61f9165b2f1b25/docs/release-evidence/k4-legacy-node-2026-11-13.json).
+Keine neue Branch-/PR-Anlage, kein zweiter Entwicklungsstrang, keine Ref
+für diesen Kandidaten bewegt. Kandidat über diesen gepinnten Verweis erhalten.
+
+Node24.22.1: final25TestsPASS/0FAIL/0SKIP/0CANCELLED, SyntaxPASS.
+10neue gerichtete Gegenproben+13bestehende Migration/Backupreferenzen+
+2bestehende Verschlüsselungstests. Unabhängiges Soll140EUR=100+2*25*0.8;
+UNKNOWN bleibt null, native Mengen100/2, historischer125EUR-Beleg legacy-unverified.
+Keine erfundenen Journal-/Cashflows; keine Identitäts-/Autoritätsübertragung.
+Map-Storage ist ausdrückliches Double, KEIN IDB-/Native-PASS.
+Drei temporäre lokale Negativkontrollen (FX-Parität/Archivverlust/CAS-Umgehung)
+werden von den acht neuen Migrationstests erkannt; Produktblobs wiederhergestellt.
+61anfängliche Eingänge und3zusätzliche Legacycrypto-Eingänge unabhängigGitblobgeprüft;
+63unveränderte Dateien final erneut gegenMainblobs geprüft.
+Finaler Testblob42ed5fcf26682ca2f86f1ec86da0c16f5ec0c71e,
+SHA256dec3a3ee856180a6527b616e31e21b43a39b466e2323d340f70b4ba2ce5a4243.
+Beide Kandidatdateien vollständig exakt rückgelesen und unabhängigGitblobbestätigt.
+Verschlüsselung nur vorhandenes foliolab-open-encrypted-v1, keinVault-v2/Syncreview.
+
+Danach offene Grenze: native/UI-v1/v2-FreshRestore und reale Windows/Android-
+Bedienung weiteroffen; keine v1–v5-Gesamtfreigabe, K4 PARTIAL unverändert.
+Vorhandene v3-10k/v4/v5-Belege nicht wiederholt. Geprüfte nächste Kandidaten:
+K3-lokaler Einstellungsablauf bereitsv308abgenommen,kein künstlicher Neubau;
+UI-R4-60c1ab09 bereits vorbereitet/geschützt, weitere native/PR/Main-Freigabe offen;
+P-CI-B/PR332 braucht konkrete Workflowentscheidung und ungeklärtenCSV44px-Nachweis,
+keine Matrixentfernung als Umgehung. Keine weitere gleichartige Testvermehrung
+als Ersatz für native oder externe Abschlusskriterien.
+
+HND-Einstieg wiederverwendet; relevante Zentral/Main-Refs frisch unverändert,
+0IN_PROGRESS. Keine Vollinventur-/Altbackuptransferwiederholung.
+Frühere Originalsicherungen/Readbacks nur gemäß gepinntem Vorgängerbeleg;
+keine neue privateTransfer-/Restoreabnahme. Keine Produkt-/Workflow-/SWmutation,
+kein nativer Lauf/Action/Retry/Ersatztrigger/Merge/Deploy/Release.
+Transportabbruch bei immutableTree-Anlage erst anhand unabhängig rekonstruiertem
+SHA/404 geklärt; danach identischerTree156f3428 bestätigt, keine Refmutation unklar.
+
+Abschlussanlass: konkret gewählter lokaler Legacy-Restore-Nachweis abgeschlossen;
+dessen nächste native/UI-Abnahme nicht neu autorisiert, Operatorzugang unbestätigt;
+die oben geprüften vorbereiteten Nachbarkandidaten haben derzeit ebenfalls keinen
+unbelegten lokalen Implementierungsrest. Dies ist keine Aussage über alle41Scopes.
+Keine neue Gerätefrage, keine allgemeine Übernahmebestätigung,keinChatwechselzwang.
+STOPPED/HANDOVER_READY; kein Hintergrundbetrieb, keine offene Speichermutation.
+
+Genau nächste Aktion: vorhandenen Testkandidaten/Beleg wiederverwenden und bei
+passender konkreter nativerFreigabe gezielten fehlendenLegacy-UI-Fall qualifizieren;
+bei neuen Operatorangaben passendeEinzelfälle beginnen. Sonst nur einen durch
+Roadmap/Originalbeleg konkret fehlenden unabhängigen Ablauf wählen, keinen neuen
+Gesamtaudit oder künstlichen Produktcommit. RelevanteDeltas vor Mutation prüfen.
+Alle Schutzverträge/FLH04-/Renderer-/Kryptoreview-/Releasegrenzen am gepinnten
+[Eintritt9be96d6f](https://github.com/joke0071/foliolab-open/blob/9be96d6f6a64f46c1f4c71610b6ee5cd525b1a75/docs/WORK_RESTPAKETE_CHECKPOINT.md)
+und aktivemEffizienzplan unverändert verbindlich; Zentralbranch nie nachMainmergen.
+
+---
+
 ## STOPPED / HANDOVER_READY / PERSONAL_SCOPE_SIMPLIFIED · work-scope-a815eee410c4-20261113
 
 Neuester ausdrücklicher Nutzerauftrag bewertet Vereinfachungsideen für persönliche
