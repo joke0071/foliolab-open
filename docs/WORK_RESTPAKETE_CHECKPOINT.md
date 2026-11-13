@@ -1,3 +1,201 @@
+## STOPPED / HANDOVER_READY / FLH04_RESTORE_ORPHAN_GUARDS_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
+
+Eigene alleinige HND01-Verantwortung und sämtliche eigenen Schreibaktivitäten mit diesem gepinnten Abschluss beendet; kein Hintergrundbetrieb/Nachfolger. Keine neuen Agenten/Automation/PR/CI/Freeze/Merge/Release. Ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen.
+
+FLH04 [HEADce3c351](https://github.com/joke0071/foliolab-open/commit/ce3c3513fcbd1a43b953f4f4040851d0d07ce7ac)/Tree7491a470636de086cadc056d81868197d9342176; Code5e08f4d085a8f5cb646122eedcefed19b859e7e0/Tree92314eee7613bd8bbba9ab5c83e8d6158ed5135d. Beide normaleBackuprestorepfade tragen intent:restore bis zum atomarenIDBCommit; auch identischesRestore invalidiert alteOutbox bei vollemOriginalerhalt. Neuanlage nach fehlendem/tombstonetemPortfolio invalidiert alteLinie; markerloseAdoption verweigert beobachteteverwaisteLinie. **Keine vollständigeInstallationsidentität/atomarerCutover:** nebenläufigeErfassungwährendmarkerloserAdoption braucht weiter vertrauenswürdigenInstallations-/Enrollmentpreimagevertrag. A1/A2/Snapshotgrenzen unverändert.
+
+40verschiedeneNode24.22.1-TestsPASS/0FAIL/0SKIP/0CANCELLED(8Zustand+25Double+3PortfolioStorage+4Legacy/CAS),11neu. Syntax5PASS,81unveränderteEingabenblobgenau/App-RücknahmediffexaktOriginal. Alle7Restore-/5Folgedeltadateien+Schlusscheckpointgepinntbytegleich. GegenMain23Dateien=20neu+3geändert. NativeHarnessnurSyntax/NICHTGESTARTET,keinUI-/echterIDB-/Crash-/Quota-/Mehrtab-/Cutover-/Remote-/Geräte-/FullCI-/ProduktionsPASS. Frühere52/63/41nichtvollständigwiederholt.
+
+NächsterSchritt atomareInstallations-/Enrollmentpreimagebindung oder geeignetezugelasseneNativeabnahme; bekanntenAF_UNIX→EPERM-Fehlstartnichtwiederholen. VolleSnapshot-Outbox/v5/History/Beleg-/Key-/Transport-/FinanzApply/UI-/interne/externePflichtgatesweiteroffen. OutboxINTERNUNQUALIFIZIERT,FLH04NICHTDONE,N-DRIVEBLOCKED_EXTERNAL. Maina27cde2/Run43332355188FAILURE/PARKED/RELEASE_BLOCKED. GeschützteRefs/Reviews/Kommentareunverändert;0IN_PROGRESS,nurhistorischeQueues43095194276/43095194257. RootV155/406425600Bytes und CompanionsV0/12748800+212408320Bytes frischNURMetadaten;keinprivaterTransfer/Upload/Readback/Restore/Schreibnachweis,alleOriginalketten erhalten.
+
+### Vollständiger kopierfertiger Übergabeauftrag
+
+```text
+FOLIOLAB OPEN – FLH04 NACH RESTORE-/ORPHAN-GUARDS FORTSETZEN
+
+Repository: https://github.com/joke0071/foliolab-open
+GitHub ausschließlich über das verbundene Plugin.
+
+Vorgänger work-64ba30c2c554-20261113:
+STOPPED / HANDOVER_READY; alle eigenen Schreibaktivitäten beendet,
+kein Hintergrundbetrieb. Nach frischem kollisionsfreiem Abgleich
+alleinige HND01-Verantwortung übernehmen. Unmittelbare
+Vorgängerbestätigung nicht erneut nötig. Die ältere work-pr333-Ausführung
+weiterhin NICHT technisch als beendet nachgewiesen.
+Alle Zusatzaufträge beendet. Keine Parallelisierung, Automation
+oder zweite finale CI.
+
+Aktuelle Referenzen:
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325
+FLH04-Branch feature/flh04-revisions-20261113-b5ddfe1c
+FLH04-HEAD ce3c3513fcbd1a43b953f4f4040851d0d07ce7ac
+FLH04-Tree 7491a470636de086cadc056d81868197d9342176
+Letzter Codecommit 5e08f4d085a8f5cb646122eedcefed19b859e7e0
+Codetree 92314eee7613bd8bbba9ab5c83e8d6158ed5135d
+Restorecode c7e8dbefbfd3a2f6a5f648991c24f8b25a93c662
+Restoretree 2c12245deff1eb89a5b16d5212adbe6a8d964475
+Zentraler Checkpointbranch feature/flh05-import-foundation;
+dessen aktuellen HEAD frisch lesen, niemals einen historischen Kopf annehmen.
+
+Vor erster Mutation Owner/Main/Checkpoint/Arbeitsbranch/PRs/Reviews/
+Kommentare/Actions/Sicherungsmetadaten frisch abgleichen.
+Zuerst Checkpointkopf, aktiven Effizienzplan, N-DRIVE-Roadmapzeile und
+FLH04-Wochenplanabschnitt lesen. Danach auf FLH04:
+docs/FLH04_WORK_CHECKPOINT.md
+docs/FLH04_SYNC_ARCHITECTURE.md (neueste Lifecycle- und A1/A2-Nachträge)
+docs/FLH04_SNAPSHOT_CONTRACT.md
+docs/FLH04_SNAPSHOT_ALLOWLIST_ONCE_2026-11-13.md
+Keine Gesamtinventur oder Doppelimplementierung.
+
+Vorhandene Arbeit erhalten: Revisions-/Konfliktmodell,
+authentisierter HKDF/AES-GCM-Verifier, flüchtiger Matcher,
+persistenter lokaler Outboxadapter im bestehenden IDB-Store records.
+Portfolio-/MetadatenCAS, exakte Frames/Parentkette/ErfassungsCAS/
+Wiederverifikation und Tombstone-/beschädigteRecoveryinvalidierung.
+Keine zweite DB/LocalStoragequeue/DB-Versionänderung.
+Keine Sync-Appaktivierung, kein Encoder/Transport/RemoteApply.
+
+Neuer geprüfter Implementierungsstand:
+1. Beide regulären Backupersetzungswege (lokale JSON/verschlüsselte
+   Datei und Drive restoreData) tragen intent:restore über
+   PortfolioStorage.save bis commitPortfolioRecord. Auch identische
+   Finanzbytes erhöhen CAS und invalidieren alte Outbox atomar als
+   portfolio-restored. Sämtliche Frames/Versuche bleiben erhalten.
+   Unbekannte Speichergründe blockieren vor Mutation.
+   Gewöhnliche Finanz-/CSV-Importsaves bleiben intent:edit und
+   erfassbare lokale Nachfolger. Restore erzeugt keine Outbox/Identität.
+2. Fehlender oder tombstoneter Portfolio-Record invalidiert bei
+   Neuanlage vorhandene Outbox atomar als portfolio-reinitialized:
+   alter Frame kann bei neuem CAS1 nicht still wiederverwendet werden.
+   initializeNew/migrateLocked lesen Portfolio+Outbox gemeinsam und
+   verweigern beobachtete verwaiste lebende/fehlende Portfoliozuordnung
+   vor markerloser Adoption. Frische/identische unterbrochene Installation
+   ohne Outbox und explizite Tombstonemigration bleiben erhalten.
+3. Das ist KEINE vollständige Installationsidentitätsbindung:
+   readonly Resumeprüfung+LocalStorage-Marker sind kein atomarer
+   Cutover und kein vertrauenswürdiger Installations-/Geräteanker.
+   Nebenläufige Outboxerfassung während markerloser Adoption braucht
+   weiterhin echten atomaren Installations-/Enrollmentpreimagevertrag.
+   Keine Freigabe aus passenden Bytes/CAS/Marker; keine neuen
+   Identitäten/Schlüssel/Enrollment- oder Senderrechte behaupten.
+   Bereits vor Restore übergebene Bytes können nicht rückwirkend
+   zurückgerufen werden; späterer Transport braucht Lifecycleprüfung.
+
+A1 unverändert: planSyncOutboxApply verlangt aktuellen Portfolio-CAS
+und exaktes raw des letzten erfassten/verifizierten Frames.
+Unrepräsentierter CAS43 nach A/CAS42 blockiert auch bei gleichen Bytes;
+anderer Snapshot bei gleichem CAS blockiert. Alte Frame-/Revisions-ID
+nicht an neueren CAS bindbar. Erfasste Offlinefolger bleiben Graphheads.
+Storage.planApply prüft IDB-Preimage nach Crypto erneut.
+applyAuthorized:false; echter atomarer Applyadapter weiter offen.
+
+A2 unverändert: Storage.confirm() lehnt ALLE Bestätigungen bis zum echten
+Remoteherkunftsadapter ab. Lokaler Verifierbeleg/erneuteVerifikation/
+HTTP200/behauptete URL oder Objekt-ID genügen nie.
+Summary remoteAnchor/acknowledgedLocalRevision=null,
+remoteConfirmation=unavailable,hasPendingChanges=true.
+matchedAnchor/matchedLocalRevision sind nur kryptografische Matches;
+historisches internes confirmed beweist keinen Remoteabruf.
+Transport muss autorisierten Abruf/Origin/Objektidentität/vollständige
+Framebytes/Versuch/Pagination/Vollständigkeit kontrollieren.
+Keine beliebige Receipt-Mint-/verified:true-Abkürzung.
+
+Snapshot unverändert: ursprünglicher begrenzter Validator erhalten.
+Zweiter B-Beleg65765d3a6282f4383e85e9e22ee91349e5081c25 selektiv
+bytegleich übernommen; kein Branchmerge. Neun aktuelle Regressionen.
+Nur dokumentierter v3/v4-Kern. Settings ausgeschlossen, unbekannte
+Felder/Normalisierung blockieren ganze Payload. Decimal/UNKNOWN/IDs
+unverändert. v5, opake Import-/Management-/Bridge-/Withdrawalevidenz,
+gefüllte Wallet-/Preishistory/Kaufbelege weiterhin UNSUPPORTED.
+Keine Kürzung/Konvertierung/Teilsnapshots.
+3.500.000 UTF8-Bytes/100.000 Strukturwerte/Tiefe16.
+Credentialfreier Snapshottyp NICHT an Outboxerfassung gebunden;
+diese verlangt weiter exaktes canonical record.raw.
+Volle wirtschaftliche Datenabdeckung bleibt offen.
+
+Tatsächliche Qualifikation dieser Sitzung:
+40 verschiedene Tests PASS/0FAIL/0SKIP/0CANCELLED auf Node24.22.1:
+8 Zustand +25 Transaktions-/Factorydouble +3 PortfolioStorage
++4 Legacy/CAS; davon11neueLifecyclefälle.
+Letzter betroffener Lauf32PASS;8unveränderte Zustandsnachweise aus
+vorherigem Schnitt wiederverwendet. Syntax5aktuellerCode-/TestdateienPASS.
+81unveränderte lokale Eingaben blobgenau; App-Rücknahmediff exakt
+auf Originalblob a5c14d2172422201f5a0198d2d1138d7e718b329 geprüft.
+Alle7Restore-Deltadateien,5Folgedeltadateien und Schlusscheckpoint
+jeweils am Commit gepinnt bytegleich rückgelesen.
+Gegen Main23Dateien:20neu,atomic-storage/browser-portfolio-storage/app geändert.
+Frühere52/63/41Tests NICHT vollständig wiederholt.
+Native tests/browser-sync-outbox.mjs um normalesRestore und
+Invalidierungs-Abort/Quota ergänzt, NURSyntax/NICHTGESTARTET.
+Doublemodelle sind kein echterIDB-/Crash-/Quota-/Mehrtab-/UI-/CutoverPASS.
+CI22/Wallet20 nicht ausgeführt; kein FullCI-/Produktions-/Gerätenachweis.
+
+Genau nächster unabhängiger Schritt:
+Atomare vertrauenswürdige Installations-/Enrollmentpreimagebindung
+vor Code konkretisieren: Portfolio/Epoche/Gerät/lokaleLinie/CAS,
+fehlender/ersetzter Record, markerlose Adoption, Crypto-Await und
+gleichzeitige Outboxerfassung. Bestehende begrenzte Guards erhalten;
+keine vollständige Identität aus ihnen ableiten.
+Alternativ den vorbereiteten nativen IDB-Harness nur in geeigneter
+zugelassener Umgebung prüfen/ausführen. Bekannten Chromium-
+AF_UNIX→EPERM-Fehlstart im unveränderten Executor NICHT wiederholen.
+Keine Sandbox-/TLS-/Timeoutumgehung/Umgebungsauditserie/CI-Retries.
+Unabhängige losslose v5-/History-/Belegschemas bleiben weiterer Weg.
+Vor neuer Arbeit benötigte Fähigkeiten gezielt prüfen;
+keine unveränderten Nachweise aus Gewohnheit erneut erzeugen.
+
+Weiter offen: echte nativeIDB/CAS/Crash/Quota/Mehrtab/Recovery/
+Installationscutover- und beideAppRestore-Abnahme; Postcommit-Vault/
+Drive-/UIfehler. VollständigeSnapshot-/Finanz-/History-/Dedupe-/
+Applyvalidierung;Enrollment/vertrauenswürdigeIdentitäten/Schlüsselherkunft/
+-persistenz/-umhüllung;Encoder/dauerhafteNonce-/Keybudgets;
+Rotation/Recovery/neuerGeräteanker;authentisierterGraphadapter;
+RemoteTransport/-Concurrency/-Pagination/-DelayedVisibility;
+Konfliktlösung/UI und atomarerFinanzApply.
+Keine RemoteCAS/If-Match/LWW-Garantie. Gruppenschlüssel authentisiert
+keinen einzelnenWriter;Decrypt erteilt keinApplyrecht.
+Outbox INTERN UNQUALIFIZIERT,FLH04 NICHT DONE,N-DRIVE BLOCKED_EXTERNAL.
+
+Mainrun43332355188 FAILURE/PARKED/RELEASE_BLOCKED unverändert;
+Produktionsursache ungeklärt. Alle Browser/PWA/Axe/OAuth/Operator/
+Origin/Scope/Zweigeräte/Kryptoreview/Produktion/Release/Sicherung/
+Readback/Restoregates offen. Produktiver Sync braucht konkrete
+Freigabe am vollständig reviewbaren Kandidaten.
+Kein PR allein zur Ablage; kein Merge/Release ohne Pflichtgates.
+
+Geschützt:
+PR332 71dfb05d5dae6a7e5d7c3979120462e0862fe7e2,CSV44pxBLOCKED
+PR157 08714cc602110bae479083b3d38fa1adc9be280c
+Draft161 0d980c2f43f28fd06ef9a7403b2144b6099fbc74
+UI-R4 60c1ab098449151b475563c9fc822b9a5e9a9152
+Keine Workflowänderung ohne konkrete#229-Freigabe.
+Checkpointbranch nie vollständig nach Main mergen.
+Keine pauschale Test-/Branch-/Artefakt-/Originallöschung.
+Zuletzt0IN_PROGRESS,nur historischeQueues43095194276/43095194257.
+
+Sicherungen zuletzt frisch NURMetadaten in Version/Größe bestätigt:
+RootV155 406425600Bytes
+SHA256 749f072638409f4643fa9ed0763c4ceaa18bb89fa2557585624953f47722e234
+FAILCompanionV0 12748800Bytes
+SHA256 459e5236c9f3d41d16c00bb5cdc5920929044608c19435cc8e64188e78777169
+MainOriginalCompanionV0 212408320Bytes
+SHA256 af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c
+Keine neuen privatenTransfers/Uploads/Sicherungen/Readbacks/Restores
+oder privateSchreibfähigkeitsnachweise behaupten.
+Root allein unvollständig; alle Original/Oracle/Companion/Readback/
+Restoreketten erhalten.
+
+Alle Finanz-/Decimal-/Journal-/UNKNOWN-FX-/Bestands-/CAS-/Datenschutz-/
+PWA-/A11y-/Backupverträge gelten weiter.
+18.11.,12:31MEZ bleibt Planungsziel,keine Sicherheitsausnahme.
+Änderungen mit erwarteten SHAs und gepinntem Byte-Readback schützen.
+Seriell unabhängig weiterarbeiten. Bei Ende Fortschritt/SHAs/offene
+Gates sichern,eigene Aktivitäten beenden,STOPPED/HANDOVER_READY setzen
+und vollständigen kopierfertigen Übergabeprompt ausgeben.
+```
+
+## Unveränderte Historie
+
 ## ACTIVE / FLH04_NORMAL_RESTORE_LIFECYCLE / RELEASE_BLOCKED · work-64ba30c2c554-20261113
 
 Alleinige serielle HND01-Verantwortung nach ausdrücklichem Nutzerauftrag und frischem Abgleich übernommen. Unmittelbarer Vorgänger work-0910b01a3280-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine tatsächliche konkurrierende Mutation belegt. Main a27cde2f802c26bfec41190911d88bd1d7d8e325, FLH04 d3255e5b2971d7b6fc82e0592e284623a4e36547, Ausgangscheckpoint5d220d2bbe4e0105bc456a744c33e21f02b909ab. PR332/157/161 samt Reviews/Kommentaren, UI-R4 und Actions frisch abgeglichen: unverändert,0IN_PROGRESS,nur historischeQueues43095194276/43095194257. RootV155 und beide CompanionsV0 frisch nur per Library-Metadaten in Version/Größe bestätigt; kein Transfer/Readback/Restore/Upload/Schreibfähigkeitsnachweis.
