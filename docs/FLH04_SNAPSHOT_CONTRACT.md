@@ -4,8 +4,9 @@
 
 Canonical accepted BTC/ETH/SOL sessions and separate canonical CSV/user-confirmed
 provider priceHistories are supported losslessly under the dated slices below.
-v5, pending/resume and import/management/withdrawal/bridge/purchase evidence remain
-unsupported in full. Earlier empty-only price-history statements below describe
+Canonical v3/v4 purchase receipts/decisions are additionally supported by the dated
+Purchase-Evidence slice below. v5, pending/resume, populated bitcoinLedger and other
+import/management/withdrawal/bridge evidence remain unsupported in full. Earlier empty-only price-history statements below describe
 historical slices and are superseded only for this dated scope.
 No active integration or Apply permission, no independent crypto/native acceptance.
 
@@ -186,7 +187,7 @@ Link-Unlink-Folge und eigene Limits; dessen Projektion muss vollständig gleich 
 Keine zweite Validierungs-/Bewertungsengine. Kein Normalisieren oder Defaulten.
 
 Erfolg: receipts ohne Zuordnung, bestätigte N:M/split-Bezüge, Link→Unlink→Relink,
-optionales leeres/gefülltes Ledger, sämtliche IDs/Hashes/Strings/Reihenfolgen und
+optionales leeres Ledger, sämtliche IDs/Hashes/Strings/Reihenfolgen und
 koexistierende Finanz-/UNKNOWN-/Wallet-/Preis-History unverändert erhalten.
 Bestehende veraltete Sitzung/Fingerprint/Wallet-/Ledgerbezüge bleiben dokumentarisch;
 der Snapshot bestätigt sie nicht und erzeugt weder Buchung noch neue Autorität.
@@ -205,3 +206,23 @@ Ablehnung durch echte ungültige Schemafälle. Snapshotvertrag/Fachcheckpoint un
 lokaler Prüfbeleg fortschreiben. Bestehende purchase-evidence.test.mjs unverändert
 gezielt mitprüfen. Keine Storage-/Outbox-/Anker-/Krypto-/Appintegration. Alle Budgets,
 Kryptoreview-/Persistenz-/Recovery-/Releasegates unverändert und ausdrücklich offen.
+
+### Implementiert und geprüft · Purchase-Evidence
+
+Die konkrete hasUnifiedBitcoinState/assertDataVersion-Abhängigkeit verlangt schon
+bei gefülltem bitcoinLedger Datenversion5. Dieser Scope unterstützt deshalb nur
+fehlendes/leeres Ledger und kanonische Receipt-/Decisionherkunft unter v3/v4;
+gefülltesLedger und v5 bleiben vollständig gesperrt. Die ursprünglich zu weite
+Erfolgserwartung eines gefülltenLedgers ist hiermit ausdrücklich korrigiert.
+Die Ledgerstruktur ist geschlossen allowlisted, aber keine semantische Freigabe;
+der bestehende Versionsvalidator sperrt nichtleere Ledger vor safeImport.
+
+12neueTests und57betroffenebestehendeTests final69PASS/0FAIL/0SKIP/0CANCELLED,
+Node24.22.1/Exit0; Syntax5PASS. Verlustfreie N:M/Splitbezüge, Link/Unlink/Relink,
+v4-Archiv, Reihenfolge/Provenienz/FX/UNKNOWN/Journal/PreisHistory und unveränderte
+conflict-Semantik auch bei fehlenderHistory tatsächlich geprüft. Decoder UND
+Encoder weisen unbekannteFelder/falscheTypen/IDs/Referenzen/Arithmetik/Duplikate/
+UTC-/Decimalnormalisierung/v5/pending/andereBelege vollständig zurück.
+[Originaloutput, Eingabeidentitäten und Grenzen](release-evidence/flh04-snapshot-purchase-evidence-local-2026-11-13.json).
+Keine aktiveIntegration/Apply/Krypto-/Native-/CI-/Release-/Produktionsabnahme.
+Preis-Historybeleg bleibt gepinnt erhalten; keine Addition historischerTests.

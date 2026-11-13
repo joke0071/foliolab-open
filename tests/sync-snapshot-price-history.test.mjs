@@ -109,7 +109,7 @@ test('limits reject whole histories without truncation or publishing other valid
  await rejectBoth(bytes,/byte-budget|bestätigt/);
 });
 test('unsupported evidence, v5 and pending state still block otherwise supported histories',async()=>{
- for(const edit of [d=>d.version=5,d=>d.purchaseEvidence={schema:1,receipts:[],decisions:[]},d=>d.walletHistory={schema:1,sessions:[],pending:[{id:'pending'}]},d=>d.positions[0].importSource={sourcePayload:'SECRET'}]){
+ for(const edit of [d=>d.version=5,d=>d.purchaseEvidence={schema:2,receipts:[],decisions:[]},d=>d.walletHistory={schema:1,sessions:[],pending:[{id:'pending'}]},d=>d.positions[0].importSource={sourcePayload:'SECRET'}]){
   const data=fixture();edit(data);await rejectBoth(data,/unsupported-data-or-field|envelope/);
  }
 });

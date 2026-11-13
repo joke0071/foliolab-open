@@ -1,3 +1,67 @@
+## PRODUCT_WORK_STOPPED / LOSSLESS_PURCHASE_EVIDENCE_IMPLEMENTED / RELEASE_BLOCKED · work-3e1b992cda51-20261113
+
+Kanonische Purchase-Evidence im bestehenden v3/v4-Snapshot verlustfrei umgesetzt:
+Receipt-IDs/Provider/EUR/UTC/TxID und alle exakten Gebühren/Mengen, Link-/Unlink-
+Entscheidungen mit vollständiger Receipt-/Event-/Fingerprint-/Wallet-/Sessionherkunft.
+Rekursiv geschlossene strikt typisierte Allowlist; bestehendes validatePurchaseEvidence
+via safeImport und vollständiger unverändernder Vergleich. Kein neuer Validator,
+keine Buchung/Bestandswirkung, keine neue Bestätigung/Autorität. Stale/fehlende
+Session/Wallet-/Fingerprintbezüge bleiben dokumentarisch unverändert und conflict.
+Settings ausgeschlossen; jeder Fehler blockiert das gesamte Portfolio ohne Teilpayload.
+
+**Explizite v5-Grenze:** bereits assertDataVersion+hasUnifiedBitcoinState verlangen
+für JEDES gefüllte bitcoinLedger v5. Daher nur fehlendes/kanonisch leeres optionales
+Ledger im v3/v4-Snapshot akzeptiert; gefülltes Ledger in v3/v4 und jedes v5 ganz
+abgelehnt, nicht entfernt oder zurückgestuft. Vollständige nichtleere Ledger-/v5-/
+Import-/Management-/Withdrawal-/Bridgebelege und pending-Resume bleiben unsupported.
+Diese beim direkten Codeabgleich vor erster Prüfung belegte Abhängigkeit ersetzt
+die zu weite filled-Ledger-Erfolgserwartung des Vorcodeabsatzes; keine Grenzlockerung.
+
+Ausgang3f05f5ebcc5ec8ccdc2390937c9a961b9d041c83; Vorcodevertrag
+3cf29e60dd9b6aa163c87a5db5f91d4f80578616 vollständig gepinnt rückgelesen.
+[Vertrag](FLH04_SNAPSHOT_CONTRACT.md),
+[Prüfbeleg mit finalem Originaloutput](release-evidence/flh04-snapshot-purchase-evidence-local-2026-11-13.json).
+12 neue gerichtete Tests plus 57 betroffene bestehende: final69PASS/0FAIL/0SKIP/
+0CANCELLED/Exit0 auf Node24.22.1. Syntax der5geänderten/neuen JS-Testdateien PASS.
+Erster neuer12erLauf und erster gemeinsamer69erLauf ebenfalls ohne Fehler; danach
+Decimal-Normalisierungsprobe präzisiert (501.0 statt veränderter5010.0), final69erneut
+PASS. Kein Assertion-/Timeout-/Limitabbau. 70ursprüngliche Eingaben vor Änderung
+blobgenau, danach66unverändert; complete-backup/crypto-backup zusätzlich gepinnt.
+Nur4alteCode-/Testdateien geändert plus neueSuite; keine Validatoränderung.
+
+Preis-Historybeleg am3f05f5e bleibt erhalten: dessen7unveränderte historical-CSV-
+Tests nicht erneut ausgeführt/addiert; wegen dataSchema und3überholter Empty-
+Purchase-Rejectfixtures die betroffenen Snapshot-/History-/Preis-History-/Gaptests
+am neuen Code gezielt erneut qualifiziert. Koexistenz PreisHistory/FX/UNKNOWN/
+Journal/Receipt/WalletHistory in neuerSuite geprüft. Keine zusätzlicheFullCI.
+
+BegrenzterScope implementiert, gezielte interneNodeprüfung bestanden; FLH04NOTDONE,
+OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mit internem/externalemRest.
+KeineBrowser/IDB/CryptoKeyPersistenz/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
+CI22/Wallet20/PR/Main/Produktions-/Geräte-/externeAbnahme. BekanntenAF_UNIX-EPERM-
+Chromiumfehlstart nicht wiederholt. Challenge→Commit-Keyslotbindung weiter ungelöst.
+Kryptokandidat17a5a190d472f1f07b3508e6f35194371fe95eb2 unverändert,
+REVIEW_READY/EXTERNAL_REVIEW_PENDING/keinPrüfer/keinReviewabschluss. Snapshotdelta
+nur nachgelagerte Allowlist; Impact später am exakten Reviewkandidaten prüfen,
+keine pauschale Branchfreigabe. KeineKrypto-/Storage-/Outbox-/Ankerintegration/
+Wrap-/Signatur-/Aussteller-/Entsperrimplementierung. A1/A2/prepared-locked/
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 undIdentitätsschutz unverändert.
+Kein neuerWorkflow/Runner/Retry/PR/Merge/Release/SW-Bump/zweiteDB/DBVersion.
+Main43332355188FAILURE/UrsacheUNKNOWN/RELEASE_GATE_OPEN; Diagnose43421311524
+SUCCESS bleibt verbrauchterEinzelversuch. Alle Sicherungsketten bewahrt; nur
+Metadaten RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120 frisch bestätigt; keine privaten Transfers/Uploads/Readbacks/
+Restores/neuerSchreibfähigkeitsbeweis, keine technischeReleasevollübernahme.
+ExakteProdukt-/Zentralendstände und Schlussabgleich imzentralenCheckpoint.
+
+Eigene Produktarbeit beendet, zentrale Schlussdokumentation folgt seriell.
+Nächste unabhängige Aktion: anhand vorhandener v5-Finanz-/Import-/Ledgerkette
+den nächsten vollständigen fachlichen Belegumfang gegen bestehende Validatoren
+abgrenzen; gefülltesLedger nicht isoliert an v5 vorbei freischalten. Fertige
+Purchase-/PreisHistoryschnitte und allgemeineKryptoplanung nicht wiederholen.
+
+---
+
 ## PRODUCT_WORK_STOPPED / LOSSLESS_PRICE_HISTORY_IMPLEMENTED / RELEASE_BLOCKED · work-f2948d3c3fba-20261113
 
 Genau ein vorbereiteter unabhängiger Historyrest vollständig implementiert:

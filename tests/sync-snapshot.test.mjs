@@ -112,7 +112,7 @@ test('opaque import source/proof branches block instead of stripping their ident
 });
 test('malformed price and unsupported evidence/audit branches fail without partial output',async()=>{
  const data=await exported(model());
- for(const [key,value] of [['priceHistories',{position:{points:[]}}],['purchaseEvidence',{schema:1,receipts:[],decisions:[]}]]){
+ for(const [key,value] of [['priceHistories',{position:{points:[]}}],['purchaseEvidence',{schema:2,receipts:[],decisions:[]}]]){
   const copy=structuredClone(data);copy[key]=value;
   await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),key==='priceHistories'?/Ungültige CSV-Kurshistorie/:/envelope/);
  }

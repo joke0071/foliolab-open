@@ -72,10 +72,20 @@ const priceFX=object({date:historyText,currency:historyText,rate:historyText,sou
 const priceProvenance=object({schema:v=>v===1,provider:historyText,identity:historyText,retention:historyText});
 const priceHistory=object({currency:historyText,source:historyText,points:array(pricePoint),
  priceType:historyText,fxPoints:array(priceFX),provenance:priceProvenance});
+// Documentary provenance only. safeImport calls validatePurchaseEvidence; every
+// projected value must stay identical. Stale references gain no new authority.
+const purchaseRef=object({id:historyText,fingerprint:historyText});
+const purchaseReceipt=object(Object.fromEntries('id provider currency timestamp txid fiatEUR serviceFeeEUR grossBTC miningFeeBTC netBTC'.split(' ').map(k=>[k,historyText])));
+const purchaseDecision=object({action:historyText,walletKey:historyText,sessionId:historyText,at:historyText,
+ receiptIds:array(historyText),events:array(purchaseRef)});
+const purchaseLedger=object({id:historyText,ownerDigest:historyText,txid:historyText,timestamp:historyText,
+ amountBTC:historyText,events:array(purchaseRef)});
+const purchaseEvidence=object({schema:v=>v===1,receipts:array(purchaseReceipt),decisions:array(purchaseDecision),
+ bitcoinLedger:array(purchaseLedger)});
 const dataSchema=object({version:v=>v===3||v===4,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
- priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history});
+ priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history,purchaseEvidence});
 const same=(a,b)=>{
  if(a===b)return true;
  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;

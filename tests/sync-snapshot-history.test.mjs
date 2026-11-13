@@ -92,7 +92,7 @@ test('canonical resume metadata remains unsupported in full; no portable-history
  await rejectUnchanged(d,/envelope/);
 });
 test('v5/import/evidence and malformed price payloads reject even when history is accepted',async()=>{
- const changes=[d=>d.version=5,d=>d.flatexNetRemovals=[],d=>d.purchaseEvidence={schema:1,receipts:[],decisions:[]},
+ const changes=[d=>d.version=5,d=>d.flatexNetRemovals=[],d=>d.purchaseEvidence={schema:2,receipts:[],decisions:[]},
   d=>d.bookings[0].importSource={sourcePayload:'SYNTHETIC'}];
  for(const change of changes){const d=data();change(d);await rejectUnchanged(d,/envelope/);}
  const d=data();d.priceHistories={cash:{points:[]}};await rejectUnchanged(d,/Kurshistorie hat keinen gültigen Positionsbezug/);
