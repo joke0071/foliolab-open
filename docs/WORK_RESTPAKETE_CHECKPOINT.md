@@ -1,3 +1,85 @@
+## STOPPED / HANDOVER_READY / RENDERER_TERMINATION_PREPARED / NATIVE_APPROVAL_REQUIRED · work-4cd697ef5bd2-20261113
+
+Tatsächlicher Endpunkt: autorisierte lokale Metadaten-/Oraclekorrektur und
+vollständig reviewbare begrenzte Folgevorbereitung abgeschlossen; nur neue
+konkrete native Ausführungsfreigabe fehlt. Kein Hintergrundbetrieb/Agent/Automation.
+Ältere work-pr333-Ausführung weiter NICHT technisch beendet nachgewiesen.
+
+QUELLKANDIDAT45ef99e0c09932406c41e22757fbed00ae164016
+Tree404fd33bcdf78e419f9038d66df9f177593f8f4d, Parent61a8932a794a9c3e5a7c49c08aee25f0d7be2d45.
+9Deltas,nur Tests und bestehendeFachdokumentation/Beleg;keinProduktcode.
+Close-Provenienz strictisTrusted;L5 RESULT synthetic/false;L2 vollständigerIntent-
+String mit VOR Aufruf unabhängig berechnetemFingerprint/Revision.
+[Fallplan/Mechanismus/Oracle/Grenzen](https://github.com/joke0071/foliolab-open/blob/45ef99e0c09932406c41e22757fbed00ae164016/docs/FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md).
+Fachcheckpoint ausschließlich aufFLH04Arbeitsbranch;keinFachcheckpoint aufZentralref.
+
+AUSFÜHRUNGSKANDIDAT7fb78e2bc9812a288a515cf4f83b47a54b68c480
+Treec373842a81cd8e25eea0b9b7d5c6de6ace0c0b1e;
+Parent/Prüfbasis45ef99e0c09932406c41e22757fbed00ae164016.
+EinzigerKontrolldiff bestehenderDiagnoseworkflow,
+Blob6eebf6a3c9673f8214f912a5490d751da69b8677.
+Alle9Quelldateien undvollständigerWorkflow bytegleichrückgelesen,
+unabhängigeGitblobprüfungbestanden;14EingangsblobsfürLaufgepinnt.
+FLH04Arbeitsrefperexpected61a8932a auf7fb78e2bfortgeschriebenundrückgelesen.
+
+NeuerTriggerFEHLT:
+test/flh04-renderer-termination-4cd697ef5bd2-20261113
+VorAnlagefrischprüfen;eineAnlageEXAKTan7fb78e2bc9812a288a515cf4f83b47a54b68c480
+bedarfNEUERkonkreterNutzerfreigabe. NochkeineAusführung/keinRun/keineErgebnisse.
+Bei vorhandenemTrigger/fehlendemRun nurlesendklären,keinRetry/Ersatz.
+AlterLifecycletriggerundC1Triggerunverändertundverbraucht.
+
+GeplanterUmfang:1Job/Versuch1/einBasisharnessaufruf,13korrigierteLifecyclegruppen
+mit81Diagnosezeilen plus2Rendererterminierungsgruppen mit18Zeilen.
+ChromiumCDPPage.crash nachreadonlycomplete bzw.Tombstonecommit vorMarkerbereinigung;
+echtesCrashEvent/keinPageclose/Browserverbunden,danachneueSeite,
+IDB/Marker/vollständigerIntent/Anker undtatsächlichen v1Neustartprüfen.
+PrimärAPI/Playwright1.56.1Bindunggepinnt;tatsächlicheFähigkeiterstbeifreigegebener
+Ausführungbeobachten. KeinIDBForcedCloseevent-/Browserprozesscrash-/Powerlossbeleg.
+CallbacksNACHnativenCompleteeventsgehalten,keinKeepalive/offeneTransaktionscrashbehauptung.
+Outboxnull;keinv2Rückwechsel/Writer-/Worker-/Asset-/Keyslot-/ABA-/Recoveryabschluss.
+
+Ubuntu24.04/Node22.23.4/PW1.56.1/zugehörigeChromiumHeadlessShell,
+tatsächlicheVersionnochUNBEOBACHTET;max25MinutenJob,
+360SekundenHarness+15SekundenKillnachlauf,0Retry.
+ENGINEchromium/FLH04_SOURCE_LIFECYCLE1/FLH04_RENDERER_TERMINATION1,
+C1OptinUNGESETZT;synthetischeisolierteContexts/lokaleHTTPorigin4173.
+Originalartefakte7Tage/immerUpload;beideReports/Exits/Eingänge/Workflow/Tree/
+Manifestbewahren;fehlenderReportNOT_REACHED,niePASS.
+NachseparaterFreigabeAuswertungundexaktesneuesOriginalZIP/Manifestdauerhaftsichern;
+keinRootvollbackup.
+
+LokalNode24.22.1:26/26gezielteTestsPASS,0FAIL/0SKIP/0CANCELLED,
+6SyntaxchecksPASS. 14Lifecycle-/Oracle-/Integrität+6CDPDoubles/Guards+
+6unveränderteDiagnostiktests. WorkflowYAML/5Bash/4Python/2JSblöckeSyntaxPASS,
+2historischeJobsbytegleich,8Steps. KeineWorkflowjobnutzlast/Browserausführung.
+[Maschinenbeleg/Freeze/Prüfgrenzen](release-evidence/flh04-renderer-termination-prepared-2026-11-13.json).
+VorbereitungsbefundeimQuellbeleg,keineProduktursacheabgeleitet.
+
+FrischerAbgleich315Heads,nur eigeneZentral-/FLH04Refänderung,keingelöschterHead.
+Main/Diagnose/UI-R4/PR332/161/157undHeads/Metadaten/Reviews/Inline/
+Conversation332/161/157/335geschützt,0IN_PROGRESS,kein neuerRun.
+NurhistorischeQueues43095194276/43095194257,nichtneuinterpretiert.
+RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120,LifecycleOriginalV0/788480frischnurMetadatenunverändert.
+KeinTransfer/ByteReadback/Restore/neueSicherungdieserOriginalebehauptet.
+
+Run43497366403/1bleibtbegrenztesSUCCESSmitursprünglicherfinalerPASSKonsole,
+13/13Gruppen81/81Zeilen;keinC1PASSdesAdapters.
+AlleOriginale/InterpretationsgrenzenundSchutzgatesdesnachfolgenden
+Vorgängereintragssindunverändertverbindlich.KeinaktuellerAssertionfehler
+durchdieseMetadatenkorrekturbehauptet;keinenaltenIstwertnachträglichergänzen.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNALinternUNDextern.
+A1false/A2gesperrt/Ankernull,format1preparedlockednieadoptieren/hochstufen/
+überschreiben/löschen,V2Normalpfadeblockiert,RecoveryohneIdentitätsportierung.
+Kryptopaketfd3fce4b/Review17a5a190EXTERNAL_REVIEW_PENDING/CR4CR5offen,
+AdapterdeltaeigenerReviewimpact.KeineSelbstfreigabe.
+AlleP/R/S/D/CAS/Raw-/Retry/oncomplete-/Snapshot-/Original-/Finanzoraclekettenerhalten.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+ZentralbranchnievollständignachMainmergen.
+
+---
+
 ## ACTIVE / LOCAL_LIFECYCLE_ORACLES / NATIVE_NOT_AUTHORIZED · work-4cd697ef5bd2-20261113
 
 Alleinige begrenzte HND01-Fortführung nach ausdrücklichem Nutzerauftrag.

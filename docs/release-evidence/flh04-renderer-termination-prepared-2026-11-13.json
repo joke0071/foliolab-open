@@ -1,0 +1,162 @@
+{
+  "status": "PREPARED_NATIVE_NOT_RUN_APPROVAL_REQUIRED",
+  "owner": "work-4cd697ef5bd2-20261113",
+  "repository": "joke0071/foliolab-open",
+  "source": {
+    "sha": "45ef99e0c09932406c41e22757fbed00ae164016",
+    "tree": "404fd33bcdf78e419f9038d66df9f177593f8f4d",
+    "parent": "61a8932a794a9c3e5a7c49c08aee25f0d7be2d45",
+    "changed_files": [
+      {
+        "path": "tests/flh04-source-lifecycle-harness.mjs",
+        "sha": "9ae1f299fdda24a07d12344e1215bf751865ec82"
+      },
+      {
+        "path": "tests/flh04-source-lifecycle-probes.mjs",
+        "sha": "d86caa79346b96f0528461332d6c1b87ef7fe049"
+      },
+      {
+        "path": "tests/flh04-source-lifecycle.test.mjs",
+        "sha": "17cf9694c335a9221702e70390bf0a58be1b4e85"
+      },
+      {
+        "path": "tests/flh04-renderer-termination-probes.mjs",
+        "sha": "19f28d7e71a720bb880ceaef899d3a1fb36d4285"
+      },
+      {
+        "path": "tests/flh04-renderer-termination.test.mjs",
+        "sha": "5819f3b15c0ead1be7385f81b3c0baa0f2449b58"
+      },
+      {
+        "path": "tests/browser-sync-outbox.mjs",
+        "sha": "3af87b74d75d4eb9dd4514f0a0f0c2f78c6de2f8"
+      },
+      {
+        "path": "docs/FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md",
+        "sha": "36630df2cc52a6ab849ca78c7bd52c6456296318"
+      },
+      {
+        "path": "docs/release-evidence/flh04-renderer-termination-local-2026-11-13.json",
+        "sha": "4759ebf24107d7c16990dbf30f71ba3326005d9e"
+      },
+      {
+        "path": "docs/FLH04_WORK_CHECKPOINT.md",
+        "sha": "403573d6bfaa32f40a398657b7ecebeabbe2b97b"
+      }
+    ],
+    "full_byte_readback": true,
+    "independent_git_blob_check": true,
+    "product_delta": false
+  },
+  "execution": {
+    "sha": "7fb78e2bc9812a288a515cf4f83b47a54b68c480",
+    "tree": "c373842a81cd8e25eea0b9b7d5c6de6ace0c0b1e",
+    "parent": "45ef99e0c09932406c41e22757fbed00ae164016",
+    "workflow_path": ".github/workflows/live-initialization-diagnostics.yml",
+    "workflow_blob": "6eebf6a3c9673f8214f912a5490d751da69b8677",
+    "only_control_delta": ".github/workflows/live-initialization-diagnostics.yml",
+    "full_byte_readback": true,
+    "independent_git_blob_check": true,
+    "branch": "test/flh04-renderer-termination-4cd697ef5bd2-20261113",
+    "branch_exists": false,
+    "branch_created": false,
+    "run_started": false,
+    "job": "flh04-renderer-termination-first",
+    "event": "create",
+    "attempt": 1
+  },
+  "local": {
+    "node": "v24.22.1",
+    "tests": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "syntax_checks": 6,
+    "scope": "14 lifecycle/oracle/integrity;6 explicit CDP-double/guard;6 unchanged diagnostics",
+    "workflow_yaml": "parsed",
+    "workflow_bash_blocks": 5,
+    "workflow_python_blocks": 4,
+    "workflow_js_blocks": 2,
+    "prior_two_jobs_byte_exact": true,
+    "workflow_steps": 8,
+    "workflow_payload_executed": false,
+    "native_browser_started": false,
+    "source_evidence": "https://github.com/joke0071/foliolab-open/blob/45ef99e0c09932406c41e22757fbed00ae164016/docs/release-evidence/flh04-renderer-termination-local-2026-11-13.json"
+  },
+  "planned_native": {
+    "baseline": "preserved original final console",
+    "lifecycle_groups": 13,
+    "lifecycle_diagnostic_rows": 81,
+    "termination_groups": 2,
+    "termination_diagnostic_rows": 18,
+    "results": "NOT_RUN",
+    "mechanism": "CDP Page.crash; actual renderer crash event required;browser must remain connected;ordinary page.close not accepted",
+    "limits": {
+      "ubuntu": "24.04",
+      "node": "22.23.4",
+      "playwright": "1.56.1",
+      "engine": "Chromium matching installed HeadlessShell; actual version unobserved",
+      "job_minutes": 25,
+      "harness_seconds": 360,
+      "kill_grace_seconds": 15,
+      "jobs": 1,
+      "harness_calls": 1,
+      "retries": 0
+    },
+    "environment": {
+      "ENGINE": "chromium",
+      "FLH04_SOURCE_LIFECYCLE": "1",
+      "FLH04_RENDERER_TERMINATION": "1",
+      "FLH04_VERSION2_CANDIDATE": "UNSET",
+      "BASE_URL": "http://127.0.0.1:4173"
+    },
+    "receipt_blobs": {
+      "src/browser-portfolio-storage.js": "4743618cbfba19dbb19aaf6a9e6bf563b2311614",
+      "tests/browser-sync-outbox.mjs": "3af87b74d75d4eb9dd4514f0a0f0c2f78c6de2f8",
+      "tests/flh04-source-lifecycle-harness.mjs": "9ae1f299fdda24a07d12344e1215bf751865ec82",
+      "tests/flh04-source-lifecycle-probes.mjs": "d86caa79346b96f0528461332d6c1b87ef7fe049",
+      "tests/flh04-source-lifecycle.test.mjs": "17cf9694c335a9221702e70390bf0a58be1b4e85",
+      "tests/flh04-c1-source-guard.test.mjs": "12388345a554a76311de2c34aaba35a8835c1271",
+      "tests/flh04-c1-diagnostics.mjs": "d3adb9857a17538070234fbdb28482322b44c4ba",
+      "tests/flh04-version2-candidate-probes.mjs": "d87ab642d1ba409814af517c2b28ad50fd924b0c",
+      "tests/flh04-c1-diagnostics.test.mjs": "eb53397ca3d6d2aab127b53583408e8402719cc8",
+      "tests/fixtures/c1-storage-dependencies.mjs": "02c53fa3c41ff35785021757ceb43eb834dc4b60",
+      "tests/sync-outbox-fixture.mjs": "13c338233f5a65b0e107675b5a3b006cbe78f11a",
+      "src/atomic-storage.js": "b8bc22967d451150801cd8ac1fd847a768c37ca2",
+      "tests/flh04-renderer-termination-probes.mjs": "19f28d7e71a720bb880ceaef899d3a1fb36d4285",
+      "tests/flh04-renderer-termination.test.mjs": "5819f3b15c0ead1be7385f81b3c0baa0f2449b58"
+    },
+    "retention_days": 7,
+    "original_preservation": "After separate approval preserve exact new original ZIP/manifest once;no root full backup"
+  },
+  "historical": {
+    "run": "43497366403/1",
+    "status": "bounded PASS unchanged;13groups/81rows;C1unset",
+    "execution": "08e2189a17be2e8899ee057a4639b09b343e088c",
+    "original_sha256": "ba30b9c02721e6778ae5f6439bd1fdaf7b346a8f69d650f4916791ea0e4d6a20",
+    "preservation_sha256": "17655c2dd9738813d4634cf0e81e7f51113283303a34073ab886ccb56353827d",
+    "preservation_version": 0,
+    "preservation_bytes": 788480,
+    "retransfer_or_reverification": false
+  },
+  "limits": [
+    "all native candidate results remain NOT_RUN",
+    "callback scheduling instrumented after native complete;no keepalive/no open-transaction crash claim",
+    "renderer termination is not native IDB forced-close-event proof/browser-process crash/power loss/disk durability",
+    "lifecycle outbox null;no full writer/worker/assets/keyslot/ABA/recovery qualification",
+    "L2 strengthened oracle does not retroactively add old actual values",
+    "no crypto self approval or product/release qualification"
+  ],
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "Outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL_INTERNAL_AND_EXTERNAL_REMAINS",
+    "A1_applyAuthorized": false,
+    "A2_Storage_confirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "crypto": "EXTERNAL_REVIEW_PENDING_CR4_CR5_OPEN"
+  },
+  "next_action": "Read exact pinned candidate, freshly check HND01 deltas;require new concrete approval for one branch creation at execution SHA. No automatic run, retry, replacement trigger, full CI, merge, deploy, release or SW bump."
+}
