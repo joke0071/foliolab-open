@@ -54,6 +54,36 @@ Aktuelle offizielle Referenzen gelesen: [Finanzfluss-Copilot Dashboard](https://
 3. Navigation **einschließlich Installation**, Dashboard und Anbieter-/Positionsdetails zu einem vollständigen UI-Kandidaten bündeln. Finanz-/Speicherkorrekturen nur bei notwendigem fachlichem Zusammenhang mitführen, ansonsten separat qualifizieren.
 4. P-CI-B-WIP bleibt erhalten und wird mit unveränderten Schutzgates sowie bestehender konkreter Workflow-Mergefreigabe weitergeführt. Zurückgestellte Prozessoptionen bleiben inaktiv.
 
+## FLH04 – begrenzter Wiederverwendungsabgleich · 13.11.2026
+
+Unabhängige Folgevorbereitung nach UI-R4; keine zweite Produktimplementierung, keine Mutation an Draft161 und keine aktivierte Synchronisierung. Gelesen: #160, beide vollständigen Draft161-Dokumente am geschützten HEAD0d980c2f43f28fd06ef9a7403b2144b6099fbc74 sowie aktuelle Mainquellen a27cde2f802c26bfec41190911d88bd1d7d8e325. Kein neuer API-/OAuth-/Krypto-/Geräte-PASS und keine neue Gesamtinventur.
+
+| Vorhandener Baustein / exakter Gitblob | Ergebnis für FLH04 |
+| --- | --- |
+| backup-vault.js ·7a19b4bd816324dca029b3398ea1f4b7fe5494b0 | AES-GCM-V2 mit festem Backup-AAD, zufälligem IV, Passwort-Wrap und lokalem nicht extrahierbarem Schlüssel vorhanden. Keine Sync-spezifischen Portfolio-/Geräte-/Revisions-/Eltern-/Replayfelder oder deren Validierung in dieser API. Unveränderte Backupverschlüsselung ist allein kein authentisiertes Syncprotokoll. |
+| crypto-backup.js ·9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4 | Legacy-V1-Backupformat erhalten; keinen neuen Synctyp still unter dessen Formaterkennung einschleusen. Kein Backupfehler allein aus fehlender Syncsemantik behauptet. |
+| complete-backup.js ·d7af70fe06b61f9db8dffff215f7e8b2782385db | Portfolio-/Historytransport und opt-in-Konfiguration vorhanden; portable Einstellungen können ausdrücklich gewählte API-Zugänge enthalten. Sync muss Datenumfang gesondert festlegen; kein automatischer Credentialtransfer und kein Austausch des bestehenden Import-/Restorevertrags. |
+| drive-backup.js ·e93573b9b39010a30ee0c2aa4465340f00de2ef7 | Aktuelle Backup-/Authzustände und drive.file-Integration vorhanden; kein implementierter authentisierter Revisionsgraph oder konfliktfester Mehrgeräte-Commit daraus. Reale Remote-CAS-/OAuth-/Neugerätefähigkeit weiterhin ungeprüft. |
+
+**Nächster kleinster interner Fachschritt:** bestehenden reinen Revisions-/Konfliktvertrag aus Draft161 präzisieren, bevor Transport/UI entsteht. Keine Transportalternative als entschieden ausgeben. Eingabe ist ein bereits authentisiert und strukturell/umfangsbegrenzt validierter synthetischer Revisionsgraph derselben Portfolioidentität plus lokaler akzeptierter Basis; Ausgabe ausschließlich ein Plan (unverändert, Nachfolger prüfbar, Konflikt oder blockiert), keine IDB-/Netzwerk-/Vaultmutation. Der Plan ist weder ein Integrationscommit noch ein Authentisierungs-/Vollständigkeitsbeweis der Cloud. Mangels vollständiger Sicht niemals „global synchron“ behaupten.
+
+Unabhängige erwartete Referenzfälle für diesen bestehenden Vertrag:
+
+| Synthetischer Fall | Sicheres Soll |
+| --- | --- |
+| Gleiche bereits akzeptierte Revisionsidentität und gleicher Inhalt | Kein Apply; doppelte Zustellung idempotent. |
+| Gleiche Identität mit anderem authentisierten Inhalt | Blockieren; Identitätswiderspruch, kein Gewinner nach Zeitstempel. |
+| Vollständig geprüfte lineare Nachfolgerkette derselben Portfolioidentität | Nur als Apply-Kandidat planen; Modell-/History-/Importvalidierung und aktueller lokaler CAS bleiben nachgelagerte Pflicht. |
+| Zwei Geschwister nach gleicher Basis | Beide erhalten; expliziter Konflikt, kein Last Write Wins/Automerge aus JSON-Feldverschiedenheit. |
+| Fehlender Elternknoten oder unvollständige paginierte Sicht | Blockiert/unvollständig; kein neuer Head oder automatischer Root-Ersatz. |
+| Fremdes Portfolio, Selbstbezug/Zyklus, unbekanntes Format, zu große Eingabe | Vor Apply blockieren; lokalen Stand/Vault unverändert lassen. |
+| Bekannter alter Vorfahr nach bereits akzeptiertem Nachfolger | Kein Rollback. Legitimer Historienabruf allein ist kein Beweis eines Angriffs. |
+| Lokale Revision ändert sich nach Planerstellung | Commit über bestehenden CAS abweisen; neu lesen/planen, nicht Cloudstand erzwingen. |
+
+Das sind spezifizierte Sollfälle, **keine ausgeführten neuen Tests**. Authentisierung/Kanonisierung, Revisionsidentitätsbildung, Nonce-/Schlüsseltrennung, Rotation und Recovery bleiben vor Code fachlich zu schließen; keine neue Eigenkryptografie aus diesem Abgleich. Die tatsächlichen Drive-Schreib-/Sichtbarkeits-/Idempotenz-/OAuthbedingungen sind getrennte externe Nachweise, keine Voraussetzung für das Spezifizieren rein lokaler Fälle.
+
+Der einzige isolierte Produktfolgeschnitt bleibt UI-R4. Solange sein Platz durch den geparkten Releaseblocker gebunden ist, keinen zweiten FLH04-Produktbranch eröffnen oder Sync in UI-R4 mischen. Diese Folgevorbereitung liegt ausschließlich in diesem bestehenden Wochenplan; Draft161 nicht mergen. Vor produktiver Sync-/Migrationsfreigabe konkreten vollständig reviewbaren Kandidaten und die dann erforderliche Nutzerentscheidung gemäß #160 vorlegen.
+
 ## 1. Zuständigkeit und sicherer Einstieg
 
 Ein alleiniger HND01-Hauptagent bleibt verantwortlich für Entwicklung, eigene QA, CI, Integration, Produktion, Sicherung und Restore. Keine neue Agentenautomatisierung, kein zweiter Produktwriter, keine automatische Chat-Nachfolge. Dieser ausdrücklich beauftragte Dokumentationsnachtrag übernimmt keine HND01-Verantwortung und verändert weder den zentralen Owner-Eintrag noch Produktcode, Main, Workflow, private Sicherungen oder eingefrorene Kandidaten.
