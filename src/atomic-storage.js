@@ -336,10 +336,10 @@ export function readPortfolioSyncAnchorPreimage(db) {
  return new Promise((resolve,reject)=>{
   const tx=db.transaction(STORE,'readonly'),store=tx.objectStore(STORE);
   let portfolio=null,syncPresent=false,anchorPresent=false;
-  const p=store.get(KEY),s=store.get(SYNC_KEY),a=store.get('sync-local-anchor-v1');
+  const p=store.get(KEY),s=store.count(SYNC_KEY),a=store.count('sync-local-anchor-v1');
   p.onsuccess=()=>{portfolio=p.result??null;};
-  s.onsuccess=()=>{syncPresent=s.result!==undefined;};
-  a.onsuccess=()=>{anchorPresent=a.result!==undefined;};
+  s.onsuccess=()=>{syncPresent=s.result!==0;};
+  a.onsuccess=()=>{anchorPresent=a.result!==0;};
   tx.oncomplete=()=>{try{assertRecord(portfolio);resolve({portfolio,syncPresent,anchorPresent});}catch(error){reject(error);}};
   tx.onabort=()=>reject(tx.error||Error('sync-anchor-read-aborted'));tx.onerror=()=>{};
  });

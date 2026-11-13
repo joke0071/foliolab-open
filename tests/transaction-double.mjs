@@ -9,6 +9,7 @@ export function memoryDB() {
   let working,active=false,release,scheduled=false;const queue=[];
   const done=new Promise(r=>release=r),prior=tail;tail=done;
   const store={get(key){const req={};queue.push(()=>{req.result=structuredClone(working.get(key));req.onsuccess?.();});pump();return req;},
+   count(key){const req={};queue.push(()=>{req.result=working.has(key)?1:0;req.onsuccess?.();});pump();return req;},
    put(value,key){if(!active||tx.done)throw Error('inactive');if(db.fault==='quota'){db.fault=null;throw new DOMException('quota-double','QuotaExceededError');}
     working.set(key,structuredClone(value));
     if(db.fault==='abort-after-put'){db.fault=null;tx.abort();}

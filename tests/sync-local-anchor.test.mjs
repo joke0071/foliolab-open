@@ -71,8 +71,8 @@ test('locked anchor double: missing, deleted, unfenced and malformed portfolio n
 });
 
 test('locked anchor double: every existing outbox or anchor, including null and disabled, blocks without overwrite',async()=>{
- for(const [key,value] of [['sync-outbox-v1',null],['sync-outbox-v1',{disabled:'portfolio-restored',entries:['original']}],
-  [anchorKey,null],[anchorKey,{status:'prepared-locked',original:'preserve'}]]) {
+ for(const [key,value] of [['sync-outbox-v1',undefined],['sync-outbox-v1',null],['sync-outbox-v1',{disabled:'portfolio-restored',entries:['original']}],
+  [anchorKey,undefined],[anchorKey,null],[anchorKey,{status:'prepared-locked',original:'preserve'}]]) {
   const {db}=await fixture();db.data.set(key,value);const before=structuredClone(db.data);
   await assert.rejects(()=>prepareLocalSyncAnchor(db),/existing-(outbox|anchor)/);
   assert.deepEqual(db.data,before);
@@ -110,8 +110,8 @@ test('locked anchor double: non-JSON and unknown metadata cannot collapse into a
 
 test('locked anchor double: missing record, outbox or competing anchor appearing after crypto prevents commit',async()=>{
  for(const method of ['importKey','generateKey','digest'])for(const change of [
-  db=>db.data.delete('portfolio'),db=>db.data.set('sync-outbox-v1',null),
-  db=>db.data.set('sync-outbox-v1',{entries:['preserve']}),db=>db.data.set(anchorKey,null)]) {
+  db=>db.data.delete('portfolio'),db=>db.data.set('sync-outbox-v1',null),db=>db.data.set('sync-outbox-v1',undefined),
+  db=>db.data.set('sync-outbox-v1',{entries:['preserve']}),db=>db.data.set(anchorKey,null),db=>db.data.set(anchorKey,undefined)]) {
   const {db}=await fixture();let changed;
   await hook(method,()=>{change(db);changed=structuredClone(db.data);},
    ()=>assert.rejects(()=>prepareLocalSyncAnchor(db),/stale-portfolio|existing-outbox|existing-anchor/));

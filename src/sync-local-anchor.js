@@ -43,10 +43,10 @@ function commitPrepared(db,before,anchor) {
     store.put(anchor,ANCHOR_KEY);
    }catch(error){failure=error;tx.abort();}
   };
-  const p=store.get('portfolio'),s=store.get('sync-outbox-v1'),a=store.get(ANCHOR_KEY);
+  const p=store.get('portfolio'),s=store.count('sync-outbox-v1'),a=store.count(ANCHOR_KEY);
   p.onsuccess=()=>{portfolio=p.result??null;finish();};
-  s.onsuccess=()=>{syncPresent=s.result!==undefined;finish();};
-  a.onsuccess=()=>{anchorPresent=a.result!==undefined;finish();};
+  s.onsuccess=()=>{syncPresent=s.result!==0;finish();};
+  a.onsuccess=()=>{anchorPresent=a.result!==0;finish();};
   tx.oncomplete=()=>resolve();
   tx.onabort=()=>reject(failure||tx.error||Error('sync-anchor-write-aborted'));tx.onerror=()=>{};
  });
