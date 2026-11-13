@@ -1,94 +1,114 @@
-name: Bounded live initialization diagnostics
+name: Bounded restore outcome diagnostics
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/live-initialization-diagnostics.yml'
-      - 'tests/browser-failure-diagnostics.mjs'
-      - 'tests/browser-chart-tooltip.mjs'
-      - 'tests/browser-reference-management.mjs'
-      - 'tests/browser-pchain-evidence.mjs'
+  create:
 permissions:
   contents: read
 jobs:
-  diagnostic:
-    if: github.head_ref == 'test/v220-live-initialization-diagnostics'
+  restore-outcome:
+    if: github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/restore-outcome-b7bbb8ab7737-correction-20261113' && github.run_attempt == 1
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 25
     env:
-      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
-      UI_QUALITY_ENGINES: chromium
+      FOLIOLAB_TEST_SHA: 4ba5cd84145aca866f4e55fae91690bd93b5a713
+      SOURCE_TREE: 58359de68f486c751b413cf3dd579f74706433ab
+      BROWSER: chromium
+      OUT: artifacts/restore-outcome-host
     steps:
       - uses: actions/checkout@v4
+        timeout-minutes: 2
         with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
           persist-credentials: false
       - uses: actions/setup-node@v4
+        timeout-minutes: 2
         with:
-          node-version: '22'
-      - name: Install existing acceptance tools
-        run: |
-          npm install --no-save playwright@1.56.1 axe-core@4.10.3
-          npx playwright install chromium --only-shell
-      - name: Capture published identity
-        run: |
-          mkdir -p artifacts/gates
-          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
-          sha256sum artifacts/gates/diagnostic-published-sw.js
-          head -n 1 artifacts/gates/diagnostic-published-sw.js
-      - name: One unchanged chart gate with failure evidence
-        run: node tests/browser-chart-tooltip.mjs
-      - name: One unchanged reference gate with failure evidence
-        if: always()
-        run: node tests/browser-reference-management.mjs
-      - name: Reproduce the original complete Chromium UI suite with failure evidence
-        if: always()
-        env:
-          UI_QUALITY_SCREENSHOTS: '1'
-        run: node tests/browser-ui-quality.mjs
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: bounded-live-initialization-${{ github.sha }}
-          path: artifacts/gates/
-          if-no-files-found: error
-          retention-days: 7
-
-  pchain-diagnostic:
-    if: github.head_ref == 'test/v221-live-pchain-initialization-diagnostics'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        engine: [firefox, webkit]
-    env:
-      PCHAIN_BASE: https://foliolab.unperfekt.at/
-      PCHAIN_ENGINES: ${{ matrix.engine }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install matching cross-engine acceptance tools
-        run: |
-          npm install --no-save playwright@1.64.1 axe-core@4.10.3
-          npx playwright install --with-deps ${{ matrix.engine }}
-      - name: Verify unchanged published v221 worker identity
+          node-version: '22.23.4'
+      - name: Bind unchanged candidate and execution delta
+        timeout-minutes: 1
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p artifacts/gates
-          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
-          cmp sw.js artifacts/gates/diagnostic-published-sw.js
-          sha256sum artifacts/gates/diagnostic-published-sw.js
-          head -n 1 artifacts/gates/diagnostic-published-sw.js
-      - name: One original P-Chain gate with startup failure evidence
-        run: node tests/browser-pchain-evidence.mjs
+          rm -rf artifacts
+          mkdir -p "$OUT"
+          echo '{"kind":"BEGIN","scope":"restore outcome"}' | tee "$OUT/host.jsonl"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$FOLIOLAB_TEST_SHA"
+          cp .github/workflows/live-initialization-diagnostics.yml "$OUT/executed-workflow.yml"
+          git diff --name-only HEAD^ HEAD > "$OUT/execution-delta.txt"
+          test "$(cat "$OUT/execution-delta.txt")" = ".github/workflows/live-initialization-diagnostics.yml"
+          git checkout --detach "$FOLIOLAB_TEST_SHA"
+          test "$(git rev-parse HEAD^{tree})" = "$SOURCE_TREE"
+          git ls-tree -r HEAD > "$OUT/source-tree.txt"
+          git archive HEAD index.html styles.css src icons manifest.webmanifest tests/browser-drive-restore-outcome.mjs tests/restore-text-enlargement.css tests/storage-origin.html package.json sw.js > "$OUT/source-inputs.tar"
+          node --version > "$OUT/node.txt"
+          echo '{"kind":"STAGE","name":"source-bound"}' | tee -a "$OUT/host.jsonl"
+      - name: Install existing pinned acceptance tools
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1 2>&1 | tee "$OUT/install.log"
+          npx --no-install playwright install chromium --only-shell 2>&1 | tee "$OUT/browser-install.log"
+          node --input-type=module -e 'import {createRequire} from "node:module"; const r=createRequire(import.meta.url); console.log(JSON.stringify({node:process.version,playwright:r("playwright/package.json").version}))' > "$OUT/runtime.json"
+          echo '{"kind":"STAGE","name":"tools-ready"}' | tee -a "$OUT/host.jsonl"
+      - name: One unchanged UI harness within 360 seconds
+        id: probe
+        timeout-minutes: 8
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$OUT/http.log" 2>&1 &
+          ui_http_pid=$!
+          trap 'kill "$ui_http_pid" 2>/dev/null || true; wait "$ui_http_pid" 2>/dev/null || true' EXIT
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          const expected=readFileSync('index.html');
+          let ready=false;
+          for(let i=0;i<50;i++){
+            try{const r=await fetch('http://127.0.0.1:4173/');if(r.ok&&Buffer.from(await r.arrayBuffer()).equals(expected)){ready=true;break;}}catch{}
+            await new Promise(r=>setTimeout(r,100));
+          }
+          if(!ready)throw Error('Exact synthetic local origin unavailable');
+          JS
+          kill -0 "$ui_http_pid"
+          echo '{"kind":"STAGE","name":"harness-start"}' | tee -a "$OUT/host.jsonl"
+          set +e
+          timeout --signal=TERM --kill-after=15s 360s node tests/browser-drive-restore-outcome.mjs 2>&1 | tee "$OUT/test.log"
+          ui_pipe_status=("${PIPESTATUS[@]}")
+          set -e
+          printf '{"kind":"RESULT","test_exit":%s,"tee_exit":%s}\n' "${ui_pipe_status[0]}" "${ui_pipe_status[1]}" | tee -a "$OUT/host.jsonl" > "$OUT/exit-status.json"
+          if [ "${ui_pipe_status[1]}" -ne 0 ]; then exit "${ui_pipe_status[1]}"; fi
+          exit "${ui_pipe_status[0]}"
+      - name: Preserve observed status and exact manifest
+        if: always()
+        timeout-minutes: 1
+        env:
+          PROBE_OUTCOME: ${{ steps.probe.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUT"
+          python3 - <<'PY'
+          import pathlib,os,json,hashlib
+          out=pathlib.Path(os.environ['OUT'])
+          report=pathlib.Path('artifacts/restore-outcome/report.json')
+          summary={k:os.environ.get(k) for k in ['GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','FOLIOLAB_TEST_SHA','SOURCE_TREE','PROBE_OUTCOME','RUNNER_OS','RUNNER_ARCH']}
+          summary['report']=json.loads(report.read_text()) if report.exists() else None
+          summary['report_status']='OBSERVED' if report.exists() else 'NO_VALID_REPORT'
+          summary['limits']={'job_minutes':25,'harness_seconds':360,'kill_after_seconds':15,'engines':['chromium'],'harness_calls':1,'retry':0}
+          (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+          entries=[]
+          for p in sorted(pathlib.Path('artifacts').rglob('*')):
+            if p.is_file() and p.name!='manifest.json':
+              data=p.read_bytes();entries.append({'path':str(p),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+          (out/'manifest.json').write_text(json.dumps(entries,indent=2)+'\n')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
+        timeout-minutes: 2
         with:
-          name: bounded-v221-pchain-${{ matrix.engine }}-${{ github.sha }}
-          path: artifacts/gates/
+          name: restore-outcome-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/
           if-no-files-found: error
           retention-days: 7
