@@ -1,3 +1,13 @@
+## ACTIVE / MAIN_PRODUCTION_BLOCKED / V155 · work-773870884cef-20261113
+
+Ausdrückliche Nutzerübernahme vom 13.11.2026. Alleinige HND01-Hauptzuständigkeit übernommen nach frischem kollisionsfreiem Abgleich: Main a27cde2f802c26bfec41190911d88bd1d7d8e325 unverändert; Checkpointref 683dab805723eb350d9b33bb47129e71f878cc3d / Blob83d381527e751d8558b44879572f6e147d023451; PR334/335 Reviews und Kommentare leer, nur geschützte offene PR332/157/161; keine IN_PROGRESS-Action, historische Queues43095194276/43095194257 unverändert seit2026-11-11T20:18:14Z. Keine tatsächliche konkurrierende Schreibaktivität belegt. Vorgänger work-02f19cd404ef-20261112 ausdrücklich STOPPED/HANDOVER_READY; ältere work-pr333-20261112-1942 NICHT technisch als beendet nachgewiesen.
+
+V155-Metadaten frisch bestätigt: Version155/406425600Bytes, beide genannten Companions vorhanden; frühere gepinnte Readback-/Restorebelege unverändert, hier noch kein erneuter Byte-Readback/Restore. Chromium141, Playwright und certutil lokal vorhanden; private Transfer-/Restorefähigkeit vor Abschluss noch zu prüfen. Keine Vollsicherung/Releasefreigabe/CI gestartet.
+
+Genau nächste Aktion: regulären CA-/Proxy-Vertrauenspfad im vorhandenen Chromium herstellen, unveränderten frischen Kontexthelper mit Netzwerk-/Workerdiagnostik bereits vor goto gezielt prüfen. 20000ms und Assertions unverändert. Produktionsursache UNKNOWN; kein aktueller Tooling-LIVE_ACCEPTED. UI-R4/PR332/157/161 und alle historischen Originalketten erhalten. Keine Automation/zweiter Writer/Workflowänderung.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY / MAIN_PRODUCTION_BLOCKED / V155 · work-02f19cd404ef-20261112
 
 **Eigene alleinige HND01-Zuständigkeit ausdrücklich abgegeben.** Keine behauptete Übernahme durch einen Nachfolger und keine Behauptung, die alte Vorgängerausführung work-pr333-20261112-1942 sei technisch nachweislich beendet. Frischer Schlussabgleich: Main/Checkpoint/PRs/Reviews/Kommentare unverändert, keine laufendeAction; nur historischeQueues43095194276/43095194257 weiterQUEUED mit unverändertemUpdate2026-11-11T20:18:14Z. Keine offene privateMutation oder eigene lokaleSchreibausführung. NeueÜbernahme erst nach frischemKollisionsabgleich.
