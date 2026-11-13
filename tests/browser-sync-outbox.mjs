@@ -7,6 +7,9 @@ import {frame} from './sync-outbox-fixture.mjs';
 // crash/power loss or actual disk exhaustion. Those gates remain separate.
 const engines={chromium,firefox,webkit},name=process.env.ENGINE||'chromium';
 if(!engines[name])throw Error('Unsupported ENGINE');
+const v2Candidate=process.env.FLH04_VERSION2_CANDIDATE;
+if(v2Candidate!==undefined&&(v2Candidate!=='1'||name!=='chromium'))
+ throw Error('FLH04 C1 requires explicit value 1 and ENGINE=chromium');
 const browser=await engines[name].launch({headless:true});
 const context=await browser.newContext();
 const url=(process.env.BASE_URL||'http://127.0.0.1:4173')+'/tests/storage-origin.html';
@@ -148,5 +151,9 @@ try{
   assert.deepEqual(await operation(resumed,'anchor-proof'),proof);
   assert.equal((await operation(resumed,'read')).portfolio.syncEnrollmentRequired,true);
  }finally{await local.close();}
+ if(v2Candidate==='1'){
+  const {runVersion2Candidate}=await import('./flh04-version2-candidate-probes.mjs');
+  await runVersion2Candidate({browser,setup,operation,url});
+ }
  console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, ordinary restore/recovery/delete invalidation, prepared-locked CryptoKey persistence/page reopen (not enrollment) PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
 }finally{await context.close();await browser.close();}

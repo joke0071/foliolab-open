@@ -1,3 +1,16 @@
+## Beschlossene v2-Regel und C1-Vorbereitung · 13.11.2026
+
+**V2_NO_LEGACY_RETURN_AUTHORIZED / C1_PROBE_PREPARED / PRODUCT_NOT_READY.**
+Die konkrete v2-Kompatibilitätsentscheidung aus§10.7 ist jetzt ausdrücklich
+erteilt. Alte Wartefragen darunter sind historisch und nicht erneut zu stellen.
+Verbindliche Ergänzung und begrenzter Kandidatenentscheid in§11:
+keine interne/versteckte/automatische v2-Rückmigration nachLocalStorage,
+v1/Originale erhalten; gebundeneRecovery mit gespeichertemReadback und
+ohneWriter-/Geräte-/Autoritätsportierung. C1 als optionaler Harness-Prüfkandidat
+vorbereitet, nicht ausgeführt; keine vollständige Produkt-/Writerqualifikation.
+
+---
+
 ## Ergebnis der W1/W2-Fortsetzung · 13.11.2026
 
 **A_NOT_CANDIDATE_READY / DECISION_REQUIRED_V2_LEGACY_HANDOFF.**
@@ -713,3 +726,243 @@ LocalStoragewriter. Die eigeneGegenfolge bleibt ausstehende nativeGegenprobe.
 Nur erforderlicherDelta-Nachtrag imbestehendenEntwurf; kein156Dateienscan,
 keine neueLock-/ABA-/Gesamtarchitekturserie.
 Schreibarbeit nachSicherung beenden,keinHintergrundbetrieb.
+
+## 11. Beschlossene v2-Kompatibilitätsgrenze und begrenzter Prüfkandidat C1 · 13.11.2026
+
+**V2_NO_LEGACY_RETURN_AUTHORIZED / BOUNDED_PROBE_CANDIDATE_PREPARED /
+PRODUCT_IMPLEMENTATION_NOT_READY / NATIVE_NOT_RUN.**
+
+Jochen hat ausdrücklich beschlossen:
+Eine erfolgreich bestätigte v2-Linie bleibt kanonisch in IndexedDB.
+Technische Rückmigration in die bisherige LocalStoragelinie entfällt für diese
+Linie, auch intern, versteckt und automatisch. Bestehende v1-Linien und
+Originalbestände bleiben unberührt. Diese Zustimmung erlaubt Vertrag und
+Kandidatenvorbereitung, keine Migration/aktiveSync/reviewgesperrte Implementierung
+oder zusätzliche CI-/Runnerausführung.
+
+Damit ist die Entscheidung aus§10.7 ERTEILT. Die alten dortigen Wartefragen
+sind historisch; nicht erneut stellen. R1 ist für eine regelkonform implementierte
+v2-Linie durch das Verbot seines Zielübergangs aus dem zulässigen v2-Ablauf
+entfernt. Kein nachgewiesener allgemeiner Writerabschluss folgt daraus.
+Die v1-Risiken, technischen Altpfade und Originale werden weder gelöscht
+noch als neu abgenommen oder verändert ausgegeben.
+
+### 11.1 Verbindliche Quellenwahl
+
+Für vorhandene native DBversion2 gilt eine konservative Schutzregel:
+nie aus alten Modus-/Rückwechselmarkern eine LocalStorageadoption oder neue
+kanonische Legacyquelle ableiten. Eine noch nicht fertig qualifizierte,
+unklare oder nur schema-committed v2-Linie bleibt blockiert/lesend gesichert;
+sie darf NICHT auf LocalStorage ausweichen. Bloße nativeVersion2 verleiht
+keine Enrollment-/Writer-/Send-/Applyrechte oder Schreibqualifikation.
+
+Das betrifft initialize/reload/save, implizite Neuanlage, Restore/Recovery,
+Rückwechselintents, Modusreparaturen und alle internen/Supporteinstiege.
+Ein fehlender alter MODE_KEY, belegtesnull/undefined, ein alterIntent oder eine
+scheinbar gültige Legacykopie darf diesen Schutz nicht umgehen.
+Die Entscheidung muss an den tatsächlichen DB-/Linienzustand gebunden sein,
+nicht an Callerflags, einen übernommenen this.mode-Wert oder einen frei
+rekonstruierbaren Marker. Ein geschlossenes/altesHandle ist kein Nachweis,
+dass die aktuelle nativeDB noch dieselbe Version hat.
+
+Ein Quellenprobe-/Readpfad darf keine fehlendeDB erzeugen oder upgraden;
+unerwartetes upgradeneeded abortieren. Fehlende/unbekannteLinie mit vorhandenen
+Originalen bleibt ein Verlust-/Recoveryfall. Wirklich neue leere Installation
+und v1-Legacyübernahme bleiben ihre bisherigen getrennten Verträge; keine
+automatische Version2-Neuanlage oder pauschale Altbestandsbereinigung.
+
+Alte LocalStoragewriter können weiter ihre alteKopie verändern. Gegen eine
+korrekt geschützte v2-Linie ist das keine P-/Quellenmutation, weil diese Kopie
+dort keine kanonische Eingabe oder automatische Wiederherstellungsautorität hat.
+Nicht mit der Behauptung verwechseln, der neueClient könne jeden Altwriter
+technisch beenden. Die normalen tatsächlichen altenIDBwriter und unbekannten
+versionslosen/Worker-/Assetpfade bleiben W1/W3/W4-Pflichten.
+
+### 11.2 Interner Rückwechsel: vor JEDEM Write abweisen
+
+Jede Rückwechselanforderung für eine bestätigte oder geschützte v2-Linie
+muss sicher abgewiesen werden, bevor sie irgendeine dieser Aktionen ausführt:
+- STORE_KEY kopieren/überschreiben oder eine neue Portfoliomirrorkopie erzeugen;
+- REVERT_INTENT_KEY/MODE_KEY setzen, entfernen oder reparieren;
+- Portfolio aufTombstone setzen oder Outbox/Lifecycle/Keys verändern;
+- einen lokalenModus setzen oder späteren automatischen Rückfall vormerken.
+
+Das gilt für die erhaltenen revert/revertLocked-Funktionen, alte
+Initializer-Nachläufe und künftige Support-/Recoveryadapter. Eine UIblende oder
+Ablehnung erst NACH Tombstonecommit genügt ausdrücklich nicht.
+Ein gespeicherter alterIntent ist keine Zustimmung zum v2-Rückwechsel.
+Ein neuer v2-Client darf so einenIntent nicht zur Legacyquellenwahl vollenden.
+
+Für eine v1-Linie ohne autorisierten Cutover bleiben die bestehenden Funktionen,
+Originalbytes, Intents und Sicherheitsgrenzen erhalten. Diese Entscheidung ist
+keine globale Entfernung alter API-/Test-/Recoveryfunktionen.
+Keine Bereinigung aus fremdemLinienzustand oder Versionslabel ableiten.
+
+### 11.3 Sichere v2-Recovery — verpflichtender vollständiger Ablauf
+
+R0 ORIGINALERHALT:
+Unklare/beschädigte Originalrecords und vorhandene Outbox-/Anker-/Keybestände
+zunächst erhalten; keine automatische Reparatur/Neuanlage/Normalisierung.
+Vorhandenen Originaldownload verwenden, soweit unabhängig sicher lesbar.
+Kein neuer Export von Writerprivatkeys, Geräte- oder Autoritätsidentität.
+Ein heruntergeladenes Portfoliooriginal ist kein portabler vollständiger
+Installation-/Writerklon; Credentials/Originalbytes nicht in Logs/Remote geben.
+Die tatsächliche Downloadablage bleibt vom Browser nicht beweisbar.
+Download allein qualifiziert weder Restore noch Recovery.
+
+R1 BACKUPAUSWAHL:
+Konkretes bewusst ausgewähltes Backup über bestehende Import-/Finanz-/
+Versions-/vollständigeBackupvalidierung prüfen. Bestehende Legacyoriginale
+nicht automatisch als dieses Backup auswählen. Keine zweite Finanzengine,
+keine verkürzte Quellpayload oder Lockerung der Undo-/Original-/CASverträge.
+Erlaubte Konfigurationsübernahme behält ihren bestehenden getrennten Opt-in;
+sie verleiht keine Sync-/Writer-/Geräte-/Autoritätsrechte.
+
+R2 GEBUNDENER VERSUCH:
+Nach Prüfung von Nutzerauswahl und zulässiger lokaler Quelle den geschlossenen
+Lifecycle für die tatsächliche v2-Linie erwerben. Vollständiges Original-P
+samt Presence/CAS/raw/settings/Sperre/Outbox/Lifecycle/Keyslots erfassen.
+Den konkreten geprüften Restoreinhalt und Zweck an diesen Versuch binden.
+Bei jeder relevanten Änderung den ganzenVersuch verwerfen; ein altesBackup
+oder ein Caller-expected-Objekt ersetzt diese privateBindung nicht.
+Die noch fehlende komplette Writer-/Keyslotdurchsetzung bleibt Voraussetzung,
+nicht durch diese Recoverybeschreibung gelöst.
+
+R3 EIN COMMIT:
+Nur den erlaubten bestehenden Portfolio-/Recovery-CAS-Pfad in records benutzen.
+Originalzustand in derselben readwrite-Transaktion prüfen; bestehende
+Outboxinvalidierung/Fence-/Tombstoneregeln erhalten. Kein Crypto-/Netzwerkawait
+in IDB; keine zweiteDB oder LocalStoragequeue.
+Backupdaten dürfen keine lokalen Writer-/Geräte-/Autoritäts-/Schlüsselidentitäten
+ersetzen, aktivieren oder neu ausstellen. Bereits lokal vorhandenes
+format1-prepared-locked bleibt unverändert gesperrt.
+Ein erlaubter Finanzrestore ist kein Adoption-/Entsperr-/Enrollmentereignis.
+
+R4 FEHLER/ABBRUCH:
+Vor dem Commit: tatsächlichenAbort und unveränderten gespeichertenStand prüfen.
+Nach dem Commit: der gespeicherteStand ist maßgeblich, kein fiktivesRollback.
+Ein Marker-/Darstellungs-/Downloadfehler darf keine Legacyquelle aktivieren.
+Unbekannter Ausgang bleibt UNKNOWN, bis er gebunden geklärt werden kann;
+kein automatischer zweiterRestore und keine neueRevision als blinderRetry.
+
+R5 READBACK/REOPEN:
+Nach oncomplete tatsächlichen Portfolio-/Revision-/Settings-/Sperr-/Outbox-/
+Identitäts-/Keyzustand neu lesen und den erlaubten Ergebniszustand verifizieren.
+Eine normale Rückgabe alleine genügt nicht. Separate Verbindung/Seite und
+später Reopen gehören zu den nativen Nachweisen.
+Nach Antwortverlust kann Readback den Datenzustand zeigen, ohne dadurch schon
+die eindeutige Operationsherkunft zu beweisen. Fehlt diese Zuordnung unter
+Konkurrenz, nicht willkürlich den letztenWrite der eigenenOperation zuschreiben;
+weiter blockieren/gezielt explizit recovern.
+Keine flüchtigen Zustimmung-/Verifierfähigkeiten nach Reload rekonstruieren.
+
+R6 KEINE RECHTEPORTIERUNG:
+Normales Restore bleibt auf den bisher erlaubten Finanz-/Konfigurationsumfang
+begrenzt. Kein Writer-, Geräte-, Autoritäts- oder Installationsbezug aus einem
+Backup darf lokal neueRechte auslösen. BestehendeOutbox/Keys sind kein zu
+importierendesBackupfeld. Fehlende/gelöschte lokaleIdentität ist eigenes
+gesperrtes Enrollment-/Recoverythema mit unabhängigen Review-/Nativgates.
+
+### 11.4 Kandidatenentscheidung mit ehrlicher Grenze
+
+**A trägt jetzt einen vollständigen BEGRENZTEN nativen Prüfkandidaten C1
+für die Versions-/Quellen-/Rückwechsel-/Restoreannahmen unten.**
+C1 ist als Code im vorhandenen Harness vorbereitet, NICHT gestartet.
+Er macht bestehende Produktlücken sichtbar und ist KEINE implementierte
+Version2-Produktengine.
+
+**A trägt weiterhin KEINEN vollständigen freigabefähigen
+Produkt-/Keyslot-/Syncimplementierungskandidaten.**
+Offen bleiben vollständige unterstützte Writer-/Worker-/Asset-/Supportzuordnung,
+kanonischer v2-Startup-/APIumbau, vollständige P-/Key-/Verifierbindung,
+qualifizierter Lebenszyklus und native sowie unabhängigeReviewgates.
+Die entfallene LocalStorage-Rückmigration darf diese Pflichten nicht scheinbar
+schließen. Keine neue allgemeine Architekturrichtungsentscheidung nötig.
+
+Die nächste zulässige Produktvorbereitung müsste die erkannten direkten
+Startup-/Revertlücken UND die volle betroffene Aufrufkette gemeinsam schließen.
+Kein isolierter guard patch oder bestandenerPrototyp als gesamterA-Abschluss.
+Reviewgesperrter Schlüssel-/Autoritätscode wird dafür nicht vorgezogen.
+
+### 11.5 C1 — vollständiger reviewbarer Prüfumfang
+
+Dateien:
+- tests/browser-sync-outbox.mjs: nur zwei opt-in-Blöcke ergänzt.
+  Entfernt man diese beiden Blöcke, entstehen exakt die bisherigen
+  Originalbytes mit Blob88529dbbc1748e48c0f1c9c973fe4c0e03550691.
+  Alle bestehenden Assertions und Standardausführung erhalten.
+- tests/flh04-version2-candidate-probes.mjs: neue test-only-Proben.
+  Kein neuer Runner/Workflow, kein Import durch Produktcode.
+
+Aktivierung ausschließlich:
+ENGINE=chromium, FLH04_VERSION2_CANDIDATE=1,
+BASE_URL=http://127.0.0.1:4173,
+node tests/browser-sync-outbox.mjs.
+
+Ohne Opt-in ist der vorhandene Ablauf unverändert. Ungültiger Opt-in-Wert oder
+andereEngine blockiert vor Browserstart. Die Erweiterung lässt nur lokalen
+HTTPorigin localhost/127.0.0.1 und /tests/storage-origin.html zu.
+Jede Probe erhält einen frischen BrowserContext mit zweiSeiten.
+Keine Nutzer- oder ProduktionsDB, keine produktiven Remotezugriffe.
+
+Der Schemawechsel ist ein ausdrücklich TESTEIGENER Prototyp auf den synthetischen
+DBs, mit alten echten v1-Handles, oldVersion1/newVersion2-Prüfung,
+Abort bei Cancel und OHNE Record-/Store-/Indexwrites oder Cryptoawait in IDB.
+Seine Testinstrumentierung (window.v2CandidateProbe) ist KEINE sichere
+Produktcapability, kein Enrollmentcontroller und keine neue ProduktionsAPI.
+
+| Probe | Bestehender Fallbezug | Tatsächlich vorgesehene Aussage / Grenze |
+| --- | --- | --- |
+| C1-CANCEL | A03/A11 | Alter v1-Handle blockiert; cancel vor verspätetem upgradeneeded; tatsächlicherAbort, v1-Reopen und Original-/Keykohärenz. Keine allgemeineProzess-/Abbruchvollabnahme. |
+| C1-VERSION-FENCE | A05/A11 | Schema-only1→2, Originalportfolio/Anker erhalten, alter expliziterv1-Reopen VersionError. AktiveLangtransaktion/alleAltbuilds nicht dadurch abgenommen. |
+| C1-MARKERS | A15, beschlosseneQuellenregel | AlteLocalStoragekopie/Marker nachUpgrade; aktueller tatsächlicher PortfolioStorage.initialize darf keineLegacyquelle wählen. AktuellerCode wird aus Quellen als lückenhaft erwartet; kein PASS behauptet. |
+| C1-NO-REVERT | A15/A16, v2-Verbot | Tatsächlicher interner PortfolioStorage.revert muss vor Record-/Kopie-/Intent-/Markerwrite ablehnen. AktuellerCode wird aus Quellen als lückenhaft erwartet. Fehler/Mutation ist FAIL, kein expected-fail-PASS. |
+| C1-RESTORE-CAS | A12/A16 | Aktueller vorhandener finanzieller Recoverypfad am explizit synthetisch angehängten v2-Handle: staleOriginal verweigern, erlaubtenRestore tatsächlich über zweiteSeite zurücklesen, Sperre/Outbox und lokaleAnkerkohärenz erhalten. Kein qualifizierter v2-Startup-/FullP-/Enrollmentnachweis. |
+| C1-RESTORE-FAULT-REPLY | A16/A19 | InjizierterPutfehler vorCommit erhält gespeichertenStand; injizierterAntwortverlust NACH abgeschlossenerAPI wird über tatsächlichenStand aus zweiterSeite geklärt, ohneLegacyspiegel und Identitätsänderung. Kein echterCrash/Transportausfall/realeQuota. |
+
+Die Recoveryproben benutzen bestehende model-/atomic-storage-/PortfolioStorage-
+Fachfunktionen. Das explizite Anhängen des Testhandles an einen Controller ist
+nur Harnessinstrumentierung und darf NICHT als vorhandener Produktstartpfad
+ausgegeben werden. Der bestehende anchor-proof wird wiederverwendet; keine
+neuen Signatur-/KDF-/Wrapalgorithmen implementiert.
+
+Alle Fälle laufen bei Ausführung seriell in getrennten frischenContexts.
+FAIL bleibt FAIL; Ergebnisse werden gesammelt und einFehler beendet den
+Gesamtkandidaten mit AggregateError. Kein Skip/automatischerRetry/Erwartungslockerung.
+Der Report nennt Node/PW/tatsächlicheEngineversion, Fallstatus und expliziteGrenzen,
+keine Finanz-/Credential-/Preimagedigests.
+Die nachUpgrade gesetzten Legacydaten sind gezielte synthetische Altwriter-
+Fixtures, KEIN neu eingeführter Produktmirror.
+
+### 11.6 Tatsächliche lokale Prüfung und Ausführungsschranke
+
+Beide finalen mjs-Dateien mit node --check geprüft: Exit0.
+Nach der letzten reinen Reportmetadatenänderung die geänderteHelperdatei
+nochmals Syntax geprüft: Exit0.
+Kein Import-/Browser-/IDB-/Migrations-/Recovery-/CItest dadurch ausgeführt.
+Die zwei opt-in-Blöcke wurden textuell entfernt und der resultierende Harness
+exakt gegen seine vollständig gepinnten Originalbytes verglichen: gleich.
+Gitblob-/Byteprüfungen der gespeicherten Kandidatdateien sind Integritätsnachweise,
+kein nativePASS. Keine historischenTestzahlen addiert.
+
+Die zwei erwarteten Produktlücken sind QUELLERWARTUNGEN, keine gemessenen
+Testergebnisse. C1 nicht bloß starten, um bekannte Lücken ohne geänderte
+Voraussetzung erneut rot zu sehen. Jede spätere Ausführung verlangt einen
+konkreten freigegebenen exaktenKandidaten und zulässigenHost/Job.
+Keine zusätzliche CI-/Runnerausführung oder Workflowänderung in diesem Auftrag.
+
+Vorhandener möglicher Hosttyp aus dem früheren Nachweis:
+Ubuntu24.04/Node22.23.4/PW1.56.1/Chromium141.0.7390.37.
+BeendeterRun43421311524 ist kein wiederverwendbarer Hostzugang oder neuerC1-Beleg.
+Die schon vorbereiteten regulären Localhost-/Harnessbefehle bleiben der Weg;
+fürC1 zusätzlich ausschließlich den genanntenOpt-in setzen.
+Originalharness zuerst innerhalb DIESER einen Ausführung; kein separater
+Statistik-/Retry-/Full-CIzyklus aus der Kandidatenvorbereitung.
+
+W1/W3/W4 und unbekannteRuntimepfade bleiben intern zu schließen.
+N0-/C1-/N1-Ausführung und unabhängigerPrüfer/Zugang/Budget sind getrennt
+von der jetzt erteilten v2-Kompatibilitätsentscheidung.
+Kryptopaketfd3fce4b/Kandidat17a5a190/Tree44ff9c4d bleibt unverändert;
+neuer Vertrag/C1 sind ungeprüfter Delta-/Impactgegenstand, kein Paketneubau
+oder Selbst-/KIabschluss fürCR4/CR5.
+A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutz unverändert.

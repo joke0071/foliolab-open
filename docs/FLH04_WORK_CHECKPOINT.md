@@ -1,3 +1,51 @@
+## V2_NO_LEGACY_RETURN_AUTHORIZED / C1_PROBE_PREPARED / PRODUCT_NOT_READY · work-366da675bef5-20261113
+
+Jochen hat ausdrücklich autorisiert: bestätigte v2 bleibt kanonisch IDB;
+keine technische/interne/versteckte/automatische Rückmigration nach LocalStorage.
+V1-Linien/Originale erhalten. Alte Marker verleihen v2 keine Quellenautorität.
+Die Wartefrage aus dem vorigen Kopf ist erledigt; nicht erneut stellen.
+
+[Vertrag §11](FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md)
+gezielt ergänzt: native v2 konservativ schützen, Revert vor JEDEM Write ablehnen,
+Originalerhalt/-download plus explizit gebundener Backup-Restore mit vollständigem
+CAS/Fehler-/Abbruch-/gespeichertemReadback und ohne Identitätsportierung.
+Download allein und Antwortverlust-Endzustand sind keine pauschale Recoveryabnahme.
+R1s Zielübergang ist für v2 verboten, nicht jeder Altwriter technisch beendet.
+
+A trägt jetzt den vollständig vorbereiteten BEGRENZTEN nativen Prüfkandidaten C1,
+aber weiter KEINEN vollständigen Produkt-/Keyslot-/Syncimplementierungskandidaten.
+Quellen-/Startup-/Revertumbau und W1/W3/W4/Worker-/Asset-/Runtime-/Reviewgates offen.
+Keinen isolierten Feldguard oder Prototyp als Gesamtlösung ausgeben.
+
+C1-Code: optionaler Hook im vorhandenen tests/browser-sync-outbox.mjs plus
+tests/flh04-version2-candidate-probes.mjs. Kein Produktimport/neuerRunner/Workflow.
+Ohne Opt-in unverändert; alle bisherigen Assertions erhalten. Entfernen der
+zwei opt-in-Blöcke ergibt exakt Originalharness Blob88529dbbc1748e48c0f1c9c973fe4c0e03550691.
+Opt-in nur FLH04_VERSION2_CANDIDATE=1/ENGINE=chromium; lokaleHTTP-Testorigin,
+je Probe frischerContext/zweiSeiten, keine Nutzer-/ProduktionsDB.
+
+Sechs Probegruppen: Cancel/spätesUpgrade, v1-Reopen nach2/Keyerhalt,
+alteMarker/v2-Quellenwahl, internerRevert vorWrites, Restore-StaleCAS/Readback
+auszweiterSeite/Identitätserhalt, injizierterPutfehler+AntwortverlustnachAPI.
+C1-MARKERS/C1-NO-REVERT werden ausQuellen als bestehendeProduktlücken erwartet,
+NICHT als gemesseneFAIL/PASS. Kein expected-fail-Skip oder Assertionlockerung.
+Schema-onlyÜbergang/Handleattachment sind ausdrücklich Testprototyp/Instrumentierung,
+keineProduktmigration/Enrollmentfähigkeiten. Bestehenden anchor-proof wiederverwendet.
+
+Lokale Node24.22.1-Syntaxprüfung beider finalen mjs Exit0, Helper nach letzter
+Reportänderung erneut Exit0. Keine Module/Browser/IDBtests gestartet.
+Keine CI/Runner-/Workflowausführung, Migration oder aktiveSync autorisiert.
+Vor späterer Ausführung exakten Kandidaten/Hostentscheidung qualifizieren;
+nicht bloß bekannte Lücken blind erneut rot laufen lassen.
+
+Kryptoreviewpaketfd3fce4b/17a5a190/Tree44ff9c4d unverändertEXTERNAL_REVIEW_PENDING.
+Kein neuer Krypto-/Aussteller-/Signatur-/Wrap-/Entsperrcode.
+Alle A1/A2/format1/P/R/S/D/CAS/Raw-/Retry/oncomplete/Budgets/Originalketten erhalten.
+FLH04 NOT DONE / Outbox INTERN UNQUALIFIZIERT /
+N-DRIVE BLOCKED_EXTERNAL mit internem UND externem Rest.
+
+---
+
 ## A_NOT_CANDIDATE_READY / W1_PATHS_MAPPED / W2_COUNTERCASE_R1 / DECISION_REQUIRED · work-366da675bef5-20261113
 
 [Bestehender Vertragsentwurf §10](FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md)
