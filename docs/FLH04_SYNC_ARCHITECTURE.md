@@ -105,4 +105,52 @@ Quellabgleich Main a27cde2: `PortfolioStorage/atomic-storage` liefern bereits lo
 
 Der anschließende begrenzte Crypto-Wiederverwendungsabgleich bestätigt: Backup-V2 verschlüsselt unter festem Backup-AAD und öffnet Schlüssel nur innerhalb seiner bestehenden Routinen; `keyId/createdAt` sind dort keine Sync-Portfolio-/Revisions-/Replaygarantie. `createCompleteBackup(configuration)` kann explizit gewählte API-Zugänge enthalten. Diese unveränderten Funktionen werden daher nicht als Syncencoder aufgerufen. Nächster Schnitt: eigenständiger authentisierter Sync-Frame mit eindeutig gebundener Protokoll-/Portfolio-/Parent-/Generation-/Keyepoche und getrenntem Snapshotdatenumfang, ohne Credentialübernahme; vor Kryptocode Schlüsseltrennung/Nonce/Rotation/Recovery anhand konkreter positiver/negativer Frames prüfen. Manipulierte Parent-/Portfolio-/Epoche muss Authfehler vor Hash/Modell/Apply ergeben; ein kopiertes gültiges altes Frame bleibt gegen lokalen akzeptierten Anker rollbacksicher. Dieser Frame und sein Verifier sind noch NICHT implementiert.
 
+## Authentisierter Frame v1 — lokaler Decodervertrag · 13.11.2026
+
+Dieser vor dem Kryptocode festgelegte Schnitt benutzt WebCrypto-HKDF-SHA256/AES-256-GCM, keinen eigenen Cipher und keinen Backup-V2-Encoder. Er implementiert ausschließlich einen lokalen Decoder und einen flüchtigen Outbox-Abgleich. Kein Enrollment, Key-Wrapping, Passwort-KDF, Encoder, dauerhafter Nonceallocator, Rotationsvollzug, Storage oder Transport. Produktive Kryptofreigabe bleibt offen.
+
+### Schlüssel und Bytes
+
+Eine ausdrücklich lokal vertraute Bindung besteht aus Portfolio-ID, zufälliger opaker Epochen-ID (32 Hexzeichen /128 Bit) und einem nicht extrahierbaren HKDF-CryptoKey mit deriveKey-Recht. Sein Eingangsmaterial muss ein **eigenständig zufällig erzeugtes 256-Bit-Sync-Epochengeheimnis** sein, niemals Passwort, Backup-DEK, OAuth-/API-Token, Geräte-ID oder Payloaddigest. Der Decoder kann die Herkunft/Entropie eines CryptoKey nicht prüfen; Enrollment/Vaultadapter müssen diese Voraussetzung später belegen. Keine automatische Übernahme einer Bindung aus Remote-Header oder Backup. Symmetrische Authentisierung beweist Besitz des Gruppenschlüssels, nicht die behauptete individuelle Writer-ID; jeder berechtigte Schlüsselhalter könnte sie setzen. Keine Gerätesignatur, individuelle Widerrufbarkeit oder Nichtabstreitbarkeit behaupten.
+
+UTF8 bezeichnet TextEncoder nach Ablehnung ungepaarter Surrogate; entschlüsselte Bytes werden fatal UTF8-dekodiert, BOM nicht entfernt. JSON der festen Arrays wird genau durch JSON.stringify erzeugt, ohne Zwischenräume, mit festgelegter Reihenfolge. Decoder verlangt identische Reserialisierung der **Framehüllen**, damit alternative Encodings/überzählige Elemente nicht mehrere Retryidentitäten erzeugen; der enthaltene Snapshotstring wird nie geparst/reserialisiert/normalisiert.
+
+| Element | Exakte v1-Bindung |
+| --- | --- |
+| Äußerer Frame | JSON.stringify(["foliolab-sync",1,"HKDF-SHA256-A256GCM",epochId,saltHex,nonceHex,cipherHex]); ausschließlich ASCII, max.15.000.000 Zeichen inklusive Hülle; Ciphertext inklusive128-Bit-Tag max.7.400.000 Bytes. Hex klein/gerade, keine alternativen Base64-/Objekt-/Zusatzfelder. Grenzen sind bewusst enger als Backup, kein Erhöhen alter Limits. |
+| Salt/Nonce | Pro neuer Verschlüsselung32zufällige Saltbytes und12zufällige Noncebytes aus CSPRNG; Hex64/24. Kein Zähler aus Gerät/Generation/Uhrzeit. Nicht absichtlich wiederverwenden. Decoder kann historische Eindeutigkeit nicht nachweisen. |
+| HKDF | SHA-256; salt = saltBytes; info = UTF8(JSON.stringify(["foliolab-sync-key",1,"HKDF-SHA256-A256GCM",expectedPortfolioId,expectedEpochId])); Ausgabe nicht extrahierbarer AES-256-GCM-Schlüssel, nur decrypt im Decoder. |
+| AEAD-AAD | UTF8(JSON.stringify(["foliolab-sync",1,"HKDF-SHA256-A256GCM",expectedPortfolioId,expectedEpochId,saltHex,nonceHex])); Portfolio kommt aus lokalem Vertrauenskontext, nicht aus frei wählbarer Remotebindung. |
+| Verschlüsselter Inhalt | JSON.stringify(["foliolab-sync-content",1,[format,portfolioId,revisionId,deviceId,parentId,generation,payloadDigest],exactSnapshotString]); exakt7 Descriptorfelder aus bestehendem Format1. Vollständiger Descriptor und Snapshot sind gemeinsam AEAD-geschützt. |
+| Snapshot | Ausschließlich separat erlaubter Portfolio-/History-/Journalumfang. API-Konfiguration, Tokens, Vault, Installations-/Writeridentitäten und Zugangsdaten ausgeschlossen. Decoder behandelt String als opak; Modell-/Credential-Allowlist muss später vor Encoder und vor Apply separat durchgesetzt werden. Kein createCompleteBackup(configuration)-Aufruf. |
+| Lokaler Framebeleg | SHA256 über **exakten äußeren UTF8-Frame** ausschließlich lokal; niemals Finanzdigest/Klartext in Remote-Dateinamen/Logs. Beleg ist Authentisierungsergebnis plus Bytereferenz, kein Ersatz für AEAD. |
+
+Prüfreihenfolge: enge äußere Typ-/Längen-/Versions-/Hexprüfung → lokale Portfolio-/Epoche-/Schlüsselbindung → HKDF/AEAD-Tagprüfung → fatal UTF8 und strikte innere Hülle → vollständiger Descriptor/Portfolio → exakter Snapshot-SHA256. Erst danach unveränderlicher, im laufenden Modul privat registrierter Verifierbeleg. Ein kopiertes JSON-Objekt oder {verified:true} wird nicht als Beleg akzeptiert. Der Beleg bestätigt keine Finanzvalidität und keinen aktuellen Remotezustand. Graph/Replayprüfung folgt separat vor Apply; niemals nur auf erfolgreiche Entschlüsselung schreiben.
+
+### Replay, Rotation und Wiederaufnahme
+
+Eine identische gültige alte Revision bleibt kryptografisch gültig. Der vollständige lokal akzeptierte Descriptor und die gesamte authentisierte Elternhülle müssen den bestehenden Planer passieren: Vorfahr/fehlender Anker kein Rollback; Geschwister stets Konflikt; gleiche Revisions-ID mit abweichendem Descriptor blockiert. Noch kein lokaler Anker = ausdrückliches Enrollment, keine automatisch höchste Generation. Kein Zeitstempel als Ablauf-/Frischebeweis, keine globale Freshnessgarantie gegen Ausblenden eines Servers. Ein verlorener lokaler Anker braucht explizite Recovery/vertrauenswürdigen externen Anker.
+
+Decoderinstanz ist auf genau eine lokal akzeptierte Epoche gebunden; andere Epoche scheitert vor Decrypt, ohne Schlüsselsuche/Downgrade oder Vaultwechsel. Historische Epochen dürfen später nur über separat vertraute **history-only**-Bindungen zur Elternvalidierung gelesen werden; daraus keine aktuelle Apply-/Schreibberechtigung. Rotationsübergang braucht einen eigenen authentisierten Übergangsdatensatz, erwarteten aktuellen vollständigen Head, alte+neue Epochenbindung, exakte Parentkontinuität und atomaren lokalen Epochen-/Ankerwechsel. Dieser Übergang ist hier nicht definiert/implementiert und deshalb blockiert. Reines Passwortändern darf nur die separat spezifizierte Sync-Schlüsselumhüllung ändern; kompromittierter Gruppenschlüssel erfordert frische Epoche und sicheren Enrollmentweg. Alte Schlüssel erlauben weiter Lesen alter Daten; Widerruf kann das nicht rückgängig machen. Unpublizierte alte Outboxobjekte erhalten, aber nach Rotation nicht still senden/umschlüsseln.
+
+Vor künftigem Upload müssen lokal bestätigter Snapshot, vollständiger Descriptor/Parent, Portfolio/Epoche, lokaler Erfassungs-CAS, **exakter verschlüsselter Frame** samt lokalem Framehash und Publikationsstatus atomar dauerhaft gebunden sein. Vor dieser Commitgrenze nie senden. Absturz vor Commit erzeugt keinen sendbaren Versuch; danach wird nur derselbe gespeicherte Frame gesendet. Timeout/HTTP-Erfolg bleibt uncertain; authentisierter Readback muss **denselben äußeren Frame** und Descriptor besitzen. Gleicher Descriptor mit neuem Salt/Nonce/Cipher ist kein bestätigter alter Versuch. Neuverschlüsselung nur explizit mit frischem Salt/Nonce und eigener gespeicherter Versuchshistorie, ohne neuen wirtschaftlichen Commit vorzutäuschen. Bestätigung eines alten Erfassungs-CAS markiert neuere lokale Änderungen nicht als erledigt.
+
+Der lokale Outbox-Schnitt speichert oder sendet nichts: nur unveränderliche, privat registrierte Verifierbelege akzeptieren, erwartete Bindung/CAS prüfen und pending/uncertain/confirmed/blocked zurückgeben. Keine Boolverified-Abkürzung, kein persistierbarer Authbeleg. Nach Neustart gespeicherten Frame erneut kryptografisch verifizieren; serialisierter Beleg genügt nicht. Dauerhafte IDB-Outbox, Nonce-/Key-Budget und Rotation bleiben Pflichtrest.
+
+### Konkrete Gegenproben / Gates
+
+| Fall | Verbindliches Ergebnis |
+| --- | --- |
+| Synthetischer unabhängiger Node-HKDF/AES-GCM-Encoder, Unicode/Decimal/UNKNOWN/Journal | Decoder exakt ursprünglicher Snapshot und vollständiger Descriptor; keine Float-/FX-Normalisierung. |
+| Portfolio A→B bei gleichem Epochengeheimnis; geänderter Header/Epoche/Salt/Nonce/Tag/Cipher | Ablehnen vor Belegerzeugung; kein Plan/IDB-Aufruf. |
+| Parent/Generation/Writer/Digest mit altem Tag geändert | Authfehler; kann ein berechtigter Schlüsselhalter einen neuen Tag erzeugen, folgt trotzdem strikte Descriptor-/Graphprüfung, keine individuelle Writerauthbehauptung. |
+| Gültig verschlüsselt, aber inneres Portfolio/Digest falsch, malformed UTF8/Unicode, fremde/extra Formate | Ablehnen nach Auth vor Belegerzeugung. |
+| Wiederholung identischer Frames / gültiger alter Head / authentisiertes Geschwister | Idempotenter Beleg; Planer verhindert Rollback bzw. meldet Konflikt; Decrypt allein kein Apply. |
+| Rotation oder Wiederherstellung mit alter Epoche; fremder BackupV2-Frame | Keine automatische Epochübernahme/Downgrade; alter Vault/Anker/Originale bleiben. Keine Backupcredentialübernahme. |
+| HTTP-Erfolg ohne Readback / anderer gültiger Cipher desselben Descriptors / gefälschter Beleg | uncertain / blocked / Ablehnung; nur exakter authentisierter Frame bestätigt seinen Versuch. |
+| Crash/Quota/mehrere Tabs/neuer lokaler CAS | Noch OFFEN: echte dauerhafte IDB-Transaktion/Outboxnachweise vor Transport; reine Modelle sind kein PASS dafür. |
+
+Primärreferenzen für diesen isolierten Standardprimitiveinsatz: [Web Cryptography Level2](https://www.w3.org/TR/WebCryptoAPI/) (HKDF, AES-GCM, CryptoKey), [RFC5869](https://www.rfc-editor.org/rfc/rfc5869) (HKDF extract/expand und Kontexttrennung). Eigener Protokollentwurf und Key-Lifecycle benötigen vor produktiver Nutzung weiterhin unabhängiges Kryptoreview; erfolgreiche Units ersetzen es nicht.
+
+
 
