@@ -1,4 +1,26 @@
-## ACTIVE / DIAGNOSIS_DRAFT_ONLY / RELEASE_BLOCKED · work-d62125b28794-20261113
+## STOPPED / HANDOVER_READY / PR335_DIAGNOSTIC_CANDIDATE_READY_FOR_DECISION / RELEASE_BLOCKED · work-d62125b28794-20261113
+
+Mit diesem Abschluss sämtliche eigenen Schreibaktivitäten beendet; kein Hintergrundbetrieb oder laufender Nachfolger. Serielle Dokumentationsvorbereitung abgeschlossen. Vorgänger work-25790c57cd29-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine Agenten/Parallelisierung/Automation/zweiter Writer/zweite finale CI.
+
+**Neue konkrete nächste Entscheidung:** [vollständiger Diagnosevertrag, Patch und Übergabeauftrag](PR335_FULL_KRAKEN_DIAGNOSTIC_CANDIDATE_2026-11-13_d62125b28794.md). Unreferenzierter Kandidat **e9578124495709ef7550273f239840c96d4a1b1c / Tree e17b95fddc8f87dfffa9288f2878785bd7f1979c**, Parent Main a27cde2f802c26bfec41190911d88bd1d7d8e325. Genau3Deltadateien vollständig gepinnt bytegleich rückgelesen; Originaltest/Helper/Produkt unverändert. Keine Branchref oder PR angelegt, kein Workflow aktiviert/integriert oder Runner gestartet. Vollständiger Patch zusätzlich dauerhaft im Dokument gesichert.
+
+#229 verlangt konkrete Freigabe: erst nach ausdrücklichem Auftrag genau diesen SHA einmal als neuen Branch test/pr335-full-kraken-d62125b28794 veröffentlichen; dessen create-Trigger startet EINEN begrenzten Diagnosejob(max20Minuten). Vorher frischer kollisionsfreier Abgleich/Branchabwesenheit; kein Mainmerge/Deployment/PR/Retry. Übernahme dieses Checkpoints autorisiert die Aktivierung NICHT.
+
+Tatsächliche neue Prüfung:7verschiedeneNode24.22.1MockgegenprobenPASS/0FAIL/0SKIP/0CANCELLED,SyntaxpreloadPASS,YAMLstruktur geprüft(vorhandenesPyYAML6.0.3),beidehistorischenDiagnosejobs/PRselektoren/permissionsidentisch. AwaitedBeobachtungsbarrieren vorSeitenübergabe/TLSnachlauf/Fehlergrenzen/Logdatenreduktion isoliert geprüft. KEINPlaywright-/Browser-/App-/IDB-/CI22-/Wallet20-/FullCI-/ProduktionsPASS. LokalenAF_UNIXFehlstartnichtwiederholt. createRunnerwegundnativeHooksNICHTAUSGEFÜHRT;keineZeit-/Creditersparnisbehauptet.
+
+FrischerSchlussabgleich311Heads:nureigeneCheckpointänderung;Main/FLH04/PR332/157/161/UI-R4samtReviews/Inline-/Conversationkommentarenunverändert.0IN_PROGRESS,nurhistorischeQueues43095194276/43095194257. Mainrun43332355188FAILURE/UrsacheUNKNOWN/RELEASE_GATE_OPEN. RootV155/406425600Bytes,FAILCompanionV0/12748800Bytes,MainOriginalCompanionV0/212408320BytesfrischNURVersions-/Größenmetadaten. KeinprivaterTransfer/Upload/Readback/Restore/Schreibfähigkeitsnachweis;alleOriginalkettenbewahrt.
+
+FLH04weiterhin7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf/Tree6ef292b10caa2956791f0fe157137b31a3da2d00. UnabhängigesKryptoreviewVORUmhüllungscodeundCryptoKey-/Keyslotraceungelöst. KeinWrap-/Aussteller-/Signatur-/Entsperrcode,keineaktiveSync. A1/A2/Snapshot-/prepared-locked-Grenzenunverändert;OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNALmitCode-/internemAbnahmerest. Roadmapstatusunverändert,keineGesamtinventur.
+
+### Vollständiger kopierbarer Übergabeauftrag
+
+Der vollständige aktuelle Auftrag einschließlich aller Referenzen, neuer Aktivierungsgrenze, Prüfgrenzen und erhaltener Schutzverträge steht am Ende des [Diagnosekandidatendokuments](PR335_FULL_KRAKEN_DIAGNOSTIC_CANDIDATE_2026-11-13_d62125b28794.md). Die vorherige ausführliche FLH04-Übergabe bleibt unten vollständig erhalten und wird ausdrücklich nicht durch eine verkürzte Schutzannahme ersetzt.
+
+---
+
+### Historischer Übernahmeeintrag dieser Sitzung
+
+## HISTORICAL_TAKEOVER / DIAGNOSIS_DRAFT_ONLY / RELEASE_BLOCKED · work-d62125b28794-20261113
 
 Serielle begrenzte Übernahme nach frischem Abgleich: 311 Heads, Main/FLH04/Checkpoint und PR332/157/161/UI-R4 unverändert; Reviews, Inline- und Conversationkommentare geprüft. Vorgänger work-25790c57cd29-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Kein tatsächlich beobachteter Fremdschreibvorgang. Keine Agenten/Automation/zweite finale CI.
 
