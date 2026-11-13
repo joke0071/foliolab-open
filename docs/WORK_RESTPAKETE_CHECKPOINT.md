@@ -1,3 +1,74 @@
+## STOPPED / V2_NO_LEGACY_RETURN_AUTHORIZED / C1_PROBE_PREPARED_REVISION2 / PRODUCT_NOT_READY · work-366da675bef5-20261113
+
+Eigene Schreibarbeit nach gesicherter Vertrags-/Kandidatenvorbereitung beendet;
+kein Hintergrundbetrieb und keine neue Chat-/Übergabeaufforderung.
+Jochen hat ausdrücklich beschlossen: bestätigte v2 bleibt kanonisch IndexedDB,
+keine technische/interne/versteckte/automatische Rückmigration nach LocalStorage.
+V1-Linien/Originale unverändert; gebundene Recovery mit gespeichertem Readback und
+ohne Writer-/Geräte-/Autoritätsportierung erforderlich. Vorige Wartefrage erledigt.
+
+Aktueller FLH04-Prüfkandidat **b18c6fcb09b22616355355df5efb483503141e69** /
+Tree **2527bebb55b3209a59c90c66627192a751ce1fa1**,
+Parentffb2cbf7d8a3230cc8cd531419b8c77b1c09ce5c; vorherige Arbeitsbasis c806c7659f549b2506eeda596e1b29b1f1afcc30.
+Genau4Deltas gegen diese Basis: bestehenderVertrag/Fachcheckpoint,
+vorhandener tests/browser-sync-outbox.mjs und neuer
+tests/flh04-version2-candidate-probes.mjs.
+[Vertrag §11 und Kandidatengrenzen](https://github.com/joke0071/foliolab-open/blob/b18c6fcb09b22616355355df5efb483503141e69/docs/FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md).
+Alle4vollständig gepinnt bytegleich UND unabhängigGitblob-SHA1-rückgelesen;
+Compare bestätigt. Produkt-/Krypto-/Workflowdateien unverändert.
+
+Kandidatenentscheidung:
+A trägt vollständigen BEGRENZTEN nativen Prüfkandidaten C1 für die bezeichneten
+Versions-/Quellen-/Rückwechsel-/Restoreannahmen, NICHT vollständige v2-Produkt-/
+Keyslot-/Syncimplementierung. Neue Quellenregel/Startup-/Revertumbau und volle
+Writer-/Worker-/Asset-/P-/Key-/Verifierbindung sowie Review/Runtimegates offen.
+R1s Rückwechselziel ist für v2 verboten; kein allgemeiner Writerabschluss daraus.
+
+C1 opt-in nur ENGINE=chromium/FLH04_VERSION2_CANDIDATE=1,
+BASE_URL=http://127.0.0.1:4173 und vorhandener Harness.
+Vor Browserstart HTTP/localhost oder127.0.0.1/Port4173/neutralenPfad prüfen.
+OhneOpt-in unveränderterStandard; Entfernen der2Blöcke ergibt exakt Originalharness
+Blob88529dbbc1748e48c0f1c9c973fe4c0e03550691; alle Assertions erhalten.
+Je Probe frischerContext/zweiSeiten, keinProdukt-/Nutzerorigin.
+Helperblob30ca8d464e9ace8994bedb9c1e9d31e5bd742794,
+Harnessblobf5d6bcab636ff8b9cf5d4b62514dcb98acb2475c.
+
+SechsProben: blockierterCancel/späterUpgrade, alte1-Wiederöffnungnach2/Keyerhalt,
+alteMarker/v2-Quellenwahl, versteckterRevertvorWrites, Restore-StaleCAS/
+ReadbackauszweiterSeite/Identitätserhalt, injizierterPutfehler+AntwortverlustnachAPI.
+C1-MARKERS/C1-NO-REVERT als aktuelle Quelllücken erwartet; keine ausgeführten
+FAIL/PASS oder expected-fail-Skips. Test-eigenerSchemawechsel und synthetisches
+Handleattachment sind KEINE qualifizierteProduktimplementierung/Autorisierung.
+Bestehenden anchor-proof wiederverwendet; kein neuerSignatur-/KDF-/Wrapcode.
+
+Vorbereitungsbefund erhalten: ersteFassungffb2cbf7 prüfteOrigin erst beim
+nachgeladenenHelper; Revision2 verlegt sie vor denOriginalbasisablauf/Browserstart.
+Keine Browserausführung einerFassung. Beide finalen mjs Node24.22.1 node--check
+Exit0; geänderteFiles nachjeweiligerÄnderung gezielt erneut geprüft.
+Keine Modul-/Browser-/IDB-/Migration-/Recovery-/CIausführung; Syntax keinNativePASS.
+Nicht bekannteProduktlücken blind erneut rot laufen lassen.
+SpätereAusführung braucht exaktenKandidaten, zulässigenHost und konkreteFreigabe.
+Kein neuerRunner/Workflow/Retry/PR/Merge/Release/SWbump/aktiveSync.
+
+Kryptopaketfd3fce4b/17a5a190/Tree44ff9c4d unverändertEXTERNAL_REVIEW_PENDING;
+CR4/CR5offen. Prüfer/Zugang/Budget separat; keinPaketneubau/Selbstreview.
+W1/W3/W4/Worker-/Asset-/Runtimebelege bleiben intern/extern offen.
+Keine pauschaleErledigung aus verbotenerLocalStorage-Rückmigration oderC1.
+
+312Heads, nur eigeneFLH04-/Zentraländerung; Main/Diagnose/PR332/157/161/UI-R4
+geschützt. Keine beobachteteFremdrefkollision; älterework-pr333-Ausführung
+NICHTtechnischbeendetnachgewiesen. Reviews/Inlineleer, ConversationvorMutation
+unverändert. 0IN_PROGRESS beimEinstieg; keine neuenLäufe ausgelöst.
+Sicherungen frisch NURMetadaten RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120; keineprivatenTransfers/Uploads/
+Readbacks/Restores/Schreibfähigkeitsbeweise/Vollbackups.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutz erhalten.
+[TechnischeBestandsgrenzen](HANDOVER_03b53e88c37d_2026-11-13.md) bleiben,
+soweitnicht ausdrücklich durchdie dokumentierten Vertragsentscheidungen geändert.
+
+---
+
 ## STOPPED / WAITING_COMPATIBILITY_DECISION / W1_PATHS_MAPPED / W2_COUNTERCASE_R1 / RELEASE_BLOCKED · work-366da675bef5-20261113
 
 Eigene Schreibarbeit mit diesem gesicherten Stand beendet; kein Hintergrundbetrieb.
