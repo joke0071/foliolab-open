@@ -1,12 +1,14 @@
-# FLH04 credential-free snapshot gate — bounded canonical v3/v4 histories
+# FLH04 credential-free snapshot gate — bounded canonical histories and UH02 v5
 
 ## Current scope · 13.11.2026
 
 Canonical accepted BTC/ETH/SOL sessions and separate canonical CSV/user-confirmed
 provider priceHistories are supported losslessly under the dated slices below.
 Canonical v3/v4 purchase receipts/decisions are additionally supported by the dated
-Purchase-Evidence slice below. v5, pending/resume, populated bitcoinLedger and other
-import/management/withdrawal/bridge evidence remain unsupported in full. Earlier empty-only price-history statements below describe
+Purchase-Evidence slice below. The dated UH02-v5 slice additionally supports the complete
+canonical purchase/undo economic chain with its import and Ledger provenance.
+Ledger-only v5, other import/management/withdrawal/bridge evidence and pending/resume
+remain unsupported in full. Earlier empty-only price-history statements below describe
 historical slices and are superseded only for this dated scope.
 No active integration or Apply permission, no independent crypto/native acceptance.
 
@@ -272,3 +274,44 @@ wiederverwenden, keine unveränderten CSV-/Purchase-Validatorzahlen addieren.
 Kryptopaket unverändert; Impact nur nachgelagerte Snapshotabdeckung gegen Kandidat
 17a5a190d472f1f07b3508e6f35194371fe95eb2, keine pauschale Freigabe. Keine aktive
 Sync-/Anker-/Storage-/Outbox-/Appänderung, native/CI/Releasegates bleiben offen.
+
+### UH02: tatsächlicher Implementierungs- und Prüfabschluss
+
+Geschlossene UH02-importSource-/sourcePayload-/facts-/event-Allowlist und enges
+v5-Scopekriterium implementiert. Reines Ledger ohne UH02-Journal bleibt unsupported.
+Vorhandene Semantikvalidatoren unverändert, keine zweite Wirtschaftsengine.
+Ein direkt belegter Vergleichsfehler war für kanonische BTC-Wallets zusätzlich nötig:
+createPosition erzeugt eigene undefined chainId/addressType-Felder, die kein JSON
+transportiert. Der unverändernde Vergleich ignoriert ausschließlich zusätzliche
+undefined-Projektionsschlüssel. Jeder ursprüngliche JSON-Schlüssel und Wert muss
+weiter identisch sein; null statt Abwesenheit und echte Default-/Normalisierungs-
+änderungen bleiben abgewiesen. Keine Quellmutation/Verwerfung transportierbarer Daten.
+
+Final90PASS/0FAIL/0SKIP/0CANCELLED/Exit0 auf Node24.22.1:
+21Snapshot+9Gap+10WalletHistory+11PriceHistory+12PurchaseSnapshot+17UH02Snapshot+
+10bestehendeUH02. Syntax2PASS. Alle bestehenden Tests unverändert; geschlossene
+Scopeprüfung liegt auch im Envelope-Schema und erhält bisherige Ablehnungswege.
+75ursprüngliche Paket-/Quell-/Testeingaben blobgenau identifiziert,74nachCode
+unverändert, nur src/sync-snapshot.js geändert plus neueSuite.
+[Originaloutput, Eingaben und Erstbefunde](release-evidence/flh04-snapshot-v5-bitcoin-local-2026-11-13.json).
+
+Erstprobe deckte undefined-Projektionsschlüssel auf; isolierteSuite erst15/2,
+dann16/1 (Stalefixture hatte geänderten Blockhash ohne passenden Tip/Canonicalisierung;
+Preisfixture hatte falsches CSV-Label/nur1Punkt). Fixtures an vorhandene Verträge
+angepasst. Erster gemeinsamerLauf87/3:2alteEnvelope-Fehlererwartungen nach Schema-
+erweiterung und1zuenge erwarteteStaleFehlerstelle. Scopeprüfung ins gemeinsame
+Schema verschoben statt bestehende Assertions zu lockern; Staleprobe ohne neuen
+Ledger-Reimport löst gezielt altenFingerprintkonflikt aus. Zweiter gemeinsamer89/1:
+neue isolierteLedger-Probe erwartete Decoder-Unsupported statt Envelope; nur diese
+neue Erwartung auf bestehende Encoder-/Decoderfehler abgestimmt. Final90/0.
+Originale beider gemeinsamerFehlläufe erhalten; keine Budget-/Timeoutlockerung.
+
+Gültige bisherige Preis-/Purchase-/Historybelege bleiben unverändert. Wegen globaler
+dataSchema-/Vergleichsauswirkung alle fünf betroffenen Snapshot-Suiten erneut;
+10UH02-Semantiktests aufgrund neuer Nutzung gezielt. Historische CSV-/Purchase-
+Validatorbelege nicht pauschal wiederholt/addiert. Begrenzte Implementierung
+vollständig, gezielte interne Nodeverifikation bestanden; FLH04NOTDONE,
+OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mit internem/externalemRest.
+Keine nativeBrowser/IDB/CryptoKey/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
+CI22/Wallet20/Geräte/PR/Main/Produktions-/externeAbnahme oder aktiveIntegration.
+Kryptoreview/Keyslotrace/A1/A2/prepared-locked/Budgets/Releasegates unverändert.

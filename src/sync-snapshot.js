@@ -41,7 +41,6 @@ const opening=object(fields('positionId quantityExact costBasisExact realizedPnL
 const flow=object(fields('id date amountEUR amountExactEUR'));
 const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
 const journal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
-const booking=object(fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified'));
 const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
 const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
 const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
@@ -82,14 +81,39 @@ const purchaseLedger=object({id:historyText,ownerDigest:historyText,txid:history
  amountBTC:historyText,events:array(purchaseRef)});
 const purchaseEvidence=object({schema:v=>v===1,receipts:array(purchaseReceipt),decisions:array(purchaseDecision),
  bitcoinLedger:array(purchaseLedger)});
-const dataSchema=object({version:v=>v===3||v===4,providers:array(provider),accounts:array(account),assets:array(asset),
+// Only the existing UH02 provenance namespace. JSON inside sourcePayload is
+// data too: close its recursive schema before the existing economics validator
+// binds receipts, wallet scope, source ownership, journal and external funding.
+const bitcoinFacts=object({receipts:array(historyText),events:array(purchaseRef)});
+const bitcoinPayload=object({walletScopeDigest:historyText,facts:bitcoinFacts,ledgerRefs:array(historyText)});
+const bitcoinPayloadText=v=>{
+ if(!historyText(v))return false;
+ try{const parsed=JSON.parse(v);structureBudget(parsed);
+  return JSON.stringify(parsed)===v&&bitcoinPayload(parsed);
+ }catch{return false;}
+};
+const bitcoinImport=object({version:v=>v===1,sourceId:v=>v==='unified-bitcoin-v1',
+ accountId:historyText,externalId:historyText,sourcePayload:bitcoinPayloadText,
+ // sourceUnmodified checks this entire string against bookingOwnership of the
+ // allowlisted booking/journal. It cannot carry independent extension fields.
+ ownedSnapshot:historyText,fileId:historyText,occurrence:v=>Number.isSafeInteger(v)&&v>=1,
+ ownership:v=>v==='imported'});
+const booking=object({...fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified'),importSource:bitcoinImport});
+const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
  priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history,purchaseEvidence});
+// A ledger-only v5 observation is a different incomplete evidence slice.
+// No blanket v5 acceptance: require the existing complete UH02 economic path
+// (purchase or permanent undo), then let its existing validators decide.
+const dataSchema=v=>dataFields(v)&&(v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin'));
 const same=(a,b)=>{
  if(a===b)return true;
  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;
- const aa=Object.keys(a),bb=Object.keys(b);
+ // a is parsed input JSON. Model constructors may add own undefined fields
+ // (e.g. BTC wallet.chainId/addressType) absent from every persisted JSON.
+ // Ignore only these extra non-JSON projection keys, never an input value.
+ const aa=Object.keys(a),bb=Object.keys(b).filter(k=>b[k]!==undefined);
  return aa.length===bb.length&&aa.every(k=>Object.hasOwn(b,k)&&same(a[k],b[k]));
 };
 function byteBudget(plain){

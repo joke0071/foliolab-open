@@ -1,3 +1,50 @@
+## PRODUCT_WORK_STOPPED / LOSSLESS_UH02_V5_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-dedcfdccd449-20261113
+
+Kleinster vollständiger v5-Snapshotumfang gemäß N-DRIVE/Übergabe8 implementiert:
+kanonische UH02-Käufe und Undo-Tombstones samt Receipt-/Decision-/Ledger-/Import-
+herkunft, Eventfingerprints, Walletscope, Journal und externer Finanzierung.
+Geschlossene importSource-/JSON-sourcePayload-Allowlist; vorhandene safeImport/
+assertDataVersion/validateUnifiedBitcoinEconomics/Importvalidatoren unverändert.
+Keine isolierte Ledgerfreigabe: v5 verlangt im Snapshot mindestens UH02-Journal.
+Andere Importe/Management/Withdrawal/Bridge/Flatexnetto/pending-Resume unsupported.
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 unverändert.
+
+Belegter ergänzender Fix: allein zusätzliche undefined-Modellprojektionsschlüssel
+(bei BTCwallet.chainId/addressType) werden beim unverändernden Vergleich ignoriert;
+sämtliche ursprünglichen JSON-Schlüssel/Werte bleiben Pflicht. null/Default/Trim/
+Decimalnormalisierung blockiert weiter. Keine Quellmutation oder Datenverwerfung.
+
+Final90PASS/0FAIL/0SKIP/0CANCELLED/Exit0, Node24.22.1, Syntax2PASS.
+21Snapshot+9Gap+10WalletHistory+11PriceHistory+12PurchaseSnapshot+17neueUH02Snapshot+
+10bestehendeUH02Tests. Keine bestehenden Testdateien geändert/Assertions gelockert.
+75ursprüngliche Eingaben blobgenau;74unverändert nachCode, nurSnapshotmodul geändert.
+[Vertrag](FLH04_SNAPSHOT_CONTRACT.md), [Originaloutput/Inputs/Erstbefunde](release-evidence/flh04-snapshot-v5-bitcoin-local-2026-11-13.json).
+Erste isolierteLäufe15/2,16/1; gemeinsameLäufe87/3,89/1 vorFinal90/0 dokumentiert.
+Fixtures/Kodierungsfehlerstellen präzisiert, keine Grenzen/Timeouts gelockert.
+Preis-/Purchasev3v4 unverändert wiederverwendet, betroffeneSnapshot-Suiten wegen
+Schema/Vergleich erneut; keine historischenTestadditionen.
+
+Begrenzte Implementierung vollständig/gerichtete interneNodeprüfung bestanden.
+Keine Browser/IDB/CryptoKeyPersistenz/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
+CI22/Wallet20/Geräte/PR/Main/Produktions-/externeAbnahme. KeinWorkflow/Runner/Retry/
+PR/Merge/Release/SW-Bump/zweiteDB/DBVersion/aktiveSync. Kryptopaket unverändert,
+Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2 REVIEW_READY/EXTERNAL_REVIEW_PENDING;
+kein Prüfer/Reviewabschluss. Keyslotrace ungelöst, A1/A2/prepared-locked unverändert.
+Snapshotimpact gegen exaktenKryptokandidaten zu prüfen, keine Branchfreigabe.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mitRest.
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325, Run43332355188FAILURE/UrsacheUNKNOWN/
+RELEASE_GATE_OPEN; Diagnose43421311524SUCCESS verbrauchterEinzelversuch.
+SicherungennurMetadatenRootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120; keine privaten Transfers/Uploads/Readbacks/Restores/neuer
+Schreibfähigkeitsbeweis, alle Ketten erhalten, keine technischeReleasevollübernahme.
+
+Eigene Produktarbeit beendet; zentrale Schlussdokumentation folgt seriell.
+Nächste unabhängige Aktion: nächsten vorbereiteten vollständigen Import-/Belegrest
+anhand N-DRIVE und bestehender Validatoren wählen. Bereits vollständige UH02-Kette,
+Purchasev3v4/PreisHistory und fertiges Kryptopaket nicht erneut entwickeln.
+
+---
+
 ## PRODUCT_WORK_STOPPED / LOSSLESS_PURCHASE_EVIDENCE_IMPLEMENTED / RELEASE_BLOCKED · work-3e1b992cda51-20261113
 
 Kanonische Purchase-Evidence im bestehenden v3/v4-Snapshot verlustfrei umgesetzt:
