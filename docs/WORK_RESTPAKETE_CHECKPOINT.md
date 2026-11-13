@@ -2,9 +2,12 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED / HANDOVER_READY · work-bounded-b7bbb8ab7737-20261113. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
-Vorgänger work-autonomous-b9a10762f97b-20261113 STOPPED/HANDOVER_READY.
-Übernahme48d28ba1 expectedSHA-geschützt und vollständig exakt rückgelesen.
+ACTIVE · work-toast-prepare-77bcb76dd357-20261113. Ein alleiniger HND01-Writer; keine Zusatzagenten oder Automation.
+Vorgänger work-bounded-b7bbb8ab7737-20261113 STOPPED/HANDOVER_READY.
+Neuer Auftrag ausschließlich: exaktes Toastdelta und vorhandene Belege prüfen; minimale native Qualifikation vorbereiten, NICHT auslösen.
+Vor Übernahme frisch bestätigt: Zentralref21ed0d42, Maina27cde2f, FLH04435ab9a8;0IN_PROGRESS; letzte vier Diagnosen unverändert terminal/Versuch1.
+Vollständiger Vorgänger unverändert [21ed0d42](https://github.com/joke0071/foliolab-open/blob/21ed0d42cc84050db11224fb5ae711af14c2f3ea/docs/WORK_RESTPAKETE_CHECKPOINT.md).
+Historische Abschluss-/Freigabeangaben unten sind keine neue Ausführungsautorisierung.
 Vollständiger Einstieg und historische Fach-/Originalverträge unverändert gepinnt:
 [fa0cfd3f](https://github.com/joke0071/foliolab-open/blob/fa0cfd3fd8be58caedc77c3b2b48909dd4ca2ebf/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 [Jüngster vollständiger Zwischenstand b546a245](https://github.com/joke0071/foliolab-open/blob/b546a2450fc9816b9b0795eb7b833da3d3b47565/docs/WORK_RESTPAKETE_CHECKPOINT.md).
