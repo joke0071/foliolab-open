@@ -1,3 +1,14 @@
+## Ergebnis der W1/W2-Fortsetzung · 13.11.2026
+
+**A_NOT_CANDIDATE_READY / DECISION_REQUIRED_V2_LEGACY_HANDOFF.**
+Konkrete historischeOpener-/Versionzuordnung und Ereignisfolgen in§10 ergänzt.
+Die Richtungsgenehmigung fürA bleibtgültig. Die technischeRückmigration ausv2
+in dieselbe alteLocalStoragelinie ist durch normalen altenLegacy-save R1
+nicht geschützt. NeueKompatibilitätsentscheidung in§10.7 notwendig;
+keinCodeauftrag anJochen. KeineMigration/aktiveSync/Implementierung ausgeführt.
+
+---
+
 # FLH04 — kontrollierter Versions-/Lebenszyklusübergang A · Vertragsentwurf
 
 13.11.2026 · work-366da675bef5-20261113 · alleiniger Writer.
@@ -369,3 +380,336 @@ keine Aussagen eines unabhängigen Prüfers und keine native Abnahme.
 FLH04 NOT DONE; Outbox INTERN UNQUALIFIZIERT;
 N-DRIVE BLOCKED_EXTERNAL mit internem UND externem Rest.
 A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutz erhalten.
+
+## 10. W1/W2: gezielter Quellabschluss und konkrete Kandidatenentscheidung · 13.11.2026
+
+**A_NOT_CANDIDATE_READY / DECISION_REQUIRED_V2_LEGACY_HANDOFF.**
+Ergebnis der ausdrücklich beauftragten W1/W2-Fortsetzung.
+Kein bloßer weiterer allgemeiner Untersuchungsauftrag: Der unten bezeichnete
+Rückwechselgegenfall verhindert unter dem bisherigen Erhaltungsvertrag einen
+vollständigen A-Kandidaten. Die konkrete benötigte Kompatibilitätsentscheidung
+steht in§10.7. Keine Migration/aktiveSync oder Implementierung autorisiert.
+
+### 10.1 W1 — konkrete alte Öffnungspfade statt abstraktem beliebigem DBzugriff
+
+Gezielt die13Änderungsstände des Browseradapters in der FLH04-Ancestry gelesen;
+zu JEDEM Commit Einstieg von atomic-storage und sw.js gelesen.
+Cachekennung aus sw.js ist eine Quellversionskennung, KEIN neuer Produktions-/
+Auslieferungsbeleg und kein Beweis eines tatsächlich noch laufenden Altclients.
+
+Alle13Adapterstände importieren openPortfolioDB aus ihrem selben relativen
+atomic-storage-Modul; kein hier gefundener Adapteropener öffnet versionslos.
+Die Spalte „Aufrufe“ nennt die konkreten Zeilen dieses Adapterblobs.
+Die letzte Spalte nennt open-/onversionchange-Zeile im passend gepinnten
+atomic-storage-Einstieg desselben Commits, NICHT Zeilen eines anderen Builds.
+
+| Quellkennung | Commit / Adapterquelle | Adapterblob | Passender Atomicblob | Openeraufrufe | open/close-Zeile |
+| --- | --- | --- | --- | --- | --- |
+| v311 | [5a6a9e286c](https://github.com/joke0071/foliolab-open/blob/5a6a9e286c9a7d826dce2323348f8756eb175ada/src/browser-portfolio-storage.js) | c383901ffe000b82f3a97c1f08460748dbe228eb | 998cd78b5d92bc15fdba1a63945f0d77855285f9 | 45,83,155,179 | 24/37 |
+| v311 | [5e08f4d085](https://github.com/joke0071/foliolab-open/blob/5e08f4d085a8f5cb646122eedcefed19b859e7e0/src/browser-portfolio-storage.js) | 87f83614bcd29f081372e531c4d13ebcc0bc172b | 9ee73c646d97f05eca072c22d13a1ba745b07f4d | 45,83,154,189 | 24/37 |
+| v311 | [c7e8dbefbf](https://github.com/joke0071/foliolab-open/blob/c7e8dbefbfd3a2f6a5f648991c24f8b25a93c662/src/browser-portfolio-storage.js) | 8bbc2838134cff7a0435c233fae6a514ad68d565 | dc5256df06c2b667d00b4131972f9d0aad4830c4 | 45,83,153,187 | 24/37 |
+| v303 | [c9b9a47f28](https://github.com/joke0071/foliolab-open/blob/c9b9a47f285dda11b65a6ecf815094992997e616/src/browser-portfolio-storage.js) | 59ca3068fc38820d4b7e31d10b26ebdf6ed326a4 | 485703e05390176cc02a8b1502e1ec3ef4b1adf8 | 45,83,152,186 | 14/27 |
+| v263 | [10103d6253](https://github.com/joke0071/foliolab-open/blob/10103d6253ff544b383099c6a631035f67be7025/src/browser-portfolio-storage.js) | f9be5fe41e861ede12f66960dae59d582510d098 | 294861aca7b65fffd423b26f50c176a04659340f | 45,83,152,186 | 13/26 |
+| v156 | [488e08347b](https://github.com/joke0071/foliolab-open/blob/488e08347b61242bac74bee23a4de40b556f0aef/src/browser-portfolio-storage.js) | 5bf77ffe12e481cd3aee9dcd260e8ff080e345cd | e79d2133293e9b999f7767281c7a3d42febb5bc8 | 46,83,152,186 | 12/25 |
+| v156 | [08863b392e](https://github.com/joke0071/foliolab-open/blob/08863b392eabe4171328efa1e05f6ff7dca67983/src/browser-portfolio-storage.js) | 89836abf8e0f184b42d9389dbfee47b75ad6251a | e79d2133293e9b999f7767281c7a3d42febb5bc8 | 46,83,151 | 12/25 |
+| v156 | [0456a8f57e](https://github.com/joke0071/foliolab-open/blob/0456a8f57e19cc016cfab802b5c8bd47bf8cfdd4/src/browser-portfolio-storage.js) | 0084be41e9916828c0d93f3cd8c3549554d5e236 | e79d2133293e9b999f7767281c7a3d42febb5bc8 | 46,83,140 | 12/25 |
+| v142 | [add26a3646](https://github.com/joke0071/foliolab-open/blob/add26a3646e31b931f293cbd0932cc9b235037f9/src/browser-portfolio-storage.js) | 9dc8cd10b388c7f9e1758e3f3d858eb84c8205ab | 012fbab4b980b4354d3dbc7a2b6519592df4d8de | 44,108 | 13/26 |
+| v136 | [2bc3502dcb](https://github.com/joke0071/foliolab-open/blob/2bc3502dcbd1e0671084427b3e599fe9f3029804/src/browser-portfolio-storage.js) | 7f66cfbc7a1caf6c050bb199bce1e7ee4460ad9f | 5ec7beb9022d2442cc3cc6bea6a44f06867b5488 | 44,108 | 13/26 |
+| v88 | [58c8aab6ce](https://github.com/joke0071/foliolab-open/blob/58c8aab6ce93d605cae6e4f2dd8cb7f7bf8d3128/src/browser-portfolio-storage.js) | a169b18d1a42a58d46ee31f5c6296fc70ca3cb34 | 32a40df944afb7996a59c6f53c45c065b47b4c02 | 44,97 | 13/26 |
+| v86 | [f606524233](https://github.com/joke0071/foliolab-open/blob/f60652423319d3aae442f46c63ba3c8b3dcf0395/src/browser-portfolio-storage.js) | 401146233027ba9362b29a09e0d2b36a1c8c043e | 32a40df944afb7996a59c6f53c45c065b47b4c02 | 37,69 | 13/26 |
+| v85 | [dd2da3dead](https://github.com/joke0071/foliolab-open/blob/dd2da3dead0b8b341608388629c6672d63800dfe/src/browser-portfolio-storage.js) | 14498a0651b189f9ac9cf292bc28f24d269d4958 | 32a40df944afb7996a59c6f53c45c065b47b4c02 | 28,54 | 13/26 |
+
+Nicht aus Commitmessage die Cacheversion erraten:
+58c8aab6 nennt im Titel v87, seine gepinnten sw.js-Bytes nennen v88.
+Das erklärt die Bezeichnung v88 in dieser Zuordnung.
+Mehrere unterschiedliche v156-/v311-Quellstände bleiben einzeln zugeordnet;
+Versionslabel alleine ist keine Byteidentität.
+
+Für JEDE Tabellenzeile gilt am gelesenen Atomic-Einstieg:
+PORTFOLIO_DB_VERSION=1; factory.open(PORTFOLIO_DB,PORTFOLIO_DB_VERSION);
+onversionchange setzt db.close. Daraus folgen getrennte Ausgänge:
+
+| Situation | Quellen-/APIableitung | Noch offener Laufzeitnachweis |
+| --- | --- | --- |
+| Bereits offene v1-Verbindung, keine laufende Transaktion | Closehandler fordert Schließen; erfolgreicher2-Upgrade wartet auf tatsächlichen Verbindungsabschluss. | Echte alte Seite/Worker und Eventzustellung. |
+| Bereits offene v1-Verbindung mit laufender Transaktion | close-pending verhindert neue Transaktionen, bereits gestartete Transaktionen müssen enden, bevor der Upgrade fortfahren kann. | Nativer konkurrierender Commit/Abort und echte Fehlergrenzen. |
+| Nicht reagierender/suspendierter Kontext oder fremder Handle | Kein erfolgreicher Cutover, solange eine Verbindung offen bleibt. | BLOCKED ohne Timeout/Übernahme; keine Lebendigkeitsaussage aus Head/Heartbeat. |
+| Alter Adapter öffnet nach gespeichertem2 erneut | Explizite1-Anforderung scheitert mitVersionError; startup setzt IDB-Modus vor dem Openawait und hat an dieser Stelle keinen stillen Legacycatch. | Native Wiederöffnung und reale Appfehlerführung. |
+| Recovery/Neuanlage/Migration benutzen vorhandenen Handle | Kein zusätzlicher Factoryopener; neue Transaktion auf close-pending/geschlossenemHandle darf nicht starten. Schon vor close gestarteter IDBteil endet vor Upgrade. | Je konkreter Recovery-/Transaktionsgrenze testen. |
+| Neuer Originaldownloadopener | Ab488e083 im Adapter explizit über openPortfolioDB; alteV1-Wiederöffnung wird ebenfalls nicht umgangen. | Originaldownloadfehler/keinNeuaufbau in neuerv2-Steuerung. |
+| Reine Legacyseite im bereits lokalen Modus | Kann gar KEINE IDBverbindung besitzen und deshalb die Versionsgrenze weder blockieren noch empfangen. | Entscheidend für§10.5; nicht als willkürlicher DBwriter erfinden. |
+
+Aktueller v311/FLH04-Stand4745dc00:
+src/browser-portfolio-storage.js c383901ffe000b82f3a97c1f08460748dbe228eb;
+atomic-storage aus vorhandenen gepinnten Belegen b8bc22967d451150801cd8ac1fd847a768c37ca2.
+Der letzte Tabellenstand ist dessen unveränderter Browseradapter.
+Aktueller Historyworker/SW hat laut erhaltenem156Dateienbeleg keinen direkten
+Portfoliowriter. Diesen Scan NICHT wiederholt.
+
+Grenzen von W1:
+Das ist die konkrete Zuordnung dieser historischen Adapterfamilie und des
+aktuellen Quellpfads; KEIN Beweis aller jemals ausgelieferten Assetmischungen,
+privaten Supportskripte, unbekannten Worker oder vorhandenen Browserprozesse.
+Deren Versionen/Öffnungspfade bleiben unzugeordnet, sofern kein konkreter Beleg
+vorliegt. Ein unterstützter versionsloser/höherer Opener wäre weiterhin ein
+BLOCKER. Ein beliebiger technisch möglicher Zugriff wird nicht ohne
+Produkt-/Supportbezug als tatsächlich unterstützter Pfad behauptet.
+
+### 10.2 Tatsächlicher Supportvertrag für Rückwechsel — notwendige Präzisierung
+
+Frisch an4745dc00 gelesen:
+docs/INDEXEDDB_ONLY_PHASE_B.md,
+Blob819cd9699c4ce48225f857b39b31d0390fa77eb4.
+Der Phase-B-Vertrag entfernt nur die normale Speicherwahl/Rückwechsel-UI.
+Er erhält ausdrücklich revertLocked/REVERT_INTENT_KEY und technische
+Rückfall-/Altintentkompatibilität bis zu eigenen Crash-/Alttab-/Hardwarebelegen.
+
+Pinnbarer historischer Umsetzungspunkt:
+Commitc422dbd8e532127f738b24e07a9e5092fd865d84, sw.js-Cachekennungv160.
+Sein Diff entfernt revertFromIDB-Button/Handler; browser-idb-cutover prüft
+stattdessen den absichtlich erhaltenen technischen Controlleraufruf samt
+unveränderten Daten-/Tombstone-/Revisionsassertions.
+Keine neue Abnahme aus diesem historischen Commit.
+
+Zusätzliche konkrete Appbelege:
+- dd2da3dead0b8b341608388629c6672d63800dfe/v85:
+  app.js Blob4ea0699ea39db1c64ffc85b16b43e06a22db3d78,
+  initialize Zeile38, migrate Zeile1039, UIrevert Zeile1050.
+- 58c8aab6ce93d605cae6e4f2dd8cb7f7bf8d3128/v88:
+  app.js Blobc3b9a3421e44249c1d75e502823afd9abc9ca166,
+  UIrevert Zeile1050 ebenfalls vorhanden.
+- 4745dc0088279f755ff49c3329094ad369f3af7a:
+  app.js Blob0c2335a0132d333b693196feb14b21f277e33c2f,
+  kein .revert-Aufruf im aktuellen Appcode; migrate Zeile2666,
+  recoverFromBackup Zeilen2502/2567, save Zeile128, removeAll Zeile2599.
+
+Korrektur zu§5/§5.1:
+Technischer Rückwechsel ist eine erhaltene Kompatibilitätsfunktion, kein
+aktueller normaler UIbutton und nicht automatisch ein neuer v2-Nutzerablauf.
+Er ist dennoch durch den bestehenden Vertrag geschützt. Ihn aufv2 ungeprüft
+zu sperren wäre eine ausdrücklich zu entscheidende Vertragsänderung.
+Versteckte UI beweist weder Wirkungslosigkeit noch sichere technische Entfernbarkeit.
+
+### 10.3 W2 — Ereignisfolgen der vorhandenen Markerpfade
+
+Alle Abläufe sind gezielte Quellen-/APIableitungen, keine nativen Repros.
+A15/A16/A20 bleiben die bestehenden zugehörigen Gegenfallklassen.
+
+M1 — neuerer kooperativer migrate/recover/revert/removeAll:
+Der Adapter ab2bc3502/v136 hat für viele äußere Fachoperationen denselben
+Locknamen foliolab-portfolio-write. Ein neuer Cutover, der diesen Lock vor
+seinem ersten Capture hält, wartet einen solchen bereits laufenden äußeren
+Callback einschließlich synchronem Markerabschluss ab.
+Dessen geschlossener Callback schützt NUR die tatsächlich darunter laufenden
+Pfade; fehlende Teilnahme wird nicht nachträglich angenommen.
+Abhängige Unteroperationen dürfen denselben nicht reentranten Lock nicht
+erneut erwerben. GegenfallA18 bleibt Pflicht.
+
+M2 — initialize mit altem passenden Tombstone-/Rückwechselintent:
+1. Alter Kontext liest über vorhandene v1-Verbindung den Tombstone.
+2. onversionchange kann die Verbindung close-pending setzen.
+3. Nach abgeschlossenem IDBread prüft der alte JS-Nachlauf Intent/Legacykopie.
+4. Er entfernt MODE_KEY/REVERT_INTENT_KEY und setzt sich auf lokalenModus,
+   ohne neuen IDBcommit und ohne äußeren withLocalLock.
+Quellstellen an58c8aab6/v88: Adapter44/45 und51–67, Marker61/62.
+Aktueller Adapter: read46, Marker62/63, Close64.
+
+Der native Verbindungsabschluss allein liefert keine allgemeine Aussage,
+dass der JS-/LocalStorage-Nachlauf beendet ist. Ob genau eine gewünschte
+plattformübergreifende Interleavung erreichbar ist, ist nativ noch zu prüfen;
+kein fester Task-/Mikrotask-Zeitablauf als belegt ausgeben.
+
+Folge für einen korrigierten neuen v2-Client:
+Legacy-Marker dürfen dort für sich KEINE kanonische Quellenwahl, Neuanlage,
+Autoritätsübernahme oder Rückkehr zumLegacyportfolio auslösen.
+Die alte Markerentfernung wäre dann nicht verhindert, sondern hinsichtlich
+der kanonischen v2-Linie wirkungslos. Auf unerwartete Markeränderung darf der
+Client konservativ blockieren, aber keine andere Datenfassung adoptieren.
+Eine bloße spätere „Marker wieder gleich“-Prüfung ersetzt diese Quellenregel nicht.
+
+M3 — alte nichtkooperative Rückwechsel und Fehlerkompensation:
+Anv85/v86/v88 besitzen migrate/revert noch keinen äußeren WebLock.
+v85revert Zeilen102–122:
+Read/CASprüfung → lokalesSTORE_KEY schreiben → IDBTombstonecommit →
+MODE_KEYentfernen; bei Commitfehler kann die lokaleKopie bedingt zurückgesetzt werden.
+v88revert Zeilen151–183 ergänzt Intent, löscht ihn bei Fehler aber teils
+ohne Bindung an einen späteren fremden aktuellenIntent.
+Ein neuer Lockname oder ein privater v2-Intent stoppt diese alten
+LocalStorage-Anweisungen nicht. IDBschreibteile sind durch die Versionsgrenze
+abgegrenzt; deren reine lokale Vor-/Nach-/Kompensationsschritte sind es nicht.
+
+M4 — initializeNew/Recovery-/Migrationsmarker:
+Im aktuellen Adapter liegen initializeNew/migrate/recoverFromBackup samt
+Markerabschluss unter dem äußeren Lock; Rücklesetransaktionen benutzen die
+v1-Verbindung. Bereits wartende v1-Opener können vor oder hinter dem Upgrade
+in der nativen Queue liegen; entweder arbeiten sie noch aufv1 und müssen
+abgeschlossen werden oder scheitern an der gespeicherten2.
+Das ist keine Freigabe für blockierte Requests, später ungeprüft zu upgraden.
+Der CANCEL_REQUESTED-Vertrag undA03/A04 bleiben unverändert.
+
+M5 — tatsächlich unterstützte v1-Rückwechselkompatibilität:
+Der bestehende Ablauf erhält lokaleOriginale, schreibt Kopie/Intent, committet
+den exaktenTombstone und schaltet Marker zuletzt. Ein passender alterIntent
+kann beimStart fertiggestellt werden. BestehendeOriginal-/CAS-/Fingerprint-/
+Abbruch-/Readbackregeln bleiben unverändert.
+Daraus KEINE neue sicherev2-Rückwechselabnahme ableiten:
+alte Hinweise verlangten bereits das Schließen andererTabs, ohne dieses
+für nichtkooperative Legacykontexte technisch nachzuweisen.
+
+### 10.4 Quellenbeleg für einen echten alten Writer OHNE IDBzugriff
+
+Anv85/dd2da3dead undv86/f6065242:
+src/model.js Blobd61fdb1a5c20095232070a9f1771b55f2958ca84,
+persist Zeilen266–274.
+Nach Versionsprüfung liest persist STORE_KEY, vergleicht optional mit dem in
+observedStorage gemerkten String, serialisiert und führt storage.setItem aus.
+Kein WebLock, keine IDBtransaktion, keine Modusmarkersperre in diesemBlob.
+Der normale Adapterlegacy-save ruft persist auf, v85Zeile41/42.
+Das ist kein erfundener freier putKey-/DBzugriff.
+
+Anv88/58c8aab6:
+src/model.js Blobc7f61d2af5c4755e6ce5dea02cf6acc13cce8b07,
+persist abZeile266, Modusprüfung vor dem lokalenStringvergleich.
+MODE_KEY=idb-v1 blockiert diesen späteren Legacywriter, solange die Prüfung
+diesen Wert tatsächlich sieht. Prüfung, Stringvergleich und setItem sind
+jedoch keine gemeinsam atomare Schreiboperation; ein bereits bestandener
+Check ist keine übertragbare Sperre.
+Der v88-Adapter hat weiterhin keinen gemeinsamen WebLock.
+Abv136 ist der normale Adapterlegacy-save zusätzlich kooperativ gesperrt;
+das ändert keinen bereits laufenden alten v85/v88-Code.
+
+Diese Quellen beweisen die Fachpfade und fehlenden Schranken.
+Sie beweisen NICHT, dass heute einv85/v88-Tab tatsächlich läuft oder durch
+eine aktuelle Supportentscheidung weiterhin lauffähig sein muss.
+Unter den bisher ausdrücklich eingeschlossenen normalen Alt-Kontexten darf
+diese Familie aber nicht ohne neue Entscheidung still ausgeklammert werden.
+
+### 10.5 Präziser Gegenfall R1 gegen einen v2-Rückwechsel in denselben alten STORE_KEY
+
+T sei ein gültiger alter kanonischer PortfolioString.
+Ein alter LegacytabL hat T geladen; observedStorage enthältT und sein
+Adapter arbeitet weiterhin im lokalenModus. Er besitzt KEINE IDBverbindung.
+Dies entspricht der belegten v85/v86-Altkompatibilität.
+
+1. NeuerControllerN führt den freigegeben gedachten1→2-Übergang durch.
+   Alle tatsächlich offenen v1-IDBverbindungen sind beendet; L war keine davon.
+2. N beginnt einen legitim gedachten technischen v2-Rückwechsel.
+   Die Zielkopie istT; ein lokal unverändertes Portfolio ist hierfür zulässig.
+   N kann einen neuen gebundenen IDBIntent/Tombstone und seinen WebLock besitzen.
+3. L beginnt einen normalen save mit einem bearbeiteten ModellO.
+   Sein persist liestSTORE_KEY=T und besteht den vorhandenen Vergleich.
+4. N beendet alle seine eigenen Kopie-/Intent-/Readback-/Markerprüfungen und
+   erklärt die LocalStoragekopie für kanonisch bzw. den Rückwechsel erfolgreich.
+5. L führt anschließend seinen bereits vorbereiteten setItem(STORE_KEY,O) aus.
+   Er prüft weder einen v2-Intent noch dessen Lock. Der neue Rückwechsel kann
+   diesen Schreibvorgang weder verhindern noch rückwirkend sicher abweisen.
+
+Interleavung zwischen unterschiedlichen Agenten ist als Gegenablauf zu prüfen;
+kein behaupteter tatsächlicher nativer Repro. Keine CryptoKey-/P-ABAanalyse
+wiederholt: Dies ist die konkrete neue Grenze der KANONISCHEN Rückwechsellinie.
+Die IDBversion bleibt2; ihre erfolgreiche Umstellung ist kein Gegenargument.
+
+Ein abschließendes Readback ist kein Schutz gegen Schritt5 nach dem Readback.
+„AndereTabs schließen“/Heartbeat/DBhandlezählung beweist bei L ohneHandle
+keine technische Beendigung.
+Ein andererIntentrecord im bestehendenIDB bindet nurN.
+Sofortiges spätes Blockieren des neuenClients verhindert nicht die bereits
+erfolgteMutation der kanonischenZielkopie durchL.
+
+R1 benötigt keinen feindlichen Code, keine frei erfundene DBtransaktion und
+keinen VersionslosenOpener; nur den belegten normalen altenLegacy-save.
+Eine nativeAusführung bleibt ausstehend; die API-/Quellschranke ist aber bereits
+offen, weshalb ein bloßer spätererBrowser-PASS A nicht alsgeschlossen rechtfertigt.
+
+Fürv88 ist zusätzlich zu prüfen, wann dessen Moduscheck bestanden wurde.
+Nach einem bewusst abgeschlossenen Rückwechsel ist MODE_KEY gerade nicht mehr
+idb-v1. Danach können zwei nichtgemeinsam gesperrte Legacywriter ebenfalls
+zwischen Read/Compare/Write konkurrieren. Nicht jede v88-Ausführung wird als
+unbedingt erfolgreich behauptet; die konkreten Guards bleiben erhalten.
+
+### 10.6 Was ein neuer zulässiger Rückwechsel erfüllen müsste
+
+Der im bisherigenEntwurf vorgeschlagene neue persistenteIntent ist notwendig
+für die eigene Crash-/Antwortverlustzuordnung, aber fürR1 NICHT hinreichend.
+Diesen Punkt korrigiert dieser Nachtrag ausdrücklich.
+
+Ein kompletter neuerRückwechsel bräuchte gemeinsam:
+a) vollständigen Lifecyclelock über Capture/Kopie/gebundenenTombstone/
+   Sourceentscheidung und Fehlernachläufe;
+b) exakten dauerhaft verifizierbaren Übergangsbezug anOriginalCAS, ohneKeys/
+   Autoritätsportierung und ohne fiktivenRollback nachCommit;
+c) eine Zielschreibgrenze, an der ALLE tatsächlich unterstütztenWriter zwingend
+   teilnehmen oder deren Schreibzugriff tatsächlich beendet ist;
+d) Reopen-/LostResponse-/Reimport-/Neuanlagevertrag ohneVersionsdowngrade.
+a/b/d alleine schließen c nicht.
+
+Für den gemeinsamen altenLocalStorage-STORE_KEY ist c am vorliegendenStand
+gegenR1 NICHT erfüllt. Ein sicher zulässiger neuer kanonischerRückwechsel in
+genau diese Linie kann deshalb hier nicht behauptet oder implementiert werden.
+Das ist das klare negative Ergebnis, kein Auftrag anJochen, einenMechanismus
+zu erfinden. Der bisherigev1-Pfad bleibt erhalten, samt seinen historischen
+begrenzten Nachweisen und offenenAlt-/Crash-/Hardwaregates.
+
+A15 wird umM1–M4/R1 präzisiert, A16 umden unzureichenden eigenenIntent/Readback,
+A20 umden nichtautorisiertenVersions-/Quellenreset.
+Keine bestehendenAssertions/Testfälle entfernen oder deren Erfolg erfinden.
+Kein vollständiger A-Prüf-/Implementierungskandidat eingefroren.
+
+### 10.7 Entscheidung und eng begrenzter Vorschlag
+
+**Vorliegender A-Vertrag noch NICHT ausreichend für einen vollständigen
+begrenzten Implementierungskandidaten, solange er sichere v2-Rückmigration
+in dieselbe von normalen Altclients beschreibbareLocalStoragelinie verlangt.**
+GenauerGegenfallR1 und der ausdrückliche Phase-B-Erhaltungsvertrag sind benannt.
+W1 ist für die erfassteQuellfamilie zugeordnet, weitergehendeAuslieferungs-/
+Supportzuordnung und nativeLäufe bleibenOFFEN.
+
+Empfehlung für genau eine zusätzlich nötige Entscheidung:
+Für eine künftig ausdrücklich bestätigteVersion2-Linie KEINE technische
+kanonischeRückmigration mehr in die alteLocalStoragelinie zulassen.
+V2 bleibtkanonischIDB; Recovery überOriginaldownload und ausdrücklich
+gebundenenBackup-Restore in dieselbe/neue separat autorisierteIDBlinie,
+ohneWriter-/Autoritätsportierung oderVersionsdowngrade.
+AlteModusmarker allein verleihenV2 keineQuellen-/Initialisierungsberechtigung.
+
+Das verändert fürv2 gezielt den bisher erhaltenen technischen
+Rückfall-Kompatibilitätsvertrag. Es entfernt keineNormalUIaktion (die ist
+bereits seitv160entfernt) und löscht KEINEN v1-Pfad/Altintent/Originalbestand.
+Für bereits bestätigtesv2 müsste der neueController technische revert-Anfragen
+vorJEDEM Zielwrite sicher ablehnen und den vorhandenenOriginal-/Backupweg anbieten.
+Eine v1-Instanz ohne beschlossenenCutover behält ihre bisherigen Funktionen.
+Keine globaleAltversionsstilllegung oder bewieseneTabbeendigung daraus ableiten.
+
+Zustimmung würde nur erlauben, GENAU diesev2-Kompatibilitätsgrenze in den
+Vertragsentwurf zu übernehmen und dann einen entsprechenden begrenzten
+Prüf-/Implementierungskandidaten vollständig reviewbar vorzubereiten.
+Sie wäre KEINE Migration-/aktiveSync-/Ausführungs-/Reviewfreigabe.
+Bei Ablehnung bleibt A für diesenUmfang geparkt; andereArchitekturen werden
+nicht automatisch freigegeben oder in eine neue allgemeineSerie umgedeutet.
+
+### 10.8 Trennung der Nachweisarten und tatsächlicher Schlussstand
+
+QUELLE:
+13historische vollständigeAdapter, zugehörige gepinnteAtomic-Einstiege/
+Cachekennungen;3konkreteAppstände;alteModel-persist-Blobs;aktuellePhaseA/B-/
+Stagingverträge. HistorischeQuellkennung ≠ Auslieferung ≠ laufenderAltprozess.
+
+ARGUMENT:
+IDBversionsgrenze aufv1-Handles/Reopen;M1–M5 undR1; insuffizienter
+eigenerIntent/Endvergleich; erforderlicheZielwritergrenze.
+Kein universellerUnmöglichkeitsbeweis für jede denkbareArchitektur.
+
+NATIV:
+Keine neueBrowser-/IDB-/Versionswechsel-/Crash-/Quota-/Recovery-/CIprüfung.
+N0/N1, vorhandenesKryptoreviewpaket und sämtlicheProduktgates unverändert.
+Keine historischenZahlenaddition, keine neuenTests oder Workflows.
+
+Primärgrundlage für die begrenzte APIableitung frisch am13.11.2026:
+https://www.w3.org/TR/2026/WD-IndexedDB-3-20261030/ §5.1/5.2
+https://html.spec.whatwg.org/multipage/webstorage.html §12.1/12.2
+IDBversions-/Verbindungsregeln sind keineSchranke für einen getrennten alten
+LocalStoragewriter. Die eigeneGegenfolge bleibt ausstehende nativeGegenprobe.
+
+Nur erforderlicherDelta-Nachtrag imbestehendenEntwurf; kein156Dateienscan,
+keine neueLock-/ABA-/Gesamtarchitekturserie.
+Schreibarbeit nachSicherung beenden,keinHintergrundbetrieb.

@@ -1,3 +1,47 @@
+## A_NOT_CANDIDATE_READY / W1_PATHS_MAPPED / W2_COUNTERCASE_R1 / DECISION_REQUIRED · work-366da675bef5-20261113
+
+[Bestehender Vertragsentwurf §10](FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md)
+gezielt ergänzt: 13 historische Adapterstände mit Commit/Blob/Cachekennung,
+passend gepinnten Atomic-open/close-Stellen und konkreten Openeraufrufen.
+Alle öffnen explizit v1; offene Verbindungen/Transaktionen müssen vor dem
+Upgrade enden, erneutes Öffnen mit1 nach gespeichertem2 scheitert.
+Keine vollständige Auslieferungs-/Runtimeinventur behauptet.
+
+Notwendige Kompatibilitätskorrektur:
+Phase B/v160 entfernte UI-Wahl und Rückwechselhandler, erhielt aber ausdrücklich
+technischen Rückwechsel und alte Intents. Aktueller Appcode ruft .revert nicht auf;
+das erlaubt keine stille Entfernung der technischen Funktion.
+Alte normale Legacy-save-Pfade v85/v86/v88 sind aus Quellen belegt,
+keine beliebigen erfundenen DBwriter.
+
+W2, konkret M1–M5/R1:
+Kooperative Adapterpfade warten am gemeinsamen Lock. initialize-Intentnachlauf
+und alte Kompensation können LocalStorage ohne weiteren IDBcommit verändern.
+Ein alter Legacytab ohne IDBhandle wird vom DBversionswechsel nicht beendet.
+R1: alter persist besteht den Stringcheck; neuer Controller beendet
+Rückwechsel/Readback; alter setItem folgt. Neuer IDBintent/Endvergleich schützt
+die kanonische Zielkopie nicht. Argumentativer Gegenfall, KEIN nativer Repro.
+
+KLARE ENTSCHEIDUNG: A im vorliegenden Erhaltungsvertrag NICHT ausreichend für
+einen vollständigen begrenzten Implementierungskandidaten.
+Konkret nötige Entscheidung: eine künftig bestätigte v2-Linie nicht mehr
+kanonisch in dieselbe LocalStoragelinie zurückmigrieren; v2-Recovery über
+Originaldownload/gebundenen Backup-Restore ohne Identitätsportierung.
+V1-Kompatibilität beibehalten. Das ändert gezielt den Phase-B-Erhaltungsvertrag
+und ist noch nicht autorisiert. Kein Codeauftrag an Jochen und keine erneute
+allgemeine Frage zur Architekturrichtung.
+
+25 vollständige gepinnte Eingänge unabhängig Gitblob-SHA1-geprüft.
+Atomic-/SW-Auszüge nicht als vollständige Byteprüfung ausgegeben.
+Keine Tests/Browser/CI/Workflowänderung, keine Migration oder aktive Sync.
+Bestehende A15/A16/A20 präzisiert, keine Assertions entfernt.
+Kryptoreviewpaket, Prüfer-/Budget- und N0-Ausführungsentscheidung unverändert.
+P/R/S/D/CAS/Raw-/Retry-/oncomplete-/format1-/A1/A2-/Budget-/Originalschutz erhalten.
+FLH04 NOT DONE / Outbox INTERN UNQUALIFIZIERT /
+N-DRIVE BLOCKED_EXTERNAL mit internem UND externem Rest.
+
+---
+
 ## CONTRACT_DRAFT_PREPARED / DIRECTION_AUTHORIZED / INTERNAL_W1_W2_OPEN / RELEASE_BLOCKED · work-366da675bef5-20261113
 
 Jochen hat AlternativeA als begrenzte Vertragsausarbeitung bestätigt.
