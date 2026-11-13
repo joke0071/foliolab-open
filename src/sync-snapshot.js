@@ -42,7 +42,7 @@ const opening=object(fields('positionId quantityExact costBasisExact realizedPnL
 const flow=object(fields('id date amountEUR amountExactEUR'));
 const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
 const basicJournal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
-const journal=v=>basicJournal(v)||cashRemovalJournal(v)||manualCashAuditJournal(v);
+const journal=v=>basicJournal(v)||cashRemovalJournal(v)||manualCashAuditJournal(v)||usdPrincipalRemovalJournal(v);
 const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
 const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
 const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
@@ -113,10 +113,41 @@ const csvCashPayloadText=v=>{
 const csvCashImport=object({version:v=>v===1,sourceId:v=>v==='generic-csv',
  accountId:historyText,externalId:historyText,sourcePayload:csvCashPayloadText,
  ownedSnapshot:historyText,fileId:historyText,occurrence:v=>v===1,ownership:v=>v==='imported'});
+// Full existing native USD principal provenance, never a blanket Kraken gate.
+// The existing financial validators bind these closed bytes to ownership,
+// account roles, UNKNOWN postings and the permanent withdrawal digest.
+const usdPrincipalStatus='unpriced-native-usd-principal';
+const krakenSource='kraken-uh03-v1';
+const usdPrincipalAction=object(Object.fromEntries('type date positionId quantity unitPrice feeEUR taxEUR fxRate notes targetPositionId'.split(' ').map(k=>[k,historyText])));
+const usdPrincipalPayload=object({group:historyText,payload:historyText,
+ bindings:v=>Array.isArray(v)&&v.length===2&&v.every(p=>Array.isArray(p)&&p.length===2&&p.every(historyText)),
+ action:v=>usdPrincipalAction(v)&&Object.keys(v).length===10});
+const usdPrincipalPayloadText=v=>{
+ if(!historyText(v))return false;
+ try{const parsed=JSON.parse(v);structureBudget(parsed);
+  return JSON.stringify(parsed)===v&&usdPrincipalPayload(parsed)&&Object.keys(parsed).length===4;
+ }catch{return false;}
+};
+const usdPrincipalImport=object({version:v=>v===1,sourceId:v=>v===krakenSource,
+ accountId:historyText,externalId:historyText,sourcePayload:usdPrincipalPayloadText,
+ ownedSnapshot:historyText,fileId:historyText,occurrence:v=>v===1,ownership:v=>v==='imported'});
 const bookingFields=fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified');
 const existingBooking=object({...bookingFields,importSource:bitcoinImport});
 const csvCashBooking=object({...bookingFields,importSource:csvCashImport,importFingerprint:historyText});
-const booking=v=>existingBooking(v)||csvCashBooking(v);
+const usdPrincipalBookingFields=object({...bookingFields,importSource:usdPrincipalImport});
+const usdPrincipalBooking=v=>usdPrincipalBookingFields(v)&&v.type==='transfer'&&
+ v.reconciliationStatus===usdPrincipalStatus&&v.importSource?.sourceId===krakenSource;
+const usdPrincipalJournal=v=>basicJournal(v)&&v.type==='transfer'&&v.source===krakenSource&&v.status===usdPrincipalStatus;
+const usdPrincipalOriginal=object({booking:usdPrincipalBooking,journal:usdPrincipalJournal,
+ flows:v=>Array.isArray(v)&&v.length===0});
+const usdPrincipalRemoval=object({version:v=>v===1,group:historyText,count:v=>v===1,
+ originals:v=>Array.isArray(v)&&v.length===1&&v.every(usdPrincipalOriginal),digest:historyText});
+const usdPrincipalRemovalJournalFields=object({...fields('id date recordedAt sequence'),
+ type:v=>v==='uh03-undo',source:v=>v===krakenSource,status:v=>v==='removed',
+ postings:array(posting),krakenWithdrawal:usdPrincipalRemoval});
+const usdPrincipalRemovalJournal=v=>usdPrincipalRemovalJournalFields(v)&&v.type==='uh03-undo'&&
+ v.source===krakenSource&&v.status==='removed'&&usdPrincipalRemoval(v.krakenWithdrawal);
+const booking=v=>existingBooking(v)||csvCashBooking(v)||usdPrincipalBooking(v);
 const cashOriginal=object({booking:csvCashBooking,journal:basicJournal,flows:array(flow)});
 const cashRemovalFields=object({version:v=>v===2,action:v=>v==='remove',reason:historyText,
  originals:array(v=>cashOriginal(v)&&v.booking.importSource?.sourceId==='generic-csv'&&provenCashImport(v.booking,v.journal)),
@@ -144,11 +175,16 @@ const manualCashAuditJournal=v=>v?.type==='booking-management-audit'&&v.source==
 const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
- priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history,purchaseEvidence});
+ priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history,purchaseEvidence,
+ flatexNetRemovals:v=>Array.isArray(v)&&v.length===0});
 // A ledger-only v5 observation is a different incomplete evidence slice.
 // No blanket v5 acceptance: require the existing complete UH02 economic path
 // (purchase or permanent undo), then let its existing validators decide.
-const dataSchema=v=>dataFields(v)&&(v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin'))&&
+const hasUSDPrincipal=v=>(v.journalEntries||[]).some(j=>usdPrincipalJournal(j)||usdPrincipalRemovalJournal(j));
+const dataSchema=v=>dataFields(v)&&
+ (v.flatexNetRemovals===undefined||hasUSDPrincipal(v))&&
+ (v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin')||hasUSDPrincipal(v))&&
+ (v.journalEntries||[]).every(j=>j.source!==krakenSource||usdPrincipalJournal(j)||usdPrincipalRemovalJournal(j))&&
  (v.bookings||[]).every(b=>b.importSource?.sourceId!=='generic-csv'||provenCashImport(b,(v.journalEntries||[]).find(j=>j.id===b.journalEntryId)))&&
  // Scope, not a second economics engine: original positions must still be
  // EUR cash. Existing journal validation binds every retained removal flow.

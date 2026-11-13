@@ -1,0 +1,459 @@
+{
+  "scope": "complete native USD principal active and permanent uh03-undo snapshot chain",
+  "owner": "work-3de59b8f2b9b-20261113",
+  "date": "2026-11-13",
+  "base": "d2b4325d6fc8275b8e3dcc248df01516fa4a8ec2",
+  "precodeContract": "63ae60118433b984dda2b18838e7892d385b15f5",
+  "node": "v24.22.1",
+  "final": {
+    "tests": 121,
+    "pass": 121,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "exit": 0,
+    "composition": {
+      "existingSnapshot": 100,
+      "newPrincipalSnapshot": 13,
+      "existingKrakenPrincipal": 8
+    },
+    "syntax": [
+      "src/sync-snapshot.js",
+      "tests/sync-snapshot-usd-principal.test.mjs"
+    ]
+  },
+  "inputs": [
+    {
+      "path": "package.json",
+      "sha": "76c6961ae4d56593a8f9721de12fc84823b45d88"
+    },
+    {
+      "path": "src/sync-snapshot.js",
+      "sha": "3029b1df9ffb713ae7e082ac12ee1c4ec52cd029"
+    },
+    {
+      "path": "src/model.js",
+      "sha": "3ab1397af6870f1b356f9696451170697eafbf36"
+    },
+    {
+      "path": "src/csv-import.js",
+      "sha": "6522fca91a5b58a1d9f468e7c499bab93153378f"
+    },
+    {
+      "path": "src/booking-management.js",
+      "sha": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5"
+    },
+    {
+      "path": "tests/sync-snapshot-v5-bitcoin.test.mjs",
+      "sha": "ce50a8058371f63be1aa96f99b333469dd1e96e4"
+    },
+    {
+      "path": "tests/import-cash-removal.test.mjs",
+      "sha": "b3614f0f1c973754bcdc6027670928232c5ee28b"
+    },
+    {
+      "path": "tests/sync-snapshot-gap-regressions.test.mjs",
+      "sha": "1f5943e754c19c997e761098ccd6be0321a1c167"
+    },
+    {
+      "path": "tests/sync-snapshot.test.mjs",
+      "sha": "8e3dab3a48323606d8e86d715340f35584e8c24b"
+    },
+    {
+      "path": "tests/sync-snapshot-history.test.mjs",
+      "sha": "a69cbc6466754dc65cff4b58d524df67060297b8"
+    },
+    {
+      "path": "tests/sync-snapshot-purchase-evidence.test.mjs",
+      "sha": "b8a955082135dacc50470c78345de684eb096812"
+    },
+    {
+      "path": "tests/sync-snapshot-price-history.test.mjs",
+      "sha": "5fe668b2797d219a90f21ebaa65a84776f4dce26"
+    },
+    {
+      "path": "src/import-identity.js",
+      "sha": "9c80c33266d3c769d0185e3e89cf182c192f1406"
+    },
+    {
+      "path": "src/transactions.js",
+      "sha": "306dfd8f06b41f4e6414ecbb248124fbfb726402"
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "sha": "332037a4d578c8128121f799165db3a749a82239"
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "sha": "d9b14aa5806089767d43e049df70bbb70507a5ae"
+    },
+    {
+      "path": "src/defi.js",
+      "sha": "12fbc404d61ce4412cf9120712ea2ed719da4405"
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "sha": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1"
+    },
+    {
+      "path": "src/sync-payload-integrity.js",
+      "sha": "99a91dd41d911f5df5b3ef9328a29de4352af57b"
+    },
+    {
+      "path": "src/refresh-frequency.js",
+      "sha": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3"
+    },
+    {
+      "path": "src/retired-providers.js",
+      "sha": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731"
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "sha": "fe27c60e3181596b2ec792081ede2d5861fb00e2"
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "sha": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107"
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "sha": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90"
+    },
+    {
+      "path": "src/cash-terms.js",
+      "sha": "e0bc7723f1da10ebfedeaebd89905749a3e24c77"
+    },
+    {
+      "path": "src/wallet-identity.js",
+      "sha": "7337ad57a531189676f747fdf6d1a925170f4004"
+    },
+    {
+      "path": "src/position-history.js",
+      "sha": "20afdf678e520b2b361d6c1c02a6604f5130659f"
+    },
+    {
+      "path": "src/assets.js",
+      "sha": "054ba656af6145f96bf93a566009ed40f45603cb"
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "sha": "edcbe5570a903271d07ddc637bd876071e85a40a"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "sha": "f87f593a4ec2be99f351037cec48316acb8db6a3"
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "sha": "ae451f421b8442a46f0fd97925f5f736d4b44fc3"
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "sha": "320637c48fc98ebaecc7c46b1a21266767c964e6"
+    },
+    {
+      "path": "tests/wallet-history-fixtures.mjs",
+      "sha": "1949b9138f70a094b7cd715a9eca4bfe87846adc"
+    },
+    {
+      "path": "tests/ledger-live-fixture.mjs",
+      "sha": "f2825a6a9b072ed5cc8787eec51c6ae8c3621b4c"
+    },
+    {
+      "path": "src/historical-csv.js",
+      "sha": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4"
+    },
+    {
+      "path": "src/decimal.js",
+      "sha": "7896c75407ff67763bc9c969ea203f6e5f1b529a"
+    },
+    {
+      "path": "src/fx-state.js",
+      "sha": "0c0239573d9306da2f7d66da21ad8537ce123783"
+    },
+    {
+      "path": "src/csv-records.js",
+      "sha": "a38aad028a30776022c6c8950a2699a6694962b4"
+    },
+    {
+      "path": "src/reference-listings.js",
+      "sha": "3ba091983e64a631ad187ebb302299380db49c02"
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "sha": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a"
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "sha": "c87b64284e074993fbdf5673ba1f4c5cf926f02e"
+    },
+    {
+      "path": "src/coin-identity.js",
+      "sha": "e7681a4b1cab7c41c950ea1b8999963148340f5f"
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "sha": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4"
+    },
+    {
+      "path": "src/quote-quality.js",
+      "sha": "3ec1f74b2c10caef09a400592db05a5db1dda9d6"
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "sha": "782cab38bb79daa0886c6ab66559f61792279dd1"
+    },
+    {
+      "path": "src/position-selection.js",
+      "sha": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2"
+    },
+    {
+      "path": "src/booking-history.js",
+      "sha": "77d23820cacdbe9a1efb1112eb609241e88c190d"
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "sha": "16214b0406a740200585f726e9c9b90cb6007dec"
+    },
+    {
+      "path": "src/ledger-live.js",
+      "sha": "d864f6d36d933e5a1919cce4d88990cd513f9093"
+    },
+    {
+      "path": "src/security-sources.js",
+      "sha": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d"
+    },
+    {
+      "path": "src/kraken-link-bridge.js",
+      "sha": "48d8b4594c0c33635bf93a88f51f64c95fe8e423"
+    },
+    {
+      "path": "src/flatex-net-reconciliation.js",
+      "sha": "2d39c199135dc9348271271c60b36876c4660936"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "sha": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5"
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "sha": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d"
+    },
+    {
+      "path": "src/flatex-native.js",
+      "sha": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2"
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "sha": "d52e116b9280147495316666289962d21988ba3c"
+    },
+    {
+      "path": "src/request-cache.js",
+      "sha": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89"
+    },
+    {
+      "path": "src/solana-history.js",
+      "sha": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1"
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "sha": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63"
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "sha": "16cab7de80658d72ef01f829e70ebfb75a41e6f8"
+    },
+    {
+      "path": "src/portfolio-edit-actions.js",
+      "sha": "3412841500a16abd99aa37e2603603e676d2ad94"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "sha": "1151f42b1315241805923b848a7a2efdf65528ac"
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "sha": "fdafc8f2f1a86d706a049c3b91545551cccf0af9"
+    },
+    {
+      "path": "src/marketstack.js",
+      "sha": "a686d3010a804db0d324c45324f7e5b9f5deafae"
+    },
+    {
+      "path": "src/link-explorer-evidence.js",
+      "sha": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b"
+    },
+    {
+      "path": "src/market.js",
+      "sha": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "sha": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2"
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "sha": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9"
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "sha": "0c6f714150b3d78e4e3086f275d63943d36b43ba"
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "sha": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a"
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "sha": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24"
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "sha": "4be2e9af21fd5d66c37938727a43d956292fd6bf"
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "sha": "b98c2e5966815cbe7673e2a789661f8a31e637bd"
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "sha": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5"
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "sha": "db6c208030f0d21c528cafaf47d4a51b22055e53"
+    },
+    {
+      "path": "tests/sync-snapshot-csv-cash.test.mjs",
+      "sha": "2b5d4cdb18bfd40bd027ec84c61c1774435f52d3"
+    },
+    {
+      "path": "tests/booking-management-changes.test.mjs",
+      "sha": "2174ad9bc16dbca685f427cf6344bad2baca696a"
+    },
+    {
+      "path": "src/booking-insights.js",
+      "sha": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36"
+    },
+    {
+      "path": "tests/sync-snapshot-management.test.mjs",
+      "sha": "5cd395f462f23ae63d38baef8c7b835102304fbb"
+    },
+    {
+      "path": "tests/kraken-usd-principal-fixture.mjs",
+      "sha": "eb45af9cf6e7e2698fc27c56bbda40b4535b9567"
+    },
+    {
+      "path": "tests/kraken-usd-principal.test.mjs",
+      "sha": "d62d9f18951d232ddcda15771558336b642135f0"
+    },
+    {
+      "path": "docs/release-evidence/uh05-usd-principal-decimal100.json",
+      "sha": "71de1ee8606e08b0245ea503edcdc8b8c0dbc701"
+    },
+    {
+      "path": "src/kraken-import.js",
+      "sha": "c232ff453d806a9ef093f59ab5e835713cac5f63"
+    },
+    {
+      "path": "src/shared-import.js",
+      "sha": "f4d0787bf0ba6d99bbd818fc5384ec33779a0ef7"
+    },
+    {
+      "path": "src/csv-batch.js",
+      "sha": "0356e6cd8550f3107742603da2fde9fa7fbcc7df"
+    },
+    {
+      "path": "tests/kraken-ledger-fixture.mjs",
+      "sha": "68b56cabd842a6f0bed3d10eed98987df3d23f0a"
+    },
+    {
+      "path": "src/bitpanda-import.js",
+      "sha": "b42e81350784dd4f4654dfc90c7461e2189e770b"
+    },
+    {
+      "path": "src/bitpanda-preview.js",
+      "sha": "38ed3103272fe7110387c68f24f889e1a88f7ca6"
+    },
+    {
+      "path": "src/complete-backup.js",
+      "sha": "d7af70fe06b61f9db8dffff215f7e8b2782385db"
+    },
+    {
+      "path": "src/flatex-backfill.js",
+      "sha": "ad07376e1830b08e636f2201fadf695b4b2ead44"
+    },
+    {
+      "path": "src/kraken-ledger.js",
+      "sha": "ba9f306137f2a7c2cbe120686fe3930738adf4ff"
+    },
+    {
+      "path": "src/kraken-source-plan.js",
+      "sha": "35139f556f80b2fb38567e6139c23448d32a7fa0"
+    },
+    {
+      "path": "src/flatex-import.js",
+      "sha": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69"
+    }
+  ],
+  "unchangedOriginalInputs": 92,
+  "changedOriginalInputs": [
+    "src/sync-snapshot.js"
+  ],
+  "originalOutputs": {
+    "usd-existing-baseline.tap": "✔ one complete native USD principal preserves amounts and UNKNOWN gross EUR without external effects (49.106695ms)\n✔ shared core commit, exact replay and existing Undo preserve the whole baseline (34.29272ms)\n✔ documentary withdrawal restores native principal and durably blocks resurrection (33.621824ms)\n✔ incomplete, overlapping, changed, fee-unknown and wrong-role native groups never partially commit (19.808595ms)\n✔ openings, separate own native USD accounts and unknown costs remain mandatory (27.960665ms)\n✔ journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities (12.978452ms)\n✔ current FX updates cannot rewrite UNKNOWN journal or grant historical EUR valuation (11.024548ms)\n✔ UNKNOWN journal path rejects unqualified callers and other transaction types (0.860831ms)\nℹ tests 8\nℹ suites 0\nℹ pass 8\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 609.110126\n",
+    "usd-snapshot-first.tap": "✔ full active principal provenance and empty v5 marker survive without any monetary substitution (104.832331ms)\n✔ active snapshot restore retains duplicate replay, complete withdrawal and permanent replay protection (81.398429ms)\n✔ local exact-preimage Undo stays local and gains no authority from snapshot restoration (31.157712ms)\n✔ archived principal remains v5 and keeps the full documentary withdrawal path (51.662324ms)\n✔ known current FX cannot replace historical UNKNOWN or grant historical EUR valuation (43.763754ms)\n✖ UH02 purchase provenance coexists with the complete USD v5 chain and marker (68.43483ms)\n✖ generic CSV removal and manual management history coexist without altering principal provenance (15.527732ms)\n✔ missing/downgraded/filled marker and marker-only portfolios reject without version bypass (56.567267ms)\n✔ active and withdrawn JSON payload extensions and noncanonical encodings cannot hide credentials (48.825098ms)\n✔ unknown fields at every permanent-original layer reject even with a matching digest (30.173452ms)\n✔ existing validators still reject altered UNKNOWN amounts, bindings, ownership and source roles (70.182367ms)\n✔ permanent proof cannot lose originals, digest, ownership, identity or nonresurrection checks (38.280358ms)\n✔ other Kraken journal roles and incompatible USD ownership stay outside this scope (62.485978ms)\nℹ tests 13\nℹ suites 0\nℹ pass 11\nℹ fail 2\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5115.63895\n\n✖ failing tests:\n\ntest at tests/sync-snapshot-usd-principal.test.mjs:54:1\n✖ UH02 purchase provenance coexists with the complete USD v5 chain and marker (68.43483ms)\n  Error: Backup: Journalreihenfolge ist ungültig oder nicht eindeutig.\n      at safeImport (file:///workspace/scratch/3de59b8f2b9b/repo/src/model.js:261:101)\n      at checkData (file:///workspace/scratch/3de59b8f2b9b/repo/src/sync-snapshot.js:221:16)\n      at createSyncSnapshot (file:///workspace/scratch/3de59b8f2b9b/repo/src/sync-snapshot.js:240:2)\n      at async roundtrip (file:///workspace/scratch/3de59b8f2b9b/repo/tests/sync-snapshot-usd-principal.test.mjs:22:78)\n      at async TestContext.<anonymous> (file:///workspace/scratch/3de59b8f2b9b/repo/tests/sync-snapshot-usd-principal.test.mjs:57:10)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)\n\ntest at tests/sync-snapshot-usd-principal.test.mjs:59:1\n✖ generic CSV removal and manual management history coexist without altering principal provenance (15.527732ms)\n  Error: Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden. Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden. Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.\n      at prepareBookingChange (file:///workspace/scratch/3de59b8f2b9b/repo/src/booking-management.js:171:76)\n      at TestContext.<anonymous> (file:///workspace/scratch/3de59b8f2b9b/repo/tests/sync-snapshot-usd-principal.test.mjs:61:125)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)\n",
+    "usd-snapshot-second.tap": "✔ full active principal provenance and empty v5 marker survive without any monetary substitution (134.409279ms)\n✔ active snapshot restore retains duplicate replay, complete withdrawal and permanent replay protection (105.045318ms)\n✔ local exact-preimage Undo stays local and gains no authority from snapshot restoration (13.157799ms)\n✔ archived principal remains v5 and keeps the full documentary withdrawal path (35.940246ms)\n✔ known current FX cannot replace historical UNKNOWN or grant historical EUR valuation (25.429081ms)\n✔ UH02 purchase provenance coexists with the complete USD v5 chain and marker (36.895435ms)\n✔ generic CSV removal and manual management history coexist without altering principal provenance (34.191816ms)\n✔ missing/downgraded/filled marker and marker-only portfolios reject without version bypass (44.867865ms)\n✔ active and withdrawn JSON payload extensions and noncanonical encodings cannot hide credentials (48.277474ms)\n✔ unknown fields at every permanent-original layer reject even with a matching digest (48.124099ms)\n✔ existing validators still reject altered UNKNOWN amounts, bindings, ownership and source roles (96.835493ms)\n✔ permanent proof cannot lose originals, digest, ownership, identity or nonresurrection checks (52.230996ms)\n✔ other Kraken journal roles and incompatible USD ownership stay outside this scope (79.800736ms)\nℹ tests 13\nℹ suites 0\nℹ pass 13\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1339.672589\n",
+    "usd-snapshot-combined.tap": "✔ one complete native USD principal preserves amounts and UNKNOWN gross EUR without external effects (225.986789ms)\n✔ shared core commit, exact replay and existing Undo preserve the whole baseline (87.054958ms)\n✔ documentary withdrawal restores native principal and durably blocks resurrection (55.816672ms)\n✔ incomplete, overlapping, changed, fee-unknown and wrong-role native groups never partially commit (39.6855ms)\n✔ openings, separate own native USD accounts and unknown costs remain mandatory (29.787061ms)\n✔ journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities (15.987192ms)\n✔ current FX updates cannot rewrite UNKNOWN journal or grant historical EUR valuation (14.894031ms)\n✔ UNKNOWN journal path rejects unqualified callers and other transaction types (1.049578ms)\n✔ all six generic cash events preserve exact complete provenance and unchanged reimport behavior (242.041728ms)\n✔ all six durable removal audits retain original booking, journal, flows and deleted-source protection (144.266876ms)\n✔ local undo retains its exact preimage guard; snapshot transport does not port transient undo authority (28.974377ms)\n✔ batched removal retains all originals and separate active imports without dropping audit lineage (47.584303ms)\n✔ v4 archive and current UNKNOWN/18 decimal positions coexist without credentials (17.314707ms)\n✔ complete UH02-v5 and generic cash active/removal chains coexist losslessly (187.391911ms)\n✔ generic source and nested JSON extension fields cannot tunnel credentials (58.471112ms)\n✔ noncanonical JSON, types, Unicode, duplicate keys and missing required source fields fail closed (88.150705ms)\n✔ source payload, fingerprint, ownership and journal discrepancies reject without repairs (24.805011ms)\n✔ every retained audit level is closed and incomplete audit/flow/ownership chains reject (135.334606ms)\n✔ manual/mixed management and generic trades remain unsupported, including nested source changes (14.22907ms)\n✔ B regression: full supported journal/snapshot keeps independent amount11 and all source IDs (86.924215ms)\n✔ B regression: unknown root credentials and foreign portfolio identity reject the whole payload (129.279875ms)\n✔ B regression: booking, journal and posting credentials never survive the closed gate (29.493456ms)\n✔ B regression: historical credential objects reject in revision, quote time and account value (41.203851ms)\n✔ B regression: decimal normalization is rejected without changing source bytes or balances (7.65964ms)\n✔ B regression: complete configuration and wallet resume data are blocked, never dropped or rewritten (8.031108ms)\n✔ B regression: oversized historic metadata cannot use importer row limits to bypass byte limits (257.820889ms)\n✔ B budget regression: multibyte bytes, not just character count, bound received plaintext (99.746944ms)\n✔ B budget regression: deeply nested and excessive-node extensions fail before financial projection (123.070379ms)\n✔ accepted BTC/ETH/SOL facts roundtrip exactly with finance, journal, UNKNOWN, null and provenance (148.262246ms)\n✔ accepted partial/unknown facts preserve null effects, missing opening and missing quotes (132.719018ms)\n✔ v4 archive and accepted history coexist without changing references (58.110666ms)\n✔ unknown fields reject at every accepted-history nesting level, including credentials and object payloads (143.458028ms)\n✔ normalizing sources, status, timestamps, missing fields or quote decimals rejects instead of repairing (172.124155ms)\n✔ duplicate facts/sessions and reordered events cannot be silently deduped or sorted (46.584699ms)\n✔ forged event IDs, orphan streams and false quote bindings reject through existing validators (109.781006ms)\n✔ canonical resume metadata remains unsupported in full; no portable-history projection drops it (5.986301ms)\n✔ v5/import/evidence and malformed price payloads reject even when history is accepted (37.060413ms)\n✔ history retains existing session/event/byte/node/depth limits with no truncation (559.814118ms)\n✔ all six manual cash types retain complete notes/edit/remove originals, afterbookings and cash flows (630.044978ms)\n✔ edit then notes then remove continues through repeated snapshot/restore without cutting historical lineage (44.462108ms)\n✔ multi-account batch removal preserves separate original identities and sequence for later transactions (11.719478ms)\n✔ v4 archive and UNKNOWN/large-decimal position coexist with manual cash audit history (11.614262ms)\n✔ pure generic CSV removal and manual audit families coexist while repeat-import protection remains (29.16957ms)\n✔ stale current booking and documentary afterbookings stay distinct and never grant a follow-up edit (10.772471ms)\n✔ extensions at every original/after/audit level reject whole snapshot without source mutation (67.665105ms)\n✔ wrong scope, audit forms, original journals and artificial financial audit postings reject (167.301255ms)\n✔ manual removal requires null afterbookings and does not admit mixed imported originals (46.333238ms)\n✔ canonical CSV, FX and retained crypto histories roundtrip together without changing finance (101.754191ms)\n✔ all existing confirmed providers and v4 archives retain provenance and price type (196.327519ms)\n✔ credential-bearing settings excluded while every history value and map order stay intact (15.72752ms)\n✔ unknown keys and object-valued secrets reject at each newly admitted level (71.483136ms)\n✔ orphan and dangerous history map identities block the whole portfolio (38.85099ms)\n✔ retained history cannot change confirmed position, provider, retention, currency or price type (36.876096ms)\n✔ invalid, duplicate or reversed price points never normalize silently (54.451212ms)\n✔ FX source, date, duplicate, reference window and rate validation remain mandatory (47.552862ms)\n✔ known fields needing defaults, uppercase or projection reject lossily (42.224107ms)\n✔ limits reject whole histories without truncation or publishing other valid histories (474.147975ms)\n✔ unsupported evidence, v5 and pending state still block otherwise supported histories (28.905509ms)\n✔ N:M split receipt provenance roundtrips with exact finance, journal, FX and history (127.704891ms)\n✔ unlinked receipts, absent evidence, empty evidence and optional empty ledger retain shape (137.356849ms)\n✔ link unlink relink chronology and receipt/event order stay exact in v4 (61.675079ms)\n✔ stale session wallet or fingerprints remain conflicts, never new authority (120.909478ms)\n✔ settings excluded and all unknown fields reject at every purchase level (137.681868ms)\n✔ known purchase fields reject wrong types and arbitrary config objects (104.428086ms)\n✔ corrupt receipts, arithmetic, IDs and duplicate receipts fail the existing validator (89.474036ms)\n✔ orphan receipt, invalid decisions, duplicated active events and invalid unlink fail (217.480661ms)\n✔ validator projections timestamps decimals and missing receipt IDs cannot normalize silently (34.500438ms)\n✔ populated bitcoin ledger stays v5-gated and is never silently pruned or downgraded (14.381464ms)\n✔ oversized decision references and malformed ledger block the entire portfolio (47.08433ms)\n✔ other evidence, pending history and v5 still reject supported purchase receipts (24.794495ms)\n✔ full active principal provenance and empty v5 marker survive without any monetary substitution (113.726071ms)\n✔ active snapshot restore retains duplicate replay, complete withdrawal and permanent replay protection (96.51945ms)\n✔ local exact-preimage Undo stays local and gains no authority from snapshot restoration (13.322112ms)\n✔ archived principal remains v5 and keeps the full documentary withdrawal path (73.709861ms)\n✔ known current FX cannot replace historical UNKNOWN or grant historical EUR valuation (85.34853ms)\n✔ UH02 purchase provenance coexists with the complete USD v5 chain and marker (73.215113ms)\n✔ generic CSV removal and manual management history coexist without altering principal provenance (49.841723ms)\n✔ missing/downgraded/filled marker and marker-only portfolios reject without version bypass (40.933603ms)\n✔ active and withdrawn JSON payload extensions and noncanonical encodings cannot hide credentials (76.768073ms)\n✔ unknown fields at every permanent-original layer reject even with a matching digest (69.938549ms)\n✔ existing validators still reject altered UNKNOWN amounts, bindings, ownership and source roles (250.75799ms)\n✔ permanent proof cannot lose originals, digest, ownership, identity or nonresurrection checks (80.479026ms)\n✔ other Kraken journal roles and incompatible USD ownership stay outside this scope (68.218892ms)\n✔ v5 complete N:1 chain preserves independent quantities, fees, financing and exact provenance (138.199772ms)\n✔ v5 purchase without optional Ledger observations is a complete economic chain (53.097682ms)\n✔ N:M source facts retain every own vout and fingerprint, without double quantity effects (45.093644ms)\n✔ Ledger first, Bittr first and combined imports roundtrip with one unchanged economic effect (83.663324ms)\n✔ permanent undo tombstone retains documentary Ledger and receipts, prevents reimport (23.775021ms)\n✔ archive coexists with v5 without format downgrade (17.856371ms)\n✔ missing optional chain history stays missing; snapshot confers no new import permission (10.332722ms)\n✔ stale documentary event fingerprints survive exactly and retain existing preview conflict (11.668853ms)\n✔ complete chain coexists with UNKNOWN FX, 18 decimals, price history and no local settings (15.025424ms)\n✔ internal undefined wallet projection keys do not reject canonical persisted JSON; actual defaults do (28.829808ms)\n✔ empty v5 and isolated populated Ledger remain wholly unsupported (8.233895ms)\n✔ downgrades and future versions reject full chain without partial output (23.725407ms)\n✔ unknown provenance keys reject at import source, payload, facts and event levels (44.664956ms)\n✔ opaque ownership string cannot tunnel extension keys or altered journal facts (15.023512ms)\n✔ JSON encoded provenance rejects duplicate keys, alternate encoding, malformed Unicode and wrong types (55.601128ms)\n✔ missing and contradictory provenance/Receipt/Wallet/financing records reject using existing validators (88.23058ms)\n✔ unknown keys across complete chain and unrelated proof families remain rejected (62.669595ms)\n✔ credential-bearing local settings are wholly excluded; source bytes remain unchanged (23.432346ms)\n✔ exact 18-decimal quantity, UNKNOWN FX/null and financial IDs survive without repair (2.945965ms)\n✔ simple journal retains balanced postings, exact amounts, ordering and links (10.717499ms)\n✔ empty history is retained; malformed accepted sessions and any pending history reject (4.430055ms)\n✔ v4 booking archive is preserved with its reference identity (2.956266ms)\n✔ history snapshot exact totals, revisions and quote provenance remain unchanged (2.676798ms)\n✔ unknown top-level payload/configuration/vault/extensions are rejected, not dropped (6.678456ms)\n✔ unknown nested keys cannot hide credentials in allowed financial entities (3.672978ms)\n✔ unrecognized wallet and snapshot nested extensions fail closed (4.438177ms)\n✔ duplicate provider/position and orphan account identity reject via existing financial validator (3.65737ms)\n✔ balanced but orphaned journal posting and duplicate posting IDs reject (3.614201ms)\n✔ unbalanced journal cannot pass an allowlisted shape (4.469743ms)\n✔ unknown fee stays null in allowed booking; no zero default is inserted (2.234777ms)\n✔ opaque import source/proof branches block instead of stripping their identities (3.225337ms)\n✔ malformed price and unsupported evidence/audit branches fail without partial output (3.584317ms)\n✔ normalization, trimmed IDs/labels and numeric FX repair are rejected, never silently emitted (4.356547ms)\n✔ received settings and extra envelope keys are forbidden (2.674966ms)\n✔ duplicate keys, extra whitespace and alternate JSON numeric spellings are rejected (2.131214ms)\n✔ malformed Unicode, malformed JSON and unsupported versions reject (5.929492ms)\n✔ invalid types and over-limit text reject before JSON processing (0.930533ms)\n✔ escaped lone surrogates inside financial strings never reach emitted data (3.819834ms)\nℹ tests 121\nℹ suites 0\nℹ pass 121\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2322.108995\n"
+  },
+  "firstFindings": [
+    "Combined independent fixture produced duplicate journal sequence; corrected by committing UH02 via existing API on combined baseline.",
+    "New management fixture selected old imported booking via at(-1); corrected to returned transaction ID and concrete source identity. No product guard or existing test changed."
+  ],
+  "reuse": [
+    "Existing Decimal100 oracle and prior accepted snapshot histories/financial validators. No historical test count addition."
+  ],
+  "scopeLimits": [
+    "Only kraken-uh03-v1 unpriced native USD principal transfer and complete single-original permanent withdrawal.",
+    "Only empty flatexNetRemovals marker with this complete principal chain. Marker-only, filled Flatex state and other Kraken roles/bridges remain unsupported.",
+    "Local Undo retains exact model preimage; no ephemeral receipt portability."
+  ],
+  "limits": {
+    "snapshotVersion": 1,
+    "utf8Bytes": 3500000,
+    "structureValues": 100000,
+    "depth": 16
+  },
+  "crypto": {
+    "candidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+    "package": "fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b",
+    "review": "EXTERNAL_REVIEW_PENDING",
+    "impact": "downstream snapshot coverage only; no wrapper/signature/issuer/unlock code"
+  },
+  "remainingIntegration": "Credential-free payload bytes must still be atomically bound to original local Raw/revision/CryptoKey preimages. No Storage/Outbox/Apply integration or Raw identity reinterpretation.",
+  "notProven": [
+    "browser",
+    "native IndexedDB",
+    "CryptoKey persistence",
+    "reopen",
+    "multitab",
+    "process crash",
+    "real quota",
+    "recovery",
+    "CI22",
+    "Wallet20",
+    "device",
+    "PR",
+    "Main",
+    "production",
+    "independent external review"
+  ],
+  "gates": {
+    "FLH04": "NOT DONE",
+    "outbox": "INTERN UNQUALIFIZIERT",
+    "N-DRIVE": "BLOCKED_EXTERNAL with internal and external work",
+    "A1": "applyAuthorized=false",
+    "A2": "Storage.confirm locked; remoteAnchor/acknowledgedLocalRevision=null",
+    "preparedLocked": "not adopted/promoted/overwritten/deleted"
+  }
+}

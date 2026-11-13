@@ -1,3 +1,29 @@
+## USD_PRINCIPAL_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-3de59b8f2b9b-20261113
+
+Neuer Fortschritt: vollständige kanonische Kraken-USD-Spot→Earn-UNKNOWN-Principal-
+und dauerhafte uh03-undo-Kette samt JSON-Quellpayload,Ownership,Originalen,Digest,
+Journal und v5/leerem flatexNetRemovals-Marker verlustfrei transportiert.
+Reimportduplikat→Originalgruppenrücknahme→Snapshot/Restore→dauerhafte Wiederanlage-
+sperre,18Decimal/UNKNOWN,Archiv/UH02/CSV/Managementkoexistenz und lokaler Undo-
+Preimagevertrag geprüft. Keine allgemeine Kraken-/Flatex-/v5-Freigabe.
+
+Final121PASS/0FAIL/0SKIP/0CANCELLED/Exit0,Node24.22.1,Syntax2PASS:
+100bestehendeSnapshot+13neuePrincipalSnapshot+8bestehendeKrakenPrincipal.
+93Originaleingabenblobgenau,92nachCodeunverändert;keinbestehenderTestgeändert.
+Erste11/2 neueFixturefehler(doppelteSequenz/falscheBuchungsauswahl)bewahrt;
+danach13/0 und121/0. [Originaloutputs](release-evidence/flh04-snapshot-usd-principal-local-2026-11-13.json).
+[Vorcodevertrag63ae6011](https://github.com/joke0071/foliolab-open/blob/63ae60118433b984dda2b18838e7892d385b15f5/docs/FLH04_SNAPSHOT_CONTRACT.md)
+vollständig byte-/blobgeprüft; [aktueller Vertrag](FLH04_SNAPSHOT_CONTRACT.md).
+
+Begrenzte Implementierung vollständig/gezielte interne Nodeprüfung bestanden.
+Raw-/Payload-/CryptoKey-CAS-Integration weiterhin offen; keine aktiveSync/native/
+CI-/Main-/Produktions-/externeAbnahme. Reviewpaketfd3fce4b unverändert REVIEW_READY/
+EXTERNAL_REVIEW_PENDING; kein gesperrter Kryptocode/keine Selbstfreigabe.
+Alle unveränderten Schutzgrenzen und konkreten Abnahmewege im Vertrag.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
+
+---
+
 ## MANUAL_CASH_MANAGEMENT_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-f1798d3a9454-20261113
 
 NeuerFortschritt: vollständige kanonische manuelle EUR-Cash-Notiz/Korrektur/Rücknahme

@@ -7,6 +7,8 @@ provider priceHistories are supported losslessly under the dated slices below.
 Canonical v3/v4 purchase receipts/decisions are additionally supported by the dated
 Purchase-Evidence slice below. The dated UH02-v5 slice additionally supports the complete
 canonical purchase/undo economic chain with its import and Ledger provenance.
+The dated CSV-cash, manual EUR-cash management and complete native USD-principal
+slices below additionally preserve their full active/permanent-removal provenance.
 Ledger-only v5, other import/management/withdrawal/bridge evidence and pending/resume
 remain unsupported in full. Earlier empty-only price-history statements below describe
 historical slices and are superseded only for this dated scope.
@@ -544,3 +546,36 @@ Mainbefund nur bei neuer Hypothese/geänderter Voraussetzung und konkretem revie
 Kandidaten zur Ausführungsentscheidung; kein Retry/Runner/Workflow/PR/Merge/Release/
 SW-Bump/aktiveSync. A1/A2/prepared-locked/Identitäts-/DB-/Budgetgrenzen unverändert.
 FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
+
+### USD-Principal: tatsächlicher Implementierungs- und Prüfabschluss
+
+Vollständige kanonische aktive und dauerhafte uh03-undo-Kette verlustfrei unterstützt,
+mit geschlossenem group/payload/bindings/action-JSON, Ownership, allen Originalen,
+Digest, UNKNOWN und unverändertem v5/leerem flatexNetRemovals-Marker.
+Marker-only, gefüllter Flatexzustand, andere Krakenrollen/Bridges bleiben unsupported.
+Keine Änderung bestehender Finanz-/Import-/Journal-/Withdrawal-/Versionsvalidatoren.
+Aktiv→Snapshot→Restore→Duplikat→Originalgruppenrücknahme→Snapshot→Restore→dauerhafte
+Wiederanlagesperre geprüft. Aktuelles FX ersetzt kein historisches UNKNOWN.
+UH02-Kauf-/CSV-Remove-/manuelle Management-/Archivkoexistenz und striktes lokales
+Undo-Preimage geprüft; kein Receipttransport/keine neue Autorität.
+
+Final gemeinsam121PASS/0FAIL/0SKIP/0CANCELLED/Exit0,Node24.22.1,Syntax2PASS:
+100bestehendeSnapshot+13neuePrincipalSnapshot+8bestehendeKrakenPrincipal.
+93Originaleingabenblobgenau;92nachCodeunverändert, nurSnapshotmodul geändert.
+Keine bestehenden Tests geändert; keine historischen Testzahlen addiert.
+Erster isolierter Lauf11/2: neue zusammengesetzte UH02-Fixture hatte doppelte
+Journalsequenz; neue Managementfixture wählte mit at(-1) die alte Krakenbuchung
+statt der vom Transaktionskern zurückgegebenen neuen Buchungs-ID. Fixtures über
+bestehende APIs erzeugt und über konkrete Herkunft/IDs ausgewählt, keine Guards/
+Validatoren/Assertions gelockert. Danach isoliert13/0, gemeinsam121/0.
+[Originaloutputs und Eingabeidentitäten](release-evidence/flh04-snapshot-usd-principal-local-2026-11-13.json).
+
+Begrenzte Implementierung vollständig/gezielte interne Nodeverifikation bestanden;
+keine Browser-/IDB-/CryptoKey-/Reopen-/Mehrtab-/Prozesscrash-/realeQuota-/Recovery-/
+CI22-/Wallet20-/Geräte-/PR-/Main-/Produktions-/externeAbnahme und keine Integration.
+Kryptoimpact zum exakten Kandidaten17a5a190d472f1f07b3508e6f35194371fe95eb2:
+nur nachgelagerte Snapshotabdeckung/Tests/Belege; unverändertes Reviewpaketfd3fce4b
+REVIEW_READY/EXTERNAL_REVIEW_PENDING. Kein Wrap-/Signatur-/Aussteller-/Entsperrcode.
+Raw-/Payload-/CryptoKey-CAS-Integration und alle zuvor konkret zugeordneten
+Abnahmewege/Gates bleiben offen. FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/
+N-DRIVEBLOCKED_EXTERNAL mit internem UND externem Rest.
