@@ -4,6 +4,8 @@
 // reviewed product implementation exists. No expected failure is converted to PASS.
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
+import {createC1Diagnostics} from './flh04-c1-diagnostics.mjs';
+const assertionPlans={"C1-CANCEL":["A.01","A.02","A.03","A.04"],"C1-VERSION-FENCE":["UPGRADE.01","UPGRADE.02","A.01","A.02","A.03","A.04"],"C1-MARKERS":["UPGRADE.01","UPGRADE.02","A.01","A.02","A.03"],"C1-NO-REVERT":["UPGRADE.01","UPGRADE.02","A.01","A.02","A.03"],"C1-RESTORE-CAS":["UPGRADE.01","UPGRADE.02","A.01","A.02","A.03","A.04","A.05","A.06","A.07","A.08"],"C1-RESTORE-FAULT-REPLY":["UPGRADE.01","UPGRADE.02","A.01","A.02","A.03","A.04","A.05","A.06","A.07","A.08","A.09","A.10"]};
 
 export async function runVersion2Candidate({browser,setup,operation,url}) {
  const origin=new URL(url);
@@ -12,7 +14,9 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
  assert.ok(['127.0.0.1','localhost'].includes(origin.hostname),'C1 forbids production origins');
  assert.equal(origin.pathname,'/tests/storage-origin.html');
  const results=[];
+ let checks;
  async function scenario(id,body) {
+  checks=createC1Diagnostics(id,assertionPlans[id]);
   const context=await browser.newContext();
   try {
    const a=await context.newPage(),b=await context.newPage();
@@ -22,9 +26,11 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
    await operation(a,'prepare-anchor');
    const original=await operation(a,'read'),proof=await operation(a,'anchor-proof');
    await body({a,b,context,original,proof});
-   results.push({id,status:'PASS'});
+   checks.complete();
+   results.push({id,status:'PASS',checks:checks.report()});
   } catch(error) {
-   results.push({id,status:'FAIL',errorType:error.name});
+   const failure=checks.fail(error);
+   results.push({id,status:'FAIL',errorType:failure.errorType,failure,checks:checks.report()});
   } finally {await context.close();}
  }
  async function startUpgrade(page) {
@@ -57,9 +63,13 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
  async function upgraded(a,b) {
   // Existing setup installs onversionchange=>close on both old handles.
   await startUpgrade(b);
-  assert.deepEqual(await outcome(b),{status:'schema-committed',version:2});
-  assert.equal(await a.evaluate(()=>window.syncTest.db.version),1,
+  checks.start('UPGRADE.01');
+ assert.deepEqual(await outcome(b),{status:'schema-committed',version:2});
+ checks.pass('UPGRADE.01');
+  checks.start('UPGRADE.02');
+ assert.equal(await a.evaluate(()=>window.syncTest.db.version),1,
    'closed old handle does not become a v2 handle');
+ checks.pass('UPGRADE.02');
  }
  async function state(page,version=null){
   return page.evaluate(async version=>{
@@ -113,23 +123,39 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
   await b.waitForFunction(()=>window.v2CandidateProbe.blocked===true);
   await b.evaluate(()=>{window.v2CandidateProbe.cancelled=true;});
   await a.evaluate(()=>window.syncTest.db.close());
-  assert.deepEqual(await outcome(b),{status:'aborted',errorName:'AbortError'});
+  checks.start('A.01');
+ assert.deepEqual(await outcome(b),{status:'aborted',errorName:'AbortError'});
+ checks.pass('A.01');
   await b.evaluate(async()=>{window.syncTest.db=await window.syncTest.storage.openPortfolioDB();});
-  assert.equal(await b.evaluate(()=>window.syncTest.db.version),1);
-  assert.deepEqual(await state(b),original);
-  assert.deepEqual(await operation(b,'anchor-proof'),proof);
+  checks.start('A.02');
+ assert.equal(await b.evaluate(()=>window.syncTest.db.version),1);
+ checks.pass('A.02');
+  checks.start('A.03');
+ assert.deepEqual(await state(b),original);
+ checks.pass('A.03');
+  checks.start('A.04');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof);
+ checks.pass('A.04');
  });
 
  await scenario('C1-VERSION-FENCE',async({a,b,original,proof})=>{
   await upgraded(a,b);
-  assert.deepEqual(await state(b),original);
-  assert.deepEqual(await operation(b,'anchor-proof'),proof);
+  checks.start('A.01');
+ assert.deepEqual(await state(b),original);
+ checks.pass('A.01');
+  checks.start('A.02');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof);
+ checks.pass('A.02');
   const oldReopen=await a.evaluate(async()=>{
    try{const db=await window.syncTest.storage.openPortfolioDB();db.close();return 'unexpected-open';}
    catch(error){return error.name;}
   });
-  assert.equal(oldReopen,'VersionError');
-  assert.deepEqual(await state(b),original);
+  checks.start('A.03');
+ assert.equal(oldReopen,'VersionError');
+ checks.pass('A.03');
+  checks.start('A.04');
+ assert.deepEqual(await state(b),original);
+ checks.pass('A.04');
  });
 
  await scenario('C1-MARKERS',async({a,b,original,proof})=>{
@@ -147,10 +173,16 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
    catch{return 'blocked';}
    finally{store.close();}
   });
-  assert.deepEqual(await state(b),original);
-  assert.deepEqual(await operation(b,'anchor-proof'),proof);
-  assert.notEqual(disposition,'legacy',
+  checks.start('A.01');
+ assert.deepEqual(await state(b),original);
+ checks.pass('A.01');
+  checks.start('A.02');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof);
+ checks.pass('A.02');
+  checks.start('A.03');
+ assert.notEqual(disposition,'legacy',
    'Confirmed v2 must not adopt legacy data after an old marker tail');
+ checks.pass('A.03');
  });
 
  await scenario('C1-NO-REVERT',async({a,b,original})=>{
@@ -167,9 +199,15 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
    try{await store.revert(model);return {rejected:false};}
    catch(error){return {rejected:true,errorName:error.name};}
   });
-  assert.deepEqual(await state(b),original,'No tombstone or other record write before v2 rejection');
-  assert.deepEqual(await legacy(b),beforeLegacy,'No target/intent/marker write before v2 rejection');
-  assert.equal(result.rejected,true,'The retained internal revert path must reject confirmed v2');
+  checks.start('A.01');
+ assert.deepEqual(await state(b),original,'No tombstone or other record write before v2 rejection');
+ checks.pass('A.01');
+  checks.start('A.02');
+ assert.deepEqual(await legacy(b),beforeLegacy,'No target/intent/marker write before v2 rejection');
+ checks.pass('A.02');
+  checks.start('A.03');
+ assert.equal(result.rejected,true,'The retained internal revert path must reject confirmed v2');
+ checks.pass('A.03');
  });
 
  await scenario('C1-RESTORE-CAS',async({a,b,original,proof})=>{
@@ -179,39 +217,75 @@ export async function runVersion2Candidate({browser,setup,operation,url}) {
   changed.providers.push({id:'c1-newer-save',name:'C1 newer local save',type:'broker'});
   await operation(b,'save',{revision:original.portfolio.revision,raw:JSON.stringify(changed)});
   const newer=await state(b);
-  await assert.rejects(()=>recovery(b,original.portfolio));
-  assert.deepEqual(await state(b),newer,'Stale backup restore must not overwrite newer state');
+  checks.start('A.01');
+ await assert.rejects(()=>recovery(b,original.portfolio));
+ checks.pass('A.01');
+  checks.start('A.02');
+ assert.deepEqual(await state(b),newer,'Stale backup restore must not overwrite newer state');
+ checks.pass('A.02');
   const receipt=await recovery(b,newer.portfolio);
   const restored=await state(a,2);
-  assert.equal(receipt.revision,newer.portfolio.revision+1);
-  assert.equal(restored.portfolio.revision,receipt.revision);
-  assert.equal(JSON.parse(restored.portfolio.raw).providers.filter(p=>p.id==='c1-backup-provider').length,1);
-  assert.equal(restored.portfolio.syncEnrollmentRequired,true);
-  assert.equal(restored.sync,null);
-  assert.deepEqual(await operation(b,'anchor-proof'),proof,
+  checks.start('A.03');
+ assert.equal(receipt.revision,newer.portfolio.revision+1);
+ checks.pass('A.03');
+  checks.start('A.04');
+ assert.equal(restored.portfolio.revision,receipt.revision);
+ checks.pass('A.04');
+  checks.start('A.05');
+ assert.equal(JSON.parse(restored.portfolio.raw).providers.filter(p=>p.id==='c1-backup-provider').length,1);
+ checks.pass('A.05');
+  checks.start('A.06');
+ assert.equal(restored.portfolio.syncEnrollmentRequired,true);
+ checks.pass('A.06');
+  checks.start('A.07');
+ assert.equal(restored.sync,null);
+ checks.pass('A.07');
+  checks.start('A.08');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof,
    'Financial backup restore must preserve local locked identities and keys');
+ checks.pass('A.08');
  });
 
  await scenario('C1-RESTORE-FAULT-REPLY',async({a,b,original,proof})=>{
   await upgraded(a,b);
   await prepareLegacy(b,original.portfolio.raw);
   const beforeLegacy=await legacy(b);
-  await assert.rejects(()=>recovery(b,original.portfolio,{fault:true}));
-  assert.deepEqual(await state(b),original,'Injected put failure must leave persisted state unchanged');
-  assert.deepEqual(await operation(b,'anchor-proof'),proof);
-  await assert.rejects(()=>recovery(b,original.portfolio,{lostResponse:true}),
+  checks.start('A.01');
+ await assert.rejects(()=>recovery(b,original.portfolio,{fault:true}));
+ checks.pass('A.01');
+  checks.start('A.02');
+ assert.deepEqual(await state(b),original,'Injected put failure must leave persisted state unchanged');
+ checks.pass('A.02');
+  checks.start('A.03');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof);
+ checks.pass('A.03');
+  checks.start('A.04');
+ await assert.rejects(()=>recovery(b,original.portfolio,{lostResponse:true}),
    /C1 injected reply loss/);
+ checks.pass('A.04');
   const committed=await state(a,2);
-  assert.equal(committed.portfolio.revision,original.portfolio.revision+1);
-  assert.equal(JSON.parse(committed.portfolio.raw).providers.filter(p=>p.id==='c1-backup-provider').length,1);
-  assert.equal(committed.portfolio.syncEnrollmentRequired,true);
-  assert.equal(committed.sync,null);
-  assert.deepEqual(await operation(b,'anchor-proof'),proof);
-  assert.deepEqual(await legacy(b),beforeLegacy,'Restore must not refresh a legacy portfolio mirror');
+  checks.start('A.05');
+ assert.equal(committed.portfolio.revision,original.portfolio.revision+1);
+ checks.pass('A.05');
+  checks.start('A.06');
+ assert.equal(JSON.parse(committed.portfolio.raw).providers.filter(p=>p.id==='c1-backup-provider').length,1);
+ checks.pass('A.06');
+  checks.start('A.07');
+ assert.equal(committed.portfolio.syncEnrollmentRequired,true);
+ checks.pass('A.07');
+  checks.start('A.08');
+ assert.equal(committed.sync,null);
+ checks.pass('A.08');
+  checks.start('A.09');
+ assert.deepEqual(await operation(b,'anchor-proof'),proof);
+ checks.pass('A.09');
+  checks.start('A.10');
+ assert.deepEqual(await legacy(b),beforeLegacy,'Restore must not refresh a legacy portfolio mirror');
+ checks.pass('A.10');
   // Reply loss is injected AFTER the API completed. No real process crash claim.
  });
  const require=createRequire(import.meta.url);
- const report={kind:'FLH04Version2CandidateProbe',version:1,node:process.version,
+ const report={kind:'FLH04Version2CandidateProbe',version:2,node:process.version,
   playwright:require('playwright/package.json').version,engine:browser.version(),
   cases:results,limitations:['test-only schema transition','no product v2 startup implementation',
    'not full writer closure','reply loss and quota are injections','not process crash or real quota',

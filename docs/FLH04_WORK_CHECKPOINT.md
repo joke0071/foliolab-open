@@ -1,3 +1,39 @@
+## C1_CORRECTION_PREPARED / NATIVE_NOT_RUN / PRODUCT_NOT_RELEASED · work-366da675bef5-20261113
+
+Jochen autorisiert nach erstem nativen C1-FAIL die begrenzte Korrekturvorbereitung.
+Nur Browseradapter unter src geändert: native Quellenprobe vor Legacyfallback/
+Normaloperation/Revert, v2 sicher blockiert, v1-Fachpfade/Originale erhalten.
+Kein produktiver v2-Cutover oder Krypto-/Autoritätscode.
+Automatische Intentnachläufe und direkte Locked-Einstiege eingeschlossen.
+Privater endlicher v1-Verbindungsumfang; gleicher bestehender Lock vor Probe,
+kein neuer freier Callback/Keyslotmechanismus, kein vollständiger Writerabschluss.
+Originaldownload/ausdrücklich gebundene bestehende Recovery erhalten;
+recoverFromBackup-Funktionskörper vollständig bytegleich.
+
+Diagnostik: alle38ursprünglichen Assertionausdrücke samt await/Reihenfolge erhalten,
+34Gruppen-Aufrufstellen synchron instrumentiert; stabileKennungen/Assertionzeilen,
+minimale synthetische Soll-/Istwerte/erlaubte Feldnamen, später NOT_REACHED.
+Keine Schlüssel/Credentials/vollständigenPortfolioinhalte/Fehlernachrichten/Stacks.
+Original browser-sync-outbox.mjs vollständig unverändert.
+
+[Gerichtete Fehlerzuordnung/Änderungen/Grenzen](FLH04_C1_CORRECTION_CANDIDATE_2026-11-13.md).
+[Lokaler Maschinenbeleg](release-evidence/flh04-c1-correction-local-2026-11-13.json).
+Node24.22.1: sechsSyntaxchecksExit0;21gezielteTestsPASS/0FAIL/0Skips,
+davon15Adaptertests mit ausdrücklich gedoppelten IDB-/Modell-/Atomicabhängigkeiten
+und6echteNode-Diagnostiktests. KEIN nativer Test/Finanzmodellvolltest daraus.
+Vorbereitungsbefunde/behobeneZwischenfehler im Beleg; keine nativeAusführung.
+
+Native Ausgangsmessung Run43485655271/Versuch1 bleibt FAILURE:
+4PASS,MARKERS/NO-REVERTFAIL; exaktealteFehlerassertion weiterhinUNKNOWN.
+Kein neuer Browser/Actionslauf/Retry/Branchtrigger/PR/Merge/Release/Deploy.
+Vorgeschlagene einmalige begrenzte Folgeausführung erst nach exakter
+Kontrollcommit-/Sourcebindung und eigener konkreter Freigabe.
+Alle A1/A2/format1/P/R/S/D/CAS/Raw-/Original-/Review-/Nativgates erhalten.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+Keine pauschale v2-/Writer-/Keyslot-/ABA-/Recoveryfreigabe.
+
+---
+
 ## C1_PREPARED_REVISION2 / LOCALHOST_GUARD_BEFORE_BROWSER / NATIVE_NOT_RUN
 
 C1-Localhost-/Port-/Pfadprüfung vor Browserstart und Originalbasisablauf ergänzt,

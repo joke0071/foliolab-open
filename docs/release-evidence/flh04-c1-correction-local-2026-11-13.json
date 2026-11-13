@@ -1,0 +1,103 @@
+{
+  "kind": "FLH04_C1_CORRECTION_LOCAL_VALIDATION",
+  "source_parent": "f73535847f26476da3ea100f0410f391496dafd7",
+  "source_tree": "511c047a067f1c04690378232d698cd204f495c0",
+  "native_status": "NOT_RUN",
+  "original_native_run": {
+    "id": 43485655271,
+    "attempt": 1,
+    "result": "FAILURE",
+    "original_zip_sha256": "8b830f6b2a1786032e148b12e6a6608d5050cd7f1a924f1687d2dd2a2a0fb3ec",
+    "manifest_reverified": 16,
+    "exact_failed_assertions": "UNKNOWN"
+  },
+  "node": "v24.22.1",
+  "commands": [
+    {
+      "command": "node --check <six code/test inputs>",
+      "exit": 0
+    },
+    {
+      "command": "node --test tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.test.mjs",
+      "exit": 0,
+      "tests": 21,
+      "pass": 21,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "test_scope": {
+    "adapter": 15,
+    "diagnostics": 6,
+    "adapter_dependencies": "IDB request events and all three imported modules doubled; original adapter body unchanged except import URLs/sourceURL in unit loader",
+    "native": false,
+    "full_model_regression": false
+  },
+  "original_assertions": {
+    "count": 38,
+    "expressions_order_and_await_exact": true,
+    "instrumented_call_sites": 34,
+    "baseline_harness_byte_unchanged": true,
+    "explicit_recover_function_byte_unchanged": true
+  },
+  "files": {
+    "src/browser-portfolio-storage.js": {
+      "gitblob_sha1": "ce56e74ff0519331b06e9833ab808e17a136613f",
+      "sha256": "f130505fcc3c4fd83f9a8984d0c136e8602d195260ebdb70de8df97738212162",
+      "bytes": 19589
+    },
+    "tests/flh04-version2-candidate-probes.mjs": {
+      "gitblob_sha1": "d87ab642d1ba409814af517c2b28ad50fd924b0c",
+      "sha256": "708b29eaf05191f5a35323865d88b39152d92832b11cac443aff6192f411bde7",
+      "bytes": 13495
+    },
+    "tests/flh04-c1-diagnostics.mjs": {
+      "gitblob_sha1": "1e1f5c3bbe66d911a312c246b98f08f11562c4af",
+      "sha256": "6009a62fd9a81d5e32fed44c50ff6575e5dac4d0f6413b346f8e66ff50214631",
+      "bytes": 3083
+    },
+    "tests/flh04-c1-source-guard.test.mjs": {
+      "gitblob_sha1": "33eeaabce0cebac36fc46592ce2c5bede68e6c26",
+      "sha256": "eb8b67dd9f0429af972d55af466fc36b310019bfb0a537bda5748716b82a1124",
+      "bytes": 10257
+    },
+    "tests/flh04-c1-diagnostics.test.mjs": {
+      "gitblob_sha1": "eb53397ca3d6d2aab127b53583408e8402719cc8",
+      "sha256": "4f58c2fc14f7ab8f8b22a70ee4f71b0c980cf796a801ec1ce0ac7f68fb072e6b",
+      "bytes": 2478
+    },
+    "tests/fixtures/c1-storage-dependencies.mjs": {
+      "gitblob_sha1": "02c53fa3c41ff35785021757ceb43eb834dc4b60",
+      "sha256": "ad115fa77a592d0ac2fd975d6a131d07babc42cf3f14bed4c50526aa34c60bd8",
+      "bytes": 2549
+    }
+  },
+  "test_log": "✔ stable assertion ID, bounded expected/actual, and later NOT_REACHED (5.346484ms)\n✔ portfolio, keys, credentials, error messages and unknown field names never serialized (2.842287ms)\n✔ operand failure is attached to current assertion; no invented expected/actual (0.508761ms)\n✔ operation failure between assertions leaves future assertions NOT_REACHED (0.492127ms)\n✔ invalid or repeated checks fail instead of fabricating PASS (0.835974ms)\n✔ completion requires all planned assertions; snapshots cannot change tracker state (0.661366ms)\n✔ stub-reported v2 blocks every normal/legacy/revert entry before writes, including stale handles (11.178353ms)\n✔ v2 automatic matching-intent resume and damaged/absent markers stay untouched (1.019926ms)\n✔ unknown native version and missing records store block before legacy use (0.794633ms)\n✔ unavailable IndexedDB preserves active and empty startup regression gates (1.446355ms)\n✔ failed or blocked source probe never falls back; late success closes (1.306519ms)\n✔ missing active IDB aborts probe and does not silently recreate (1.511011ms)\n✔ v1 legacy read/save retained; probe connection held until local operation finishes (1.564219ms)\n✔ v1 IDB startup reuses inspected handle, avoiding a queued second open (1.017061ms)\n✔ pending versionchange waits through v1 revert cleanup, then guard closes (1.620812ms)\n✔ forced close after read blocks credential retirement and writes (1.059705ms)\n✔ new empty installation still uses existing explicit v1 creation, no local mirror (1.399456ms)\n✔ original download reads actual v2 through fresh probe; missing source never created (1.513595ms)\n✔ existing explicit fixture-bound recovery CAS remains, with no legacy mirror (0.769617ms)\n✔ one local lock is acquired before source inspection, also for direct locked entry (2.63488ms)\n✔ v1 exact matching automatic revert intent still resumes without replacing original bytes (0.652744ms)\nℹ tests 21\nℹ suites 0\nℹ pass 21\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 289.300248\n",
+  "preparation_findings": [
+    "Inline checks initially needed braces; corrected before tests/freeze",
+    "await rejects preservation corrected before tests",
+    "Probe-handle reuse and uniform lock-before-probe order corrected during review",
+    "Intermediate 18/19: new recovery fixture lacked required existing mode; fixed fixture, not product gate; final21/21"
+  ],
+  "no_browser_or_actions_or_retry": true,
+  "backup_metadata_only": {
+    "Root": {
+      "version": 155,
+      "bytes": 406425600
+    },
+    "FAIL": {
+      "version": 0,
+      "bytes": 12748800
+    },
+    "MainOriginal": {
+      "version": 0,
+      "bytes": 212408320
+    },
+    "Diagnosis": {
+      "version": 0,
+      "bytes": 2181120
+    },
+    "private_transfer": false
+  },
+  "gates": "FLH04 NOT_DONE; Outbox INTERN_UNQUALIFIZIERT; full writer/worker/asset/keyslot/ABA/native recovery/crypto review/active sync remain open"
+}

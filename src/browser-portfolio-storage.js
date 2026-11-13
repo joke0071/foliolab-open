@@ -5,7 +5,7 @@ import {portableSettings} from './complete-backup.js';
  * Encrypted complete backups may optionally include user-approved credentials.
  */
 import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData,retireLegacyProviderCredentials} from './model.js';
-import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials,readPortfolioSyncRecord,adoptPortfolioRecord} from './atomic-storage.js';
+import {PORTFOLIO_DB,openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials,readPortfolioSyncRecord,adoptPortfolioRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
 export const REVERT_INTENT_KEY='foliolab-open-idb-revert-intent';
@@ -27,6 +27,37 @@ function restored(record){
  m.settings=portableSettings(allowed);
  return m;
 }
+
+// Read the actual native version without creating/upgrading a missing database.
+// No marker, controller mode or caller-supplied handle grants v2 write rights.
+function inspectPortfolioSource(factory=globalThis.indexedDB){
+ if(!factory)return Promise.reject(Error('IndexedDB ist in diesem Browser nicht verfügbar.'));
+ return new Promise((resolve,reject)=>{
+  const request=factory.open(PORTFOLIO_DB); // deliberately no requested version
+  let missing=false,blocked=false;
+  request.onupgradeneeded=event=>{
+   missing=event.oldVersion===0;
+   request.transaction.abort(); // also abort every unexpected upgrade
+  };
+  request.onblocked=()=>{
+   blocked=true;
+   reject(Error('IndexedDB-Quellenprüfung durch einen anderen Tab blockiert. Keine lokale Übernahme.'));
+  };
+  request.onerror=()=>{
+   if(!blocked&&missing&&request.error?.name==='AbortError')resolve(null);
+   else reject(request.error||Error('IndexedDB-Quelle konnte nicht sicher geprüft werden.'));
+  };
+  request.onsuccess=()=>{
+   const db=request.result;
+   if(blocked){db.close();return;}
+   // The private finite operation retains this connection until its finally.
+   // A concurrent version upgrade must wait; no IDB transaction is kept alive.
+   db.onversionchange=()=>{};
+   resolve(db);
+  };
+ });
+}
+
 export class PortfolioStorage {
  constructor(storage=globalThis.localStorage){
   this.storage=storage;this.mode='local';this.db=null;this.revision=null;
@@ -35,14 +66,51 @@ export class PortfolioStorage {
   try{this.legacyRaw=storage.getItem(STORE_KEY);}catch{this.legacyRaw=undefined;}
  }
  get isIndexedDB(){return this.mode==='idb';}
+ async #withV1Source(action){
+  return this.withLocalLock(()=>this.#withV1SourceLocked(action));
+ }
+ async #withV1SourceLocked(action){
+  let db;
+  try{
+   db=await inspectPortfolioSource();
+   if(db&&(db.version!==1||!db.objectStoreNames.contains('records')))
+    throw Error('IndexedDB-Linie geschützt oder unbekannt. Keine lokale Übernahme oder Rückmigration; Original sichern und ausdrücklich wiederherstellen.');
+   if(!db&&(this.isIndexedDB||this.storage.getItem(MODE_KEY)===MODE_VALUE))
+    throw Error('Aktive IndexedDB-Linie fehlt. Originaldaten erhalten und ausdrücklich wiederherstellen.');
+  }catch(error){this.mode='idb';db?.close();throw error;}
+  let failed=false,changing=false;
+  const hold=connection=>{
+   db=connection;
+   db.onversionchange=()=>{changing=true;};
+   db.onclose=()=>{failed=true;};
+   return db;
+  };
+  if(db)hold(db);
+  const source={db,hold,check:()=>{
+   if(failed)throw Error('IndexedDB-Quellenverbindung verloren. Keine lokale Übernahme.');
+  }};
+  try{return await action(source);}
+  finally{
+   if(db){
+    if(this.db===db&&!changing&&!failed)db.onversionchange=()=>db.close();
+    else{if(this.db===db)this.db=null;db.close();}
+   }
+  }
+ }
+
  async initialize(){
+  const mode=this.storage.getItem(MODE_KEY);
+  if(mode!==null&&mode!==MODE_VALUE)throw Error('Unbekannter Speichermodus. Keine Daten automatisch übernommen.');
+  return this.#withV1Source(source=>this.#initializeV1(source));
+ }
+ async #initializeV1(source){
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE){
    if(this.storage.getItem(MODE_KEY)!==null)throw Error('Unbekannter Speichermodus. Keine Daten automatisch übernommen.');
-   if(this.storage.getItem(STORE_KEY)===null)return this.initializeNew();
-   return this.withLocalLock(()=>{retireLegacyProviderCredentials(this.storage);const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;});
+   if(this.storage.getItem(STORE_KEY)===null)return this.#initializeNewV1(source);
+   return (()=>{source.check();retireLegacyProviderCredentials(this.storage);source.check();const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;})();
   }
   this.mode='idb'; // marker decides canonical store, even if opening IndexedDB fails
-  this.db=await openPortfolioDB(); // never fall back to stale localStorage on error
+  this.db=source.db??source.hold(await openPortfolioDB()); // never fall back to stale localStorage on error
   const record=await readPortfolioRecord(this.db); // fail closed
   if(!record)throw Error('Aktiver IndexedDB-Speicher nicht gefunden. Bitte eine Sicherung wiederherstellen.');
   this.revision=record.revision;
@@ -58,29 +126,33 @@ export class PortfolioStorage {
      const raw=this.storage.getItem(STORE_KEY);
      if(typeof raw!=='string'||localFingerprint(raw)!==intent.fingerprint)
       throw Error('Die lokale Kopie stimmt nicht mit der Rückmigration überein. Kein automatischer Wechsel.');
-     const copy=load(this.storage); // validate legacy bytes before switching
-     this.storage.removeItem(MODE_KEY);
-     try{this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
+     source.check();const copy=load(this.storage); // validate legacy bytes before switching
+     source.check();this.storage.removeItem(MODE_KEY);
+     try{source.check();this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
      this.db.close();this.db=null;this.mode='local';this.revision=null;
      this.legacyRaw=this.storage.getItem(STORE_KEY);
      return copy;
     }
    }
   }
+  source.check();
   const clean=await retirePortfolioCredentials(this.db,record.revision);
   this.revision=clean.revision;return restored(clean);
  }
  /** New installations never write a portfolio to localStorage. The marker is
   * last; an interrupted identical blank commit can be resumed, not overwritten. */
  async initializeNew(){
+  return this.#withV1Source(source=>this.#initializeNewV1(source));
+ }
+ async #initializeNewV1(source){
   this.mode='idb'; // unavailable/quota/marker failures must never permit local saves
-  return this.withLocalLock(async()=>{
+  return (async()=>{
    // Another tab may have initialized or created a legacy portfolio while waiting.
    const mode=this.storage.getItem(MODE_KEY);
-   if(mode===MODE_VALUE)return this.initialize();
+   if(mode===MODE_VALUE)return this.#initializeV1(source);
    if(mode!==null||this.storage.getItem(STORE_KEY)!==null)
     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
-   const db=await openPortfolioDB();
+   const db=source.db??source.hold(await openPortfolioDB());
    try{
     const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=portableSettings(model.settings);
     const {portfolio:existing,sync}=await readPortfolioSyncRecord(db);
@@ -90,27 +162,34 @@ export class PortfolioStorage {
      if(existing.raw!==raw||JSON.stringify(existing.settings)!==JSON.stringify(settings))
       throw Error('IndexedDB enthält einen unbestätigten Datenstand. Keine automatische Überschreibung.');
     }
-    record=await adoptPortfolioRecord(db,{expectedPortfolio:existing,raw,settings});
+    source.check();record=await adoptPortfolioRecord(db,{expectedPortfolio:existing,raw,settings});
     const check=await readPortfolioRecord(db);
     if(check?.revision!==record.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))
      throw Error('IndexedDB konnte nicht vollständig überprüft werden.');
     if(this.storage.getItem(MODE_KEY)!==null||this.storage.getItem(STORE_KEY)!==null)
      throw Error('Speichermodus wurde geändert. Bitte neu laden.');
-    this.storage.setItem(MODE_KEY,MODE_VALUE);
+    source.check();this.storage.setItem(MODE_KEY,MODE_VALUE);
     this.db=db;this.revision=check.revision;
     return restored(check);
    }catch(error){db.close();throw error;}
-  });
+  })();
  }
  async reload(){
-  if(!this.isIndexedDB)return this.withLocalLock(()=>{retireLegacyProviderCredentials(this.storage);const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;});
+  return this.#withV1Source(source=>this.#reloadV1(source));
+ }
+ async #reloadV1(source){
+  if(!this.isIndexedDB)return (()=>{source.check();retireLegacyProviderCredentials(this.storage);source.check();const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;})();
   const current=await readPortfolioRecord(this.db);
   if(!current)throw Error('Der aktive IndexedDB-Datensatz fehlt.');
+  source.check();
   const clean=await retirePortfolioCredentials(this.db,current.revision);this.revision=clean.revision;
   return restored(clean);
  }
  /** Read-only freshness check; never adopts a newer revision for stale writes. */
  async assertCurrent(){
+  return this.#withV1Source(source=>this.#assertCurrentV1(source));
+ }
+ async #assertCurrentV1(source){
   const mode=this.storage.getItem(MODE_KEY);
   if(this.isIndexedDB){
    if(mode!==MODE_VALUE||!this.db)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
@@ -121,20 +200,24 @@ export class PortfolioStorage {
   }
  }
  async save(model,{intent='edit'}={}){
+  return this.#withV1Source(source=>this.#saveV1(source,model,{intent}));
+ }
+ async #saveV1(source,model,{intent='edit'}={}){
   if(intent!=='edit'&&intent!=='restore')throw new TypeError('Unbekannter Speichergrund.');
   if(!this.isIndexedDB){
    const draft=clone(model);
-   return this.withLocalLock(()=>{
+   return (()=>{
     if(this.storage.getItem(MODE_KEY)===MODE_VALUE)throw Error('Speichermodus wurde in einem anderen Tab geändert. Bitte neu laden.');
     if(this.legacyRaw===undefined||this.storage.getItem(STORE_KEY)!==this.legacyRaw)
      throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte Daten neu laden.');
-    persist(draft,this.storage);
+    source.check();persist(draft,this.storage);
     this.legacyRaw=this.storage.getItem(STORE_KEY);
-   });
+   })();
   }
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
   const draft=clone(model);
+  source.check();
   const current=await commitPortfolioRecord(this.db,{
    expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings,intent
   });
@@ -145,14 +228,17 @@ export class PortfolioStorage {
   if(typeof window!=='undefined')throw Error('Sicheres Speichern benötigt Web Locks. Bitte einen aktuellen Browser verwenden.');
   return action(); // synchronous in-memory adapters in Node tests
  }
- async migrate(model){return this.withLocalLock(()=>this.migrateLocked(model));}
+ async migrate(model){return this.migrateLocked(model);}
  async migrateLocked(model){
+  return this.#withV1Source(source=>this.#migrateLockedV1(source,model));
+ }
+ async #migrateLockedV1(source,model){
   if(this.isIndexedDB)throw Error('IndexedDB ist bereits aktiv.');
   const original=this.storage.getItem(STORE_KEY);
   if(this.legacyRaw!==undefined&&original!==this.legacyRaw)
    throw Error('Das lokale Portfolio wurde in einem anderen Tab geändert. Bitte neu laden und die Migration erneut starten.');
   if(original!==null)safeImport(JSON.parse(original)); // reject corrupt source without rebuilding ID comparisons
-  const db=await openPortfolioDB();
+  const db=source.db??source.hold(await openPortfolioDB());
   try{
    const {portfolio:existing,sync}=await readPortfolioSyncRecord(db);
    if(sync!==null&&!existing?.deleted)throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
@@ -161,6 +247,7 @@ export class PortfolioStorage {
    // byte-identical. The atomic cutover checks the full record and outbox.
    if(existing&&!existing.deleted&&(existing.raw!==portable||JSON.stringify(existing.settings)!==JSON.stringify(preferences)))
     throw Error('IndexedDB enthält einen abweichenden Datenstand. Automatische Überschreibung verweigert.');
+   source.check();
    const record=await adoptPortfolioRecord(db,{expectedPortfolio:existing,raw:portable,settings:preferences,allowTombstone:true});
    const check=await readPortfolioRecord(db);
    if(check?.revision!==record.revision||check.raw!==portable||JSON.stringify(check.settings)!==JSON.stringify(preferences))
@@ -168,7 +255,7 @@ export class PortfolioStorage {
    if(this.storage.getItem(STORE_KEY)!==original)
     throw Error('Das lokale Portfolio wurde während der Migration geändert. Wechsel abgebrochen; Originaldaten bleiben erhalten.');
    // Marker is the final cutover. A failed marker write leaves legacy canonical.
-   this.storage.setItem(MODE_KEY,MODE_VALUE);
+   source.check();this.storage.setItem(MODE_KEY,MODE_VALUE);
    this.db=db;this.revision=record.revision;this.mode='idb';
   }catch(error){db.close();throw error;}
  }
@@ -176,8 +263,20 @@ export class PortfolioStorage {
   if(!this.isIndexedDB)throw Error('IndexedDB ist nicht geöffnet.');
   // Failed new-install verification may have closed the connection. Original
   // records must still be downloadable for the existing explicit recovery UI.
-  if(!this.db)this.db=await openPortfolioDB();
-  return readUnverifiedRecord(this.db);
+  const db=await inspectPortfolioSource();
+  if(!db)throw Error('Aktive IndexedDB-Linie fehlt. Keine Neuanlage für den Originaldownload.');
+  let changing=false,failed=false;
+  db.onversionchange=()=>{changing=true;};db.onclose=()=>{failed=true;};
+  try{
+   if(![1,2].includes(db.version)||!db.objectStoreNames.contains('records'))
+    throw Error('Unbekannte IndexedDB-Linie. Originalzugriff sicher blockiert.');
+   const original=await readUnverifiedRecord(db);
+   if(failed)throw Error('IndexedDB-Originalverbindung verloren. Keine Wiederherstellung freigegeben.');
+   if(changing){db.close();return original;}
+   if(this.db!==db)this.db?.close();
+   db.onversionchange=()=>db.close();this.db=db;
+   return original; // retain existing explicit recovery access, never auto-restore
+  }catch(error){db.close();throw error;}
  }
  async recoverFromBackup(model,expected){
   return this.withLocalLock(async()=>{
@@ -201,55 +300,65 @@ export class PortfolioStorage {
    return recovered;
   });
  }
- async removeAll(){return this.withLocalLock(()=>this.removeAllLocked());}
+ async removeAll(){return this.removeAllLocked();}
  async removeAllLocked(){
+  return this.#withV1Source(source=>this.#removeAllLockedV1(source));
+ }
+ async #removeAllLockedV1(source){
   if(this.isIndexedDB){
    // A failed older rollback may have left a recovery intent. Never allow an
    // intentional delete-all tombstone to accidentally match that old intent.
-   if(this.storage.getItem(REVERT_INTENT_KEY)!==null)
-    this.storage.removeItem(REVERT_INTENT_KEY);
+   if(this.storage.getItem(REVERT_INTENT_KEY)!==null){
+    source.check();this.storage.removeItem(REVERT_INTENT_KEY);
+   }
    if(this.storage.getItem(REVERT_INTENT_KEY)!==null)
     throw Error('Alter Rückwechsel-Marker konnte nicht entfernt werden. Löschung abgebrochen.');
+   source.check();
    const record=await commitPortfolioRecord(this.db,{expectedRevision:this.revision,raw:null,settings:null});
    this.revision=record.revision;
   }else{
    if(this.storage.getItem(MODE_KEY)===MODE_VALUE||this.storage.getItem(STORE_KEY)!==this.legacyRaw)
     throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte neu laden.');
   }
-  purgeLocalAppData(this.storage,{preserveStorageMode:this.isIndexedDB});
+  source.check();purgeLocalAppData(this.storage,{preserveStorageMode:this.isIndexedDB});
   this.legacyRaw=null;
  }
- async revert(model){return this.withLocalLock(()=>this.revertLocked(model));}
+ async revert(model){return this.revertLocked(model);}
  async revertLocked(model){
+  return this.#withV1Source(source=>this.#revertLockedV1(source,model));
+ }
+ async #revertLockedV1(source,model){
   if(!this.isIndexedDB)throw Error('Es ist bereits lokale Speicherung aktiv.');
   const current=await readPortfolioRecord(this.db);
   if(current?.revision!==this.revision)throw Error('Ein anderer Tab hat den IndexedDB-Datensatz geändert. Zuerst neu laden.');
   const before=this.storage.getItem(STORE_KEY);
   const raw=JSON.stringify(clone(model));
   const priorIntent=this.storage.getItem(REVERT_INTENT_KEY);
-  this.storage.setItem(STORE_KEY,raw); // failure leaves IndexedDB canonical
+  source.check();this.storage.setItem(STORE_KEY,raw); // failure leaves IndexedDB canonical
   try{
-   this.storage.setItem(REVERT_INTENT_KEY,JSON.stringify({
+   source.check();this.storage.setItem(REVERT_INTENT_KEY,JSON.stringify({
     revision:current.revision+1,fingerprint:localFingerprint(raw)
    }));
+   source.check();
    const deleted=await commitPortfolioRecord(this.db,{expectedRevision:this.revision,raw:null,settings:null});
    this.revision=deleted.revision;
   }catch(error){
    // The IDB transaction did not commit, so keep it as the canonical source.
    try{
+    source.check();
     if(this.storage.getItem(STORE_KEY)===raw){
      if(before===null)this.storage.removeItem(STORE_KEY);
      else this.storage.setItem(STORE_KEY,before);
     }
-    if(priorIntent===null)this.storage.removeItem(REVERT_INTENT_KEY);
+    if(priorIntent===null){source.check();this.storage.removeItem(REVERT_INTENT_KEY);}
     else this.storage.setItem(REVERT_INTENT_KEY,priorIntent);
    }catch{} // never overwrite the original transaction error
    throw error;
   }
   // A crash here leaves MODE_KEY and the exact recovery intent in place. The
   // next startup can finish the switch safely if local bytes still match.
-  this.storage.removeItem(MODE_KEY);
-  try{this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
+  source.check();this.storage.removeItem(MODE_KEY);
+  try{source.check();this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
   this.mode='local';this.db.close();this.db=null;
   this.legacyRaw=this.storage.getItem(STORE_KEY);
  }
