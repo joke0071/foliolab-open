@@ -457,3 +457,32 @@ einschlägigenReviewabschluss weiterkeinWrap-/Signatur-/Aussteller-/Entsperrcode
 MainbefundgeparktbisneuerbegründeterHypothese/geänderterVoraussetzungundkonkretem
 reviewbarenKandidaten;neueAusführungsentscheidungdurchJochen,KEinblindRetry.
 Alleübrigeninternen/externenGeräte-/OAuth-/CI-/Releasegatesweiteroffen.
+
+### Manueller Cash-Managementablauf: tatsächlich geprüft
+
+Geschlossene v1-Managementaudit-/Original-/afterBooking-Allowlist für vorhandene
+manuelle EUR-Cash-Notiz/Korrektur/Rücknahme implementiert. Importiertev2-Remove-
+Audits bleibenreinundunverändert;keinegemischteoderallgemeineManagementfreigabe.
+Vorhandene validateJournalEntry/safeImport/Management-/Undo-Validatoren unverändert.
+Vollständige mehrstufigeEdit→Edit→Notes→Remove-Ketten überSnapshot/Restore weiter
+bedienbar;mehrereKonten/gebündelteRücknahme/monotoneSequenz/Archiv/UNKNOWN/
+großeDecimalwerteundKoexistenzgenerischerCSV-Auditsgeprüft. StaleaktuelleBuchung
+bleibtexaktdokumentiertundblockiertweiterFolgeänderungen;keineneueAutorität.
+FlüchtigeUndoReceiptsweiterkeinSnapshotinhalt;identischelokalePreimagesPflicht.
+
+Isoliert9PASS/0FAIL; finalgemeinsam123PASS/0FAIL/0SKIP/0CANCELLED/Exit0 aufNode24.22.1:
+91bestehendeSnapshotinklusiveCSV+9neueManagementSnapshot+8bestehendeCashRemoval+
+15bestehendeManagementChanges. Syntax2PASS. KeinebestehendenTestsgeändert.
+78ursprünglichePaket-/Quell-/Testeingabenblobgenau;77nachCodeunverändert,
+nurSnapshotmodulgeändert. KeineursprünglichenFehlläufeindiesemFolgeschnitt.
+[OriginaloutputsundEingaben](release-evidence/flh04-snapshot-management-local-2026-11-13.json).
+GezielteinterneVerifikationbestanden;keineVollabnahme/aktiveIntegration.
+
+OffeneAbschlussbeiträgebleibenkonkretwiezuvor: Hauptowner mussRaw-/Payload-/
+CryptoKey-CAS-VertraggeschlossenbearbeitenundnativeHarnessesinbelegbargeeigneter
+zulässigerUmgebungaustesten;JochenbestimmtunabhängigenqualifiziertenKryptoprüfer
+undggfZugang/BudgetfürdasbestehendePaket. MainbefundnurmitneuerHypothese/
+geänderterVoraussetzungundkonkretemreviewbarenKandidatenzurAusführungsentscheidung.
+KeineWrap-/Signatur-/Aussteller-/EntsperrimplementierungoderSelbstfreigabe.
+N-DRIVEBLOCKED_EXTERNALmitinternem/externalemRest,FLH04NOTDONE,
+OutboxINTERNUNQUALIFIZIERT. A1/A2/prepared-locked/alleBudgetsundGatesunverändert.

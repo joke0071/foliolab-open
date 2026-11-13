@@ -1,0 +1,390 @@
+{
+  "scope": "complete existing manual EUR cash notes/edit/remove snapshot provenance",
+  "owner": "work-f1798d3a9454-20261113",
+  "date": "2026-11-13",
+  "base": "ce5ab5967faaf997e336f46041074a8e9ee4ac02",
+  "precodeContract": "5351b54658061306fc616cc28e8ac6c9444bdf2a",
+  "node": "v24.22.1",
+  "final": {
+    "tests": 123,
+    "pass": 123,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "exit": 0,
+    "composition": {
+      "existingSnapshotIncludingCSV": 91,
+      "newManagementSnapshot": 9,
+      "existingCashRemoval": 8,
+      "existingManagementChanges": 15
+    },
+    "syntax": [
+      "src/sync-snapshot.js",
+      "tests/sync-snapshot-management.test.mjs"
+    ]
+  },
+  "inputs": [
+    {
+      "path": "package.json",
+      "sha": "76c6961ae4d56593a8f9721de12fc84823b45d88"
+    },
+    {
+      "path": "src/sync-snapshot.js",
+      "sha": "80daa77e3512a7283d7548a4aa3d93cf6b9b83c1"
+    },
+    {
+      "path": "src/model.js",
+      "sha": "3ab1397af6870f1b356f9696451170697eafbf36"
+    },
+    {
+      "path": "src/csv-import.js",
+      "sha": "6522fca91a5b58a1d9f468e7c499bab93153378f"
+    },
+    {
+      "path": "src/booking-management.js",
+      "sha": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5"
+    },
+    {
+      "path": "tests/sync-snapshot-v5-bitcoin.test.mjs",
+      "sha": "ce50a8058371f63be1aa96f99b333469dd1e96e4"
+    },
+    {
+      "path": "tests/import-cash-removal.test.mjs",
+      "sha": "b3614f0f1c973754bcdc6027670928232c5ee28b"
+    },
+    {
+      "path": "tests/sync-snapshot-gap-regressions.test.mjs",
+      "sha": "1f5943e754c19c997e761098ccd6be0321a1c167"
+    },
+    {
+      "path": "tests/sync-snapshot.test.mjs",
+      "sha": "8e3dab3a48323606d8e86d715340f35584e8c24b"
+    },
+    {
+      "path": "tests/sync-snapshot-history.test.mjs",
+      "sha": "a69cbc6466754dc65cff4b58d524df67060297b8"
+    },
+    {
+      "path": "tests/sync-snapshot-purchase-evidence.test.mjs",
+      "sha": "b8a955082135dacc50470c78345de684eb096812"
+    },
+    {
+      "path": "tests/sync-snapshot-price-history.test.mjs",
+      "sha": "5fe668b2797d219a90f21ebaa65a84776f4dce26"
+    },
+    {
+      "path": "src/import-identity.js",
+      "sha": "9c80c33266d3c769d0185e3e89cf182c192f1406"
+    },
+    {
+      "path": "src/transactions.js",
+      "sha": "306dfd8f06b41f4e6414ecbb248124fbfb726402"
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "sha": "332037a4d578c8128121f799165db3a749a82239"
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "sha": "d9b14aa5806089767d43e049df70bbb70507a5ae"
+    },
+    {
+      "path": "src/defi.js",
+      "sha": "12fbc404d61ce4412cf9120712ea2ed719da4405"
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "sha": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1"
+    },
+    {
+      "path": "src/sync-payload-integrity.js",
+      "sha": "99a91dd41d911f5df5b3ef9328a29de4352af57b"
+    },
+    {
+      "path": "src/refresh-frequency.js",
+      "sha": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3"
+    },
+    {
+      "path": "src/retired-providers.js",
+      "sha": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731"
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "sha": "fe27c60e3181596b2ec792081ede2d5861fb00e2"
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "sha": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107"
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "sha": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90"
+    },
+    {
+      "path": "src/cash-terms.js",
+      "sha": "e0bc7723f1da10ebfedeaebd89905749a3e24c77"
+    },
+    {
+      "path": "src/wallet-identity.js",
+      "sha": "7337ad57a531189676f747fdf6d1a925170f4004"
+    },
+    {
+      "path": "src/position-history.js",
+      "sha": "20afdf678e520b2b361d6c1c02a6604f5130659f"
+    },
+    {
+      "path": "src/assets.js",
+      "sha": "054ba656af6145f96bf93a566009ed40f45603cb"
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "sha": "edcbe5570a903271d07ddc637bd876071e85a40a"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "sha": "f87f593a4ec2be99f351037cec48316acb8db6a3"
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "sha": "ae451f421b8442a46f0fd97925f5f736d4b44fc3"
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "sha": "320637c48fc98ebaecc7c46b1a21266767c964e6"
+    },
+    {
+      "path": "tests/wallet-history-fixtures.mjs",
+      "sha": "1949b9138f70a094b7cd715a9eca4bfe87846adc"
+    },
+    {
+      "path": "tests/ledger-live-fixture.mjs",
+      "sha": "f2825a6a9b072ed5cc8787eec51c6ae8c3621b4c"
+    },
+    {
+      "path": "src/historical-csv.js",
+      "sha": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4"
+    },
+    {
+      "path": "src/decimal.js",
+      "sha": "7896c75407ff67763bc9c969ea203f6e5f1b529a"
+    },
+    {
+      "path": "src/fx-state.js",
+      "sha": "0c0239573d9306da2f7d66da21ad8537ce123783"
+    },
+    {
+      "path": "src/csv-records.js",
+      "sha": "a38aad028a30776022c6c8950a2699a6694962b4"
+    },
+    {
+      "path": "src/reference-listings.js",
+      "sha": "3ba091983e64a631ad187ebb302299380db49c02"
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "sha": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a"
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "sha": "c87b64284e074993fbdf5673ba1f4c5cf926f02e"
+    },
+    {
+      "path": "src/coin-identity.js",
+      "sha": "e7681a4b1cab7c41c950ea1b8999963148340f5f"
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "sha": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4"
+    },
+    {
+      "path": "src/quote-quality.js",
+      "sha": "3ec1f74b2c10caef09a400592db05a5db1dda9d6"
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "sha": "782cab38bb79daa0886c6ab66559f61792279dd1"
+    },
+    {
+      "path": "src/position-selection.js",
+      "sha": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2"
+    },
+    {
+      "path": "src/booking-history.js",
+      "sha": "77d23820cacdbe9a1efb1112eb609241e88c190d"
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "sha": "16214b0406a740200585f726e9c9b90cb6007dec"
+    },
+    {
+      "path": "src/ledger-live.js",
+      "sha": "d864f6d36d933e5a1919cce4d88990cd513f9093"
+    },
+    {
+      "path": "src/security-sources.js",
+      "sha": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d"
+    },
+    {
+      "path": "src/kraken-link-bridge.js",
+      "sha": "48d8b4594c0c33635bf93a88f51f64c95fe8e423"
+    },
+    {
+      "path": "src/flatex-net-reconciliation.js",
+      "sha": "2d39c199135dc9348271271c60b36876c4660936"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "sha": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5"
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "sha": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d"
+    },
+    {
+      "path": "src/flatex-native.js",
+      "sha": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2"
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "sha": "d52e116b9280147495316666289962d21988ba3c"
+    },
+    {
+      "path": "src/request-cache.js",
+      "sha": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89"
+    },
+    {
+      "path": "src/solana-history.js",
+      "sha": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1"
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "sha": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63"
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "sha": "16cab7de80658d72ef01f829e70ebfb75a41e6f8"
+    },
+    {
+      "path": "src/portfolio-edit-actions.js",
+      "sha": "3412841500a16abd99aa37e2603603e676d2ad94"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "sha": "1151f42b1315241805923b848a7a2efdf65528ac"
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "sha": "fdafc8f2f1a86d706a049c3b91545551cccf0af9"
+    },
+    {
+      "path": "src/marketstack.js",
+      "sha": "a686d3010a804db0d324c45324f7e5b9f5deafae"
+    },
+    {
+      "path": "src/link-explorer-evidence.js",
+      "sha": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b"
+    },
+    {
+      "path": "src/market.js",
+      "sha": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "sha": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2"
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "sha": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9"
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "sha": "0c6f714150b3d78e4e3086f275d63943d36b43ba"
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "sha": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a"
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "sha": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24"
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "sha": "4be2e9af21fd5d66c37938727a43d956292fd6bf"
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "sha": "b98c2e5966815cbe7673e2a789661f8a31e637bd"
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "sha": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5"
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "sha": "db6c208030f0d21c528cafaf47d4a51b22055e53"
+    },
+    {
+      "path": "tests/sync-snapshot-csv-cash.test.mjs",
+      "sha": "2b5d4cdb18bfd40bd027ec84c61c1774435f52d3"
+    },
+    {
+      "path": "tests/booking-management-changes.test.mjs",
+      "sha": "2174ad9bc16dbca685f427cf6344bad2baca696a"
+    },
+    {
+      "path": "src/booking-insights.js",
+      "sha": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36"
+    }
+  ],
+  "unchangedOriginalInputs": 77,
+  "changedOriginalInputs": [
+    "src/sync-snapshot.js"
+  ],
+  "originalOutputs": [
+    {
+      "file": "management-first.tap",
+      "text": "✔ all six manual cash types retain complete notes/edit/remove originals, afterbookings and cash flows (268.330048ms)\n✔ edit then notes then remove continues through repeated snapshot/restore without cutting historical lineage (43.579333ms)\n✔ multi-account batch removal preserves separate original identities and sequence for later transactions (24.845453ms)\n✔ v4 archive and UNKNOWN/large-decimal position coexist with manual cash audit history (8.784504ms)\n✔ pure generic CSV removal and manual audit families coexist while repeat-import protection remains (29.930421ms)\n✔ stale current booking and documentary afterbookings stay distinct and never grant a follow-up edit (6.04905ms)\n✔ extensions at every original/after/audit level reject whole snapshot without source mutation (34.325797ms)\n✔ wrong scope, audit forms, original journals and artificial financial audit postings reject (87.007184ms)\n✔ manual removal requires null afterbookings and does not admit mixed imported originals (23.676423ms)\nℹ tests 9\nℹ suites 0\nℹ pass 9\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1705.523867\n",
+      "sha256": "ffa6588275441fe7b9ef6d3156f85e02ba240dd697ec9078c1e62a1dc29a4c87"
+    },
+    {
+      "file": "management-final.tap",
+      "text": "✔ EUR deposit business removal restores 100 exactly, retains opening and auditable original, undo exact (605.233624ms)\n✔ cash correction reuses engine with exact independent 100+7.25 result and capital flow (147.039427ms)\n✔ all six cash kinds roll back independently; income/fee/tax overview matches no-booking reference (278.004631ms)\n✔ notes preserve all financial records and reject extra economics, import identity and wallet references (17.677959ms)\n✔ same-named separate accounts and multi-remove are atomic, not cascade (158.05818ms)\n✔ negative chronology, checkpoints, later historical edit, stale ID/preimage, opaque references block unchanged (28.187193ms)\n✔ mismatched cash provenance and FX do not become mutable despite balanced journal (16.669051ms)\n✔ restore rejects audit records carrying financial postings or broken evidence (182.245108ms)\n✔ corrected fee/tax preview names actual before/after charges and metadata does not alter returns input (153.735946ms)\n✔ non-unit cash quote cannot silently change economic impact (1.40427ms)\n✔ later ordinary transactions keep sequence monotonic after removal and retained audit (5.684042ms)\n✔ oversized and excessively nested unknown reference evidence fails closed without mutation (454.203918ms)\n✔ known audit trails permit repeated proven corrections and notes without treating them as foreign dependencies (76.407441ms)\n✔ unknown references and unknown booking fields block even metadata, without writes (27.89196ms)\n✔ mismatched or ambiguous audit chain never permits a later correction (8.075343ms)\n✔ all six exact imported cash events reverse, retain source audit, restore and undo byte-for-byte (1461.898506ms)\n✔ identity, ownership, original payload and journal changes fail closed without touching model (110.074558ms)\n✔ later dependent spending, snapshots, references, linked transfers, FX and coupled costs remain blocked (24.456243ms)\n✔ stale preimage, absent consent and a later mutation prevent apply or undo (46.629295ms)\n✔ audit version cannot be downgraded or used for imported edits; source evidence survives backup validation (3.484248ms)\n✔ changed source payload and renamed file cannot bypass deleted external identity (2.925914ms)\n✔ retained imported journal and cash-flow amounts cannot be tampered on restore (5.478217ms)\n✔ reimport protection also marks changed namespace and ambiguous same-day source for review (9.110204ms)\n✔ all six generic cash events preserve exact complete provenance and unchanged reimport behavior (720.254916ms)\n✔ all six durable removal audits retain original booking, journal, flows and deleted-source protection (120.487136ms)\n✔ local undo retains its exact preimage guard; snapshot transport does not port transient undo authority (15.566574ms)\n✔ batched removal retains all originals and separate active imports without dropping audit lineage (17.201997ms)\n✔ v4 archive and current UNKNOWN/18 decimal positions coexist without credentials (9.203761ms)\n✔ complete UH02-v5 and generic cash active/removal chains coexist losslessly (115.102302ms)\n✔ generic source and nested JSON extension fields cannot tunnel credentials (62.457315ms)\n✔ noncanonical JSON, types, Unicode, duplicate keys and missing required source fields fail closed (27.303799ms)\n✔ source payload, fingerprint, ownership and journal discrepancies reject without repairs (29.521047ms)\n✔ every retained audit level is closed and incomplete audit/flow/ownership chains reject (118.487086ms)\n✔ manual/mixed management and generic trades remain unsupported, including nested source changes (30.325262ms)\n✔ B regression: full supported journal/snapshot keeps independent amount11 and all source IDs (481.662614ms)\n✔ B regression: unknown root credentials and foreign portfolio identity reject the whole payload (387.660948ms)\n✔ B regression: booking, journal and posting credentials never survive the closed gate (43.936149ms)\n✔ B regression: historical credential objects reject in revision, quote time and account value (24.59658ms)\n✔ B regression: decimal normalization is rejected without changing source bytes or balances (19.959142ms)\n✔ B regression: complete configuration and wallet resume data are blocked, never dropped or rewritten (21.037272ms)\n✔ B regression: oversized historic metadata cannot use importer row limits to bypass byte limits (165.490299ms)\n✔ B budget regression: multibyte bytes, not just character count, bound received plaintext (111.852152ms)\n✔ B budget regression: deeply nested and excessive-node extensions fail before financial projection (88.89222ms)\n✔ accepted BTC/ETH/SOL facts roundtrip exactly with finance, journal, UNKNOWN, null and provenance (84.292924ms)\n✔ accepted partial/unknown facts preserve null effects, missing opening and missing quotes (429.676135ms)\n✔ v4 archive and accepted history coexist without changing references (29.558308ms)\n✔ unknown fields reject at every accepted-history nesting level, including credentials and object payloads (102.418211ms)\n✔ normalizing sources, status, timestamps, missing fields or quote decimals rejects instead of repairing (147.869565ms)\n✔ duplicate facts/sessions and reordered events cannot be silently deduped or sorted (39.299902ms)\n✔ forged event IDs, orphan streams and false quote bindings reject through existing validators (160.958425ms)\n✔ canonical resume metadata remains unsupported in full; no portable-history projection drops it (13.092204ms)\n✔ v5/import/evidence and malformed price payloads reject even when history is accepted (101.478767ms)\n✔ history retains existing session/event/byte/node/depth limits with no truncation (295.660982ms)\n✔ all six manual cash types retain complete notes/edit/remove originals, afterbookings and cash flows (650.930881ms)\n✔ edit then notes then remove continues through repeated snapshot/restore without cutting historical lineage (46.670451ms)\n✔ multi-account batch removal preserves separate original identities and sequence for later transactions (18.833773ms)\n✔ v4 archive and UNKNOWN/large-decimal position coexist with manual cash audit history (8.132392ms)\n✔ pure generic CSV removal and manual audit families coexist while repeat-import protection remains (28.801556ms)\n✔ stale current booking and documentary afterbookings stay distinct and never grant a follow-up edit (16.882342ms)\n✔ extensions at every original/after/audit level reject whole snapshot without source mutation (32.055103ms)\n✔ wrong scope, audit forms, original journals and artificial financial audit postings reject (108.12972ms)\n✔ manual removal requires null afterbookings and does not admit mixed imported originals (15.874446ms)\n✔ canonical CSV, FX and retained crypto histories roundtrip together without changing finance (135.151717ms)\n✔ all existing confirmed providers and v4 archives retain provenance and price type (372.930011ms)\n✔ credential-bearing settings excluded while every history value and map order stay intact (19.071734ms)\n✔ unknown keys and object-valued secrets reject at each newly admitted level (78.747302ms)\n✔ orphan and dangerous history map identities block the whole portfolio (22.999145ms)\n✔ retained history cannot change confirmed position, provider, retention, currency or price type (55.758342ms)\n✔ invalid, duplicate or reversed price points never normalize silently (36.336772ms)\n✔ FX source, date, duplicate, reference window and rate validation remain mandatory (50.899071ms)\n✔ known fields needing defaults, uppercase or projection reject lossily (63.224745ms)\n✔ limits reject whole histories without truncation or publishing other valid histories (299.975068ms)\n✔ unsupported evidence, v5 and pending state still block otherwise supported histories (13.241875ms)\n✔ N:M split receipt provenance roundtrips with exact finance, journal, FX and history (884.188881ms)\n✔ unlinked receipts, absent evidence, empty evidence and optional empty ledger retain shape (751.693865ms)\n✔ link unlink relink chronology and receipt/event order stay exact in v4 (15.561738ms)\n✔ stale session wallet or fingerprints remain conflicts, never new authority (173.940023ms)\n✔ settings excluded and all unknown fields reject at every purchase level (129.335449ms)\n✔ known purchase fields reject wrong types and arbitrary config objects (50.059228ms)\n✔ corrupt receipts, arithmetic, IDs and duplicate receipts fail the existing validator (47.536248ms)\n✔ orphan receipt, invalid decisions, duplicated active events and invalid unlink fail (99.458062ms)\n✔ validator projections timestamps decimals and missing receipt IDs cannot normalize silently (62.207111ms)\n✔ populated bitcoin ledger stays v5-gated and is never silently pruned or downgraded (33.05242ms)\n✔ oversized decision references and malformed ledger block the entire portfolio (40.432943ms)\n✔ other evidence, pending history and v5 still reject supported purchase receipts (52.670931ms)\n✔ v5 complete N:1 chain preserves independent quantities, fees, financing and exact provenance (70.317193ms)\n✔ v5 purchase without optional Ledger observations is a complete economic chain (18.769915ms)\n✔ N:M source facts retain every own vout and fingerprint, without double quantity effects (43.530353ms)\n✔ Ledger first, Bittr first and combined imports roundtrip with one unchanged economic effect (61.781502ms)\n✔ permanent undo tombstone retains documentary Ledger and receipts, prevents reimport (17.927152ms)\n✔ archive coexists with v5 without format downgrade (12.933611ms)\n✔ missing optional chain history stays missing; snapshot confers no new import permission (11.277748ms)\n✔ stale documentary event fingerprints survive exactly and retain existing preview conflict (16.84779ms)\n✔ complete chain coexists with UNKNOWN FX, 18 decimals, price history and no local settings (15.937349ms)\n✔ internal undefined wallet projection keys do not reject canonical persisted JSON; actual defaults do (34.111406ms)\n✔ empty v5 and isolated populated Ledger remain wholly unsupported (9.133977ms)\n✔ downgrades and future versions reject full chain without partial output (27.537412ms)\n✔ unknown provenance keys reject at import source, payload, facts and event levels (40.352707ms)\n✔ opaque ownership string cannot tunnel extension keys or altered journal facts (22.221614ms)\n✔ JSON encoded provenance rejects duplicate keys, alternate encoding, malformed Unicode and wrong types (69.120939ms)\n✔ missing and contradictory provenance/Receipt/Wallet/financing records reject using existing validators (90.554663ms)\n✔ unknown keys across complete chain and unrelated proof families remain rejected (80.42368ms)\n✔ credential-bearing local settings are wholly excluded; source bytes remain unchanged (35.902256ms)\n✔ exact 18-decimal quantity, UNKNOWN FX/null and financial IDs survive without repair (7.999184ms)\n✔ simple journal retains balanced postings, exact amounts, ordering and links (15.220341ms)\n✔ empty history is retained; malformed accepted sessions and any pending history reject (30.062905ms)\n✔ v4 booking archive is preserved with its reference identity (11.442502ms)\n✔ history snapshot exact totals, revisions and quote provenance remain unchanged (22.073506ms)\n✔ unknown top-level payload/configuration/vault/extensions are rejected, not dropped (10.676101ms)\n✔ unknown nested keys cannot hide credentials in allowed financial entities (10.757301ms)\n✔ unrecognized wallet and snapshot nested extensions fail closed (6.087065ms)\n✔ duplicate provider/position and orphan account identity reject via existing financial validator (21.468223ms)\n✔ balanced but orphaned journal posting and duplicate posting IDs reject (10.88563ms)\n✔ unbalanced journal cannot pass an allowlisted shape (2.02829ms)\n✔ unknown fee stays null in allowed booking; no zero default is inserted (2.263398ms)\n✔ opaque import source/proof branches block instead of stripping their identities (3.1606ms)\n✔ malformed price and unsupported evidence/audit branches fail without partial output (3.84594ms)\n✔ normalization, trimmed IDs/labels and numeric FX repair are rejected, never silently emitted (6.493334ms)\n✔ received settings and extra envelope keys are forbidden (5.65705ms)\n✔ duplicate keys, extra whitespace and alternate JSON numeric spellings are rejected (4.646811ms)\n✔ malformed Unicode, malformed JSON and unsupported versions reject (6.263475ms)\n✔ invalid types and over-limit text reject before JSON processing (0.788944ms)\n✔ escaped lone surrogates inside financial strings never reach emitted data (5.001744ms)\nℹ tests 123\nℹ suites 0\nℹ pass 123\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 9777.088123\n",
+      "sha256": "e2fbd2859490f2df78fcca3103ef83dd436a0c21d55be476643b50c33139bc69"
+    }
+  ],
+  "firstFindings": [],
+  "reuse": "Previously qualified scopes retained; common snapshot schema and existing management/cash-removal tests rerun because affected. No historical test counts added.",
+  "scopeLimits": "only six manual EUR cash event types on existing positions, v1 notes/edit/remove and complete originals/afterBook­ings; pure generic CSV v2 remove remains separate; no transient Undo receipt transport",
+  "limits": {
+    "snapshotVersion": 1,
+    "utf8": 3500000,
+    "nodes": 100000,
+    "depth": 16
+  },
+  "crypto": {
+    "candidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+    "package": "fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b",
+    "review": "REVIEW_READY / EXTERNAL_REVIEW_PENDING",
+    "impact": "downstream snapshot coverage; no cryptographic authority or byte contract code changed"
+  },
+  "remainingIntegration": "raw/payload/revision/CryptoKey-CAS binding remains unresolved; Outbox applyAuthorized=false and Storage.confirm locked; no integration in this scope",
+  "notProven": [
+    "Browser",
+    "IDB",
+    "CryptoKey persistence",
+    "Reopen",
+    "Multitab",
+    "real crash",
+    "real quota",
+    "Recovery",
+    "CI22",
+    "Wallet20",
+    "Device",
+    "PR",
+    "Main",
+    "Production",
+    "External acceptance"
+  ],
+  "gates": "FLH04 NOT DONE; Outbox INTERN UNQUALIFIZIERT; N-DRIVE BLOCKED_EXTERNAL with internal and external remainder; A1/A2/prepared-locked unchanged"
+}

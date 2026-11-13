@@ -1,3 +1,29 @@
+## MANUAL_CASH_MANAGEMENT_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-f1798d3a9454-20261113
+
+NeuerFortschritt: vollständige kanonische manuelle EUR-Cash-Notiz/Korrektur/Rücknahme
+samtOriginalbooking/-journal/-flowsundafterBookingsverlustfreiallowlisted.
+MehrstufigeÄnderungskettenüberSnapshot/Restore,gebündelteRücknahme,CSV-Koexistenz,
+Archiv/UNKNOWN,Stale-FolgeänderungssperreundstrikteslokalesUndogeprüft.
+KeineallgemeineManagement-/Importfreigabe;Fachvalidatorenunverändert.
+
+Final123PASS/0FAIL/0SKIP/0CANCELLED/Exit0,Node24.22.1,Syntax2PASS:
+91bestehendeSnapshotinklCSV+9neueManagementSnapshot+8CashRemoval+15ManagementChanges.
+78Originaleingabenblobgenau,77nachCodeunverändert;keinebestehendenTestsgeändert.
+Isoliert9/0,gemeinsam123/0;keineFehlläufe. [Originaloutputs](release-evidence/flh04-snapshot-management-local-2026-11-13.json).
+[Vorcodevertrag5351b546](https://github.com/joke0071/foliolab-open/blob/5351b54658061306fc616cc28e8ac6c9444bdf2a/docs/FLH04_SNAPSHOT_CONTRACT.md)
+und[aktuellerVertrag](FLH04_SNAPSHOT_CONTRACT.md)mitkonkretemRaw-/Payload-/CryptoKey-CAS-
+Integrationsrest,Zuständigkeit/Wiederaufnahmebedingung. BegrenzteImplementierung
+vollständig/gerichteteNodeprüfungbestanden;keineBrowser-/IDB-/CI-/Release-/Produktions-
+oderexterneAbnahme/aktiveIntegration. AlleSchutzgrenzenimvorigenKopfweitergültig.
+
+Prozessänderungen7e5139c8selektivunter285ed13489c0e64fd5196868d64592deed72b304
+übernommen,nurEffizienz-/Wochenplan,vollständigbyte-/blobgeprüft.Stabilitätsgrenze
+untere7ffd3264532a1f4d2b6bf09359543da48ff8ca5vollständigrückgelesen;keinCI/Chatwechsel.
+NächsterSchritt: nachSicherungamkonkretoffenenPortfolio-/Integrationsrestfortfahren;
+keinegleichartigeFeldfreigabeohnevollständigenBelegablaufundAbschlussbezug.
+
+---
+
 ## PRODUCT_WORK_STOPPED / GENERIC_CSV_CASH_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-f1798d3a9454-20261113
 
 Vollständiger enger generischer CSV-EUR-Cash-Belegumfang implementiert: sechs

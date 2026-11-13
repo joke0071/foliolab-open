@@ -42,7 +42,7 @@ const opening=object(fields('positionId quantityExact costBasisExact realizedPnL
 const flow=object(fields('id date amountEUR amountExactEUR'));
 const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
 const basicJournal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
-const journal=v=>basicJournal(v)||cashRemovalJournal(v);
+const journal=v=>basicJournal(v)||cashRemovalJournal(v)||manualCashAuditJournal(v);
 const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
 const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
 const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
@@ -125,6 +125,22 @@ const cashRemovalAudit=v=>v?.version===2&&v.action==='remove'&&Array.isArray(v.o
 const cashRemovalJournalFields=object({...fields('id date recordedAt sequence'),type:v=>v==='booking-management-audit',source:v=>v==='management-audit',
  postings:array(posting),managementAudit:cashRemovalAudit});
 const cashRemovalJournal=v=>v?.type==='booking-management-audit'&&v.source==='management-audit'&&cashRemovalAudit(v.managementAudit)&&cashRemovalJournalFields(v);
+// Existing manual EUR-cash notes/edit/remove history is a separate complete
+// evidence family. Do not broaden imported v2 removals into mixed/edit audits.
+const cashTypes=new Set(['deposit','withdraw','dividend','interest','fee','tax']);
+const manualCashBooking=v=>existingBooking(v)&&cashTypes.has(v.type)&&
+ !Object.hasOwn(v,'importSource')&&!Object.hasOwn(v,'importFingerprint');
+const manualCashOriginal=object({booking:manualCashBooking,
+ journal:v=>basicJournal(v)&&v.source==='manual',flows:array(flow)});
+const manualCashAuditFields=object({version:v=>v===1,action:v=>['notes','edit','remove'].includes(v),reason:historyText,
+ originals:array(manualCashOriginal),afterBookings:array(nullable(manualCashBooking))});
+const manualCashAudit=v=>v?.version===1&&['notes','edit','remove'].includes(v.action)&&
+ Array.isArray(v.originals)&&v.originals.length>0&&manualCashAuditFields(v);
+const manualCashAuditJournalFields=object({...fields('id date recordedAt sequence'),
+ type:v=>v==='booking-management-audit',source:v=>v==='management-audit',
+ postings:array(posting),managementAudit:manualCashAudit});
+const manualCashAuditJournal=v=>v?.type==='booking-management-audit'&&v.source==='management-audit'&&
+ manualCashAudit(v.managementAudit)&&manualCashAuditJournalFields(v);
 const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
@@ -137,7 +153,7 @@ const dataSchema=v=>dataFields(v)&&(v.version!==5||v.journalEntries?.some(j=>j.s
  // Scope, not a second economics engine: original positions must still be
  // EUR cash. Existing journal validation binds every retained removal flow.
  [...(v.bookings||[]).filter(b=>b.importSource?.sourceId==='generic-csv'),
- ...(v.journalEntries||[]).flatMap(j=>j.managementAudit?.originals?.map(o=>o.booking)||[])].every(b=>
+ ...(v.journalEntries||[]).flatMap(j=>j.managementAudit?[...j.managementAudit.originals.map(o=>o.booking),...(j.managementAudit.afterBookings||[]).filter(Boolean)]:[])].every(b=>
   v.positions?.some(p=>p.id===b.positionId&&p.accountId===b.accountId&&p.kind==='cash'&&p.currency==='EUR'));
 const same=(a,b)=>{
  if(a===b)return true;
