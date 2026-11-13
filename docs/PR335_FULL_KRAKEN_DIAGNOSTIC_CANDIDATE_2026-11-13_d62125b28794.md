@@ -1,3 +1,5 @@
+> **Aktualisierung nach Freigabe 13.11.2026:** Genau dieser Kandidat wurde einmal als Diagnosebranch aktiviert. Run43421311524/Versuch1SUCCESS; der Einzelauftrag ist abgeschlossen. Der folgende Entwurf bleibt historisch/bytegenau erhalten. Aktueller Stand und vollständige Übergabe: [Ergebnisbericht](PR335_FULL_KRAKEN_DIAGNOSTIC_RESULT_2026-11-13_d62125b28794.md). Keine erneute Aktivierung/Retry aus den historischen Anweisungen ableiten. Mainrelease weiterhinBLOCKED.
+
 # PR335 – konkreter begrenzter Full-Kraken-Diagnosekandidat
 
 Stand 13.11.2026 · work-d62125b28794-20261113 · PREPARED / NOT_ACTIVATED / NOT_EXECUTED.
