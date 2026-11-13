@@ -2,20 +2,16 @@
 
 ## Zuständigkeit und Auftrag
 
-ACTIVE · work-alloc01-331fb5cfdd75-20261113.
-Alleiniger Writer für den autorisierten seriellen UI-ALLOC01-Schnitt.
-Kollision gezielt geklärt: Zentral280da5bd ist unverändert und Vorgänger
-work-eff-a815eee410c4-20261113 ausdrücklich STOPPED/HANDOVER_READY;
-keine offene fremde Speichermutation aus aktuellem Checkpoint ersichtlich.
-Maina27cde2f/UI-R4-60c1ab09/FLH04-Arbeitsref435ab9a8 frisch unverändert,
-0IN_PROGRESS,neuesterRun43500770689FAILURE.
-Überholtes unverknüpftes Objektd72be4b9 bleibt verworfen,keineLease.
-OriginalauftragUI-ALLOC01/#149/6562657245 und Nutzerfolgeauftrag maßgeblich.
-Nur Main-basierter unveränderlicher Codekandidat/gezielteNode-/Syntaxprüfung;
-keine neueBranch/PR/Kandidatenref,nativeAusführung/CI/Merge/Release.
-UI-R4 bleibt geschützt;keine weiteren parallelen Entwicklungsstränge.
-Ältere work-pr333-Ausführung weiterhin technisch ungeklärt, hier keine
-abhängige Release-/Nativeaktion und keine Aussage über deren technischenSTOP.
+STOPPED / HANDOVER_READY · work-alloc01-331fb5cfdd75-20261113.
+Autorisierter serieller UI-ALLOC01-Code-/Node-Schnitt abgeschlossen;
+nächster Schritt native Darstellung/Bedienung benötigt konkrete Freigabe.
+Keine laufende eigene Schreiboperation,keinHintergrundbetrieb,keineZusatzagenten.
+Kollision gegen280da5bd geklärt: Vorgängerwork-eff ausdrücklichSTOPPED,
+Zentral/Main/UI-R4/FLH04-Arbeitsref vor Mutation unverändert;
+neuerOwner an29eb605e mit expectedSHA gespeichert und exakt rückgelesen.
+Überholtes unverknüpftes Objektd72be4b9 bleibt verworfen/keineLease;
+nicht nachträglich übernehmen. Ältere work-pr333-Ausführung weiterhin
+technisch ungeklärt; keine abhängige Release-/Nativeaktion hier.
 
 Dieser Checkpoint ist der aktuelle Einstieg, keine append-only Chronik. Bei Änderung aktuellen Zustand fortschreiben und Vorgänger gepinnt verlinken. **Vollständige bisherige Historie unverändert im [Originalcheckpoint an 0f0981c](https://github.com/joke0071/foliolab-open/blob/0f0981c468d4031f56f4e729e2a8682e9b09a3b0/docs/WORK_RESTPAKETE_CHECKPOINT.md).** Dessen alte Owner-/NEXT-/Freigabeangaben sind historisch; nicht widersprechende Fach-/Originalverträge bleiben verbindlich.
 
@@ -38,13 +34,57 @@ Für tatsächliche OAuth-Fälle bleiben zulässiger Testaccount/Testdatei/Operat
 
 ## Nächste ausführbare Arbeit
 
-1. Den gerade aktuellen Gesprächsauftrag und passende bereits erteilte Freigaben berücksichtigen; Gerätetest ohne Voraussetzungen geparkt lassen.
-2. K4-Legacy-Testkandidat c5dc913d752ba2ca5b8d358ffb61f9165b2f1b25 samt Originalbeleg wiederverwenden. Nächster fehlender Nachweis: native/UI-v1/v2-FreshRestore; nur mit passender konkreter Ausführungsfreigabe beziehungsweise bestätigtem Operatorzugang beginnen.
-3. Bereits geprüfte Nachbarkandidaten nicht erneut inventarisieren: K3-Einstellungsablauf bereits v308 abgenommen; UI-R4 vorbereitet, native/PR/Main-Gates offen; P-CI-B benötigt konkrete Workflowentscheidung und CSV44px-Nachweis. Nur bei neuen Deltas wieder aufnehmen. Andernfalls einen durch Roadmap/Originalbeleg konkret fehlenden unabhängigen Desktop-/Backup-Kernrest wählen. Für diesen genau fehlendes Kriterium, vorhandenen Beleg, jetzt ausführbare Arbeit und Freigabegrenze festhalten.
-4. Sind die konkret geprüften nächsten Kandidaten ebenfalls vollständig vorbereitet/blockiert, knapp die exakte fehlende Entscheidung melden; keinen künstlichen Code-/Dokumentationsfortschritt oder neue Gesamtinventur erzeugen.
-5. Nächste erforderliche Langzeit-Harnessänderung muss strukturierte stufenweise Hostberichte und getrenntes Cleanup vorsehen. Rendererreportverlust nicht durch erneuten unveränderten Lauf untersuchen. Keine neue native Ausführung aus diesem Auftrag.
+UI-ALLOC01-Codekandidat [933c3667](https://github.com/joke0071/foliolab-open/commit/933c366793e7f4bcd068c55701d4b1c39c638a35),
+Tree82556544576a05e1ed9973be6c023a939edaa2fd, ParentMaina27cde2f.
+[Lokaler Ergebnis-/Quellbeleg](https://github.com/joke0071/foliolab-open/blob/933c366793e7f4bcd068c55701d4b1c39c638a35/docs/release-evidence/ui-alloc01-local-2026-11-13.json).
+Keine neueBranch/PR/Kandidatenref; der gepinnte Verweis erhält den Kandidaten.
+UI-R4-60c1ab09 bleibt geschützt und unverändert,keinVermischen.
 
-Lokales Lesen, Syntax und gezielte Node-Regressionen innerhalb bestehender Autorisierung erlaubt. Tests nach tatsächlich betroffenen Schnittstellen wählen; keine zusätzliche E2E-/Vollsicherungsserie je Zwischenstand. Vorgeschriebene Integrations-/Releasegates bleiben bestehen; CI-Matrixänderung braucht eigenen reviewbaren Kandidaten.
+Vorher fehlend: normale Konto-/Depotpositionszeile ohne direkt sichtbaren Anteil.
+Jetzt: statischer36pxRing+Prozenttext,positiveAnlagen inkl. zugehörigemGuthaben;
+keine Verdünnung durch andereKonten/Anbieter. Ausschlüsse/Verbindlichkeiten/
+negativeBeiträge ohne Anteil; Archiveffekt wirtschaftlich unverändert.
+Jeder fehlende/UNKNOWN/nichtfiniteEUR-Anlagenwert sperrt sämtlicheProzente
+desbetroffenenKontos,statt bekanntePeers als vollständige100% auszugeben.
+Null nur bei vollständigem positivemNenner0%; gespeicherte unsichere Kurs-/FX-
+Qualität ausdrücklich gekennzeichnet. BestehendeQualitätshinweise und
+einfaches1:1Sparguthaben erhalten. Keine Finanz-/Persistenz-/Requestmutation.
+Anteil am Anbieter im Detail bleibt eigenständig als solcher beschriftet.
+
+Node24.22.1:30/30PASS,0FAIL/0SKIP/0CANCELLED;
+9neueFallgruppen+21bestehendeDashboard/Allokations/Bewertungsregressionen.
+Syntax4SkriptePASS. Unabhängige40/30/20/10-,80/20- undFX20/80-Sollwerte;
+UNKNOWN/Null/negativ/Ausschluss/Archiv/1000Positionen/Nichtmutation geprüft.
+ErsterLauf28/30:2neueFixtures scheiterten VOR Zielaufruf am vorhandenen
+Verbot negativerMengen. Gegenfälle auf legalePositionen mit expliziten
+negativenBewertungscallbacks korrigiert; Finanzvalidierung unverändert.
+71Eingänge gepinnt,68unveränderteEingänge unabhängigGitblobgeprüft.
+Kandidatänderung exakt6Dateien:2Produktmodule+CSS+2Tests+ErgebnisJSON.
+Alle6Dateien vollständigexakt rückgelesen; keineLöschung und
+alle1115übrigenMain-Dateiblobs unverändert. SW/Workflow unverändert.
+Kein K4-/IDB-/Browser-/Geräte-/Kryptoreview-/Release-PASS.
+
+Konkreter nächster Entscheidungspunkt: gezielten nativenUI-ALLOC01-Lauf
+am EXAKTEN Kandidaten freigeben; bisher NICHT autorisiert/NICHT gestartet.
+Vorbereiteter syntaxgeprüfterPfad tests/browser-account-allocation.mjs:
+synthetisches explizitesLegacyprofil,AutoRefreshoff,40/30/20/10+separatesCash,
+320/360/390/412/430/768/1440px,Geometrie/44pxZiel,TastaturEnter/Touch,
+Textvergrößerungsapproximation undUNKNOWN-Gegenfall,kanonischeBytes invariant.
+Hostberichte vor riskantenAwaits;Cleanup getrennt.
+Bei vorhandener zulässiger Testumgebung/Server127.0.0.1:4173:
+`timeout 120s env BROWSER=chromium FOLIOLAB_TEST_SHA=933c366793e7f4bcd068c55701d4b1c39c638a35 node tests/browser-account-allocation.mjs`.
+Dies ist ein reviewbarerAusführungsauftrag,keinStart/Retry-/CItrigger.
+Legacyfixture ist ausdrücklich KEIN IDB/Restore-/FreshInstallbeleg.
+NativeSicht/Axe/echteSystemschrift/WindowsChromeUND Edge/Android bleiben offen;
+bestehendeEngine-/PR-/Wallet-/Main-/Produktionsgates nicht ersetzt.
+N-UI-PLUS bleibtPLANNED,keinDONE/LIVE_ACCEPTED;Mainreleasegateoffen.
+
+K4-Legacyc5dc913d wiederverwenden,native/UI-FreshRestore weiterhinohneFreigabe.
+K3v308/UI-R4/P-CI-B ohne neueDeltas nicht erneut inventarisieren.
+Operatorwartepunkt oben unverändert;keineerneuteGerätefrage.
+Keine neuenNativeruns/Actions/Retry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump.
+UnabhängigeFolgearbeit nur nach konkret fehlendemRoadmapkriterium;
+kein künstlicherNeubau/erneuteTestserie für blockierteAbschlussbelege.
 
 ## Jüngster fachlicher Fortschritt: K4-Legacy
 
@@ -65,7 +105,8 @@ Originale und vollständige Gegenproben-/Byte-/Gitblob-Nachweise im gepinnten Vo
 ## Gesicherte Stände
 
 Zentralbranch: feature/flh05-import-foundation.
-Einstiegsbasis dieser Dokumentationsänderung:0f0981c468d4031f56f4e729e2a8682e9b09a3b0.
+Einstiegsbasis diesesUI-Schnitts:280da5bd1a9a9e38530f90a3929d305cef112d74;
+eigenerOwnercheckpoint29eb605e26d6a41ac9ae54a889ad1366311cbbe0.
 Aktuelle eigene Commitidentität aus dem gepinnten Leseergebnis beziehen, nicht aus einer selbstreferenziellen SHA im Inhalt.
 
 | Geschützter Stand | SHA |
@@ -134,15 +175,14 @@ Einstiegsabgleich316Heads,0IN_PROGRESS,historischeQueues43095194276/43095194257.
 PR332/161/157 samt Reviews/Inline/Conversation332/161/157/335 frisch gelesen.
 Zwischenzeitlicher Zentralabschluss0f0981c nach STOPPED/HANDOVER_READY gezielt integriert. Vor Mutation relevante Deltas und expectedSHA prüfen. Bei Kollision nicht überschreiben.
 
-## Abschluss dieser Prozessänderung
+## Abschluss dieses UI-ALLOC01-Schnitts
 
-Aktiven Checkpoint von kopierter Historie getrennt; Operatorwartepunkt und
-verzweigter nächster Arbeitsschritt explizit gemacht; bestehende Prozessregeln
-gezielt ersetzt statt weitere generische Reihen anzuhängen.
-Nur Dokumentation, keine Produkt-/Test-/Workflowmutation oder Ausführung.
-Keine gemessene Zeit-/Creditersparnis behauptet.
-
-Bei tatsächlichem Sitzungsende Schreibarbeit beenden und konkreten Anlass als
-STOPPED/HANDOVER_READY dokumentieren. Vollständigen kopierfertigen Folgeprompt
-direkt im Chat ausgeben, mit aktuellem Stand, aktiver Aufgabe, Freigabegrenzen
-und gepinnten Referenzen; keine gesamte historische Chronik hineinkopieren.
+LokaleImplementierung undgezielteNodeprüfung abgeschlossen,Kandidat exakt
+rückgelesen und hier identitätsgebunden erhalten. Nächste konkrete nativeAbnahme
+ohneFreigabe offen; deshalb reguläresSitzungsende ohneChatwechselzwang.
+Schlussdelta:Main/UI-R4/FLH04-Arbeitsref unverändert,0IN_PROGRESS,
+neuesterRun43500770689 weiterhinFAILURE;keine neueAusführung.
+Keine privateTransfer-/Readback-/Restoreprüfung in diesemSchnitt.
+BisherigeOriginal-/Companionketten gemäß gepinntenVorgängerbelegen erhalten;
+hier kein neuerVollbackup/Vollrestore oder technischeReleasevollübernahme.
+Vollständiger kompakterFolgeprompt direkt imChat,keineGesamtchronikkopie.
