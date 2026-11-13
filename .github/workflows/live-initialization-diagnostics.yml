@@ -94,13 +94,13 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  flh04-c1-native-first:
-    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-c1-native-b18c6fcb-366da675bef5' && github.run_attempt == 1
+  flh04-c1-native-correction-first:
+    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-c1-correction-bfed8172-366da675bef5' && github.run_attempt == 1
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
-      C1_SOURCE_SHA: b18c6fcb09b22616355355df5efb483503141e69
-      C1_SOURCE_TREE: 2527bebb55b3209a59c90c66627192a751ce1fa1
+      C1_SOURCE_SHA: bfed81728189c71ff88c7a7419f2c51db56b084d
+      C1_SOURCE_TREE: 27dad342d21e45b484c7b8ab87d4ed7cc2851b46
       C1_OUT_DIR: artifacts/flh04-c1
       ENGINE: chromium
       FLH04_VERSION2_CANDIDATE: '1'
@@ -137,15 +137,12 @@ jobs:
           test "$(git rev-parse HEAD)" = "$C1_SOURCE_SHA"
           test "$(git rev-parse HEAD^{tree})" = "$C1_SOURCE_TREE"
           git ls-tree -r HEAD > "$C1_OUT_DIR/pinned-source-tree.txt"
-          cp --parents package.json tests/browser-sync-outbox.mjs tests/flh04-version2-candidate-probes.mjs tests/storage-origin.html "$C1_OUT_DIR/inputs/"
+          cp --parents package.json tests/browser-sync-outbox.mjs src/browser-portfolio-storage.js tests/flh04-version2-candidate-probes.mjs tests/flh04-c1-diagnostics.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.test.mjs tests/fixtures/c1-storage-dependencies.mjs tests/storage-origin.html "$C1_OUT_DIR/inputs/"
           node --version > "$C1_OUT_DIR/node.txt"
           python3 - <<'PY'
           import os,json,hashlib,pathlib
           out=pathlib.Path(os.environ['C1_OUT_DIR'])
-          expected={
-           'tests/browser-sync-outbox.mjs':'f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c',
-           'tests/flh04-version2-candidate-probes.mjs':'30ca8d464e9ace8994bedb9c1e9d31e5bd742794'
-          }
+          expected={"tests/browser-sync-outbox.mjs":"f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c","src/browser-portfolio-storage.js":"ce56e74ff0519331b06e9833ab808e17a136613f","tests/flh04-version2-candidate-probes.mjs":"d87ab642d1ba409814af517c2b28ad50fd924b0c","tests/flh04-c1-diagnostics.mjs":"1e1f5c3bbe66d911a312c246b98f08f11562c4af","tests/flh04-c1-source-guard.test.mjs":"33eeaabce0cebac36fc46592ce2c5bede68e6c26","tests/flh04-c1-diagnostics.test.mjs":"eb53397ca3d6d2aab127b53583408e8402719cc8","tests/fixtures/c1-storage-dependencies.mjs":"02c53fa3c41ff35785021757ceb43eb834dc4b60"}
           files=[]
           for name,want in expected.items():
            data=pathlib.Path(name).read_bytes()
@@ -248,7 +245,8 @@ jobs:
            'exit_status':json.loads((out/'exit-status.json').read_text()) if (out/'exit-status.json').exists() else None,
            'c1_report':observed,
            'report_status':'OBSERVED' if observed is not None else 'NOT_REACHED_OR_NO_VALID_REPORT',
-           'expected_source_gaps':['C1-MARKERS','C1-NO-REVERT'],
+           'prior_failed_groups':['C1-MARKERS','C1-NO-REVERT'],
+           'c1_cases':observed.get('cases',[]) if observed is not None else [{'id':name,'status':'NOT_REACHED'} for name in ['C1-CANCEL','C1-VERSION-FENCE','C1-MARKERS','C1-NO-REVERT','C1-RESTORE-CAS','C1-RESTORE-FAULT-REPLY']],
            'expected_failures_count_as_pass':False,
            'scope':'Original browser-sync-outbox baseline plus six C1 groups, one invocation, Chromium only',
            'not_qualified':['production v2 adapter','full writer closure','real process crash','real quota','crypto review','active sync']
@@ -266,7 +264,7 @@ jobs:
         uses: actions/upload-artifact@v4
         timeout-minutes: 2
         with:
-          name: flh04-c1-b18c6fcb-${{ github.run_id }}-${{ github.run_attempt }}
+          name: flh04-c1-correction-bfed8172-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/flh04-c1/
           if-no-files-found: error
           retention-days: 7
