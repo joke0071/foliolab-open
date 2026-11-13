@@ -1,0 +1,1837 @@
+{
+  "status": "COMPLETED_FAILURE_TIMEOUT_RENDERER_REPORT_MISSING",
+  "owner": "work-61e5fa815b33-20261113",
+  "repository": "joke0071/foliolab-open",
+  "authorization": "Explicit user Ja to exact branch/SHA/attempt1/job/harness/evaluation/separate-original-preservation request; later supplement does not authorize another run.",
+  "run": {
+    "id": 43500770689,
+    "attempt": 1,
+    "event": "create",
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/43500770689",
+    "job_id": 132145632572,
+    "job_conclusion": "failure",
+    "other_jobs": "diagnostic and pchain-diagnostic skipped",
+    "harness_started": "2026-11-13T20:21:29Z",
+    "harness_completed": "2026-11-13T20:27:30Z",
+    "test_exit": 124,
+    "tee_exit": 0,
+    "harness_calls": 1,
+    "retries": 0
+  },
+  "execution": {
+    "branch": "test/flh04-renderer-termination-4cd697ef5bd2-20261113",
+    "sha": "7fb78e2bc9812a288a515cf4f83b47a54b68c480",
+    "tree": "c373842a81cd8e25eea0b9b7d5c6de6ace0c0b1e",
+    "parent": "45ef99e0c09932406c41e22757fbed00ae164016",
+    "workflow_blob": "6eebf6a3c9673f8214f912a5490d751da69b8677",
+    "trigger_created_once": true,
+    "trigger_consumed": true
+  },
+  "source": {
+    "sha": "45ef99e0c09932406c41e22757fbed00ae164016",
+    "tree": "404fd33bcdf78e419f9038d66df9f177593f8f4d",
+    "nine_deltas": "tests and documentation only; no product delta",
+    "control_delta": "workflow only",
+    "tree_metadata_reconstructed": true,
+    "full_original_ls_tree_matches_api": true,
+    "receipt_blobs_verified": 14,
+    "all_input_file_blobs_verified": 16,
+    "executed_workflow_blob_verified": true
+  },
+  "runtime": {
+    "ubuntu": "24.04.5",
+    "image": "20261111.370.1",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "observed_chromium": "141.0.7390.37",
+    "headless_shell_build": 1194,
+    "runtime_json_is_prelaunch_metadata": true,
+    "ENGINE": "chromium",
+    "FLH04_SOURCE_LIFECYCLE": "1",
+    "FLH04_RENDERER_TERMINATION": "1",
+    "FLH04_VERSION2_CANDIDATE": "UNSET",
+    "BASE_URL": "http://127.0.0.1:4173"
+  },
+  "baseline": {
+    "pre_optin_await_assertions": "Reached through successful original pre-opt-in awaits, inferred from sequential source flow reaching lifecycle report",
+    "original_final_PASS_console": "NOT_REACHED; after renderer hook in frozen source; absent in original log",
+    "whole_harness_PASS": false
+  },
+  "lifecycle": {
+    "status": "BOUNDED_PASS",
+    "groups": 13,
+    "assertion_rows": 81,
+    "pass": 81,
+    "fail": 0,
+    "not_reached": 0,
+    "stable_ids_and_source_lines_verified": true,
+    "L2": "LEGACY full retained intent exact string compared with independently precomputed expected legacy bytes/fingerprint/revision+1; bounded oracle PASS; no raw expected/actual dumps",
+    "L5": "Exactly one source-close-event: seq9 kind synthetic isTrusted false; RESULT requires both; no native forced-close claim",
+    "report": {
+      "kind": "FLH04SourceLifecycleProbe",
+      "version": 1,
+      "node": "v22.23.4",
+      "playwright": "1.56.1",
+      "engine": "141.0.7390.37",
+      "cases": [
+        {
+          "id": "L1-REVERT",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L1-REVERT.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L1-REVERT.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L1-REVERT.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L1-REVERT.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L1-REVERT.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L1-REVERT.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L1-REVERT.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L1-REVERT.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "setItem:foliolab-open-v1",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "setItem:foliolab-open-idb-revert-intent",
+              "kind": "operation"
+            },
+            {
+              "seq": 10,
+              "name": "transaction-readwrite",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 12,
+              "name": "removeItem:foliolab-open-storage-mode",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "removeItem:foliolab-open-idb-revert-intent",
+              "kind": "operation"
+            },
+            {
+              "seq": 14,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 15,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 17,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 18,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 19,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 20,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 21,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 22,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 23,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 24,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L2-MARKER-FAIL",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L2-MARKER-FAIL.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L2-MARKER-FAIL.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "setItem:foliolab-open-v1",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "setItem:foliolab-open-idb-revert-intent",
+              "kind": "operation"
+            },
+            {
+              "seq": 10,
+              "name": "transaction-readwrite",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 12,
+              "name": "removeItem:foliolab-open-storage-mode",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "marker-error-injected",
+              "kind": "injected"
+            },
+            {
+              "seq": 14,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 15,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 17,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 18,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 19,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 20,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 21,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 22,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 23,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L3-INITIALIZE",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L3-INITIALIZE.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L3-INITIALIZE.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "transaction-readwrite",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 10,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 12,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 14,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 15,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 16,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 17,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 18,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 19,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L4-READ-ERROR",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L4-READ-ERROR.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L4-READ-ERROR.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "read-error-injected",
+              "kind": "injected"
+            },
+            {
+              "seq": 9,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 10,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 12,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 13,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 14,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 15,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 17,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 18,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L5-CLOSE-EVENT",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L5-CLOSE-EVENT.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L5-CLOSE-EVENT.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "source-close-event",
+              "kind": "synthetic",
+              "isTrusted": false
+            },
+            {
+              "seq": 10,
+              "name": "close-event-injected",
+              "kind": "injected"
+            },
+            {
+              "seq": 11,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 12,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 14,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 15,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 17,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 18,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 19,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 20,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L6-INTENT",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L6-INTENT.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L6-INTENT.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L6-INTENT.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L6-INTENT.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L6-INTENT.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L6-INTENT.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L6-INTENT.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L6-INTENT.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "removeItem:foliolab-open-storage-mode",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "removeItem:foliolab-open-idb-revert-intent",
+              "kind": "operation"
+            },
+            {
+              "seq": 10,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 12,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 14,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 15,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 17,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 18,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 19,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 20,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L7-MIGRATE",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L7-MIGRATE.OVERLAP",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "OVERLAP",
+                "line": 142
+              }
+            },
+            {
+              "id": "L7-MIGRATE.RELEASE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RELEASE",
+                "line": 145
+              }
+            },
+            {
+              "id": "L7-MIGRATE.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 146
+              }
+            },
+            {
+              "id": "L7-MIGRATE.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 158
+              }
+            },
+            {
+              "id": "L7-MIGRATE.LEGACY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "LEGACY",
+                "line": 171
+              }
+            },
+            {
+              "id": "L7-MIGRATE.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 185
+              }
+            },
+            {
+              "id": "L7-MIGRATE.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 186
+              }
+            },
+            {
+              "id": "L7-MIGRATE.V2-BLOCK",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "V2-BLOCK",
+                "line": 191
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "operation-start",
+              "kind": "operation"
+            },
+            {
+              "seq": 1,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 2,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 3,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 4,
+              "name": "read-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 5,
+              "name": "barrier-held",
+              "kind": "harness"
+            },
+            {
+              "seq": 6,
+              "name": "source-versionchange",
+              "kind": "native"
+            },
+            {
+              "seq": 7,
+              "name": "barrier-release",
+              "kind": "harness"
+            },
+            {
+              "seq": 8,
+              "name": "transaction-readwrite",
+              "kind": "operation"
+            },
+            {
+              "seq": 9,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 10,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 11,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 12,
+              "name": "setItem:foliolab-open-storage-mode",
+              "kind": "operation"
+            },
+            {
+              "seq": 13,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 14,
+              "name": "operation-settled",
+              "kind": "operation"
+            },
+            {
+              "seq": 15,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 16,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 17,
+              "name": "transaction-readonly",
+              "kind": "operation"
+            },
+            {
+              "seq": 18,
+              "name": "transaction-complete",
+              "kind": "native"
+            },
+            {
+              "seq": 19,
+              "name": "source-close-call",
+              "kind": "operation"
+            },
+            {
+              "seq": 20,
+              "name": "source-open",
+              "kind": "operation"
+            },
+            {
+              "seq": 21,
+              "name": "source-success",
+              "kind": "native"
+            },
+            {
+              "seq": 22,
+              "name": "source-close-call",
+              "kind": "operation"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "blocked",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L8-V2-LOCKED",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L8-V2-LOCKED.REJECT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REJECT",
+                "line": 209
+              }
+            },
+            {
+              "id": "L8-V2-LOCKED.UNCHANGED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "UNCHANGED",
+                "line": 211
+              }
+            },
+            {
+              "id": "L8-V2-LOCKED.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 214
+              }
+            },
+            {
+              "id": "L8-V2-LOCKED.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 215
+              }
+            }
+          ],
+          "events": [],
+          "upgradeEvents": [
+            "open-called",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L9-V1-REMOVE",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L9-V1-REMOVE.RESULT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RESULT",
+                "line": 220
+              }
+            },
+            {
+              "id": "L9-V1-REMOVE.PERSISTED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PERSISTED",
+                "line": 221
+              }
+            },
+            {
+              "id": "L9-V1-REMOVE.ORIGINAL",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ORIGINAL",
+                "line": 223
+              }
+            },
+            {
+              "id": "L9-V1-REMOVE.RECOVERY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RECOVERY",
+                "line": 226
+              }
+            }
+          ],
+          "events": [],
+          "upgradeEvents": []
+        },
+        {
+          "id": "L10-V2-INTENT",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L10-V2-INTENT.REJECT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REJECT",
+                "line": 244
+              }
+            },
+            {
+              "id": "L10-V2-INTENT.UNCHANGED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "UNCHANGED",
+                "line": 246
+              }
+            },
+            {
+              "id": "L10-V2-INTENT.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 248
+              }
+            },
+            {
+              "id": "L10-V2-INTENT.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 249
+              }
+            }
+          ],
+          "events": [],
+          "upgradeEvents": [
+            "open-called",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L11-PROBE-ERROR",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L11-PROBE-ERROR.REJECT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REJECT",
+                "line": 273
+              }
+            },
+            {
+              "id": "L11-PROBE-ERROR.NO-WRITES",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "NO-WRITES",
+                "line": 274
+              }
+            },
+            {
+              "id": "L11-PROBE-ERROR.UPGRADE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "UPGRADE",
+                "line": 277
+              }
+            },
+            {
+              "id": "L11-PROBE-ERROR.PRESERVED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PRESERVED",
+                "line": 278
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "injected-open-SecurityError",
+              "kind": "injected"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L11-PROBE-BLOCKED",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L11-PROBE-BLOCKED.REJECT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REJECT",
+                "line": 273
+              }
+            },
+            {
+              "id": "L11-PROBE-BLOCKED.NO-WRITES",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "NO-WRITES",
+                "line": 274
+              }
+            },
+            {
+              "id": "L11-PROBE-BLOCKED.UPGRADE",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "UPGRADE",
+                "line": 277
+              }
+            },
+            {
+              "id": "L11-PROBE-BLOCKED.PRESERVED",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "PRESERVED",
+                "line": 278
+              }
+            }
+          ],
+          "events": [
+            {
+              "seq": 0,
+              "name": "injected-blocked-event",
+              "kind": "injected"
+            }
+          ],
+          "upgradeEvents": [
+            "open-called",
+            "upgradeneeded",
+            "success"
+          ]
+        },
+        {
+          "id": "L12-V2-RECOVERY",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "L12-V2-RECOVERY.REJECT",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REJECT",
+                "line": 288
+              }
+            },
+            {
+              "id": "L12-V2-RECOVERY.ORIGINAL",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ORIGINAL",
+                "line": 290
+              }
+            },
+            {
+              "id": "L12-V2-RECOVERY.RECOVERY",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "RECOVERY",
+                "line": 293
+              }
+            },
+            {
+              "id": "L12-V2-RECOVERY.ANCHOR",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "ANCHOR",
+                "line": 295
+              }
+            },
+            {
+              "id": "L12-V2-RECOVERY.REOPEN",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-source-lifecycle-probes.mjs",
+                "anchor": "REOPEN",
+                "line": 296
+              }
+            }
+          ],
+          "events": [],
+          "upgradeEvents": [
+            "open-called",
+            "upgradeneeded",
+            "success"
+          ]
+        }
+      ],
+      "openCases": [
+        "native forced-close/process termination",
+        "native source-open blocked/error (injections separate)",
+        "unknown old writers/workers/mixed assets",
+        "full keyslot/ABA/recovery closure"
+      ],
+      "instrumentation": "readonly oncomplete callback delayed after native event; real product methods/imports unchanged; synthetic close/read/marker faults explicitly labeled"
+    }
+  },
+  "renderer": {
+    "report_count": 0,
+    "status": "NOT_REACHED_OR_NO_VALID_REPORT",
+    "cases": [
+      {
+        "id": "T1-READ-COMPLETE",
+        "report_status": "NOT_REACHED"
+      },
+      {
+        "id": "T2-REVERT-COMMITTED",
+        "report_status": "NOT_REACHED"
+      }
+    ],
+    "planned_rows": 18,
+    "qualified_rows": 0,
+    "actual_stage": "UNKNOWN; missing report prevents reconstruction of individual barriers, crash events, persistence/restart results",
+    "observed_error": "browserContext.close: Target page, context or browser has been closed; stack at renderer probe line120 finally/context.close and main harness line172",
+    "timeout": "GNU timeout test_exit124 after 360s; no retry",
+    "root_cause": "UNKNOWN; cleanup error at termination is not proof of earlier assertion failure, observed Page.crash capability or root cause",
+    "native_crash_PASS": false
+  },
+  "original": {
+    "artifact_id": 14072814694,
+    "bytes": 103778,
+    "sha256": "1d4219c5039be5b0f241e47d8bbd10a5819d79236b9e5414b9d00805eb94da2e",
+    "api_digest_and_upload_log_digest_match": true,
+    "zip_crc_verified": true,
+    "zip_files": 29,
+    "inner_manifest_entries": 28,
+    "manifest_sha256": "fc807827a8d92cf70e31b14af080e73e55c2c9d1b8f201d7f8de0556ac5067db",
+    "all_inner_files_sha256_verified": true,
+    "retention_until": "2026-11-20T20:27:30Z",
+    "http_200": 1125,
+    "http_304": 215
+  },
+  "durable_preservation": {
+    "new_separate_original_archive": true,
+    "version": 0,
+    "bytes": 1914880,
+    "sha256": "7144cb6f79269e38421ee1a4e963acfec882668612589fd19dc61e2455f5cac3",
+    "pinned_exact_version_readback": true,
+    "preservation_manifest_files_verified": 45,
+    "original_zip_and_28_inner_files_verified_again_from_readback": true,
+    "private_locator": "WITHHELD",
+    "root_full_backup": false,
+    "root_or_old_original_transfer": false
+  },
+  "historical": {
+    "run": "43497366403/1",
+    "status": "COMPLETED_SUCCESS unchanged",
+    "scope": "original final PASS console;13 groups81 rows;C1unset;historical L2/L5 limits unchanged",
+    "originals": "retained, previous full qualification reused; only fresh metadata checked for old backups"
+  },
+  "limits": [
+    "Readonly/readwrite callback scheduling held AFTER native complete events; no IDB keepalive/open-transaction crash claim",
+    "Lifecycle outbox null; no non-null lifecycle outbox qualification",
+    "Renderer report absent; no native IDB forced-close/browser-process/power-loss/disk-durability proof",
+    "Full writer/worker/assets/keyslot/ABA/recovery qualification remains open",
+    "No product/release/Main/production qualification; no cryptographic independent review replacement"
+  ],
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "Outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL with internal and external remains",
+    "A1_applyAuthorized": false,
+    "A2_Storage_confirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "format1_prepared_locked": "never adopt/promote/overwrite/delete",
+    "v2_normal_paths": "blocked; no return to LocalStorage for confirmed v2 lines",
+    "recovery": "no writer/device/authority/sync identity porting",
+    "crypto": "EXTERNAL_REVIEW_PENDING_CR4_CR5_OPEN",
+    "protected_contracts": "All P/R/S/D/CAS/raw/retry/oncomplete/snapshot/original and USD/ETH/CSV/management/UH02/history/purchase/undo/oracle chains preserved"
+  },
+  "next": "Native run/evaluation/original preservation complete. No retry or replacement trigger. Continue separately authorized documentation-unblocking supplement; eight scope statuses unchanged until full evidence."
+}

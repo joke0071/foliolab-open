@@ -1,3 +1,55 @@
+## RENDERER_RUN_CLOSED / TIMEOUT / ORIGINALS_DURABLE · work-61e5fa815b33-20261113
+
+Run43500770689/1 COMPLETED/FAILURE, unersetzter einmaliger create-Trigger exakt
+an7fb78e2bc9812a288a515cf4f83b47a54b68c480; einJob132145632572,
+einHarnessaufruf, test_exit124/tee_exit0 nach360s. KeinRetry/Ersatztrigger.
+Ubuntu24.04.5/Image20261111.370.1/Node22.23.4/PW1.56.1,
+tatsächlich Chromium141.0.7390.37/HeadlessShell1194. C1Optin ungesetzt.
+
+Begrenzter aktueller Lifecycle-PASS:13/13Gruppen81/81Prüfzeilen,0FAIL/0NOT_REACHED.
+L2vollständigerIntentstring/Fingerprint mit unabhängig VOR Aufruf berechnetemSoll;
+L5source-close-event synthetic/isTrustedfalse und entsprechendesRESULT-PASS.
+Kein rückwirkendes Ergänzen des historischen Runs43497366403/1.
+VorOptin liegende ursprüngliche await-Assertions durchlaufen; ursprüngliche finale
+PASS-Konsole liegt NACH Rendererhook und wurde in DIESEM Lauf NICHT erreicht.
+Kein vollständiger Basisharness-PASS.
+
+Rendererreport FEHLT: T1/T2 NOT_REACHED_OR_NO_VALID_REPORT,0/18qualifizierteZeilen.
+Keinen Crash, Haltepunkt, Persistenz-/Neustartzustand oder Mechanismus-PASS ableiten.
+Abbruchlog zeigt browserContext.close/Targetclosed bei Probezeile120(finally);
+tatsächliche vorgelagerte Stufe/Ursache UNKNOWN. KeinProduktursachennachweis.
+
+[Originalauswertung und vollständiger Lifecyclebericht](release-evidence/flh04-renderer-termination-43500770689-attempt1.json).
+Artefakt14072814694:103778Bytes/SHA256
+1d4219c5039be5b0f241e47d8bbd10a5819d79236b9e5414b9d00805eb94da2e.
+29ZIPDateien/28Innenmanifestpfade vollständig geprüft;14Receiptblobs undALLE16
+Eingangsdateien/Workflow unabhängigGitblobgeprüft; vollständigesOriginal-ls-tree
+mitAPIQuelltree identisch/Tree-Metadaten unabhängig rekonstruiert.
+SeparaterOriginalteil V0/1914880Bytes/SHA256
+7144cb6f79269e38421ee1a4e963acfec882668612589fd19dc61e2455f5cac3
+dauerhaft exaktgepinntrückgelesen;45Erhaltungsmanifestdateien UNDOriginalZIP/28
+Innenmanifestdateien daraus erneut geprüft. PrivateLocatorsnurprivat.
+AlteRootV155/FAILV0/MainOriginalV0/DiagnoseV0/LifecycleOriginalV0 nurMetadaten,
+keine erneuteTransfer-/Restoreprüfung,keinRootvollbackup.
+
+316Heads:vorSchreiben nur neuer eigenerTrigger;keinegelöschtenHeads;
+geschützteRefs/PRs/Reviews/Inline/Conversation unverändert;0IN_PROGRESS.
+Älterework-pr333AusführungweiterNICHTtechnischbeendetnachgewiesen.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern,
+A1false/A2gesperrt/Ankernull/format1preparedlockedunantastbar/v2Normalpfadeblockiert,
+RecoveryohneIdentitätsportierung;KryptoEXTERNAL_REVIEW_PENDING/CR4CR5offen.
+Alle bisherigen Schutz-/Finanz-/Originalverträge undhistorischenPASS-Grenzen erhalten.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+
+NativeEinmalausführung/Auswertung/Originalsicherung regulär abgeschlossen.
+Aktueller Nutzerergänzungsauftrag: Dokumentationskandidat e5e9e00897303f5b559c1b277a39bd540e5406a1
+anschließend lesen, ausschließlich zwei autorisierte Ergänzungen kollisionsgeschützt
+übernehmen, Ergebnisformulierungen aktualisieren; achtScope-Status unverändert.
+DanachersteausführbareEntsperrmaßnahme,unabhängigeautorisierteArbeitfortführen.
+KeinHintergrundbetrieb/Agent/Automation; keinneuerNative-/Merge-/Releaseauftrag.
+
+---
+
 ## STOPPED / HANDOVER_READY / RENDERER_TERMINATION_PREPARED / NATIVE_APPROVAL_REQUIRED · work-4cd697ef5bd2-20261113
 
 Tatsächlicher Endpunkt: autorisierte lokale Metadaten-/Oraclekorrektur und
