@@ -98,7 +98,7 @@ async function runCase(kind){
   IDBObjectStore.prototype.put=function(...args){
    if(this.name==='records'){
     state.idbWrites++;
-    if(kind==='commit'){state.commitFaultObserved=true;this.transaction.abort();}
+    if(kind==='commit'){const request=originalPut.apply(this,args);state.commitFaultObserved=true;this.transaction.abort();return request;}
    }
    return originalPut.apply(this,args);
   };
@@ -119,6 +119,7 @@ async function runCase(kind){
  const state=await page.evaluate(()=>{
   const s=window.__restoreProbe;return {calls:s.calls,adoptions:s.adoptions,passwordCompleted:s.passwordCompleted,errors:s.errors,idbWrites:s.idbWrites,commitFaultObserved:s.commitFaultObserved??false,preferenceFaultObserved:s.preferenceFaultObserved??false,displayFaultObserved:s.displayFaultObserved??false,status:window.FolioDriveBackup.getStatus(),field:document.querySelector('[name="coinGeckoKey"]').value,fieldType:document.querySelector('[name="coinGeckoKey"]').type,passwordCleared:document.getElementById('driveRecoveryInput').value==='',storageMode:localStorage.getItem('foliolab-open-storage-mode')};
  });
+ await writeFile(dir+'/'+kind+'.json',JSON.stringify({kind,before,after,state,requests,pageErrors,blockedExternal},null,2));
  assert.equal(state.calls,1);assert.equal(state.passwordCleared,true);assert.equal(state.status.busy,false);
  assert.equal(state.storageMode,'idb-v1');assert.equal(state.idbWrites,1);
  assert.equal(requests.filter(r=>r.media).length,1);assert.equal(requests.filter(r=>r.method!=='GET').length,0);
