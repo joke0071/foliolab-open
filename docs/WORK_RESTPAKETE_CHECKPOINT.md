@@ -1,3 +1,23 @@
+## ACTIVE / RAW_PAYLOAD_KEY_CAS_CONTRACT / RELEASE_BLOCKED · work-0c5363d0ea74-20261113
+
+Alleinige begrenzte HND01-Zuständigkeit nach autorisiertem frischem Abgleich:
+312 Heads; Zentral680974992b2666193d7af8568152e14048c5833e,
+FLH04920debdad089b085f21f3fc5ca0c84a27577b22b,
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325 und geschützte
+PR332/157/161/UI-R4/Diagnose unverändert. VorgängerSTOPPED/HANDOVER_READY;
+ältere work-pr333-Ausführung NICHT technisch beendet nachgewiesen,
+keine tatsächliche Fremdschreibkollision beobachtet. Reviews/Inline-/Conversation
+332/157/161/335 frisch gelesen, kein Gegenauftrag; keine Zusatzagenten/Automation.
+Sicherungen NUR frische Metadaten: RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120; keine Transfers/Restore/Uploads.
+Node24.22.1 verfügbar. Keine technische Releasevollübernahme.
+Nächster Schnitt: geschlossener Raw-/Payload-/CryptoKey-CAS-Vorcodevertrag im
+bestehenden Snapshotvertrag; aktuelle Rawgleichheit nicht lockern. Vollständige
+Keyslotlösung und native Persistenz fehlen; keine Review-/Autoritätsfreigabe.
+Unveränderte Schutzgrenzen im [gepinnten Vorgängerauftrag](https://github.com/joke0071/foliolab-open/blob/680974992b2666193d7af8568152e14048c5833e/docs/HANDOVER_3de59b8f2b9b_2026-11-13.md).
+
+---
+
 ## STOPPED / HANDOVER_READY / USD_PRINCIPAL_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-3de59b8f2b9b-20261113
 
 Mit diesem Schlusscommit eigene Schreibarbeit beendet, kein Hintergrundbetrieb.
