@@ -12,7 +12,7 @@ const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 
-function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false,httpStatus=200,retention=3,oldBackups=false,existingFolder=false}={}){
+function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false,httpStatus=200,retention=3,oldBackups=false,existingFolder=false,confirmRestore=true}={}){
  const values=new Map(),requests=[],written=[],events=[];let oauthRequests=0,backedUpCount=0;
  if(clientId)values.set('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId,retention,mode:'off'}));
  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
@@ -49,6 +49,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
  let uploaded=false;
  async function fetch(url,opts={}){
   requests.push({url,method:opts.method||'GET',body:opts.body});
+  if(new URL(url).searchParams.get('alt')==='media')return response({format:'foliolab-open-encrypted-v2',synthetic:true});
   const qs=new URL(url).searchParams,q=qs.get('q')||'';
   if(url.includes('upload/drive/v3/files')){uploaded=true;return response({id:'backup123456789'})}
   if(opts.method==='POST'&&url.includes('/drive/v3/files'))return response({id:'folder123456789',name:'FolioLab Backups'});
@@ -61,7 +62,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
  runInNewContext(source,{window,document,google:window.google,localStorage:storage,fetch,Option:class{
   constructor(text,value){this.text=text;this.value=value}},
   Date,Math,JSON,URL,URLSearchParams,Blob,Error,Number,setTimeout,clearTimeout,CustomEvent:class{constructor(type){this.type=type}},
-  confirm:()=>true},{filename:'drive-backup.js'});
+  confirm:()=>confirmRestore},{filename:'drive-backup.js'});
  return {window,elements,storage,requests,written,backend,events,get oauthRequests(){return oauthRequests},get uploaded(){return uploaded},get backedUpCount(){return backedUpCount}};
 }
 
@@ -75,6 +76,78 @@ test('Drive remains voluntary and cannot upload without a configured password',a
  assert.equal(t.elements.driveBackupStatus.hidden,true,'Neutral setup information does not duplicate the connection badge');
  assert.equal(t.elements.driveDisconnect.hidden,true,'Disconnect is hidden until connected');
  assert.equal(t.storage.getItem('foliolab-open-drive-backup-settings-v1'),null);
+});
+
+async function selectedRestore(options={}){
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,...options});
+ await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
+ t.elements.driveBackupSelect.value='syntheticBackup12345';
+ t.elements.driveRecoveryInput.value='SYNTHETIC_PASSWORD';
+ return t;
+}
+test('Drive restore success commits once before password adoption and clears the password',async()=>{
+ const t=await selectedRestore(),order=[];
+ t.backend.restoreData=async(data,configuration)=>{order.push('commit');assert.equal(data.positions.length,0);assert.equal(configuration,null);};
+ t.backend.adoptPasswordVault=async(envelope,password)=>{order.push('password');assert.equal(envelope.format,'foliolab-open-encrypted-v2');assert.equal(password,'SYNTHETIC_PASSWORD');};
+ await t.elements.driveRestore.onclick();
+ assert.deepEqual(order,['commit','password']);
+ assert.match(t.elements.driveBackupStatus.textContent,/Drive-Backup wiederhergestellt/);
+ assert.equal(t.window.FolioDriveBackup.getStatus().error,false);assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
+ assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
+});
+test('Drive restore cancellation and decryption failure never reach the local commit',async()=>{
+ for(const kind of ['cancel','decrypt']){
+  const t=await selectedRestore({confirmRestore:kind!=='cancel'});let restores=0,adoptions=0;
+  t.backend.restoreData=async()=>{restores++;};t.backend.adoptPasswordVault=async()=>{adoptions++;};
+  if(kind==='decrypt')t.backend.decryptPasswordBackup=async()=>{throw Error('SYNTHETIC_DECRYPT_FAILURE');};
+  await t.elements.driveRestore.onclick();
+  assert.equal(restores,0);assert.equal(adoptions,0);assert.equal(t.elements.driveRecoveryInput.value,'');
+  assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
+  assert.match(t.elements.driveBackupStatus.textContent,kind==='cancel'?/Wiederherstellung abgebrochen/:/Wiederherstellung fehlgeschlagen: SYNTHETIC_DECRYPT_FAILURE/);
+  assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt/);
+ }
+});
+test('Drive restore commit rejection never adopts a password or claims restored data',async()=>{
+ const t=await selectedRestore();let adoptions=0,restores=0;
+ t.backend.restoreData=async()=>{restores++;throw Error('SYNTHETIC_CAS_REJECTION');};t.backend.adoptPasswordVault=async()=>{adoptions++;};
+ await t.elements.driveRestore.onclick();
+ assert.equal(restores,1);assert.equal(adoptions,0);
+ assert.match(t.elements.driveBackupStatus.textContent,/Wiederherstellung fehlgeschlagen: SYNTHETIC_CAS_REJECTION/);
+ assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt/);
+ assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.window.FolioDriveBackup.getStatus().error,true);
+});
+test('Drive restore preserves a backend-confirmed commit when settings finalization rejects',async()=>{
+ const t=await selectedRestore();let restores=0,adoptions=0;
+ t.backend.restoreData=async()=>{restores++;throw Object.assign(Error('SYNTHETIC_PREFERENCES_FAILURE'),{restoreCommitted:true});};
+ t.backend.adoptPasswordVault=async()=>{adoptions++;};
+ await t.elements.driveRestore.onclick();
+ assert.equal(restores,1);assert.equal(adoptions,0);
+ assert.match(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt.*Einstellungen fehlgeschlagen.*Backup-Passwort.*noch nicht übernommen/);
+ assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Wiederherstellung fehlgeschlagen/);
+ assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.window.FolioDriveBackup.getStatus().error,true);
+});
+test('Drive restore display failure retains both confirmed operations without replay',async()=>{
+ const t=await selectedRestore();let restores=0,adoptions=0;
+ t.backend.restoreData=async()=>{restores++;};t.backend.adoptPasswordVault=async()=>{adoptions++;};
+ t.elements.restoreBackupDialog={close(){throw Error('SYNTHETIC_DIALOG_FAILURE');}};
+ await t.elements.driveRestore.onclick();
+ assert.equal(restores,1);assert.equal(adoptions,1);
+ assert.match(t.elements.driveBackupStatus.textContent,/Portfolio und Backup-Passwort übernommen.*Abschlussanzeige fehlgeschlagen/);
+ assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
+ assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
+});
+test('Drive restore keeps a confirmed portfolio commit visible when password adoption fails',async()=>{
+ const t=await selectedRestore();let committed=false,restores=0,adoptions=0;
+ t.backend.restoreData=async()=>{restores++;committed=true;};
+ t.backend.adoptPasswordVault=async()=>{adoptions++;throw Error('SYNTHETIC_VAULT_FAILURE');};
+ await t.elements.driveRestore.onclick();
+ assert.equal(committed,true);assert.equal(restores,1);assert.equal(adoptions,1);
+ assert.match(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt.*Backup-Passwort.*nicht.*übernommen/);
+ assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Wiederherstellung fehlgeschlagen/);
+ assert.equal(t.window.FolioDriveBackup.getStatus().error,true);
+ assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
+ assert.equal(t.elements.driveRecoveryInput.value,'');
+ assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
 });
 test('Drive upload encrypts only the sanitized portfolio through the shared password backend',async()=>{
  const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true});

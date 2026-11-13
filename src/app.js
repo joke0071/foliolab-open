@@ -2560,11 +2560,14 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
       async restoreData(data,configuration=null){
         if(saving||otherTabChangedPortfolio)throw Error('Speicherung aktiv oder Daten durch anderen Tab verändert. Bitte zuerst neu laden.');
         const imported=safeImport(data);
+        let restoreCommitted=false;
+        try{
         if(loadFailure){
           if(!portfolioStore.isIndexedDB||!recoveryDownloaded)throw Error('Beschädigte Originaldaten zuerst unter „Daten retten“ exportieren, danach Wiederherstellung erneut starten.');
           const accepted=decideImportedConfiguration(configuration);
           imported.settings=accepted?accepted.settings:defaultSettings();
           await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
+          restoreCommitted=true;
           if(accepted)applyImportedDriveConfiguration(accepted);
           location.reload();return;
         }
@@ -2583,11 +2586,21 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         const previous=model;
         model=imported;filter='all';
         try{await save()}catch(error){model=previous;throw error}
+        restoreCommitted=true;
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone();
         if(accepted)syncApiSettingsForm();
         notify('Google-Drive-Backup erfolgreich wiederhergestellt.');
         return true;
+        }catch(error){
+          if(restoreCommitted){
+            // Only attach this boundary after the existing storage operation resolved.
+            const committedError=new Error(String(error?.message||error),{cause:error});
+            committedError.restoreCommitted=true;
+            throw committedError;
+          }
+          throw error;
+        }
       },
       onBackedUp(){backupDone();}
     };

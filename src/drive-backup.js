@@ -417,14 +417,28 @@ async function restore(){
  if(!get('driveBackupSelect').value)return status('Bitte zuerst ein Drive-Backup auswählen.',true);
  if(busy)return;
  busy=true;updateUi();status('Backup wird heruntergeladen und entschlüsselt …');
+ let portfolioRestored=false,passwordAdopted=false;
  try{
   const {data:next,configuration,password,envelope}=await inspectSelectedDriveBackup();
   if(!confirm('Dieses Backup mit '+next.positions.length+' Positionen und '+next.snapshots.length+' Stichtagen wiederherstellen? Deine aktuellen lokalen Daten werden ersetzt.'))return status('Wiederherstellung abgebrochen.');
   await backend.restoreData(next,configuration);
+  portfolioRestored=true;
   await backend.adoptPasswordVault(envelope,password);
+  passwordAdopted=true;
   get('restoreBackupDialog')?.close();
   status('Drive-Backup wiederhergestellt. '+next.positions.length+' Positionen geladen. Vorheriger Stand lokal gesichert.');
- }catch(e){status('Wiederherstellung fehlgeschlagen: '+e.message,true)}
+ }catch(e){
+  // A later password/settings/UI error cannot undo a confirmed portfolio commit.
+  // Keep that boundary visible rather than inviting a destructive full retry.
+  const message=String(e?.message||e);
+  if(e?.restoreCommitted===true&&!portfolioRestored){
+   status('Portfolio wiederhergestellt. Nachbereitung der Einstellungen fehlgeschlagen: '+message+'. Das Backup-Passwort wurde noch nicht übernommen. Portfolio nicht erneut importieren.',true);
+  }else if(portfolioRestored&&!passwordAdopted){
+   status('Portfolio wiederhergestellt. Das Backup-Passwort konnte nicht vollständig übernommen werden: '+message+'. Passwortstatus unter „Backup-Verschlüsselung“ prüfen. Portfolio nicht erneut importieren.',true);
+  }else if(portfolioRestored){
+   status('Portfolio und Backup-Passwort übernommen. Abschlussanzeige fehlgeschlagen: '+message+'. Portfolio nicht erneut importieren.',true);
+  }else status('Wiederherstellung fehlgeschlagen: '+message,true);
+ }
  finally{get('driveRecoveryInput').value='';busy=false;updateUi()}
 }
 async function trimExisting(){
