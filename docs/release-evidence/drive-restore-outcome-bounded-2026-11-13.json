@@ -1,0 +1,123 @@
+{
+  "scope": "Restore outcome bounded Linux Chromium",
+  "status": "FROZEN_BOUNDED_PASS_FOLLOWUP_TOAST_GAP",
+  "product_source": "775bbdddb5a01b8ed400ea8add9848b1aadc4aa8",
+  "product_tree": "4db8a537abb2f952ac9e0b41d9894be786aea551",
+  "initial_candidate": "8067ec3bfdd686ee475458e179401a679305690a",
+  "corrected_candidate": "4ba5cd84145aca866f4e55fae91690bd93b5a713",
+  "corrected_tree": "58359de68f486c751b413cf3dd579f74706433ab",
+  "correction": {
+    "product_delta": false,
+    "harness": "put actual request before tx.abort; capture case state before assertions",
+    "reason": "Initial injected abort-before-put provoked an uncaught second abort on finished transaction",
+    "assertions": "unchanged; pageErrors remains empty required",
+    "local": "syntax and directed put-before-abort ordering PASS"
+  },
+  "runs": [
+    {
+      "id": 43514448489,
+      "attempt": 1,
+      "execution": "59085dac146d4ce24937501f5fcf9aac5b21404a",
+      "trigger": "test/restore-outcome-b7bbb8ab7737-initial-20261113",
+      "result": "FAIL",
+      "cleanup": "PASS",
+      "qualified_cases": [
+        "success"
+      ],
+      "unqualified": [
+        "commit overall failed due injection pageerror",
+        "preferences not reached",
+        "password not reached",
+        "display not reached"
+      ],
+      "artifact": 14079108796,
+      "zip_bytes": 619676,
+      "zip_sha256": "2fe039e520448863c0ad976dc20de60d288de5aca904207ebc5a7180f944085f",
+      "inner_manifest": 15,
+      "archive_bytes": 2856960,
+      "archive_sha256": "0d7f175ceeb7f83d409b71874c1744298dada95ed6086f04fbbc81aff4e462c0",
+      "pinned_verified_entries": 18
+    },
+    {
+      "id": 43514930241,
+      "attempt": 1,
+      "execution": "23e9afa4c4a0e6195fe3517675b54ce17d957952",
+      "trigger": "test/restore-outcome-b7bbb8ab7737-correction-20261113",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "qualified_cases": [
+        "success",
+        "actual IDB transaction abort",
+        "post-commit preferences failure",
+        "simulated password adoption failure",
+        "synthetic optional dialog-close failure"
+      ],
+      "artifact": 14079787877,
+      "zip_bytes": 2381910,
+      "zip_sha256": "af95fcd579706ba1a6dbd57142c6d9520f2434bbbb4f8e48311a32db5c76524f",
+      "inner_manifest": 24,
+      "archive_bytes": 6563840,
+      "archive_sha256": "5b1102e7e0bba7ce84c45aad3aa33fa0cd41c9ed5342eb5d9d60eca9fdf314b7",
+      "pinned_verified_entries": 27
+    }
+  ],
+  "native_IDB": {
+    "database": "foliolab-open-portfolio",
+    "database_version": 1,
+    "mode": "idb-v1",
+    "fixture": "empty canonical portfolio autoRefresh off; synthetic stored configuration; restored cash123.45EUR+imported configuration",
+    "before_revision": 2,
+    "success_revision": 3,
+    "aborted_revision": 2,
+    "full_record_readback": "independent indexedDB.open + readonly records.get(portfolio), resolve on native tx.oncomplete; entire raw and settings oracle comparison",
+    "save_calls_per_case": 1,
+    "media_GET_per_case": 1,
+    "retries": 0,
+    "legacy_portfolio_absent": true
+  },
+  "observed": [
+    "Precommit abort carries no restoreCommitted marker and no restored status; full record and visible draft retained",
+    "Postcommit preferences keeps canonical import and draft; restoreCommitted true and original cause/message retained",
+    "Password failure retains canonical import; explicit password-incomplete status and no retry",
+    "Optional dialog-close failure retains both completed operations; explicit final-display error",
+    "success aligns canonical data/settings and masked input in one revision",
+    "320/390/430/768/1440px status visible, no horizontal overflow; focus/Tab and 200% CSS approximation; IDB bytes invariant while reading"
+  ],
+  "visual_review": {
+    "viewed": [
+      "password320",
+      "password1440"
+    ],
+    "finding": "Partial-failure status is readable, but app backend's green success toast prematurely claims whole Drive backup restored before password adoption. This is a real separate follow-up gap, not a full UX PASS.",
+    "next": "one independent local follow-up correcting only that notification; no more native executions"
+  },
+  "runtime": {
+    "os": "Ubuntu24.04.5",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37 build1194",
+    "job_minutes": 25,
+    "harness_seconds": 360,
+    "kill_after_seconds": 15,
+    "engine_count": 1
+  },
+  "limits": [
+    "OAuth/Drive-media/decryption/password adoption are simulated; no real OAuth or encrypted native restore claim",
+    "Actual portfolio IDB used; no damaged-record recovery/legacy migration/SW/PWA/device lifecycle claim",
+    "No Windows Chrome/Edge or Android hardware/system zoom evidence",
+    "No crypto review/FLH04/vault-v2/full CI/Main/production acceptance",
+    "Internal save/render failure boundaries beyond these exact five cases remain outside this bounded proof"
+  ],
+  "preservation": {
+    "existing_separate_archives": true,
+    "versions": [
+      0,
+      0
+    ],
+    "both_pinned_exact_readback": true,
+    "private_locators": "WITHHELD",
+    "root_full_backup": false
+  },
+  "session_runs_used": 4,
+  "remaining_diagnostic_budget": 0
+}
