@@ -2590,7 +2590,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone();
         if(accepted)syncApiSettingsForm();
-        notify('Google-Drive-Backup erfolgreich wiederhergestellt.');
+        notify('Portfoliodaten aus Google Drive übernommen.');
         return true;
         }catch(error){
           if(restoreCommitted){

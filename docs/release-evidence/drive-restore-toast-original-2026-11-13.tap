@@ -1,0 +1,32 @@
+✖ Drive backend toast confirms only portfolio data before password adoption (30.910428ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 655.66529
+
+✖ failing tests:
+
+test at tests/settings-replacement.test.mjs:100:1
+✖ Drive backend toast confirms only portfolio data before password adoption (30.910428ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'Google-Drive-Backup erfolgreich wiederhergestellt.'
+  -   'Portfoliodaten aus Google Drive übernommen.'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b7bbb8ab7737/restore/tests/settings-replacement.test.mjs:103:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Google-Drive-Backup erfolgreich wiederhergestellt.' ],
+    expected: [ 'Portfoliodaten aus Google Drive übernommen.' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -96,3 +96,10 @@ test('Drive recovery rejection never carries a confirmed-commit marker',async()=
  h.context.portfolioStore.recoverFromBackup=async()=>{throw Error('SYNTHETIC_RECOVERY_REJECTION');};
  await assert.rejects(h.drive(),error=>error.restoreCommitted===undefined&&/SYNTHETIC_RECOVERY_REJECTION/.test(error.message));
 });
+
+test('Drive backend toast confirms only portfolio data before password adoption',async()=>{
+ const h=harness(),messages=[];h.context.notify=message=>messages.push(message);
+ await h.drive();
+ assert.deepEqual(messages,['Portfoliodaten aus Google Drive übernommen.']);
+ assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');
+});
