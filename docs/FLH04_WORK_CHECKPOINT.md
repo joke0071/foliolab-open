@@ -1,3 +1,30 @@
+## IMPLEMENTED / ETH_STAKING_SNAPSHOT_VERIFIED / RELEASE_BLOCKED · work-0c5363d0ea74-20261113
+
+Vollständiger Ersatzumfang gemäß autorisiertem HND01-Auftrag:
+ETH-Spot→Earn-Principal samt nachfolgender Reward-/Gebührengruppe,
+aktive kanonische JSON-Quellherkunft/Ownership/Journal und dauerhafte
+Originalgruppenrücknahme mit Digest/Wiederanlagesperren. Bestehende Validatoren
+und Tests unverändert, kein Outbox-/Storage-/Krypto-/Autoritätscode.
+Vorcode807af8cabaf0ba2f44dcb51567643433ba30e328/Treee1c4ce29fe0e04246d0ada907a0561a79c7953d9
+vollständig byte-/blobgeprüft. Final143PASS/0FAIL/0SKIP/0CANCELLED/Exit0,
+Node24.22.1,Syntax2PASS (113bestehendeSnapshot+16neueStaking+14bestehendeKraken).
+86Originaleingabenblobgenau/85nachCodeunverändert;einzigeProduktquelleSnapshotmodul.
+Erst15/0,danach16/0und143/0;keinehistorischeTestaddition.
+[Vertrag](FLH04_SNAPSHOT_CONTRACT.md) und
+[Originalbeleg](release-evidence/flh04-snapshot-staking-local-2026-11-13.json).
+
+Raw-/Payload-/CryptoKey-CAS-Vollpreimage/Ablehnungs-/Retry-/Commitanforderungen
+konkretisiert, Lösung ausdrücklich OFFEN/NOT_IMPLEMENTED: JSON/Lifecycle/
+Envelope und vorgelagerte Challenge schließen tatsächlichen Keyslottausch vor
+Commit nicht; Cryptoawait in IDB weiterhin verboten. Aktuelle Rawgleichheit bleibt.
+ProjektimportPlaywright ERR_MODULE_NOT_FOUND;bekannterBrowserfehlstart nichtwiederholt.
+NativeUmgebung/Keyslotmechanismus und unabhängiger qualifizierterKryptoprüfer nötig;
+keine neueReviewpaketerstellung/Selbstfreigabe/Beauftragung.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
+Alle Schutzgates aus [gepinntem Vorgänger](https://github.com/joke0071/foliolab-open/blob/680974992b2666193d7af8568152e14048c5833e/docs/HANDOVER_3de59b8f2b9b_2026-11-13.md) unverändert.
+
+---
+
 ## USD_PRINCIPAL_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-3de59b8f2b9b-20261113
 
 Neuer Fortschritt: vollständige kanonische Kraken-USD-Spot→Earn-UNKNOWN-Principal-

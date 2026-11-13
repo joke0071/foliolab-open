@@ -1,0 +1,575 @@
+{
+  "scope": "complete native Kraken ETH principal/reward+fee snapshot and permanent original-group withdrawal",
+  "baseCommit": "920debdad089b085f21f3fc5ca0c84a27577b22b",
+  "precodeCommit": "807af8cabaf0ba2f44dcb51567643433ba30e328",
+  "precodeTree": "e1c4ce29fe0e04246d0ada907a0561a79c7953d9",
+  "runtime": "Node24.22.1",
+  "final": {
+    "pass": 143,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "composition": {
+      "existingSnapshot": 113,
+      "newStaking": 16,
+      "existingKrakenImportWithdrawal": 14
+    },
+    "output": "TAP version 13\n# Subtest: authoritative EUR execution value survives a non-terminating display price division\nok 1 - authoritative EUR execution value survives a non-terminating display price division\n  ---\n  duration_ms: 162.106631\n  type: 'test'\n  ...\n# Subtest: complete three-leg economic group updates cash, bought asset and distinct crypto fee exactly once\nok 2 - complete three-leg economic group updates cash, bought asset and distinct crypto fee exactly once\n  ---\n  duration_ms: 584.596994\n  type: 'test'\n  ...\n# Subtest: all selected groups are atomic; quota/CAS caller receives only a validated detached draft\nok 3 - all selected groups are atomic; quota/CAS caller receives only a validated detached draft\n  ---\n  duration_ms: 21.569525\n  type: 'test'\n  ...\n# Subtest: changed source ID payload, manual correction, incomplete group and remapping never silently duplicate\nok 4 - changed source ID payload, manual correction, incomplete group and remapping never silently duplicate\n  ---\n  duration_ms: 54.662234\n  type: 'test'\n  ...\n# Subtest: external transfers require explicit counterpart classification; selection never authorizes silent partial commit\nok 5 - external transfers require explicit counterpart classification; selection never authorizes silent partial commit\n  ---\n  duration_ms: 10.642312\n  type: 'test'\n  ...\n# Subtest: staking principal is an internal transfer, reward a separate event and fee a separate debit\nok 6 - staking principal is an internal transfer, reward a separate event and fee a separate debit\n  ---\n  duration_ms: 24.540808\n  type: 'test'\n  ...\n# Subtest: trusted cost basis remains protected and reordered source rows do not change import identity\nok 7 - trusted cost basis remains protected and reordered source rows do not change import identity\n  ---\n  duration_ms: 33.540893\n  type: 'test'\n  ...\n# Subtest: independent inverse amounts: cash/trade/distinct and same-asset fees; evidence survives restore and blocks reordered/remapped overlapping reimport\nok 8 - independent inverse amounts: cash/trade/distinct and same-asset fees; evidence survives restore and blocks reordered/remapped overlapping reimport\n  ---\n  duration_ms: 825.906623\n  type: 'test'\n  ...\n# Subtest: terminal reference withdrawal retains prefix and blocks removal of consumed predecessor\nok 9 - terminal reference withdrawal retains prefix and blocks removal of consumed predecessor\n  ---\n  duration_ms: 130.344994\n  type: 'test'\n  ...\n# Subtest: external cash classification, rewards, principal transfer and fees reverse all legs and flows\nok 10 - external cash classification, rewards, principal transfer and fees reverse all legs and flows\n  ---\n  duration_ms: 489.2727\n  type: 'test'\n  ...\n# Subtest: archive cleanup preserves v5 and independent reference archive\nok 11 - archive cleanup preserves v5 and independent reference archive\n  ---\n  duration_ms: 444.873687\n  type: 'test'\n  ...\n# Subtest: stale approval, missing or partial group, changed payload, manual edits, unknown fields, dependencies and protected basis never mutate\nok 12 - stale approval, missing or partial group, changed payload, manual edits, unknown fields, dependencies and protected basis never mutate\n  ---\n  duration_ms: 197.013247\n  type: 'test'\n  ...\n# Subtest: tampered persistent withdrawal is rejected on backup and restore; no orphan resurrection\nok 13 - tampered persistent withdrawal is rejected on backup and restore; no orphan resurrection\n  ---\n  duration_ms: 208.667995\n  type: 'test'\n  ...\n# Subtest: changed opening quantity and later dated opening cannot authorize a source-anchored inverse\nok 14 - changed opening quantity and later dated opening cannot authorize a source-anchored inverse\n  ---\n  duration_ms: 135.989828\n  type: 'test'\n  ...\n# Subtest: all six generic cash events preserve exact complete provenance and unchanged reimport behavior\nok 15 - all six generic cash events preserve exact complete provenance and unchanged reimport behavior\n  ---\n  duration_ms: 598.321988\n  type: 'test'\n  ...\n# Subtest: all six durable removal audits retain original booking, journal, flows and deleted-source protection\nok 16 - all six durable removal audits retain original booking, journal, flows and deleted-source protection\n  ---\n  duration_ms: 1247.431164\n  type: 'test'\n  ...\n# Subtest: local undo retains its exact preimage guard; snapshot transport does not port transient undo authority\nok 17 - local undo retains its exact preimage guard; snapshot transport does not port transient undo authority\n  ---\n  duration_ms: 268.134283\n  type: 'test'\n  ...\n# Subtest: batched removal retains all originals and separate active imports without dropping audit lineage\nok 18 - batched removal retains all originals and separate active imports without dropping audit lineage\n  ---\n  duration_ms: 347.02938\n  type: 'test'\n  ...\n# Subtest: v4 archive and current UNKNOWN/18 decimal positions coexist without credentials\nok 19 - v4 archive and current UNKNOWN/18 decimal positions coexist without credentials\n  ---\n  duration_ms: 54.52887\n  type: 'test'\n  ...\n# Subtest: complete UH02-v5 and generic cash active/removal chains coexist losslessly\nok 20 - complete UH02-v5 and generic cash active/removal chains coexist losslessly\n  ---\n  duration_ms: 658.608653\n  type: 'test'\n  ...\n# Subtest: generic source and nested JSON extension fields cannot tunnel credentials\nok 21 - generic source and nested JSON extension fields cannot tunnel credentials\n  ---\n  duration_ms: 2323.466622\n  type: 'test'\n  ...\n# Subtest: noncanonical JSON, types, Unicode, duplicate keys and missing required source fields fail closed\nok 22 - noncanonical JSON, types, Unicode, duplicate keys and missing required source fields fail closed\n  ---\n  duration_ms: 4404.190433\n  type: 'test'\n  ...\n# Subtest: source payload, fingerprint, ownership and journal discrepancies reject without repairs\nok 23 - source payload, fingerprint, ownership and journal discrepancies reject without repairs\n  ---\n  duration_ms: 1934.86728\n  type: 'test'\n  ...\n# Subtest: every retained audit level is closed and incomplete audit/flow/ownership chains reject\nok 24 - every retained audit level is closed and incomplete audit/flow/ownership chains reject\n  ---\n  duration_ms: 5676.40239\n  type: 'test'\n  ...\n# Subtest: manual/mixed management and generic trades remain unsupported, including nested source changes\nok 25 - manual/mixed management and generic trades remain unsupported, including nested source changes\n  ---\n  duration_ms: 123.313086\n  type: 'test'\n  ...\n# Subtest: B regression: full supported journal/snapshot keeps independent amount11 and all source IDs\nok 26 - B regression: full supported journal/snapshot keeps independent amount11 and all source IDs\n  ---\n  duration_ms: 107.345385\n  type: 'test'\n  ...\n# Subtest: B regression: unknown root credentials and foreign portfolio identity reject the whole payload\nok 27 - B regression: unknown root credentials and foreign portfolio identity reject the whole payload\n  ---\n  duration_ms: 109.138554\n  type: 'test'\n  ...\n# Subtest: B regression: booking, journal and posting credentials never survive the closed gate\nok 28 - B regression: booking, journal and posting credentials never survive the closed gate\n  ---\n  duration_ms: 45.819689\n  type: 'test'\n  ...\n# Subtest: B regression: historical credential objects reject in revision, quote time and account value\nok 29 - B regression: historical credential objects reject in revision, quote time and account value\n  ---\n  duration_ms: 57.07788\n  type: 'test'\n  ...\n# Subtest: B regression: decimal normalization is rejected without changing source bytes or balances\nok 30 - B regression: decimal normalization is rejected without changing source bytes or balances\n  ---\n  duration_ms: 9.568254\n  type: 'test'\n  ...\n# Subtest: B regression: complete configuration and wallet resume data are blocked, never dropped or rewritten\nok 31 - B regression: complete configuration and wallet resume data are blocked, never dropped or rewritten\n  ---\n  duration_ms: 11.92689\n  type: 'test'\n  ...\n# Subtest: B regression: oversized historic metadata cannot use importer row limits to bypass byte limits\nok 32 - B regression: oversized historic metadata cannot use importer row limits to bypass byte limits\n  ---\n  duration_ms: 514.958824\n  type: 'test'\n  ...\n# Subtest: B budget regression: multibyte bytes, not just character count, bound received plaintext\nok 33 - B budget regression: multibyte bytes, not just character count, bound received plaintext\n  ---\n  duration_ms: 151.474235\n  type: 'test'\n  ...\n# Subtest: B budget regression: deeply nested and excessive-node extensions fail before financial projection\nok 34 - B budget regression: deeply nested and excessive-node extensions fail before financial projection\n  ---\n  duration_ms: 285.166716\n  type: 'test'\n  ...\n# Subtest: accepted BTC/ETH/SOL facts roundtrip exactly with finance, journal, UNKNOWN, null and provenance\nok 35 - accepted BTC/ETH/SOL facts roundtrip exactly with finance, journal, UNKNOWN, null and provenance\n  ---\n  duration_ms: 144.692062\n  type: 'test'\n  ...\n# Subtest: accepted partial/unknown facts preserve null effects, missing opening and missing quotes\nok 36 - accepted partial/unknown facts preserve null effects, missing opening and missing quotes\n  ---\n  duration_ms: 98.439388\n  type: 'test'\n  ...\n# Subtest: v4 archive and accepted history coexist without changing references\nok 37 - v4 archive and accepted history coexist without changing references\n  ---\n  duration_ms: 43.015824\n  type: 'test'\n  ...\n# Subtest: unknown fields reject at every accepted-history nesting level, including credentials and object payloads\nok 38 - unknown fields reject at every accepted-history nesting level, including credentials and object payloads\n  ---\n  duration_ms: 133.318447\n  type: 'test'\n  ...\n# Subtest: normalizing sources, status, timestamps, missing fields or quote decimals rejects instead of repairing\nok 39 - normalizing sources, status, timestamps, missing fields or quote decimals rejects instead of repairing\n  ---\n  duration_ms: 136.133229\n  type: 'test'\n  ...\n# Subtest: duplicate facts/sessions and reordered events cannot be silently deduped or sorted\nok 40 - duplicate facts/sessions and reordered events cannot be silently deduped or sorted\n  ---\n  duration_ms: 22.46238\n  type: 'test'\n  ...\n# Subtest: forged event IDs, orphan streams and false quote bindings reject through existing validators\nok 41 - forged event IDs, orphan streams and false quote bindings reject through existing validators\n  ---\n  duration_ms: 38.4183\n  type: 'test'\n  ...\n# Subtest: canonical resume metadata remains unsupported in full; no portable-history projection drops it\nok 42 - canonical resume metadata remains unsupported in full; no portable-history projection drops it\n  ---\n  duration_ms: 4.924922\n  type: 'test'\n  ...\n# Subtest: v5/import/evidence and malformed price payloads reject even when history is accepted\nok 43 - v5/import/evidence and malformed price payloads reject even when history is accepted\n  ---\n  duration_ms: 22.390946\n  type: 'test'\n  ...\n# Subtest: history retains existing session/event/byte/node/depth limits with no truncation\nok 44 - history retains existing session/event/byte/node/depth limits with no truncation\n  ---\n  duration_ms: 206.30892\n  type: 'test'\n  ...\n# Subtest: all six manual cash types retain complete notes/edit/remove originals, afterbookings and cash flows\nok 45 - all six manual cash types retain complete notes/edit/remove originals, afterbookings and cash flows\n  ---\n  duration_ms: 534.417683\n  type: 'test'\n  ...\n# Subtest: edit then notes then remove continues through repeated snapshot/restore without cutting historical lineage\nok 46 - edit then notes then remove continues through repeated snapshot/restore without cutting historical lineage\n  ---\n  duration_ms: 63.207627\n  type: 'test'\n  ...\n# Subtest: multi-account batch removal preserves separate original identities and sequence for later transactions\nok 47 - multi-account batch removal preserves separate original identities and sequence for later transactions\n  ---\n  duration_ms: 19.106889\n  type: 'test'\n  ...\n# Subtest: v4 archive and UNKNOWN/large-decimal position coexist with manual cash audit history\nok 48 - v4 archive and UNKNOWN/large-decimal position coexist with manual cash audit history\n  ---\n  duration_ms: 10.402584\n  type: 'test'\n  ...\n# Subtest: pure generic CSV removal and manual audit families coexist while repeat-import protection remains\nok 49 - pure generic CSV removal and manual audit families coexist while repeat-import protection remains\n  ---\n  duration_ms: 32.372153\n  type: 'test'\n  ...\n# Subtest: stale current booking and documentary afterbookings stay distinct and never grant a follow-up edit\nok 50 - stale current booking and documentary afterbookings stay distinct and never grant a follow-up edit\n  ---\n  duration_ms: 23.788738\n  type: 'test'\n  ...\n# Subtest: extensions at every original/after/audit level reject whole snapshot without source mutation\nok 51 - extensions at every original/after/audit level reject whole snapshot without source mutation\n  ---\n  duration_ms: 110.279757\n  type: 'test'\n  ...\n# Subtest: wrong scope, audit forms, original journals and artificial financial audit postings reject\nok 52 - wrong scope, audit forms, original journals and artificial financial audit postings reject\n  ---\n  duration_ms: 170.257979\n  type: 'test'\n  ...\n# Subtest: manual removal requires null afterbookings and does not admit mixed imported originals\nok 53 - manual removal requires null afterbookings and does not admit mixed imported originals\n  ---\n  duration_ms: 31.160954\n  type: 'test'\n  ...\n# Subtest: canonical CSV, FX and retained crypto histories roundtrip together without changing finance\nok 54 - canonical CSV, FX and retained crypto histories roundtrip together without changing finance\n  ---\n  duration_ms: 163.638071\n  type: 'test'\n  ...\n# Subtest: all existing confirmed providers and v4 archives retain provenance and price type\nok 55 - all existing confirmed providers and v4 archives retain provenance and price type\n  ---\n  duration_ms: 179.161093\n  type: 'test'\n  ...\n# Subtest: credential-bearing settings excluded while every history value and map order stay intact\nok 56 - credential-bearing settings excluded while every history value and map order stay intact\n  ---\n  duration_ms: 16.441158\n  type: 'test'\n  ...\n# Subtest: unknown keys and object-valued secrets reject at each newly admitted level\nok 57 - unknown keys and object-valued secrets reject at each newly admitted level\n  ---\n  duration_ms: 129.007068\n  type: 'test'\n  ...\n# Subtest: orphan and dangerous history map identities block the whole portfolio\nok 58 - orphan and dangerous history map identities block the whole portfolio\n  ---\n  duration_ms: 40.366249\n  type: 'test'\n  ...\n# Subtest: retained history cannot change confirmed position, provider, retention, currency or price type\nok 59 - retained history cannot change confirmed position, provider, retention, currency or price type\n  ---\n  duration_ms: 142.34328\n  type: 'test'\n  ...\n# Subtest: invalid, duplicate or reversed price points never normalize silently\nok 60 - invalid, duplicate or reversed price points never normalize silently\n  ---\n  duration_ms: 56.534594\n  type: 'test'\n  ...\n# Subtest: FX source, date, duplicate, reference window and rate validation remain mandatory\nok 61 - FX source, date, duplicate, reference window and rate validation remain mandatory\n  ---\n  duration_ms: 74.562289\n  type: 'test'\n  ...\n# Subtest: known fields needing defaults, uppercase or projection reject lossily\nok 62 - known fields needing defaults, uppercase or projection reject lossily\n  ---\n  duration_ms: 43.797935\n  type: 'test'\n  ...\n# Subtest: limits reject whole histories without truncation or publishing other valid histories\nok 63 - limits reject whole histories without truncation or publishing other valid histories\n  ---\n  duration_ms: 982.962898\n  type: 'test'\n  ...\n# Subtest: unsupported evidence, v5 and pending state still block otherwise supported histories\nok 64 - unsupported evidence, v5 and pending state still block otherwise supported histories\n  ---\n  duration_ms: 31.917061\n  type: 'test'\n  ...\n# Subtest: N:M split receipt provenance roundtrips with exact finance, journal, FX and history\nok 65 - N:M split receipt provenance roundtrips with exact finance, journal, FX and history\n  ---\n  duration_ms: 161.697373\n  type: 'test'\n  ...\n# Subtest: unlinked receipts, absent evidence, empty evidence and optional empty ledger retain shape\nok 66 - unlinked receipts, absent evidence, empty evidence and optional empty ledger retain shape\n  ---\n  duration_ms: 93.943358\n  type: 'test'\n  ...\n# Subtest: link unlink relink chronology and receipt/event order stay exact in v4\nok 67 - link unlink relink chronology and receipt/event order stay exact in v4\n  ---\n  duration_ms: 45.484678\n  type: 'test'\n  ...\n# Subtest: stale session wallet or fingerprints remain conflicts, never new authority\nok 68 - stale session wallet or fingerprints remain conflicts, never new authority\n  ---\n  duration_ms: 104.844265\n  type: 'test'\n  ...\n# Subtest: settings excluded and all unknown fields reject at every purchase level\nok 69 - settings excluded and all unknown fields reject at every purchase level\n  ---\n  duration_ms: 109.187514\n  type: 'test'\n  ...\n# Subtest: known purchase fields reject wrong types and arbitrary config objects\nok 70 - known purchase fields reject wrong types and arbitrary config objects\n  ---\n  duration_ms: 116.411857\n  type: 'test'\n  ...\n# Subtest: corrupt receipts, arithmetic, IDs and duplicate receipts fail the existing validator\nok 71 - corrupt receipts, arithmetic, IDs and duplicate receipts fail the existing validator\n  ---\n  duration_ms: 79.474212\n  type: 'test'\n  ...\n# Subtest: orphan receipt, invalid decisions, duplicated active events and invalid unlink fail\nok 72 - orphan receipt, invalid decisions, duplicated active events and invalid unlink fail\n  ---\n  duration_ms: 146.297926\n  type: 'test'\n  ...\n# Subtest: validator projections timestamps decimals and missing receipt IDs cannot normalize silently\nok 73 - validator projections timestamps decimals and missing receipt IDs cannot normalize silently\n  ---\n  duration_ms: 42.522566\n  type: 'test'\n  ...\n# Subtest: populated bitcoin ledger stays v5-gated and is never silently pruned or downgraded\nok 74 - populated bitcoin ledger stays v5-gated and is never silently pruned or downgraded\n  ---\n  duration_ms: 21.326221\n  type: 'test'\n  ...\n# Subtest: oversized decision references and malformed ledger block the entire portfolio\nok 75 - oversized decision references and malformed ledger block the entire portfolio\n  ---\n  duration_ms: 54.213996\n  type: 'test'\n  ...\n# Subtest: other evidence, pending history and v5 still reject supported purchase receipts\nok 76 - other evidence, pending history and v5 still reject supported purchase receipts\n  ---\n  duration_ms: 38.587184\n  type: 'test'\n  ...\n# Subtest: full principal/reward/fee provenance survives, exact quantities and unknown costs are unchanged\nok 77 - full principal/reward/fee provenance survives, exact quantities and unknown costs are unchanged\n  ---\n  duration_ms: 214.50651\n  type: 'test'\n  ...\n# Subtest: complete restore/reimport/terminal removal chain keeps both permanent replay barriers\nok 78 - complete restore/reimport/terminal removal chain keeps both permanent replay barriers\n  ---\n  duration_ms: 421.301799\n  type: 'test'\n  ...\n# Subtest: archived chain retains provenance and withdrawal cleans only its original booking IDs\nok 79 - archived chain retains provenance and withdrawal cleans only its original booking IDs\n  ---\n  duration_ms: 101.86079\n  type: 'test'\n  ...\n# Subtest: local CSV Undo keeps exact model preimage, snapshot supplies no new undo receipt\nok 80 - local CSV Undo keeps exact model preimage, snapshot supplies no new undo receipt\n  ---\n  duration_ms: 39.623746\n  type: 'test'\n  ...\n# Subtest: existing full USD UNKNOWN chain coexists without broadening the v5 marker rule\nok 81 - existing full USD UNKNOWN chain coexists without broadening the v5 marker rule\n  ---\n  duration_ms: 93.205121\n  type: 'test'\n  ...\n# Subtest: manual cash history coexists through snapshot and independent group removal\nok 82 - manual cash history coexists through snapshot and independent group removal\n  ---\n  duration_ms: 109.178045\n  type: 'test'\n  ...\n# Subtest: all nested active and permanent evidence branches reject unknown credentials\nok 83 - all nested active and permanent evidence branches reject unknown credentials\n  ---\n  duration_ms: 156.882945\n  type: 'test'\n  ...\n# Subtest: full permanent original/digest/count/documentation tamper never normalizes or prunes\nok 84 - full permanent original/digest/count/documentation tamper never normalizes or prunes\n  ---\n  duration_ms: 92.470427\n  type: 'test'\n  ...\n# Subtest: partial active reward/fee group remains unsupported even after coherent ledger removal\nok 85 - partial active reward/fee group remains unsupported even after coherent ledger removal\n  ---\n  duration_ms: 20.070706\n  type: 'test'\n  ...\n# Subtest: source action and binding edits stay rejected after ownership is recomputed\nok 86 - source action and binding edits stay rejected after ownership is recomputed\n  ---\n  duration_ms: 63.023968\n  type: 'test'\n  ...\n# Subtest: same group reward/fee differing payloads and detached journals cannot pass the complete group gate\nok 87 - same group reward/fee differing payloads and detached journals cannot pass the complete group gate\n  ---\n  duration_ms: 28.887722\n  type: 'test'\n  ...\n# Subtest: ETH alone grants neither v5 nor empty/filled Flatex marker support\nok 88 - ETH alone grants neither v5 nor empty/filled Flatex marker support\n  ---\n  duration_ms: 100.141228\n  type: 'test'\n  ...\n# Subtest: other native coin families and ordinary trade groups remain unsupported in full\nok 89 - other native coin families and ordinary trade groups remain unsupported in full\n  ---\n  duration_ms: 69.099096\n  type: 'test'\n  ...\n# Subtest: noncanonical source payload and source ownership extensions are never stripped\nok 90 - noncanonical source payload and source ownership extensions are never stripped\n  ---\n  duration_ms: 28.390182\n  type: 'test'\n  ...\n# Subtest: unsupported extra payload beside an otherwise complete valid chain blocks the whole snapshot\nok 91 - unsupported extra payload beside an otherwise complete valid chain blocks the whole snapshot\n  ---\n  duration_ms: 39.55182\n  type: 'test'\n  ...\n# Subtest: resealed ownership cannot conceal changed economic leg relations in active or permanent groups\nok 92 - resealed ownership cannot conceal changed economic leg relations in active or permanent groups\n  ---\n  duration_ms: 243.195775\n  type: 'test'\n  ...\n# Subtest: full active principal provenance and empty v5 marker survive without any monetary substitution\nok 93 - full active principal provenance and empty v5 marker survive without any monetary substitution\n  ---\n  duration_ms: 117.037262\n  type: 'test'\n  ...\n# Subtest: active snapshot restore retains duplicate replay, complete withdrawal and permanent replay protection\nok 94 - active snapshot restore retains duplicate replay, complete withdrawal and permanent replay protection\n  ---\n  duration_ms: 102.935027\n  type: 'test'\n  ...\n# Subtest: local exact-preimage Undo stays local and gains no authority from snapshot restoration\nok 95 - local exact-preimage Undo stays local and gains no authority from snapshot restoration\n  ---\n  duration_ms: 14.614912\n  type: 'test'\n  ...\n# Subtest: archived principal remains v5 and keeps the full documentary withdrawal path\nok 96 - archived principal remains v5 and keeps the full documentary withdrawal path\n  ---\n  duration_ms: 124.608372\n  type: 'test'\n  ...\n# Subtest: known current FX cannot replace historical UNKNOWN or grant historical EUR valuation\nok 97 - known current FX cannot replace historical UNKNOWN or grant historical EUR valuation\n  ---\n  duration_ms: 76.968378\n  type: 'test'\n  ...\n# Subtest: UH02 purchase provenance coexists with the complete USD v5 chain and marker\nok 98 - UH02 purchase provenance coexists with the complete USD v5 chain and marker\n  ---\n  duration_ms: 96.321728\n  type: 'test'\n  ...\n# Subtest: generic CSV removal and manual management history coexist without altering principal provenance\nok 99 - generic CSV removal and manual management history coexist without altering principal provenance\n  ---\n  duration_ms: 100.514035\n  type: 'test'\n  ...\n# Subtest: missing/downgraded/filled marker and marker-only portfolios reject without version bypass\nok 100 - missing/downgraded/filled marker and marker-only portfolios reject without version bypass\n  ---\n  duration_ms: 97.695218\n  type: 'test'\n  ...\n# Subtest: active and withdrawn JSON payload extensions and noncanonical encodings cannot hide credentials\nok 101 - active and withdrawn JSON payload extensions and noncanonical encodings cannot hide credentials\n  ---\n  duration_ms: 105.028266\n  type: 'test'\n  ...\n# Subtest: unknown fields at every permanent-original layer reject even with a matching digest\nok 102 - unknown fields at every permanent-original layer reject even with a matching digest\n  ---\n  duration_ms: 74.529593\n  type: 'test'\n  ...\n# Subtest: existing validators still reject altered UNKNOWN amounts, bindings, ownership and source roles\nok 103 - existing validators still reject altered UNKNOWN amounts, bindings, ownership and source roles\n  ---\n  duration_ms: 237.133329\n  type: 'test'\n  ...\n# Subtest: permanent proof cannot lose originals, digest, ownership, identity or nonresurrection checks\nok 104 - permanent proof cannot lose originals, digest, ownership, identity or nonresurrection checks\n  ---\n  duration_ms: 576.728423\n  type: 'test'\n  ...\n# Subtest: other Kraken journal roles and incompatible USD ownership stay outside this scope\nok 105 - other Kraken journal roles and incompatible USD ownership stay outside this scope\n  ---\n  duration_ms: 522.542251\n  type: 'test'\n  ...\n# Subtest: v5 complete N:1 chain preserves independent quantities, fees, financing and exact provenance\nok 106 - v5 complete N:1 chain preserves independent quantities, fees, financing and exact provenance\n  ---\n  duration_ms: 79.613252\n  type: 'test'\n  ...\n# Subtest: v5 purchase without optional Ledger observations is a complete economic chain\nok 107 - v5 purchase without optional Ledger observations is a complete economic chain\n  ---\n  duration_ms: 35.776088\n  type: 'test'\n  ...\n# Subtest: N:M source facts retain every own vout and fingerprint, without double quantity effects\nok 108 - N:M source facts retain every own vout and fingerprint, without double quantity effects\n  ---\n  duration_ms: 59.835625\n  type: 'test'\n  ...\n# Subtest: Ledger first, Bittr first and combined imports roundtrip with one unchanged economic effect\nok 109 - Ledger first, Bittr first and combined imports roundtrip with one unchanged economic effect\n  ---\n  duration_ms: 104.841736\n  type: 'test'\n  ...\n# Subtest: permanent undo tombstone retains documentary Ledger and receipts, prevents reimport\nok 110 - permanent undo tombstone retains documentary Ledger and receipts, prevents reimport\n  ---\n  duration_ms: 58.330234\n  type: 'test'\n  ...\n# Subtest: archive coexists with v5 without format downgrade\nok 111 - archive coexists with v5 without format downgrade\n  ---\n  duration_ms: 28.423669\n  type: 'test'\n  ...\n# Subtest: missing optional chain history stays missing; snapshot confers no new import permission\nok 112 - missing optional chain history stays missing; snapshot confers no new import permission\n  ---\n  duration_ms: 10.453898\n  type: 'test'\n  ...\n# Subtest: stale documentary event fingerprints survive exactly and retain existing preview conflict\nok 113 - stale documentary event fingerprints survive exactly and retain existing preview conflict\n  ---\n  duration_ms: 12.366331\n  type: 'test'\n  ...\n# Subtest: complete chain coexists with UNKNOWN FX, 18 decimals, price history and no local settings\nok 114 - complete chain coexists with UNKNOWN FX, 18 decimals, price history and no local settings\n  ---\n  duration_ms: 32.738156\n  type: 'test'\n  ...\n# Subtest: internal undefined wallet projection keys do not reject canonical persisted JSON; actual defaults do\nok 115 - internal undefined wallet projection keys do not reject canonical persisted JSON; actual defaults do\n  ---\n  duration_ms: 45.860697\n  type: 'test'\n  ...\n# Subtest: empty v5 and isolated populated Ledger remain wholly unsupported\nok 116 - empty v5 and isolated populated Ledger remain wholly unsupported\n  ---\n  duration_ms: 9.351519\n  type: 'test'\n  ...\n# Subtest: downgrades and future versions reject full chain without partial output\nok 117 - downgrades and future versions reject full chain without partial output\n  ---\n  duration_ms: 34.484149\n  type: 'test'\n  ...\n# Subtest: unknown provenance keys reject at import source, payload, facts and event levels\nok 118 - unknown provenance keys reject at import source, payload, facts and event levels\n  ---\n  duration_ms: 48.422997\n  type: 'test'\n  ...\n# Subtest: opaque ownership string cannot tunnel extension keys or altered journal facts\nok 119 - opaque ownership string cannot tunnel extension keys or altered journal facts\n  ---\n  duration_ms: 20.114455\n  type: 'test'\n  ...\n# Subtest: JSON encoded provenance rejects duplicate keys, alternate encoding, malformed Unicode and wrong types\nok 120 - JSON encoded provenance rejects duplicate keys, alternate encoding, malformed Unicode and wrong types\n  ---\n  duration_ms: 71.375268\n  type: 'test'\n  ...\n# Subtest: missing and contradictory provenance/Receipt/Wallet/financing records reject using existing validators\nok 121 - missing and contradictory provenance/Receipt/Wallet/financing records reject using existing validators\n  ---\n  duration_ms: 91.553178\n  type: 'test'\n  ...\n# Subtest: unknown keys across complete chain and unrelated proof families remain rejected\nok 122 - unknown keys across complete chain and unrelated proof families remain rejected\n  ---\n  duration_ms: 58.637323\n  type: 'test'\n  ...\n# Subtest: credential-bearing local settings are wholly excluded; source bytes remain unchanged\nok 123 - credential-bearing local settings are wholly excluded; source bytes remain unchanged\n  ---\n  duration_ms: 32.771315\n  type: 'test'\n  ...\n# Subtest: exact 18-decimal quantity, UNKNOWN FX/null and financial IDs survive without repair\nok 124 - exact 18-decimal quantity, UNKNOWN FX/null and financial IDs survive without repair\n  ---\n  duration_ms: 5.540161\n  type: 'test'\n  ...\n# Subtest: simple journal retains balanced postings, exact amounts, ordering and links\nok 125 - simple journal retains balanced postings, exact amounts, ordering and links\n  ---\n  duration_ms: 23.816252\n  type: 'test'\n  ...\n# Subtest: empty history is retained; malformed accepted sessions and any pending history reject\nok 126 - empty history is retained; malformed accepted sessions and any pending history reject\n  ---\n  duration_ms: 5.396392\n  type: 'test'\n  ...\n# Subtest: v4 booking archive is preserved with its reference identity\nok 127 - v4 booking archive is preserved with its reference identity\n  ---\n  duration_ms: 3.137528\n  type: 'test'\n  ...\n# Subtest: history snapshot exact totals, revisions and quote provenance remain unchanged\nok 128 - history snapshot exact totals, revisions and quote provenance remain unchanged\n  ---\n  duration_ms: 4.956557\n  type: 'test'\n  ...\n# Subtest: unknown top-level payload/configuration/vault/extensions are rejected, not dropped\nok 129 - unknown top-level payload/configuration/vault/extensions are rejected, not dropped\n  ---\n  duration_ms: 4.707689\n  type: 'test'\n  ...\n# Subtest: unknown nested keys cannot hide credentials in allowed financial entities\nok 130 - unknown nested keys cannot hide credentials in allowed financial entities\n  ---\n  duration_ms: 4.0854\n  type: 'test'\n  ...\n# Subtest: unrecognized wallet and snapshot nested extensions fail closed\nok 131 - unrecognized wallet and snapshot nested extensions fail closed\n  ---\n  duration_ms: 5.396047\n  type: 'test'\n  ...\n# Subtest: duplicate provider/position and orphan account identity reject via existing financial validator\nok 132 - duplicate provider/position and orphan account identity reject via existing financial validator\n  ---\n  duration_ms: 6.48726\n  type: 'test'\n  ...\n# Subtest: balanced but orphaned journal posting and duplicate posting IDs reject\nok 133 - balanced but orphaned journal posting and duplicate posting IDs reject\n  ---\n  duration_ms: 2.780891\n  type: 'test'\n  ...\n# Subtest: unbalanced journal cannot pass an allowlisted shape\nok 134 - unbalanced journal cannot pass an allowlisted shape\n  ---\n  duration_ms: 1.753332\n  type: 'test'\n  ...\n# Subtest: unknown fee stays null in allowed booking; no zero default is inserted\nok 135 - unknown fee stays null in allowed booking; no zero default is inserted\n  ---\n  duration_ms: 2.214294\n  type: 'test'\n  ...\n# Subtest: opaque import source/proof branches block instead of stripping their identities\nok 136 - opaque import source/proof branches block instead of stripping their identities\n  ---\n  duration_ms: 3.829701\n  type: 'test'\n  ...\n# Subtest: malformed price and unsupported evidence/audit branches fail without partial output\nok 137 - malformed price and unsupported evidence/audit branches fail without partial output\n  ---\n  duration_ms: 8.481318\n  type: 'test'\n  ...\n# Subtest: normalization, trimmed IDs/labels and numeric FX repair are rejected, never silently emitted\nok 138 - normalization, trimmed IDs/labels and numeric FX repair are rejected, never silently emitted\n  ---\n  duration_ms: 3.259348\n  type: 'test'\n  ...\n# Subtest: received settings and extra envelope keys are forbidden\nok 139 - received settings and extra envelope keys are forbidden\n  ---\n  duration_ms: 1.822655\n  type: 'test'\n  ...\n# Subtest: duplicate keys, extra whitespace and alternate JSON numeric spellings are rejected\nok 140 - duplicate keys, extra whitespace and alternate JSON numeric spellings are rejected\n  ---\n  duration_ms: 2.785689\n  type: 'test'\n  ...\n# Subtest: malformed Unicode, malformed JSON and unsupported versions reject\nok 141 - malformed Unicode, malformed JSON and unsupported versions reject\n  ---\n  duration_ms: 2.99031\n  type: 'test'\n  ...\n# Subtest: invalid types and over-limit text reject before JSON processing\nok 142 - invalid types and over-limit text reject before JSON processing\n  ---\n  duration_ms: 0.500149\n  type: 'test'\n  ...\n# Subtest: escaped lone surrogates inside financial strings never reach emitted data\nok 143 - escaped lone surrogates inside financial strings never reach emitted data\n  ---\n  duration_ms: 4.051209\n  type: 'test'\n  ...\n1..143\n# tests 143\n# suites 0\n# pass 143\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 47846.524402\n"
+  },
+  "isolatedRuns": [
+    {
+      "pass": 15,
+      "fail": 0,
+      "output": "✔ full principal/reward/fee provenance survives, exact quantities and unknown costs are unchanged (129.831412ms)\n✔ complete restore/reimport/terminal removal chain keeps both permanent replay barriers (174.850915ms)\n✔ archived chain retains provenance and withdrawal cleans only its original booking IDs (90.282349ms)\n✔ local CSV Undo keeps exact model preimage, snapshot supplies no new undo receipt (19.420176ms)\n✔ existing full USD UNKNOWN chain coexists without broadening the v5 marker rule (52.036774ms)\n✔ manual cash history coexists through snapshot and independent group removal (39.723581ms)\n✔ all nested active and permanent evidence branches reject unknown credentials (58.736082ms)\n✔ full permanent original/digest/count/documentation tamper never normalizes or prunes (39.078938ms)\n✔ partial active reward/fee group remains unsupported even after coherent ledger removal (14.753564ms)\n✔ source action and binding edits stay rejected after ownership is recomputed (53.10211ms)\n✔ same group reward/fee differing payloads and detached journals cannot pass the complete group gate (26.412236ms)\n✔ ETH alone grants neither v5 nor empty/filled Flatex marker support (101.687313ms)\n✔ other native coin families and ordinary trade groups remain unsupported in full (35.261763ms)\n✔ noncanonical source payload and source ownership extensions are never stripped (18.89697ms)\n✔ unsupported extra payload beside an otherwise complete valid chain blocks the whole snapshot (22.792346ms)\nℹ tests 15\nℹ suites 0\nℹ pass 15\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1901.300771\n"
+    },
+    {
+      "pass": 16,
+      "fail": 0,
+      "output": "✔ full principal/reward/fee provenance survives, exact quantities and unknown costs are unchanged (111.141099ms)\n✔ complete restore/reimport/terminal removal chain keeps both permanent replay barriers (109.947862ms)\n✔ archived chain retains provenance and withdrawal cleans only its original booking IDs (50.207816ms)\n✔ local CSV Undo keeps exact model preimage, snapshot supplies no new undo receipt (27.600418ms)\n✔ existing full USD UNKNOWN chain coexists without broadening the v5 marker rule (41.457876ms)\n✔ manual cash history coexists through snapshot and independent group removal (25.325845ms)\n✔ all nested active and permanent evidence branches reject unknown credentials (46.2322ms)\n✔ full permanent original/digest/count/documentation tamper never normalizes or prunes (34.024931ms)\n✔ partial active reward/fee group remains unsupported even after coherent ledger removal (7.61088ms)\n✔ source action and binding edits stay rejected after ownership is recomputed (36.837927ms)\n✔ same group reward/fee differing payloads and detached journals cannot pass the complete group gate (34.627471ms)\n✔ ETH alone grants neither v5 nor empty/filled Flatex marker support (25.292881ms)\n✔ other native coin families and ordinary trade groups remain unsupported in full (17.624727ms)\n✔ noncanonical source payload and source ownership extensions are never stripped (14.514073ms)\n✔ unsupported extra payload beside an otherwise complete valid chain blocks the whole snapshot (21.9984ms)\n✔ resealed ownership cannot conceal changed economic leg relations in active or permanent groups (90.609961ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1126.45405\n"
+    }
+  ],
+  "syntax": [
+    {
+      "path": "src/sync-snapshot.js",
+      "exitCode": 0
+    },
+    {
+      "path": "tests/sync-snapshot-staking.test.mjs",
+      "exitCode": 0
+    }
+  ],
+  "originalInputs": [
+    {
+      "path": "tests/sync-snapshot-usd-principal.test.mjs",
+      "originalBlob": "ba09c3ec06ce0f87f03852d3495b14c05a389e76",
+      "localBlob": "ba09c3ec06ce0f87f03852d3495b14c05a389e76",
+      "unchanged": true
+    },
+    {
+      "path": "tests/kraken-import.test.mjs",
+      "originalBlob": "ca36bfd4c84ea212e1f3b8d6ac172a6909a6e9fd",
+      "localBlob": "ca36bfd4c84ea212e1f3b8d6ac172a6909a6e9fd",
+      "unchanged": true
+    },
+    {
+      "path": "tests/kraken-import-fixture.mjs",
+      "originalBlob": "1a4b6a55e38e361ae7e4a9a2cd4e3dae2887de9d",
+      "localBlob": "1a4b6a55e38e361ae7e4a9a2cd4e3dae2887de9d",
+      "unchanged": true
+    },
+    {
+      "path": "src/sync-snapshot.js",
+      "originalBlob": "1e4dd3073b2a724678ad2a199ba6170356ab4b15",
+      "localBlob": "33048f303c01afac7d302c541a3761fef0154120",
+      "unchanged": false
+    },
+    {
+      "path": "tests/sync-snapshot-management.test.mjs",
+      "originalBlob": "5cd395f462f23ae63d38baef8c7b835102304fbb",
+      "localBlob": "5cd395f462f23ae63d38baef8c7b835102304fbb",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-history.test.mjs",
+      "originalBlob": "a69cbc6466754dc65cff4b58d524df67060297b8",
+      "localBlob": "a69cbc6466754dc65cff4b58d524df67060297b8",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-purchase-evidence.test.mjs",
+      "originalBlob": "b8a955082135dacc50470c78345de684eb096812",
+      "localBlob": "b8a955082135dacc50470c78345de684eb096812",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-v5-bitcoin.test.mjs",
+      "originalBlob": "ce50a8058371f63be1aa96f99b333469dd1e96e4",
+      "localBlob": "ce50a8058371f63be1aa96f99b333469dd1e96e4",
+      "unchanged": true
+    },
+    {
+      "path": "tests/kraken-withdrawal.test.mjs",
+      "originalBlob": "9d942340ebce726c1da4e4bd0537e8a12e5382a0",
+      "localBlob": "9d942340ebce726c1da4e4bd0537e8a12e5382a0",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot.test.mjs",
+      "originalBlob": "8e3dab3a48323606d8e86d715340f35584e8c24b",
+      "localBlob": "8e3dab3a48323606d8e86d715340f35584e8c24b",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-csv-cash.test.mjs",
+      "originalBlob": "2b5d4cdb18bfd40bd027ec84c61c1774435f52d3",
+      "localBlob": "2b5d4cdb18bfd40bd027ec84c61c1774435f52d3",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-price-history.test.mjs",
+      "originalBlob": "5fe668b2797d219a90f21ebaa65a84776f4dce26",
+      "localBlob": "5fe668b2797d219a90f21ebaa65a84776f4dce26",
+      "unchanged": true
+    },
+    {
+      "path": "tests/kraken-ledger-fixture.mjs",
+      "originalBlob": "68b56cabd842a6f0bed3d10eed98987df3d23f0a",
+      "localBlob": "68b56cabd842a6f0bed3d10eed98987df3d23f0a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/sync-snapshot-gap-regressions.test.mjs",
+      "originalBlob": "1f5943e754c19c997e761098ccd6be0321a1c167",
+      "localBlob": "1f5943e754c19c997e761098ccd6be0321a1c167",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-import.js",
+      "originalBlob": "c232ff453d806a9ef093f59ab5e835713cac5f63",
+      "localBlob": "c232ff453d806a9ef093f59ab5e835713cac5f63",
+      "unchanged": true
+    },
+    {
+      "path": "src/import-identity.js",
+      "originalBlob": "9c80c33266d3c769d0185e3e89cf182c192f1406",
+      "localBlob": "9c80c33266d3c769d0185e3e89cf182c192f1406",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "originalBlob": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107",
+      "localBlob": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107",
+      "unchanged": true
+    },
+    {
+      "path": "tests/wallet-history-fixtures.mjs",
+      "originalBlob": "1949b9138f70a094b7cd715a9eca4bfe87846adc",
+      "localBlob": "1949b9138f70a094b7cd715a9eca4bfe87846adc",
+      "unchanged": true
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "originalBlob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+      "localBlob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+      "unchanged": true
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "originalBlob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+      "localBlob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+      "unchanged": true
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "originalBlob": "edcbe5570a903271d07ddc637bd876071e85a40a",
+      "localBlob": "edcbe5570a903271d07ddc637bd876071e85a40a",
+      "unchanged": true
+    },
+    {
+      "path": "src/csv-batch.js",
+      "originalBlob": "0356e6cd8550f3107742603da2fde9fa7fbcc7df",
+      "localBlob": "0356e6cd8550f3107742603da2fde9fa7fbcc7df",
+      "unchanged": true
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "originalBlob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+      "localBlob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+      "unchanged": true
+    },
+    {
+      "path": "src/booking-management.js",
+      "originalBlob": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+      "localBlob": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/release-evidence/uh05-usd-principal-decimal100.json",
+      "originalBlob": "71de1ee8606e08b0245ea503edcdc8b8c0dbc701",
+      "localBlob": "71de1ee8606e08b0245ea503edcdc8b8c0dbc701",
+      "unchanged": true
+    },
+    {
+      "path": "src/booking-history.js",
+      "originalBlob": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+      "localBlob": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+      "unchanged": true
+    },
+    {
+      "path": "tests/kraken-usd-principal-fixture.mjs",
+      "originalBlob": "eb45af9cf6e7e2698fc27c56bbda40b4535b9567",
+      "localBlob": "eb45af9cf6e7e2698fc27c56bbda40b4535b9567",
+      "unchanged": true
+    },
+    {
+      "path": "src/decimal.js",
+      "originalBlob": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+      "localBlob": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+      "unchanged": true
+    },
+    {
+      "path": "src/historical-csv.js",
+      "originalBlob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+      "localBlob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+      "unchanged": true
+    },
+    {
+      "path": "tests/ledger-live-fixture.mjs",
+      "originalBlob": "f2825a6a9b072ed5cc8787eec51c6ae8c3621b4c",
+      "localBlob": "f2825a6a9b072ed5cc8787eec51c6ae8c3621b4c",
+      "unchanged": true
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "originalBlob": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+      "localBlob": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+      "unchanged": true
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "originalBlob": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+      "localBlob": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-source-plan.js",
+      "originalBlob": "35139f556f80b2fb38567e6139c23448d32a7fa0",
+      "localBlob": "35139f556f80b2fb38567e6139c23448d32a7fa0",
+      "unchanged": true
+    },
+    {
+      "path": "src/model.js",
+      "originalBlob": "3ab1397af6870f1b356f9696451170697eafbf36",
+      "localBlob": "3ab1397af6870f1b356f9696451170697eafbf36",
+      "unchanged": true
+    },
+    {
+      "path": "src/sync-payload-integrity.js",
+      "originalBlob": "99a91dd41d911f5df5b3ef9328a29de4352af57b",
+      "localBlob": "99a91dd41d911f5df5b3ef9328a29de4352af57b",
+      "unchanged": true
+    },
+    {
+      "path": "src/transactions.js",
+      "originalBlob": "306dfd8f06b41f4e6414ecbb248124fbfb726402",
+      "localBlob": "306dfd8f06b41f4e6414ecbb248124fbfb726402",
+      "unchanged": true
+    },
+    {
+      "path": "src/csv-import.js",
+      "originalBlob": "6522fca91a5b58a1d9f468e7c499bab93153378f",
+      "localBlob": "6522fca91a5b58a1d9f468e7c499bab93153378f",
+      "unchanged": true
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "originalBlob": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+      "localBlob": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-ledger.js",
+      "originalBlob": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+      "localBlob": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "originalBlob": "320637c48fc98ebaecc7c46b1a21266767c964e6",
+      "localBlob": "320637c48fc98ebaecc7c46b1a21266767c964e6",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "originalBlob": "782cab38bb79daa0886c6ab66559f61792279dd1",
+      "localBlob": "782cab38bb79daa0886c6ab66559f61792279dd1",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "originalBlob": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+      "localBlob": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+      "unchanged": true
+    },
+    {
+      "path": "src/quote-quality.js",
+      "originalBlob": "3ec1f74b2c10caef09a400592db05a5db1dda9d6",
+      "localBlob": "3ec1f74b2c10caef09a400592db05a5db1dda9d6",
+      "unchanged": true
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "originalBlob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+      "localBlob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+      "unchanged": true
+    },
+    {
+      "path": "src/csv-records.js",
+      "originalBlob": "a38aad028a30776022c6c8950a2699a6694962b4",
+      "localBlob": "a38aad028a30776022c6c8950a2699a6694962b4",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-native.js",
+      "originalBlob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "localBlob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "unchanged": true
+    },
+    {
+      "path": "src/position-selection.js",
+      "originalBlob": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+      "localBlob": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+      "unchanged": true
+    },
+    {
+      "path": "src/backup-limits.js",
+      "originalBlob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+      "localBlob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+      "unchanged": true
+    },
+    {
+      "path": "src/position-history.js",
+      "originalBlob": "20afdf678e520b2b361d6c1c02a6604f5130659f",
+      "localBlob": "20afdf678e520b2b361d6c1c02a6604f5130659f",
+      "unchanged": true
+    },
+    {
+      "path": "src/assets.js",
+      "originalBlob": "054ba656af6145f96bf93a566009ed40f45603cb",
+      "localBlob": "054ba656af6145f96bf93a566009ed40f45603cb",
+      "unchanged": true
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "originalBlob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+      "localBlob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+      "unchanged": true
+    },
+    {
+      "path": "src/fx-state.js",
+      "originalBlob": "0c0239573d9306da2f7d66da21ad8537ce123783",
+      "localBlob": "0c0239573d9306da2f7d66da21ad8537ce123783",
+      "unchanged": true
+    },
+    {
+      "path": "src/refresh-frequency.js",
+      "originalBlob": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3",
+      "localBlob": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3",
+      "unchanged": true
+    },
+    {
+      "path": "src/retired-providers.js",
+      "originalBlob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+      "localBlob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+      "unchanged": true
+    },
+    {
+      "path": "src/reference-listings.js",
+      "originalBlob": "3ba091983e64a631ad187ebb302299380db49c02",
+      "localBlob": "3ba091983e64a631ad187ebb302299380db49c02",
+      "unchanged": true
+    },
+    {
+      "path": "src/wallet-identity.js",
+      "originalBlob": "7337ad57a531189676f747fdf6d1a925170f4004",
+      "localBlob": "7337ad57a531189676f747fdf6d1a925170f4004",
+      "unchanged": true
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "originalBlob": "332037a4d578c8128121f799165db3a749a82239",
+      "localBlob": "332037a4d578c8128121f799165db3a749a82239",
+      "unchanged": true
+    },
+    {
+      "path": "src/coin-identity.js",
+      "originalBlob": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+      "localBlob": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+      "unchanged": true
+    },
+    {
+      "path": "src/cash-terms.js",
+      "originalBlob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+      "localBlob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+      "unchanged": true
+    },
+    {
+      "path": "src/ledger-live.js",
+      "originalBlob": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+      "localBlob": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+      "unchanged": true
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "originalBlob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+      "localBlob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "originalBlob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+      "localBlob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+      "unchanged": true
+    },
+    {
+      "path": "src/defi.js",
+      "originalBlob": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+      "localBlob": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-net-reconciliation.js",
+      "originalBlob": "2d39c199135dc9348271271c60b36876c4660936",
+      "localBlob": "2d39c199135dc9348271271c60b36876c4660936",
+      "unchanged": true
+    },
+    {
+      "path": "src/portfolio-edit-actions.js",
+      "originalBlob": "3412841500a16abd99aa37e2603603e676d2ad94",
+      "localBlob": "3412841500a16abd99aa37e2603603e676d2ad94",
+      "unchanged": true
+    },
+    {
+      "path": "src/security-sources.js",
+      "originalBlob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+      "localBlob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+      "unchanged": true
+    },
+    {
+      "path": "src/solana-history.js",
+      "originalBlob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+      "localBlob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "originalBlob": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "localBlob": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "unchanged": true
+    },
+    {
+      "path": "src/request-cache.js",
+      "originalBlob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+      "localBlob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+      "unchanged": true
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "originalBlob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+      "localBlob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+      "unchanged": true
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "originalBlob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+      "localBlob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+      "unchanged": true
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "originalBlob": "1151f42b1315241805923b848a7a2efdf65528ac",
+      "localBlob": "1151f42b1315241805923b848a7a2efdf65528ac",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "originalBlob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "localBlob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "unchanged": true
+    },
+    {
+      "path": "src/kraken-link-bridge.js",
+      "originalBlob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+      "localBlob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "originalBlob": "d52e116b9280147495316666289962d21988ba3c",
+      "localBlob": "d52e116b9280147495316666289962d21988ba3c",
+      "unchanged": true
+    },
+    {
+      "path": "src/market.js",
+      "originalBlob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+      "localBlob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+      "unchanged": true
+    },
+    {
+      "path": "src/marketstack.js",
+      "originalBlob": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+      "localBlob": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+      "unchanged": true
+    },
+    {
+      "path": "src/link-explorer-evidence.js",
+      "originalBlob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+      "localBlob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+      "unchanged": true
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "originalBlob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+      "localBlob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+      "unchanged": true
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "originalBlob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+      "localBlob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+      "unchanged": true
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "originalBlob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+      "localBlob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+      "unchanged": true
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "originalBlob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+      "localBlob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+      "unchanged": true
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "originalBlob": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+      "localBlob": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+      "unchanged": true
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "originalBlob": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+      "localBlob": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+      "unchanged": true
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "originalBlob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+      "localBlob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+      "unchanged": true
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "originalBlob": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+      "localBlob": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+      "unchanged": true
+    }
+  ],
+  "originalInputCount": 86,
+  "unchangedOriginalInputs": 85,
+  "originalMaterializationCorrection": "Initial apply_patch text copies had an extra newline; replaced from pinned complete UTF8 content and independently Gitblob checked before every test. No test executed on inexact originals.",
+  "constraints": {
+    "rawPayloadKeyCAS": "requirements fixed; actual post-challenge keyslot race UNRESOLVED; NOT_IMPLEMENTED",
+    "nativeBrowser": "NOT_RUN; project Playwright import ERR_MODULE_NOT_FOUND; no browser launch or workaround",
+    "cryptoReview": "EXTERNAL_REVIEW_PENDING; exact candidate 17a5a190d472f1f07b3508e6f35194371fe95eb2 unchanged",
+    "applyAuthorized": false,
+    "confirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "activeSync": false,
+    "release": "BLOCKED",
+    "nativeIDB_Crash_RealQuota_Recovery_CI22_Wallet20_Production": "NOT_ACCEPTED"
+  }
+}

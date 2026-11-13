@@ -9,6 +9,8 @@ Purchase-Evidence slice below. The dated UH02-v5 slice additionally supports the
 canonical purchase/undo economic chain with its import and Ledger provenance.
 The dated CSV-cash, manual EUR-cash management and complete native USD-principal
 slices below additionally preserve their full active/permanent-removal provenance.
+The dated ETH-staking slice additionally supports complete principal and
+reward+fee groups with their permanent original-group withdrawal chains.
 Ledger-only v5, other import/management/withdrawal/bridge evidence and pending/resume
 remain unsupported in full. Earlier empty-only price-history statements below describe
 historical slices and are superseded only for this dated scope.
@@ -705,3 +707,41 @@ Dateien: Snapshotmodul, neue Stakingsnapshotsuite, dieser Vertrag,
 Fachcheckpoint und Originalprüfbeleg; vor Umsetzung Vorcodecommit pinnen.
 Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 sowie A1/A2/prepared-locked
 und alle nativen/externalen/CI-/Releasegates unverändert.
+
+### ETH-Staking: tatsächlich implementiert und geprüft · 13.11.2026
+
+Vorcodevertrag 807af8cabaf0ba2f44dcb51567643433ba30e328 /
+Treee1c4ce29fe0e04246d0ada907a0561a79c7953d9; vollständige Bytes und
+Gitblob4875264d10d48936cc199a5492fda0235c978ef5 bestätigt.
+Geschlossene ETH-Principal-/Reward+Fee-Gruppen mit vollständiger aktiver und
+dauerhafter uh03-undo-Herkunft implementiert. Gruppenprüfung bindet Quellpayload,
+Ownership, konkrete Booking-/Journal-/Postingrelationen, Positionsscope und
+vollständige Gegenbeine; kein alleinstehender Reward oder Fee als Teilgruppe.
+Bestehende Finanz-/Import-/Journal-/Withdrawal-/Versionsvalidatoren unverändert.
+
+Vollständige Folge geprüft: Aktiv→Snapshot→Restore→Reimportduplikate→zuerst
+Reward/Fee-Gruppe zurücknehmen→Snapshot/Restore→Principal zurücknehmen→
+Snapshot/Restore→beide Wiederanlagesperren, auch mit umgeordneten Quelldateizeilen.
+18Decimal, null-Gebührenwerte/UNKNOWN-Kosten, keine externen Flüsse, Archiv,
+lokale exakte CSV-Undo-Grenze, manuelles Cash und vorhandene USD-v5-Kette erhalten.
+ETH allein autorisiert weiter weder v5 noch leeren/gefüllten Flatexmarker.
+
+Finaler gemeinsamer Lauf Node24.22.1:
+**143PASS/0FAIL/0SKIP/0CANCELLED/Exit0**, Syntax2PASS.
+113 vorhandene Snapshottests +16 neue Stakingtests +14 bestehende
+Kraken-Import-/Withdrawaltests. Erste isolierte15/0, nach zusätzlicher
+wirtschaftlicher Gegenbeinprüfung16/0; keine Testfehler/gelockerten Assertions.
+Nicht additiv zählen. 86Originaleingaben vorCode blobgenau,85 nachCode
+unverändert; einziges bestehendes Produktdelta src/sync-snapshot.js.
+[Originaloutputs und Eingabemanifest](release-evidence/flh04-snapshot-staking-local-2026-11-13.json).
+Lokale Textkopien zunächst mit zusätzlichem Patchnewline erzeugt, vor jedem
+Test durch exakte gepinnte Bytes ersetzt und unabhängig Gitblob-geprüft.
+
+Raw-/Payload-/CryptoKey-CAS-Anforderungen oben konkretisiert, **Lösung weiterhin
+OFFEN**: Keyslottausch nach Kryptochallenge ist mit Metadatenvergleich nicht
+geschlossen. Keine Outbox-/Storage-/Anchor-/Applyanbindung oder -Guardlockerung.
+Keine Browser/IDB/CryptoKeyPersistenz/PageReopen/Mehrtab/Prozesscrash/realeQuota/
+Recovery/CI22/Wallet20/PR/Main/Produktions-/externeAbnahme.
+Playwright-Projektimport ERR_MODULE_NOT_FOUND; kein Browserstart/keine Umgehung.
+Kryptoreview EXTERNAL_REVIEW_PENDING am unveränderten exakten Kandidaten;
+Snapshotimpact unter src nur sync-snapshot.js, keine Krypto-/Autoritätsfreigabe.

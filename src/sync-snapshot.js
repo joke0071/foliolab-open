@@ -1,7 +1,7 @@
 import {safeImport,assertDataVersion} from './model.js';
 import {syncPayloadDigest} from './sync-payload-integrity.js';
 import {units,exact} from './decimal.js';
-import {provenCashImport} from './import-identity.js';
+import {provenCashImport,sourceUnmodified} from './import-identity.js';
 
 /** Bounded credential-free financial gate, NOT crypto/graph/CAS/Apply approval.
  * Unsupported financial evidence blocks the entire snapshot; nothing is pruned.
@@ -42,7 +42,7 @@ const opening=object(fields('positionId quantityExact costBasisExact realizedPnL
 const flow=object(fields('id date amountEUR amountExactEUR'));
 const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
 const basicJournal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
-const journal=v=>basicJournal(v)||cashRemovalJournal(v)||manualCashAuditJournal(v)||usdPrincipalRemovalJournal(v);
+const journal=v=>basicJournal(v)||cashRemovalJournal(v)||manualCashAuditJournal(v)||usdPrincipalRemovalJournal(v)||stakingRemovalJournal(v);
 const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
 const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
 const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
@@ -147,7 +147,97 @@ const usdPrincipalRemovalJournalFields=object({...fields('id date recordedAt seq
  postings:array(posting),krakenWithdrawal:usdPrincipalRemoval});
 const usdPrincipalRemovalJournal=v=>usdPrincipalRemovalJournalFields(v)&&v.type==='uh03-undo'&&
  v.source===krakenSource&&v.status==='removed'&&usdPrincipalRemoval(v.krakenWithdrawal);
-const booking=v=>existingBooking(v)||csvCashBooking(v)||usdPrincipalBooking(v);
+// Complete ETH principal and reward+fee groups only. This is a scope gate;
+// existing import ownership, withdrawal and financial validators stay intact.
+const hexDigest=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
+const stakingPayloadText=v=>{
+ if(!historyText(v))return false;
+ try{const p=JSON.parse(v);structureBudget(p);
+  const a=p.action,n=a?.type==='transfer'?10:9;
+  return JSON.stringify(p)===v&&Object.keys(p).length===4&&
+   Object.keys(p).every(k=>['group','payload','bindings','action'].includes(k))&&
+   hexDigest(p.group)&&hexDigest(p.payload)&&
+   Array.isArray(p.bindings)&&p.bindings.length===(n===10?2:1)&&
+   p.bindings.every(b=>Array.isArray(b)&&b.length===2&&hexDigest(b[0])&&historyText(b[1]))&&
+   new Set(p.bindings.map(b=>b[0])).size===p.bindings.length&&
+   new Set(p.bindings.map(b=>b[1])).size===p.bindings.length&&
+   ['transfer','reward','fee'].includes(a.type)&&usdPrincipalAction(a)&&Object.keys(a).length===n&&
+   (n===10?Object.hasOwn(a,'targetPositionId'):!Object.hasOwn(a,'targetPositionId'));
+ }catch{return false;}
+};
+const stakingImport=object({version:v=>v===1,sourceId:v=>v===krakenSource,
+ accountId:historyText,externalId:historyText,sourcePayload:stakingPayloadText,
+ ownedSnapshot:historyText,fileId:hexDigest,occurrence:v=>v===1,ownership:v=>v==='imported'});
+const stakingBookingFields=object({...bookingFields,importSource:stakingImport});
+const stakingBooking=v=>stakingBookingFields(v)&&['transfer','reward','fee'].includes(v.type)&&
+ v.importSource?.sourceId===krakenSource&&v.reconciliationStatus===(v.type==='fee'?'unpriced-asset-fee':'recorded');
+const stakingJournal=v=>basicJournal(v)&&v.source===krakenSource&&
+ ['transfer','reward','fee'].includes(v.type)&&v.status===(v.type==='fee'?'unpriced-asset-fee':'recorded')&&
+ !Object.hasOwn(v,'nativeCurrency');
+const stakingOriginal=object({booking:stakingBooking,journal:stakingJournal,flows:v=>Array.isArray(v)&&v.length===0});
+const stakingRemoval=object({version:v=>v===1,group:hexDigest,count:v=>v===1||v===2,
+ originals:v=>Array.isArray(v)&&v.length>=1&&v.length<=2&&v.every(stakingOriginal),digest:hexDigest});
+const stakingRemovalJournalFields=object({...fields('id date recordedAt sequence'),
+ type:v=>v==='uh03-undo',source:v=>v===krakenSource,status:v=>v==='removed',
+ postings:array(posting),krakenWithdrawal:stakingRemoval});
+const stakingRemovalJournal=v=>stakingRemovalJournalFields(v)&&v.type==='uh03-undo'&&stakingRemoval(v.krakenWithdrawal);
+function stakingLeg(b,j){
+ const q=b.quantityExact;
+ if(!decimal(q)||units(q)<=0n||b.quantity!==Number(q)||b.fxRateDate!==null||b.fxSource!==null||
+  j.postings.some(p=>p.amountBookEURExact!=='0'))return false;
+ const own=j.postings.filter(p=>p.positionId===b.positionId),target=j.postings.filter(p=>p.positionId===b.targetPositionId);
+ const matches=(p,role,id,account,quantity)=>p?.role===role&&p.positionId===id&&p.accountId===account&&p.quantityDeltaExact===quantity;
+ if(b.type==='fee')return b.unitPrice===null&&b.feeEUR===null&&b.amountEUR===null&&b.amountExactEUR===null&&b.targetPositionId===null&&
+  j.postings.length===2&&own.length===1&&matches(own[0],'asset-fee',b.positionId,b.accountId,exact(-units(q)))&&
+  j.postings.some(p=>matches(p,'unpriced-fee',null,null,null));
+ if(b.unitPrice!==0||b.feeEUR!==0||b.amountEUR!==0||b.amountExactEUR!=='0')return false;
+ if(b.type==='reward')return b.targetPositionId===null&&j.postings.length===1&&matches(own[0],'nonmonetary',b.positionId,b.accountId,q);
+ return b.targetQuantityExact===q&&j.postings.length===2&&own.length===1&&target.length===1&&
+  matches(own[0],'transfer-out',b.positionId,b.accountId,exact(-units(q)))&&target[0].role==='transfer-in'&&target[0].quantityDeltaExact===q;
+}
+function stakingGroup(data,originals){
+ try{
+  if(![1,2].includes(originals.length))return false;
+  const sorted=[...originals].sort((a,b)=>a.booking.importSource.externalId.localeCompare(b.booking.importSource.externalId));
+  const root=JSON.parse(sorted[0].booking.importSource.sourcePayload);
+  if(sorted.map(o=>o.booking.type).join(',')!==(sorted.length===1?'transfer':'reward,fee'))return false;
+  return sorted.every(({booking:b,journal:j,flows},i)=>{
+   if(!stakingOriginal({booking:b,journal:j,flows})||!sourceUnmodified({journalEntries:[j]},b)||!stakingLeg(b,j))return false;
+   const s=b.importSource,p=JSON.parse(s.sourcePayload),a=p.action;
+   const position=id=>data.positions?.find(v=>v.id===id&&v.kind==='crypto'&&v.coinId==='ethereum'&&
+    v.currency==='EUR'&&!v.wallet?.enabled&&v.managementSource!=='wallet'&&
+    [v.costBasisExact,v.costBasisEUR,v.realizedPnLExact,v.realizedPnLEUR].every(n=>n===null));
+   const source=position(b.positionId),target=b.type==='transfer'?position(b.targetPositionId):null;
+   return source&&source.accountId===b.accountId&&(b.type!=='transfer'||target&&target.id!==source.id&&target.providerId===source.providerId&&
+    j.postings.some(p=>p.positionId===target.id&&p.accountId===target.accountId))&&
+    s.fileId===root.group&&p.group===root.group&&p.payload===root.payload&&JSON.stringify(p.bindings)===JSON.stringify(root.bindings)&&
+    b.id==='uh03:'+root.group+':'+i&&s.externalId===root.group+':'+i&&b.journalEntryId===b.id&&j.id===b.id&&j.type===b.type&&j.date===b.date&&
+    a.type===b.type&&a.date===b.date&&a.positionId===b.positionId&&a.quantity===b.quantityExact&&a.notes===b.notes&&
+    a.unitPrice==='0'&&a.feeEUR==='0'&&a.taxEUR==='0'&&a.fxRate==='1'&&b.fxRate===1&&b.costsVerified===false&&b.taxEUR===null&&
+    b.external===false&&b.cashPositionId===null&&j.cashPositionId===null&&
+    (b.type!=='transfer'||a.targetPositionId===b.targetPositionId)&&
+    p.bindings.every(v=>[b.positionId,...(target?[target.id]:[])].includes(v[1]));
+  });
+ }catch{return false;}
+}
+function stakingScope(data){
+ const groups=new Map();
+ for(const b of data.bookings||[]){
+  if(b.importSource?.sourceId!==krakenSource||usdPrincipalBooking(b))continue;
+  if(!stakingBooking(b))return false;
+  const key=b.importSource.fileId;if(!groups.has(key))groups.set(key,[]);
+  groups.get(key).push({booking:b,journal:data.journalEntries?.find(j=>j.id===b.journalEntryId),
+   flows:(data.externalCashFlows||[]).filter(f=>f.id===b.id)});
+ }
+ if([...groups.values()].some(g=>!stakingGroup(data,g)))return false;
+ return (data.journalEntries||[]).every(j=>{
+  if(j.source!==krakenSource||usdPrincipalJournal(j)||usdPrincipalRemovalJournal(j))return true;
+  if(stakingJournal(j))return (data.bookings||[]).some(b=>b.journalEntryId===j.id&&stakingBooking(b));
+  return stakingRemovalJournal(j)&&j.krakenWithdrawal.count===j.krakenWithdrawal.originals.length&&
+   stakingGroup(data,j.krakenWithdrawal.originals);
+ });
+}
+const booking=v=>existingBooking(v)||csvCashBooking(v)||usdPrincipalBooking(v)||stakingBooking(v);
 const cashOriginal=object({booking:csvCashBooking,journal:basicJournal,flows:array(flow)});
 const cashRemovalFields=object({version:v=>v===2,action:v=>v==='remove',reason:historyText,
  originals:array(v=>cashOriginal(v)&&v.booking.importSource?.sourceId==='generic-csv'&&provenCashImport(v.booking,v.journal)),
@@ -184,7 +274,7 @@ const hasUSDPrincipal=v=>(v.journalEntries||[]).some(j=>usdPrincipalJournal(j)||
 const dataSchema=v=>dataFields(v)&&
  (v.flatexNetRemovals===undefined||hasUSDPrincipal(v))&&
  (v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin')||hasUSDPrincipal(v))&&
- (v.journalEntries||[]).every(j=>j.source!==krakenSource||usdPrincipalJournal(j)||usdPrincipalRemovalJournal(j))&&
+ stakingScope(v)&&
  (v.bookings||[]).every(b=>b.importSource?.sourceId!=='generic-csv'||provenCashImport(b,(v.journalEntries||[]).find(j=>j.id===b.journalEntryId)))&&
  // Scope, not a second economics engine: original positions must still be
  // EUR cash. Existing journal validation binds every retained removal flow.
