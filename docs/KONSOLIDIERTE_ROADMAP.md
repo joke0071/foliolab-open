@@ -385,3 +385,8 @@ Sicherer serieller Pfad bleibt **aktuellen Releaseabschluss klären → UH03 →
 
 </details>
 
+
+
+## FLH04 Enrollmentaussteller konkretisiert · 13.11.2026 · work-196cef9db7a8-20261113
+
+[Konkreter Ausstellervertrag und gezielter Backup-Wiederverwendungsabgleich](https://github.com/joke0071/foliolab-open/blob/30567f35359341cf2cf5ab64c2fbfc8a4441ff79/docs/FLH04_ENROLLMENT_ISSUER_CONTRACT.md), FLH04HEAD30567f35359341cf2cf5ab64c2fbfc8a4441ff79/Treea097996124a89b85169a15b0e32de37e47993ba1. Portfolioautorität/individuellerWriter/Zustimmung/Keybesitz/Vollpreimage/Widerruf/Recovery/Rotation konkretisiert, KEIN Aussteller-/Umhüllungs-/Signaturwirecode oder Entsperrung. Zwei neue nachgewiesene Voraussetzungen: gespeicherten HKDFKey ohne vorherigeRohmaterialumhüllung nicht nachträglichwrapKey-portabel machen; JSON.stringify keinvollständigerCryptoKey-CAS. VorhandenesBackup-Erzeugungs-/Cleanupmuster geprüft, BackupDEK/festerAAD/eigeneDB/öffentlicheAPIskeinSyncwrapper. Produktcodeunverändert; final3neueNode24TestsPASS/0FAIL/0SKIP/0CANCELLED,SyntaxPASS,vierDeltadateiengepinntbytegleich. Kein nativeIDB/Page-Reopen/CI22/Wallet20/Kryptoreview/FullCI/ProduktionsPASS; historische50nichtaddiert. NächsterSchrittgeschlossenerSync-Umhüllungs-/AutoritätsbytevertragvorweiterhingesperrtemErzeugungsweg. N-DRIVEbleibtBLOCKED_EXTERNALmitweiteremCode-/internemAbnahmerest,FLH04NICHTDONE/OutboxINTERNUNQUALIFIZIERT. AllebisherigenPflichtgates,WochenumfangundProduktionsblockerunverändert. AktuellerOwner/ÜbergabenurimzentralenCheckpoint.
