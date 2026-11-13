@@ -1,3 +1,43 @@
+## DECISION_READY / WAITING_ARCHITECTURE_DECISION / RELEASE_BLOCKED · work-366da675bef5-20261113
+
+Begrenzter neuer Nutzerauftrag: Architekturentscheidung statt Wiederholung der
+K1-Gegenanalyse. [Konkrete Vorlage](FLH04_WRITER_BOUNDARY_DECISION_2026-11-13.md).
+Empfehlung A: kontrollierter Versions-/Lifecycleübergang derselben DB auf v2
+als BEDINGTE Zielarchitektur; Alternative B isolierter Storageorigin, größerer
+Umfang. Kein DB-/Origin-/Schutzzielvertrag geändert oder Produktcode freigegeben.
+
+Neue gezielte Evidenz: 14 historische Einstiegsschnitte von atomic-storage öffnen
+explizit Version1/onversionchange-close. Keine vollständige Altwriterqualifikation:
+unterstützte versionslose/andere Recoveryopener bleiben zuzuordnen.
+Versionupgrade wäre Versionsgrenze, kein natives ACL. Ungebundener unterstützter
+neuer Writer blockiert A. Normale Save-/Restore-/Recovery-/Worker-/Testkonkurrenz
+bleibt Pflicht; ALLE P-Mutationen in der neuen Kohorte binden.
+
+N0 konkret: unveränderter Harness an520fe691/Tree9904f377,
+ENGINE=chromium/BASE_URL=http://127.0.0.1:4173, einmalig.
+Run43421311524/Job131871726863 belegt nur passende historische Ubuntu24.04/
+Node22.23.4/PW1.56.1/Chromium141.0.7390.37-Umgebung, KEINE neue Abnahme.
+Kein angebotener Hostzugang/FLH04-Workfloweingang; kein Dispatch/Retry/Runner.
+Regulärer Host oder separat gefrorener genehmigter einmaliger Jobkandidat nötig.
+Konkrete Befehle, Ergebnisgrenzen und N1-Gegenfallmatrix in der Vorlage.
+
+Reviewpaketfd3fce4b/Kandidat17a5a190/Tree44ff9c4d unverändert
+EXTERNAL_REVIEW_PENDING; Prüfer/Zugang/Budget separat, keine Beauftragung.
+Bekannter unabhängiger UI-R4-Rest am60c1ab09 gezielt geprüft:
+bereits PR_CANDIDATE_PREPARED, keine neue belegte Produktlücke;
+nächste native-/CI-/Release-/Sicherungsgates nicht freigegeben/qualifiziert.
+Kein künstlicher Wiederholungslauf oder neuer Produktumfang.
+
+Wartepunkt: Jochen entscheidet über A als begrenzte Vertragsänderungsrichtung
+(Version2 statt festerVersion1, Schutzziel erhalten) ODER FLH04 parken.
+Ein Ja ist KEINE Migration-/Implementierungs-/Test-/CI-/Releasefreigabe.
+Kein weiterer identischer Fortführungschat nötig.
+Alle P/R/S/D/CAS/Retry/oncomplete/format1/A1/A2/Budgets/Originalketten erhalten.
+Nur Dokumentation geändert, keine Tests/Browser/CI ausgeführt.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
+
+---
+
 ## K1_WRITER_BOUNDARY_ANALYZED / MECHANISM_OPEN / RELEASE_BLOCKED · work-03b53e88c37d-20261113
 
 Gezielter Writerabschlussabgleich gegen c6674c64/Tree58bb88ce:
