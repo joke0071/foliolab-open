@@ -12,6 +12,9 @@ const v2Candidate=process.env.FLH04_VERSION2_CANDIDATE;
 const sourceLifecycle=process.env.FLH04_SOURCE_LIFECYCLE;
 if(sourceLifecycle!==undefined&&(sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))
  throw Error('FLH04 lifecycle requires value 1, Chromium and no C1 opt-in');
+const rendererTermination=process.env.FLH04_RENDERER_TERMINATION;
+if(rendererTermination!==undefined&&(rendererTermination!=='1'||sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))
+ throw Error('FLH04 renderer termination requires value 1, source lifecycle, Chromium and no C1 opt-in');
 if(v2Candidate!==undefined&&(v2Candidate!=='1'||name!=='chromium'))
  throw Error('FLH04 C1 requires explicit value 1 and ENGINE=chromium');
 if(v2Candidate==='1'||sourceLifecycle==='1'){
@@ -164,6 +167,10 @@ try{
  if(sourceLifecycle==='1'){
   const {runSourceLifecycleCandidate}=await import('./flh04-source-lifecycle-probes.mjs');
   await runSourceLifecycleCandidate({browser,setup,operation,url});
+  if(rendererTermination==='1'){
+   const {runRendererTerminationCandidate}=await import('./flh04-renderer-termination-probes.mjs');
+   await runRendererTerminationCandidate({browser,setup,operation,url});
+  }
  }
  if(v2Candidate==='1'){
   const {runVersion2Candidate}=await import('./flh04-version2-candidate-probes.mjs');

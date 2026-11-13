@@ -1,3 +1,121 @@
+## Fortsetzung: Provenienz, vollständiges Intentoracle und Renderer-Terminierung · 13.11.2026
+
+PREPARED / NATIVE_NOT_RUN / NATIVE_APPROVAL_REQUIRED / PRODUCT_RELEASE_BLOCKED.
+Alleiniger Writer work-4cd697ef5bd2-20261113; Basis61a8932a794a9c3e5a7c49c08aee25f0d7be2d45.
+Der nachfolgende ältere Vorbereitungsstand und das historische Original bleiben erhalten.
+Run43497366403/1 bleibt begrenztes SUCCESS gemäß
+[unverändertem Ergebnisbeleg](https://github.com/joke0071/foliolab-open/blob/00478af24e67a91444ffd78b0d22fe94634929e2/docs/release-evidence/flh04-source-lifecycle-43497366403-attempt1.json).
+Kein nachträglicher Assertionfehler und keine rückwirkende Ausweitung dieses PASS.
+
+### Gezielt korrigierte Diagnostik
+
+Close-Ereignisse: isTrusted===true ergibt native, false synthetic, fehlende/ungültige
+Metadaten unknown. Das einzelne Ereignis enthält isTrusted als bool/null.
+L5 RESULT verlangt ausdrücklich genau ein synthetic-close/isTrusted=false.
+Regulärer close-Aufruf bleibt getrennt; er beweist keinen Forced-Close.
+
+L2 LEGACY vergleicht den gesamten erhaltenen Intentstring bytegenau mit dem VOR
+Produktaufruf aus erwarteten Legacybytes und vorheriger Revision+1 berechneten
+Sollstring. Unabhängiges Node-BigInt-FNV-1a über UTF-16-Codeunits statt Import des
+Produktchecksums oder Ableitung aus Ist-Intent/Ist-Fingerprint. Feste Vektoren:
+leer/ASCII/Nicht-ASCII+Surrogatpaar. Falscher Fingerprint bei gleicher Revision,
+fehlende/zusätzliche Felder, falsche Revision, Nicht-JSON, Null und abweichende
+Serialisierung werden abgewiesen. Der alte revisionsbasierte Ausdruck akzeptiert
+den gezielten falschen Fingerprint als Negativkontrolle.
+Lifecycle weiter13Gruppen/81geplante Diagnosezeilen; einzelne Operanden erweitert.
+Keine Addition zum historischen PASS. Der neue Umfang ist nativ NICHT ausgeführt.
+
+### Tatsächlicher Terminierungsmechanismus und seine Grenze
+
+Chromium-CDP Page.crash, experimenteller Befehl: Rendererabsturz auf IO-Thread.
+Primärquellen:
+- [Page.pdl am festen Protokollcommit c092aa9630c73ff7765a8fe0f1d3ff4847a3676a](https://github.com/ChromeDevTools/devtools-protocol/blob/c092aa9630c73ff7765a8fe0f1d3ff4847a3676a/pdl/domains/Page.pdl), Blob3da7a899288c5bc47cb3218b151537101429d7b9.
+- [Playwright1.56.1 Protokolltypen](https://github.com/microsoft/playwright/blob/v1.56.1/packages/playwright-core/src/server/chromium/protocol.d.ts),
+Blob5d3c9d26c1308d6d09d05bf9c3a8871536ac1103 enthält Page.crash.
+- [Playwright1.56.1 Chromium-Ereignisbindung](https://github.com/microsoft/playwright/blob/v1.56.1/packages/playwright-core/src/server/chromium/crPage.ts),
+Blob43f810ebd6df44e3967e114a94421ae6d15f8d0f: Inspector.targetCrashed.
+
+Die Quellen belegen API/Bindung, keine tatsächlich beobachtete Fähigkeit der
+nächsten Laufzeit. In der separat freizugebenden Ausführung muss der echte
+Playwright-page-crash beobachtet werden, page-close darf noch nicht erfolgt und
+browser.isConnected muss true sein. Nur eine CDP-Antwort oder deren Fehler genügt
+nicht. Es gibt keinen Ersatz durch page.close, dispatchEvent, Storage-Löschen
+oder Prozesssimulation. Fehlende Unterstützung/Crashbeobachtung ist FAIL/
+NOT_REACHED, kein Skip und kein Retry. CommandOutcome ist ausschließlich der
+beobachtete Antwortstand beim Crash, ggf.pending-at-crash; keine Antwort erfunden.
+Kein Browserprozesscrash, Stromverlust, physischer Datenträgerflush oder nativer
+IDB-close-Eventnachweis daraus. Der Renderer kann nach Crash selbst keine
+IDB-close-Ereignisse mehr berichten. Native Forced-Close bleibt separat offen.
+
+### Zwei begrenzte neue Gruppen
+
+| Gruppe | Haltepunkt | Soll vor Crash und nach unabhängigem Reopen | Tatsächlicher Neustart |
+| --- | --- | --- | --- |
+| T1-READ-COMPLETE | initialize: nativer readonly-complete bereits eingetreten, Produktcallback gehalten | vollständiger Portfolio-/Outbox-/Marker-/Ankerstand unverändert | initialize bleibt idb, gleiche Revision/Modell/Marker; abschließender IDB-/Ankervergleich |
+| T2-REVERT-COMMITTED | revertLocked v1: nativer readwrite-complete bereits eingetreten, Produktcallback gehalten | exakter Tombstone Revision+1, raw/settingsnull, Outbox unverändert; vollständige Legacykopie+idb-v1+unabhängiger vollständiger Intent | bestehender v1-Intentnachlauf wählt local, entfernt Modus/Intent; ursprünglicher Tombstone/Anker bleiben; keine v2-Rückmigration |
+
+Neun Diagnosezeilen je Gruppe: BARRIER/COMMITTED/INTERRUPTED-MARKERS/CRASH/
+PERSISTED/MARKERS/ANCHOR/RESTART/FINAL =18geplante Zeilen, keine Ergebnisse.
+BARRIER verlangt unsettled/resultnull/sourceCount1 und echtes Transaktionscomplete
+vor harness-held, keine Freigabe/Close/Operationsabschluss. COMMITTED verwendet
+vollständigen gespeicherten Stand; updatedAt nach erlaubtem Commit variabel und
+separat plausibilisiert. Readback vor Crash nutzt Quellenhandle, kein zusätzlicher
+offener Writer. Node hält die Beobachtung, zum Crash existiert keine zweite Seite:
+Same-Origin-Renderer-Sharing wird nicht als Überleben eines Beobachters ausgegeben.
+Erst danach neue Seite im selben synthetischen Context. Persistenz bedeutet hier
+Überleben dieses Renderercrashs bei weiter laufendem Browser, keine Diskdurability.
+Es gibt ausdrücklich kein wartendes Upgrade in T1/T2. Die sieben Upgrade-
+Konkurrenzen bleiben im getrennten13Gruppen-Lifecycleumfang.
+
+Kein Produktcode/Importersatz/IDB-Keepalive. Harness hält readonly ODER readwrite
+complete-CALLBACK NACH nativem complete-EVENT. Kein Crash während einer offenen
+IDBtransaktion behauptet. Die Originaloperation wird nach echtem Crash niemals
+fortgesetzt; es gibt daher kein erfundenes fulfilled/rejected-Ergebnis.
+Kontextdisposal nach Oracle/FAIL ist Cleanup und kein Crashbeleg.
+Outboxnull; Ankerproof nur intern verglichen und nicht serialisiert.
+Raw/Settings/Intent/Fingerprint/Schlüssel bleiben aus Konsolenreport ausgeschlossen.
+
+### Begrenzter Ausführungskandidat
+
+Ein bestehender Basisharnessaufruf mit FLH04_SOURCE_LIFECYCLE=1 und
+FLH04_RENDERER_TERMINATION=1, ENGINE=chromium, BASE_URL=http://127.0.0.1:4173;
+FLH04_VERSION2_CANDIDATE ungesetzt. Ohne neues Opt-in keine Terminierung.
+Alle bisherigen Basisausdrücke bleiben erhalten; C1Helper unverändert.
+Originaler Harness vor Lifecycle kann durch Entfernen beider neuen Opt-ins exakt
+als Blobf5d6bcab636ff8b9cf5d4b62514dcb98acb2475c rekonstruiert werden.
+Quellcommit, Tree, Kontrollcommit und exakter neuer Trigger im Zentralcheckpoint
+nach Freeze. Alter Trigger niemals verschieben/löschen/neuanlegen.
+
+Vorgesehen: Ubuntu24.04/Node22.23.4/PW1.56.1/zugehörigeChromiumHeadlessShell;
+tatsächliche Version erst bei neuer freigegebener Ausführung beobachten.
+Ein Job/Versuch1/ein Harnessaufruf, maximal25MinutenJob und360SekundenHarness
+plus15SekundenKillnachlauf, kein Retry/FullCI/andereEngine. Originallogs, beide
+unveränderten Reports, Exits, Quell-/Workflow-/Tree-/Inputbeleg und SHA256Manifest
+immer hochladen/7Tage; fehlender Report bleibt NOT_REACHED_OR_NO_VALID_REPORT.
+OriginalZIP samt Manifest danach separat dauerhaft sichern, kein Rootvollbackup.
+
+### Lokale Verifikation und verbleibende Gates
+
+Node24.22.1:26gezielte Tests PASS/0FAIL/0SKIP/0CANCELLED, sechs Syntaxprüfungen PASS.
+14Lifecycle-/Oracle-/Integritätstests,6Terminierungs-Orchestrierungs-/Guardtests
+mit ausdrücklichen CDPDoubles und6unveränderte Diagnostiktests. Kein nativer
+Browserstart/Renderercrash/IDB-/Finanz-/Kryptoreview-PASS in dieser Sitzung.
+Lokale Vorbereitungsbefunde: Harness-Rekonstruktionsprüfung nach Erweiterung
+zunächst rot (Entfernung der ineinander gesetzten Hooks), Hookanordnung korrigiert.
+Readwrite-Nodefixture zunächst wartend, weil ihr EventTargetdouble oncomplete
+außerhalb des gehaltenen Pfads nicht zustellte; lokalen Testprozess mit Exit130
+beendet, Double korrigiert. Keine Action und keine Produktursache daraus.
+Finaler lokaler Beleg: release-evidence/flh04-renderer-termination-local-2026-11-13.json.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+A1false/A2gesperrt/Ankernull, prepared-locked nieadoptieren/hochstufen/überschreiben/
+löschen; v2Normalpfadeblockiert. Recovery ohne Identitätsportierung.
+Keine Kryptoselbstabnahme; EXTERNAL_REVIEW_PENDING/CR4CR5offen.
+Kein Main/Release/ProduktionsPASS/Merge/Deploy/SWBump/LIVE_ACCEPTED.
+
+---
+
+
 # FLH04: Quellenverbindung unter Konkurrenz · 13.11.2026
 
 PREPARED / NATIVE_NOT_RUN / PRODUCT_RELEASE_BLOCKED.
@@ -170,3 +288,4 @@ Kein Retry/FullCI/Merge/Deploy/Release/SW-Bump/LIVE_ACCEPTED.
 Am tatsächlichen Sitzungsende nach vollständigem gepinntem Readback:
 STOPPED / HANDOVER_READY ausschließlich wegen fertigem Vorbereitungspaket und
 fehlender konkreter nativer Ausführungsfreigabe. Kein Hintergrundbetrieb.
+

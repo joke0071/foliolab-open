@@ -1,0 +1,70 @@
+{
+  "status": "LOCAL_PASS_NATIVE_NOT_RUN",
+  "node": "v24.22.1",
+  "test_exit": 0,
+  "tests": 26,
+  "pass": 26,
+  "fail": 0,
+  "skip": 0,
+  "cancelled": 0,
+  "syntax_checks": 6,
+  "test_scope": "14 lifecycle/intent/integrity;6 explicit CDP-double/guard;6 unchanged diagnostics;no native browser or IDB proof",
+  "planned_native_scope": {
+    "lifecycle_groups": 13,
+    "lifecycle_diagnostic_rows": 81,
+    "renderer_termination_groups": 2,
+    "renderer_termination_diagnostic_rows": 18,
+    "results": "NOT_RUN"
+  },
+  "product_delta": false,
+  "files": [
+    {
+      "path": "tests/flh04-source-lifecycle-harness.mjs",
+      "bytes": 4606,
+      "git_blob_sha1": "9ae1f299fdda24a07d12344e1215bf751865ec82",
+      "sha256": "b8d69f272a12a49eafdcf0a2010973eaacaa98ba10e9197fbccf533d5600c02f"
+    },
+    {
+      "path": "tests/flh04-source-lifecycle-probes.mjs",
+      "bytes": 19939,
+      "git_blob_sha1": "d86caa79346b96f0528461332d6c1b87ef7fe049",
+      "sha256": "8d45b1aaf4c8e1a809321e749b1cc533bc279b3115db7a82a1564dd9902e204a"
+    },
+    {
+      "path": "tests/flh04-source-lifecycle.test.mjs",
+      "bytes": 11387,
+      "git_blob_sha1": "17cf9694c335a9221702e70390bf0a58be1b4e85",
+      "sha256": "643fb89294dfba433971a1e131ae075852b699a1c8f1e9c526d55ae3a7748b1f"
+    },
+    {
+      "path": "tests/flh04-renderer-termination-probes.mjs",
+      "bytes": 8604,
+      "git_blob_sha1": "19f28d7e71a720bb880ceaef899d3a1fb36d4285",
+      "sha256": "58db91c5126dd013b2765c81518117f82568eef3e304b9c759f8a8839a03094e"
+    },
+    {
+      "path": "tests/flh04-renderer-termination.test.mjs",
+      "bytes": 3912,
+      "git_blob_sha1": "5819f3b15c0ead1be7385f81b3c0baa0f2449b58",
+      "sha256": "7ad011538bffb590d62c7247a48c56ebf510d0f20fca3966655c403d34eaaf24"
+    },
+    {
+      "path": "tests/browser-sync-outbox.mjs",
+      "bytes": 13158,
+      "git_blob_sha1": "3af87b74d75d4eb9dd4514f0a0f0c2f78c6de2f8",
+      "sha256": "21dd28469c565cf69692e846e39a66a6ca37143af8522c83a968e6af084a75bc"
+    }
+  ],
+  "preparation_findings": [
+    "Hook-removal expectation initially failed after nested hook insertion;ordering corrected and prior harness reconstruction passes.",
+    "Explicit Node EventTarget double omitted ordinary oncomplete for readwrite barrier;waiting local test stopped exit130,double corrected;no Action/native/product cause."
+  ],
+  "original_result": "Run43497366403/1 bounded PASS unchanged;old L5 label native remains synthetic by provenance;no original rewritten",
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "Outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL_INTERNAL_AND_EXTERNAL_REMAINS",
+    "native_execution": "NOT_AUTHORIZED",
+    "crypto": "EXTERNAL_REVIEW_PENDING_CR4_CR5_OPEN"
+  }
+}

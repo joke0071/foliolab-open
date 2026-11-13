@@ -1,8 +1,8 @@
 // Real Node promises/EventTargets, explicit IDB doubles. NOT native IDB proof.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {installLifecycleHarness} from './flh04-source-lifecycle-harness.mjs';
-import {assertOverlap,assertReleased,lifecycleCases} from './flh04-source-lifecycle-probes.mjs';
+import {installLifecycleHarness,closeEventProvenance} from './flh04-source-lifecycle-harness.mjs';
+import {assertOverlap,assertReleased,lifecycleCases,expectedRevertIntent,assertRetainedRevertIntent} from './flh04-source-lifecycle-probes.mjs';
 import {createC1Diagnostics} from './flh04-c1-diagnostics.mjs';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -10,7 +10,7 @@ import {createHash} from 'node:crypto';
 function setup(){
  class Database extends EventTarget{
   name='foliolab-open-portfolio';closed=false;
-  transaction(){const tx=new EventTarget();queueMicrotask(()=>tx.dispatchEvent(new Event('complete')));return tx;}
+  transaction(){const tx=new EventTarget();queueMicrotask(()=>{const event=new Event('complete');tx.dispatchEvent(event);tx.oncomplete?.(event);});return tx;}
   close(){this.closed=true;}
  }
  class Factory{open(){const request=new EventTarget();request.result=new Database();queueMicrotask(()=>{request.dispatchEvent(new Event('success'));request.onsuccess?.();});return request;}}
@@ -28,6 +28,65 @@ function setup(){
  return {Factory,Database,Storage,original,controller,getSource:()=>source};
 }
 test.afterEach(()=>{for(const k of ['IDBFactory','IDBDatabase','Storage','localStorage'])delete globalThis[k];});
+test('close provenance uses strict isTrusted and keeps absent provenance unknown',()=>{
+ assert.deepEqual(closeEventProvenance(new Event('close')),{kind:'synthetic',isTrusted:false});
+ // Explicit metadata double; this does NOT generate or prove a native close.
+ assert.deepEqual(closeEventProvenance({isTrusted:true}),{kind:'native',isTrusted:true});
+ for(const event of [null,{}, {isTrusted:1},{isTrusted:'true'}])
+  assert.deepEqual(closeEventProvenance(event),{kind:'unknown',isTrusted:null});
+});
+test('actual Node dispatch through installed close listener is recorded synthetic',async()=>{
+ const f=setup(),h=installLifecycleHarness({controller:f.controller,action:'initialize',fault:'close-event-injected'});
+ try{
+  await h.atBarrier;h.release();await h.done;
+  const close=h.events.filter(e=>e.name==='source-close-event');
+  assert.equal(close.length,1);assert.equal(close[0].kind,'synthetic');assert.equal(close[0].isTrusted,false);
+  assert.ok(h.events.some(e=>e.name==='close-event-injected'&&e.kind==='injected'));
+ }finally{h.cleanup();}
+});
+test('ordinary close call does not invent a close event',async()=>{
+ const f=setup(),h=installLifecycleHarness({controller:f.controller,action:'initialize'});
+ try{await h.atBarrier;h.release();await h.done;
+  assert.ok(h.events.some(e=>e.name==='source-close-call'));
+  assert.ok(h.events.every(e=>e.name!=='source-close-event'));
+ }finally{h.cleanup();}
+});
+test('readwrite barrier holds callback after commit event and allows no marker cleanup yet',async()=>{
+ const f=setup();let cleaned=false;
+ f.controller.revertLocked=async()=>{
+  const source=await new Promise(resolve=>{const r=new f.Factory().open('foliolab-open-portfolio');r.onsuccess=()=>resolve(r.result);});
+  await new Promise(resolve=>{source.transaction('records','readonly').oncomplete=resolve;});
+  await new Promise(resolve=>{source.transaction('records','readwrite').oncomplete=resolve;});
+  cleaned=true;source.close();
+ };
+ const h=installLifecycleHarness({controller:f.controller,action:'revertLocked',barrierMode:'readwrite'});
+ try{await h.atBarrier;
+  assert.equal(cleaned,false);assert.equal(h.snapshot().settled,false);
+  assert.ok(h.events.some(e=>e.name==='transaction-complete'));
+  assert.ok(h.events.some(e=>e.name==='write-complete'));
+  assert.ok(h.events.every(e=>e.name!=='source-close-call'));
+  h.release();await h.done;assert.equal(cleaned,true);
+ }finally{h.cleanup();}
+});
+test('independent intent fingerprint has fixed empty, ASCII and UTF-16 vectors',()=>{
+ assert.equal(expectedRevertIntent('',7),'{"revision":7,"fingerprint":"0:811c9dc5"}');
+ assert.equal(expectedRevertIntent('hello',7),'{"revision":7,"fingerprint":"5:4f9f2cab"}');
+ assert.equal(expectedRevertIntent('a',7),'{"revision":7,"fingerprint":"1:e40c292c"}');
+ assert.equal(expectedRevertIntent('ä😀',7),'{"revision":7,"fingerprint":"3:e28c507e"}');
+ assert.throws(()=>expectedRevertIntent(null,7));assert.throws(()=>expectedRevertIntent('x',0));
+});
+test('retained intent oracle rejects same-revision fingerprint and complete-string mutations',()=>{
+ const expected=expectedRevertIntent('hello',7);assertRetainedRevertIntent(expected,expected);
+ // Negative control: predecessor's revision-only expression accepts this wrong fingerprint.
+ assert.equal(JSON.parse('{"revision":7,"fingerprint":"5:00000000"}').revision,7);
+ for(const actual of [null,'{}','not-json',
+  '{"revision":7,"fingerprint":"5:00000000"}',
+  '{"revision":8,"fingerprint":"5:4f9f2cab"}',
+  '{"revision":7}',
+  '{"revision":7,"fingerprint":"5:4f9f2cab","extra":true}',
+  '{"fingerprint":"5:4f9f2cab","revision":7}',expected+' '])
+  assert.throws(()=>assertRetainedRevertIntent(actual,expected));
+});
 test('native-event double finishes transaction while product callback remains held; release is explicit',async()=>{
  const f=setup(),h=installLifecycleHarness({controller:f.controller,action:'initialize'});
  try{
@@ -70,6 +129,8 @@ test('C1 helper stays byte exact and the lifecycle hook preserves the entire pri
  let harness=await readFile(new URL('./browser-sync-outbox.mjs',import.meta.url),'utf8');
  harness=harness.replace("// Independent opt-in; consumed C1 runs are not repeated by this candidate.\nconst sourceLifecycle=process.env.FLH04_SOURCE_LIFECYCLE;\nif(sourceLifecycle!==undefined&&(sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))\n throw Error('FLH04 lifecycle requires value 1, Chromium and no C1 opt-in');\n",'')
   .replace("if(v2Candidate==='1'||sourceLifecycle==='1'){","if(v2Candidate==='1'){")
+  .replace("const rendererTermination=process.env.FLH04_RENDERER_TERMINATION;\nif(rendererTermination!==undefined&&(rendererTermination!=='1'||sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))\n throw Error('FLH04 renderer termination requires value 1, source lifecycle, Chromium and no C1 opt-in');\n",'')
+  .replace("  if(rendererTermination==='1'){\n   const {runRendererTerminationCandidate}=await import('./flh04-renderer-termination-probes.mjs');\n   await runRendererTerminationCandidate({browser,setup,operation,url});\n  }\n",'')
   .replace(" if(sourceLifecycle==='1'){\n  const {runSourceLifecycleCandidate}=await import('./flh04-source-lifecycle-probes.mjs');\n  await runSourceLifecycleCandidate({browser,setup,operation,url});\n }\n",'');
  assert.equal(blob(harness),'f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c');
 });

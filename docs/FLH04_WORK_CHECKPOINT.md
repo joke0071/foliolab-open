@@ -1,3 +1,45 @@
+## SOURCE_LIFECYCLE_ORACLES_AND_RENDERER_TERMINATION_PREPARED / NATIVE_NOT_RUN · work-4cd697ef5bd2-20261113
+
+Alleinige autorisierte Fortführung nach frischem315Heads/HND01-Abgleich.
+Close-Eventprovenienz strikt über isTrusted (native/synthetic/unknown);L5 RESULT
+fordert synthetic/false. L2 LEGACY vergleicht vollständigen Intentstring mit
+VOR Aufruf unabhängig via BigInt-FNV/UTF16 berechnetem Soll, inklusiveFingerprint.
+Kein Produktdelta und kein nachträglicher Assertionfehler im verbrauchten
+Run43497366403/1; dessen begrenztes PASS und Originale unverändert.
+
+[Bestehender Fallplan mit ergänztem Kandidaten](FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md):
+echter Chromium-CDP-Renderercrash Page.crash nach readonlycomplete(T1) bzw.
+Tombstonecommit/readwritecomplete vor Markerbereinigung(T2). Produktcallback
+instrumentiert gehalten NACH nativemEvent,keinIDBkeepalive.
+CrashEvent+keinPageclose+Browserverbunden, neueSeiteerstnachCrash,
+vollständigerIDB-/Marker-/Intent-/Ankervergleich und tatsächlicher v1Neustart.
+2Gruppen/18geplanteDiagnosezeilen zusätzlich zu13Lifecyclegruppen/81Zeilen.
+Keine Ergebnisse; keinBrowserprozesscrash/Powerloss/nativerIDBForcedClosebeleg.
+API/Playwright1.56.1Bindung primärquellengepinnt, tatsächliche Laufzeitfähigkeit
+erst bei separat freigegebenemVersuch prüfen; keinClose-/Lösch-/Simulationsersatz.
+
+Node24.22.1:26gezielteTestsPASS/0FAIL/0SKIP/0CANCELLED,6SyntaxchecksPASS.
+14Lifecycle-/Oracle-/Integrität,6ausdrücklicheCDPDoubles/Guards,6Diagnostik.
+Vorbereitungsbefunde und [Maschinenbeleg](release-evidence/flh04-renderer-termination-local-2026-11-13.json)
+erhalten. Kein nativerStart/Action/Retry. Produktadapter/Recovery/C1Helper
+unverändert; bisherigerBasisharness nach Entfernung neuerOptins exaktrekonstruierbar.
+Quell-/Ausführungscommit und Trigger nach Freeze im Zentralcheckpoint.
+Vorbereitung ist keine nativeFreigabe; nur neue konkreteNutzerfreigabe darf
+genau einen neuen, bisherfehlendenTrigger am exaktenKontrollcommit anlegen.
+
+HND01:keineFremddeltas,315Heads;Main/Diagnose/UI-R4/PR332/161/157 geschützt,
+Reviews/Inline/Conversation332/161/157/335unverändert,0IN_PROGRESS;
+neuesterRun43497366403/1, historischeQueuesunverändert.
+RootV155/FAILV0/MainOriginalV0/DiagnoseV0/LifecycleOriginalV0 nurMetadaten
+frischbestätigt;keineerneuteTransferprüfung/Backup/Restore.
+Ältere work-pr333AusführungweiterNICHTtechnischbeendetnachgewiesen.
+Alle Schutzgates im nachfolgenden Vorgängereintrag bleiben verbindlich:
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+Keine A1/A2/v2/format1/Krypto-/Autoritäts-/Identitäts-/Releasefreigabe.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+
+---
+
 ## STOPPED / HANDOVER_READY / SOURCE_LIFECYCLE_BOUNDED_PASS / PRODUCT_RELEASE_BLOCKED · work-2cd7c03c3433-20261113
 
 Konkreter Endpunkt: ausdrücklich autorisierte einmalige Branchanlage, native

@@ -1,7 +1,12 @@
 // Browser-only scheduling instrumentation. No product source/import replacement.
 // Delay one readonly oncomplete CALLBACK after the native complete EVENT.
 // No transaction keepalive; product promise stays pending at its existing await.
-export function installLifecycleHarness({controller,action,model,fault=null}) {
+export function closeEventProvenance(event){
+ const isTrusted=typeof event?.isTrusted==='boolean'?event.isTrusted:null;
+ return {kind:isTrusted===true?'native':isTrusted===false?'synthetic':'unknown',isTrusted};
+}
+export function installLifecycleHarness({controller,action,model,fault=null,barrierMode='readonly'}) {
+ if(!['readonly','readwrite'].includes(barrierMode))throw Error('unsupported-lifecycle-barrier');
  const events=[],handles=[],transactions=[];
  const mark=(name,kind='native')=>events.push({seq:events.length,name,kind});
  const original={open:IDBFactory.prototype.open,transaction:IDBDatabase.prototype.transaction,
@@ -15,7 +20,7 @@ export function installLifecycleHarness({controller,action,model,fault=null}) {
    request.addEventListener('success',()=>{
     const db=request.result;source??=db;handles.push(db);mark('source-success');
     db.addEventListener('versionchange',()=>mark('source-versionchange'));
-    db.addEventListener('close',()=>mark('source-close-event'));
+    db.addEventListener('close',event=>events.push({seq:events.length,name:'source-close-event',...closeEventProvenance(event)}));
    });
   }
   return request;
@@ -29,11 +34,11 @@ export function installLifecycleHarness({controller,action,model,fault=null}) {
   if(this.name!=='foliolab-open-portfolio')return tx;
   transactions.push(tx);mark('transaction-'+(args[1]??'readonly'),'operation');
   tx.addEventListener('abort',()=>mark('transaction-abort'));
-  if(!held&&(args[1]??'readonly')==='readonly'){
+  if(!held&&(args[1]??'readonly')===barrierMode){
    held=true;
    Object.defineProperty(tx,'oncomplete',{configurable:true,set(callback){
     tx.addEventListener('complete',event=>{
-     mark('read-complete');
+     mark(barrierMode==='readonly'?'read-complete':'write-complete');
      release=()=>{
       mark('barrier-release','harness');
       if(fault==='close-event-injected'){

@@ -12,6 +12,18 @@ export const lifecycleCases=[
  ['L7-MIGRATE','migrateLocked',null,'adopt'],
 ];
 const keys=['foliolab-open-v1','foliolab-open-storage-mode','foliolab-open-idb-revert-intent'];
+// Independent Node oracle: BigInt FNV-1a over UTF-16 code units, modulo 2^32.
+// Do not import the product fingerprint or derive the expected value from intent.
+export function expectedRevertIntent(raw,revision){
+ assert.equal(typeof raw,'string');assert.ok(Number.isSafeInteger(revision)&&revision>0);
+ let hash=2166136261n;
+ for(let i=0;i<raw.length;i++)hash=((hash^BigInt(raw.charCodeAt(i)))*16777619n)&0xffffffffn;
+ return JSON.stringify({revision,fingerprint:raw.length+':'+hash.toString(16)});
+}
+export function assertRetainedRevertIntent(actual,expected){
+ // Exact string equality covers all fields, fingerprint, extras and serialization.
+ assert.equal(actual,expected,'entire retained revert intent must match independent oracle');
+}
 export function assertOverlap(snapshot,upgrade){
  assert.equal(snapshot.settled,false);
  assert.equal(snapshot.sourceCount,1,'initialize must reuse its source handle');
@@ -112,6 +124,8 @@ export async function runSourceLifecycleCandidate({browser,setup,operation,url})
     t.controller.legacyRaw=t.originalRaw;
    });
    const beforeLegacy=await legacy(a);
+   const expectedRaw=await a.evaluate(()=>window.syncTest.expectedLegacy);
+   const retainedIntent=expected==='tombstone'&&fault?expectedRevertIntent(expectedRaw,before.portfolio.revision+1):null;
    await a.evaluate(async({action,fault})=>{
     const t=window.syncTest,{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
     if(action==='initialize'){t.controller.close();t.controller=new PortfolioStorage(localStorage);}
@@ -131,6 +145,10 @@ export async function runSourceLifecycleCandidate({browser,setup,operation,url})
    check('RELEASE',()=>assertReleased(completed));
    check('RESULT',()=>{
     assert.equal(completed.result.status,fault?'rejected':'fulfilled');
+    if(fault==='close-event-injected'){
+     const close=completed.events.filter(e=>e.name==='source-close-event');
+     assert.equal(close.length,1);assert.equal(close[0].kind,'synthetic');assert.equal(close[0].isTrusted,false);
+    }
     if(['read-error-injected','close-event-injected'].includes(fault))
      assert.ok(completed.events.every(e=>e.name!=='transaction-readwrite'&&!/^(setItem|removeItem):/.test(e.name)));
    });
@@ -148,14 +166,14 @@ export async function runSourceLifecycleCandidate({browser,setup,operation,url})
      assert.ok(Number.isFinite(Date.parse(after.portfolio.updatedAt)));
     }else assert.deepEqual(after,before);
    });
-   const afterLegacy=await legacy(a),expectedRaw=await a.evaluate(()=>window.syncTest.expectedLegacy);
+   const afterLegacy=await legacy(a);
    const markersAtUpgrade=await b.evaluate(()=>window.upgrade.markers);
    check('LEGACY',()=>{
     assert.deepEqual(markersAtUpgrade,afterLegacy,'upgrade begins only after final marker state');
     if(expected==='tombstone'){
      assert.equal(afterLegacy[0],expectedRaw);
      assert.equal(afterLegacy[1],fault?beforeLegacy[1]:null);
-     if(fault)assert.equal(JSON.parse(afterLegacy[2]).revision,after.portfolio.revision);
+     if(fault)assertRetainedRevertIntent(afterLegacy[2],retainedIntent);
      else assert.equal(afterLegacy[2],null);
     }else if(expected==='intent')assert.deepEqual(afterLegacy,[expectedRaw,null,null]);
     else if(expected==='adopt')assert.deepEqual(afterLegacy,[beforeLegacy[0],'idb-v1',beforeLegacy[2]]);
