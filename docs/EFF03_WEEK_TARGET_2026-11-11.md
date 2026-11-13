@@ -6,6 +6,86 @@ Dieser Nachtrag ist ein Ausführungs- und Priorisierungsplan, keine zweite Roadm
 
 **Ziel ist nicht Garantie.** Eine vollständige Umsetzung und produktive Abnahme aller 41 Positionen innerhalb der Woche ist derzeit nicht belastbar nachgewiesen: echte Restaufwände, verfügbare aktive Agentenzeit, Originalbelege, OAuth-/Betreiberfreigaben und Gerätezugang sind nicht vollständig geklärt. BLOCKED_EXTERNAL, fehlende Zustimmung, nur implementierter Code oder ein vorbereiteter Test gelten niemals als DONE. Das Ziel darf nicht durch Scope-Streichung, Umbenennung oder Abschwächung von Abnahmen scheinbar erfüllt werden.
 
+## Blockierte Pakete gezielt freimachen · 13.11.2026
+
+Nutzerauftrag: notwendige Maßnahmen und Vorarbeiten selbstständig umsetzen; effizienter, stabiler Ein-Writer-Prozess. Dieser Abschnitt operationalisiert die acht BLOCKED_EXTERNAL-Zeilen der bestehenden Roadmap, ist keine zweite Statusmatrix und erteilt keine zusätzliche native Ausführungs-, Kontakt-, Kosten-, Merge- oder Releasefreigabe.
+
+### Reihenfolge am nächsten sicheren Entscheidungspunkt
+
+1. Autorisierten Renderer-Versuch regulär abgeschlossen wiederverwenden: [Run43500770689/1 und Originalauswertung](release-evidence/flh04-renderer-termination-43500770689-attempt1.json), COMPLETED/FAILURE mit Timeout124 nach360s. Korrigierter Lifecyclebericht13/13Gruppen81/81Zeilen PASS; Rendererreport fehlt, T1/T2 NOT_REACHED_OR_NO_VALID_REPORT, keine18neuenPrüfzeilen qualifiziert. Ursprüngliche finale Basisharness-PASS-Konsole in diesem Lauf nicht erreicht. Exakte neue Originale separat dauerhaft gepinnt und bytegleich rückgelesen. Trigger test/flh04-renderer-termination-4cd697ef5bd2-20261113 an7fb78e2bc9812a288a515cf4f83b47a54b68c480 ist verbraucht. Kein Retry, Ersatztrigger oder erneute unveränderte Vorbereitung; konkrete vorgelagerte Ursache UNKNOWN. Aktuellen Owner und nächsten unabhängigen Schritt aus dem Checkpoint lesen.
+2. Gemeinsam vorbereitete Android-/TalkBack-Gerätesitzung zuerst zur tatsächlichen Bedienbarkeit nutzen. Für genau einen zugelassenen Teststand und gültige synthetische Fixtures durchführen. Fortschritt pro Kriterium führen; keine Komplettfreigabe aus der gemeinsamen Sitzung.
+3. Reviewzuordnung und fehlende Originalklassen gebündelt klären. Nach bereits zugänglichen einschlägigen Belegen gezielt suchen, bevor dieselben Daten erneut vom Nutzer verlangt werden. Ein fehlender Suchtreffer beweist keine Nichtexistenz.
+4. Solange eine externe Entscheidung fehlt, innerhalb desselben Owners den nächsten bereits vorbereiteten unabhängigen Nutzerablauf aus dem Checkpoint bearbeiten, etwa UI-R4-Vorbereitung. Erst Abhängigkeit zum offenen Releasegate prüfen. Keine neue Full-CI oder parallele Entwicklung.
+5. Mainfehler43332355188 bleibt UNKNOWN. Der vollständige Kraken-Diagnoselauf43421311524 bestand, hat aber die historische Ursache nicht bewiesen. Kein weiterer Versuch ohne neue begründete Hypothese/geänderte Voraussetzung und konkrete Freigabe. Bestehenden Ergebnisbericht verwenden.
+
+Die bisherige native Umgebungsblockade ist für den begrenzten GitHub-Chromiumweg durch C1- und Lifecycle-Läufe überwunden. Nicht erneut pauschal einen Browserplatz anfordern. Hardware-Android, Safari, echte Crash-/Quota-/OAuth-/Geräte- und Kryptogates bleiben davon getrennt. NACH_1.0 bedeutet im bestehenden Wochenauftrag nicht unbeauftragt; Kernabschluss und Risiko bestimmen die Reihenfolge.
+
+### Konkrete Entsperrbedingungen
+
+| Bestehender Scope | Jetzt ausführbare Vorarbeit / Wiederverwendung | Exakt fehlender Zugang oder Nachweis | Zuständigkeit und erste Aktion nach Eingang |
+| --- | --- | --- | --- |
+| K5 | Vorhandene A01–A10 aus der Roadmap und Android03-Protokoll gemeinsam verwenden; siehe Sitzung unten. | Physisches Android, isolierter Testdatenbereich, genaue OS/Browser/PWA-Version und qualifizierte Fixture. | Jochen/benannter Geräteoperator stellt Zugriff bereit; Owner bindet SHA/Fixture/Sollwerte, wertet jeden Fall aus. A07 braucht echte kontrollierte Versionsfolge, A08 echte isolierte Quotagrenze; ohne sie OPEN. |
+| E-TALKBACK | Dieselbe Androidsitzung und Dialogcheckliste; gemeinsame Geräte-/Versionsangaben nur einmal erfassen. | Tatsächliche TalkBack-Ausgabe, Fokus, IME und große Systemschrift am Gerät. | Geräteoperator führt vorhandene Dialogfälle aus; Owner ordnet Befunde zu K6/K5 bzw. E-TALKBACK. Axe/Viewport sind keine Ersatzbelege. |
+| E-OAUTH | Bestehendes Drive-Backup prüfen, getrennt von FLH04-Sync. Fallauftrag unten; keine neue OAuthimplementierung. | Autorisierter Testaccount, isolierte Appdaten, zweites Profil/Gerät und reale Zustimmung/Tokenablauf/Reconnect-/Revisionsbelege. | Jochen benennt zulässigen Account/Testdatei und Operationen; Owner prüft Quellenstand und begleitet die tatsächlichen Fälle. Funktionsbestätigung „Drive geht“ bleibt ein Teilbefund. |
+| E-SAFARI | Vorhandene Speicher-/Update-/Recoveryfälle auf reales Safari/iOS/macOS abbilden; gleiche gültige synthetische Fixtures wiederverwenden. | Benanntes reales Apple-Gerät und Safari-/OS-Version. | Operator führt nur dort mögliche Fälle aus; Owner hält ITP/Eviction/Update offen, solange Bedingung nicht wirklich eingetreten ist. Kein neuer WebKitlauf als Ersatz. |
+| N-BROKER | Bestehende Parser und Originalklassen abgleichen; D-IMPORT/Trade-Republic-Grundfunktion nicht neu bauen. | Exakt benannte noch unqualifizierte Export-/Buchungsklasse mit Originalformat, Quellidentität und unabhängigen Salden/Fees/Steuern/FX. | Owner benennt fehlende Klasse anhand bestehender Verträge; Jochen liefert nur diese privat, wenn nicht bereits zugänglich. Danach vollständige Vorschau→Commit→Wiederimport→Rücknahme-Kette mit unabhängigem Oracle. |
+| N-AT | Bestehende AT02/03/05-Abnahmen erhalten; einen konkret fehlenden Steuer-/OeKB-/Exportfall wählen. | Zugehöriger Originalbeleg samt fachlich unabhängig bestätigter Sollbehandlung. | Owner grenzt Fall ein, Jochen/qualifizierter Fachprüfer liefert oder bestätigt Sollwerte. Erst dann Produktvertrag und Implementierung; keine allgemeine Steuerfreigabe aus Jahresübersicht. |
+| N-CASHLIEU | Sichere Abweisung erhalten; kleinsten vollständigen Barausgleichfall anhand der unten genannten Unterlagen vorbereiten. | Maßnahmendokument, Vor-/Nachbestand, tatsächliches Settlement, Gebühren/Steuern und unabhängige Basis-/Buchungszuordnung. | Owner prüft Vollständigkeit, Fachprüfer klärt offene Zuordnung. Erst danach eigener wirtschaftlicher Vertrag; keine angenommene Basisverteilung. |
+| N-DRIVE | Vorhandenes Reviewpaket und unveränderte Renderer-Ausführungsoriginale wiederverwenden; Rendererbericht fehlt, daher kein Crash-/Persistenz-PASS. Interne Writer-/Keyslot-/ABA-Lücken als interne Arbeit führen. | Unabhängiger qualifizierter Prüfer samt Zugang/Budget sowie verbleibende native und echte Geräte-/Remote-Nachweise. | Jochen benennt Prüfer/Zugang/Budget; Owner liefert bestehenden Paketindex plus explizites Adapterdelta. Gültiger Reviewabschluss nur für benannten Gegenstand; native PASS schließen interne Mechanismuslücken nicht automatisch. |
+
+### Gemeinsame Android-/TalkBack-Sitzung: vorbereiteter Operatorauftrag
+
+Vor Beginn ausfüllen: Operator, Gerät, OS, Browser, PWA-/SW-Identität, getestetes SHA soweit belegt, TalkBack-Version, Schrift/Energie/Netz, isoliertes Profil, Fixturepfad+SHA256 und unabhängige erwartete Mengen/Salden/Journalwerte. Nicht sichtbare Angaben UNKNOWN. Kein Import in ein privates Portfolio; fehlende Isolation ist ein Stoppgrund für mutierende Fälle.
+
+Bestehende [Android03-Checkliste](PERF_ANDROID03_REAL_DEVICE_CHECKLIST.md) und [Dialog-/TalkBack-Checkliste](DIALOG_AUDIT_ANDROID_TALKBACK_CHECKLIST.md) verwenden. Automatische Kurse/Walletscans vor synthetischem Import deaktivieren. Fixturekompatibilität für den ausgewählten Stand gezielt prüfen; alte 10k-Seeds nicht allein wegen ihres Namens als zulässiges verschlüsseltes Backup verwenden. Aktueller begrenzter [10k-Restorebeleg](release-evidence/k4-10000-local-restore-2026-11-12.json) und historischer v251-Seed haben unterschiedliche Geltungsbereiche.
+
+Reihenfolge: A01/A02 Start → A03 Navigation mit Dialog-/TalkBackfällen → A04 Listen → A05 Offline → A06 Hintergrund → A09 Restore. A10 Messungen gemäß bestehendem Protokoll mitführen. A07 Update und A08 Quota nur bei tatsächlich hergestellten Voraussetzungen ergänzen; sonst OPEN, nicht simuliert PASS. Messwiederholungen des bestehenden Protokolls erhalten. Screenshots ausschließlich mit synthetischen Daten; keine privaten Backups/Schlüssel/Token.
+
+Rückgabe je Fall in dieser Form:
+```text
+Fall-ID:
+Gerät/OS/Browser/PWA/TalkBack:
+Prüfbasis/SW/Fixture-SHA256:
+Voraussetzung tatsächlich hergestellt:
+Schritte und beobachtete Ereignisfolge:
+Erwartung / tatsächliches Ergebnis:
+PASS / FAIL / OPEN:
+Messmethode und Rohwerte (falls verlangt):
+Belegreferenz ohne private Daten:
+Offene Grenze / nächster Schritt:
+```
+Leere Felder und geplante Schritte sind kein Ausführungsbeleg.
+
+### Bestehendes Drive-Backup: vorbereiteter Operatorauftrag
+
+Nur nach tatsächlicher Zugangs-/Operationszuordnung: isoliertes synthetisches Portfolio und eindeutig benannte Testdatei; keine andere Drive-Datei verändern. Gleiche Ergebnisvorlage benutzen.
+- Zustimmung verweigern/abbrechen: lokaler Stand erhalten, keine Erfolgsmeldung.
+- Zustimmung erteilen und Testbackup schreiben: tatsächliche Datei/Revision und Datenumfang belegen.
+- Zweites autorisiertes Profil/Gerät: echte Wiederherstellung und unabhängiger Mengen-/Journal-/Settingsvergleich.
+- Offline/Verbindungsverlust: ehrlicher Fehlerzustand, keine doppelte oder vorgetäuschte Speicherung.
+- Tatsächlicher Tokenablauf beziehungsweise gezielter Widerruf nur soweit gesondert autorisiert: Reconnect und lokale Datenerhaltung beobachten. Ablauf und Widerruf nicht gleichsetzen.
+- Konkurrierende Revisionen: vorab erwartetes Verhalten aus bestehendem Backupvertrag bestimmen; keinen Sync-CAS-Vertrag unterstellen.
+Fehlende Voraussetzungen OPEN. Keine Token, Credentials oder privaten Datei-IDs öffentlich protokollieren. Keine echten Accountaktionen durch diese Vorbereitung.
+
+### Gezielte private Beleganforderung statt Gesamtexport
+
+Vor einer Anforderung vorhandene einschlägige Originalindizes prüfen; keine neue Vollarchivprüfung ohne konkreten Grund. Für genau die aktiv gewählte Klasse:
+- Broker: unveränderte Exportstruktur/Version, relevante zusammengehörige Zeilen, Buchungs-/Valutadatum, Instrument/Währung/Menge, Brutto/Netto, Fees/Steuern/FX und unabhängig belegte Vor-/Nachbestände.
+- AT: konkret betroffene Abrechnung beziehungsweise OeKB-/Steuer-/Exportunterlage und unabhängige erwartete Behandlung.
+- Barausgleich: Maßnahmenmitteilung, Verhältnis/Bruchteile, Vor-/Nachbestand, Cashsettlement, Kosten/Steuern und belegte Anschaffungskostenbehandlung.
+Private Originale erhalten, keine Veröffentlichung. Redaktion nur in abgeleiteten Testbelegen; echte Beziehungen nicht durch Anonymisierung verfälschen. Unklarheiten einzeln ausweisen. Fehlt ein Fachbeleg, unabhängige Scopes weiterbearbeiten.
+
+### Kryptoreview: vorhandenes Paket gezielt zustellbar machen
+
+Paket fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
+Einstieg docs/FLH04_CRYPTO_REVIEW_ENTRY_2026-11-13.md,
+Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2.
+Kein Paketneubau und keine neue allgemeine Spezifikationsserie.
+Benötigte Zuordnung: Name/Organisation des unabhängigen qualifizierten Prüfers, tatsächliche Verfügbarkeit, zulässiger Zugang, vereinbartes Budget falls erforderlich.
+Owner ergänzt gezielten Impactverweis auf die seitdem geänderten Adapter-/Lifecycleverträge; diese nicht rückwirkend in den gepinnten Gegenstand hineininterpretieren.
+Ergebnis muss Gegenstand/SHA, geprüfte Annahmen, Findings/Schwere, offene Punkte und deren Abschluss benennen. CR4/CR5 und interne K1-Lücke bleiben bis einschlägigem Nachweis offen. Keine Selbst-/KI-Freigabe; keine Nachricht oder Beauftragung durch dieses Dokument.
+
+
 ## Aktive Ausführung
 
 Aktueller Owner, Kandidat und Release ausschließlich aus dem frischen [Checkpointkopf](WORK_RESTPAKETE_CHECKPOINT.md); Scope-Status ausschließlich in der kanonischen Matrix. [Aktiver Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md#aktive-prozessregeln) ist der kurze Einstieg; Detailhistorie nur bei Bedarf nachladen.

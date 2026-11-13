@@ -1,5 +1,20 @@
 # FolioLab – aktiver Effizienzplan
 
+### Wiederaufnahme blockierter Pakete · 13.11.2026
+
+Der [gebündelte Entsperrauftrag im Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md#blockierte-pakete-gezielt-freimachen--13112026) ordnet alle acht extern blockierten Scopes konkreten Eingaben, Operatoren und Sollnachweisen zu. Kanonische Roadmapstatus bleiben erhalten.
+
+- Nach einem belegten begrenzten nativen Lauf den konkreten Ausführungsweg wiederverwenden; historische lokale AF_UNIX-Fehler nicht als globale Browserblockade fortschreiben.
+- Fertiger Kandidat plus fehlende Einmalfreigabe ist ein Entscheidungspunkt, kein Auftrag für weitere unveränderte Vorbereitung. Vor neuer Nutzerfrage Gespräch auf passende konkrete Freigabe prüfen.
+- Zusammenhängende Geräteprüfungen in einer Operator-Sitzung bündeln, ihre einzelnen Nachweise getrennt erhalten. Account-/Kryptoreviewentscheidungen gesammelt mit exakt fehlender Handlung vorlegen.
+- Interne Restarbeit und externe Eingabe innerhalb eines BLOCKED_EXTERNAL-Scopes getrennt benennen. Ohne neue Evidenz keine Statushochsetzung; kein weiterer Quellscan als Ersatz für einen externen Nachweis.
+- Am Ende einer autorisierten Prüfung den vollständigen Befund samt Originalsicherung schließen. Anschließend nächsten unabhängigen bereits vorbereiteten Scope anhand Nutzerwert, Risiko und Restkriterium wählen; keine dauerhafte Bindung des gesamten Wochenumfangs an N-DRIVE oder P-CI-B.
+- Prozentwerte aus Statusgewichten sind höchstens unverbindliche Kommunikationsschätzungen. Sie verändern weder Priorität noch Abnahme und werden nicht als gemessener Aufwand oder Fertigstellung geführt.
+- Fortschritt pro gewähltem Paket: vorher fehlendes Kriterium → neue Evidenz/Änderung → danach offene Grenze. Keine Kennzahl aus Commit-/Test-/Übergabeanzahl, keine festen Lauf-/Chatwechselzeiten.
+- Einmal frischer vollständiger HND01-Einstieg; vor unmittelbar folgender Mutation relevante Deltas/Lease prüfen. Vollabgleich nur bei neuem Anlass. Bei unklarer Mutation zuerst tatsächlichen Zustand lesen, nicht blind wiederholen.
+- Stabilitätsregeln, Ein-Writer-Grenze und sämtliche vorhandenen Freigaben bleiben verbindlich.
+
+
 ## Aktive Prozessregeln
 
 **Fortschreibung 12.11.2026, Nutzeraufträge 17:12 und 17:52 MEZ:** Effizienz und Stabilität gemeinsam verbessern; keine pauschale Prozentgewichtung. Maßstab ist das sicher vollständig abgenommene Nutzerergebnis, nicht die Anzahl von Änderungen, Commits, Tests oder Releases. Diese organisatorische Fortschreibung ändert keine Produkt-, Workflow-, Test-, Sicherungs- oder Freigabelogik und übernimmt keine HND01-Zuständigkeit. Der laufende eingefrorene Release wird nicht umgeplant.
