@@ -1,5 +1,6 @@
 name: Bounded live initialization diagnostics
 on:
+  create:
   pull_request:
     branches: [main]
     paths:
@@ -89,6 +90,43 @@ jobs:
         if: always()
         with:
           name: bounded-v221-pchain-${{ matrix.engine }}-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+          retention-days: 7
+
+
+  kraken-production-diagnostic:
+    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/pr335-full-kraken-d62125b28794'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      UH03_BASE: https://foliolab.unperfekt.at/
+      HISTORY_ENGINES: chromium
+      DIAGNOSTIC_CANDIDATE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - name: Install original Chromium acceptance tools
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates/kraken-diagnostic
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0 2>&1 | tee artifacts/gates/kraken-diagnostic/install.log
+          npx playwright install chromium --only-shell 2>&1 | tee -a artifacts/gates/kraken-diagnostic/install.log
+      - name: One complete unchanged Kraken test with awaited observers
+        run: |
+          set -euo pipefail
+          test -z "${UH03_SCENARIOS+x}"
+          node --import ./tests/kraken-preload.mjs tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/kraken-diagnostic/test.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kraken-diagnostic-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/gates/
           if-no-files-found: error
           retention-days: 7
