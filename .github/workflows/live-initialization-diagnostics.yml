@@ -94,16 +94,17 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  flh04-source-lifecycle-first:
-    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-source-lifecycle-781cbfc52ec6-20261113' && github.run_attempt == 1
+  flh04-renderer-termination-first:
+    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-renderer-termination-4cd697ef5bd2-20261113' && github.run_attempt == 1
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
-      LC_SOURCE_SHA: 063add5697a1deaf119eec7ca7eb18a663f31bc8
-      LC_SOURCE_TREE: 33d610d2eff09cf383cb003615a7ce3dc9269dd4
-      LC_OUT_DIR: artifacts/flh04-source-lifecycle
+      LC_SOURCE_SHA: 45ef99e0c09932406c41e22757fbed00ae164016
+      LC_SOURCE_TREE: 404fd33bcdf78e419f9038d66df9f177593f8f4d
+      LC_OUT_DIR: artifacts/flh04-renderer-termination
       ENGINE: chromium
       FLH04_SOURCE_LIFECYCLE: '1'
+      FLH04_RENDERER_TERMINATION: '1'
       BASE_URL: http://127.0.0.1:4173
     steps:
       - name: Checkout exact execution commit and its source parent
@@ -124,6 +125,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$LC_OUT_DIR/inputs"
+          test -z "${FLH04_VERSION2_CANDIDATE+x}"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test "$(git rev-parse HEAD^)" = "$LC_SOURCE_SHA"
           cp .github/workflows/live-initialization-diagnostics.yml "$LC_OUT_DIR/executed-workflow.yml"
@@ -137,19 +139,19 @@ jobs:
           test "$(git rev-parse HEAD)" = "$LC_SOURCE_SHA"
           test "$(git rev-parse HEAD^{tree})" = "$LC_SOURCE_TREE"
           git ls-tree -r HEAD > "$LC_OUT_DIR/pinned-source-tree.txt"
-          cp --parents package.json src/browser-portfolio-storage.js tests/browser-sync-outbox.mjs tests/flh04-source-lifecycle-harness.mjs tests/flh04-source-lifecycle-probes.mjs tests/flh04-source-lifecycle.test.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.mjs tests/flh04-version2-candidate-probes.mjs tests/flh04-c1-diagnostics.test.mjs tests/fixtures/c1-storage-dependencies.mjs tests/sync-outbox-fixture.mjs src/atomic-storage.js tests/storage-origin.html "$LC_OUT_DIR/inputs/"
+          cp --parents package.json src/browser-portfolio-storage.js tests/browser-sync-outbox.mjs tests/flh04-source-lifecycle-harness.mjs tests/flh04-source-lifecycle-probes.mjs tests/flh04-source-lifecycle.test.mjs tests/flh04-renderer-termination-probes.mjs tests/flh04-renderer-termination.test.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.mjs tests/flh04-version2-candidate-probes.mjs tests/flh04-c1-diagnostics.test.mjs tests/fixtures/c1-storage-dependencies.mjs tests/sync-outbox-fixture.mjs src/atomic-storage.js tests/storage-origin.html "$LC_OUT_DIR/inputs/"
           node --version > "$LC_OUT_DIR/node.txt"
           python3 - <<'PY'
           import os,json,hashlib,pathlib
           out=pathlib.Path(os.environ['LC_OUT_DIR'])
-          expected={"src/browser-portfolio-storage.js":"4743618cbfba19dbb19aaf6a9e6bf563b2311614","tests/browser-sync-outbox.mjs":"f542adf39e8840f0c801b6ff65a3925dbf63fbef","tests/flh04-source-lifecycle-harness.mjs":"d6e2fbdca996b66d78fc184b98dad3bcb6b74fbc","tests/flh04-source-lifecycle-probes.mjs":"65c0b0a031721f9752f592e974583ff673918496","tests/flh04-source-lifecycle.test.mjs":"56bdab130fc012923de8a6b0f9f283584dace19f","tests/flh04-c1-source-guard.test.mjs":"12388345a554a76311de2c34aaba35a8835c1271","tests/flh04-c1-diagnostics.mjs":"d3adb9857a17538070234fbdb28482322b44c4ba","tests/flh04-version2-candidate-probes.mjs":"d87ab642d1ba409814af517c2b28ad50fd924b0c","tests/flh04-c1-diagnostics.test.mjs":"eb53397ca3d6d2aab127b53583408e8402719cc8","tests/fixtures/c1-storage-dependencies.mjs":"02c53fa3c41ff35785021757ceb43eb834dc4b60","tests/sync-outbox-fixture.mjs":"13c338233f5a65b0e107675b5a3b006cbe78f11a","src/atomic-storage.js":"b8bc22967d451150801cd8ac1fd847a768c37ca2"}
+          expected={"src/browser-portfolio-storage.js":"4743618cbfba19dbb19aaf6a9e6bf563b2311614","tests/browser-sync-outbox.mjs":"3af87b74d75d4eb9dd4514f0a0f0c2f78c6de2f8","tests/flh04-source-lifecycle-harness.mjs":"9ae1f299fdda24a07d12344e1215bf751865ec82","tests/flh04-source-lifecycle-probes.mjs":"d86caa79346b96f0528461332d6c1b87ef7fe049","tests/flh04-source-lifecycle.test.mjs":"17cf9694c335a9221702e70390bf0a58be1b4e85","tests/flh04-c1-source-guard.test.mjs":"12388345a554a76311de2c34aaba35a8835c1271","tests/flh04-c1-diagnostics.mjs":"d3adb9857a17538070234fbdb28482322b44c4ba","tests/flh04-version2-candidate-probes.mjs":"d87ab642d1ba409814af517c2b28ad50fd924b0c","tests/flh04-c1-diagnostics.test.mjs":"eb53397ca3d6d2aab127b53583408e8402719cc8","tests/fixtures/c1-storage-dependencies.mjs":"02c53fa3c41ff35785021757ceb43eb834dc4b60","tests/sync-outbox-fixture.mjs":"13c338233f5a65b0e107675b5a3b006cbe78f11a","src/atomic-storage.js":"b8bc22967d451150801cd8ac1fd847a768c37ca2","tests/flh04-renderer-termination-probes.mjs":"19f28d7e71a720bb880ceaef899d3a1fb36d4285","tests/flh04-renderer-termination.test.mjs":"5819f3b15c0ead1be7385f81b3c0baa0f2449b58"}
           files=[]
           for name,want in expected.items():
            data=pathlib.Path(name).read_bytes()
            actual=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
            assert actual==want,(name,actual)
            files.append({'path':name,'bytes':len(data),'git_blob_sha1':actual})
-          fields=['GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_JOB','RUNNER_OS','RUNNER_ARCH','LC_SOURCE_SHA','LC_SOURCE_TREE','ENGINE','FLH04_SOURCE_LIFECYCLE','BASE_URL']
+          fields=['GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_JOB','RUNNER_OS','RUNNER_ARCH','LC_SOURCE_SHA','LC_SOURCE_TREE','ENGINE','FLH04_SOURCE_LIFECYCLE','FLH04_RENDERER_TERMINATION','BASE_URL']
           receipt={name:os.environ.get(name) for name in fields}
           receipt['files']=files
           receipt['limits']={'job_minutes':25,'harness_seconds':360,'harness_calls':1,'engines':['chromium'],'automatic_test_retries':0}
@@ -174,7 +176,7 @@ jobs:
           console.log(JSON.stringify({node:process.version,playwright:require('playwright/package.json').version,
            executable:chromium.executablePath(),browserStarted:false},null,2));
           JS
-      - name: One original harness call with the lifecycle extension
+      - name: One original harness call with corrected lifecycle and renderer termination
         id: lifecycle
         timeout-minutes: 8
         shell: bash
@@ -233,6 +235,13 @@ jobs:
              try: reports.append(json.loads(line))
              except json.JSONDecodeError: pass
           observed=reports[0] if len(reports)==1 else None
+          termination_reports=[]
+          if log.exists():
+           for line in log.read_text(errors='replace').splitlines():
+            if line.startswith('{"kind":"FLH04RendererTerminationProbe"'):
+             try: termination_reports.append(json.loads(line))
+             except json.JSONDecodeError: pass
+          termination=termination_reports[0] if len(termination_reports)==1 else None
           summary={
            'source_sha':os.environ['LC_SOURCE_SHA'],
            'source_tree':os.environ['LC_SOURCE_TREE'],
@@ -245,11 +254,16 @@ jobs:
            'exit_status':json.loads((out/'exit-status.json').read_text()) if (out/'exit-status.json').exists() else None,
            'lifecycle_report':observed,
            'report_status':'OBSERVED' if observed is not None else 'NOT_REACHED_OR_NO_VALID_REPORT',
+           'termination_report_count':len(termination_reports),
+           'termination_report':termination,
+           'termination_report_status':'OBSERVED' if termination is not None else 'NOT_REACHED_OR_NO_VALID_REPORT',
+           'termination_cases':termination.get('cases',[]) if termination is not None else [{'id':name,'status':'NOT_REACHED'} for name in ['T1-READ-COMPLETE','T2-REVERT-COMMITTED']],
            'native_forced_close_qualified':False,
+           'renderer_termination_qualification':'UNASSESSED_PENDING_ORIGINAL_REVIEW',
            'lifecycle_cases':observed.get('cases',[]) if observed is not None else [{'id':name,'status':'NOT_REACHED'} for name in ["L1-REVERT","L2-MARKER-FAIL","L3-INITIALIZE","L4-READ-ERROR","L5-CLOSE-EVENT","L6-INTENT","L7-MIGRATE","L8-V2-LOCKED","L9-V1-REMOVE","L10-V2-INTENT","L11-PROBE-ERROR","L11-PROBE-BLOCKED","L12-V2-RECOVERY"]],
            'expected_failures_count_as_pass':False,
-           'scope':'Unchanged browser-sync-outbox baseline plus thirteen source lifecycle groups;C1 opt-in unset;one invocation;Chromium only',
-           'not_qualified':['production v2 adapter','full writer closure','real process crash','real quota','crypto review','active sync']
+           'scope':'Preserved browser-sync-outbox baseline plus thirteen corrected source lifecycle groups and two renderer termination groups;C1 opt-in unset;one invocation;Chromium only',
+           'not_qualified':['production v2 adapter','full writer closure','browser-process crash','power loss','native IDB forced-close event','real quota','crypto review','active sync']
           }
           (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
           files=[]
@@ -264,7 +278,7 @@ jobs:
         uses: actions/upload-artifact@v4
         timeout-minutes: 2
         with:
-          name: flh04-source-lifecycle-781cbfc52ec6-${{ github.run_id }}-${{ github.run_attempt }}
-          path: artifacts/flh04-source-lifecycle/
+          name: flh04-renderer-termination-4cd697ef5bd2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/flh04-renderer-termination/
           if-no-files-found: error
           retention-days: 7
