@@ -1,3 +1,41 @@
+## PRODUCT_WORK_STOPPED / GENERIC_CSV_CASH_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-f1798d3a9454-20261113
+
+Vollständiger enger generischer CSV-EUR-Cash-Belegumfang implementiert: sechs
+provenCashImport-Ereignisse samt aktiver Quelle und dauerhaften reinen Remove-v2-
+Audits, Originalbookings/-journal/-flows, Reimportschutz und unveränderter lokaler
+Undo-Preimagegrenze. Kein allgemeinesCSV/Trade/Broker/manuelles/gemischtesManagement.
+Geschlossene kanonische JSON-sourcePayload-/Import-/Audit-Allowlist, vorhandene
+Fachvalidatoren unverändert. AlleJSON-Werte unverändert; keineDatenverwerfung.
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 unverändert.
+
+Final99PASS/0FAIL/0SKIP/0CANCELLED/Exit0, Node24.22.1, Syntax2PASS:
+80bestehendeSnapshot+11neueCSVSnapshot+8bestehendeCashRemoval. 75ursprüngliche
+Eingabenblobgenau,74unverändertnachCode. BestehendeTests/Assertions unverändert.
+Erstbefunde: isoliert10/1 (Undo-Testannahmezuweit; nachRekonstruktionkeinBytepreimage),
+gemeinsam98/1 (fehlendesAudit-v2-Scopekriterium), final99/0. Originaloutputserhalten.
+[Vertrag](FLH04_SNAPSHOT_CONTRACT.md), [Prüfbeleg](release-evidence/flh04-snapshot-csv-cash-local-2026-11-13.json).
+
+BegrenzteImplementierungvollständig/gezielteinterneNodeprüfungbestanden.
+KeineBrowser/IDB/CryptoKeyPersistenz/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
+CI22/Wallet20/Geräte/PR/Main/Produktions-/externeAbnahme; keineaktiveIntegration.
+Kryptopaketfd3fce4b unverändert, Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2
+REVIEW_READY/EXTERNAL_REVIEW_PENDING; keinPrüfer/Reviewabschluss. ExakterCompare-
+Impact nur nachgelagerteSnapshotabdeckung, keinepauschaleFreigabe. Keyslotrace
+ungelöst/A1/A2/prepared-lockedunverändert. KeinWorkflow/Runner/Retry/PR/Merge/Release/
+SW-Bump/zweiteDB/DBVersion/aktiveSync. FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/
+N-DRIVEBLOCKED_EXTERNAL mitinternem/externalemRest.
+
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325;43332355188Versuch1FAILURE/
+UrsacheUNKNOWN/RELEASE_GATE_OPEN. Diagnose43421311524Versuch1SUCCESSverbraucht.
+SicherungenfrischnurMetadatenRootV155/406425600,FAILV0/12748800,MainOriginalV0/
+212408320,DiagnoseV0/2181120;keinprivaterTransfer/Upload/Readback/Restore/neuer
+Schreibfähigkeitsbeweis/identischesVollbackup. Keine technischeReleasevollübernahme.
+EigeneProduktarbeitbeendet;zentraleSchlussdokumentationfolgt. NächsterSchritt:
+nächstenvorbereiteten vollständigenBelegrest anhandN-DRIVE undValidatoren wählen;
+generischeTrades nurmitvollständigerQuell-/Rücknahmeherkunft,sonstanderenfertigenRest.
+
+---
+
 ## PRODUCT_WORK_STOPPED / LOSSLESS_UH02_V5_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-dedcfdccd449-20261113
 
 Kleinster vollständiger v5-Snapshotumfang gemäß N-DRIVE/Übergabe8 implementiert:
@@ -520,4 +558,3 @@ Stand26.10.2026. Eigenes Issue [#160](https://github.com/joke0071/foliolab-open/
 Zuerst FLH03-14/#158 final abnehmen und dessen konkrete Produktionsentscheidung klären; andere aktive Stränge nicht überschreiben. Vor späterem funktionalem FLH04-Start aktuellen main übernehmen und `FLH04_SYNC_ARCHITECTURE.md`, #160, #148, konsolidierte Roadmap und dieses Dokument lesen. Dann kleinsten reinen Revisions-/Konfliktvertrag mit unabhängigen Sollfällen spezifizieren und vor Transport/UI testen. Die append-only Alternative und jede Remote-Schreibvorbedingung benötigen reale API-Beweise; keine stillen LWW- oder „immer aktuell“-Versprechen.
 
 Vor Freischalten: Schlüssel-/Nonce-/AAD-/Identity-/Replay-/Rollback-/Passwortrotationsreview, Offline-/Parallelgeräte-/Konflikt-/Automerge-/Backup-/Recovery-/IDB-CAS-Tests, alle3Engines/Mobile/Axe und echter OAuth-/Neugerätetest. Neue sicherheitskritische Migrationen bzw. produktiver Sync benötigen ihre konkrete Nutzerentscheidung auf Basis eines vollständig reviewbaren PRs. Die08-/D-Freigaben gelten hierfür nicht. Fehlende Betreiber-/Gerätenachweise dokumentieren, unabhängige FLH03-Pakete fortsetzen.
-

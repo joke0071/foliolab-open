@@ -1,6 +1,7 @@
 import {safeImport,assertDataVersion} from './model.js';
 import {syncPayloadDigest} from './sync-payload-integrity.js';
 import {units,exact} from './decimal.js';
+import {provenCashImport} from './import-identity.js';
 
 /** Bounded credential-free financial gate, NOT crypto/graph/CAS/Apply approval.
  * Unsupported financial evidence blocks the entire snapshot; nothing is pruned.
@@ -40,7 +41,8 @@ const asset=object({...fields('id key kind name isin coinId'),listings:array(lis
 const opening=object(fields('positionId quantityExact costBasisExact realizedPnLExact source asOf'));
 const flow=object(fields('id date amountEUR amountExactEUR'));
 const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
-const journal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
+const basicJournal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
+const journal=v=>basicJournal(v)||cashRemovalJournal(v);
 const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
 const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
 const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
@@ -98,7 +100,31 @@ const bitcoinImport=object({version:v=>v===1,sourceId:v=>v==='unified-bitcoin-v1
  // allowlisted booking/journal. It cannot carry independent extension fields.
  ownedSnapshot:historyText,fileId:historyText,occurrence:v=>Number.isSafeInteger(v)&&v>=1,
  ownership:v=>v==='imported'});
-const booking=object({...fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified'),importSource:bitcoinImport});
+// A complete existing generic cash proof, including durable removal originals.
+// JSON strings are closed data schemas too; opaque source/ownership extensions
+// must never bypass the credential-free snapshot boundary.
+const csvCashPayload=object(Object.fromEntries('type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId'.split(' ').map(k=>[k,historyText])));
+const csvCashPayloadText=v=>{
+ if(!historyText(v))return false;
+ try{const parsed=JSON.parse(v);structureBudget(parsed);
+  return JSON.stringify(parsed)===v&&csvCashPayload(parsed);
+ }catch{return false;}
+};
+const csvCashImport=object({version:v=>v===1,sourceId:v=>v==='generic-csv',
+ accountId:historyText,externalId:historyText,sourcePayload:csvCashPayloadText,
+ ownedSnapshot:historyText,fileId:historyText,occurrence:v=>v===1,ownership:v=>v==='imported'});
+const bookingFields=fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified');
+const existingBooking=object({...bookingFields,importSource:bitcoinImport});
+const csvCashBooking=object({...bookingFields,importSource:csvCashImport,importFingerprint:historyText});
+const booking=v=>existingBooking(v)||csvCashBooking(v);
+const cashOriginal=object({booking:csvCashBooking,journal:basicJournal,flows:array(flow)});
+const cashRemovalFields=object({version:v=>v===2,action:v=>v==='remove',reason:historyText,
+ originals:array(v=>cashOriginal(v)&&v.booking.importSource?.sourceId==='generic-csv'&&provenCashImport(v.booking,v.journal)),
+ afterBookings:array(v=>v===null)});
+const cashRemovalAudit=v=>v?.version===2&&v.action==='remove'&&Array.isArray(v.originals)&&v.originals.length>0&&cashRemovalFields(v);
+const cashRemovalJournalFields=object({...fields('id date recordedAt sequence'),type:v=>v==='booking-management-audit',source:v=>v==='management-audit',
+ postings:array(posting),managementAudit:cashRemovalAudit});
+const cashRemovalJournal=v=>v?.type==='booking-management-audit'&&v.source==='management-audit'&&cashRemovalAudit(v.managementAudit)&&cashRemovalJournalFields(v);
 const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
@@ -106,7 +132,13 @@ const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider
 // A ledger-only v5 observation is a different incomplete evidence slice.
 // No blanket v5 acceptance: require the existing complete UH02 economic path
 // (purchase or permanent undo), then let its existing validators decide.
-const dataSchema=v=>dataFields(v)&&(v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin'));
+const dataSchema=v=>dataFields(v)&&(v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin'))&&
+ (v.bookings||[]).every(b=>b.importSource?.sourceId!=='generic-csv'||provenCashImport(b,(v.journalEntries||[]).find(j=>j.id===b.journalEntryId)))&&
+ // Scope, not a second economics engine: original positions must still be
+ // EUR cash. Existing journal validation binds every retained removal flow.
+ [...(v.bookings||[]).filter(b=>b.importSource?.sourceId==='generic-csv'),
+ ...(v.journalEntries||[]).flatMap(j=>j.managementAudit?.originals?.map(o=>o.booking)||[])].every(b=>
+  v.positions?.some(p=>p.id===b.positionId&&p.accountId===b.accountId&&p.kind==='cash'&&p.currency==='EUR'));
 const same=(a,b)=>{
  if(a===b)return true;
  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;

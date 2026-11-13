@@ -363,3 +363,39 @@ nachgelagerte Snapshotfeldabdeckung, keine Änderung seiner Byte-/Autoritätsver
 oder Selbstfreigabe. REVIEW_READY/EXTERNAL_REVIEW_PENDING unverändert.
 Keine Storage-/Outbox-/Anker-/Krypto-/Appintegration oder aktiveSync.
 NativePersistenz/Keyslotrace/CI/Release/externeGates bleiben offen.
+
+### Generische Cashkette: tatsächlicher Implementierungs- und Prüfabschluss
+
+Geschlossene generic-csv-sourcePayload-/importSource- und Remove-v2-Audit-
+Originalbooking/-journal/-flow-Allowlist implementiert; bestehendes provenCashImport
+bindet Quelle/Ownership/Fingerprint/Journal. safeImport/alle Fachvalidatoren unverändert.
+Nur sechs belegte EUR-Geldereignisse und reine importierte Remove-v2-Audits,
+keine generische Trade-/Broker-/manuelle oder gemischte Managementfreigabe.
+Sämtliche kanonischen JSON-Werte bleiben unverändert; Settings weiterhin ausgeschlossen.
+Bisherige UH02-v5-/Purchase-/Preis-/Wallet-History-Verträge und Budgets erhalten.
+
+99gezielteNode24.22.1TestsPASS/0FAIL/0SKIP/0CANCELLED/Exit0:
+80bestehendeSnapshot+11neueCSVSnapshot+8bestehendeCashRemoval. Syntax2PASS.
+75ursprünglicheEingaben blobgenau;74nachCodeunverändert, nurSnapshotmodul geändert.
+Alle bestehenden Tests unverändert; Wiederholung wegen gemeinsamemSchema/CSV-
+Rücknahmevertrag, keine historischenTestadditionen.
+[Originaloutputs/Eingabeidentitäten](release-evidence/flh04-snapshot-csv-cash-local-2026-11-13.json).
+
+Erster isolierterLauf10PASS/1FAIL: neue Undoerwartung nach safeImport war zu weit.
+PersistenterAudit wird vollständig transportiert; flüchtigerUndoReceipt wird nicht
+portiert. BestehendesUndo verlangt weiterhin exakt gleiche Modellbytes; lokalesUndo
+besteht, nach nicht byteidentischerRekonstruktion bleibt es gesperrt. KeineProdukt-
+oderGuardänderung dafür. Erster gemeinsamerLauf98PASS/1FAIL: unvollständigesAudit
+passierte neue optionaleFeldallowlist bis bestehendemJournalfehler, alteDecoder-
+Envelopeassertion bliebstreng. Pflicht-v2/Remove-/nichtleereOriginals-Scopeprüfung
+vorSchemaannahme korrigiert; Final99/0, keinbestehenderTest/Timeout/Budgetgelockert.
+Beide ursprünglichen Fehleroutputs vollständig erhalten.
+
+BegrenzteImplementierungvollständig/gezielteinterneNodeprüfungbestanden.
+KeineBrowser/IDB/CryptoKeyPersistenz/Reopen/Mehrtab/echterCrash/realeQuota/Recovery/
+CI22/Wallet20/Geräte/PR/Main/Produktions-/externeAbnahme. KeineaktiveIntegration.
+Kryptokandidat17a5a190d472f1f07b3508e6f35194371fe95eb2 exakt alsComparebasis
+verwendet: nur nachgelagerte Snapshotabdeckung/Belege, keineByte-/Autoritätscode-
+freigabe; Reviewpaketfd3fce4b bleibtREVIEW_READY/EXTERNAL_REVIEW_PENDING.
+Keyslotrace/A1/A2/prepared-locked/Identitätsschutz/alleReleasegatesoffen.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mitinternem/externalemRest.
