@@ -10,21 +10,23 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   const current=await readPortfolioSyncRecord(db);
   if(!current.portfolio||current.portfolio.deleted||current.portfolio.revision!==expectedLocalRevision||
    (current.sync?.version??null)!==expectedSyncVersion)throw Error('sync-outbox-stale-preimage');
+  if(current.portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
   const ticket=current.sync===null?null:await verifySyncOutboxState(current.sync,verifyFrame);
   return {...current,ticket};
  }
  async function commit(current,nextState) {
   return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,
-   expectedState:current.sync,nextState});
+   expectedPortfolio:current.portfolio,expectedState:current.sync,nextState});
  }
  return Object.freeze({
   async recover() {
    const {portfolio,sync}=await readPortfolioSyncRecord(db);
    if(!portfolio||portfolio.deleted)throw Error('sync-outbox-no-local-portfolio');
+   if(portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
    if(sync===null)return {state:null,summary:null,localRevision:portfolio.revision};
    const ticket=await verifySyncOutboxState(sync,verifyFrame);
    const after=await readPortfolioSyncRecord(db);
-   if(after.portfolio?.revision!==portfolio.revision||JSON.stringify(after.sync)!==JSON.stringify(sync))
+   if(JSON.stringify(after.portfolio)!==JSON.stringify(portfolio)||JSON.stringify(after.sync)!==JSON.stringify(sync))
     throw Error('sync-outbox-recovery-race');
    return {state:readSyncOutboxState(ticket),summary:syncOutboxSummary(ticket,portfolio.revision),localRevision:portfolio.revision};
   },
@@ -47,7 +49,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
    const result=planSyncOutboxApply({ticket:current.ticket,portfolio:current.portfolio,revisions:remoteDescriptors,observationComplete});
    const after=await readPortfolioSyncRecord(db);
-   if(after.portfolio?.revision!==current.portfolio.revision||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
+   if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
     throw Error('sync-outbox-apply-plan-race');
    return result; // Actual Apply must repeat this preimage/CAS in its OWN tx.
   },

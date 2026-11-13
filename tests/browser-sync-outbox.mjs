@@ -34,6 +34,7 @@ async function operation(page,action,args={}){
   if(action==='save')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings()});
   if(action==='restore')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings(),intent:'restore'});
   if(action==='delete')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:null,settings:null});
+  if(action==='adopt')return t.storage.adoptPortfolioRecord(t.db,{expectedPortfolio:args.expected,raw:args.raw,settings:t.model.defaultSettings(),allowTombstone:true});
   if(action==='recover-record')return t.storage.restoreDamagedRecord(t.db,{expected:args.expected,raw:args.raw,settings:t.model.defaultSettings()});
   if(action==='fault-capture'||action==='fault-restore'){
    const put=IDBObjectStore.prototype.put;
@@ -101,5 +102,14 @@ try{
  await operation(c,'delete',{revision:4});
  assert.equal((await operation(b,'read')).sync.disabled,'portfolio-deleted');
  await assert.rejects(()=>operation(b,'recover'));
+ const tombstone=await operation(b,'read');
+ const adopted=await operation(c,'adopt',{expected:tombstone.portfolio,raw:restored.portfolio.raw});
+ assert.equal(adopted.syncEnrollmentRequired,true);assert.equal(adopted.revision,6);
+ const fenced=await operation(b,'read');
+ assert.deepEqual(fenced.sync.entries,preserved.sync.entries);
+ await assert.rejects(()=>operation(b,'capture',{expectedLocalRevision:6,expectedSyncVersion:fenced.sync.version,frameText:frame(adopted.raw)}),/enrollment-required/);
+ await assert.rejects(()=>operation(b,'begin',{expectedLocalRevision:6,expectedSyncVersion:fenced.sync.version,revisionId:'R'}),/enrollment-required/);
+ await assert.rejects(()=>operation(b,'recover'),/enrollment-required/);
+ assert.deepEqual(await operation(c,'read'),fenced);
  console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, ordinary restore/recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
 }finally{await context.close();await browser.close();}

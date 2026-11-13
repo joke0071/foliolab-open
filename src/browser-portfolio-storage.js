@@ -5,7 +5,7 @@ import {portableSettings} from './complete-backup.js';
  * Encrypted complete backups may optionally include user-approved credentials.
  */
 import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData,retireLegacyProviderCredentials} from './model.js';
-import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials,readPortfolioSyncRecord} from './atomic-storage.js';
+import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials,readPortfolioSyncRecord,adoptPortfolioRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
 export const REVERT_INTENT_KEY='foliolab-open-idb-revert-intent';
@@ -89,7 +89,8 @@ export class PortfolioStorage {
     if(existing){
      if(existing.raw!==raw||JSON.stringify(existing.settings)!==JSON.stringify(settings))
       throw Error('IndexedDB enthält einen unbestätigten Datenstand. Keine automatische Überschreibung.');
-    }else record=await commitPortfolioRecord(db,{expectedRevision:null,raw,settings});
+    }
+    record=await adoptPortfolioRecord(db,{expectedPortfolio:existing,raw,settings});
     const check=await readPortfolioRecord(db);
     if(check?.revision!==record.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))
      throw Error('IndexedDB konnte nicht vollständig überprüft werden.');
@@ -156,22 +157,11 @@ export class PortfolioStorage {
    const {portfolio:existing,sync}=await readPortfolioSyncRecord(db);
    if(sync!==null&&!existing?.deleted)throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
    const portable=backup(model,{includeHistory:true}),preferences=portableSettings(model.settings);
-   let record;
-   if(existing?.deleted&&existing.raw===null){
-    // A deliberate prior rollback/reset leaves an IDB tombstone. Only a NEW,
-    // explicitly consented migration may supersede it at its exact revision.
-    record=await commitPortfolioRecord(db,{
-     expectedRevision:existing.revision,raw:portable,settings:preferences
-    });
-   }else if(existing){
-    // Interrupted prior migration may be resumed only when its bytes and
-    // credentials are exactly the same; never overwrite a different record.
-    if(existing.raw!==portable||JSON.stringify(existing.settings)!==JSON.stringify(preferences))
-     throw Error('IndexedDB enthält einen abweichenden Datenstand. Automatische Überschreibung verweigert.');
-    record=existing;
-   }else record=await commitPortfolioRecord(db,{
-    expectedRevision:null,raw:portable,settings:preferences
-   });
+   // Consented migration may supersede a tombstone; a live resume must be
+   // byte-identical. The atomic cutover checks the full record and outbox.
+   if(existing&&!existing.deleted&&(existing.raw!==portable||JSON.stringify(existing.settings)!==JSON.stringify(preferences)))
+    throw Error('IndexedDB enthält einen abweichenden Datenstand. Automatische Überschreibung verweigert.');
+   const record=await adoptPortfolioRecord(db,{expectedPortfolio:existing,raw:portable,settings:preferences,allowTombstone:true});
    const check=await readPortfolioRecord(db);
    if(check?.revision!==record.revision||check.raw!==portable||JSON.stringify(check.settings)!==JSON.stringify(preferences))
     throw Error('IndexedDB-Migration konnte nicht vollständig überprüft werden.');

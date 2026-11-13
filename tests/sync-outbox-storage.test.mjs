@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider} from '../src/model.js';
-import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord} from '../src/atomic-storage.js';
+import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord,adoptPortfolioRecord} from '../src/atomic-storage.js';
 import {verifySyncOutboxState,advanceSyncOutboxState} from '../src/sync-outbox-state.js';
 import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
@@ -44,7 +44,7 @@ async function matchForModel(db,args) {
  const current=await readPortfolioSyncRecord(db);
  const next=advanceSyncOutboxState({ticket:await verifySyncOutboxState(current.sync,verify),revisionId:args.revisionId,
   readback:args.readback,currentLocalRevision:current.portfolio.revision});
- return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,expectedState:current.sync,nextState:next});
+ return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,expectedPortfolio:current.portfolio,expectedState:current.sync,nextState:next});
 }
 test('transaction double: capture/restart retains full frame without changing portfolio or settings',async()=>{
  const {db,p,api,args}=await fixture();const s=await api.capture(args);
@@ -117,7 +117,7 @@ test('transaction double: post-commit reply loss rereads full committed state; m
  // No fictional rollback: dropping caller result does not undo oncomplete.
  assert.deepEqual((await createSyncOutboxStorage(db,verify).recover()).state,s);
  const next=structuredClone(s);next.version=2;next.entries[0].status='uncertain';
- const pending=commitPortfolioSyncRecord(db,{expectedLocalRevision:1,expectedState:s,nextState:next});
+ const pending=commitPortfolioSyncRecord(db,{expectedLocalRevision:1,expectedPortfolio:(await readPortfolioSyncRecord(db)).portfolio,expectedState:s,nextState:next});
  next.entries[0].status='confirmed';s.version=99;await pending;
  assert.equal((await api.recover()).state.entries[0].status,'uncertain');
 });
@@ -271,7 +271,7 @@ test('installation lifecycle double: missing record cannot rebind old frames at 
  assert.deepEqual((await readPortfolioSyncRecord(db)).sync,{...original,disabled:'portfolio-reinitialized'});
  await assert.rejects(()=>api.capture({...args,expectedSyncVersion:1}),/disabled/);
  await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/disabled/);
- await assert.rejects(()=>api.recover(),/disabled/);
+ await assert.rejects(()=>api.recover(),/disabled|enrollment-required/);
 });
 
 test('installation lifecycle double: reinitialization invalidation failure preserves missing-record preimage',async()=>{
@@ -316,7 +316,7 @@ test('installation lifecycle double: fresh and identical interrupted installatio
   if(interrupted)await commitPortfolioRecord(db,{expectedRevision:null,raw:backup(model,{includeHistory:true}),settings:model.settings});
   const controller=new PortfolioStorage(local.storage);
   const loaded=await withFactory(db,()=>controller.initializeNew());
-  assert.equal(controller.revision,1);assert.equal(controller.isIndexedDB,true);
+  assert.equal(controller.revision,interrupted?2:1);assert.equal(controller.isIndexedDB,true);
   assert.deepEqual(loaded,model);assert.equal(local.data.get(MODE_KEY),MODE_VALUE);
   assert.equal((await readPortfolioSyncRecord(db)).sync,null);
  }
@@ -330,5 +330,136 @@ test('installation lifecycle double: consented migration over tombstone preserve
  await withFactory(db,()=>controller.migrate(model));
  assert.equal(controller.revision,3);assert.equal(local.data.get(MODE_KEY),MODE_VALUE);
  assert.deepEqual((await readPortfolioSyncRecord(db)).sync,{...original,disabled:'portfolio-reinitialized'});
- await assert.rejects(()=>api.recover(),/disabled/);
+ await assert.rejects(()=>api.recover(),/disabled|enrollment-required/);
+});
+
+test('atomic adoption double: capture before cutover blocks adoption without changing originals',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const before=await readPortfolioSyncRecord(db);
+ await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:p,raw:p.raw,settings:p.settings}),/Synchronisierungslinie/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+
+test('atomic adoption double: cutover before capture fences every outbox entry and ordinary saves retain it',async()=>{
+ const {db,p,api,args,model}=await fixture();
+ const next=await adoptPortfolioRecord(db,{expectedPortfolio:p,raw:p.raw,settings:p.settings});
+ assert.equal(next.revision,2);assert.equal(next.syncEnrollmentRequired,true);
+ await assert.rejects(()=>api.capture(args),/stale-preimage/);
+ await assert.rejects(()=>api.capture({...args,expectedLocalRevision:2}),/enrollment-required/);
+ await assert.rejects(()=>api.begin({expectedLocalRevision:2,expectedSyncVersion:null,revisionId:'R'}),/enrollment-required/);
+ await assert.rejects(()=>api.planApply({expectedLocalRevision:2,expectedSyncVersion:null,revisions:[],observationComplete:true}),/enrollment-required/);
+ await assert.rejects(()=>api.recover(),/enrollment-required/);
+ await assert.rejects(()=>api.confirm(),/remote-provenance-unavailable/);
+ let edited=await commitPortfolioRecord(db,{expectedRevision:2,raw:p.raw,settings:model.settings});
+ assert.equal(edited.syncEnrollmentRequired,true);
+ edited=await commitPortfolioRecord(db,{expectedRevision:3,raw:p.raw,settings:model.settings,intent:'restore'});
+ assert.equal(edited.syncEnrollmentRequired,true);
+ const recovered=await restoreDamagedRecord(db,{expected:edited,raw:p.raw,settings:p.settings});
+ assert.equal(recovered.syncEnrollmentRequired,true);assert.equal((await readPortfolioSyncRecord(db)).sync,null);
+});
+
+test('atomic adoption double: simultaneous capture/cutover cannot both succeed',async()=>{
+ for(const adoptionFirst of [false,true]){
+  const {db,p,api,args}=await fixture();
+  const adopt=()=>adoptPortfolioRecord(db,{expectedPortfolio:p,raw:p.raw,settings:p.settings});
+  const outcomes=await Promise.allSettled(adoptionFirst?[adopt(),api.capture(args)]:[api.capture(args),adopt()]);
+  assert.equal(outcomes.filter(x=>x.status==='fulfilled').length,1);
+  const current=await readPortfolioSyncRecord(db);
+  if(current.sync===null)assert.equal(current.portfolio.syncEnrollmentRequired,true);
+  else assert.deepEqual(current.portfolio,p);
+ }
+});
+
+test('atomic adoption double: full preimage, tombstone consent and source bytes are mandatory',async()=>{
+ const {db,p}=await fixture(),before=await readPortfolioSyncRecord(db);
+ await assert.rejects(()=>adoptPortfolioRecord(db,{raw:p.raw,settings:p.settings}),/preimage/);
+ await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:{...p,updatedAt:'different'},raw:p.raw,settings:p.settings}),/stale-preimage/);
+ const changed=JSON.parse(p.raw);changed.providers.push(createProvider({id:'other',name:'different',type:'broker'}));
+ await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:p,raw:JSON.stringify(changed),settings:p.settings}),/data-mismatch/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ const tombstone=await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});
+ await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:tombstone,raw:p.raw,settings:p.settings}),/tombstone/);
+ assert.deepEqual((await readPortfolioSyncRecord(db)).portfolio,tombstone);
+});
+
+test('atomic adoption double: same-CAS changes during crypto block capture, begin, planning and recovery',async()=>{
+ for(const mutation of ['raw','settings','updatedAt','syncEnrollmentRequired'])for(const action of ['capture','begin','planApply','recover']){
+  const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);let once=true;
+  const racing=createSyncOutboxStorage(db,async text=>{
+   if(once){once=false;const replacement=structuredClone(p);
+    if(mutation==='raw'){
+     const changed=JSON.parse(p.raw);changed.providers.push(createProvider({id:'new',name:'replacement',type:'broker'}));
+     replacement.raw=backup(changed,{includeHistory:true});
+    }else if(mutation==='settings')replacement.settings={...p.settings,theme:p.settings.theme==='dark'?'light':'dark'};
+    else replacement[mutation]=mutation==='syncEnrollmentRequired'?true:'replacement-time';
+    db.data.set('portfolio',replacement); // deliberate same-CAS record replacement DOUBLE
+   }return verify(text);
+  });
+  const call=action==='capture'?()=>racing.capture({...args,expectedSyncVersion:1}):
+   action==='begin'?()=>racing.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}):
+   action==='planApply'?()=>racing.planApply({expectedLocalRevision:1,expectedSyncVersion:1,revisions:[],observationComplete:true}):()=>racing.recover();
+  await assert.rejects(call,/preimage|race|enrollment-required/);
+  const after=await readPortfolioSyncRecord(db);
+  assert.equal(after.portfolio.revision,1);assert.deepEqual(after.sync,before.sync);
+ }
+});
+
+test('atomic adoption double: metadata commit requires full detached portfolio and honors persistent fence',async()=>{
+ const {db,p,api,args}=await fixture();const state=await api.capture(args);
+ await assert.rejects(()=>commitPortfolioSyncRecord(db,{expectedLocalRevision:1,expectedState:state,nextState:state}),/preimage/);
+ const fenced={...p,syncEnrollmentRequired:true};db.data.set('portfolio',fenced);
+ const before=await readPortfolioSyncRecord(db);
+ await assert.rejects(()=>commitPortfolioSyncRecord(db,{expectedLocalRevision:1,expectedPortfolio:fenced,expectedState:state,nextState:state}),/enrollment-required/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+
+test('atomic adoption double: quota/abort roll back record, fence and tombstone outbox invalidation together',async()=>{
+ for(const tombstoned of [false,true])for(const fault of ['quota','abort-after-put']){
+  const {db,p,api,args}=await fixture();let expected=p;
+  if(tombstoned){await api.capture(args);expected=await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});}
+  const before=await readPortfolioSyncRecord(db);db.fault=fault;
+  await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:expected,raw:p.raw,settings:p.settings,allowTombstone:tombstoned}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+
+test('atomic adoption factory double: marker failure keeps durable fence; interrupted new/migrate resume safely',async()=>{
+ for(const migration of [false,true]){
+  const db=memoryDB(),model=blankModel(),local=localFixture();const original=local.storage.setItem;let fail=true;
+  local.storage.setItem=(key,value)=>{if(key===MODE_KEY&&fail){fail=false;throw Error('marker-double');}return original(key,value);};
+  const controller=new PortfolioStorage(local.storage);
+  await withFactory(db,()=>assert.rejects(()=>migration?controller.migrate(model):controller.initializeNew(),/marker-double/));
+  const committed=await readPortfolioSyncRecord(db);
+  assert.equal(committed.portfolio.syncEnrollmentRequired,true);assert.equal(committed.portfolio.revision,1);
+  assert.equal(local.storage.getItem(MODE_KEY),null);
+  const api=createSyncOutboxStorage(db,verify),receipt=await verify(frame(committed.portfolio.raw));
+  await assert.rejects(()=>api.capture({expectedLocalRevision:1,expectedSyncVersion:null,receipt,expectedPortfolioId:portfolioId,expectedEpochId:epochId}),/enrollment-required/);
+  const resumed=new PortfolioStorage(local.storage);
+  await withFactory(db,()=>migration?resumed.migrate(model):resumed.initializeNew());
+  assert.equal(resumed.revision,2);assert.equal(local.storage.getItem(MODE_KEY),MODE_VALUE);
+  assert.equal((await readPortfolioSyncRecord(db)).portfolio.syncEnrollmentRequired,true);
+ }
+});
+
+test('atomic adoption double: second put failure preserves tombstone and all encrypted attempts',async()=>{
+ for(const fault of ['quota','abort']){
+  const {db,p,api,args}=await fixture();await api.capture(args);await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
+  const tombstone=await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null}),before=await readPortfolioSyncRecord(db);
+  const transaction=db.transaction;db.transaction=function(...a){const tx=transaction.apply(db,a),objectStore=tx.objectStore;
+   tx.objectStore=function(...b){const store=objectStore.apply(tx,b),put=store.put;
+    store.put=function(value,key){if(key==='sync-outbox-v1'){
+     if(fault==='quota')throw new DOMException('adoption-second-put','QuotaExceededError');
+     const result=put.call(store,value,key);tx.abort();return result;
+    }return put.call(store,value,key);};return store;};return tx;};
+  await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:tombstone,raw:p.raw,settings:p.settings,allowTombstone:true}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+
+test('atomic adoption double: caller mutation cannot change preimages, preferences or captured next state',async()=>{
+ const {db,p}=await fixture(),expected=structuredClone(p),settings=structuredClone(p.settings);
+ const pending=adoptPortfolioRecord(db,{expectedPortfolio:expected,raw:p.raw,settings});
+ expected.updatedAt='caller-change';settings.theme='caller-change';const committed=await pending;
+ assert.deepEqual(committed.settings,p.settings);
+ assert.equal(committed.raw,p.raw);assert.equal(committed.syncEnrollmentRequired,true);
 });
