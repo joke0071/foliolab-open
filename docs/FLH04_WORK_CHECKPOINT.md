@@ -1,3 +1,13 @@
+## C1_PREPARED_REVISION2 / LOCALHOST_GUARD_BEFORE_BROWSER / NATIVE_NOT_RUN
+
+C1-Localhost-/Port-/Pfadprüfung vor Browserstart und Originalbasisablauf ergänzt,
+im Helper nochmals geprüft. Vorbereitungsbefund anffb2cbf7 im Vertragsentwurf§11.7
+erhalten; dieseFassung wurde nicht ausgeführt. Beide finalen mjs erneut
+node --check Exit0; Originalharness durch Entfernen der zweiopt-in-Blöcke
+weiter exakt rekonstruierbar. Keine neueNative-/CI-/Migrationfreigabe.
+
+---
+
 ## V2_NO_LEGACY_RETURN_AUTHORIZED / C1_PROBE_PREPARED / PRODUCT_NOT_READY · work-366da675bef5-20261113
 
 Jochen hat ausdrücklich autorisiert: bestätigte v2 bleibt kanonisch IDB;

@@ -966,3 +966,20 @@ Kryptopaketfd3fce4b/Kandidat17a5a190/Tree44ff9c4d bleibt unverändert;
 neuer Vertrag/C1 sind ungeprüfter Delta-/Impactgegenstand, kein Paketneubau
 oder Selbst-/KIabschluss fürCR4/CR5.
 A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutz unverändert.
+
+### 11.7 C1-Vorbereitungsrevision2 — Localhostschranke vor dem Originalablauf
+
+Beim gerichteten Vorabreview wurde die Origin-/Portprüfung zusätzlich VOR den
+Browserstart und damit vor den vorhandenen Basisablauf verlegt.
+Die erste vorbereitete Fassung ffb2cbf7 prüfte die Origin erst beim Eintritt
+in die nachgeladene Erweiterung; damit war ein falsch gesetztes BASE_URL für
+den davor laufenden Originalharness noch nicht durch die C1-Schranke begrenzt.
+Keine Ausführung dieser Fassung hat stattgefunden.
+
+Revision2 prüft bei Opt-in HTTP, localhost/127.0.0.1, Port4173 und exakten
+neutralen Pfad vor Engine-/Context-/Pageerzeugung; der Helper prüft zusätzlich
+unabhängig beim Eintritt. Ohne Opt-in bleibt der Originalablauf bytegleich
+rekonstruierbar. Beide geänderten finalen mjs nochmals node --check Exit0.
+Keine Sicherheitsgrenze durch einen späteren Testassert ersetzen.
+Der ursprüngliche Vorbereitungscommit bleibt als Historie erhalten; nur die
+neue exakte Revision darf als aktueller C1-Prüfkandidat benannt werden.

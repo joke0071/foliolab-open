@@ -8,6 +8,7 @@ import {createRequire} from 'node:module';
 export async function runVersion2Candidate({browser,setup,operation,url}) {
  const origin=new URL(url);
  assert.equal(origin.protocol,'http:','C1 requires a local HTTP test origin');
+ assert.equal(origin.port,'4173','C1 requires the assigned local test port');
  assert.ok(['127.0.0.1','localhost'].includes(origin.hostname),'C1 forbids production origins');
  assert.equal(origin.pathname,'/tests/storage-origin.html');
  const results=[];

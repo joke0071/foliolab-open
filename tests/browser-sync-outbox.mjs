@@ -10,6 +10,12 @@ if(!engines[name])throw Error('Unsupported ENGINE');
 const v2Candidate=process.env.FLH04_VERSION2_CANDIDATE;
 if(v2Candidate!==undefined&&(v2Candidate!=='1'||name!=='chromium'))
  throw Error('FLH04 C1 requires explicit value 1 and ENGINE=chromium');
+if(v2Candidate==='1'){
+ const candidateURL=new URL((process.env.BASE_URL||'http://127.0.0.1:4173')+'/tests/storage-origin.html');
+ if(candidateURL.protocol!=='http:'||!['127.0.0.1','localhost'].includes(candidateURL.hostname)||
+    candidateURL.port!=='4173'||candidateURL.pathname!=='/tests/storage-origin.html')
+  throw Error('FLH04 C1 requires the local synthetic test origin on port 4173');
+}
 const browser=await engines[name].launch({headless:true});
 const context=await browser.newContext();
 const url=(process.env.BASE_URL||'http://127.0.0.1:4173')+'/tests/storage-origin.html';
