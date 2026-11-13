@@ -399,3 +399,61 @@ verwendet: nur nachgelagerte Snapshotabdeckung/Belege, keineByte-/Autoritätscod
 freigabe; Reviewpaketfd3fce4b bleibtREVIEW_READY/EXTERNAL_REVIEW_PENDING.
 Keyslotrace/A1/A2/prepared-locked/Identitätsschutz/alleReleasegatesoffen.
 FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mitinternem/externalemRest.
+
+## Manueller EUR-Cash-Managementablauf · vor Code · 13.11.2026
+
+Owner work-f1798d3a9454-20261113; Basisce5ab5967faaf997e336f46041074a8e9ee4ac02.
+Prozessänderungen7e5139c86e35ecf1559b359489acf35d13758f64 selektiv auf frischen
+ZentralHEAD übernommen (285ed13489c0e64fd5196868d64592deed72b304); nur zwei Pläne,
+gepinnt byte-/blobgeprüft, kein neuer CI-/Chat-/Releasezyklus.
+
+Fehlendes fachliches Abschlusskriterium dieses nächsten vollständigen Ablaufs:
+vorhandene manuelle EUR-Cash-Notiz/Korrektur/Rücknahme mit sämtlichen v1-Audits,
+Originalbookings/-journal/-flows und afterBookings verlustfrei transportieren und
+nach Restore dieselben bestehenden Folgeänderungs-/Undo-/Stalegrenzen erhalten.
+Vorhanden: booking-management erzeugt diese Belege; validateJournalEntry/safeImport
+lesen sie, bestehende booking-management-changes-Suite prüft alle sechs Geldarten,
+Korrektur/Notiz/Mehrfachrücknahme/fortgesetzte Änderungshistorie und strikte Guards.
+Fehlend: geschlossene Snapshotabdeckung, nicht neuer Verwaltungscode.
+
+Kleinster vollständiger Scope: diese bestehenden v1-Managementketten für
+deposit/withdraw/dividend/interest/fee/tax auf weiterhin vorhandenen eigenen EUR-
+Cashpositionen. Notes/Edit haben vollständige manuelle afterBookings; Remove hat
+null. Originaljournal nur bestehendes einfaches manual-Journal, keine rekursiven
+Audits oder Import-/Fingerprintherkunft. Reine v2-generic-csv-Remove-Belege bleiben
+getrennt unverändert unterstützt; gemischte v2-Audits weiterunsupported. Bestehende
+Validatoren und unverändernder Vergleich bleiben unverändert. Keine neue Mutation,
+Eigentumsbestätigung, Autorität, Reimport-/Undoengine oder Projektion/Default.
+
+Erfolg: alle6Geldarten×3Aktionen, Betrag/Datum/Notiz/ID/Reihenfolge/Kapitalflüsse,
+gebündelteRücknahme, aufeinanderfolgendeEdit→Notes→Remove-Historie, alte lokaleUndo-
+Preimagegrenze, Archiv/UNKNOWN und bisherigeImportbelege. Snapshotportiertkeinen
+flüchtigenUndoReceipt. Ein veralteter/mehrdeutigerAuditbezug gewinnt keine neue
+Berechtigung; bestehendeFolgeänderungsprüfung bleibtentscheidend.
+AblehnungEncoderUNDDecoder: unbekannteFelder/Credentials anAudit/Original/
+Booking/Journal/Posting/Flow/afterBookings, fremdeImportherkunft, falscheVersion/
+Aktion/afterForm/Originalstruktur, GeldwirkungimAudit undScopefremdeTrade-/FX-/
+Wallet-/Positionenketten. GanzerPayloadscheitert,keinPruning. Budgets unverändert.
+Dateien: Snapshotmodul, neue sync-snapshot-management.test.mjs, bestehenderVertrag/
+Fachcheckpoint/Prüfbeleg. BestehendeSnapshot-/CSVTestsunverändert; neueAbdeckungund
+vorhandenebooking-management-changes gezielt prüfen.
+
+Bezug zum tatsächlichen FLH04-Abschluss: diese Implementierung schließt nur den
+genannten Portfolioablauf, keineEndlossammelfreigabe. VollständigeSnapshotabdeckung
+übrigerbereitsgespeicherterImport-/Bridge-/Withdrawal-/Flatex-/Resumezustände bleibt
+offen; unknown/unsupportedvollständigabweisen. Separat ungelöst ist die atomare
+Bindung credentialfreierSnapshotbytes an originale lokaleRaw-/Revision-/Keyslot-
+Preimages: sync-outbox-state vergleicht noch portfolio.raw mit verifiziertem
+Payload, Storage.confirm gesperrt/planApply.applyAuthorized=false. Snapshotmodul
+hier NICHT anOutbox/Storage/Apply anschließen oder Rawidentität umdeuten.
+Für interneVollabnahme braucht es den geschlossenenRaw-/Payload-/CryptoKey-CAS-
+Vertrag und echte Persistenz/Reopen/Mehrtab/Crash/Quota-Prüfungen. Hauptowner muss
+dafür vorhandeneHarnesses in tatsächlich zulässiger geeigneterUmgebung ausführen;
+bekannteunveränderteFehlstarts nichtwiederholen. Für reviewgesperrtenCode muss
+Jochen den unabhängigen qualifiziertenPrüfer und nötigenZugang/Budget bestimmen;
+bestehendesPaketfd3fce4b/exakterKandidat17a5a190d472f1f07b3508e6f35194371fe95eb2
+wiederverwenden, keineSelbstfreigabe/externeBeauftragung. Ohne tatsächlichen
+einschlägigenReviewabschluss weiterkeinWrap-/Signatur-/Aussteller-/Entsperrcode.
+MainbefundgeparktbisneuerbegründeterHypothese/geänderterVoraussetzungundkonkretem
+reviewbarenKandidaten;neueAusführungsentscheidungdurchJochen,KEinblindRetry.
+Alleübrigeninternen/externenGeräte-/OAuth-/CI-/Releasegatesweiteroffen.
