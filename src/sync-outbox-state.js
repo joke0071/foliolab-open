@@ -1,5 +1,5 @@
 import {readVerifiedSyncFrame} from './sync-frame-verifier.js';
-import {isSyncRevisionDescriptor} from './sync-revisions.js';
+import {isSyncRevisionDescriptor,planSyncRevisions} from './sync-revisions.js';
 
 // Pure durable-state transitions. No Apply, transport, key storage or enrollment.
 export const SYNC_OUTBOX_ENTRY_LIMIT=128;
@@ -10,6 +10,7 @@ const integer=n=>Number.isSafeInteger(n)&&n>=1;
 const shape=(o,keys)=>o&&typeof o==='object'&&!Array.isArray(o)&&
  Object.keys(o).length===keys.length&&keys.every(k=>Object.hasOwn(o,k));
 const verifiedStates=new WeakMap();
+const verifiedPayloads=new WeakMap();
 
 /** Re-decrypt EVERY stored frame with an independently locally bound verifier.
  * Copy first: IDB data has no authority and cannot mutate across async work.
@@ -21,7 +22,7 @@ export async function verifySyncOutboxState(input,verifyFrame) {
   state.format!==1||!integer(state.version)||state.disabled!==null||
   !Array.isArray(state.entries)||!state.entries.length||state.entries.length>SYNC_OUTBOX_ENTRY_LIMIT||
   !Number.isInteger(state.anchorIndex)||state.anchorIndex< -1||state.anchorIndex>=state.entries.length)fail('format-or-disabled');
- let total=0,previous=null;
+ let total=0,previous=null;const payloads=[];
  const ids=new Set();
  for(let i=0;i<state.entries.length;i++) {
   const e=state.entries[i];
@@ -38,10 +39,10 @@ export async function verifySyncOutboxState(input,verifyFrame) {
   if((i<=state.anchorIndex)!==(e.status==='confirmed'))fail('anchor');
   const v=readVerifiedSyncFrame(await verifyFrame(e.frameText));
   if(v.epochId!==state.epochId||!same(v.descriptor,e.revision)||v.frameText!==e.frameText||v.frameDigest!==e.frameDigest)fail('frame-binding');
-  previous=e;
+  payloads.push(v.plain);previous=e;
  }
  const ticket=Object.freeze({type:'verified-sync-outbox-state'});
- verifiedStates.set(ticket,state);
+ verifiedStates.set(ticket,state);verifiedPayloads.set(ticket,payloads);
  return ticket;
 }
 
@@ -81,8 +82,9 @@ export function appendSyncOutboxState({ticket=null,receipt,portfolio,expectedPor
  return state;
 }
 
-/** Mark uncertain BEFORE send; only a fresh exact authenticated readback can
- * advance the contiguous anchor. Failures/HTTP success never roll status back.
+/** Pure FRAME-MATCH model only. It proves no actual remote read provenance.
+ * The storage adapter must not use this result as a remote acknowledgement.
+ * Mark uncertain before send; failures/HTTP never roll status back.
  */
 export function advanceSyncOutboxState({ticket,revisionId,readback=null,currentLocalRevision}) {
  const state=readSyncOutboxState(ticket),i=state.entries.findIndex(e=>e.revision.revisionId===revisionId);
@@ -107,6 +109,25 @@ export function syncOutboxSummary(ticket,currentLocalRevision) {
  const s=readSyncOutboxState(ticket),last=s.entries.at(-1),anchor=s.entries[s.anchorIndex]??null;
  if(!integer(currentLocalRevision)||currentLocalRevision<last.capturedLocalRevision)fail('current-cas');
  return {portfolioId:s.portfolioId,epochId:s.epochId,version:s.version,head:{...last.revision},
-  remoteAnchor:anchor?{...anchor.revision}:null,acknowledgedLocalRevision:anchor?.capturedLocalRevision??null,
-  hasPendingChanges:s.anchorIndex!==s.entries.length-1||currentLocalRevision>last.capturedLocalRevision};
+  matchedAnchor:anchor?{...anchor.revision}:null,matchedLocalRevision:anchor?.capturedLocalRevision??null,
+  remoteAnchor:null,acknowledgedLocalRevision:null,remoteConfirmation:'unavailable',hasPendingChanges:true};
+}
+
+/** A1: pure pre-Apply planning guard, NEVER permission to Apply. All remote
+ * descriptors must still come from the future authenticated graph adapter.
+ * The local frame/CAS binding is read from persisted state, never supplied by
+ * the remote graph. New local saves without a captured successor block first.
+ */
+export function planSyncOutboxApply({ticket,portfolio,revisions,observationComplete}) {
+ const s=readSyncOutboxState(ticket),last=s.entries.at(-1);
+ if(!portfolio||portfolio.deleted||!integer(portfolio.revision))return {status:'blocked',reason:'invalid-local-preimage'};
+ if(portfolio.revision>last.capturedLocalRevision)return {status:'blocked',reason:'unrepresented-local-changes'};
+ if(portfolio.revision!==last.capturedLocalRevision)return {status:'blocked',reason:'local-cas-mismatch'};
+ if(portfolio.raw!==verifiedPayloads.get(ticket).at(-1))return {status:'blocked',reason:'local-snapshot-mismatch'};
+ if(!Array.isArray(revisions))return {status:'blocked',reason:'invalid-remote-descriptors'};
+ // Local offline successors remain heads too; remote B following old A cannot
+ // win over a captured local sibling, even when its generation is higher.
+ const result=planSyncRevisions({portfolioId:s.portfolioId,localHead:last.revision,localRevision:portfolio.revision,
+  revisions:[...s.entries.map(e=>e.revision),...revisions],observationComplete});
+ return {...result,expectedSyncVersion:s.version,applyAuthorized:false};
 }

@@ -8,6 +8,11 @@ import {units,exact} from './decimal.js';
  */
 export const SYNC_SNAPSHOT_KIND='FolioLabSyncSnapshot';
 export const SYNC_SNAPSHOT_VERSION=1;
+// Conservative payload budget leaves room for JSON-escaped content+descriptor
+// inside the existing 7.4MB frame cipher bound. No existing limit is raised.
+export const SYNC_SNAPSHOT_UTF8_LIMIT=3500000;
+export const SYNC_SNAPSHOT_NODE_LIMIT=100000;
+export const SYNC_SNAPSHOT_DEPTH_LIMIT=16;
 const fail=reason=>{throw Error('sync-snapshot-'+reason);};
 const unicode=v=>{
  for(let i=0;i<v.length;i++){const c=v.charCodeAt(i);
@@ -56,7 +61,20 @@ const same=(a,b)=>{
  const aa=Object.keys(a),bb=Object.keys(b);
  return aa.length===bb.length&&aa.every(k=>Object.hasOwn(b,k)&&same(a[k],b[k]));
 };
+function byteBudget(plain){
+ if(new TextEncoder().encode(plain).byteLength>SYNC_SNAPSHOT_UTF8_LIMIT)fail('byte-budget');
+}
+function structureBudget(value){
+ const stack=[[value,0]];let nodes=0;
+ while(stack.length){
+  const [v,depth]=stack.pop();
+  if(++nodes>SYNC_SNAPSHOT_NODE_LIMIT)fail('node-budget');
+  if(depth>SYNC_SNAPSHOT_DEPTH_LIMIT)fail('depth-budget');
+  if(v&&typeof v==='object')for(const child of Object.values(v))stack.push([child,depth+1]);
+ }
+}
 function checkData(data){
+ structureBudget(data);
  if(!dataSchema(data))fail('unsupported-data-or-field');
  assertDataVersion(data);
  // Reuse existing financial/journal/history/reference/dedupe validators. They
@@ -77,10 +95,12 @@ export async function createSyncSnapshot(canonicalRaw){
  await syncPayloadDigest(canonicalRaw); // strict UTF8/Unicode and existing limits
  let data;try{data=JSON.parse(canonicalRaw);}catch{fail('json');}
  if(!data||typeof data!=='object'||Array.isArray(data))fail('data');
+ structureBudget(data);
  if(canonicalRaw!==JSON.stringify(data)&&canonicalRaw!==JSON.stringify(data,null,2))fail('noncanonical-local-json');
  delete data.settings;
  checkData(data);
  const plain=JSON.stringify({kind:SYNC_SNAPSHOT_KIND,snapshotVersion:SYNC_SNAPSHOT_VERSION,data});
+ byteBudget(plain);
  await syncPayloadDigest(plain);
  return plain;
 }
@@ -89,8 +109,9 @@ export async function createSyncSnapshot(canonicalRaw){
  * frozen data grants no storage permission and never installs settings/keys.
  */
 export async function validateSyncSnapshot(plain){
- await syncPayloadDigest(plain);
+ await syncPayloadDigest(plain);byteBudget(plain);
  let envelope;try{envelope=JSON.parse(plain);}catch{fail('json');}
+ structureBudget(envelope);
  if(!object({kind:v=>v===SYNC_SNAPSHOT_KIND,snapshotVersion:v=>v===SYNC_SNAPSHOT_VERSION,data:dataSchema})(envelope)||
     Object.keys(envelope).length!==3||JSON.stringify(envelope)!==plain)fail('envelope');
  checkData(envelope.data);

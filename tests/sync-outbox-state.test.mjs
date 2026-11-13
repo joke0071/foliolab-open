@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
 import {createHash} from 'node:crypto';
 const hash=s=>createHash('sha256').update(s).digest('hex');
-import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary} from '../src/sync-outbox-state.js';
+import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary,planSyncOutboxApply} from '../src/sync-outbox-state.js';
 const raw='{"quantity":"9007199254740993.00000001","fx":null,"fxState":"UNKNOWN","journal":["J"]}';
 export const capture=async(plain=raw,revision=7,extra={})=>appendSyncOutboxState({receipt:await verify(frame(plain)),portfolio:{raw:plain,revision,deleted:false},expectedPortfolioId:portfolioId,expectedEpochId:epochId,...extra});
 const ticket=s=>verifySyncOutboxState(s,verify);
@@ -42,9 +42,9 @@ test('before-send uncertain persists; only exact readback advances contiguous an
  assert.equal(syncOutboxSummary(await ticket(s),9).acknowledgedLocalRevision,null);
  await assert.rejects(async()=>advanceSyncOutboxState({ticket:await ticket(s),revisionId:'S',currentLocalRevision:8,readback:await verify(s.entries[1].frameText)}),/anchor-order/);
  s=advanceSyncOutboxState({ticket:await ticket(s),revisionId:'R',currentLocalRevision:9,readback:await verify(s.entries[0].frameText)});
- assert.equal(s.anchorIndex,0);assert.equal(s.entries[1].status,'pending');assert.equal(syncOutboxSummary(await ticket(s),9).acknowledgedLocalRevision,7);
+ assert.equal(s.anchorIndex,0);assert.equal(s.entries[1].status,'pending');assert.equal(syncOutboxSummary(await ticket(s),9).matchedLocalRevision,7);
  s=advanceSyncOutboxState({ticket:await ticket(s),revisionId:'S',currentLocalRevision:9,readback:await verify(s.entries[1].frameText)});
- assert.equal(syncOutboxSummary(await ticket(s),8).hasPendingChanges,false);assert.equal(syncOutboxSummary(await ticket(s),9).hasPendingChanges,true);
+ assert.equal(syncOutboxSummary(await ticket(s),8).hasPendingChanges,true);assert.equal(syncOutboxSummary(await ticket(s),9).hasPendingChanges,true);
 });
 test('fresh valid ciphertext is conflict; copies cannot mutate private state; stale CAS/version overflow block',async()=>{
  const s=await capture(),pending=ticket(s);s.entries[0].capturedLocalRevision=99;const t=await pending;
@@ -55,4 +55,32 @@ test('fresh valid ciphertext is conflict; copies cannot mutate private state; st
  assert.throws(()=>syncOutboxSummary(t,6),/current-cas/);
  const capped=readSyncOutboxState(t);capped.version=Number.MAX_SAFE_INTEGER;
  await assert.rejects(async()=>advanceSyncOutboxState({ticket:await ticket(capped),revisionId:'R',currentLocalRevision:7}),/version/);
+});
+
+test('A1: remote B after A cannot overwrite CAS43 local save unrepresented since captured CAS42',async()=>{
+ const s=await capture(raw,42),t=await ticket(s);
+ const b={...s.entries[0].revision,revisionId:'B',parentId:'R',generation:'2'};
+ const args={ticket:t,revisions:[b],observationComplete:true};
+ assert.equal(planSyncOutboxApply({...args,portfolio:{raw:raw+'changed',revision:43}}).reason,'unrepresented-local-changes');
+ // Even a CAS43 save returning to identical bytes is not retroactively CAS42.
+ assert.equal(planSyncOutboxApply({...args,portfolio:{raw,revision:43}}).reason,'unrepresented-local-changes');
+ assert.equal(planSyncOutboxApply({...args,portfolio:{raw:'different',revision:42}}).reason,'local-snapshot-mismatch');
+ assert.equal(planSyncOutboxApply({...args,portfolio:{raw,revision:41}}).reason,'local-cas-mismatch');
+ const clean=planSyncOutboxApply({...args,portfolio:{raw,revision:42}});
+ assert.equal(clean.status,'apply-candidate');assert.equal(clean.applyAuthorized,false);assert.equal(clean.expectedLocalRevision,42);
+});
+test('A1: old frame cannot be rebound to a later CAS or a different local snapshot',async()=>{
+ const s=await capture(raw,42),t=await ticket(s),receipt=await verify(frame(raw));
+ await assert.rejects(()=>capture(raw,43,{ticket:t,receipt}),/revision-conflict/);
+ await assert.rejects(()=>capture(raw,43,{receipt,portfolio:{raw:raw+'changed',revision:43}}),/capture-binding/);
+ const local=await append(s,{portfolio:{raw:raw+'\n',revision:43}}),lt=await ticket(local);
+ const sibling={...s.entries[0].revision,revisionId:'B',parentId:'R',generation:'2'};
+ const plan=planSyncOutboxApply({ticket:lt,portfolio:{raw:raw+'\n',revision:43},revisions:[sibling],observationComplete:true});
+ assert.equal(plan.status,'conflict');assert.deepEqual(plan.heads,['B','S']);assert.equal(plan.applyAuthorized,false);
+});
+test('A2: local frame match exposes no acknowledged remote CAS, anchor or synchronized status',async()=>{
+ let s=await capture(raw,42);s=advanceSyncOutboxState({ticket:await ticket(s),revisionId:'R',readback:await verify(s.entries[0].frameText),currentLocalRevision:42});
+ const summary=syncOutboxSummary(await ticket(s),42);
+ assert.equal(summary.matchedLocalRevision,42);assert.equal(summary.remoteAnchor,null);
+ assert.equal(summary.acknowledgedLocalRevision,null);assert.equal(summary.remoteConfirmation,'unavailable');assert.equal(summary.hasPendingChanges,true);
 });

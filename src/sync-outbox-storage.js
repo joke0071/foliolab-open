@@ -1,5 +1,5 @@
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from './atomic-storage.js';
-import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary} from './sync-outbox-state.js';
+import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
  * store as the canonical portfolio. No upload, RemoteApply or key persistence.
@@ -41,11 +41,21 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    await commit(current,next); // NEVER expose sendable bytes before commit
    return {state:next,frameText:entry.frameText};
   },
-  async confirm({expectedLocalRevision,expectedSyncVersion,revisionId,readback}) {
-   if(readback===null||readback===undefined)throw Error('sync-outbox-readback-required');
+  async planApply({expectedLocalRevision,expectedSyncVersion,revisions,observationComplete}) {
+   const remoteDescriptors=structuredClone(revisions); // detach before crypto awaits
    const current=await read(expectedLocalRevision,expectedSyncVersion);
-   const next=advanceSyncOutboxState({ticket:current.ticket,revisionId,readback,currentLocalRevision:current.portfolio.revision});
-   return commit(current,next);
+   if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
+   const result=planSyncOutboxApply({ticket:current.ticket,portfolio:current.portfolio,revisions:remoteDescriptors,observationComplete});
+   const after=await readPortfolioSyncRecord(db);
+   if(after.portfolio?.revision!==current.portfolio.revision||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
+    throw Error('sync-outbox-apply-plan-race');
+   return result; // Actual Apply must repeat this preimage/CAS in its OWN tx.
+  },
+  async confirm() {
+   // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
+   // No remote transport/provenance issuer exists yet. Fail closed, including
+   // caller-supplied URLs, object IDs, HTTP flags or a locally reverified frame.
+   throw Error('sync-outbox-remote-provenance-unavailable');
   }
  });
 }

@@ -1,3 +1,16 @@
+# FLH04 — Nachtrag A1/A2/B · work-0910b01a3280-20261113
+
+## ACTIVE / INTEGRATION_GUARDS_IMPLEMENTED / RELEASE_BLOCKED
+
+Nutzer-Folgeauftrag während Abschlussvorbereitung übernommen. Zentraler HND01-Owner blieb ACTIVE; vorbereiteter zentraler STOPPED-Commit wurde nicht referenziert. Keine neue Übernahme/Parallelisierung. A/B abgeschlossen. Vor Mutation Maina27cde2, FLH04e22cefe1 und Checkpoint6fbe2895 frisch bestätigt.
+
+A1: aktueller Portfolio-CAS und raw müssen dem letzten tatsächlich erfassten/verifizierten Frame entsprechen; unrepräsentierte Saves blockieren, lokale Folger bleiben konkurrierende Heads, Rebind alter ID/Frames an neuen CAS blockiert. Adapter prüft IDB-Preimage nach Crypto erneut; Plan ist kein Applyrecht.
+A2: confirm() bis echter Transportherkunft für ALLE Eingaben gesperrt. Summary meldet keinen Remote-Anker/acknowledgedCAS/Synchronität aus lokalem Frame-Match. Echter Transportbelegaussteller und atomarer Applyadapter fehlen weiterhin.
+Zweiter B-Beleg65765d3a gezielt geprüft/selektiv übernommen;9neue aktuelle Validatorproben, keine Wiederholung alter41. UTF8-/Struktur-/Tiefegrenzen, keine Kürzung/Normalisierung; volle v5-/History-/Belegabdeckung weiter offen.
+52 verschiedene betroffene Tests PASS/0FAIL/0SKIP (8Zustand+14Double+21Snapshot+9Regressionen), Syntax7aktuellerDateienPASS. Kein echterIDB/Browser/Crash/Remote/OAuth/Geräte/Recovery/ProduktionsPASS, keineCI/PR/Merge/Syncaktivierung. Mainblocker/geschützteRefs/Originale unverändert.
+
+## Unveränderte vorherige Abschlussvorbereitung
+
 # FLH04 — lokaler Implementierungscheckpoint
 
 ## STOPPED / HANDOVER_READY / DURABLE_OUTBOX_PREPARED / NATIVE_IDB_UNQUALIFIED / RELEASE_BLOCKED · work-0910b01a3280-20261113

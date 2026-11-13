@@ -22,3 +22,20 @@ New APIs: `createSyncSnapshot(canonicalRaw)` returns distinct compact snapshot t
 Node24.22.1: 21 directed tests PASS, 0FAIL/0SKIP/0CANCELLED; syntax of both new files PASS. 62 original package/source inputs are Git-blob exact at pinned base before the final suite. Earlier local file copies had one extra trailing LF; removed only when the resulting blob matched the pinned source, before final tests. One first-pass assertion expected null for fxRateExact; corrected to the existing canonical `UNKNOWN` representation while fxRate stays null. No product-code FX repair was introduced. No existing 63-test suite repeated; no browser/IDB/CI/device/crypto/production qualification.
 
 Full v5, imported-source payloads and audit/withdrawal/bridge proofs, populated wallet/price histories and purchase evidence remain BLOCKED_UNSUPPORTED. No partial output, migration or activation for those portfolios. A complete financial/history/apply gate is still unfinished.
+
+
+## Folgeauftrag: B-Lückenproben und Ressourcenbudget
+
+Zweiter unabhängiger Beleg65765d3a wurde gegen diesen Validator ausgewertet.
+Neun neue gezielte Reject-/Acceptregressionen prüfen Root-/Journal-/Posting-/
+History-Credentials, fremde Identität, Decimalnormalisierung, Resume-/Konfigurations-
+verlust und Größen-/Strukturlücken am aktuellen Gate. Die41 alten Charakterisierungen
+wurden nicht wiederholt. Betroffene21Snapshottests wegen Budgetänderung erneut geprüft;
+zusammen30PASS/0FAIL/0SKIP auf Node24.22.1.
+
+Der neue Snapshot muss maximal3.500.000UTF8-Bytes,100.000Strukturwerte und Tiefe16
+haben. Ein Strukturwert ist ein besuchter JSON-Wert einschließlich Container.
+Der konservative Byteswert lässt selbst bei doppelter Escapierung im verschlüsselten
+Content ausreichend Platz für den begrenzten Descriptor unter dem7,4MB-Framecipherlimit.
+Grenzen blockieren vollständig, keine Kürzung/Teil-Snapshots. Vollständige v5-/Beleg-/
+gefüllteWallet-/Preishistoryabdeckung bleibt unverändert unimplementiert.

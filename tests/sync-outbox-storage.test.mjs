@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider} from '../src/model.js';
 import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord} from '../src/atomic-storage.js';
+import {verifySyncOutboxState,advanceSyncOutboxState} from '../src/sync-outbox-state.js';
 import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
 import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
 
@@ -37,6 +38,13 @@ async function fixture() {
  const args={expectedLocalRevision:1,expectedSyncVersion:null,receipt,expectedPortfolioId:portfolioId,expectedEpochId:epochId};
  return {db,model,p,api,receipt,args};
 }
+// Pure local frame-match setup ONLY. Never a remote receipt or transport PASS.
+async function matchForModel(db,args) {
+ const current=await readPortfolioSyncRecord(db);
+ const next=advanceSyncOutboxState({ticket:await verifySyncOutboxState(current.sync,verify),revisionId:args.revisionId,
+  readback:args.readback,currentLocalRevision:current.portfolio.revision});
+ return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,expectedState:current.sync,nextState:next});
+}
 test('transaction double: capture/restart retains full frame without changing portfolio or settings',async()=>{
  const {db,p,api,args}=await fixture();const s=await api.capture(args);
  assert.equal(s.version,1);assert.equal(s.entries[0].capturedLocalRevision,1);
@@ -59,26 +67,26 @@ test('transaction double: two metadata contenders have one winner; stale CAS can
  await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:0,revisionId:'R'}),/stale-preimage/);
  assert.deepEqual(await readPortfolioSyncRecord(db),before);
 });
-test('transaction double: save during upload protects newer revision and exact confirmation acknowledges only old CAS',async()=>{
+test('transaction double: save during upload protects newer revision; frame match records only old CAS',async()=>{
  const {db,p,model,api,args}=await fixture();await api.capture(args);
  const started=await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
  assert.equal(started.state.entries[0].status,'uncertain');assert.equal(started.frameText,frame(p.raw));
  // Simulated HTTP answer lost: NO confirm; restart still uncertain.
  assert.equal((await createSyncOutboxStorage(db,verify).recover()).state.entries[0].status,'uncertain');
  model.providers.push(createProvider({id:'new-provider',name:'newer-save',type:'broker'}));await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
- await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:2,revisionId:'R',readback:args.receipt}),/stale-preimage/);
- await api.confirm({expectedLocalRevision:2,expectedSyncVersion:2,revisionId:'R',readback:await verify(started.frameText)});
- const current=await api.recover();assert.equal(current.summary.acknowledgedLocalRevision,1);assert.equal(current.summary.hasPendingChanges,true);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:2,revisionId:'R',readback:args.receipt}),/remote-provenance-unavailable/);
+ await matchForModel(db,{revisionId:'R',readback:await verify(started.frameText)});
+ const current=await api.recover();assert.equal(current.summary.matchedLocalRevision,1);assert.equal(current.summary.hasPendingChanges,true);
  assert.equal((await readPortfolioSyncRecord(db)).portfolio.revision,2);
  assert.equal(JSON.parse((await readPortfolioSyncRecord(db)).portfolio.raw).providers[0].name,'newer-save');
  await assert.rejects(()=>api.begin({expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'R'}),/not-publishable/);
 });
 test('transaction double: valid different cipher is conflict; no readback or foreign state cannot confirm',async()=>{
  const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
- await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:awaitableDummy()}),/unverified/);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:awaitableDummy()}),/remote-provenance-unavailable/);
  const other=await verify(frame(p.raw,'R',null,'1','45'.repeat(32)));
- await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:other}),/readback-conflict/);
- await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/readback-required/);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:other}),/remote-provenance-unavailable/);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/remote-provenance-unavailable/);
  assert.deepEqual(await readPortfolioSyncRecord(db),before);
 });
 function awaitableDummy(){return {verified:true};}
@@ -115,7 +123,7 @@ test('transaction double: post-commit reply loss rereads full committed state; m
 
 test('transaction double: local save during async recovery cannot return a stale synchronized summary',async()=>{
  const {db,model,api,args}=await fixture();await api.capture(args);
- await api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:args.receipt});
+ await matchForModel(db,{revisionId:'R',readback:args.receipt});
  let once=true;
  const racing=createSyncOutboxStorage(db,async text=>{
   if(once){once=false;await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});}
@@ -124,7 +132,7 @@ test('transaction double: local save during async recovery cannot return a stale
  await assert.rejects(()=>racing.recover(),/recovery-race/);
  assert.equal((await api.recover()).summary.hasPendingChanges,true);
 });
-test('transaction double: failed confirmation leaves the complete uncertain frame and old anchor',async()=>{
+test('A2 transaction double: rejected pseudo-confirmation leaves the complete uncertain frame and old anchor',async()=>{
  const {db,api,args}=await fixture();await api.capture(args);await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
  const before=await readPortfolioSyncRecord(db);db.fault='abort-after-put';
  await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:2,revisionId:'R',readback:args.receipt}));
@@ -140,8 +148,33 @@ test('transaction double: reset/recovery during crypto re-verification invalidat
     else await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});
    }return verify(text);
   });
-  await assert.rejects(()=>racing.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:args.receipt}),/local-cas|metadata-cas/);
+  await assert.rejects(()=>racing.planApply({expectedLocalRevision:1,expectedSyncVersion:1,revisions:[],observationComplete:true}),/apply-plan-race/);
   const after=await readPortfolioSyncRecord(db);assert.equal(after.sync.anchorIndex,-1);
   assert.equal(after.sync.disabled,recovery?'explicit-recovery':'portfolio-deleted');
  }
+});
+
+test('A1 transaction double: adapter reads current IDB preimage and blocks unrepresented saves',async()=>{
+ const {db,model,api,args}=await fixture();await api.capture(args);
+ await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ const before=await readPortfolioSyncRecord(db),d=before.sync.entries[0].revision;
+ const result=await api.planApply({expectedLocalRevision:2,expectedSyncVersion:1,revisions:[{...d,revisionId:'B',parentId:'R',generation:'2'}],observationComplete:true});
+ assert.equal(result.reason,'unrepresented-local-changes');assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+test('A2 transaction double: local proof, HTTP flags and asserted object URLs never constitute remote provenance',async()=>{
+ const {db,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
+ for(const extra of [{readback:args.receipt},{readback:await verify(frame(before.portfolio.raw))},{readback:args.receipt,remote:true,httpStatus:200,objectId:'claimed',url:'https://example.invalid/object'},{}])
+  await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',...extra}),/remote-provenance-unavailable/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ assert.equal((await api.recover()).summary.acknowledgedLocalRevision,null);
+});
+
+test('A1 transaction double: local save while planning invalidates even an initially clean Apply candidate',async()=>{
+ const {db,model,api,args}=await fixture();await api.capture(args);let once=true;
+ const racing=createSyncOutboxStorage(db,async text=>{if(once){once=false;
+  await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ }return verify(text);});
+ const d=(await readPortfolioSyncRecord(db)).sync.entries[0].revision;
+ await assert.rejects(()=>racing.planApply({expectedLocalRevision:1,expectedSyncVersion:1,revisions:[{...d,revisionId:'B',parentId:'R',generation:'2'}],observationComplete:true}),/apply-plan-race/);
+ assert.equal((await readPortfolioSyncRecord(db)).portfolio.revision,2);
 });

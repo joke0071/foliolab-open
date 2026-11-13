@@ -76,17 +76,17 @@ try{
  await assert.rejects(()=>operation(c,'confirm',{expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'R',frameText:frame(initial.raw,'R',null,'1','45'.repeat(32))}));
  await assert.rejects(()=>operation(c,'confirm',{expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'S',frameText:childFrame}));
  assert.deepEqual(await operation(c,'read'),before);
- await operation(c,'confirm',{expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'R',frameText:rootFrame});
- const old=await operation(b,'recover');assert.equal(old.summary.acknowledgedLocalRevision,1);assert.equal(old.summary.hasPendingChanges,true);
- await operation(b,'confirm',{expectedLocalRevision:2,expectedSyncVersion:4,revisionId:'S',frameText:childFrame});
- assert.equal((await operation(c,'recover')).summary.hasPendingChanges,false);
- const confirmed=await operation(c,'read');
- await operation(c,'recover-record',{expected:confirmed.portfolio,raw:confirmed.portfolio.raw});
+ await assert.rejects(()=>operation(c,'confirm',{expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'R',frameText:rootFrame}),/remote-provenance-unavailable/);
+ const guarded=await c.evaluate(async()=>window.syncTest.api.planApply({expectedLocalRevision:2,expectedSyncVersion:3,revisions:[],observationComplete:true}));
+ assert.equal(guarded.status,'unchanged');assert.equal(guarded.applyAuthorized,false);
+ const unmatched=await operation(c,'recover');assert.equal(unmatched.summary.remoteAnchor,null);assert.equal(unmatched.summary.hasPendingChanges,true);
+ const preserved=await operation(c,'read');
+ await operation(c,'recover-record',{expected:preserved.portfolio,raw:preserved.portfolio.raw});
  assert.equal((await operation(b,'read')).sync.disabled,'explicit-recovery');
  await assert.rejects(()=>operation(b,'recover'));
- assert.deepEqual((await operation(c,'read')).sync.entries,confirmed.sync.entries);
+ assert.deepEqual((await operation(c,'read')).sync.entries,preserved.sync.entries);
  await operation(c,'delete',{revision:3});
  assert.equal((await operation(b,'read')).sync.disabled,'portfolio-deleted');
  await assert.rejects(()=>operation(b,'recover'));
- console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, exact readback, anchor order, recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
+ console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
 }finally{await context.close();await browser.close();}
