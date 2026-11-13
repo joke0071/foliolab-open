@@ -7,6 +7,16 @@ export const PORTFOLIO_DB = 'foliolab-open-portfolio';
 export const PORTFOLIO_DB_VERSION = 1;
 const STORE = 'records';
 const KEY = 'portfolio';
+const SYNC_KEY = 'sync-outbox-v1';
+
+// Preserve encrypted originals but invalidate the old sync line on reset/recovery.
+function invalidateSyncState(store, reason) {
+ const request=store.get(SYNC_KEY);
+ request.onsuccess=()=>{
+  if(request.result!==undefined)store.put({...request.result,disabled:reason},SYNC_KEY);
+ };
+}
+
 
 export function openPortfolioDB(factory = globalThis.indexedDB) {
   if (!factory) return Promise.reject(new Error('IndexedDB ist in diesem Browser nicht verfügbar.'));
@@ -125,6 +135,7 @@ export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
           updatedAt: new Date().toISOString()
         };
         store.put(nextRecord, KEY);
+        if(portable===null)invalidateSyncState(store,'portfolio-deleted');
       } catch (error) {
         failure = error;
         tx.abort();
@@ -189,6 +200,7 @@ export function restoreDamagedRecord(db,{expected,raw,settings}){
      throw Error('Beschädigte Versionskennung; automatische Wiederherstellung verweigert.');
     record={schemaVersion:1,revision:revision+1,raw:portable,settings:prefs,deleted:false,updatedAt:new Date().toISOString()};
     storage.put(record,KEY);
+    invalidateSyncState(storage,'explicit-recovery');
    }catch(error){failure=error;tx.abort();}
   };
   tx.oncomplete=()=>resolve(record);
@@ -214,5 +226,52 @@ export function retirePortfolioCredentials(db,expectedRevision){
    store.put(result,KEY);
   }catch(error){failure=error;tx.abort();}};
   tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(failure||tx.error||Error('Zugangsbereinigung abgebrochen.'));tx.onerror=()=>{};
+ });
+}
+
+
+/** Internal FLH04 metadata boundary. Uses the existing DB/store/CAS, never writes
+ * portfolio bytes or returns before oncomplete. No crypto/network await in tx.
+ * High-level caller must reverify persisted encrypted frames before mutation.
+ */
+export function readPortfolioSyncRecord(db) {
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readonly'),store=tx.objectStore(STORE);
+  let portfolio=null,sync=null;
+  const p=store.get(KEY),s=store.get(SYNC_KEY);
+  p.onsuccess=()=>{portfolio=p.result??null;};
+  s.onsuccess=()=>{sync=s.result??null;};
+  tx.oncomplete=()=>{try{assertRecord(portfolio);resolve({portfolio,sync});}catch(error){reject(error);}};
+  tx.onabort=()=>reject(tx.error||Error('sync-storage-read-aborted'));tx.onerror=()=>{};
+ });
+}
+
+export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedState,nextState}) {
+ // Snapshot all caller inputs before async IDB callbacks; never accept a live
+ // object that can change between verification/CAS/write.
+ let before,next;
+ try {
+  if(!Number.isSafeInteger(expectedLocalRevision)||expectedLocalRevision<1)throw Error('sync-storage-cas');
+  before=JSON.stringify(expectedState);next=structuredClone(nextState);
+  if(!next||next.format!==1||!Number.isSafeInteger(next.version)||next.version<1||
+   !(next.version===(expectedState===null?1:expectedState.version+1)||JSON.stringify(next)===before))throw Error('sync-storage-version');
+ }catch(error){return Promise.reject(error);}
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE);
+  let portfolio,sync,failure=null,reads=0;
+  const finish=()=>{
+   if(++reads!==2)return;
+   try{
+    assertRecord(portfolio);
+    if(!portfolio||portfolio.deleted||portfolio.revision!==expectedLocalRevision)throw Error('sync-storage-local-cas');
+    if(JSON.stringify(sync)!==before)throw Error('sync-storage-metadata-cas');
+    if(JSON.stringify(next)!==before)store.put(next,SYNC_KEY);
+   }catch(error){failure=error;tx.abort();}
+  };
+  const p=store.get(KEY),s=store.get(SYNC_KEY);
+  p.onsuccess=()=>{portfolio=p.result??null;finish();};
+  s.onsuccess=()=>{sync=s.result??null;finish();};
+  tx.oncomplete=()=>resolve(next);
+  tx.onabort=()=>reject(failure||tx.error||Error('sync-storage-write-aborted'));tx.onerror=()=>{};
  });
 }

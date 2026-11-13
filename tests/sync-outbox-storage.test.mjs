@@ -1,0 +1,147 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {blankModel,backup,createProvider} from '../src/model.js';
+import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord} from '../src/atomic-storage.js';
+import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
+import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
+
+/** Transaction DOUBLE only. Tests orchestration/error paths, NOT native IDB,
+ * browser durability, actual quota, process crash or real tabs. No such PASS.
+ * Tentative writes publish only on completion; all readwrite tx serialize.
+ */
+function memoryDB() {
+ const data=new Map();let tail=Promise.resolve();
+ const db={data,fault:null,transaction(_store,mode){
+  const tx={error:null,abort(){if(tx.done)return;tx.done=true;setImmediate(()=>{tx.onabort?.();release();});}};
+  let working,active=false,release,scheduled=false;const queue=[];
+  const done=new Promise(r=>release=r),prior=tail;tail=done;
+  const store={get(key){const req={};queue.push(()=>{req.result=structuredClone(working.get(key));req.onsuccess?.();});pump();return req;},
+   put(value,key){if(!active||tx.done)throw Error('inactive');if(db.fault==='quota'){db.fault=null;throw new DOMException('quota-double','QuotaExceededError');}
+    working.set(key,structuredClone(value));
+    if(db.fault==='abort-after-put'){db.fault=null;tx.abort();}
+    return {};}};
+  tx.objectStore=()=>store;
+  function pump(){if(!active||scheduled||tx.done)return;scheduled=true;setImmediate(()=>{
+   scheduled=false;if(tx.done)return;
+   if(queue.length){try{queue.shift()();}catch(e){tx.error=e;tx.abort();}pump();return;}
+   tx.done=true;if(mode==='readwrite'){data.clear();for(const [k,v] of working)data.set(k,v);}
+   tx.oncomplete?.();release();
+  });}
+  prior.then(()=>{working=structuredClone(data);active=true;pump();});return tx;
+ }};return db;
+}
+async function fixture() {
+ const db=memoryDB(),model=blankModel();
+ const p=await commitPortfolioRecord(db,{expectedRevision:null,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ const api=createSyncOutboxStorage(db,verify),receipt=await verify(frame(p.raw));
+ const args={expectedLocalRevision:1,expectedSyncVersion:null,receipt,expectedPortfolioId:portfolioId,expectedEpochId:epochId};
+ return {db,model,p,api,receipt,args};
+}
+test('transaction double: capture/restart retains full frame without changing portfolio or settings',async()=>{
+ const {db,p,api,args}=await fixture();const s=await api.capture(args);
+ assert.equal(s.version,1);assert.equal(s.entries[0].capturedLocalRevision,1);
+ assert.deepEqual((await readPortfolioSyncRecord(db)).portfolio,p);
+ const restarted=createSyncOutboxStorage(db,verify);assert.deepEqual((await restarted.recover()).state,s);
+ assert.equal((await restarted.recover()).summary.remoteAnchor,null);
+ assert.deepEqual(await api.capture({...args,expectedSyncVersion:1}),s);
+});
+test('transaction double: staged write abort and quota expose no half-state; retry after recovery',async()=>{
+ for(const fault of ['quota','abort-after-put']) {
+  const {db,p,api,args}=await fixture();db.fault=fault;
+  await assert.rejects(()=>api.capture(args));assert.deepEqual(await readPortfolioSyncRecord(db),{portfolio:p,sync:null});
+  assert.equal((await api.capture(args)).entries.length,1);
+ }
+});
+test('transaction double: two metadata contenders have one winner; stale CAS cannot overwrite',async()=>{
+ const {db,api,args}=await fixture();const outcomes=await Promise.allSettled([api.capture(args),api.capture(args)]);
+ assert.equal(outcomes.filter(x=>x.status==='fulfilled').length,1);assert.equal(outcomes.filter(x=>x.status==='rejected').length,1);
+ const before=await readPortfolioSyncRecord(db);
+ await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:0,revisionId:'R'}),/stale-preimage/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+test('transaction double: save during upload protects newer revision and exact confirmation acknowledges only old CAS',async()=>{
+ const {db,p,model,api,args}=await fixture();await api.capture(args);
+ const started=await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
+ assert.equal(started.state.entries[0].status,'uncertain');assert.equal(started.frameText,frame(p.raw));
+ // Simulated HTTP answer lost: NO confirm; restart still uncertain.
+ assert.equal((await createSyncOutboxStorage(db,verify).recover()).state.entries[0].status,'uncertain');
+ model.providers.push(createProvider({id:'new-provider',name:'newer-save',type:'broker'}));await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:2,revisionId:'R',readback:args.receipt}),/stale-preimage/);
+ await api.confirm({expectedLocalRevision:2,expectedSyncVersion:2,revisionId:'R',readback:await verify(started.frameText)});
+ const current=await api.recover();assert.equal(current.summary.acknowledgedLocalRevision,1);assert.equal(current.summary.hasPendingChanges,true);
+ assert.equal((await readPortfolioSyncRecord(db)).portfolio.revision,2);
+ assert.equal(JSON.parse((await readPortfolioSyncRecord(db)).portfolio.raw).providers[0].name,'newer-save');
+ await assert.rejects(()=>api.begin({expectedLocalRevision:2,expectedSyncVersion:3,revisionId:'R'}),/not-publishable/);
+});
+test('transaction double: valid different cipher is conflict; no readback or foreign state cannot confirm',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:awaitableDummy()}),/unverified/);
+ const other=await verify(frame(p.raw,'R',null,'1','45'.repeat(32)));
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:other}),/readback-conflict/);
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/readback-required/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+function awaitableDummy(){return {verified:true};}
+test('transaction double: reset and explicit recovery atomically disable old line and preserve originals',async()=>{
+ for(const recovery of [false,true]){
+  const {db,model,api,args}=await fixture();const s=await api.capture(args),before=await readPortfolioSyncRecord(db);
+  if(recovery)await restoreDamagedRecord(db,{expected:before.portfolio,raw:backup(model,{includeHistory:true}),settings:model.settings});
+  else await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});
+  const stored=await readPortfolioSyncRecord(db);assert.deepEqual(stored.sync.entries,s.entries);
+  assert.equal(stored.sync.disabled,recovery?'explicit-recovery':'portfolio-deleted');
+  await assert.rejects(()=>api.recover(),/disabled|no-local-portfolio/);
+  await assert.rejects(()=>api.confirm({expectedLocalRevision:2,expectedSyncVersion:1,revisionId:'R',readback:args.receipt}));
+ }
+});
+test('transaction double: lifecycle invalidation failure rolls back portfolio tombstone/recovery too',async()=>{
+ for(const recovery of [false,true]){
+  const {db,model,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
+  const original=db.transaction;db.transaction=function(...a){const tx=original.apply(db,a),get=tx.objectStore;
+   tx.objectStore=function(...b){const store=get.apply(tx,b),put=store.put;store.put=function(v,k){if(k==='sync-outbox-v1')throw new DOMException('quota-double','QuotaExceededError');return put.call(store,v,k);};return store;};return tx;};
+  if(recovery)await assert.rejects(()=>restoreDamagedRecord(db,{expected:before.portfolio,raw:backup(model,{includeHistory:true}),settings:model.settings}));
+  else await assert.rejects(()=>commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+test('transaction double: post-commit reply loss rereads full committed state; mutable inputs captured before tx',async()=>{
+ const {db,api,args}=await fixture();const s=await api.capture(args);
+ // No fictional rollback: dropping caller result does not undo oncomplete.
+ assert.deepEqual((await createSyncOutboxStorage(db,verify).recover()).state,s);
+ const next=structuredClone(s);next.version=2;next.entries[0].status='uncertain';
+ const pending=commitPortfolioSyncRecord(db,{expectedLocalRevision:1,expectedState:s,nextState:next});
+ next.entries[0].status='confirmed';s.version=99;await pending;
+ assert.equal((await api.recover()).state.entries[0].status,'uncertain');
+});
+
+test('transaction double: local save during async recovery cannot return a stale synchronized summary',async()=>{
+ const {db,model,api,args}=await fixture();await api.capture(args);
+ await api.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:args.receipt});
+ let once=true;
+ const racing=createSyncOutboxStorage(db,async text=>{
+  if(once){once=false;await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});}
+  return verify(text);
+ });
+ await assert.rejects(()=>racing.recover(),/recovery-race/);
+ assert.equal((await api.recover()).summary.hasPendingChanges,true);
+});
+test('transaction double: failed confirmation leaves the complete uncertain frame and old anchor',async()=>{
+ const {db,api,args}=await fixture();await api.capture(args);await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
+ const before=await readPortfolioSyncRecord(db);db.fault='abort-after-put';
+ await assert.rejects(()=>api.confirm({expectedLocalRevision:1,expectedSyncVersion:2,revisionId:'R',readback:args.receipt}));
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ assert.equal((await api.recover()).summary.remoteAnchor,null);
+});
+test('transaction double: reset/recovery during crypto re-verification invalidates the pending confirmation',async()=>{
+ for(const recovery of [false,true]){
+  const {db,model,api,args}=await fixture();await api.capture(args);let once=true;
+  const racing=createSyncOutboxStorage(db,async text=>{
+   if(once){once=false;const before=await readPortfolioSyncRecord(db);
+    if(recovery)await restoreDamagedRecord(db,{expected:before.portfolio,raw:backup(model,{includeHistory:true}),settings:model.settings});
+    else await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});
+   }return verify(text);
+  });
+  await assert.rejects(()=>racing.confirm({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R',readback:args.receipt}),/local-cas|metadata-cas/);
+  const after=await readPortfolioSyncRecord(db);assert.equal(after.sync.anchorIndex,-1);
+  assert.equal(after.sync.disabled,recovery?'explicit-recovery':'portfolio-deleted');
+ }
+});

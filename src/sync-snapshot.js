@@ -1,0 +1,98 @@
+import {safeImport,assertDataVersion} from './model.js';
+import {syncPayloadDigest} from './sync-payload-integrity.js';
+import {units,exact} from './decimal.js';
+
+/** Bounded credential-free financial gate, NOT crypto/graph/CAS/Apply approval.
+ * Unsupported financial evidence blocks the entire snapshot; nothing is pruned.
+ * See FLH04_SNAPSHOT_CONTRACT.md for deliberately incomplete v5/history scope.
+ */
+export const SYNC_SNAPSHOT_KIND='FolioLabSyncSnapshot';
+export const SYNC_SNAPSHOT_VERSION=1;
+const fail=reason=>{throw Error('sync-snapshot-'+reason);};
+const unicode=v=>{
+ for(let i=0;i<v.length;i++){const c=v.charCodeAt(i);
+  if(c>=0xd800&&c<=0xdbff){const n=v.charCodeAt(++i);if(!(n>=0xdc00&&n<=0xdfff))return false;}
+  else if(c>=0xdc00&&c<=0xdfff)return false;
+ }return true;
+};
+const scalar=v=>v===null||(typeof v==='string'&&unicode(v))||typeof v==='boolean'||(typeof v==='number'&&Number.isFinite(v));
+const array=check=>v=>Array.isArray(v)&&v.every(check);
+const object=fields=>v=>v!==null&&typeof v==='object'&&!Array.isArray(v)&&
+ Object.keys(v).every(k=>Object.hasOwn(fields,k)&&fields[k](v[k]));
+const nullable=check=>v=>v===null||check(v);
+const fields=names=>Object.fromEntries(names.split(' ').map(k=>[k,scalar]));
+const decimal=v=>{try{return typeof v==='string'&&exact(units(v))===v;}catch{return false;}};
+const map=check=>v=>v!==null&&typeof v==='object'&&!Array.isArray(v)&&
+ Object.keys(v).every(k=>unicode(k)&&k!=='__proto__'&&k!=='constructor'&&k!=='prototype'&&check(v[k]));
+const provider=object(fields('id name type'));
+const cashTerms=object(fields('version status fixedTerm startDate maturityDate outcome outcomeDate evidence renewalMaturityDate'));
+const interestTerms=object({...fields('version dayCount'),rates:array(object(fields('fromDate annualRateExact knownThrough')))});
+const account=object({...fields('id providerId name type currency'),cashTerms,interestTerms});
+const wallet=object(fields('enabled chain address contract decimals chainId addressType'));
+const position=object({...fields('archived id providerId accountId managementSource costBasisEUR costBasisExact realizedPnLEUR realizedPnLExact priceExact priceStatus fxUpdatedAt assetId kind name mic listingId economicRole valuationMode representedByPositionId quoteSource quoteAsOf quoteFetchedAt quoteQuality fxSource fxRateDate fxRateExact eodhdSymbol fmpSymbol tradingViewSymbol exchange symbol isin coinId coinIdMigration quantity quantityExact price currency fxRate updatedAt notes'),wallet:nullable(wallet)});
+const listing=object(fields('id symbol mic exchange currency'));
+const asset=object({...fields('id key kind name isin coinId'),listings:array(listing)});
+const opening=object(fields('positionId quantityExact costBasisExact realizedPnLExact source asOf'));
+const flow=object(fields('id date amountEUR amountExactEUR'));
+const posting=object(fields('id positionId accountId role quantityDeltaExact amountBookEURExact'));
+const journal=object({...fields('id type date recordedAt sequence cashPositionId status source nativeCurrency'),postings:array(posting)});
+const booking=object(fields('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId targetQuantityExact external notes journalEntryId cashPositionId reconciliationStatus costsVerified'));
+const quoteTime=object(fields('positionId updatedAt quoteAsOf quoteSource fxRateDate'));
+const revision=object({...fields('recordedAt valuationStatus source'),totalEURExact:decimal});
+const snapshot=object({...fields('id date total totalEURExact recordedAt valuationStatus source note'),
+ byAccount:nullable(map(v=>typeof v==='number'&&Number.isFinite(v))),byPosition:nullable(map(decimal)),
+ quoteTimes:array(quoteTime),revisions:array(revision)});
+const archive=object({...fields('version'),archivedIds:array(v=>typeof v==='string'),referenceArchivedIds:array(v=>typeof v==='string')});
+// Empty optional containers are retained, not silently removed. Full history,
+// imported price and v5 proof allowlists are still required before their use.
+const history=object({schema:v=>v===1,sessions:v=>Array.isArray(v)&&v.length===0,pending:v=>Array.isArray(v)&&v.length===0});
+const dataSchema=object({version:v=>v===3||v===4,providers:array(provider),accounts:array(account),assets:array(asset),
+ positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
+ externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
+ priceHistories:map(()=>false),bookingPresentation:archive,walletHistory:history});
+const same=(a,b)=>{
+ if(a===b)return true;
+ if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;
+ const aa=Object.keys(a),bb=Object.keys(b);
+ return aa.length===bb.length&&aa.every(k=>Object.hasOwn(b,k)&&same(a[k],b[k]));
+};
+function checkData(data){
+ if(!dataSchema(data))fail('unsupported-data-or-field');
+ assertDataVersion(data);
+ // Reuse existing financial/journal/history/reference/dedupe validators. They
+ // may migrate/normalize old inputs; a sync gate MUST NOT accept those changes.
+ const checked=safeImport(data);delete checked.settings;
+ if(!same(data,checked))fail('normalization-required');
+ return data;
+}
+function freeze(value){
+ if(value&&typeof value==='object'){for(const v of Object.values(value))freeze(v);Object.freeze(value);}
+ return value;
+}
+
+/** Encode only already canonical local raw. Local settings are deliberately
+ * excluded in their entirety; caller must never pass record.settings here.
+ */
+export async function createSyncSnapshot(canonicalRaw){
+ await syncPayloadDigest(canonicalRaw); // strict UTF8/Unicode and existing limits
+ let data;try{data=JSON.parse(canonicalRaw);}catch{fail('json');}
+ if(!data||typeof data!=='object'||Array.isArray(data))fail('data');
+ if(canonicalRaw!==JSON.stringify(data)&&canonicalRaw!==JSON.stringify(data,null,2))fail('noncanonical-local-json');
+ delete data.settings;
+ checkData(data);
+ const plain=JSON.stringify({kind:SYNC_SNAPSHOT_KIND,snapshotVersion:SYNC_SNAPSHOT_VERSION,data});
+ await syncPayloadDigest(plain);
+ return plain;
+}
+
+/** Call only after frame authentication and byte-digest verification. Returning
+ * frozen data grants no storage permission and never installs settings/keys.
+ */
+export async function validateSyncSnapshot(plain){
+ await syncPayloadDigest(plain);
+ let envelope;try{envelope=JSON.parse(plain);}catch{fail('json');}
+ if(!object({kind:v=>v===SYNC_SNAPSHOT_KIND,snapshotVersion:v=>v===SYNC_SNAPSHOT_VERSION,data:dataSchema})(envelope)||
+    Object.keys(envelope).length!==3||JSON.stringify(envelope)!==plain)fail('envelope');
+ checkData(envelope.data);
+ return freeze({plain,data:envelope.data});
+}
