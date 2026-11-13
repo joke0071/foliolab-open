@@ -1,3 +1,33 @@
+## Fortschreibung nach Jochen-Zustimmung · 13.11.2026
+
+**DIRECTION_AUTHORIZED / CONTRACT_DRAFT_PREPARED / NOT_IMPLEMENTED.**
+Jochen hat AlternativeA als begrenzte Vertragsausarbeitung bestätigt.
+Die weiter unten stehenden NOT_APPROVED-/Entscheidungsfragen dokumentieren den
+vorherigen Entscheidungssnapshot; die Richtungsgenehmigung ist jetzt erteilt.
+Keine erneute allgemeine Zustimmung für diese Ausarbeitung verlangen.
+
+[Konkreter neuer Versions-/Lifecyclevertragsentwurf](FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md):
+schema-only1→2, explizite Phasen/Abbruch/Unknownausgang, alle tatsächlichen
+Save-/Recovery-/Adoption-/Outboxpfade, Reentranz und kanonische Speichermarker.
+20native Gegenfallklassen festgelegt, NICHT ausgeführt.
+Neuer gezielter Befund: alter initialize-Rückwechselintent hat keinen äußeren
+Adapterlock und einen LocalStorage-Nachlauf ohne weiteren IDBcommit.
+DBversiongrenze alleine beweist deshalb keinen vollständigen Quellenabschluss.
+V2 muss alte Marker von der kanonischen Quellenentscheidung trennen und legitimen
+neuen Rückwechsel persistent/atomar an exakten lokalen CAS binden; konkrete neue
+Recordsform noch OFFEN, keine bestehende Operation still ausschließen.
+
+W1–W6 und der neue Entwurf sind ungeprüft. Versionwechsel/Migration, Produkt-/
+Kryptocode, Native/CI/Workflowausführung bleiben ausdrücklich NICHT autorisiert.
+Bestehendes Reviewpaket, Aussteller§4 und Produktgates unverändert.
+N0zugang/-Ausführung und Prüfer/Budget bleiben separate vorbereitete Entscheidungen.
+Diese Fortschreibung ersetzt keine Implementierung, technischen Nachweise oder
+neue Freigabe. Kein weiterer identischer Fortführungschat erforderlich.
+
+---
+
+## Historischer Entscheidungssnapshot vor Zustimmung
+
 # FLH04 — begrenzte Architekturentscheidung zur Writergrenze · 13.11.2026
 
 Status: **DECISION_READY / NOT_APPROVED / NOT_IMPLEMENTED**.

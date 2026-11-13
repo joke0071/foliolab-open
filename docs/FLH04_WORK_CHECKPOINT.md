@@ -1,3 +1,39 @@
+## CONTRACT_DRAFT_PREPARED / DIRECTION_AUTHORIZED / INTERNAL_W1_W2_OPEN / RELEASE_BLOCKED · work-366da675bef5-20261113
+
+Jochen hat AlternativeA als begrenzte Vertragsausarbeitung bestätigt.
+[Konkreter Vertragsentwurf](FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md)
+vorbereitet: schema-only1→2, bestehendeRecords unverändert, Cutover-/Abbruch-/
+Unknown-/Reopen-/Verlustzustände, vollständige neue P-Writer-/Verifiergrenze,
+private Unteroperationen ohne verschachtelte Lockakquise und20native Gegenfallklassen.
+Kein Produktcode oder Ausführung autorisiert; Aussteller§4 unverändert.
+
+Neuer gezielter Istpfadabgleich: PortfolioStorage umfasst auch retirement bei
+initialize/reload, Neuanlage, Restore/Recovery, Moduswechsel und Rückwechsel.
+Altes initialize kann nach Tombstone-/Intentread LocalStorage-Modusmarker ändern,
+ohne äußeren withLocalLock oder weiteren IDBcommit. Ein v1-Verbindungsabschluss
+beweist keine Beendigung dieses JS-Nachlaufs. Kein nativer Repro behauptet.
+Entwurf verlangt getrennten qualifizierten v2-Quellenentscheid und gebundenen
+neuen Rückwechselvertrag; konkrete neueRecordsform bleibtOFFEN. Normale Pfade
+werden nicht aus dem Modell entfernt, kein atomarerIDB+LocalStorageCAS erfunden.
+
+W1: unterstützte Build-/Openerzuordnung weiterOFFEN.
+W2: alte Nachläufe/neuer Quellen-/Rückwechselvertrag weiterOFFEN.
+W3–W6: neuer Writerabschluss/Native/Review/Release nicht belegt.
+Nächste INTERNE Arbeit ist genau diese Zuordnung/Vertragsschließung,
+kein Codeauftrag anJochen und keine erneute allgemeine Richtungsbestätigung.
+N0alterHarness separat ungefahren;20N1Fälle sind Spezifikation, keinePASS.
+Reviewpaketfd3fce4b/17a5a190 unverändertEXTERNAL_REVIEW_PENDING;
+keine Signatur-/Wrap-/Aussteller-/Entsperrimplementierung.
+
+Nur3Dokumentationsdeltas vorgesehen: neuerVertragsentwurf,
+Entscheidungsvorlage mitZustimmungsfortschreibung und dieserFachcheckpoint.
+Vorherige Entscheidungs-/Checkpointbytes vollständig erhalten.
+Kein156Dateienscan/ABA-Wiederholungsanalyse, keineTests/Browser/CI/Workflowmutation.
+P/R/S/D/CAS/Rawguards/Retry/oncomplete/format1/A1/A2/Budgets/Originalketten erhalten.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
+
+---
+
 ## DECISION_READY / WAITING_ARCHITECTURE_DECISION / RELEASE_BLOCKED · work-366da675bef5-20261113
 
 Begrenzter neuer Nutzerauftrag: Architekturentscheidung statt Wiederholung der
