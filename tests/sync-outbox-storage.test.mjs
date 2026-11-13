@@ -262,3 +262,73 @@ test('restore lifecycle double: PortfolioStorage forwards intent and advances it
  await assert.rejects(()=>controller.save(model,{intent:'unknown'}),/Speichergrund/);
  assert.equal(controller.revision,2);
 });
+
+test('installation lifecycle double: missing record cannot rebind old frames at restarted CAS1',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);const original=(await readPortfolioSyncRecord(db)).sync;
+ db.data.delete('portfolio'); // Simulated partial local loss, NOT a native crash.
+ const next=await commitPortfolioRecord(db,{expectedRevision:null,raw:p.raw,settings:p.settings});
+ assert.equal(next.revision,1);assert.equal(next.raw,p.raw);
+ assert.deepEqual((await readPortfolioSyncRecord(db)).sync,{...original,disabled:'portfolio-reinitialized'});
+ await assert.rejects(()=>api.capture({...args,expectedSyncVersion:1}),/disabled/);
+ await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/disabled/);
+ await assert.rejects(()=>api.recover(),/disabled/);
+});
+
+test('installation lifecycle double: reinitialization invalidation failure preserves missing-record preimage',async()=>{
+ for(const fault of ['quota','abort']){
+  const {db,p,api,args}=await fixture();await api.capture(args);db.data.delete('portfolio');
+  const before=await readPortfolioSyncRecord(db),transaction=db.transaction;
+  db.transaction=function(...a){const tx=transaction.apply(db,a),objectStore=tx.objectStore;
+   tx.objectStore=function(...b){const store=objectStore.apply(tx,b),put=store.put;
+    store.put=function(value,key){if(key==='sync-outbox-v1'){
+     if(fault==='quota')throw new DOMException('reinit-quota-double','QuotaExceededError');
+     const result=put.call(store,value,key);tx.abort();return result;
+    }return put.call(store,value,key);};return store;};return tx;};
+  await assert.rejects(()=>commitPortfolioRecord(db,{expectedRevision:null,raw:p.raw,settings:p.settings}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+
+// Factory orchestration DOUBLE, not a browser/IDB/cutover/installation PASS.
+async function withFactory(db,run){
+ const owned=Object.hasOwn(globalThis,'indexedDB'),previous=globalThis.indexedDB;
+ db.close=()=>{};
+ globalThis.indexedDB={open(){const request={};setImmediate(()=>{request.result=db;request.onsuccess?.();});return request;}};
+ try{return await run();}finally{if(owned)globalThis.indexedDB=previous;else delete globalThis.indexedDB;}
+}
+function localFixture(){
+ const data=new Map();return {data,storage:{getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)}};
+}
+
+test('installation lifecycle double: marker loss cannot adopt byte-identical live record or orphan outbox',async()=>{
+ for(const lostRecord of [false,true])for(const migration of [false,true]){
+  const {db,model,api,args}=await fixture();await api.capture(args);
+  if(lostRecord)db.data.delete('portfolio');const before=await readPortfolioSyncRecord(db);
+  const local=localFixture(),controller=new PortfolioStorage(local.storage);
+  await withFactory(db,()=>assert.rejects(()=>migration?controller.migrate(model):controller.initializeNew(),/Synchronisierungslinie/));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);assert.equal(local.data.size,0);
+ }
+});
+
+test('installation lifecycle double: fresh and identical interrupted installation without outbox still work',async()=>{
+ for(const interrupted of [false,true]){
+  const db=memoryDB(),model=blankModel(),local=localFixture();
+  if(interrupted)await commitPortfolioRecord(db,{expectedRevision:null,raw:backup(model,{includeHistory:true}),settings:model.settings});
+  const controller=new PortfolioStorage(local.storage);
+  const loaded=await withFactory(db,()=>controller.initializeNew());
+  assert.equal(controller.revision,1);assert.equal(controller.isIndexedDB,true);
+  assert.deepEqual(loaded,model);assert.equal(local.data.get(MODE_KEY),MODE_VALUE);
+  assert.equal((await readPortfolioSyncRecord(db)).sync,null);
+ }
+});
+
+test('installation lifecycle double: consented migration over tombstone preserves and disables old originals',async()=>{
+ const {db,model,api,args}=await fixture();await api.capture(args);
+ const original=(await readPortfolioSyncRecord(db)).sync;
+ await commitPortfolioRecord(db,{expectedRevision:1,raw:null,settings:null});
+ const local=localFixture(),controller=new PortfolioStorage(local.storage);
+ await withFactory(db,()=>controller.migrate(model));
+ assert.equal(controller.revision,3);assert.equal(local.data.get(MODE_KEY),MODE_VALUE);
+ assert.deepEqual((await readPortfolioSyncRecord(db)).sync,{...original,disabled:'portfolio-reinitialized'});
+ await assert.rejects(()=>api.recover(),/disabled/);
+});

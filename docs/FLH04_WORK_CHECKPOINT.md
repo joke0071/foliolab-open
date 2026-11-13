@@ -1,3 +1,13 @@
+## ACTIVE / RESTORE_AND_ORPHAN_GUARDS_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
+
+Zwei eng zusammenhängende lokale Lifecyclekorrekturen gemäß vorherigem Vertrag. Restorecode c7e8dbefbfd3a2f6a5f648991c24f8b25a93c662/Tree2c12245deff1eb89a5b16d5212adbe6a8d964475, alle7Deltadateien bytegleich rückgelesen. Folgevertrag8aa399c6: bei fehlendem/tombstonetem Portfolio reinitialisiert atomarerCommit vorhandeneOutbox als portfolio-reinitialized; markerlose New-/Migration-Adoption verweigert beobachteteverwaisteLinie, ohne neueIdentitäten oderOutbox anzulegen. AlleOriginalframes/Versucheerhalten.
+
+Tatsächlich40verschiedeneTestsPASS/0FAIL/0SKIP/0CANCELLED:8Zustand+25Transaktions-/Factorydouble+3PortfolioStorage+4Legacy/CAS, davon11neueLifecyclefälle. LetzterbetroffenerLauf32PASS,8Zustand aus unverändertemvorherigemSchnittwiederverwendet. Syntax5aktuellerCode-/TestdateienPASS.81unveränderteEingabenblobgenau; App-Rücknahmediff exaktOriginalblob. KeinNative-/UI-/Crash-/Quota-/Mehrtab-/Cutover-/Remote-/Geräte-/FullCI-/ProduktionsPASS. NativeHarnessnurSyntax/NICHTGESTARTET; bekannterAF_UNIX→EPERM-Fehlstartnichtwiederholt.
+
+NächsterSchritt: atomare vertrauenswürdige Installations-/Enrollmentpreimagebindung konkretisieren. Vorhandene orphan/marker-Prüfungen sind KEIN atomarerLocalStorage-IDBCutover und KEINE vollständigeInstallationsauthentisierung; nebenläufigeErfassungwährendmarkerloserAdoption weiterhin prüfen/binden. KeinebloßeBytes/CAS/Markerfreigabe. AlternativgeeignetezugelasseneNativeIDB-Abnahme; keinUmgehungsstart. Snapshot-Outboxbindung/volle v5-/History-/Beleg-/FinanzApply-/Key-/Encoder-/Transport-/UI-Implementierung sowie allePflichtgatesoffen. A1/A2unverändert,OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNAL. Maina27cde2/Run43332355188FAILURE/PARKED/RELEASE_BLOCKED. KeinPR/CI/Freeze/Merge/Release/Syncaktivierung/Workflowänderung/zweiterWriter/Automation. VorEndeCommit/Tree/ReadbacknachführenundSTOPPEDsetzen.
+
+## Unveränderte Historie
+
 ## ACTIVE / NORMAL_RESTORE_INVALIDATION_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
 
 Serieller HND01-Folgeschnitt auf bestehendem Branch, nach Vertrag4961a67d. Lokale und Drive-Backupersetzung tragen explizites intent:restore durch PortfolioStorage bis zum atomaren records-Commit. Auch byteidentisches Restore erhöht CAS und invalidiert alte Outbox als portfolio-restored, erhält sämtliche Frames/Versuche; keine neue Outbox/Identität. Gewöhnliche Finanz-/CSV-Saves bleiben lokale Nachfolger. A1/A2 unverändert. Keine Appaktivierung der Syncmodule/Encoder/Transport/Apply, keine zweiteDB/LocalStoragequeue/DB-Versionänderung.

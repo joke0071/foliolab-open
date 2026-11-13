@@ -5,7 +5,7 @@ import {portableSettings} from './complete-backup.js';
  * Encrypted complete backups may optionally include user-approved credentials.
  */
 import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData,retireLegacyProviderCredentials} from './model.js';
-import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials} from './atomic-storage.js';
+import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials,readPortfolioSyncRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
 export const REVERT_INTENT_KEY='foliolab-open-idb-revert-intent';
@@ -83,7 +83,8 @@ export class PortfolioStorage {
    const db=await openPortfolioDB();
    try{
     const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=portableSettings(model.settings);
-    const existing=await readPortfolioRecord(db);
+    const {portfolio:existing,sync}=await readPortfolioSyncRecord(db);
+    if(sync!==null)throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
     let record=existing;
     if(existing){
      if(existing.raw!==raw||JSON.stringify(existing.settings)!==JSON.stringify(settings))
@@ -152,7 +153,8 @@ export class PortfolioStorage {
   if(original!==null)safeImport(JSON.parse(original)); // reject corrupt source without rebuilding ID comparisons
   const db=await openPortfolioDB();
   try{
-   const existing=await readPortfolioRecord(db);
+   const {portfolio:existing,sync}=await readPortfolioSyncRecord(db);
+   if(sync!==null&&!existing?.deleted)throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
    const portable=backup(model,{includeHistory:true}),preferences=portableSettings(model.settings);
    let record;
    if(existing?.deleted&&existing.raw===null){

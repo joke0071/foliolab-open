@@ -140,6 +140,7 @@ export function commitPortfolioRecord(db, {expectedRevision, raw,settings,intent
         store.put(nextRecord, KEY);
         if(portable===null)invalidateSyncState(store,'portfolio-deleted');
         else if(intent==='restore')invalidateSyncState(store,'portfolio-restored');
+        else if(current===null||current.deleted)invalidateSyncState(store,'portfolio-reinitialized');
       } catch (error) {
         failure = error;
         tx.abort();
