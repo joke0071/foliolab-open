@@ -78,11 +78,11 @@ Private Originale erhalten, keine Veröffentlichung. Redaktion nur in abgeleitet
 ### Kryptoreview: vorhandenes Paket gezielt zustellbar machen
 
 Paket fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
-Einstieg docs/FLH04_CRYPTO_REVIEW_ENTRY_2026-11-13.md,
+[Einstieg im bestehenden Paket](https://github.com/joke0071/foliolab-open/blob/fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b/docs/FLH04_CRYPTO_REVIEW_ENTRY_2026-11-13.md),
 Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2.
 Kein Paketneubau und keine neue allgemeine Spezifikationsserie.
 Benötigte Zuordnung: Name/Organisation des unabhängigen qualifizierten Prüfers, tatsächliche Verfügbarkeit, zulässiger Zugang, vereinbartes Budget falls erforderlich.
-Owner ergänzt gezielten Impactverweis auf die seitdem geänderten Adapter-/Lifecycleverträge; diese nicht rückwirkend in den gepinnten Gegenstand hineininterpretieren.
+Gezielter Impactverweis jetzt zugeordnet: Browseradapter am Reviewkandidaten17a5a190 Blobc383901ffe000b82f3a97c1f08460748dbe228eb → [Adapter am ausgeführten Quellstand45ef99e0](https://github.com/joke0071/foliolab-open/blob/45ef99e0c09932406c41e22757fbed00ae164016/src/browser-portfolio-storage.js), Blob4743618cbfba19dbb19aaf6a9e6bf563b2311614. Geänderte native Quellenprobe ohne Versionsanforderung, endliche v1-Handle-/Lockbindung und Cleanup, v2-Ablehnung vor Normalpfaden/Rückwechsel sowie ausdrücklicher Originalzugriff benötigen eigenen Reviewimpact; daraus keine neue Autorität/Entsperrung ableiten. [Quellen-/Lifecyclevertrag samt Instrumentierung](https://github.com/joke0071/foliolab-open/blob/45ef99e0c09932406c41e22757fbed00ae164016/docs/FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md) und [Originalauswertung43500770689/1](release-evidence/flh04-renderer-termination-43500770689-attempt1.json) getrennt beilegen:13/81Lifecycle-PASS, keinRendererbericht. Der gepinnte ursprüngliche Reviewgegenstand bleibt unverändert; dies ist eine Impactzuordnung, keine eigene oder unabhängige Reviewabnahme. Bereits vorliegende Snapshotdeltas behalten ihre bestehenden Einzelbelege; kein Paketneubau.
 Ergebnis muss Gegenstand/SHA, geprüfte Annahmen, Findings/Schwere, offene Punkte und deren Abschluss benennen. CR4/CR5 und interne K1-Lücke bleiben bis einschlägigem Nachweis offen. Keine Selbst-/KI-Freigabe; keine Nachricht oder Beauftragung durch dieses Dokument.
 
 
