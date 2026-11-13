@@ -32,9 +32,10 @@ async function operation(page,action,args={}){
   if(action==='begin')return t.api.begin(args);
   if(action==='confirm')return t.api.confirm({...args,readback:await t.verify(args.frameText)});
   if(action==='save')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings()});
+  if(action==='restore')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings(),intent:'restore'});
   if(action==='delete')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:null,settings:null});
   if(action==='recover-record')return t.storage.restoreDamagedRecord(t.db,{expected:args.expected,raw:args.raw,settings:t.model.defaultSettings()});
-  if(action==='fault-capture'){
+  if(action==='fault-capture'||action==='fault-restore'){
    const put=IDBObjectStore.prototype.put;
    IDBObjectStore.prototype.put=function(value,key){
     if(key==='sync-outbox-v1'){
@@ -43,7 +44,10 @@ async function operation(page,action,args={}){
     }
     return put.call(this,value,key);
    };
-   try{return await t.api.capture({...args,receipt:await t.verify(args.frameText),expectedPortfolioId:'P',expectedEpochId:'12'.repeat(16)});}
+   try{
+    if(action==='fault-restore')return await t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings(),intent:'restore'});
+    return await t.api.capture({...args,receipt:await t.verify(args.frameText),expectedPortfolioId:'P',expectedEpochId:'12'.repeat(16)});
+   }
    finally{IDBObjectStore.prototype.put=put;}
   }
   throw Error('Unknown action');
@@ -81,12 +85,21 @@ try{
  assert.equal(guarded.status,'unchanged');assert.equal(guarded.applyAuthorized,false);
  const unmatched=await operation(c,'recover');assert.equal(unmatched.summary.remoteAnchor,null);assert.equal(unmatched.summary.hasPendingChanges,true);
  const preserved=await operation(c,'read');
- await operation(c,'recover-record',{expected:preserved.portfolio,raw:preserved.portfolio.raw});
+ for(const fault of ['quota','abort']){
+  await assert.rejects(()=>operation(c,'fault-restore',{revision:2,raw:preserved.portfolio.raw,fault}));
+  assert.deepEqual(await operation(b,'read'),preserved);
+ }
+ await operation(c,'restore',{revision:2,raw:preserved.portfolio.raw});
+ assert.equal((await operation(b,'read')).sync.disabled,'portfolio-restored');
+ assert.deepEqual((await operation(b,'read')).sync.entries,preserved.sync.entries);
+ await assert.rejects(()=>operation(b,'recover'));
+ const restored=await operation(c,'read');
+ await operation(c,'recover-record',{expected:restored.portfolio,raw:restored.portfolio.raw});
  assert.equal((await operation(b,'read')).sync.disabled,'explicit-recovery');
  await assert.rejects(()=>operation(b,'recover'));
  assert.deepEqual((await operation(c,'read')).sync.entries,preserved.sync.entries);
- await operation(c,'delete',{revision:3});
+ await operation(c,'delete',{revision:4});
  assert.equal((await operation(b,'read')).sync.disabled,'portfolio-deleted');
  await assert.rejects(()=>operation(b,'recover'));
- console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
+ console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, ordinary restore/recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
 }finally{await context.close();await browser.close();}

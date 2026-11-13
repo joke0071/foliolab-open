@@ -4,6 +4,7 @@ import {blankModel,backup,createProvider} from '../src/model.js';
 import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord} from '../src/atomic-storage.js';
 import {verifySyncOutboxState,advanceSyncOutboxState} from '../src/sync-outbox-state.js';
 import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
+import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
 import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
 
 /** Transaction DOUBLE only. Tests orchestration/error paths, NOT native IDB,
@@ -177,4 +178,87 @@ test('A1 transaction double: local save while planning invalidates even an initi
  const d=(await readPortfolioSyncRecord(db)).sync.entries[0].revision;
  await assert.rejects(()=>racing.planApply({expectedLocalRevision:1,expectedSyncVersion:1,revisions:[{...d,revisionId:'B',parentId:'R',generation:'2'}],observationComplete:true}),/apply-plan-race/);
  assert.equal((await readPortfolioSyncRecord(db)).portfolio.revision,2);
+});
+
+test('restore lifecycle double: identical restore preserves attempts and disables every old-line operation',async()=>{
+ const {db,p,model,api,args}=await fixture();await api.capture(args);
+ await api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'});
+ const before=await readPortfolioSyncRecord(db);
+ const result=await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings,intent:'restore'});
+ const after=await readPortfolioSyncRecord(db);
+ assert.equal(result.revision,2);assert.equal(result.raw,p.raw);
+ assert.deepEqual(after.sync,{...before.sync,disabled:'portfolio-restored'});
+ await assert.rejects(()=>createSyncOutboxStorage(db,verify).recover(),/disabled/);
+ await assert.rejects(()=>api.begin({expectedLocalRevision:2,expectedSyncVersion:2,revisionId:'R'}),/disabled/);
+ await assert.rejects(()=>api.capture({...args,expectedLocalRevision:2,expectedSyncVersion:2}),/disabled/);
+ await assert.rejects(()=>api.planApply({expectedLocalRevision:2,expectedSyncVersion:2,revisions:[],observationComplete:true}),/disabled/);
+ await assert.rejects(()=>api.confirm(),/remote-provenance-unavailable/);
+ await commitPortfolioRecord(db,{expectedRevision:2,raw:p.raw,settings:model.settings});
+ assert.deepEqual((await readPortfolioSyncRecord(db)).sync,after.sync);
+});
+
+test('restore lifecycle double: ordinary edits/CSV successors preserve line; restore creates no outbox',async()=>{
+ const {db,p,model,api,args}=await fixture();await api.capture(args);
+ const before=(await readPortfolioSyncRecord(db)).sync;
+ model.providers.push(createProvider({id:'imported',name:'Synthetic import',type:'broker'}));
+ const saved=await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ assert.deepEqual((await readPortfolioSyncRecord(db)).sync,before);
+ await api.capture({...args,expectedLocalRevision:2,expectedSyncVersion:1,receipt:await verify(frame(saved.raw,'S','R','2'))});
+ assert.equal((await api.recover()).state.entries.length,2);
+ const clean=await fixture();
+ await commitPortfolioRecord(clean.db,{expectedRevision:1,raw:p.raw,settings:p.settings,intent:'restore'});
+ assert.equal((await readPortfolioSyncRecord(clean.db)).sync,null);
+});
+
+test('restore lifecycle double: abort/quota at invalidation rolls back both records after portfolio put',async()=>{
+ for(const fault of ['quota','abort']){
+  const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
+  const transaction=db.transaction;
+  db.transaction=function(...a){const tx=transaction.apply(db,a),objectStore=tx.objectStore;
+   tx.objectStore=function(...b){const store=objectStore.apply(tx,b),put=store.put;
+    store.put=function(value,key){if(key==='sync-outbox-v1'){
+     if(fault==='quota')throw new DOMException('metadata-quota-double','QuotaExceededError');
+     const result=put.call(store,value,key);tx.abort();return result;
+    }return put.call(store,value,key);};return store;};return tx;};
+  await assert.rejects(()=>commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings,intent:'restore'}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+
+test('restore lifecycle double: stale CAS, invalid data and unknown intent never invalidate frames',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);
+ for(const patch of [{expectedRevision:99},{raw:'{"version":999}'},{intent:'RESTORE'},{intent:null},{intent:{restore:true}}]){
+  await assert.rejects(()=>commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings,intent:'restore',...patch}));
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+});
+
+test('restore lifecycle double: restore during crypto prevents stale capture/begin/plan/recovery',async()=>{
+ for(const action of ['capture','begin','planApply','recover']){
+  const {db,p,api,args}=await fixture();await api.capture(args);const before=await readPortfolioSyncRecord(db);let once=true;
+  const racing=createSyncOutboxStorage(db,async text=>{
+   if(once){once=false;await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings,intent:'restore'});}
+   return verify(text);
+  });
+  const call=action==='capture'?()=>racing.capture({...args,expectedSyncVersion:1}):
+   action==='begin'?()=>racing.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}):
+   action==='planApply'?()=>racing.planApply({expectedLocalRevision:1,expectedSyncVersion:1,revisions:[],observationComplete:true}):()=>racing.recover();
+  await assert.rejects(call,/cas|race/);
+  const after=await readPortfolioSyncRecord(db);
+  assert.equal(after.portfolio.revision,2);assert.deepEqual(after.sync,{...before.sync,disabled:'portfolio-restored'});
+ }
+});
+
+test('restore lifecycle double: PortfolioStorage forwards intent and advances its revision only after commit',async()=>{
+ const {db,p,model,api,args}=await fixture();await api.capture(args);
+ const local={getItem:key=>key===MODE_KEY?MODE_VALUE:null};
+ const controller=new PortfolioStorage(local);controller.mode='idb';controller.db=db;controller.revision=1;
+ const before=await readPortfolioSyncRecord(db);
+ db.fault='abort-after-put';await assert.rejects(()=>controller.save(model,{intent:'restore'}));
+ assert.equal(controller.revision,1);assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ await controller.save(model,{intent:'restore'});
+ assert.equal(controller.revision,2);assert.equal((await readPortfolioSyncRecord(db)).sync.disabled,'portfolio-restored');
+ assert.equal((await readPortfolioSyncRecord(db)).portfolio.raw,p.raw);
+ await assert.rejects(()=>controller.save(model,{intent:'unknown'}),/Speichergrund/);
+ assert.equal(controller.revision,2);
 });

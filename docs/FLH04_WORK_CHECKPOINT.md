@@ -1,3 +1,13 @@
+## ACTIVE / NORMAL_RESTORE_INVALIDATION_IMPLEMENTED / RELEASE_BLOCKED · work-64ba30c2c554-20261113
+
+Serieller HND01-Folgeschnitt auf bestehendem Branch, nach Vertrag4961a67d. Lokale und Drive-Backupersetzung tragen explizites intent:restore durch PortfolioStorage bis zum atomaren records-Commit. Auch byteidentisches Restore erhöht CAS und invalidiert alte Outbox als portfolio-restored, erhält sämtliche Frames/Versuche; keine neue Outbox/Identität. Gewöhnliche Finanz-/CSV-Saves bleiben lokale Nachfolger. A1/A2 unverändert. Keine Appaktivierung der Syncmodule/Encoder/Transport/Apply, keine zweiteDB/LocalStoragequeue/DB-Versionänderung.
+
+Tatsächlich35verschiedene betroffene Node24.22.1-TestsPASS/0FAIL/0SKIP/0CANCELLED=8Zustand+20Transaktionsdouble+3PortfolioStorage+4Legacy/CAS. Sechs neue Fälle inklusive identischemRestore/uncertain, Altlinienoperationen, Nachfolgern, Abort/Quota nachPortfolioPut, staleCAS/invalidenDaten/Grund, Crypto-Races und Controllerrevision nachCommit.81unveränderte Eingaben blobgenau; App-Rücknahmediff exaktOriginalblob. Syntax5PASS. NativeHarness ergänzt, NURSyntax/NICHTGESTARTET; keinUI-/echterIDB-/Crash-/Quota-/Mehrtab-/Geräte-/Remote-/ProduktionsPASS. KeinPR/CI/Freeze/Merge/Release; Mainrun43332355188FAILURE/PARKED/RELEASE_BLOCKED.
+
+Nächster unabhängiger Schritt: vertrauenswürdige Installations-/Gerätelinie an Portfolio-/Outboxpreimage binden; fehlende/ersetzteIDB/Restoreanker konkret vertraglich absichern, keine neueIdentität aus bloßem Restoregrund. Alternativ geeignete zugelassene nativeIDB-Abnahme; bekanntenChromiumAF_UNIX→EPERM-Fehlstart nicht wiederholen. VolleSnapshot-Outboxbindung/v5/History/Belegschemas/FinanzApply/Keys/Enrollment/Encoder/Noncebudget/Rotation/Recovery/Graph/Transport/UI sowie alle bisherigen Pflichtgates OFFEN. OutboxINTERNUNQUALIFIZIERT,FLH04NICHTDONE,N-DRIVEBLOCKED_EXTERNAL. Vor Abschluss Commit/Tree und gepinntes Byte-Readback nachführen; danach eigene Aktivitäten stoppen.
+
+## Unveränderte Historie
+
 # FLH04 — Abschluss A1/A2/B
 
 ## STOPPED / HANDOVER_READY / A1_GUARD_IMPLEMENTED / A2_REMOTE_CONFIRMATION_BLOCKED / NATIVE_IDB_UNQUALIFIED / RELEASE_BLOCKED · work-0910b01a3280-20261113

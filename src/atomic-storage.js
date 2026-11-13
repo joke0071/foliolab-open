@@ -100,8 +100,11 @@ export function readPortfolioRecord(db) {
  * expectedRevision=null means the store must be empty. A deletion writes a
  * tombstone, preserving the revision and preventing a stale tab from reviving it.
  * raw=null removes the portfolio without resetting the conflict history.
+ * intent=restore invalidates any old sync line even for identical raw bytes.
+ * Portfolio and invalidation commit together; no sync state is created.
  */
-export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
+export function commitPortfolioRecord(db, {expectedRevision, raw,settings,intent='edit'}) {
+  if(intent!=='edit'&&intent!=='restore')return Promise.reject(new TypeError('Unbekannter Speichergrund.'));
   if (expectedRevision !== null &&
       (!Number.isSafeInteger(expectedRevision) || expectedRevision < 1)) {
     return Promise.reject(new TypeError('Ungültige erwartete Speicherrevision.'));
@@ -136,6 +139,7 @@ export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
         };
         store.put(nextRecord, KEY);
         if(portable===null)invalidateSyncState(store,'portfolio-deleted');
+        else if(intent==='restore')invalidateSyncState(store,'portfolio-restored');
       } catch (error) {
         failure = error;
         tx.abort();

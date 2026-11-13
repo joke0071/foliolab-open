@@ -118,7 +118,8 @@ export class PortfolioStorage {
    throw Error('Datenstand in einem anderen Tab geändert. Bitte neu laden.');
   }
  }
- async save(model){
+ async save(model,{intent='edit'}={}){
+  if(intent!=='edit'&&intent!=='restore')throw new TypeError('Unbekannter Speichergrund.');
   if(!this.isIndexedDB){
    const draft=clone(model);
    return this.withLocalLock(()=>{
@@ -133,7 +134,7 @@ export class PortfolioStorage {
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
-   expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings
+   expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings,intent
   });
   this.revision=current.revision; // only after tx.oncomplete
  }

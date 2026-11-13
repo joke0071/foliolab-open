@@ -119,13 +119,13 @@ const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnun
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
-async function save(){
+async function save(options){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
  saving=true;syncPortfolioState();
  try{
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
-  await portfolioStore.save(model);
+  await portfolioStore.save(model,options);
   lastStorageError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
@@ -2507,7 +2507,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   imported.settings=configuration?configuration.settings:{...defaultSettings(),...model.settings};
   const previous=model;
   model=imported;filter='all';
-  try{await save()}catch(error){model=previous;throw error}
+  try{await save({intent:'restore'})}catch(error){model=previous;throw error}
   loadFailure=null;
   if(v2Envelope){
     await adoptBackupPassword(v2Envelope,password);
@@ -2582,7 +2582,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         imported.settings=accepted?accepted.settings:{...defaultSettings(),...model.settings};
         const previous=model;
         model=imported;filter='all';
-        try{await save()}catch(error){model=previous;throw error}
+        try{await save({intent:'restore'})}catch(error){model=previous;throw error}
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone();
         if(accepted)syncApiSettingsForm();
