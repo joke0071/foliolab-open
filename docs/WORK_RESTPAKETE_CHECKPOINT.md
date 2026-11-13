@@ -1,3 +1,13 @@
+## ACTIVE / FLH04_ENROLLMENT_ISSUER_CONTRACT / RELEASE_BLOCKED · work-196cef9db7a8-20261113
+
+Alleinige serielle HND01-Verantwortung nach frischem kollisionsfreiem Abgleich übernommen. Vorgänger work-52769392352e-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. 311 Heads, Main a27cde2f802c26bfec41190911d88bd1d7d8e325, FLH04 77987b037deb1202d6b40873535a6379816eebdf, zentraler Ausgang ddfe0f6c31f094d82e7048cf08e68f23d1ac1ac6; Trees wie Übergabe. PR332/157/161 einschließlich Reviews, Inline-/Conversationkommentaren und UI-R4 unverändert. 0 IN_PROGRESS; nur historische Queues43095194276/43095194257. Mainrun43332355188 COMPLETED/FAILURE, Ursache UNKNOWN, RELEASE_GATE_OPEN.
+
+RootV155/406425600Bytes und FAIL-/Mainoriginal-CompanionsV0/12748800+212408320Bytes frisch ausschließlich Version-/Größenmetadaten bestätigt. Keine privaten Transfers/Uploads/Readbacks/Restores oder Schreibfähigkeitsnachweise. Kein identisches Vollbackup, alle Originalketten erhalten. GitHub nur Plugin; keine Agenten/Parallelisierung/Automation/zweiter Writer/PR/FullCI/Merge/Release/Workflowänderung/Runner/Retry/Syncaktivierung.
+
+Nächste unabhängige Aktion: konkreten Enrollment-/Zustimmungs-/Writerautorisierungsaussteller und seine zwingenden Schlüssel-/Transaktions-/Recoveryvorbedingungen gegen vorhandene Implementierung festlegen. Vorbereiteter HKDF-Key ohne erhaltenes umhülltes Rohmaterial kann nicht nachträglich per wrapKey portabel gemacht werden; JSON.stringify(CryptoKey) ist kein vollständiger Schlüsselvergleich. Beide Grenzen gezielt mit echter Node-WebCrypto gegenprüfen; keinerlei Entsperrung/Receipt-/Key-API einführen. A1/A2/Snapshotgrenzen und alle bisherigen Gates erhalten. Bekannten nativen AF_UNIX-Fehlstart nicht wiederholen.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY / FLH04_LOCKED_LOCAL_ANCHOR_PREPARED / RELEASE_BLOCKED · work-52769392352e-20261113
 
 Mit diesem geschützten zentralen Abschluss sind sämtliche eigenen Schreibaktivitäten beendet; kein Hintergrundbetrieb/Nachfolger behauptet. Unmittelbarer Vorgänger ausdrücklichSTOPPED; älterework-pr333-AusführungweiterhinNICHTtechnischalsbeendetnachgewiesen. KeineZusatzagenten/Automation/zweiterWriter/PR/FullCI/Merge/Release/Workflowänderung/Runner/Retry/Syncaktivierung.
