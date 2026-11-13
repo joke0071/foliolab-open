@@ -1,3 +1,47 @@
+## PRODUCT_WORK_STOPPED / ACCEPTED_HISTORY_ALLOWLIST_IMPLEMENTED / RELEASE_BLOCKED · work-f236b969b0b1-20261113
+
+Genau ein unabhängiger Produktschnitt: v3/v4-Snapshot übernimmt bereits
+kanonisch akzeptierte BTC/ETH/SOL-Sessions rekursiv geschlossen und verlustfrei,
+inklusive Events/Locator/Streams/Opening/Coverage/Quotes/BTC-Scope/Issues.
+Bestehende validateWalletHistory-/Replay-/Quotes-/Finanz-/Journalprüfung
+wiederverwendet; jede Veränderung/Normalisierung blockiert vollständig.
+UNKNOWN/null/Decimal/IDs/Herkunft/Reihenfolge erhalten. Pending/Resume,
+v5/Import-/Management-/Withdrawal-/Bridge-/Purchasebelege und getrennte
+priceHistories weiter vollständig unsupported. Keine stille Projektion.
+
+[Vertrag/Erfolgs-/Ablehnungsfälle](FLH04_SNAPSHOT_CONTRACT.md),
+[lokaler Prüfbeleg](release-evidence/flh04-snapshot-history-local-2026-11-13.json).
+Final40gerichteteNode24.22.1TestsPASS/0FAIL/0SKIP/0CANCELLED, Syntax3PASS.
+21+9bestehende betroffene und10neueTests; keine historischenPASSadditionen.
+Erstbefunde/Testpräzisierungen im Beleg erhalten. 69ursprüngliche Eingaben vor
+Änderung blobgenau, danach67unverändert; zusätzliche Historyfixture blobgenau.
+Implementierung begrenzt vollständig, gezielte interne Verifikation bestanden;
+native/CI22/Wallet20/PR/Main/Produktion/externe Abnahme offen. Nicht integriert.
+
+[Unabhängiger Review-Einstieg](FLH04_CRYPTO_REVIEW_ENTRY_2026-11-13.md)
+REVIEW_READY/EXTERNAL_REVIEW_PENDING, Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2,
+Tree44ff9c4d60fb22b9519b4b0b344a91045f97f28e, Paketcommitfd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b.
+Prüfer nicht verfügbar/Unabhängigkeit nicht nachgewiesen; keine externe
+Beauftragung/Nachricht. Keine Krypto-/Aussteller-/Signatur-/Entsperrimplementierung.
+Neue Snapshotänderung ist keine Freigabe des gepinnten Kryptokandidaten.
+
+Aktuelle native Socketprobe AF_UNIX→EPERM (Seccomp2/NoNewPrivs1);
+kein Chromiumstart wiederholt, keine neue geeignete Ausführungsfähigkeit.
+Harness browser-sync-outbox.mjs nur Syntax; injectedAbort/Quota keine echte
+Crash-/Diskabnahme. Native Persistenz/Reopen/Mehrtab, echter Crash/realeQuota
+und Challenge→Commit-Keyslotbindung getrennt offen; keine JSON-/Envelope-CAS-
+Behauptung. Kein neuer Runner/Workflowstart/Retry/PR/Merge/Release/aktiveSync.
+A1/A2/format1prepared-locked/3,5MB/100000Werte/Tiefe16 unverändert.
+Main43332355188FAILURE/UrsacheUNKNOWN; Diagnose43421311524SUCCESS verbraucht.
+OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNAL mit Rest.
+
+Eigene Produktarbeit beendet; zentrale Schlussdokumentation folgt seriell.
+Exakte End-SHAs, frischer Schlussabgleich, Sicherungsgrenzen und vollständiger
+kopierbarer Übergabeauftrag im zentralen Checkpoint. Keine technische
+Releasevollübernahme/Browser-/Sicherungsfähigkeit durch Ownerstatus behauptet.
+
+---
+
 ## CONTRACT_WORK_STOPPED / WRITER_FRAME_BYTES_SPECIFIED / RELEASE_BLOCKED · work-5e7228746eee-20261113
 
 Unabhängiger serieller Vorcodevertrag auf Ausgang7ed0bbe09af03f52603b4e8e9ca8fedfada1d2cf; Produktcode unverändert10edebbf66cb021107cd1ae52b03bd82380c9e32. [Individueller Writerhüllenbytekandidat](FLH04_WRITER_FRAME_BYTE_CONTRACT.md), [öffentliche Dummyvektoren](FLH04_WRITER_FRAME_BYTE_VECTORS.json): explizite äußere Version2 über unverändertem Gruppenframev1, vollständige verschlüsselte Framebytes samt Portfolio/Epoche/Root/State/Member/W signiert. Descriptor/Snapshot/Payloaddigest bleiben verschlüsselt. Parentgraph nur individuell geprüfte Knoten, Identitätskonflikte/alte Mitgliedschaft/Frische/Rotation fail closed; E/Passwort/A kein Writerersatz. Keine API-/Outbox-/Ankermigration, keine Implementierung oder Aktivierung.

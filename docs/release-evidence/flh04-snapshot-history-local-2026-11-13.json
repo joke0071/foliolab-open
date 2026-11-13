@@ -1,0 +1,86 @@
+{
+  "scope": "FLH04 accepted wallet-history snapshot allowlist; v3/v4 only",
+  "date": "2026-11-13",
+  "owner": "work-f236b969b0b1-20261113",
+  "baseCommit": "fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b",
+  "cryptoReviewCandidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+  "implementation": "complete for canonical accepted BTC/ETH/SOL sessions; no pending; no active integration",
+  "internalVerification": {
+    "runtime": "Node v24.22.1",
+    "ciRuntimeDifference": "CI22/Wallet20 not executed",
+    "command": "node --test tests/sync-snapshot.test.mjs tests/sync-snapshot-gap-regressions.test.mjs tests/sync-snapshot-history.test.mjs",
+    "tests": 40,
+    "pass": 40,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "syntax": [
+      "src/sync-snapshot.js",
+      "tests/sync-snapshot-history.test.mjs",
+      "tests/browser-sync-outbox.mjs"
+    ],
+    "initialFindings": [
+      "First new-suite run:9 pass/1 fail; declared partial coverage is canonical valid input, moved to positive lossless/null assertion; no product guard relaxed.",
+      "First combined run:39 pass/1 fail; malformed session still rejected by existing history validator; precise expected error and historical test name updated. Final 40 all pass."
+    ],
+    "pinnedInputs": {
+      "initial": 69,
+      "unchangedAfterImplementation": 67,
+      "additionalFixture": "tests/wallet-history-fixtures.mjs",
+      "fixtureBlob": "1949b9138f70a094b7cd715a9eca4bfe87846adc"
+    },
+    "sourceBlobs": {
+      "src/sync-snapshot.js": "756f7a2a2f00f09cb5d0f5d642d8ed0063715eb9",
+      "tests/sync-snapshot.test.mjs": "c7feef918bd1a25f312cb40c6422808bf55a19fc",
+      "tests/sync-snapshot-history.test.mjs": "72f07f12c7cf1bca48a28966241109102309eb0a"
+    }
+  },
+  "invariants": {
+    "snapshotVersion": 1,
+    "dataVersions": [
+      3,
+      4
+    ],
+    "utf8Bytes": 3500000,
+    "nodes": 100000,
+    "depth": 16,
+    "normalization": "reject entire payload",
+    "pending": "reject entire payload",
+    "unsupported": [
+      "v5",
+      "import proofs",
+      "management/withdrawal/bridge evidence",
+      "purchaseEvidence",
+      "priceHistories"
+    ],
+    "applyAuthorized": false,
+    "storageConfirm": "blocked"
+  },
+  "native": {
+    "environment": "ENVIRONMENT_BLOCKED",
+    "evidence": "AF_UNIX socket creation EPERM errno1; Seccomp2/NoNewPrivs1",
+    "chromiumStarted": false,
+    "idbCryptoKeyPersistence": "not executed",
+    "pageReopen": "not executed",
+    "multitabCAS": "not executed",
+    "realProcessCrash": "not qualified",
+    "realQuotaRecovery": "not qualified",
+    "challengeCommitKeyslotBinding": "unresolved",
+    "injectedFaultsAreRealCrash": false
+  },
+  "externalAcceptance": {
+    "cryptoReview": "EXTERNAL_REVIEW_PENDING",
+    "browser": "not executed",
+    "PR": "not created",
+    "CI": "not started",
+    "main": "not merged",
+    "release": "blocked",
+    "production": "not qualified",
+    "privateWriteReadbackRestore": "not demonstrated"
+  },
+  "productionBlockers": {
+    "mainRun": "43332355188 FAILURE; cause UNKNOWN",
+    "diagnosticRun": "43421311524 SUCCESS; single authorization consumed"
+  }
+}

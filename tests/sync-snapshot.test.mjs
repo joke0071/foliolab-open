@@ -37,12 +37,12 @@ test('simple journal retains balanced postings, exact amounts, ordering and link
  assert.deepEqual(result.openingPositions,source.openingPositions);assert.equal(result.bookings[0].journalEntryId,'buy-1');
  assert.equal(result.positions[0].quantityExact,'1.000000000000000002');
 });
-test('empty history is retained; nonempty or pending history blocks the whole snapshot',async()=>{
+test('empty history is retained; malformed accepted sessions and any pending history reject',async()=>{
  const m=model();m.walletHistory={schema:1,sessions:[],pending:[]};
  const data=await exported(m);assert.deepEqual(data.walletHistory,{schema:1,sessions:[],pending:[]});
  for(const field of ['sessions','pending']){
   const copy=structuredClone(data);copy.walletHistory[field].push({id:'unsupported'});
-  await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),/envelope/);
+  await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),field==='sessions'?/Historie ist ungültig oder zu groß/:/envelope/);
  }
 });
 test('v4 booking archive is preserved with its reference identity',async()=>{

@@ -4,7 +4,7 @@ import {units,exact} from './decimal.js';
 
 /** Bounded credential-free financial gate, NOT crypto/graph/CAS/Apply approval.
  * Unsupported financial evidence blocks the entire snapshot; nothing is pruned.
- * See FLH04_SNAPSHOT_CONTRACT.md for deliberately incomplete v5/history scope.
+ * See FLH04_SNAPSHOT_CONTRACT.md for supported accepted history and v5 limits.
  */
 export const SYNC_SNAPSHOT_KIND='FolioLabSyncSnapshot';
 export const SYNC_SNAPSHOT_VERSION=1;
@@ -48,9 +48,21 @@ const snapshot=object({...fields('id date total totalEURExact recordedAt valuati
  byAccount:nullable(map(v=>typeof v==='number'&&Number.isFinite(v))),byPosition:nullable(map(decimal)),
  quoteTimes:array(quoteTime),revisions:array(revision)});
 const archive=object({...fields('version'),archivedIds:array(v=>typeof v==='string'),referenceArchivedIds:array(v=>typeof v==='string')});
-// Empty optional containers are retained, not silently removed. Full history,
-// imported price and v5 proof allowlists are still required before their use.
-const history=object({schema:v=>v===1,sessions:v=>Array.isArray(v)&&v.length===0,pending:v=>Array.isArray(v)&&v.length===0});
+// Only already canonical accepted history: the existing safeImport history
+// validator below checks replay, event IDs, coverage and quotes. Its projection
+// must equal every original value, so sorting/dedupe/source cleanup cannot
+// silently change a snapshot. Pending/resume data remains unsupported in full.
+const historyIdentity=fields('network chainId accountId assetId contract mint');
+const historyEvent=object({...historyIdentity,
+ ...fields('id walletId txid blockHeight blockHash txIndex timestamp decimals quantityBaseUnits includedInEventId type source status finality observedAt coverage qualityCode'),
+ locator:object(fields('kind index subindex'))});
+const historyStream=object({...historyIdentity,...fields('decimals throughBlock'),
+ opening:nullable(object(fields('quantityBaseUnits beforeBlock source'))),
+ coverage:object(fields('status fromBlock toBlock tipHash source'))});
+const historyQuote=object({...fields('network chainId assetId contract mint date currency priceExact source binding quality')});
+const historySession=object({...fields('walletScopeDigest id chain walletKey acceptedAt decision providerCache'),
+ events:array(historyEvent),streams:array(historyStream),quotes:array(historyQuote),issues:array(v=>typeof v==='string'&&unicode(v))});
+const history=object({schema:v=>v===1,sessions:array(historySession),pending:v=>Array.isArray(v)&&v.length===0});
 const dataSchema=object({version:v=>v===3||v===4,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
