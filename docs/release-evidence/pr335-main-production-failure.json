@@ -1,0 +1,120 @@
+{
+  "status": "PRODUCTION_FAIL_NO_RELEASE_APPROVAL",
+  "main": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+  "tree": "e55ffa96f641345759eb3779b00de6187c8671b8",
+  "run": 43332355188,
+  "job": 131591512462,
+  "artifact": 13996793680,
+  "bytes": 12448968,
+  "sha256": "fd35575239ded0d3ef93ae14b2c18397cc944d3cba623eebdd992b972630a69c",
+  "integrity": "API_SIZE_SHA256_CRC_VERIFIED",
+  "jsonParsed": 24,
+  "pngDecoded": 95,
+  "nestedTrace": "storage-fixture/chromium-1794529173928-trace.zip",
+  "traceNetworkEvents": 0,
+  "failure": {
+    "caller": "tests/browser-kraken-import.mjs:132 fresh offline context before data setup",
+    "file": "tests/browser-controlled-storage-fixture.mjs:46",
+    "timeoutMilliseconds": 20000,
+    "initial": "installing worker; no active/controller",
+    "final": "no installing/waiting/active/controller; fixture.readyfalse/errornull",
+    "cause": "UNKNOWN; original network trace empty; no proven HTTP error or product/transport attribution"
+  },
+  "liveAssetHashesMatchQualifiedV311": 155,
+  "proxyCertificateException": false,
+  "cache": "foliolab-open-v311",
+  "crossEngineProduction": "NOT_RUN due Chromium step failure",
+  "allMissingExpectedProductionReports": "UNQUALIFIED",
+  "releaseApproval": false,
+  "retry": false,
+  "gateRelaxation": false,
+  "nestedTraceCRC": "PASS",
+  "traceJPEGDecoded": 5,
+  "traceSourceExactMainHelperGitBlob": "7ee6568522425c1a4bcb7549d3be68abda96c09f",
+  "owner": "work-02f19cd404ef-20261112",
+  "durable": {
+    "file_name": "FolioLab_private_continuation_2026-11-04.tar.xz",
+    "bytes": 406425600,
+    "sha256": "749f072638409f4643fa9ed0763c4ceaa18bb89fa2557585624953f47722e234",
+    "rootVersionTarget": 155,
+    "rootManifestPaths": 5,
+    "rootVersion": 155,
+    "pinnedByteReadback": "exact",
+    "restoreProgram": "unchanged",
+    "verifiedManifestPaths": 23,
+    "extractedReadbackFiles": 25,
+    "newOriginalZipReopened": 1,
+    "nestedOriginalTraceReopened": 1,
+    "failures": 0,
+    "priorFullRestoreRepeated": false,
+    "rootAloneCompletePayloadSet": false,
+    "releaseApproval": false,
+    "preservedProduction": "FAIL",
+    "scope": "Current failed production/trace/diagnostics safely preserved; no LIVE_ACCEPTED. Main originals separately pinned/restored20paths.",
+    "mainCompanion": {
+      "file_name": "FolioLab_PWA_identity_Main_originals_2026-11-13.tar",
+      "bytes": 212408320,
+      "sha256": "af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c",
+      "manifestPaths": 20,
+      "pinnedVersion": 0,
+      "pinnedByteReadback": "exact",
+      "actualManifestRestoreReadback": 20,
+      "actualRestoredFiles": 21,
+      "restoredZipReopened": 7,
+      "failures": 0,
+      "production": "PENDING",
+      "releaseApproval": false
+    },
+    "failureCompanion": {
+      "file_name": "FolioLab_PR335_production_FAIL_diagnostics_2026-11-13.tar",
+      "bytes": 12748800,
+      "sha256": "459e5236c9f3d41d16c00bb5cdc5920929044608c19435cc8e64188e78777169",
+      "manifestPaths": 18,
+      "pinnedVersion": 0,
+      "pinnedByteReadback": "exact",
+      "actualIncrementRestorePaths": 18
+    }
+  },
+  "diagnosis": {
+    "cause": "UNKNOWN",
+    "originalTraceNetworkEvents": 0,
+    "originalHelperGitBlob": "7ee6568522425c1a4bcb7549d3be68abda96c09f",
+    "exactCITraceSourceMatchesGitHelper": true,
+    "localDirectBrowser": "ERR_EMPTY_RESPONSE before App",
+    "localBrowserWithInheritedProxy": "ERR_CERT_AUTHORITY_INVALID before App",
+    "localOrdinaryTLSHTTPClient": 200,
+    "browserPrerequisiteReproducedLocally": false,
+    "certificateExceptions": false,
+    "newCIRetry": false,
+    "next": "Repair ordinary TLS trust for existing Chromium with supplied CA/proxy; one bounded original fresh-context helper with network/worker diagnostics before goto. Keep20s/all assertions. A passing probe alone does not explain original failure."
+  },
+  "priorAcceptedAppMain": "8ecc49f91c2c193e9391ef6f15460e6a40eb10c2",
+  "priorAcceptedAppVersion": 311,
+  "mainTestJobsAndDeploy": "SUCCESS",
+  "mainUnitNode": "22.23.4",
+  "mainUnits": {
+    "tests": 1392,
+    "fail": 0,
+    "skip": 0
+  },
+  "mergedPRs": [
+    334,
+    335
+  ],
+  "uiR4": {
+    "branch": "feature/ui-r4-display-filter-02f19cd404ef",
+    "head": "97ea17b5e4bfc390e1ef6c5fc68ea4c7dde096aa",
+    "status": "PREPARED_NO_PR_NO_CI",
+    "candidateSW": 312
+  },
+  "protectedPRs": [
+    332,
+    157,
+    161
+  ],
+  "historicalQueues": [
+    43095194276,
+    43095194257
+  ],
+  "handoff": "Owner explicitly releases own sole responsibility at safe checkpoint; no next owner or successful transfer asserted."
+}
