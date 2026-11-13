@@ -1,3 +1,86 @@
+## C1_EXECUTION_CANDIDATE_READY / NOT_STARTED / SPECIFIC_RUN_APPROVAL_REQUIRED · work-366da675bef5-20261113
+
+Konkreter neuer Auftrag: erste native C1-Ausführung vorbereiten; erwartete
+C1-MARKERS/C1-NO-REVERT dürfen als echte Fehler reproduziert werden.
+Keine weitere allgemeine Vertrags-/Übergaberunde. Kein Lauf gestartet.
+
+Startbereiter Ausführungskandidat:
+Commit **f73535847f26476da3ea100f0410f391496dafd7**
+Tree **511c047a067f1c04690378232d698cd204f495c0**
+Parent/Prüfbasis **b18c6fcb09b22616355355df5efb483503141e69**
+PrüfbasisTree **2527bebb55b3209a59c90c66627192a751ce1fa1**.
+[Einziger Delta: Diagnoseworkflow](https://github.com/joke0071/foliolab-open/commit/f73535847f26476da3ea100f0410f391496dafd7).
+Workflowblob a2f3eaded7507080feda0ca27e9f1e323bf1fc48.
+Gespeichert auf bestehendem FLH04-Branch; kein neuer Branch/PR/Merge.
+C1-/Produktdateien exakt auf der geforderten Prüfbasis unverändert.
+
+EXAKTE noch benötigte Freigabe:
+Einmalige Anlage des bisher NICHT vorhandenen Branches
+test/flh04-c1-native-b18c6fcb-366da675bef5
+an genau diesem Ausführungscommit über das verbundene GitHub-Plugin.
+Nur dieses create-Ereignis soll Job flh04-c1-native-first auslösen.
+github.run_attempt==1; kein automatischer oder manueller Retry autorisiert.
+Branch nicht löschen/neu anlegen, falls er zwischenzeitlich existiert;
+dann erst echten Stand prüfen. Kein Full-CI-/Produktions-/Wallet-/Deploylauf.
+
+Umgebung: vorhandener GitHub-gehosteter Runnertyp ubuntu-24.04,
+Node22.23.4, Projektinstallation Playwright1.56.1, dessen ChromiumHeadlessShell.
+Historischer geeigneter Beleg: Run43421311524/Job131871726863 SUCCESS
+auf diesem Runnertyp; KEIN C1-/heutiger Engine-PASS.
+Kein interaktiver Hostzugang oder zusätzlicher Runner nötig.
+Die angebotenen Workflow-Status-/Listen-URLs sind im Plugin nicht freigeschaltet;
+das verhindert weder den belegten Branch-create-Weg noch die Vorbereitung.
+Keine Aktivierungseinstellung aus dieser fehlenden Metadatenlesbarkeit erfunden.
+
+Maximalumfang: EIN Job, max25Minuten; EIN Harnessaufruf, max360Sekunden
+plus höchstens15Sekunden Killnachlauf. Bestehender Basisablauf plus sechs
+C1-Gruppen, ausschließlichChromium, isolierte synthetische BrowserContexts.
+ENGINE=chromium
+FLH04_VERSION2_CANDIDATE=1
+BASE_URL=http://127.0.0.1:4173
+Kein npmtest/Full-CI, keine andere Engine oder zusätzliche Testsuite.
+Kein Launch-/Sandbox-/TLS-/Zertifikats-/Assertionsoverride.
+
+Job prüft KontrollcommitParent und Ein-Datei-Delta, sichert ausgeführtenWorkflow,
+wechselt lokal auf EXAKT b18c6fcb und prüft SourceTree/Gitblob-SHA1 beider
+C1-Testdateien. Keine Teständerung durch den Job. Lokaler HTTP-Readinesscheck
+vergleicht storage-origin.html bytegleich; kein Port-/Originfallback.
+
+Ergebnisartefakt:
+flh04-c1-b18c6fcb-<run_id>-<attempt>, retention7Tage, uploadifalways.
+Enthält source-receipt.json, pinned-source-tree.txt, Originalprüfdateien/
+package.json/storage-origin.html, ausgeführtenWorkflow, Installations-/Browser-/
+HTTP-/Testlogs, Node/PW-Metadaten, echten Testexitcode, unveränderten C1-Report
+soweit erreicht, summary.json und SHA256-artifact-manifest.json.
+Fehlender/unerreichter C1-Report wird NOT_REACHED_OR_NO_VALID_REPORT,
+niemals PASS. Testexitcode bleibt erhalten; erwartete Fehler bleibenFAILURE,
+kein continue-on-error/Skip/expected-fail-PASS. Upload läuft auchbeiTestfehler.
+Vor Ausführung sind keine Ergebnisartefakte erzeugt oder als gesichert behauptet.
+Nach tatsächlichem Lauf Originalartefakt über bestehenden Pluginweg unverändert
+sichern; kein privates Vollbackup/Rootarchiv oder neuer Ausführungszyklus.
+
+Vorbereitung geprüft: YAML-Struktur, bestehende2Jobs unverändert,
+5Bashblöcke/4Pythonblöcke/2JavaScriptblöcke ausschließlich Syntax.
+Erste lokale Prüferwartung hatte falsche Schrittanzahl; Erwartung auf tatsächliche
+8Steps/5Runblöcke korrigiert, YAML blieb dabei unverändert.
+Finale Gesamtprüfung bestanden; keine Jobnutzlast ausgeführt.
+Vollständiger gepinnter Workflowreadback bytegleich und unabhängigGitblobgeprüft,
+Compare exakt1Workflowdatei. Alle5vorhandenen Workflowtrigger gezielt geprüft:
+Update der bestehenden FLH04-Ref startet keinen dieser Läufe; zukünftige
+ausdrücklich freigegebene create-Ref trifft genau einen Job.
+
+Eigene Schreibarbeit nach gesicherter konkreter Vorbereitung beendet;
+kein Hintergrundbetrieb/Automation/Runnerstart und keine allgemeine
+Übernahme-/Stoppbestätigung nötig. Nächste Aktion erst nach konkreter Lauf-Freigabe.
+C1 bleibt begrenzt; v2-Produktmigration/Keyslotmechanismus/Review/Sync und alle
+A1/A2/format1/P/R/S/D/CAS/Raw-/Retry/oncomplete/Budget-/Originalgates offen.
+Main/Diagnose/PR332/157/161/UI-R4 unverändert; früherework-pr333-Ausführung
+weiter NICHT technisch beendet nachgewiesen. Keine Fremdrefkollision beobachtet.
+Sicherungen nur frischeMetadaten RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120; keine privaten Transfers/Restores.
+
+---
+
 ## STOPPED / V2_NO_LEGACY_RETURN_AUTHORIZED / C1_PROBE_PREPARED_REVISION2 / PRODUCT_NOT_READY · work-366da675bef5-20261113
 
 Eigene Schreibarbeit nach gesicherter Vertrags-/Kandidatenvorbereitung beendet;
