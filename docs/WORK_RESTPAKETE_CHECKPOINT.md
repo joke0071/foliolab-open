@@ -1,3 +1,13 @@
+## ACTIVE / PR335_MAIN_GATED_PRODUCTION_PENDING / V154 · work-02f19cd404ef-20261112
+
+Main `a27cde2f802c26bfec41190911d88bd1d7d8e325`, Treee55ffa96f641345759eb3779b00de6187c8671b8, Run `43332355188`/Versuch1: Test/Chromium/Cross1–3 und Deploy131591379451 SUCCESS; Node22.23.4 1392/0Fehler/0Skips. Livejob `131591512462` läuft, **kein neuerProduktions-/LIVE_ACCEPTED-PASS**. App/SW311, keineWorkflowänderung/zweitefinaleCI/unveränderterRetry.
+
+SiebenMain-OriginalZIPs exaktAPI-Digest/Größe/CRC; unabhängigePR335-Inventare exakt:241eindeutigeJSON/2089dekodiertePNG/877explizitePointer/0Findings/0unbekannteAdapter. NeuePWA-Berichte aller3Engines explizitPASS, keineHardware-/Automatikfreigabe. Pages154Gitblobs exakt unveränderteRuntime. ImmutableCompanion `FolioLab_PWA_identity_Main_originals_2026-11-13.tar` V0/212408320Bytes/SHA256 `af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c`, gepinntbytegleich/20Manifestpfade tatsächlichrestauriert/21Dateien/7ZIPs erneutfehlerfrei. KeineoffeneprivateMutation. RootV154/406364160Bytes/SHA2560db2cab4e08f7dc95ebec54fd8a0b4ab71e6ca061e53619dc3d42883e40fb4d9 bleibtqualifiziert; neuerMaincompanion wird erstmitvollständigenProduktionsbelegen imnächstenRoot verknüpft.
+
+Genau nächsteAktion: bestehendenLivejob131591512462 abschließen, neueProduktionsoriginale identitätsgebunden gegenqualifiziertev311-Inventare plusPR335-PWA-Felder prüfen (Zeitstempel-Fixtures einszueins, keineNamenskollabierung), einmalsichern/gepinntlesen/tatsächlichrestaurieren; dannRootabschluss unterErhalt exakterV154/allerOriginalketten und erstdanach neuenToolingMain abnehmen. Fehlgeschlagenerfa705/Run43315231787 bleibtFAIL/OriginaleV153 erhalten; ursprüngliche1ms-Ursache passendeDrifthypothese,nichtbewiesen. UI-R4 auf97ea17b… unverändertisoliertvorbereitet,keinPR/finaleCI; erstnachakzeptiertemMain abgleichen. PR332BLOCKED/CSV44pxUrsacheUNKNOWN;157/161/Queues/Originale geschützt,Flatexentdoppelungzurückgestellt. KeineAutomation/zweiterWriter. ZuständigkeitACTIVE.
+
+## Unveränderte Historie
+
 ## ACTIVE / PR335_INTEGRATED_MAIN_PENDING / V154 · work-02f19cd404ef-20261112
 
 PR335 am qualifiziertenHEAD regulärintegriert. Main `a27cde2f802c26bfec41190911d88bd1d7d8e325`, Tree `e55ffa96f641345759eb3779b00de6187c8671b8` exakt qualifizierterPR-Tree; Elternfa705d04… unda7375960… erhalten. EIN neuerMainlauf `43332355188` IN_PROGRESS, keinRetry/Abbruch/zweitefinaleCI. App/SW bleibtv311, da nurPWA-Test/Dokumentation geändert. **Noch kein neuerMain-/Produktions-PASS; fehlgeschlagenerV2-Mainfa705/run43315231787 bleibtFAIL.**
