@@ -1,3 +1,72 @@
+## STOPPED / WAITING_COMPATIBILITY_DECISION / W1_PATHS_MAPPED / W2_COUNTERCASE_R1 / RELEASE_BLOCKED · work-366da675bef5-20261113
+
+Eigene Schreibarbeit mit diesem gesicherten Stand beendet; kein Hintergrundbetrieb.
+Keine Übergabe allein wegen des Zwischenstands und kein neuer Fortführungschat nötig.
+Konkreter Wartepunkt: die in Phase B ausdrücklich erhaltene technische Rückmigration
+kann für eine neue v2-Linie nicht still gestrichen oder als sicher qualifiziert werden.
+
+FLH04 **c806c7659f549b2506eeda596e1b29b1f1afcc30** /
+Tree **4f4300b15133a4b69419a1f111967268d2fcd1a1**, Parent4745dc0088279f755ff49c3329094ad369f3af7a.
+Genau2Dokumentationsdeltas: bestehender
+[Vertragsentwurf, Nachtrag §10](https://github.com/joke0071/foliolab-open/blob/c806c7659f549b2506eeda596e1b29b1f1afcc30/docs/FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md)
+und Fachcheckpoint. Beide vollständig gepinnt bytegleich UND unabhängig
+Gitblob-SHA1-geprüft; Compare bestätigt. Vorherige Vertrags-/Checkpointbytes
+vollständig erhalten. Produkt-/Test-/Krypto-/Workflowdateien unverändert.
+
+W1 konkret:13historische Adapterstände mit passenden Atomicblobs,
+Cachekennungen v85/v86/v88/v136/v142/v156/v263/v303/v311 und Quellzeilen zugeordnet.
+Explizite v1-Öffnung/onversionchange-close; IDBverbindungen/Transaktionen vor Upgrade,
+erneute1-Anforderung nach2 gesperrt. Cachekennung ist kein Auslieferungsnachweis.
+Nicht belegte alte Worker/Supportopener/Assetmischungen oder aktuelle Prozesse
+bleiben offen. Kein156Dateienscan oder neue Runtimeinventur.
+
+W2 konkret: Ereignisfolgen M1–M5 und R1 im vorhandenen Entwurf ergänzt.
+Reale Quellpfade alter model.persist von v85/v86/v88 benutzen keine gemeinsame
+IDBsperre. Ein Legacytab ohne DBhandle wird vom Versionswechsel nicht beendet.
+R1: alter Save besteht Stringcheck; neuer Controller beendet Rückwechsel/
+Readback; alter setItem folgt. Neuer privater IDBintent schützt nicht den
+gemeinsam beschreibbaren kanonischen LocalStorage-Zielrecord.
+Argumentativer Gegenfall aus konkreten Quellen, KEIN nativer Repro.
+
+Aktueller Phase-B-Vertrag ausdrücklich gelesen:
+docs/INDEXEDDB_ONLY_PHASE_B.md Blob819cd9699c4ce48225f857b39b31d0390fa77eb4.
+v160 entfernte UIbutton/Handler, erhielt aber technischen Controller/Altintents.
+Aktueller Appcode hat keinen .revert-Aufruf. Aus fehlender UI keine Freigabe
+zur Entfernung der technischen Funktion ableiten; alte normale Konkurrenz
+nicht nachträglich als feindlich ausschließen.
+
+KLARE ENTSCHEIDUNG: A unter diesem v2-Rückwechsel-Erhaltungsvertrag NICHT
+ausreichend für einen vollständigen begrenzten Implementierungskandidaten.
+Benötigte enge Entscheidung: v2 bleibt kanonisch IDB und darf technisch nicht
+in dieselbe alte LocalStoragelinie zurückmigrieren; Recovery stattdessen über
+Originaldownload/gebundenen Backup-Restore ohne Writer-/Autoritätsportierung.
+V1-Pfade/Originale/alteIntents erhalten. Das ist noch nicht genehmigt.
+Kein Codeauftrag anJochen, keine erneute allgemeine Zustimmung zur bereits
+autorisierten A-Ausarbeitung. Bei Ablehnung bleibt dieser Umfang geparkt.
+
+25vollständige gepinnte Eingänge unabhängigGitblob-SHA1-geprüft; Atomic-/SW-
+Auszüge nicht als vollständige Byteprüfung ausgegeben. A15/A16/A20 präzisiert,
+keine Assertions entfernt. Keine neuen Tests/Browser/CI/Runner/Retry/Migration/
+aktiveSync/Release. N0/N1 und Kryptoreviewpaketfd3fce4b/17a5a190/Tree44ff9c4d
+unverändert ungefahren/EXTERNAL_REVIEW_PENDING; Prüfer/Budget separat.
+
+312Heads, nur eigene FLH04-/Zentraländerung; Main/Diagnose/PR332/157/161/UI-R4
+geschützt. Reviews/Inline leer, Conversationkommentare vor Mutation unverändert.
+Keine beobachtete Fremdrefkollision; ältere work-pr333-Ausführung weiter NICHT
+technisch beendet nachgewiesen. 0IN_PROGRESS beim Einstieg, keine neuen Läufe.
+Sicherungen frisch NUR Metadaten RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120; keine privaten Transfers/Uploads/
+Readbacks/Restores/Schreibfähigkeitsbeweise/Vollbackups.
+
+FLH04 NOT DONE / Outbox INTERN UNQUALIFIZIERT /
+N-DRIVE BLOCKED_EXTERNAL mit internem UND externem Rest.
+A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutz erhalten.
+[Technische Bestandsgrenzen](HANDOVER_03b53e88c37d_2026-11-13.md) unverändert;
+die damalige allgemeine A-Richtungsfrage ist durch Jochens Ja erledigt.
+Nächster Schritt nach der konkreten Kompatibilitätsentscheidung am selben Stand.
+
+---
+
 ## STOPPED / CONTRACT_DRAFT_PREPARED / DIRECTION_AUTHORIZED / INTERNAL_W1_W2_OPEN / RELEASE_BLOCKED · work-366da675bef5-20261113
 
 Jochen hat AlternativeA ausdrücklich als begrenzte Vertragsausarbeitung bestätigt.
