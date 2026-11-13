@@ -1,3 +1,107 @@
+## STOPPED / HANDOVER_READY / C1_CORRECTION_NATIVE_PASS / PRODUCT_RELEASE_BLOCKED · work-1fc1822ea62c-20261113
+
+Anlass des Endpunkts: die ausdrücklich freigegebene EINMALIGE Branchanlage,
+Ausführung, vollständige Auswertung und Originalsicherung sind abgeschlossen.
+Kein Hintergrundbetrieb; keine weitere allgemeine Übernahmebestätigung nötig.
+Die ältere work-pr333-Ausführung bleibt NICHT technisch beendet nachgewiesen.
+
+[Run43490101461/Versuch1](https://github.com/joke0071/foliolab-open/actions/runs/43490101461):
+COMPLETED/SUCCESS, event=create. Branch
+test/flh04-c1-correction-bfed8172-366da675bef5 genau EINMAL an
+097aff8a06838a02df14927dc2b7a80ec627eea8 angelegt und unverändert erhalten.
+Ausführungstree38e04ddb8c6a04a6c4ec15b9456296e8c719d318.
+Parent/Prüfbasis bfed81728189c71ff88c7a7419f2c51db56b084d,
+Tree27dad342d21e45b484c7b8ab87d4ed7cc2851b46.
+Workflowblob9e696d2ed328f24fbc59ec0c245d6c58883cede3; kein Testpatch im Job.
+
+Genau EIN Job132108665069 SUCCESS; andere2Jobs SKIPPED.
+Job19:13:10–19:13:25UTC=15s; Runstart bis finale Aktualisierung18s.
+Harnessschritt3s; reine Prozessdauer NICHT separat gemessen.
+Ein Harnessaufruf; test_exit0/tee_exit0; keine Wiederholung/Timeout.
+Ubuntu24.04.5/Image20261101.360.1, Node22.23.4/PW1.56.1/
+Chromium141.0.7390.37/build1194. Synthetische isolierteContexts.
+Basisassertions vollständig durchlaufen UND ursprüngliche PASS-Konsole erreicht.
+
+| C1-Gruppe | Run43485655271/1 | Run43490101461/1 | Gruppierte Prüfeinträge |
+| --- | --- | --- | --- |
+| CANCEL | PASS | PASS | 4 |
+| VERSION-FENCE | PASS | PASS | 6 |
+| MARKERS | FAIL/AssertionError | PASS | 5 |
+| NO-REVERT | FAIL/AssertionError | PASS | 5 |
+| RESTORE-CAS | PASS | PASS | 10 |
+| RESTORE-FAULT-REPLY | PASS | PASS | 12 |
+
+42/42 gruppierte Ausführungen PASS,0FAIL,0NOT_REACHED.
+Das sind wegen wiederverwendeter Upgradeassertions NICHT42verschiedeneAusdrücke.
+4vorherige Originassertions separat durchlaufen, nicht in42enthalten.
+Alle38ursprünglichen Ausdrücke erhalten; historische Testzahlen nicht addiert.
+[Maschinenbeleg mit vollständigem Originalreport/Kennungen/Zeilen/Manifest und Grenzen](release-evidence/flh04-c1-correction-43490101461-attempt1.json).
+
+MARKERS.A.01–.03: gespeichertes Portfolio/Outbox und Ankerproof unverändert;
+initialize wählt keineLegacyquelle bei fehlendemMarker/Altintent.
+Predicate erlaubt blocked ODER idb; exakterIstdispositionwert nicht protokolliert.
+NO-REVERT.A.01–.03: geprüfte IDB-/Legacy-/Intent-/Markerendstände unverändert,
+internes revert abgelehnt; keine bestimmte Fehlerklasse oder lückenlose
+zwischenzeitliche Nichtmutation/ABA aus diesem Vergleich ableiten.
+Die beiden roten Gruppen sind IM GEPRÜFTEN C1-UMFANG behoben.
+Alte genaue Fehlerassertion bleibt UNKNOWN, alterFAIL und OriginalZIP unverändert.
+
+Cancel/VersionError/Original-/Keykohärenz, StaleCAS, zulässigerRestoreRevision+1,
+zweiteSeiteReadback, enrollmentRequired=true/sync=null und Ankererhalt bestanden.
+Putfehler ist injiziert; Antwortverlust wird NACH abgeschlossenerAPI injiziert.
+Kein echter Crash/Netzausfall/realeQuota; synthetische Handleattachment ist
+kein produktiver v2-Startup. ErfolgreicherRestore prüft konkrete Felder,
+nicht vollständige erfolgreiche Payload-/Settingsbytegleichheit.
+V2-Normalpfade bleiben blockiert; keine pauschale Recoveryfreigabe.
+
+Originalartefakt14069831191:
+flh04-c1-correction-bfed8172-43490101461-1,73689Bytes,
+SHA256342da202161c189310514b78eed8d713e13af49f43b4bf6d2d91a9a15d0cb55d;
+API/Uploaddigest/Download exakt,22Dateien/21Manifesteinträge vollständig geprüft.
+Retention7Tage bis20.11.2026 19:13:22UTC.
+9Eingangsblobs und ausgeführterWorkflow unabhängigGitblobgeprüft;
+vollständigen Quelltree aus originalem ls-tree rekonstruiert und bestätigt.
+HTTP553x200/274x304, keine anderenStatus.
+Neuer separater Originalteil624640Bytes/SHA256
+88e415478503ace9bac167ae72e33d8132808498c08703252b0cc44034e6aa1d
+dauerhaft gespeichert und anhand exakter Dateiversion bytegleich rückgelesen:
+33Erhaltungsmanifestdateien und darin OriginalZIP samt21Innenmanifestdateien geprüft.
+Keine Root-/Companionänderung, kein Vollbackup/Vollrestore; privateLocators privat.
+RootV155/FAILV0/MainOriginalV0/DiagnoseV0 unverändert.
+
+Schlussabgleich:314Heads, ausschließlich autorisierter neuerTriggerref;
+Main/Diagnose/FLH04-Arbeitsref/UI-R4 und offenePR332/157/161 unverändert.
+Reviews/Inline-/Conversation332/157/161/335 unverändert;
+genau1neuerBranchlauf/Versuch1,0IN_PROGRESS. BeideTriggerbranches erhalten.
+Zentralbranch wird niemals vollständig nachMain gemergt.
+
+NÄCHSTER KONKRETER SCHRITT:
+Begrenzten nativen Konkurrenzprüfkandidaten für die NEUE Adapter-Quellenverbindung
+und ihren versionchange-Lifecycle gemäß bestehendemVertrag§11/A/N1 vorbereiten.
+Gezielt: laufender v1-Adaptervorgang gegen wartendesUpgrade; keinUpgradeabschluss
+vor endlichemVorgang/Markercleanup; initialize mit gehaltenemHandle ohne
+zweitenOpen-Deadlock; forced-close/blocked/error sperrt weitereungeprüfteWrites;
+automatischeIntentnachläufe und direkteLocked-Einstiege.
+Exakte Ereignisreihenfolge, raw/settings/revision/outbox/Anker vor/nach sowie
+zweiteSeite/Reopen prüfen; keineTimer alsKorrektheitsoracle, neueRunner,
+Frist-/Assertionlockerung oder erneuteGesamtinventur/identischeABAanalyse.
+C1 als begrenztenRegrressionsbeleg wiederverwenden, NICHT nochmals blind starten.
+Das leitet den internen nächstenNachweis ab, erteilt KEINE zusätzlicheLauffreigabe.
+VolleW1/W3/W4/P-/Keyslot-/ABA-/Recovery-/Reviewgates bleiben offen.
+
+FLH04NOTDONE;OutboxINTERNUNQUALIFIZIERT;
+N-DRIVEBLOCKED_EXTERNAL mit internem UND externemRest.
+A1false/A2gesperrt/remoteAnchor+acknowledgedLocalRevisionnull;
+format1-prepared-locked niemals adoptieren/hochstufen/überschreiben/löschen.
+AlleP/R/S/D/CAS/Raw-/Retry/oncomplete-/Snapshot-/Originalverträge und
+USD-/ETH-/CSV-/Management-/UH02-/History-/Purchase-/Undo-/Oracleketten erhalten.
+KeineProduktmigration/aktiveSync/Writer-/ABA-/Kryptofreigabe aus diesemPASS.
+Kryptopaketfd3fce4b/Kandidat17a5a190 unverändert
+EXTERNAL_REVIEW_PENDING;CR4/CR5offen.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release.
+
+---
+
 ## STOPPED / HANDOVER_READY / C1_CORRECTION_READY / SPECIFIC_NATIVE_APPROVAL_REQUIRED · work-366da675bef5-20261113
 
 Anlass des Endpunkts: autorisierte Korrektur-/Diagnostikvorbereitung vollständig

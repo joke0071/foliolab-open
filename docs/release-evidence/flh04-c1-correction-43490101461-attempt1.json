@@ -1,0 +1,1296 @@
+{
+  "kind": "FLH04_C1_CORRECTION_NATIVE_EXECUTION_EVALUATION",
+  "status": "SUCCESS_BOUNDED_C1_ONLY",
+  "date": "2026-11-13",
+  "owner": "work-1fc1822ea62c-20261113",
+  "authorization": {
+    "branch_create_calls": 1,
+    "attempts": 1,
+    "retries": 0,
+    "branch": "test/flh04-c1-correction-bfed8172-366da675bef5",
+    "delta_check": "313 heads unchanged; owner unchanged; target absent;0 corresponding runs",
+    "older_work_pr333_technical_stop": "NOT_PROVEN"
+  },
+  "run": {
+    "id": 43490101461,
+    "attempt": 1,
+    "event": "create",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/43490101461",
+    "execution_sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+    "execution_tree": "38e04ddb8c6a04a6c4ec15b9456296e8c719d318",
+    "source_sha": "bfed81728189c71ff88c7a7419f2c51db56b084d",
+    "source_tree": "27dad342d21e45b484c7b8ab87d4ed7cc2851b46",
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-11-13T19:13:07Z",
+    "updated_at": "2026-11-13T19:13:25Z",
+    "wall_seconds_to_final_update": 18
+  },
+  "job": {
+    "id": 132108665069,
+    "name": "flh04-c1-native-correction-first",
+    "started_at": "2026-11-13T19:13:10Z",
+    "completed_at": "2026-11-13T19:13:25Z",
+    "seconds": 15,
+    "harness_step_seconds": 3,
+    "harness_process_exact_duration": "NOT_SEPARATELY_MEASURED",
+    "harness_calls": 1,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-13T19:13:10Z",
+        "completed_at": "2026-11-13T19:13:11Z"
+      },
+      {
+        "name": "Checkout exact execution commit and its source parent",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-13T19:13:11Z",
+        "completed_at": "2026-11-13T19:13:13Z"
+      },
+      {
+        "name": "Select previously used Node version",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-13T19:13:13Z",
+        "completed_at": "2026-11-13T19:13:13Z"
+      },
+      {
+        "name": "Bind execution workflow and unchanged C1 source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-13T19:13:13Z",
+        "completed_at": "2026-11-13T19:13:13Z"
+      },
+      {
+        "name": "Install pinned existing browser tool without package scripts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-13T19:13:13Z",
+        "completed_at": "2026-11-13T19:13:15Z"
+      },
+      {
+        "name": "Install the previously used Chromium shell",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-13T19:13:15Z",
+        "completed_at": "2026-11-13T19:13:19Z"
+      },
+      {
+        "name": "One original harness call with the C1 extension",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-13T19:13:19Z",
+        "completed_at": "2026-11-13T19:13:22Z"
+      },
+      {
+        "name": "Preserve observed results without reclassifying failures",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-13T19:13:22Z",
+        "completed_at": "2026-11-13T19:13:22Z"
+      },
+      {
+        "name": "Upload original C1 evidence even when tests fail",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-13T19:13:22Z",
+        "completed_at": "2026-11-13T19:13:23Z"
+      },
+      {
+        "name": "Post Select previously used Node version",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-11-13T19:13:23Z",
+        "completed_at": "2026-11-13T19:13:23Z"
+      },
+      {
+        "name": "Post Checkout exact execution commit and its source parent",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-13T19:13:23Z",
+        "completed_at": "2026-11-13T19:13:23Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-13T19:13:23Z",
+        "completed_at": "2026-11-13T19:13:23Z"
+      }
+    ],
+    "other_jobs": [
+      {
+        "id": 132108667079,
+        "name": "diagnostic",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 132108668408,
+        "name": "pchain-diagnostic",
+        "conclusion": "skipped"
+      }
+    ],
+    "exit_status": {
+      "test_exit": 0,
+      "tee_exit": 0
+    }
+  },
+  "environment": {
+    "os": "Ubuntu24.04.5",
+    "image": "ubuntu-24.04",
+    "image_version": "20261101.360.1",
+    "node": "v22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "chromium_build": 1194,
+    "runtime_json_browserStarted_false": "Written before harness; actual browser version observed in report",
+    "ENGINE": "chromium",
+    "FLH04_VERSION2_CANDIDATE": "1",
+    "BASE_URL": "http://127.0.0.1:4173"
+  },
+  "baseline": {
+    "status": "PASS",
+    "basis": "Uncaught original assertions precede C1; C1 report, final original PASS console and exit0 observed",
+    "assertion_count": "NOT_REPORTED",
+    "scope": "Native IDB abort/quota injections;two-page CAS;page close/reopen/reverify;newer save;A1 guard;A2 pseudo-readback rejection;restore/recovery/delete/adoption invalidation;prepared-locked CryptoKey persistence/coherence. Not real crash/power-loss/real quota."
+  },
+  "comparison": [
+    {
+      "id": "C1-CANCEL",
+      "previous": "PASS",
+      "current": "PASS",
+      "current_grouped_checks": 4
+    },
+    {
+      "id": "C1-VERSION-FENCE",
+      "previous": "PASS",
+      "current": "PASS",
+      "current_grouped_checks": 6
+    },
+    {
+      "id": "C1-MARKERS",
+      "previous": "FAIL",
+      "current": "PASS",
+      "current_grouped_checks": 5
+    },
+    {
+      "id": "C1-NO-REVERT",
+      "previous": "FAIL",
+      "current": "PASS",
+      "current_grouped_checks": 5
+    },
+    {
+      "id": "C1-RESTORE-CAS",
+      "previous": "PASS",
+      "current": "PASS",
+      "current_grouped_checks": 10
+    },
+    {
+      "id": "C1-RESTORE-FAULT-REPLY",
+      "previous": "PASS",
+      "current": "PASS",
+      "current_grouped_checks": 12
+    }
+  ],
+  "assertions": {
+    "grouped_executions": 42,
+    "grouped_pass": 42,
+    "failed": [],
+    "not_reached": [],
+    "origin_guards": "4 preceding assertions completed, excluded from42",
+    "count_boundary": "38 retained unique expressions is source preservation, not42 unique expressions",
+    "actual_expected": "PASS report does not serialize actual/expected. Only predicates and completed comparisons are observed; do not invent disposition/error-name."
+  },
+  "observed_summary": {
+    "source_sha": "bfed81728189c71ff88c7a7419f2c51db56b084d",
+    "source_tree": "27dad342d21e45b484c7b8ab87d4ed7cc2851b46",
+    "execution_sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+    "run_id": "43490101461",
+    "run_attempt": "1",
+    "test_step_outcome": "success",
+    "report_count": 1,
+    "source_receipt_available": true,
+    "exit_status": {
+      "test_exit": 0,
+      "tee_exit": 0
+    },
+    "c1_report": {
+      "kind": "FLH04Version2CandidateProbe",
+      "version": 2,
+      "node": "v22.23.4",
+      "playwright": "1.56.1",
+      "engine": "141.0.7390.37",
+      "cases": [
+        {
+          "id": "C1-CANCEL",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-CANCEL.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 127
+              }
+            },
+            {
+              "id": "C1-CANCEL.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 131
+              }
+            },
+            {
+              "id": "C1-CANCEL.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 134
+              }
+            },
+            {
+              "id": "C1-CANCEL.A.04",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.04",
+                "line": 137
+              }
+            }
+          ]
+        },
+        {
+          "id": "C1-VERSION-FENCE",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-VERSION-FENCE.UPGRADE.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.01",
+                "line": 67
+              }
+            },
+            {
+              "id": "C1-VERSION-FENCE.UPGRADE.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.02",
+                "line": 70
+              }
+            },
+            {
+              "id": "C1-VERSION-FENCE.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 144
+              }
+            },
+            {
+              "id": "C1-VERSION-FENCE.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 147
+              }
+            },
+            {
+              "id": "C1-VERSION-FENCE.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 154
+              }
+            },
+            {
+              "id": "C1-VERSION-FENCE.A.04",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.04",
+                "line": 157
+              }
+            }
+          ]
+        },
+        {
+          "id": "C1-MARKERS",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-MARKERS.UPGRADE.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.01",
+                "line": 67
+              }
+            },
+            {
+              "id": "C1-MARKERS.UPGRADE.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.02",
+                "line": 70
+              }
+            },
+            {
+              "id": "C1-MARKERS.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 177
+              }
+            },
+            {
+              "id": "C1-MARKERS.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 180
+              }
+            },
+            {
+              "id": "C1-MARKERS.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 183
+              }
+            }
+          ]
+        },
+        {
+          "id": "C1-NO-REVERT",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-NO-REVERT.UPGRADE.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.01",
+                "line": 67
+              }
+            },
+            {
+              "id": "C1-NO-REVERT.UPGRADE.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.02",
+                "line": 70
+              }
+            },
+            {
+              "id": "C1-NO-REVERT.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 203
+              }
+            },
+            {
+              "id": "C1-NO-REVERT.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 206
+              }
+            },
+            {
+              "id": "C1-NO-REVERT.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 209
+              }
+            }
+          ]
+        },
+        {
+          "id": "C1-RESTORE-CAS",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-RESTORE-CAS.UPGRADE.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.01",
+                "line": 67
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.UPGRADE.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.02",
+                "line": 70
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 221
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 224
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 229
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.04",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.04",
+                "line": 232
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.05",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.05",
+                "line": 235
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.06",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.06",
+                "line": 238
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.07",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.07",
+                "line": 241
+              }
+            },
+            {
+              "id": "C1-RESTORE-CAS.A.08",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.08",
+                "line": 244
+              }
+            }
+          ]
+        },
+        {
+          "id": "C1-RESTORE-FAULT-REPLY",
+          "status": "PASS",
+          "checks": [
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.UPGRADE.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.01",
+                "line": 67
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.UPGRADE.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "UPGRADE.02",
+                "line": 70
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.01",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.01",
+                "line": 254
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.02",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.02",
+                "line": 257
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.03",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.03",
+                "line": 260
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.04",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.04",
+                "line": 263
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.05",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.05",
+                "line": 268
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.06",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.06",
+                "line": 271
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.07",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.07",
+                "line": 274
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.08",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.08",
+                "line": 277
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.09",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.09",
+                "line": 280
+              }
+            },
+            {
+              "id": "C1-RESTORE-FAULT-REPLY.A.10",
+              "status": "PASS",
+              "assertion": {
+                "path": "tests/flh04-version2-candidate-probes.mjs",
+                "anchor": "A.10",
+                "line": 283
+              }
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "test-only schema transition",
+        "no product v2 startup implementation",
+        "not full writer closure",
+        "reply loss and quota are injections",
+        "not process crash or real quota",
+        "not sync/enrollment/crypto approval"
+      ]
+    },
+    "report_status": "OBSERVED",
+    "prior_failed_groups": [
+      "C1-MARKERS",
+      "C1-NO-REVERT"
+    ],
+    "c1_cases": [
+      {
+        "id": "C1-CANCEL",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-CANCEL.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 127
+            }
+          },
+          {
+            "id": "C1-CANCEL.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 131
+            }
+          },
+          {
+            "id": "C1-CANCEL.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 134
+            }
+          },
+          {
+            "id": "C1-CANCEL.A.04",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.04",
+              "line": 137
+            }
+          }
+        ]
+      },
+      {
+        "id": "C1-VERSION-FENCE",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-VERSION-FENCE.UPGRADE.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.01",
+              "line": 67
+            }
+          },
+          {
+            "id": "C1-VERSION-FENCE.UPGRADE.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.02",
+              "line": 70
+            }
+          },
+          {
+            "id": "C1-VERSION-FENCE.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 144
+            }
+          },
+          {
+            "id": "C1-VERSION-FENCE.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 147
+            }
+          },
+          {
+            "id": "C1-VERSION-FENCE.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 154
+            }
+          },
+          {
+            "id": "C1-VERSION-FENCE.A.04",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.04",
+              "line": 157
+            }
+          }
+        ]
+      },
+      {
+        "id": "C1-MARKERS",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-MARKERS.UPGRADE.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.01",
+              "line": 67
+            }
+          },
+          {
+            "id": "C1-MARKERS.UPGRADE.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.02",
+              "line": 70
+            }
+          },
+          {
+            "id": "C1-MARKERS.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 177
+            }
+          },
+          {
+            "id": "C1-MARKERS.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 180
+            }
+          },
+          {
+            "id": "C1-MARKERS.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 183
+            }
+          }
+        ]
+      },
+      {
+        "id": "C1-NO-REVERT",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-NO-REVERT.UPGRADE.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.01",
+              "line": 67
+            }
+          },
+          {
+            "id": "C1-NO-REVERT.UPGRADE.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.02",
+              "line": 70
+            }
+          },
+          {
+            "id": "C1-NO-REVERT.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 203
+            }
+          },
+          {
+            "id": "C1-NO-REVERT.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 206
+            }
+          },
+          {
+            "id": "C1-NO-REVERT.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 209
+            }
+          }
+        ]
+      },
+      {
+        "id": "C1-RESTORE-CAS",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-RESTORE-CAS.UPGRADE.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.01",
+              "line": 67
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.UPGRADE.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.02",
+              "line": 70
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 221
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 224
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 229
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.04",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.04",
+              "line": 232
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.05",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.05",
+              "line": 235
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.06",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.06",
+              "line": 238
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.07",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.07",
+              "line": 241
+            }
+          },
+          {
+            "id": "C1-RESTORE-CAS.A.08",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.08",
+              "line": 244
+            }
+          }
+        ]
+      },
+      {
+        "id": "C1-RESTORE-FAULT-REPLY",
+        "status": "PASS",
+        "checks": [
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.UPGRADE.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.01",
+              "line": 67
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.UPGRADE.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "UPGRADE.02",
+              "line": 70
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.01",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.01",
+              "line": 254
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.02",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.02",
+              "line": 257
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.03",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.03",
+              "line": 260
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.04",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.04",
+              "line": 263
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.05",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.05",
+              "line": 268
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.06",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.06",
+              "line": 271
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.07",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.07",
+              "line": 274
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.08",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.08",
+              "line": 277
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.09",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.09",
+              "line": 280
+            }
+          },
+          {
+            "id": "C1-RESTORE-FAULT-REPLY.A.10",
+            "status": "PASS",
+            "assertion": {
+              "path": "tests/flh04-version2-candidate-probes.mjs",
+              "anchor": "A.10",
+              "line": 283
+            }
+          }
+        ]
+      }
+    ],
+    "expected_failures_count_as_pass": false,
+    "scope": "Original browser-sync-outbox baseline plus six C1 groups, one invocation, Chromium only",
+    "not_qualified": [
+      "production v2 adapter",
+      "full writer closure",
+      "real process crash",
+      "real quota",
+      "crypto review",
+      "active sync"
+    ]
+  },
+  "precise_scope": [
+    "CANCEL.A.01-.04: actual AbortError after cancel before late upgrade;v1 reopen;final portfolio/outbox and anchor-proof equal original.",
+    "VERSION-FENCE: test-only schema commit2;old closed handle remains1;explicit v1 reopen VersionError;original state/key-proof preserved.",
+    "MARKERS.A.01-.03: saved state/key-proof unchanged;initialize not legacy with missing mode/stale intent. Predicate permits blocked or idb; no exact disposition logged.",
+    "NO-REVERT.A.01-.03: saved state and three legacy/intent/mode values unchanged at readback;internal revert rejects. No exact error-name assertion or complete concurrent writer proof.",
+    "RESTORE-CAS.A.01-.08: stale restore rejects/preserves newer state;allowed restore revision+1;other page reads matching revision,one fixture provider,enrollment required=true,sync=null;anchor-proof preserved. Synthetic handle attachment;not production startup/full successful payload/settings byte oracle.",
+    "RESTORE-FAULT-REPLY.A.01-.10: injected put failure rejects/preserves state/key-proof;reply loss AFTER completed API rejects;other page reads committed revision+1/provider/enrollment fence/sync=null;anchor-proof and legacy unchanged. Not real quota/network fault/crash."
+  ],
+  "artifact": {
+    "id": 14069831191,
+    "name": "flh04-c1-correction-bfed8172-43490101461-1",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/43490101461/artifacts/14069831191",
+    "bytes": 73689,
+    "zip_sha256": "342da202161c189310514b78eed8d713e13af49f43b4bf6d2d91a9a15d0cb55d",
+    "expires_at": "2026-11-20T19:13:22Z",
+    "retention_days": 7,
+    "available_at_download": true,
+    "zip_digest_matches_upload_and_api": true,
+    "files": 22,
+    "verified_manifest_entries": 21,
+    "manifest_sha256": "79052149f2481c31554bacffa78a506c17d7d4a3201615cfad12c67e78cfcf7d",
+    "manifest": [
+      {
+        "path": "browser-install.log",
+        "bytes": 4518,
+        "sha256": "472a424ce75eff59517901c4cddd6e131bdd92e16d5b6fe8673eecdc71585ecd"
+      },
+      {
+        "path": "executed-workflow.yml",
+        "bytes": 13224,
+        "sha256": "04ec015dfb072640ed43debf1e5101f497943a95a21a2ca94a40a66c0907341a"
+      },
+      {
+        "path": "execution-delta.txt",
+        "bytes": 54,
+        "sha256": "68305f284c60c36cd2b9a12b90abc2d15f067758aa13f7e4b26d32954cccb69c"
+      },
+      {
+        "path": "exit-status.json",
+        "bytes": 38,
+        "sha256": "6d6491acf8e4fb354ef785bf19c3d2063e8b0df97b44e42eb80da3931add6143"
+      },
+      {
+        "path": "http.log",
+        "bytes": 68821,
+        "sha256": "81beff9148c0549e3fd18768142eee66726df8746ed191f1680154f01ab2eb09"
+      },
+      {
+        "path": "inputs/package.json",
+        "bytes": 422,
+        "sha256": "c24b89cba6b57fb532161dd441e15be03f97318b51c3d54082af897136791553"
+      },
+      {
+        "path": "inputs/src/browser-portfolio-storage.js",
+        "bytes": 19589,
+        "sha256": "f130505fcc3c4fd83f9a8984d0c136e8602d195260ebdb70de8df97738212162"
+      },
+      {
+        "path": "inputs/tests/browser-sync-outbox.mjs",
+        "bytes": 12119,
+        "sha256": "4d54549f2cb986a39255dcf2efe5fa73970c80a296cee2247d23235350b657b2"
+      },
+      {
+        "path": "inputs/tests/fixtures/c1-storage-dependencies.mjs",
+        "bytes": 2549,
+        "sha256": "ad115fa77a592d0ac2fd975d6a131d07babc42cf3f14bed4c50526aa34c60bd8"
+      },
+      {
+        "path": "inputs/tests/flh04-c1-diagnostics.mjs",
+        "bytes": 3083,
+        "sha256": "6009a62fd9a81d5e32fed44c50ff6575e5dac4d0f6413b346f8e66ff50214631"
+      },
+      {
+        "path": "inputs/tests/flh04-c1-diagnostics.test.mjs",
+        "bytes": 2478,
+        "sha256": "4f58c2fc14f7ab8f8b22a70ee4f71b0c980cf796a801ec1ce0ac7f68fb072e6b"
+      },
+      {
+        "path": "inputs/tests/flh04-c1-source-guard.test.mjs",
+        "bytes": 10257,
+        "sha256": "eb8b67dd9f0429af972d55af466fc36b310019bfb0a537bda5748716b82a1124"
+      },
+      {
+        "path": "inputs/tests/flh04-version2-candidate-probes.mjs",
+        "bytes": 13495,
+        "sha256": "708b29eaf05191f5a35323865d88b39152d92832b11cac443aff6192f411bde7"
+      },
+      {
+        "path": "inputs/tests/storage-origin.html",
+        "bytes": 162,
+        "sha256": "e1f614311912ee6e6dbb09df11e0df9684e36b93b3079adb612542ef37783fc4"
+      },
+      {
+        "path": "install.log",
+        "bytes": 73,
+        "sha256": "5ad7260ba01aa9157b0b67fd4050636e4f6b1ac5af37a2b360069408c4c680ec"
+      },
+      {
+        "path": "node.txt",
+        "bytes": 9,
+        "sha256": "2266957ed9a639bd7264d714bfa798a961510bf2e50695c668ab8fc0c3f4e906"
+      },
+      {
+        "path": "pinned-source-tree.txt",
+        "bytes": 109683,
+        "sha256": "aa306d61d9286f0c25fa273490c1cb74274fbde1a5d7a92ab65f757a6a37db26"
+      },
+      {
+        "path": "runtime.json",
+        "bytes": 165,
+        "sha256": "3f57e5fafe96055adbe40c52f2649c962cf7c1b5bb9c3e059f039fae3867d662"
+      },
+      {
+        "path": "source-receipt.json",
+        "bytes": 1787,
+        "sha256": "582f3da1046c3a5ee9c1d0488d553cbe78e40b7823aa7cfe146ac09d50db3721"
+      },
+      {
+        "path": "summary.json",
+        "bytes": 24042,
+        "sha256": "8d9ba594dff196ffe631780a34608dc5097e5a31d3ca9059f4cdab4d2bffc290"
+      },
+      {
+        "path": "test.log",
+        "bytes": 6899,
+        "sha256": "2e4e7a8ddb7ea526ea675fc47bba3f459c5740133a094303eaa8215651a26ce6"
+      }
+    ],
+    "source_tree_reconstructed": "27dad342d21e45b484c7b8ab87d4ed7cc2851b46",
+    "input_gitblobs_verified": {
+      "package.json": "76c6961ae4d56593a8f9721de12fc84823b45d88",
+      "tests/flh04-c1-diagnostics.mjs": "1e1f5c3bbe66d911a312c246b98f08f11562c4af",
+      "tests/browser-sync-outbox.mjs": "f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c",
+      "tests/flh04-c1-diagnostics.test.mjs": "eb53397ca3d6d2aab127b53583408e8402719cc8",
+      "tests/storage-origin.html": "4bc801127e545aa1088e43c18137ec66bf20cd8b",
+      "tests/flh04-c1-source-guard.test.mjs": "33eeaabce0cebac36fc46592ce2c5bede68e6c26",
+      "tests/flh04-version2-candidate-probes.mjs": "d87ab642d1ba409814af517c2b28ad50fd924b0c",
+      "src/browser-portfolio-storage.js": "ce56e74ff0519331b06e9833ab808e17a136613f",
+      "tests/fixtures/c1-storage-dependencies.mjs": "02c53fa3c41ff35785021757ceb43eb834dc4b60"
+    },
+    "workflow_blob": "9e696d2ed328f24fbc59ec0c245d6c58883cede3",
+    "original_zip_unchanged": true
+  },
+  "logs": {
+    "job_log_sha256": "d4a7c87920f6cac98bc85c9b8c621d7795ab0da6fad2dd8f31847475430bfd79",
+    "http_status_counts": {
+      "200": 553,
+      "304": 274
+    },
+    "original_PASS_console_observed": true
+  },
+  "previous_original": {
+    "run": 43485655271,
+    "attempt": 1,
+    "status": "FAILURE_UNCHANGED",
+    "exact_old_failure_assertion": "UNKNOWN_UNCHANGED",
+    "original_zip_sha256": "8b830f6b2a1786032e148b12e6a6608d5050cd7f1a924f1687d2dd2a2a0fb3ec",
+    "new_download_or_requalification": false,
+    "comparison_evidence_blob": "5daa9faf9f7d9535d74e2bcb1a0df8f6fd9c3b89"
+  },
+  "next_step": {
+    "action": "Prepare bounded native concurrency proof for the new adapter source-connection/versionchange lifecycle under existing contract11/A/N1; retain C1 as limited qualified regression. No extra run authorized.",
+    "cases": [
+      "Active v1 adapter operation retains probed connection while second page requests upgrade;upgrade cannot complete before finite operation/marker cleanup ends.",
+      "Queued upgrade plus initialize reuses held v1 handle without second-open deadlock;versionchange/forced-close/blocked/error prevents later unqualified writes.",
+      "Automatic intent tails and direct Locked entries preserve v1 originals and never select/write legacy after observing v2."
+    ],
+    "observations": "Exact operation ordering;stored raw/settings/revision/outbox/anchor before/after;rejection/unknown states;independent-page/reopen readback. No timer correctness oracle,changed deadlines/assertions or new runner.",
+    "bounds": "No whole source inventory/identical ABA analysis;not full W1/W3/W4/P/keyslot/ABA/product startup/migration/recovery/review/sync closure."
+  },
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL_INTERNAL_AND_EXTERNAL_REMAINDER",
+    "applyAuthorized": false,
+    "Storage_confirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "format1_prepared_locked": "NO_ADOPTION_PROMOTION_OVERWRITE_DELETE",
+    "review_package": "fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b",
+    "review_candidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+    "review_status": "EXTERNAL_REVIEW_PENDING;CR4/CR5 open",
+    "contracts": "All P/R/S/D/CAS/Raw/Retry/oncomplete/Snapshot and USD/ETH/CSV/management/UH02/history/purchase/undo/oracle/original chains preserved"
+  },
+  "closure": {
+    "status": "STOPPED_HANDOVER_READY_AFTER_EXECUTION_EVALUATION",
+    "reason": "Exactly authorized execution/evaluation completed;next concrete lifecycle preparation identified;no additional run authorized.",
+    "background": false,
+    "retry_trigger_merge_deploy_release": false
+  },
+  "preservation": {
+    "archive_bytes": 624640,
+    "archive_sha256": "88e415478503ace9bac167ae72e33d8132808498c08703252b0cc44034e6aa1d",
+    "pinned_file_identity": true,
+    "preservation_manifest_verified": 33,
+    "original_zip_preserved_byte_exact": true,
+    "original_zip_sha256": "342da202161c189310514b78eed8d713e13af49f43b4bf6d2d91a9a15d0cb55d",
+    "inner_manifest_verified": 21,
+    "root_and_old_companions_unchanged": true,
+    "full_backup_or_full_restore": false
+  }
+}
