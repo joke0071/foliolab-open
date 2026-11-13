@@ -52,7 +52,7 @@ try{
  await page.keyboard.press('Enter');assert.equal(await first.locator('..').getAttribute('open'),null);
  await first.tap();assert.equal(await first.locator('..').getAttribute('open'),'');await first.tap();
  assert.equal(await first.locator('.account-allocation button,.account-allocation [tabindex]').count(),0);
- await page.addStyleTag({content:'html{font-size:200%}'});
+ await page.addStyleTag({url:'http://127.0.0.1:4173/tests/text-enlargement-200.css'});
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'200% CSS system-text approximation overflow');
  // Browser/system zoom and physical Android remain separate operator evidence.
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),raw);
