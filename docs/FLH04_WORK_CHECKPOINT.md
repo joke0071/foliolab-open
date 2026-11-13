@@ -1,3 +1,124 @@
+## STOPPED / HANDOVER_READY / SOURCE_LIFECYCLE_BOUNDED_PASS / PRODUCT_RELEASE_BLOCKED · work-2cd7c03c3433-20261113
+
+Konkreter Endpunkt: ausdrücklich autorisierte einmalige Branchanlage, native
+Ausführung, vollständige Auswertung und dauerhafte Originalsicherung abgeschlossen.
+Kein Hintergrundbetrieb; keine erneute allgemeine Übernahmebestätigung nötig.
+Ältere work-pr333-Ausführung bleibt NICHT technisch beendet nachgewiesen;
+historisches ACTIVE wird weder als laufend noch als STOP umgedeutet.
+
+[Run43497366403/Versuch1](https://github.com/joke0071/foliolab-open/actions/runs/43497366403)
+COMPLETED/SUCCESS, event=create. Triggerbranch
+test/flh04-source-lifecycle-781cbfc52ec6-20261113 genau EINMAL an
+08e2189a17be2e8899ee057a4639b09b343e088c angelegt und dort unverändert erhalten.
+Ausführungstree86f25e5e40cb8cdc3ea7274f7b817d5b32d82a5a;
+Parent/Prüfbasis063add5697a1deaf119eec7ca7eb18a663f31bc8,
+Quelltree33d610d2eff09cf383cb003615a7ce3dc9269dd4;
+Workflowblobf52903addebf0151e69782e9ce5b3f52aa787607.
+Konkrete Nutzerfreigabe galt genau diesem Branch/SHA, Versuch1,
+einem Job/einem Harnessaufruf sowie Auswertung/Originalsicherung/Dokumentation.
+
+Genau ein Job132133888968 SUCCESS; diagnostic und pchain-diagnostic SKIPPED.
+Ubuntu24.04.5/Image20261111.370.1, Node22.23.4/PW1.56.1,
+tatsächlich beobachtetes Chromium141.0.7390.37/HeadlessShellbuild1194.
+runtime.json ist Vorlaufmetadatum mit browserStarted=false; tatsächliche
+Browserausführung/Version sind durch Originalreport und PASS-Konsole belegt.
+Ein Harnessaufruf, test_exit0/tee_exit0, kein Retry/Timeout/zusätzliche Engine.
+C1-Opt-in blieb ungesetzt; kein neuer C1-PASS des geänderten Adapters.
+
+Basisablauf: alle vorangehenden ursprünglichen await-Assertions durchlaufen
+und ursprüngliche finale PASS-Konsole erreicht. Separat davon Lifecycle:
+
+| Gruppe | Status | erreichte Assertionzeilen |
+| --- | --- | --- |
+| L1-REVERT | PASS | 8 |
+| L2-MARKER-FAIL | PASS | 8 |
+| L3-INITIALIZE | PASS | 8 |
+| L4-READ-ERROR | PASS | 8 |
+| L5-CLOSE-EVENT | PASS | 8 |
+| L6-INTENT | PASS | 8 |
+| L7-MIGRATE | PASS | 8 |
+| L8-V2-LOCKED | PASS | 4 |
+| L9-V1-REMOVE | PASS | 4 |
+| L10-V2-INTENT | PASS | 4 |
+| L11-PROBE-ERROR | PASS | 4 |
+| L11-PROBE-BLOCKED | PASS | 4 |
+| L12-V2-RECOVERY | PASS | 5 |
+
+13/13 Gruppen und81/81 tatsächliche Assertionzeilen PASS;
+0FAIL/0NOT_REACHED. Keine Addition historischer/lokaler Tests.
+[Originalreport, stabile Kennungen/Zeilen, Ereignisfolgen, Auswertung und Grenzen](https://github.com/joke0071/foliolab-open/blob/00478af24e67a91444ffd78b0d22fe94634929e2/docs/release-evidence/flh04-source-lifecycle-43497366403-attempt1.json).
+
+Alle sieben Konkurrenzfälle: native Readcompletion→Harnessbarriere→native
+Quellen-versionchange→Freigabe→Close-Aufruf→Operationsabschluss.
+Zweiter echter Upgradeopen mit blocked, danach upgradeneeded/success.
+OVERLAP hat VOR Freigabe gemeinsam unsettled/sourceCount1/started/blocked/
+keinUpgradebeginn/keinErgebnis behauptet und bestanden.
+Die beiden Seitenlogs haben keinen gemeinsamen numerischen Ereignistakt;
+gehaltene Zustandssnapshots sind nicht separat im Report serialisiert.
+Markerzustand beim Upgradebeginn entspricht dem abschließenden Markerzustand.
+Tombstonecommit vor Markercleanup inL1/L2; beiL4/L5 keine nachfolgenden
+Readwrite-/Markerwrites im geprüften Operationsabschnitt.
+Persistenz/Raw/Settings/Revision/Anker und zweiteSeite/Reopen gemäß jeweiligen
+Originalassertions bestanden; L9/L12 Originalzugriff und konkrete Recovery.
+
+Instrumentiertes Scheduling ausdrücklich: readonly-complete-CALLBACK verzögert
+NACH nativem complete-EVENT, kein IDBkeepalive/Produktimport-/Quellersatz.
+L2Marker/L4Read/L5Close/L11Probeerror+blocked sind injizierte Mechanismen.
+Reguläres close ist kein ForcedClose/Prozesscrash. Konkrete Berichtgrenze:
+L5 source-close-event seq9 ist vom generischen Listener als native etikettiert,
+entsteht tatsächlich durch dispatchEvent(new Event('close')); als SYNTHETISCH
+ausgewertet. Original unverändert, kein nativer ForcedClose-PASS.
+L2 LEGACY prüft erhaltenen Modus, Legacybytes und intent.revision;
+keinen vollständigen Byte-/Fingerprintvergleich des erhaltenen Intents behaupten.
+PASS-Zeilen liefern Oracleergebnis/Quellzeile, keine vollständigen Istwertdumps.
+Outbox in Lifecyclefixtures null; nicht mit nichtleeren Basisfällen zu einem
+Nachweis nichtleerer Lifecycle-Outboxkonkurrenz verbinden.
+Kein vollständiger Zwischen-ABA-/Writer-/Worker-/Asset-/Keyslot-/Recoveryabschluss.
+
+Originalartefakt14072731008,95176Bytes,
+SHA256ba30b9c02721e6778ae5f6439bd1fdaf7b346a8f69d650f4916791ea0e4d6a20:
+Upload/Verfügbarkeit/Download exakt;27Dateien,26Innenmanifesteinträge vollständig
+SHA256-geprüft. ManifestSHA256d27bd59b8a49be554f334491a3b2b6aedf3098e2c257669b394037cdec9cf98f.
+12Receiptblobs UND alle14Eingangsdateien unabhängigGitblobgeprüft,
+ausgeführterWorkflowGitblob bestätigt, kompletterQuelltree rekonstruiert.
+HTTP1054x200/100x304. Artefaktretention bis20.11.2026 20:00:06UTC.
+Neuer separater Originalteil788480Bytes/SHA256
+17655c2dd9738813d4634cf0e81e7f51113283303a34073ab886ccb56353827d
+dauerhaft gespeichert und exakte Dateiversion0 bytegleich rückgelesen:
+34Erhaltungsmanifestdateien sowie unverändertes OriginalZIP und26Innenmanifest-
+dateien vollständig geprüft. PrivateLocators bleiben privat.
+RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120 unverändert; kein Rootvollbackup/Vollrestore.
+
+NÄCHSTER KONKRETER TECHNISCHER SCHRITT:
+Diagnostik lokal gezielt korrigieren: Close-Eventprovenienz über isTrusted
+unterscheiden und L2Intentoracle um vollständigen erhaltenen Intent samt
+Fingerprint ergänzen, mit gerichteten lokalen Tests. Dann erst einen neuen
+exakt gepinnten nativen ForcedClose-/Terminierungskandidaten vorbereiten,
+nachdem ein tatsächlich geeigneter Mechanismus und sein Oracle feststehen.
+Kein neuer nativer Lauf ohne neue konkrete Freigabe; dieser Trigger ist verbraucht.
+NativeForcedClose/echterCrash/realeQuota/nativeQuellenprobeerror+blocked,
+nichtleereLifecycleOutbox und vollständige W1/W3/W4/P-/Keyslot-/ABA-/Recovery-
+Nachweise bleiben offen. Kein aktueller Assertionfehler zu korrigieren;
+die Metadatengrenzen schmälern den Umfang, ändern das begrenzte PASS nicht.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/
+N-DRIVEBLOCKED_EXTERNAL mit internem UND externemRest.
+A1applyAuthorized=false/A2Storage.confirmgesperrt;
+remoteAnchor+acknowledgedLocalRevisionnull.
+Format1preparedlocked niemals adoptieren/hochstufen/überschreiben/löschen;
+V2Normalpfade blockiert, keine aktiveSync/Produktmigration/v2Legacyrückmigration.
+Recovery ohne Writer-/Geräte-/Autoritäts-/Syncidentitätsportierung.
+AlleP/R/S/D/CAS/Raw-/Retry/oncomplete-/Snapshot-/Originalverträge und
+USD-/ETH-/CSV-/Management-/UH02-/History-/Purchase-/Undo-/Oracleketten erhalten.
+Kryptopaketfd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
+Reviewkandidat17a5a190d472f1f07b3508e6f35194371fe95eb2:
+EXTERNAL_REVIEW_PENDING/CR4CR5offen; Adapterdelta eigenerReviewimpact.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+Zentralbranch niemals vollständig nachMainmergen.
+
+---
+
 ## SOURCE_LIFECYCLE_PREPARED / NATIVE_NOT_RUN / PRODUCT_RELEASE_BLOCKED · work-781cbfc52ec6-20261113
 
 Autorisiert: alleinige Vorbereitung des begrenzten Konkurrenzprüfkandidaten,
