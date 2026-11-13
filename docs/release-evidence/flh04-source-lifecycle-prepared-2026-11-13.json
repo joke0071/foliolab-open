@@ -1,0 +1,203 @@
+{
+  "kind": "FLH04_SOURCE_LIFECYCLE_EXECUTION_PREPARED",
+  "status": "PREPARED_NOT_STARTED_SPECIFIC_APPROVAL_REQUIRED",
+  "date": "2026-11-13",
+  "owner": "work-781cbfc52ec6-20261113",
+  "basis": {
+    "central_sha": "c72b24ea10320d1644aa3174e77b3a8132d76d59",
+    "central_tree": "1529f3f78bf258b180bfa2c785ae187209f3bcac",
+    "working_sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+    "working_tree": "38e04ddb8c6a04a6c4ec15b9456296e8c719d318"
+  },
+  "source": {
+    "sha": "063add5697a1deaf119eec7ca7eb18a663f31bc8",
+    "tree": "33d610d2eff09cf383cb003615a7ce3dc9269dd4",
+    "changed_files": {
+      "src/browser-portfolio-storage.js": "4743618cbfba19dbb19aaf6a9e6bf563b2311614",
+      "tests/browser-sync-outbox.mjs": "f542adf39e8840f0c801b6ff65a3925dbf63fbef",
+      "tests/flh04-source-lifecycle-harness.mjs": "d6e2fbdca996b66d78fc184b98dad3bcb6b74fbc",
+      "tests/flh04-source-lifecycle-probes.mjs": "65c0b0a031721f9752f592e974583ff673918496",
+      "tests/flh04-source-lifecycle.test.mjs": "56bdab130fc012923de8a6b0f9f283584dace19f",
+      "tests/flh04-c1-source-guard.test.mjs": "12388345a554a76311de2c34aaba35a8835c1271",
+      "tests/flh04-c1-diagnostics.mjs": "d3adb9857a17538070234fbdb28482322b44c4ba",
+      "docs/FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md": "df61c6241ec79eae5c8cff23ac32e91d122810a1",
+      "docs/release-evidence/flh04-source-lifecycle-local-2026-11-13.json": "5799b4bbd55fe46a0f52fb8c9f433076736e837d",
+      "docs/FLH04_WORK_CHECKPOINT.md": "2b647ce64866f2a9a9059aad7f74498258c48f59"
+    },
+    "complete_readback_byte_exact": true,
+    "independent_gitblob_verified": true
+  },
+  "execution": {
+    "sha": "08e2189a17be2e8899ee057a4639b09b343e088c",
+    "tree": "86f25e5e40cb8cdc3ea7274f7b817d5b32d82a5a",
+    "parent": "063add5697a1deaf119eec7ca7eb18a663f31bc8",
+    "workflow_blob": "f52903addebf0151e69782e9ce5b3f52aa787607",
+    "only_delta": ".github/workflows/live-initialization-diagnostics.yml",
+    "complete_readback_byte_exact": true,
+    "independent_gitblob_verified": true,
+    "trigger_branch": "test/flh04-source-lifecycle-781cbfc52ec6-20261113",
+    "trigger_created": false,
+    "event": "create",
+    "ref_type": "branch",
+    "run_attempt": 1,
+    "job": "flh04-source-lifecycle-first",
+    "jobs_executed": 0,
+    "harness_calls_executed": 0,
+    "proposal": {
+      "jobs": 1,
+      "harness_calls": 1,
+      "ubuntu": "24.04",
+      "node": "22.23.4",
+      "playwright": "1.56.1",
+      "engine": "Chromium headless shell",
+      "engine_expected_previous_version": "141.0.7390.37",
+      "actual_engine_version": "NOT_OBSERVED_NOT_RUN",
+      "job_minutes": 25,
+      "harness_seconds": 360,
+      "kill_after_seconds": 15,
+      "env": {
+        "ENGINE": "chromium",
+        "FLH04_SOURCE_LIFECYCLE": "1",
+        "BASE_URL": "http://127.0.0.1:4173"
+      },
+      "c1_opt_in": "UNSET",
+      "retries": 0,
+      "cases": [
+        "L1-REVERT",
+        "L2-MARKER-FAIL",
+        "L3-INITIALIZE",
+        "L4-READ-ERROR",
+        "L5-CLOSE-EVENT",
+        "L6-INTENT",
+        "L7-MIGRATE",
+        "L8-V2-LOCKED",
+        "L9-V1-REMOVE",
+        "L10-V2-INTENT",
+        "L11-PROBE-ERROR",
+        "L11-PROBE-BLOCKED",
+        "L12-V2-RECOVERY"
+      ],
+      "planned_assertion_rows": 81
+    }
+  },
+  "local_checks": {
+    "node": "24.22.1",
+    "syntax_files": 7,
+    "syntax_exit": 0,
+    "node_tests": {
+      "pass": 30,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0
+    },
+    "negative_control": {
+      "original_adapter_fail": 1,
+      "patched_pass": true,
+      "native": false
+    },
+    "workflow": {
+      "yaml": true,
+      "unchanged_other_jobs": 2,
+      "steps": 8,
+      "bash_syntax": 5,
+      "python_compile": 4,
+      "javascript_syntax": 2,
+      "payload_executed": false,
+      "intermediate_observation": "Local step count expected9 corrected to actual8;workflow unchanged"
+    }
+  },
+  "collision": {
+    "head_count": 314,
+    "all_heads_prewrite_unchanged": true,
+    "open_prs": [
+      332,
+      161,
+      157
+    ],
+    "reviews_inline_conversation_checked": [
+      332,
+      157,
+      161,
+      335
+    ],
+    "prewrite_unchanged": true,
+    "in_progress": 0,
+    "old_work_pr333": "NOT_TECHNICALLY_STOPPED_PROVEN;historical ACTIVE not reinterpreted",
+    "backup_metadata": {
+      "root": {
+        "version": 155,
+        "bytes": 406425600
+      },
+      "FAIL": {
+        "version": 0,
+        "bytes": 12748800
+      },
+      "MainOriginal": {
+        "version": 0,
+        "bytes": 212408320
+      },
+      "Diagnose": {
+        "version": 0,
+        "bytes": 2181120
+      }
+    },
+    "backup_transfers": false
+  },
+  "consumed_runs": [
+    {
+      "id": 43490101461,
+      "attempt": 1,
+      "status": "SUCCESS_BOUNDED_C1_ONLY",
+      "ref_sha": "097aff8a06838a02df14927dc2b7a80ec627eea8"
+    },
+    {
+      "id": 43485655271,
+      "attempt": 1,
+      "status": "FAILURE_OLD_ASSERTION_UNKNOWN",
+      "ref_sha": "f73535847f26476da3ea100f0410f391496dafd7"
+    }
+  ],
+  "artifact_plan": {
+    "name": "flh04-source-lifecycle-781cbfc52ec6-<run_id>-<attempt>",
+    "retention_days": 7,
+    "always_upload": true,
+    "contents": [
+      "executed workflow",
+      "source receipt and pinned tree",
+      "12 pinned code/test inputs plus package and origin",
+      "Node/PW/engine if reached",
+      "install/browser-install/HTTP/test logs",
+      "exit codes",
+      "original report and minimal assertion diagnostics/native event sequence",
+      "summary",
+      "SHA256 manifest"
+    ],
+    "post_authorized_run": "preserve original ZIP and independently verify exact bytes/manifest via existing path;no root full backup",
+    "created": false
+  },
+  "open_cases": [
+    "native forced-close",
+    "real process crash",
+    "real quota",
+    "native source-open blocked/error",
+    "non-null outbox concurrency",
+    "unknown old writers/workers/mixed assets",
+    "full P/keyslot/ABA/recovery/crypto closure"
+  ],
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL_INTERNAL_AND_EXTERNAL_REMAINS",
+    "A1": false,
+    "A2": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "format1_prepared_locked": "NO_ADOPT_PROMOTE_REPLACE_DELETE",
+    "crypto_review": "EXTERNAL_REVIEW_PENDING_CR4_CR5_OPEN",
+    "merge_deploy_release_retry": false
+  },
+  "closure": {
+    "status": "STOPPED_HANDOVER_READY",
+    "reason": "Complete pinned preparation package;only specific native execution approval missing;no background work"
+  }
+}

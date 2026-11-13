@@ -1,3 +1,123 @@
+## STOPPED / HANDOVER_READY / SOURCE_LIFECYCLE_PREPARED / NATIVE_APPROVAL_REQUIRED · work-781cbfc52ec6-20261113
+
+Konkreter Anlass des Endpunkts: vollständiges reviewbares Vorbereitungspaket
+fertig; ausschließlich konkrete native Ausführungsfreigabe fehlt.
+Kein Hintergrundbetrieb/Automation/weiterer allgemeiner Übernahmebedarf.
+Ältere work-pr333-Ausführung weiterhin NICHT technisch beendet nachgewiesen;
+historisches ACTIVE weder als laufend noch als STOP interpretiert.
+
+QUELLKANDIDAT:
+063add5697a1deaf119eec7ca7eb18a663f31bc8
+Tree33d610d2eff09cf383cb003615a7ce3dc9269dd4
+Parent097aff8a06838a02df14927dc2b7a80ec627eea8.
+Genau10Deltas: nur browser-portfolio-storage.js unter src (+5Zeilen),
+Basisharness-Opt-in, gemeinsameDiagnostik, gezielteAdapterregression,
+3neueLifecycle-Testdateien, Reviewdokument/lokalerBeleg/Fachcheckpoint.
+[Quellvergleich](https://github.com/joke0071/foliolab-open/compare/097aff8a06838a02df14927dc2b7a80ec627eea8...063add5697a1deaf119eec7ca7eb18a663f31bc8).
+[Reviewbarer Fallplan](https://github.com/joke0071/foliolab-open/blob/063add5697a1deaf119eec7ca7eb18a663f31bc8/docs/FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md).
+Alle10vollständigenDateien bytegleich und unabhängigGitblobgeprüft zurückgelesen.
+C1Helperblobd87ab642d1ba409814af517c2b28ad50fd924b0c unverändert,
+alle38ursprünglichenAusdrücke erhalten; bisherigerBasisharnessblobf5d6bcab
+durchEntfernungneuerOpt-in-Blöcke exaktrekonstruiert.
+recoverFromBackup-Funktionskörper bytegleich.
+
+KonkretesProduktdelta: Ein endlicher v1-Vorgang verwendet die tatsächlich
+gehaltene geprüfteQuellenverbindung auch als Controllerhandle.
+Gegenablaufvorher: getrenntesidleHandle schließt bei versionchange;
+QuellenhandlehältUpgrade, spätererCommit würde altesgeschlossenesHandle nutzen.
+Neuer lokalerIDB-/Modell-/Atomicdouble-Gegenfall amOriginalFAIL/Exit1,
+mitKorrekturPASS. Kein nativerRepro/Produktfreigabe behauptet.
+
+13begrenzteGruppen/81geplanteAssertionzeilen, KEINE nativenErgebnisse:
+Revert/Markerfehler-nachCommit,Initialize/Fehler-/Close-Injektion,
+passenderIntentnachlauf,direktev1Migration,v2Locked-Ablehnung,
+v1Delete+Original/Recovery,v2Intent,Probeerror-/Blocked-Injektionen,
+v2Originalzugriff+bestehendeexpliziteRecovery.
+OVERLAP verlangt echtenzweitenOpen/nativesblocked bei noch offener
+ersterProduktoperation;gehaltenerreadonlycomplete-CALLBACK nachechtemEvent.
+Freigabe→endlicherVorgang/Markercleanup/Close→wartendesUpgrade;
+raw/settings/revision/outbox/Anker+unabhängigerSeiten-/Reopenreadback.
+Schedulinginstrumentierung offen,keinIDBkeepalive/Produktimportersatz.
+NativeEvents/CloseAufrufe undsynthetischeFehler getrennt.
+EchterForcedClose/Crash/realeQuota/nativeQuellenprobeerror-/Blocked offen.
+Outbox hiernull;keinFullWriter/Keyslot/ABA/Recoveryabschluss.
+C1nichtnochmalsausgeführt.
+
+Node24.22.1:7SyntaxchecksExit0;30gezielteTestsPASS/0FAIL/0SKIP/0CANCELLED.
+16Adaptertests mitIDB-/Modell-/Atomicdoubles,6Diagnostiktests,
+8NodePromise/EventTarget-/Oracle-/Integritätstests.
+KeinNative-/Finanzmodellvoll-/Kryptobeleg.
+Workflow YAML/5Bash-/4Python-/2JSblöcke nurSyntax geprüft;
+bestehende2Jobs strukturellunverändert,8Steps.
+LokaleZwischenerwartung9Steps auftatsächliche8korrigiert;Workflowunverändert.
+KeineJobnutzlast/Browser/Actionsausführung.
+[Maschinenbeleg und Dateimanifest](release-evidence/flh04-source-lifecycle-prepared-2026-11-13.json).
+
+STARTBEREITER EINMALIGER AUSFÜHRUNGSKANDIDAT:
+08e2189a17be2e8899ee057a4639b09b343e088c
+Tree86f25e5e40cb8cdc3ea7274f7b817d5b32d82a5a.
+Parent/Prüfbasis063add5697a1deaf119eec7ca7eb18a663f31bc8.
+[EinzigerKontrolldiff: bestehenderDiagnoseworkflow](https://github.com/joke0071/foliolab-open/compare/063add5697a1deaf119eec7ca7eb18a663f31bc8...08e2189a17be2e8899ee057a4639b09b343e088c).
+Workflowblobf52903addebf0151e69782e9ce5b3f52aa787607 vollständig
+bytegleich undunabhängigGitblobgeprüft;12Code-/Testblobs vorAufruf gepinnt.
+BestehendeFLH04Arbeitsrefmitexpected097aff8a auf08e2189a fortgeschrieben.
+Fachcheckpoint ausschließlich dort;keinPR/zusätzlicherEntwicklungsbranch.
+
+KONKRET BENÖTIGTE FREIGABE (NICHT ERTEILT):
+EinmaligeAnlage des bisherNICHTvorhandenenBranches
+test/flh04-source-lifecycle-781cbfc52ec6-20261113
+EXAKT an08e2189a17be2e8899ee057a4639b09b343e088c.
+Nurcreate/branch/exakterRef/run_attempt==1 trifftflh04-source-lifecycle-first.
+VorAnlagefrischlesen;beiVorhandensein nichtneuanlegen/ersetzen.
+Bei fehlendemRun ausschließlichlesendklären,keinErsatztrigger/Retry.
+
+Umfang:EINJob/Versuch1,Ubuntu24.04/Node22.23.4/PW1.56.1/
+zugehörigeChromiumHeadlessShell;Version141.0.7390.37 bisherbelegt,
+neue tatsächlicheVersion erstbeiAusführung beobachten.
+Max25MinutenJob;EINBasisharnessaufruf+13Lifecyclegruppen,
+360Sekunden+15SekundenKillnachlauf.
+ENGINE=chromium;FLH04_SOURCE_LIFECYCLE=1;
+BASE_URL=http://127.0.0.1:4173;FLH04_VERSION2_CANDIDATE UNGESETZT.
+NursynthetischeisolierteContexts,keineandereEngine/FullCI/C1Wiederholung.
+FAILbleibtFAIL,keinSkip/Assertionoverride/Deadlineänderung.
+Artefaktflh04-source-lifecycle-781cbfc52ec6-<run_id>-<attempt>,
+retention7Tage/uploadifalways:
+Quellen-/Workflow-/Treebeleg,Eingänge,Installations-/Browser-/HTTP-/Testlogs,
+Node/PW/Engine soweitbeobachtet,Exitcodes,OriginalreportmitEreignisfolge/
+stabilenKennungen/minimalerSollIstdiagnostik,summary/SHA256Manifest.
+FehlenderReport=NOT_REACHED_OR_NO_VALID_REPORT,niemalsPASS.
+NachseparaterFreigabeAuswertung+OriginalZIP/Manifestdauerhaftsichern;
+keinRootvollbackup. NochkeineErgebnisartefakteerzeugt.
+
+FrischerAbgleichvorSchreiben:
+314Headsalleunverändert;Maina27cde2f/Diagnosee9578124/PR33271dfb05d/
+PR15708714cc6/Draft1610d980c2f/UI-R460c1ab09 geschützt.
+OffenePR332/161/157,Reviews/Inline/Conversation332/157/161/335unverändert.
+0IN_PROGRESS;neuesterRunweiter43490101461/1,keinneuerLauf.
+RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120frischunverändert;keineTransfers/Vollbackup/Restore.
+C1Originalteil624640/SHA88e41547undZIP73689/SHA342da202 ausvorheriger
+gepinnterSicherungwiederverwendet,nichterneuttransferiert/geprüftausgegeben.
+
+VerbrauchteRuns43490101461/1SUCCESSund43485655271/1FAILURE,
+ihreTriggerbranches/SHAsundOriginaleunverändert;alteFehlerassertionUNKNOWN.
+Main43332355188/1FAILURE/UrsacheUNKNOWN,Diagnose43421311524/1SUCCESS:
+keine neueMain-/Release-/Produktionsqualifikation.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+A1false/A2gesperrt/remoteAnchor+acknowledgedLocalRevisionnull.
+Format1preparedlockedniemalsadoptieren/hochstufen/überschreiben/löschen.
+AlleP/R/S/D/CAS/Raw-/Retry/oncomplete-/Snapshot-/Originalverträgeerhalten.
+USD-/ETH-/CSV-/Management-/UH02-/History-/Purchase-/Undo-/Oraclekettenunverändert.
+Kryptopaketfd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
+Reviewkandidat17a5a190d472f1f07b3508e6f35194371fe95eb2 unverändert
+EXTERNAL_REVIEW_PENDING/CR4CR5offen;AdapterdeltaeigenerReviewimpact.
+KeinproduktiverCutover/aktiveSync/Writer-/ABA-/Kryptofreigabe.
+KeinRetry/Ersatztrigger/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+ZentralbranchniemalsvollständignachMainmergen.
+
+---
+
 ## STOPPED / HANDOVER_READY / C1_CORRECTION_NATIVE_PASS / PRODUCT_RELEASE_BLOCKED · work-1fc1822ea62c-20261113
 
 Anlass des Endpunkts: die ausdrücklich freigegebene EINMALIGE Branchanlage,
