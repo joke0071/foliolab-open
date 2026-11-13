@@ -226,3 +226,49 @@ UTC-/Decimalnormalisierung/v5/pending/andereBelege vollständig zurück.
 [Originaloutput, Eingabeidentitäten und Grenzen](release-evidence/flh04-snapshot-purchase-evidence-local-2026-11-13.json).
 Keine aktiveIntegration/Apply/Krypto-/Native-/CI-/Release-/Produktionsabnahme.
 Preis-Historybeleg bleibt gepinnt erhalten; keine Addition historischerTests.
+
+
+## Vollständiger UH02-v5-Snapshotumfang · vor Code · 13.11.2026
+
+Owner work-dedcfdccd449-20261113; Basis3429b9c0faecf7e5febd950f840b43a8f4c2605d.
+Abgleich N-DRIVE/Übergabe8: safeImport liest PurchaseEvidence/History, validiert ImportSource,
+Journal/Opening/Bestandsaudit, ruft validateUnifiedBitcoinEconomics und alle bestehenden
+Withdrawal-/Bridge-/Flatexvalidatoren und abschließend assertDataVersion auf.
+assertDataVersion verlangt echte geschützte v5-Inhalte; kein bloßes Versionsflag.
+UH02-Käufe verbinden Receipts, Wallet-Scope, Eventfingerprints, Ledgerreferenzen,
+bookingOwnership, Null-Mengenjournal und genau einen externen Finanzierungsflow.
+Undo erhält Belege und eine permanente uh02-undo-Tombstone. Diese vorhandene reine
+Wirtschaftskette ist unabhängig von gesperrtem Kryptocode und vollständig prüfbar.
+
+Kleinster vollständiger Umfang: kanonische v5-UH02-Käufe und ihre Undo-Tombstones,
+mit sämtlicher erforderlicher vorhandener Receipt-/Decision-/Ledger-/Importherkunft,
+History soweit vorhanden, Journal, unveränderten Beständen und Finanzierungsflows.
+Erforderlich mindestens ein bestehender UH02-Kauf-/Undo-Journaleintrag; reines gefülltes
+Ledger ohne wirtschaftliche Kette bleibt unsupported. Keine allgemeine v5-Freigabe.
+Andere ImportSource-Namensräume, Management/Withdrawal/Bridge/Flatexnetto/Resume
+bleiben ganz unsupported. Keine Validator-/Versionsguardänderung.
+
+Ergänzung allein in src/sync-snapshot.js: v5-Format innerhalb dieses Scopes;
+rekursiv geschlossene UH02-importSource-Allowlist, einschließlich JSON-kodierter
+sourcePayload-Fakten (walletScopeDigest/facts receipts+events/ledgerRefs).
+Die payload-Zeichenfolge muss selbst kanonisch kompakt und strukturell begrenzt
+sein; unbekannte Schlüssel, Credentials, doppelte JSON-Felder, Unicode und
+normalisierende Kodierung blockieren. ownedSnapshot bleibt exakter bestehender
+bookingOwnership-String, durch validateUnifiedBitcoinEconomics/sourceUnmodified
+an exakt allowlistetes Booking/Journal gebunden; kein freies JSON-Datentunneln.
+Kein zweiter ökonomischer Validator, keine neue Import-/Eigentumsbestätigung.
+
+Erfolg: Kauf mit/ohne Ledger, N:M, Quellenreihenfolgen, dokumentierte fehlende History,
+Undo und vorhandenes Archiv, Koexistenz PreisHistory/UNKNOWN/Decimal/Null bleiben
+vollständig unverändert auf Encoder/Decoder; Reimport bleibt wirtschaftlich einmalig.
+Ablehnung: fehlende/inkonsistente Quelle/Receipt/Journal/Flow/Walletbindung,
+Wirtschaftsänderung, stille Normalisierung, unbekannte nested/JSON-Stringfelder,
+Versionsdowngrade/leeres v5/isoliertesLedger, fremde Import-/Belegketten und Budgets.
+Jeder Fehler blockiert ganz ohne Quellmutation. Bestehende Validatoren wiederverwenden.
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 unverändert.
+Neue gerichtete Suite tests/sync-snapshot-v5-bitcoin.test.mjs; betroffene bestehende
+Snapshottests plus bestehende UH02-Tests gezielt prüfen. Gültige historische Belege
+wiederverwenden, keine unveränderten CSV-/Purchase-Validatorzahlen addieren.
+Kryptopaket unverändert; Impact nur nachgelagerte Snapshotabdeckung gegen Kandidat
+17a5a190d472f1f07b3508e6f35194371fe95eb2, keine pauschale Freigabe. Keine aktive
+Sync-/Anker-/Storage-/Outbox-/Appänderung, native/CI/Releasegates bleiben offen.
