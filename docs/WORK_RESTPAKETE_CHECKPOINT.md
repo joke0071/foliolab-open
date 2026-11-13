@@ -1,3 +1,11 @@
+## ACTIVE / GENERIC_CSV_CASH_SNAPSHOT / RELEASE_BLOCKED · work-f1798d3a9454-20261113
+
+Alleinige begrenzte HND01-Schreibzuständigkeit nach ausdrücklichem Nutzerauftrag und frischem Abgleich: alle312Heads, Zentrald5fe250aaf1973b3e4c8797bf026776df06cf4a9/Tree31419165b65e4d786a0422c1a957daf2aae3699b, FLH044876bf0e6af9757e1c9b602d953ca5d25fac2d84/Tree3c0bad0453d2b50e29860a398a190498f34fef0b, Maina27cde2f802c26bfec41190911d88bd1d7d8e325/Treee55ffa96f641345759eb3779b00de6187c8671b8 unverändert. OffenePR332/157/161, UI-R4, Diagnosebranch geschützt; Reviews/Inline-/Conversationkommentare332/157/161/335 frisch gelesen, kein Gegenauftrag. 0IN_PROGRESS, historischeQueues43095194276/43095194257. VorgängerSTOPPED/HANDOVER_READY; älterework-pr333 weiterhin NICHT technisch beendet nachgewiesen, keine tatsächliche Fremdschreibkollision beobachtet. Ein Writer, keine Zusatzagenten/Automation/paralleleEntwicklung.
+
+Gezielter vollständiger Rest: generische CSV-EUR-Cashherkunft für die sechs bereits durch provenCashImport belegten Ereignisklassen, einschließlich vollständiger dauerhafter Remove-v2-Audits mit Originalbooking/-journal/-flows und vorhandener Reimport-/Undo-Semantik. Keine pauschale CSV-/Managementfreigabe. VorCode bestehenden Snapshotvertrag präzisieren; bestehende Validatoren unverändert. Node24.22.1 verfügbar. Keine technischeReleasevollübernahme: privater Schreib-/Restoreweg ungeprüft; MetadatenRootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,DiagnoseV0/2181120 frisch bestätigt, keinTransfer/Backup/Restore. Main43332355188FAILURE/UrsacheUNKNOWN, Diagnose43421311524SUCCESS/verbrauchterEinzelversuch. Kryptopaket/Keyslotgate/A1/A2/prepared-locked/Budgets und alle internen/externenReleasegates unverändert. KeinWorkflow/Runner/Retry/PR/Merge/Release/SW-Bump/aktiveSync.
+
+---
+
 ## STOPPED / HANDOVER_READY / LOSSLESS_UH02_V5_SNAPSHOT_IMPLEMENTED / RELEASE_BLOCKED · work-dedcfdccd449-20261113
 
 Mit diesem Schlusscommit sämtliche eigenen Schreibaktivitäten beendet; kein Hintergrundbetrieb. Ein Writer, keine Zusatzagenten/Automation/parallele Entwicklung. Ältere work-pr333-Ausführung weiterhin NICHT technisch beendet nachgewiesen. [Vollständiger kopierfertiger Folgeauftrag](HANDOVER_dedcfdccd449_2026-11-13.md); vollständiger Prompt zusätzlich direkt im Chat.
