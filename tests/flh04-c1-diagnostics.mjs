@@ -1,7 +1,7 @@
 // Only bounded synthetic diagnostics. Never serialize error messages, stacks,
 // records, keys, credentials, raw portfolio bytes, fingerprints or digests.
 import {isDeepStrictEqual} from 'node:util';
-const tokens=new Set(['legacy','idb','blocked','VersionError','AbortError','aborted','schema-committed']);
+const tokens=new Set(['legacy','idb','blocked','VersionError','AbortError','aborted','schema-committed','fulfilled','rejected']);
 const errorTypes=new Set(['AssertionError','Error','TypeError','DOMException','AbortError','QuotaExceededError','VersionError']);
 const fields=['portfolio','sync','schemaVersion','revision','raw','settings','deleted','updatedAt','syncEnrollmentRequired','lineId','status','localRevision','outcome','version','errorName'];
 function minimal(value){
@@ -26,15 +26,22 @@ function difference(actual,expected){
  }
  return differing;
 }
-export function createC1Diagnostics(group,ids){
- const rows=ids.map(id=>({id:group+'.'+id,status:'NOT_REACHED',assertion:{path:'tests/flh04-version2-candidate-probes.mjs',anchor:id}}));
+export function createC1Diagnostics(group,ids,{path='tests/flh04-version2-candidate-probes.mjs'}={}){
+ if(!['tests/flh04-version2-candidate-probes.mjs','tests/flh04-source-lifecycle-probes.mjs'].includes(path))throw new TypeError('Unknown diagnostic source');
+ const rows=ids.map(id=>({id:group+'.'+id,status:'NOT_REACHED',assertion:{path,anchor:id}}));
  let active=null,failure=null;
  return {
   start(id){
    const row=rows.find(row=>row.id===group+'.'+id);
    if(active||!row||row.status!=='NOT_REACHED')throw Error('Invalid C1 assertion sequence');
-   const match=new Error().stack?.match(/flh04-version2-candidate-probes\.mjs:(\d+):(\d+)/);
-   if(match)row.assertion.line=Number(match[1])+1;
+   const stack=new Error().stack??'';
+   if(path==='tests/flh04-version2-candidate-probes.mjs'){
+    const match=stack.match(/flh04-version2-candidate-probes\.mjs:(\d+):(\d+)/);
+    if(match)row.assertion.line=Number(match[1])+1;
+   }else{
+    const matches=[...stack.matchAll(/flh04-source-lifecycle-probes\.mjs:(\d+):(\d+)/g)];
+    if(matches[1])row.assertion.line=Number(matches[1][1]);
+   }
    active=row;row.status='RUNNING';
   },
   pass(id){
@@ -44,7 +51,7 @@ export function createC1Diagnostics(group,ids){
   fail(error){
    const errorType=errorTypes.has(error?.name)?error.name:'Error';
    failure={id:active?.id??group+'.OPERATION',errorType,
-    assertion:active?.assertion??{path:'tests/flh04-version2-candidate-probes.mjs',anchor:group+'.OPERATION'},
+    assertion:active?.assertion??{path,anchor:group+'.OPERATION'},
     kind:active?'assertion-or-operand':'operation-between-assertions'};
    if(error?.name==='AssertionError'){
     failure.expected=minimal(error.expected);failure.actual=minimal(error.actual);

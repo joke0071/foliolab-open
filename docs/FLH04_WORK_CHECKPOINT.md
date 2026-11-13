@@ -1,3 +1,49 @@
+## SOURCE_LIFECYCLE_PREPARED / NATIVE_NOT_RUN / PRODUCT_RELEASE_BLOCKED · work-781cbfc52ec6-20261113
+
+Autorisiert: alleinige Vorbereitung des begrenzten Konkurrenzprüfkandidaten,
+keine neue native Ausführung. Vorarbeit/C1-Originalbelege unverändert verwendet.
+Frischer HND01-Abgleich:314Heads unverändert;Main/Arbeitsref/Zentralref,
+offenePR332/157/161 und Reviews/Inline/Conversation332/157/161/335 unverändert,
+0IN_PROGRESS. Vorgängerwork-1fc1822ea62c STOPPED;älterework-pr333-Ausführung
+weiter NICHT technisch beendet nachgewiesen, weder ACTIVE noch STOP umgedeutet.
+Sicherungsmetadaten RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120 frisch unverändert;keine Transfers.
+
+[Reviewbarer Kandidat](FLH04_SOURCE_LIFECYCLE_CANDIDATE_2026-11-13.md):
+13Gruppen/81geplanteAssertionzeilen,nativNICHTgestartet.
+EchteProduktoperationen/nativeIDBereignisse;Harness hält einen readonly-
+complete-Callback NACH nativemEvent vor Produktfortsetzung.
+OVERLAP verlangt tatsächlich begonnenen zweitenOpen/nativesblocked bei
+noch offener ersterOperation;Freigabe→Cleanup/Close→wartendesUpgrade.
+Initialize sourceCount1,Intentnachlauf/Locked-v1Positivfälle und v2Ablehnung,
+Originalzugriff/expliziteRecovery,Fehlercleanup und unabhängigerReopen.
+SynthetischeMarker-/Read-/Close-/Probeerror-/Blockedfehler klar getrennt;
+echterForcedClose/Crash/realeQuota/nativeQuellenerror-/Blocked offen.
+
+Konkreter Produktgegenfall: alteridleControllerhandle schließt bei versionchange,
+während separateQuellenverbindung hält;spätererCommit würde geschlossenes
+this.db benutzen. GezieltesDelta bindet vorhandenesIDBhandle an geprüfteQuelle.
+Negativkontrolle amOriginaladapterFAIL;mitKorrektur lokaleRegressionPASS.
+Kein nativerRepro behauptet;keine neueProdukt-/Kryptofreigabe.
+
+Node24.22.1:7SyntaxchecksExit0,30gezielteTestsPASS/0FAIL/0SKIP.
+Explizite IDB-/Modell-/Atomicdoubles und NodeEventTargets/Promises,keinNativePASS.
+C1Helperblobd87ab642 unverändert;ursprüngliche38Ausdrücke erhalten.
+NeueOpt-in-Blöcke entfernen rekonstruiert bisherigenBasisharnessblobf5d6bcab.
+recoverFromBackup-Körper bytegleich.
+[Lokaler Maschinenbeleg](release-evidence/flh04-source-lifecycle-local-2026-11-13.json).
+Ein separaterKontrollcommit soll NUR bestehendenDiagnoseworkflow binden;
+genaueSHA/Tree/Trigger nachFreeze imZentralcheckpoint. KeineBranchanlage/Action.
+C1Opt-in dabei ungesetzt,kein erneuterC1Lauf.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+AlleA1/A2/format1/P/R/S/D/CAS/Raw-/Retry/oncomplete-/Snapshot-/Originalgates erhalten.
+VolleW1/K1/Worker-/Asset-/Keyslot-/ABA-/Recovery-/Reviewgates offen.
+Kryptopaketfd3fce4b/Kandidat17a5a190 unverändertEXTERNAL_REVIEW_PENDING;CR4/CR5offen.
+KeinRetry/FullCI/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+
+---
+
 ## C1_CORRECTION_PREPARED / NATIVE_NOT_RUN / PRODUCT_NOT_RELEASED · work-366da675bef5-20261113
 
 Jochen autorisiert nach erstem nativen C1-FAIL die begrenzte Korrekturvorbereitung.

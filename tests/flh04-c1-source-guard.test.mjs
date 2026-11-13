@@ -124,3 +124,17 @@ test('v1 exact matching automatic revert intent still resumes without replacing 
  await controller.initialize();assert.equal(controller.isIndexedDB,false);assert.equal(values.get('foliolab-open-v1')===raw,true);
  assert.equal(values.has(MODE_KEY),false);assert.equal(values.has(REVERT_INTENT_KEY),false);assert.equal(stats.opens.length,1);
 });
+
+test('finite IDB operation replaces idle close-on-versionchange handle with held source',async()=>{
+ const {controller:c,stats}=setup({mode:MODE_VALUE});
+ const idle={version:1,closed:false,close(){this.closed=true;}};
+ idle.onversionchange=()=>idle.close();
+ c.mode='idb';c.db=idle;c.revision=1;
+ fixture.state.beforeRead=()=>idle.onversionchange();
+ fixture.state.beforeCommit=()=>{
+  const held=stats.handles[0];held.onversionchange();
+  assert.equal(idle.closed,true);assert.equal(c.db.closed,false);assert.equal(c.db,held);assert.equal(held.closed,false);
+ };
+ await c.revertLocked(fixture.blankModel());
+ assert.equal(stats.handles[0].closed,true);assert.equal(c.db,null);
+});

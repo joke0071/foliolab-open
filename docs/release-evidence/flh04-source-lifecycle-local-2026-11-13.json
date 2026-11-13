@@ -1,0 +1,121 @@
+{
+  "kind": "FLH04_SOURCE_LIFECYCLE_LOCAL_PREPARATION",
+  "date": "2026-11-13",
+  "owner": "work-781cbfc52ec6-20261113",
+  "basis_sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+  "basis_tree": "38e04ddb8c6a04a6c4ec15b9456296e8c719d318",
+  "node": "v24.22.1",
+  "syntax": [
+    {
+      "path": "src/browser-portfolio-storage.js",
+      "exit": 0
+    },
+    {
+      "path": "tests/browser-sync-outbox.mjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/flh04-source-lifecycle-harness.mjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/flh04-source-lifecycle-probes.mjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/flh04-source-lifecycle.test.mjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/flh04-c1-source-guard.test.mjs",
+      "exit": 0
+    },
+    {
+      "path": "tests/flh04-c1-diagnostics.mjs",
+      "exit": 0
+    }
+  ],
+  "tests": {
+    "command": "node --test tests/flh04-source-lifecycle.test.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.test.mjs",
+    "pass": 30,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "exit": 0,
+    "log": "✔ stable assertion ID, bounded expected/actual, and later NOT_REACHED (5.003288ms)\n✔ portfolio, keys, credentials, error messages and unknown field names never serialized (2.109675ms)\n✔ operand failure is attached to current assertion; no invented expected/actual (0.493989ms)\n✔ operation failure between assertions leaves future assertions NOT_REACHED (0.502973ms)\n✔ invalid or repeated checks fail instead of fabricating PASS (1.119673ms)\n✔ completion requires all planned assertions; snapshots cannot change tracker state (0.633295ms)\n✔ stub-reported v2 blocks every normal/legacy/revert entry before writes, including stale handles (10.457491ms)\n✔ v2 automatic matching-intent resume and damaged/absent markers stay untouched (0.972185ms)\n✔ unknown native version and missing records store block before legacy use (1.010942ms)\n✔ unavailable IndexedDB preserves active and empty startup regression gates (4.88952ms)\n✔ failed or blocked source probe never falls back; late success closes (1.692449ms)\n✔ missing active IDB aborts probe and does not silently recreate (1.185079ms)\n✔ v1 legacy read/save retained; probe connection held until local operation finishes (2.716691ms)\n✔ v1 IDB startup reuses inspected handle, avoiding a queued second open (1.239701ms)\n✔ pending versionchange waits through v1 revert cleanup, then guard closes (1.402551ms)\n✔ forced close after read blocks credential retirement and writes (1.256836ms)\n✔ new empty installation still uses existing explicit v1 creation, no local mirror (3.581609ms)\n✔ original download reads actual v2 through fresh probe; missing source never created (1.732248ms)\n✔ existing explicit fixture-bound recovery CAS remains, with no legacy mirror (0.927279ms)\n✔ one local lock is acquired before source inspection, also for direct locked entry (2.712796ms)\n✔ v1 exact matching automatic revert intent still resumes without replacing original bytes (0.842625ms)\n✔ finite IDB operation replaces idle close-on-versionchange handle with held source (0.889042ms)\n✔ native-event double finishes transaction while product callback remains held; release is explicit (5.626027ms)\n✔ cleanup releases the barrier and restores instrumentation after assertion failure (1.780629ms)\n✔ overlap oracle rejects completed first operation, absent second request and already upgrading state (13.914645ms)\n✔ release oracle rejects premature close and marker writes after final release (4.127595ms)\n✔ matrix retains both successful v1 continuations and explicitly injected failure paths (0.58943ms)\n✔ C1 helper stays byte exact and the lifecycle hook preserves the entire prior harness (17.471376ms)\n✔ lifecycle diagnostics name the actual file and never pass unfinished assertions (2.173909ms)\n✔ existing explicit recovery implementation remains byte exact (2.197605ms)\nℹ tests 30\nℹ suites 0\nℹ pass 30\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 393.749081\n"
+  },
+  "negative_control": {
+    "original_adapter_blob": "ce56e74ff0519331b06e9833ab808e17a136613f",
+    "case": "finite IDB operation replaces idle close-on-versionchange handle with held source",
+    "test_count": 1,
+    "pass": 0,
+    "fail": 1,
+    "exit": 1,
+    "actual_closed": true,
+    "expected_closed": false,
+    "evidence_kind": "explicit IDB/model/atomic doubles; NOT native"
+  },
+  "preserved": {
+    "c1_helper_blob": "d87ab642d1ba409814af517c2b28ad50fd924b0c",
+    "baseline_reconstructed_blob": "f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c",
+    "recovery_body_sha256": "309dab4d9921e66f9860a79018cd16ededfe1ba5573eae5be6e887a2ba295836",
+    "native_runs_reused": [
+      43490101461,
+      43485655271
+    ]
+  },
+  "native_execution": false,
+  "node_proof_limit": "16 adapter dependency-double control-flow tests;6 existing diagnostics tests;8 Node Promise/EventTarget/oracle/integrity tests;not native IDB or full financial/crypto proof",
+  "instrumentation": "One readonly complete callback delayed after actual native event, without transaction keepalive or source/import replacement. Error/blocked/close/marker injections labeled.",
+  "open_cases": [
+    "native forced close",
+    "real process crash or quota",
+    "native source-open error/blocked",
+    "non-null outbox race",
+    "full writer/worker/asset/keyslot/ABA/recovery closure"
+  ],
+  "code_files": [
+    {
+      "path": "src/browser-portfolio-storage.js",
+      "bytes": 19828,
+      "git_blob_sha1": "4743618cbfba19dbb19aaf6a9e6bf563b2311614",
+      "sha256": "b1eaa94bcbdfb0826d4059886f8c520f61af14acccd00eddb2532a5e88b80a22"
+    },
+    {
+      "path": "tests/browser-sync-outbox.mjs",
+      "bytes": 12644,
+      "git_blob_sha1": "f542adf39e8840f0c801b6ff65a3925dbf63fbef",
+      "sha256": "75bc426d4967c3259ffce8ebb75003dc7f7a55e0418784117326b96f0a093c32"
+    },
+    {
+      "path": "tests/flh04-source-lifecycle-harness.mjs",
+      "bytes": 4162,
+      "git_blob_sha1": "d6e2fbdca996b66d78fc184b98dad3bcb6b74fbc",
+      "sha256": "8bc73f0d2ea1a7d7fa56accc6f8d68248446d3d0e633ed19cda85ba00d5a414c"
+    },
+    {
+      "path": "tests/flh04-source-lifecycle-probes.mjs",
+      "bytes": 18844,
+      "git_blob_sha1": "65c0b0a031721f9752f592e974583ff673918496",
+      "sha256": "e6ad788be847c2b7329ba8299b89e8a25fea1fe79b1cbb921452eb161fd5db5e"
+    },
+    {
+      "path": "tests/flh04-source-lifecycle.test.mjs",
+      "bytes": 7025,
+      "git_blob_sha1": "56bdab130fc012923de8a6b0f9f283584dace19f",
+      "sha256": "863cc6775dad576ed295c6b3e2fbce74c467f09d33d2070f9589e19a69bd2439"
+    },
+    {
+      "path": "tests/flh04-c1-source-guard.test.mjs",
+      "bytes": 10941,
+      "git_blob_sha1": "12388345a554a76311de2c34aaba35a8835c1271",
+      "sha256": "734f38011cdf9afc34929ec25790b521f678a55c22abda3d9d6005eda3fd931d"
+    },
+    {
+      "path": "tests/flh04-c1-diagnostics.mjs",
+      "bytes": 3481,
+      "git_blob_sha1": "d3adb9857a17538070234fbdb28482322b44c4ba",
+      "sha256": "0bf61ab48437b7b96ee2f98121396ad3c5921c31a6e43a80593a8533c7dc8094"
+    }
+  ]
+}

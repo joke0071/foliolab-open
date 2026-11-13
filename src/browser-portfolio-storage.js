@@ -86,6 +86,11 @@ export class PortfolioStorage {
    return db;
   };
   if(db)hold(db);
+  // The previous idle handle would close on versionchange while this guard
+  // still blocks the upgrade. Bind the finite operation to its held source.
+  if(db&&this.isIndexedDB&&this.db&&this.db!==db){
+   this.db.close();this.db=db;
+  }
   const source={db,hold,check:()=>{
    if(failed)throw Error('IndexedDB-Quellenverbindung verloren. Keine lokale Übernahme.');
   }};

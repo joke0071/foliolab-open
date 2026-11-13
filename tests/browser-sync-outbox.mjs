@@ -8,9 +8,13 @@ import {frame} from './sync-outbox-fixture.mjs';
 const engines={chromium,firefox,webkit},name=process.env.ENGINE||'chromium';
 if(!engines[name])throw Error('Unsupported ENGINE');
 const v2Candidate=process.env.FLH04_VERSION2_CANDIDATE;
+// Independent opt-in; consumed C1 runs are not repeated by this candidate.
+const sourceLifecycle=process.env.FLH04_SOURCE_LIFECYCLE;
+if(sourceLifecycle!==undefined&&(sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))
+ throw Error('FLH04 lifecycle requires value 1, Chromium and no C1 opt-in');
 if(v2Candidate!==undefined&&(v2Candidate!=='1'||name!=='chromium'))
  throw Error('FLH04 C1 requires explicit value 1 and ENGINE=chromium');
-if(v2Candidate==='1'){
+if(v2Candidate==='1'||sourceLifecycle==='1'){
  const candidateURL=new URL((process.env.BASE_URL||'http://127.0.0.1:4173')+'/tests/storage-origin.html');
  if(candidateURL.protocol!=='http:'||!['127.0.0.1','localhost'].includes(candidateURL.hostname)||
     candidateURL.port!=='4173'||candidateURL.pathname!=='/tests/storage-origin.html')
@@ -157,6 +161,10 @@ try{
   assert.deepEqual(await operation(resumed,'anchor-proof'),proof);
   assert.equal((await operation(resumed,'read')).portfolio.syncEnrollmentRequired,true);
  }finally{await local.close();}
+ if(sourceLifecycle==='1'){
+  const {runSourceLifecycleCandidate}=await import('./flh04-source-lifecycle-probes.mjs');
+  await runSourceLifecycleCandidate({browser,setup,operation,url});
+ }
  if(v2Candidate==='1'){
   const {runVersion2Candidate}=await import('./flh04-version2-candidate-probes.mjs');
   await runVersion2Candidate({browser,setup,operation,url});
