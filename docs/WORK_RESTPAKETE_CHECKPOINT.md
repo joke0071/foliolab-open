@@ -2,8 +2,20 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED / HANDOVER_READY · work-eff-a815eee410c4-20261113.
-Begrenzter Nutzerauftrag „weitere Effizienz-/Stabilitätsoptimierungen prüfen und umsetzen“ abgeschlossen. Keine laufende eigene Schreiboperation, kein Hintergrundbetrieb, keine Zusatzagenten. Nächster Owner nach frischem Kollisionsabgleich; keine allgemeine Übernahmebestätigung nötig. Ältere work-pr333-Ausführung weiterhin NICHT technisch beendet nachgewiesen; historische ACTIVE-Angaben weder als Lauf noch als STOP auslegen.
+ACTIVE · work-alloc01-331fb5cfdd75-20261113.
+Alleiniger Writer für den autorisierten seriellen UI-ALLOC01-Schnitt.
+Kollision gezielt geklärt: Zentral280da5bd ist unverändert und Vorgänger
+work-eff-a815eee410c4-20261113 ausdrücklich STOPPED/HANDOVER_READY;
+keine offene fremde Speichermutation aus aktuellem Checkpoint ersichtlich.
+Maina27cde2f/UI-R4-60c1ab09/FLH04-Arbeitsref435ab9a8 frisch unverändert,
+0IN_PROGRESS,neuesterRun43500770689FAILURE.
+Überholtes unverknüpftes Objektd72be4b9 bleibt verworfen,keineLease.
+OriginalauftragUI-ALLOC01/#149/6562657245 und Nutzerfolgeauftrag maßgeblich.
+Nur Main-basierter unveränderlicher Codekandidat/gezielteNode-/Syntaxprüfung;
+keine neueBranch/PR/Kandidatenref,nativeAusführung/CI/Merge/Release.
+UI-R4 bleibt geschützt;keine weiteren parallelen Entwicklungsstränge.
+Ältere work-pr333-Ausführung weiterhin technisch ungeklärt, hier keine
+abhängige Release-/Nativeaktion und keine Aussage über deren technischenSTOP.
 
 Dieser Checkpoint ist der aktuelle Einstieg, keine append-only Chronik. Bei Änderung aktuellen Zustand fortschreiben und Vorgänger gepinnt verlinken. **Vollständige bisherige Historie unverändert im [Originalcheckpoint an 0f0981c](https://github.com/joke0071/foliolab-open/blob/0f0981c468d4031f56f4e729e2a8682e9b09a3b0/docs/WORK_RESTPAKETE_CHECKPOINT.md).** Dessen alte Owner-/NEXT-/Freigabeangaben sind historisch; nicht widersprechende Fach-/Originalverträge bleiben verbindlich.
 
