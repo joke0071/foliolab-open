@@ -82,7 +82,11 @@ Unabhängige erwartete Referenzfälle für diesen bestehenden Vertrag:
 
 Das sind spezifizierte Sollfälle, **keine ausgeführten neuen Tests**. Authentisierung/Kanonisierung, Revisionsidentitätsbildung, Nonce-/Schlüsseltrennung, Rotation und Recovery bleiben vor Code fachlich zu schließen; keine neue Eigenkryptografie aus diesem Abgleich. Die tatsächlichen Drive-Schreib-/Sichtbarkeits-/Idempotenz-/OAuthbedingungen sind getrennte externe Nachweise, keine Voraussetzung für das Spezifizieren rein lokaler Fälle.
 
-Der einzige isolierte Produktfolgeschnitt bleibt UI-R4. Solange sein Platz durch den geparkten Releaseblocker gebunden ist, keinen zweiten FLH04-Produktbranch eröffnen oder Sync in UI-R4 mischen. Diese Folgevorbereitung liegt ausschließlich in diesem bestehenden Wochenplan; Draft161 nicht mergen. Vor produktiver Sync-/Migrationsfreigabe konkreten vollständig reviewbaren Kandidaten und die dann erforderliche Nutzerentscheidung gemäß #160 vorlegen.
+**Historischer Planungsstand des damaligen Wiederverwendungsabgleichs; die damalige Beschränkung auf UI-R4 ist durch die nachfolgend autorisierte isolierte FLH04-Fortführung abgelöst:**
+
+> Der einzige isolierte Produktfolgeschnitt bleibt UI-R4. Solange sein Platz durch den geparkten Releaseblocker gebunden ist, keinen zweiten FLH04-Produktbranch eröffnen oder Sync in UI-R4 mischen. Diese Folgevorbereitung liegt ausschließlich in diesem bestehenden Wochenplan; Draft161 nicht mergen. Vor produktiver Sync-/Migrationsfreigabe konkreten vollständig reviewbaren Kandidaten und die dann erforderliche Nutzerentscheidung gemäß #160 vorlegen.
+
+**Aktuell:** Der im frischen [Checkpointkopf](WORK_RESTPAKETE_CHECKPOINT.md) benannte alleinige Hauptowner führt die autorisierte unabhängige FLH04-Arbeit auf dem bestehenden Arbeitsbranch fort. UI-R4 und Draft161 bleiben geschützt; aktive Synchronisierung, Integration und Release benötigen weiterhin alle vorgeschriebenen Gates. Fachlicher Scope-Status ausschließlich in N-DRIVE der kanonischen Roadmap. Für kontinuierliche Fortführung, kurze Statuspflege, zusammengehörige Schreib-SHAs und konkrete Abnahmewege gilt einmalig der [aktive Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md#fortschreibung-13112026-kurze-statuspflege-und-ausführbare-abnahmewege).
 
 ## 1. Zuständigkeit und sicherer Einstieg
 
