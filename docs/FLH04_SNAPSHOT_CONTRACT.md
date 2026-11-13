@@ -907,3 +907,135 @@ Prüfer und nötigen Zugang/Budget; kein Paketneubau, Selbst-/KI-Reviewabschluss
 externe Beauftragung. K1 ist zusätzliche ungeprüfte nachgelagerte Vorarbeit und
 keine Änderung oder pauschale Erweiterung des gepinnten Reviewgegenstands.
 Alle A1/A2/prepared-locked/Snapshot-/Produktions-/Sicherungsgrenzen bleiben gültig.
+
+## K1-Writerabschluss: gerichtetes Ergebnis und ABA-Grenze · 13.11.2026
+
+work-03b53e88c37d-20261113; vollständig gepinnte Basis
+c6674c64d945caf3dcbec43e43ef00106d2cad76 /
+Tree58bb88cee3ae060bb9a7ec33a934a2012b970a6c.
+**K1 ALS VOLLSTÄNDIGER MECHANISMUS NICHT TRAGFÄHIG / NICHT IMPLEMENTIERT.**
+Kein neuer Kryptokandidat und keine Selbst-/KI-Abnahme. Unveränderte
+Raw-/Payload-/CryptoKey-Matrix sowie Ausstellervertrag Abschnitt4 bleiben Pflicht.
+
+### Tatsächlich abgegrenzte Schreibflächen
+
+Das vollständige nicht abgeschnittene Git-Tree enthält 154 src/*.js-Dateien.
+Alle154 plus sw.js und index.html wurden vollständig vom exakt gepinnten Commit
+über das verbundene GitHub-Plugin gelesen, lokal als exakte UTF8-Bytes rekonstruiert
+und unabhängig mit Gitblob-SHA1 gegen jeweils denselben Treeeintrag geprüft.
+Gezielter Scan nach IDB/Transaktionen/Objectstores/DB-Löschung/Anker/DBzugang/
+Worker-/SW-Einstieg, anschließend semantischer Abgleich der Treffer und
+relevanten Importpfade. Kein Repository-Gesamtaudit; Tests, historische Altversionen,
+extern laufende Kontexte und dynamisches Laufzeitverhalten dadurch NICHT abgenommen.
+Defaultbranch-Codesuchergebnisse dienten nur der Orientierung, nie als gepinnter Beleg.
+[Vollständiges Quellmanifest und begrenzte Ergebnisse](release-evidence/flh04-k1-writer-boundary-2026-11-13.json).
+
+| Aktueller Pfad | Tatsächliche Mutation / Bedeutung für K1 |
+| --- | --- |
+| atomic-storage commitPortfolioRecord, stageLegacyPortfolio | Portfolio-CAS/Revision; Löschung/Restore/Reinitialisierung invalidieren Outbox. Kein Keyslotwriter. stageLegacy delegiert an commitPortfolioRecord. |
+| atomic-storage restoreDamagedRecord, retirePortfolioCredentials | Portfolio-/Settings-Reparatur mit Revision bzw. expliziter Recovery; ggf. Outboxinvalidierung. Kein Anker-Keytausch. |
+| atomic-storage adoptPortfolioRecord | Portfolio/Fence und ggf. Outboxinvalidierung atomar; kein Enrollment oder Keyslotwechsel. |
+| atomic-storage commitPortfolioSyncRecord | Portfolio-/Outbox-Preimages und Outboxversion; schreibt nur sync-outbox-v1. Prüft weder sämtliches P noch CryptoKey-Material und ist kein K1-Commit. |
+| sync-local-anchor commitPrepared / prepareLocalSyncAnchor | Einzige im aktuellen Produktionsquellbestand gefundene direkte Schreibstelle für sync-local-anchor-v1. Private Neuanlage nach Presence-/Portfolio-Prüfung; vorhandene Anker verweigert. Kein mutierender Lebenszyklus oder voller K1-Schutz. |
+| browser-portfolio-storage / app | Browseradapter nutzt obige Routinen; öffentliches this.db und openPortfolioDB geben echte DBverbindungen heraus. withLocalLock für lokale Vorgänge ist keine verpflichtende Keyslot-Schranke. |
+| backup-vault / alpha-vantage / instrument-catalog / security-catalog | Je andere benannte Datenbank (Backupvault/Marktcache/Fondskatalog); nicht als Portfolio-Keyslotwriter gezählt. Bestehende separate DBs bleiben unverändert, keine zweite Sync-DB vorgeschlagen. |
+| wallet-history-days-worker und dessen Importpfad | Berechnung/PostMessage; im aktuellen gepinnten Quellpfad kein Portfolio-IDB-Writer gefunden. Das erklärt keinen beliebigen alten/fremden Worker zu ausgeschlossen. |
+| sw.js | Cachepflege/Fetch/clients.claim; kein Portfolio-IDB-Keyslotwriter. Cacheupdate/clients.claim beendet keinen bereits ausgeführten alten Seitencode und beweist keinen Writerabschluss. |
+| tests/browser-sync-outbox.mjs | Bestehender Harness hält echte DBverbindung, liest Anker direkt und injiziert begrenzte Putfehler. Er enthält noch keinen K1-Keytausch-/Worker-/ABA-Test; keine native Ausführung oder PASS in dieser Sitzung. |
+
+Diese Aufstellung beweist die gelesenen aktuellen Schreibstellen, NICHT, dass
+ein unabhängiger zulässiger B-Writer den tatsächlichen Slot nicht ändern kann.
+Insbesondere kann ein neues privates Modul alten bereits laufenden Code oder
+eine weitere legitime IDBverbindung nicht nachträglich auf den Lock verpflichten.
+Es wurde kein tatsächlich laufender Alt-Tab/Worker und keine Produktkorruption
+behauptet. Feindlicher Same-Realm-Code bleibt außerhalb des bestehenden Modells;
+normale Alt-/Worker-/Recovery-/Testkonkurrenz wird dadurch NICHT ausgeschlossen.
+
+### Zweiter konkreter Gegenablauf: K0→K1→K0
+
+1. A erfasst vollständiges P mit K0 und beginnt Cryptoarbeit außerhalb von IDB.
+2. Nach einer bestandenen Challenge ersetzt B in einer unabhängigen kurzen
+   records-readwrite-Transaktion K0 durch materialverschiedenes K1, bei identischen
+   Metadaten/Attributen. B nimmt nicht am kooperativen K1-Lock teil.
+3. Vor A's nächster Beobachtung stellt B K0 einschließlich sämtlicher ursprünglicher
+   Feld-/Slotpräsenz und Metadaten wieder her. Auch zusätzliche Slots könnten
+   zwischen zwei Beobachtungen angelegt und wieder entfernt worden sein.
+4. A beobachtet dieselben Werte wie ohne B. Selbst ein hypothetisch vollständiger
+   Schlüssel-Endzustandsvergleich könnte diesen Zwischenwechsel nicht erkennen.
+   Die verbindliche Anforderung, jede zwischenzeitliche Keyslot-/Presenceänderung
+   zu verwerfen, wäre dennoch verletzt.
+
+Dies ist eine eigene argumentative Ablaufanalyse, KEIN nativer Repro, kein
+Test-PASS und kein allgemeiner Unmöglichkeitsbeweis für jede denkbare Architektur.
+Sie zeigt konkret: Für diese K1-Konstruktion reichen beliebig viele endliche
+Wiederlese-/Challengepunkte nicht, solange B unbeobachtet schreiben kann.
+Auch nach der letzten Challenge bleibt vor dem Commit eine Racegrenze.
+Ein Transaktionscommit kann nur den in seinem eigenen Scope geschützten Abschnitt
+atomar machen; die vorherige Cryptoarbeitsphase wird dadurch nicht rückwirkend
+isoliert. Es gibt am aktuellen Stand keinen qualifizierten monotonen
+Mutationszeugen, den ALLE solchen Writer zwingend zusammen mit jeder Mutation
+fortschreiben müssten. Ein frei beschreibbarer Lifecyclezähler ist kein Ersatz.
+
+### Konkret verworfene Ersatzmaßnahmen
+
+| Maßnahme | Warum sie den unveränderten Gegenfall nicht schließt |
+| --- | --- |
+| DBhandle nicht mehr exportieren / private Fachoperationen | Sinnvolle künftige APIbegrenzung, aber kein natives Slot-ACL. Andere Fenster/Worker können die bekannte DB im selben Bucket selbst öffnen; alte Handles bleiben bestehen. Allein keine ausreichende Änderung. |
+| Nur Dedicated-/SharedWorker oder ServiceWorker als Broker | Broker serialisiert nur seine eigenen Aufträge. Direkte andere IDBtransaktion bleibt möglich; Workerbesitz/clients.claim ist kein exklusiver Storebesitz. |
+| Zusätzlicher Lockname, query, BroadcastChannel, Tab-Heartbeat | Kooperativ bzw. Momentaufnahme; nicht teilnehmender B wird nicht verhindert. Keine neue Lease/TTL/steal/Fallbacklösung. |
+| Monotone Lifecycle-/Mutationsepoch als gewöhnliches Recordfeld | Nur tragfähig, falls jede relevante Mutation nachweislich zwingend mitwirkt und der Zeuge nicht zurückgesetzt werden kann. Für B und Altversionen hier gerade nicht nachgewiesen; keine bloß postulierte Lösung. |
+| Letzte Challenge, öffentliche Fingerprints, JSON oder Envelopebytes | Bindet Beobachtung/Metadaten, keine durchgängige tatsächliche Slot-Nichtmutation; ABA bleibt ununterscheidbar. Nicht exportierbare Keys werden nicht nachträglich exportierbar gemacht. |
+| indexedDB.cmp / JS-Identität / WeakMap über geklonte Keys | IDBcmp vergleicht zulässige IDB-Schlüsselwerte, keine undurchsichtigen CryptoKeymaterialien. JS-Identität ist nach Klon kein persistenter Material-CAS. Keine qualifizierte synchrone Materialgleichheit dadurch. |
+| IDBtransaction während Cryptoawait offenhalten | Verletzt bestehenden Vertrag; automatischer Commit/Lifecycle bleibt zu beachten. Kein Polling/Keepalive/verschachtelter Sperrtrick. |
+| Versionchange, DBneuanlage oder anderer Origin/Bucket | Ändert vorgegebene DB-/Version-/Speicherlinie bzw. erfordert separaten Architekturvertrag; hier ausdrücklich keine Umsetzung/Freigabe. Ein einfacher SWreload ist keine Ersatzbarriere. |
+| Immer blockieren | Erhält die Sicherheitssperre, liefert aber keinen nutzbaren vollständigen Syncmechanismus und zählt nicht als gelöste CryptoKey-CAS. |
+
+Primär-APIgrundlage am13.11.2026 frisch gelesen: WebLocks WorkingDraft12.11.2026
+Einleitung/LockScope/request-steal; IndexedDB3 WorkingDraft30.10.2026
+Transaktionen/Scheduling/Lifecycle/Keys; WebCrypto Level2 WorkingDraft22.04.2025
+CryptoKey-Interface/internes Handle/Serialisierung.
+https://www.w3.org/TR/2026/WD-web-locks-20261112/
+https://www.w3.org/TR/2026/WD-IndexedDB-3-20261030/
+https://www.w3.org/TR/2025/WD-webcrypto-2-20250422/
+Die Schlussfolgerungen oben sind eigene Mechanismusanalyse, keine Aussage eines
+externen Prüfers und keine native Browserqualifikation.
+
+### Konkreter weiterer Abschluss statt Wiederholung
+
+Der vollständige aktuelle Quellscan ist an dieser Basis erledigt. Nicht beim
+nächsten Chatwechsel dieselben156Dateien oder denselben Lockentwurf erneut lesen.
+Nur ein konkreter neuer Mechanismus mit überprüfbarer Durchsetzung gegenüber
+direktem B und ABA rechtfertigt den nächsten K1-Implementierungskandidaten.
+Seine Pflicht bleibt: vollständiger Writer-/Versions-/Lifecycleabschluss über
+ALLE relevanten P-Mutationen oder eine gleichwertige tatsächlich durchgesetzte
+Schranke, ohne Vertrag4/DBversion/Rawguards/prepared-locked-Schutz zu lockern.
+Ein unterstützter Neulinienpfad müsste konkret erklären, warum alte und fremde
+zulässige Writer den betroffenen Slot während der gesamten Phase weder ändern
+noch unbemerkt zurücksetzen können. Ein bloßes Quellmanifest reicht dafür nicht.
+
+Interner Rest bleibt beim Hauptowner; kein Codeauftrag an Jochen. Ein tragfähiger
+neuer Mechanismus wurde hier NICHT gefunden. Keine endlose neue Locknamen-/
+Metadaten-/Allowlistserie als Ersatz. CR4/CR5 bleiben ausdrücklich ungelöst;
+die Zusatzanalyse verändert den gepinnten Reviewgegenstand17a5a190 nicht.
+Bestehendes Paketfd3fce4b/Revieweinstieg weiterverwenden, Impactabgleich separat
+beifügen statt Paketneubau oder pauschaler Erweiterung. Keine externe Nachricht/
+Beauftragung/Selbstfreigabe. Erst tatsächlich einschlägiger unabhängiger Abschluss
+kann reviewgesperrte Implementierung erlauben; ein bloß positives Review löst
+die fehlende Durchsetzung ebenfalls nicht.
+
+Konkret weiterhin von Jochen zuzuordnen: zugänglicher zugelassener nativer
+Testplatz nach bestehender Matrix und unabhängiger qualifizierter Prüfer samt
+ggf. Zugang/Budget. Kein neuer Runner/Workflow/CIstart.
+Aktuelle Sitzung: Node24.22.1; CommonJS createRequire findet runtimeeigenes
+PW1.62.1 auch vom Projektpfad, aber der tatsächlich für den Harness relevante
+ESM-Import am Projekt-Testpfad scheitert ERR_MODULE_NOT_FOUND. Das sind
+verschiedene Auflösungswege, keine widersprüchliche Browserqualifikation.
+/usr/bin/chromium vorhanden; NoNewPrivs1/Seccomp2; kein erfolgreicher Browserstart,
+kein bekannter Fehlstart wiederholt und keine Umgehung/Installation.
+ENVIRONMENT_BLOCKED für native Abnahme dieser Sitzung; andere Umgebungen UNKNOWN.
+Nativegegenproben nach tragfähigem Mechanismus im bestehenden Harness gezielt um
+dauerhaften K0/K1-Tausch UND K0/K1/K0-ABA, Presence/Zusatzslot-ABA, Alt-Tab/Worker
+an JEDER Cryptoawaitgrenze erweitern. Gespeicherter Zustand/Antwortverlust,
+Reopen im selbenContext, echter Prozesscrash und realeQuota getrennt belegen.
+Alle P/R/S/D-,Retry-,oncomplete-,A1/A2-,Budget-,Review-/Releasegrenzen unverändert.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
