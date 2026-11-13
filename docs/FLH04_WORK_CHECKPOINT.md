@@ -1,5 +1,46 @@
 # FLH04 — lokaler Implementierungscheckpoint
 
+## STOPPED / HANDOVER_READY / LOCAL_FRAME_VERIFIER_IMPLEMENTED / RELEASE_BLOCKED · work-68bf48c25eec-20261113
+
+Eigene alleinige serielle HND01-Zuständigkeit und sämtliche eigenen Schreibaktivitäten enden mit dem Abschluss und gepinnten Readback dieser Fortsetzung; kein Hintergrundbetrieb und keine Nachfolgerübernahme behauptet. Vorgänger work-b5ddfe1c-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen.
+
+### Umgesetzter Schnitt
+
+- Frame-/Schlüsseltrennungsvertrag **vor Kryptocode** in Commit c5c2f32e0725e354c774adcaa5a54131f6d8f6ad / Tree01e50493507c2bd0ac4b3b44b66728d649871b44 gespeichert und gepinnt exakt rückgelesen. Portfolio-/Epochbindung, verschlüsselter vollständiger Descriptor, HKDF-Kontext/AAD, feste Byteformate/Limits, Replay/Nonce/Rotation/Recovery und atomare spätere Outboxgrenze konkret festgelegt.
+- src/sync-frame-verifier.js: eigenständiger WebCrypto-HKDF/AES-GCM-Decoder für eine **lokal vertraute** Portfolio-/Epoch-/CryptoKey-Bindung, keine Remote-Schlüsselauswahl. AEAD vor fatal UTF8/striktem Inhalt/Descriptor/bytegenauem Payloadhash. Unveränderlicher privat registrierter flüchtiger Verifierbeleg; JSON/Boolverified nicht ausreichend. Kein Encoder/Password-KDF/Key-Wrapping/Enrollment/Key-Erzeugung.
+- src/sync-outbox-attempt.js: ausschließlich flüchtige lokale Versuchserfassung und Publikationsklassifikation mit vollständig erwartetem Descriptor/Portfolio/Epoche/Erfassungs-CAS und exaktem verschlüsseltem Frame. HTTP-Erfolg bleibt uncertain. Nur identischer authentisierter äußerer Frame bestätigt. Anderer gültiger Cipher desselben Descriptors blockiert. Bestätigung erfasst ausschließlich alten CAS, neuere lokale Änderungen bleiben ausstehend.
+- src/sync-revisions.js exportiert nur seinen bestehenden Descriptorvalidator zur Wiederverwendung; bisherige Graph-/Konflikt-/CAS-Semantik unverändert. Bestehender reiner Graphplaner bleibt separat vor Apply erforderlich; erfolgreiche Entschlüsselung allein autorisiert nichts.
+- Keine App-/SW-/IDB-/Cloud-/Workflow-/Backup-/Vaultintegration, keine Transportwahl/Remote-CAS-Zusage. Keine Finanzpayloadnormalisierung oder Credentialübernahme. Symmetrischer Gruppenschlüssel authentisiert keinen einzelnen Writer; Herkunft/Entropie des CryptoKey muss zukünftiger Enrollment-/Vaultadapter nachweisen.
+
+### Tatsächliche Prüfung
+
+Node24.22.1 (weiterhin abweichend von CI22/Wallet20): **19 neue Tests** in tests/sync-frame-verifier.test.mjs PASS. Unabhängiger Node/OpenSSL-HKDF/AES-GCM-Encoder, SHA256-Oracle; kein Produktionsencoder aus dem Test. Feste Testschlüssel/Salts/Nonces ausschließlich synthetisch. Negative Portfolio/Epoche/Secret/Backup-AAD/KDF-Kontext/Salt/Nonce/Cipher/Tag/Parent/Generation/Writer/Digest/Unicode/UTF8/BOM/Hüllen-/Größen-/Proof-/Outbox-/Retryfälle; authentisierte Replay-/Geschwister-/Equivokationsfälle durch echten Decoder und vorhandenen Planer kombiniert.
+
+Finale serielle lokale Auswahl mit --test-concurrency=1: **63 PASS /0 FAIL /0 SKIP /0 CANCELLED** =19 neue+21 Revisions+6 Integritäts+17 bestehende Storage-/Importtests. Syntax aller4Syncmodule und neuer Testdatei PASS. 74 unveränderte lokale Eingaben gegen gepinnten Gitbaum535c865b... bestätigt; 5 bewusst geänderte/neue Dateien im damaligen lokalen Prüfsatz, anschließend dieser Checkpoint ergänzt. Beim Eingangsabgleich war lokale alte Kopie von backup-limits.js verkürzt; **vor jeder Testausführung** aus gepinntem Repository ersetzt und Blob9c293419fe0fc3540e9c6686abce2f3c2c7e52f5 exakt bestätigt. Keine Behauptung einer auf der verkürzten Kopie ausgeführten qualifizierten Prüfung.
+
+Keine neue Browser-/echte Sync-IDB-/OAuth-/Zweigeräte-/Recovery-/FullCI-/Produktionsabnahme. Kein unabhängiges Kryptoreview; Standardsprimitive und Units sind kein fertiges E2EE-Protokoll oder Key-Lifecycle-Nachweis. Frame-Envelope limitierter als Backup, keine bestehenden Limits erhöht. Flüchtiger Outboxschnitt ist ausdrücklich **keine dauerhafte/absturzsichere Outbox**.
+
+### Nächster unabhängiger Schritt und offene Gates
+
+Zuerst den konkreten aktuellen Decoder-/Frame-/Outboxentwurf gezielt prüfen, bevor Encoder oder Key-Lifecycle anschließen. Anschließend bestehende lokale Identity-/IDB-Verträge begrenzt lesen und einen atomaren **persistenten Outbox-/Ankervertrag** vor Implementierung festlegen: Snapshot/Descriptor/Parent/Portfolio/Epoche/Erfassungs-CAS/exakter Frame/Versuchszustand; Crash vor/nach Commit, neuer lokaler Save während Upload, Quota, konkurrierende Tabs, Reverify nach Neustart. Gegen tatsächlichen IDB-CAS integrieren nur mit ausführbaren gerichteten Tests; zurückgestellten Browserblocker nicht erneut starten. Nicht als kleine LocalStorage-Queue umgehen.
+
+Rest: vertrauenswürdiges Enrollment/zufällige Identitäten und Sync-Epochenschlüssel/Passwortumhüllung, Allowlist des Credential-freien Snapshotumfangs und Finanz-/History-/Journal-/UNKNOWN-/Dedupevalidierung, geprüfter Encoder und dauerhafte Nonce-/Keybudgets, Rotation/Recovery-Übergangsformat, dauerhafte Outbox/IDB-Anker-/Applyatomizität, authentisierte Graphadapter, Transport/RemoteConcurrency, explizite Konfliktauflösung und UI. Rotationsvollzug bewusst blockiert, kein stiller Epochenwechsel; historische Schlüssel nur später separat history-only. Neues Gerät ohne vertrauenswürdigen Anker bleibt Enrollment/Recovery.
+
+Alle internen Pflicht-/externen OAuth-/Operator-/Origin-/Scope-/RemoteConcurrency-/Pagination-/DelayedVisibility-/Quota-/Zweigeräte-/Recovery-/Browser/IDB/Mehrtab/PWA/Axe-/Release-/Sicherungs-/Readback-/Restoregates bleiben offen. N-DRIVE BLOCKED_EXTERNAL und FLH04 NICHT DONE. Main a27cde2f802c26bfec41190911d88bd1d7d8e325 / Run43332355188 FAILURE/PARKED/RELEASE_BLOCKED. Kein PR/CI/Freeze/Merge/Deploy und kein Chromium-/Umgebungsaudit. Produktiver Sync braucht konkrete Freigabe am vollständig reviewbaren Kandidaten.
+
+### Unveränderte Schutzstände
+
+Draft161 0d980c2f43f28fd06ef9a7403b2144b6099fbc74; PR157 08714cc602110bae479083b3d38fa1adc9be280c; PR332 71dfb05d5dae6a7e5d7c3979120462e0862fe7e2 weiterhin CSV44pxBLOCKED; UI-R4 60c1ab098449151b475563c9fc822b9a5e9a9152. Checkpointref niemals vollständig nach Main mergen. Keine Workflowänderung, kein zweiter Writer/Agent/Automation/finaleCI. Original-/Oracle-/Readback-/Restoreketten erhalten.
+
+RootV155/406425600Bytes/SHA256749f072638409f4643fa9ed0763c4ceaa18bb89fa2557585624953f47722e234;
+FAILCompanionV0/12748800Bytes/SHA256459e5236c9f3d41d16c00bb5cdc5920929044608c19435cc8e64188e78777169;
+MainOriginalCompanionV0/212408320Bytes/SHA256af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c.
+Nur Metadaten bestätigt, keine privaten Transfers/Restore/Uploads/neue Sicherung. Root allein unvollständig; bisherige Originalketten unverändert.
+
+## Unveränderte Vorgängerhistorie
+
+# FLH04 — lokaler Implementierungscheckpoint
+
 ## STOPPED / HANDOVER_READY / PURE_MODEL_IMPLEMENTED / RELEASE_BLOCKED · work-b5ddfe1c-20261113
 
 Nutzerauftrag 13.11.2026 setzt unabhängige FLH04-Implementierung auf eigenem Branch ausdrücklich fort. Chromium-/Unix-Socketblocker zurückgestellt: kein Browserstart/Umgebungsaudit wiederholt. Mainbasis a27cde2f802c26bfec41190911d88bd1d7d8e325, Branch `feature/flh04-revisions-20261113-b5ddfe1c`. Geschützter Draft161 HEAD0d980c2f43f28fd06ef9a7403b2144b6099fbc74 unverändert; die beiden bestehenden Entwurfsdateien sind hier als Fortsetzung übernommen, nicht auf Draft161 geändert.

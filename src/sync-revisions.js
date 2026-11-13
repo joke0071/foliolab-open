@@ -14,6 +14,7 @@ const valid = r => r && typeof r === 'object' && !Array.isArray(r) &&
  (r.parentId === null || id(r.parentId)) && generation(r.generation) && digest(r.payloadDigest);
 const same = (a,b) => fields.every(k => a[k] === b[k]);
 const copy = r => Object.fromEntries(fields.map(k => [k,r[k]]));
+export {valid as isSyncRevisionDescriptor};
 const blocked = reason => ({status:'blocked',reason});
 
 /** Full ancestor closure of the observed union of local and remote descriptors.
