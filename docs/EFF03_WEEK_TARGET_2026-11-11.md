@@ -1,5 +1,16 @@
 # EFF03 – Sieben-Tage-Ziel für den vollständigen bestehenden Entwicklungsumfang
 
+## Vorrangiger Scope-Nachtrag · 13.11.2026
+
+Der neueste Nutzerauftrag fokussiert Windows Chrome/Edge und Android. Die bisherige gemeinsame Android-/TalkBack-Pflicht wird aufgehoben: Android mit vorhandenen Fixtures durchführen; TalkBack und Safari sind DEFERRED_USER und keine Pflicht des persönlichen Zielumfangs. Historisches Wochenziel und darunterstehende Acht-Blocker-/Geräteaufträge gelten nur unter dieser neuen Eingrenzung. Keine Umdeutung zu DONE.
+
+Bestehendes verschlüsseltes Backup/Restore und ausdrücklichen Gerätewechsel priorisieren. Neue automatische E2EE-Synchronisierung nachrangig; Zeitstempel-LWW abgelehnt, Originalerhalt und lokale Mehrtab-/CAS-Prüfungen bleiben erforderlich. N-DRIVE-Aufgaben nur bei konkretem Bedarf am gewählten Nutzerablauf oder bestätigtem Sicherheits-/Datenverlustbefund fortführen; keine endlose native Mechanismusvorbereitung als Standardfolge.
+
+[Neue verbindliche Leitplanken](WORK_EFFICIENCY_PLAN_2026-11-01.md#verbindlicher-nutzungsfokus-und-vereinfachung--13112026) bestimmen Architektur, Fehlerbehandlung, Parserumfang und Delta-QA. Vorhandenes Android_TalkBack-Testpaket bleibt als historische unveränderte Fixturelieferung verwendbar; TalkBackteil optional, kein neuer ZIP-Bau notwendig.
+
+Nächster Abschlussumfang: bestehende Windows-Chrome/Edge-/Android-Kernbedienung und manuelle Backup-/Restorefolge qualifizieren; fehlende tatsächliche Geräte-/Accountzugänge gezielt benennen. Erst direkt betroffene Tests wählen. Gesonderte CI-Matrixanpassung nur als konkreten Kandidaten nach Freigabevertrag vorbereiten, keine heimliche Gateentfernung oder neue Ausführung.
+
+
 Verbindlicher Planungsnachtrag zum [bestehenden Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md), Nutzerauftrag vom 11.11.2026, 12:31 MEZ. Ziel: Fertigstellung aller bereits beauftragten Entwicklungspakete innerhalb von sieben Kalendertagen, bis **18.11.2026, 12:31 MEZ**, ohne Qualitäts-, Finanz- oder Datensicherheitsabbau.
 
 Dieser Nachtrag ist ein Ausführungs- und Priorisierungsplan, keine zweite Roadmap. Die [kanonische 41-Scope-Matrix](KONSOLIDIERTE_ROADMAP.md) bleibt die einzige Statusquelle. Historische Nachweise und fachliche Anforderungen bleiben erhalten. Der Wochenumfang umfasst ausdrücklich auch die bisher NACH_1.0 eingeordneten Pakete einschließlich FLH04-Synchronisierung. Die bestehende Definition von Version 1.0 wird dadurch nicht stillschweigend erweitert; die spätere Versionszuordnung ist von der Priorität im Wochenplan zu unterscheiden.

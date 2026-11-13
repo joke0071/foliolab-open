@@ -1,5 +1,8 @@
 # Android03 – kurze reale Geräteabnahme
 
+**Nutzer-Scope 13.11.2026:** Android Chrome/PWA bleibt Pflicht des persönlichen Zielumfangs; TalkBack ist ausdrücklich zurückgestellt. Alle folgenden TalkBack-Abfragen und Testschritte sind optional und blockieren Android-PASS nicht. Normale Dialog-/Tastatur-/Touch-/IME-/Systemschriftprüfungen bleiben erforderlich. Vorhandene Fixtures und historische Messergebnisse unverändert. Windows Chrome und Edge sind gesonderte Zielplattformen; dieser Androidauftrag ersetzt deren reale Prüfung nicht.
+
+
 **Status: EXTERNAL / noch nicht durchgeführt.** Die automatisierte Baseline ist ausdrücklich EMULATED. Ein Desktop-Chromium mit CPU4x ersetzt weder Android-Prozessstart noch installierte PWA, Energiesparen, TalkBack oder längeren Hintergrundbetrieb.
 
 ## Konkreter erster Operatorauftrag · 13.11.2026
@@ -36,7 +39,7 @@ Kalenderbedienung, keinen Restorehandler. Keine neue Browser-/IDB-/Hardware-/
 Main-/Produktions-/Kryptoreviewabnahme.
 
 **Jetzt unverzichtbar:** Jochen benennt ein tatsächlich isoliertes Android-Testprofil
-oder Testgerät ohne Privatportfolio und meldet Gerät/Android/Browser/TalkBack sowie
+oder Testgerät ohne Privatportfolio und meldet Gerät/Android/Browser sowie
 sichtbare App-/SW-Identität. Das tatsächliche Geräteergebnis bindet sich an genau
 diesen beobachteten Stand; UNKNOWN nicht aus Main oder Cachekennung ersetzen.
 Kein Import in die bestehende private PWA; fehlt Isolation, mutierende Fälle stoppen.
@@ -47,7 +50,7 @@ Keine Freigabe des ungeklärten aktuellen Main-/Produktionsgates durch diesen Te
    die Originaldatei enthält transportbedingt autoRefresh=daily. Der Import
    übernimmt nicht ungeprüft diese Einstellung; ausgeschalteten lokalen Zustand
    tatsächlich kontrollieren.
-3. Bestehende Dialog-/TalkBackfälle zunächst mit leeren/kleinen synthetischen
+3. Bestehende normale Dialogfälle zunächst mit leeren/kleinen synthetischen
    manuellen Eingaben ausführen, keine privaten Walletadressen oder API-Keys.
 4. Erst im isolierten Profil das Original-10k-JSON importieren; Menge/Gesamtwert,
    Listenanzahl soweit sichtbar und Journalbezüge gemäß Soll prüfen. Für nicht

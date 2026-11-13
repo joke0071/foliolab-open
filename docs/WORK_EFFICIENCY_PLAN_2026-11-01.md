@@ -1,5 +1,72 @@
 # FolioLab – aktiver Effizienzplan
 
+## Verbindlicher Nutzungsfokus und Vereinfachung · 13.11.2026
+
+Neuester ausdrücklicher Nutzerauftrag: hauptsächlich persönliche Nutzung auf Windows mit Chrome UND Edge sowie Android; gleichzeitige geräteübergreifende Bearbeitung unwahrscheinlich; TalkBack nicht wichtig, Safari voraussichtlich ungenutzt. Diese fachliche Priorisierung ersetzt entgegenstehende ältere Pflichtzuordnungen für Safari/TalkBack im persönlichen Zielumfang. Vorhandene Daten-/Original-/Transaktions-/Reviewgates werden nicht durch eine Nutzungsannahme aufgehoben.
+
+### Angenommene Leitplanken
+
+- Zielplattformen: Windows Chrome, Windows Edge und Android Chrome/PWA. Android-Edge oder andere Browser erst bei konkretem Bedarf separat zuordnen. Ein Chromium-Linux-Lauf beweist keine tatsächliche Windows-/Android- oder installierte Edge-PWA-Abnahme.
+- E-SAFARI und E-TALKBACK sind DEFERRED_USER: bewusst zurückgestellt, nicht erledigt und keine Blocker des persönlichen Zielumfangs. Historische Protokolle und Nachweise bleiben erhalten. Kein aktiver Gerätebeschaffungs-/TalkBack-Testauftrag.
+- Semantisches HTML, bestehende Labels/ARIA, Tastaturbedienung, sichtbarer Fokus, Escape/Zurück, Fokus beim Öffnen/Schließen relevanter Dialoge, Touchziele und lesbare Fehler erhalten. Keine neue umfassende Screenreaderoptimierung; keine pauschale Entfernung vorhandener Bedienhilfen.
+- Bestehende Vanilla-JS-Module und Ereignisse weiterverwenden; keine neue Custom-Reactivity-/Event-Bus-Abstraktion. CustomEvent/EventTarget für einfache UI-Benachrichtigungen bevorzugen, direkte Funktionsaufrufe für Fachbefehle/Ergebnisse zulassen. Nicht die gesamte App auf Events umbauen.
+- Eventnamen und Datenumfang pro tatsächlich geänderter Schnittstelle knapp festhalten; Listenerlebensdauer sauber beenden. Events sind weder persistente Zustände noch Transaktionen oder Autorisierung. Benachrichtigung über gespeicherte Änderungen erst nach bestätigtem Commit. Kein Portfolio/Key/Credential als breit verteiltes Eventdetail.
+- Keine CRDTs, Feldzusammenführung oder automatische Konfliktauflösung neu bauen. Bereits bestehende Revisions-/Konfliktregeln verwenden.
+
+### Gerätewechsel statt automatischem Last Write Wins
+
+Für den häufigsten Ablauf zuerst bestehendes verschlüsseltes Backup/Restore und ausdrücklich ausgelösten Gerätewechsel qualifizieren. N-DRIVE/E2EE-Autosync bleibt getrennt geparkt, soweit kein konkret notwendiger Teil eines aktuellen Datenverlustschutzes betroffen ist. Bestehende Implementierungen/Verträge erhalten; keine neue Synchronisierungsarchitektur in diesem Dokument freigeben.
+
+Zeitstempel-LWW wird NICHT übernommen. Beispiel: Desktop und Android starten bei Revision R; Desktop bearbeitet und sichert R1, später bearbeitet Android seinen alten Stand R. Ein späterer Zeitstempel macht die Androiddaten nicht vollständiger. Uhrenabweichungen verschärfen das Problem. Fehlende Gleichzeitigkeit beseitigt diesen Konflikt nicht.
+
+Für eine spätere komfortable Gerätewechseloperation gelten mindestens:
+- Vorherigen lokalen Stand vollständig erhalten; Backup als eigene überprüfte Revision erhalten, keine stille Überschreibung des einzigen Originals.
+- Quelle/Portfolioidentität, lokale Revision und vorhandene gemeinsame Basis prüfen, soweit vom bestehenden Vertrag tatsächlich getragen. Keine erfundene gemeinsame Basis.
+- Änderungen auf beiden Seiten oder unklare Herkunft führen zu sichtbarem Konflikt. Beide Stände erhalten; Nutzer wählt einen vollständigen Stand nach Vorschau, keine Feldfusion.
+- Atomarer lokaler CAS/Mehrtabschutz bleibt erforderlich, auch bei nur einem Gerät.
+- Ohne sichere automatische Konflikterkennung beim expliziten bestehenden Import-/Restoreablauf bleiben. Nicht mit einem Zeitstempel eine neue Garantie vortäuschen.
+- Neue Kryptografie, Writerautorität und aktive Sync benötigen weiterhin den unabhängigen Reviewabschluss. Vereinfachter Nutzungsablauf ersetzt ihn nicht.
+
+### Fehler klar anzeigen, Wiederholung kontrollieren
+
+Neue Netzwerkaktionen begrenzt und für den Nutzer nachvollziehbar halten. Bei abgelaufener Anmeldung unmittelbar Reconnect anbieten; lokale Bearbeitung und Daten erhalten. Bei sicher fehlgeschlagener Aktion ausdrückliche Wiederholung anbieten; keine unbegrenzten Hintergrundqueues oder Retryframeworks.
+
+Bei möglicherweise bereits erfolgreichem Upload/Commit mit verlorener Antwort lautet der Zustand „Ergebnis unklar“ und wird zuerst anhand gespeicherter Daten/Dateiidentität geklärt. Kein blindes erneutes Anlegen, Löschen oder Verschlüsseln. Teilweise erfolgreicher Upload plus fehlgeschlagenes Cleanup darf nicht als vollständig fehlgeschlagener Upload dargestellt werden.
+
+Vorhandener Mainstand a27cde2f: drive-backup.js nutzt CustomEvent('foliolab-drive-status'); POST-Upload maximal einen Versuch, GET/DELETE maximal drei begrenzte Versuche mit 400/800ms Pause; 401 fordert neue Anmeldung. Keine komplexe allgemeine Retryengine gefunden in diesem gezielt gelesenen Pfad. Diese bestehende einfache Logik nicht allein zur Erfüllung eines Slogans umbauen. Bestehende geplante Backups sind kein Auftrag zur neuen Syncqueue.
+
+### Finanzimporte: belegte Standardfälle, sichere Ausnahmebehandlung
+
+Vorhandene CSV-/Brokerparser wiederverwenden. Kein neuer allgemeiner PDF-Parser allein für die vorgeschlagene 80/20-Regel. „80 Prozent“ ist eine Zielheuristik, keine gemessene Abdeckung.
+
+Kauf/Verkauf/Dividende nur in tatsächlich unterstützten und vollständig belegten Klassen automatisieren. Bekannte komplexe Fälle bleiben unverändert erhalten. Neue exotische Automatisierungen nachrangig behandeln.
+
+Manuelle Eingabe oder Standard-CSV ist nur dann ein gültiger Ersatz, wenn der vorhandene Ablauf Mengen, Cash, Gebühren/Steuern, Kostenbasis, Datum, Herkunft und Rücknahme für den Fall korrekt ausdrücken kann. Barausgleich oder komplexe Steuerkorrektur nicht als normale Einzahlung/Kauf umetikettieren. Andernfalls klare Unsupported-Meldung und Originalerhalt; keine neue Spezial-UI ohne konkreten Bedarf.
+
+### QA nach Auswirkung und eindeutigen Ausgangszuständen
+
+Pro Fix zuerst genau den fehlenden Gegenfall und den passenden Erfolgsfall prüfen. Zusätzlich direkt betroffene Abhängigkeiten wählen: bei Parseränderung insbesondere gemeinsam verwendete Normalisierung, Duplikaterkennung, Journal/Bestand, Wiederimport und Undo/Restore soweit betroffen. „Nur ein Test“ ist keine ausreichende allgemeine Regel.
+
+Vorhandene Originale und gültige unveränderte Nachweise wiederverwenden. Keine komplette E2E-Runde nach jedem Zwischencommit. Vor Integration/Release bleiben die für den tatsächlichen Änderungsscope erforderlichen Gates bestehen.
+
+Für jeden neuen Test festhalten: SHA/Tree, Browser/OS/Profil, Neuinstallation oder Altbestand, DB-Version/Modusmarker/Revision, SW/Assetstand, Fixture und Sollwerte; bei OAuth nur Status/Accountrolle ohne Token. Nachbedingungen und Cleanup erfassen. Migrations-/Alttabfälle benötigen absichtlich definierte Altzustände; frische Profile ersetzen sie nicht.
+
+Neue Prüfplanung konzentriert sich auf unterstützte Plattformen. Historische Firefox-/WebKit-/Safari-Fails bleiben historische Fails, erzeugen aber keine neue Safari-Featurearbeit im persönlichen Scope. Bestehende Workflowgates nicht still löschen: eine erforderliche CI-Matrixänderung als eigenen kleinen reviewbaren Kandidaten nach dem vorhandenen Freigabevertrag vorbereiten, inklusive Abbildung auf Chrome/Edge/Android. Dieser Dokumentationsschnitt verändert keinen Workflow.
+
+Technischer Mechanismus, native Laufzeitabnahme, unabhängiger Kryptoreview und Fachbelege getrennt führen; sie müssen vor abhängiger Freigabe gemeinsam erfüllt sein. Compliance pauschal als externe Prüfung zu etikettieren ersetzt keine konkrete Anforderung.
+
+### Sofortige Reihenfolge
+
+1. Androidpaket als normale Android-Prüfung ohne TalkBack-Pflicht nutzen; vorhandene gültige Fixtures unverändert wiederverwenden. Windows Chrome UND Edge für tatsächliche Installations-/Datei-/Offline-/Bedienabläufe berücksichtigen.
+2. Bestehendes manuelles verschlüsseltes Backup/Restore und bewussten Gerätewechsel vor neuer aktiver Synchronisierung priorisieren.
+3. Fertige unabhängige Nutzerabläufe abschließen; Main-/Produktionsgate gesondert erhalten.
+4. Renderer-Versuch43500770689 bleibt FAILURE/Timeout, Renderer T1/T2 ungeprüft. Keine Wiederholung. Weiteren Crashmechanismus nur für eine konkret freizugebende Speicher-/Recoveryänderung mit klarer Nachweislücke vorbereiten; keinen offenen Forschungsstrang zum allgemeinen Fortschrittsblocker machen.
+5. Automatische Mehrgerätesync, Safari-/TalkBack-Spezialarbeit und neue exotische Parser bleiben nachrangig. Ein bestätigter Datenverlust-/Sicherheitsfehler im unterstützten Kern hat weiterhin Vorrang.
+
+Primärgrundlagen: [MDN dispatchEvent](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent) (synchroner Dispatch, kein Transaktionsersatz), [IDB complete](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/complete_event), [WAI Labels](https://www.w3.org/WAI/tutorials/forms/labels/) und [sichtbarer Fokus](https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html). Keine neue rechtliche Konformitätsbehauptung.
+
+
+
 ### Wiederaufnahme blockierter Pakete · 13.11.2026
 
 Der [gebündelte Entsperrauftrag im Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md#blockierte-pakete-gezielt-freimachen--13112026) ordnet alle acht extern blockierten Scopes konkreten Eingaben, Operatoren und Sollnachweisen zu. Kanonische Roadmapstatus bleiben erhalten.

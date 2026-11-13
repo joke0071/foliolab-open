@@ -1,3 +1,67 @@
+## STOPPED / HANDOVER_READY / PERSONAL_SCOPE_SIMPLIFIED · work-scope-a815eee410c4-20261113
+
+Neuester ausdrücklicher Nutzerauftrag bewertet Vereinfachungsideen für persönliche
+Nutzung auf Windows Chrome UND Edge sowie Android; selten parallele Gerätenutzung,
+TalkBack unwichtig, Safari voraussichtlich ungenutzt.
+
+Umgesetzt als verbindliche Dokumentations-/Roadmapänderung:
+E-SAFARI und E-TALKBACK DEFERRED_USER, kein DONE/PASS.
+K5 Android bleibt offen, TalkBack keine Voraussetzung.
+41Scopes/15DONE erhalten;6BLOCKED_EXTERNAL plus2DEFERRED_USER.
+[Leitplanken](WORK_EFFICIENCY_PLAN_2026-11-01.md#verbindlicher-nutzungsfokus-und-vereinfachung--13112026)
+samt Wochenplanpriorität und vorhandener Androidcheckliste angepasst.
+Vorhandenes OperatorZIP unverändert wiederverwendbar, TalkBackteil optional.
+
+Übernommen: native einfache Events statt neuem Reaktivitätsframework,
+keine CRDTs/Feldfusion, begrenzte nachvollziehbare Fehlerbehandlung,
+belegte Standardimporte, risiko-/abhängigkeitsbezogene Delta-QA und exakte
+Teststartzustände. Kein pauschaler Eventbusumbau.
+Nicht übernommen: Zeitstempel-LWW, Entfernen vorhandener Labels/Fokus,
+blindes Wiederholen unklarer Commits, ausschließlich ein Test trotz
+betroffener gemeinsamer Fachlogik, manuelle Falschabbildung exotischer Fälle.
+
+Bestehendes verschlüsseltes Backup/Restore und bewussten Gerätewechsel
+vor neuer aktiver Autosync priorisieren. N-DRIVE bleibt offen/nachrangig,
+keine Freigabe durch seltene Gleichzeitigkeit.
+Bestehende CAS-/Original-/Restore-/Kryptogates erhalten.
+Main-drive-backup.js gezielt gelesen: Eventstatus bereits vorhanden,
+POST1Versuch/GETDELETEmax3,401Reconnect; keine pauschale Retryentfernung.
+Keine Produkt-/Test-/Workflowmutation oder neue native Ausführung.
+
+Einstiegsbasis cd6cff9358333ec9321fb594ec8546955b2d47dd.
+316Heads,geschützte Main/FLH04/Diagnose/UI-R4/PR332/161/157 samt
+Reviews/Inline/Conversation332/161/157/335 frisch gelesen;
+0IN_PROGRESS,nur historischeQueues43095194276/43095194257.
+Ältere work-pr333-Ausführung weiterhin technisch ungeklärt.
+RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,
+DiagnoseV0/2181120 frisch NUR Metadaten bestätigt.
+Jüngere Originale gemäß Vorgängerbeleg erhalten; hier nicht erneut
+eigenständig aufgelöst oder als transfer-/bytegeprüft ausgegeben.
+Keine technische Releasevollübernahme.
+
+Renderer43500770689/1 bleibt FAILURE/Timeout124;
+Lifecycle13/13 und81/81PASS,Rendererreportfehlt/T1T2ungeprüft.
+KeinRetry/Ersatz;Originale und historische Grenzen erhalten.
+Neue Crashforschung nur bei konkreter abhängiger Freigabeanforderung.
+
+Nächste Aktion:
+Vorliegenden Scope anwenden, keine allgemeine Übernahmefrage.
+Vorhandene normale WindowsChrome/Edge-/Android-Bedienung und
+manuelleBackup-/Restorefolge mit bestehenden Fixtures qualifizieren,
+sobald tatsächlicher Zugang gegeben ist. Desktopbrowser nicht aus
+Linux-Chromium, Android nicht aus Emulation als abgenommen ausgeben.
+Zusätzliche CI-Matrixänderung nur als kleinen konkreten Kandidaten
+vorbereiten; kein bestehender Workflow still geändert.
+Gepinnte Review-/Speicher-/Originalverträge bleiben für abhängigen Code
+verbindlich. Nachrangige Scopes nicht als globalen Produktblocker behandeln.
+
+Abschlussanlass: autorisierte Scope-/Prozessanpassung umgesetzt und
+geprüft; kein Produktumbau zur bloßen Vereinfachungsbehauptung.
+STOPPED/HANDOVER_READY,keinHintergrundbetrieb,keineNebenwriter.
+Historie im folgenden Kopf unverändert erhalten.
+
+---
+
 ## STOPPED / HANDOVER_READY / UNBLOCKING_ACTIONS_ADOPTED / ANDROID_FIXTURES_READY · work-61e5fa815b33-20261113
 
 Der autorisierte Renderer-Versuch ist regulär abgeschlossen; [Auswertung](release-evidence/flh04-renderer-termination-43500770689-attempt1.json)
