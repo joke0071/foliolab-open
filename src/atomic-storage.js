@@ -328,3 +328,19 @@ export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPort
   tx.onabort=()=>reject(failure||tx.error||Error('sync-storage-write-aborted'));tx.onerror=()=>{};
  });
 }
+
+/** Locked FLH04 preparation preimage; never returns stored key material.
+ * Presence includes malformed/null records: those require explicit recovery.
+ */
+export function readPortfolioSyncAnchorPreimage(db) {
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readonly'),store=tx.objectStore(STORE);
+  let portfolio=null,syncPresent=false,anchorPresent=false;
+  const p=store.get(KEY),s=store.get(SYNC_KEY),a=store.get('sync-local-anchor-v1');
+  p.onsuccess=()=>{portfolio=p.result??null;};
+  s.onsuccess=()=>{syncPresent=s.result!==undefined;};
+  a.onsuccess=()=>{anchorPresent=a.result!==undefined;};
+  tx.oncomplete=()=>{try{assertRecord(portfolio);resolve({portfolio,syncPresent,anchorPresent});}catch(error){reject(error);}};
+  tx.onabort=()=>reject(tx.error||Error('sync-anchor-read-aborted'));tx.onerror=()=>{};
+ });
+}

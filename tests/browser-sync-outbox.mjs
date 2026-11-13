@@ -16,15 +16,34 @@ async function setup(page){
   const storage=await import('/src/atomic-storage.js'),model=await import('/src/model.js');
   const {createSyncFrameVerifier}=await import('/src/sync-frame-verifier.js');
   const {createSyncOutboxStorage}=await import('/src/sync-outbox-storage.js');
+  const {prepareLocalSyncAnchor}=await import('/src/sync-local-anchor.js');
   const key=await crypto.subtle.importKey('raw',new Uint8Array(32).fill(17),'HKDF',false,['deriveKey']);
   const verify=createSyncFrameVerifier({portfolioId:'P',epochId:'12'.repeat(16),key});
   const db=await storage.openPortfolioDB();
-  window.syncTest={storage,model,db,verify,api:createSyncOutboxStorage(db,verify)};
+  window.syncTest={storage,model,db,verify,prepareLocalSyncAnchor,api:createSyncOutboxStorage(db,verify)};
  });
 }
 async function operation(page,action,args={}){
  return page.evaluate(async({action,args})=>{
   const t=window.syncTest;
+  if(action==='prepare-anchor')return t.prepareLocalSyncAnchor(t.db);
+  if(action==='anchor-proof'){
+   const anchor=await new Promise((resolve,reject)=>{
+    const tx=t.db.transaction('records','readonly'),r=tx.objectStore('records').get('sync-local-anchor-v1');let value;
+    r.onsuccess=()=>{value=r.result;};tx.oncomplete=()=>resolve(value);tx.onabort=()=>reject(tx.error);
+   });
+   if(!(anchor.epochKey instanceof CryptoKey)||anchor.epochKey.extractable||
+    !(anchor.writerPrivateKey instanceof CryptoKey)||anchor.writerPrivateKey.extractable||
+    anchor.status!=='prepared-locked')throw Error('native-anchor-invalid-key-storage');
+   const challenge=crypto.getRandomValues(new Uint8Array(32));
+   const signature=await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},anchor.writerPrivateKey,challenge);
+   if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},anchor.writerPublicKey,signature,challenge))
+    throw Error('native-anchor-key-pair-mismatch');
+   await crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:new Uint8Array(32),info:new Uint8Array(0)},
+    anchor.epochKey,{name:'AES-GCM',length:256},false,['decrypt']);
+   return {lineId:anchor.lineId,status:anchor.status,localRevision:anchor.localRevision,
+    publicKey:Array.from(new Uint8Array(await crypto.subtle.exportKey('raw',anchor.writerPublicKey)))};
+  }
   if(action==='initialize')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:null,raw:t.model.backup(t.model.blankModel(),{includeHistory:true}),settings:t.model.defaultSettings()});
   if(action==='read')return t.storage.readPortfolioSyncRecord(t.db);
   if(action==='recover')return t.api.recover();
@@ -111,5 +130,23 @@ try{
  await assert.rejects(()=>operation(b,'begin',{expectedLocalRevision:6,expectedSyncVersion:fenced.sync.version,revisionId:'R'}),/enrollment-required/);
  await assert.rejects(()=>operation(b,'recover'),/enrollment-required/);
  assert.deepEqual(await operation(c,'read'),fenced);
- console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, ordinary restore/recovery/delete invalidation PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
+ // A distinct empty origin context: old outboxes MUST NOT be adopted.
+ const local=await browser.newContext();
+ try{
+  const page=await local.newPage();await setup(page);
+  const p=await operation(page,'initialize');
+  const fenced=await operation(page,'adopt',{expected:p,raw:p.raw});
+  const prepared=await operation(page,'prepare-anchor');
+  assert.equal(prepared.status,'prepared-locked');assert.equal(prepared.enrollmentAuthorized,false);
+  assert.deepEqual(await operation(page,'read'),{portfolio:fenced,sync:null});
+  const proof=await operation(page,'anchor-proof');assert.equal(proof.lineId,prepared.lineId);
+  await page.close();const resumed=await local.newPage();await setup(resumed);
+  assert.deepEqual(await operation(resumed,'anchor-proof'),proof);
+  await assert.rejects(()=>operation(resumed,'prepare-anchor'),/existing-anchor/);
+  await assert.rejects(()=>operation(resumed,'recover'),/enrollment-required/);
+  await operation(resumed,'restore',{revision:fenced.revision,raw:fenced.raw});
+  assert.deepEqual(await operation(resumed,'anchor-proof'),proof);
+  assert.equal((await operation(resumed,'read')).portfolio.syncEnrollmentRequired,true);
+ }finally{await local.close();}
+ console.log('NATIVE SYNC OUTBOX '+name+': injected abort/quota, two-page CAS, page restart/reverify, newer save, A1 preimage guard, A2 pseudo-readback rejection, ordinary restore/recovery/delete invalidation, prepared-locked CryptoKey persistence/page reopen (not enrollment) PASS. Real process crash/power-loss/real quota NOT QUALIFIED.');
 }finally{await context.close();await browser.close();}
