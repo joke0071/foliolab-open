@@ -1,3 +1,19 @@
+## CONTRACT_WORK_STOPPED / WRAP_AUTHORITY_BYTES_SPECIFIED / RELEASE_BLOCKED · work-25790c57cd29-20261113
+
+Fachlicher Vertragsschnitt abgeschlossen; eigener zentraler Schlusscheckpoint folgt seriell. Ausgang FLH04 30567f35359341cf2cf5ab64c2fbfc8a4441ff79/Tree a097996124a89b85169a15b0e32de37e47993ba1. Produktcode unverändert bei10edebbf66cb021107cd1ae52b03bd82380c9e32. Keine Agenten/Parallelisierung/Automation/PR/CI/Workflowänderung/Runner/Retry/Merge/Release/aktiveSync.
+
+[Geschlossener Sync-Wrapper-/Autoritätsbytekandidat](FLH04_SYNC_WRAP_AUTHORITY_BYTE_CONTRACT.md) mit [öffentlichen synthetischen Bytevektoren](FLH04_SYNC_WRAP_AUTHORITY_BYTE_VECTORS.json) gespeichert: volle Domain-/Rollen-/Versions-/Portfolio-/Epoche-/Autoritäts-/Wrapbindung; konkrete reviewbedürftige KDF/Cipher/Unicode/Längen/Nonce-/Einmal-KEK-/Budgetregeln; signierte Wrapgrants und Autoritäts-/Mitgliedschaftszustände, State→Envelope→Grant ohne Referenzzirkel; Passwortwechsel, Rotation/Antwortverlust und A-Verlust explizit. A privat nicht portabel, keine Recovery aus Passwort allein. Neuer format2-Erzeugungsweg nur vorbereitet-gesperrt spezifiziert, NICHT implementiert. Keine format1-Ankerübernahme/-änderung/-löschung/-entsperrung.
+
+Tatsächlich nur Kodierung/SHA256 geprüft: zwölf Werte durch getrennte temporäre Python-/Node-Serializer exakt rekonstruiert; fünf Strukturformen akzeptiert, fünf gezielte Fehlerformen abgewiesen. Node24.22.1, öffentliche E-/Dummycipherbytes, keine KDF/AEAD/Signatur/Appmodule/Storage/Netz im Vektorcheck. Keine App-/Browser-/Kryptotests und keine historischen Tests wiederholt; keine neuen PASSsummen mit Altbelegen. Beide Programme vom selben Owner, kein unabhängiges Kryptoreview. Bekannten AF_UNIX-Fehlstart nicht wiederholt.
+
+Nächste ausführbare Gatearbeit: exakten Kandidaten unabhängig kryptografisch reviewen; native Keypersistenz und Schlüssel-/Keyslot-Transaktionsbindung in geeigneter zugelassener Umgebung qualifizieren. Abschnitt1 des Ausstellervertrags verlangt Review VOR Umhüllungscode. CryptoKey-Austausch zwischen Challenge und Commit bleibt ungelöst; bloße Envelopebytes sind kein Key-CAS. Daher kein Aussteller-/Entsperrcode. Danach nur jeweils freigegebenen weiterhin gesperrten Erzeugungsweg umsetzen. Individueller Revisionssignatur-/Framevertrag weiter offen.
+
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325/Tree e55ffa96f641345759eb3779b00de6187c8671b8, Mainrun43332355188 FAILURE/UrsacheUNKNOWN/RELEASE_GATE_OPEN. Geschützte PRs/UI-R4 unverändert. Private RootV155/406425600Bytes und CompanionsV0/12748800+212408320Bytes nur Metadaten gelesen; kein privater Transfer/Upload/Readback/Restore/Schreibfähigkeitsnachweis. Vollständige Originalketten erhalten.
+
+A1/A2/Snapshotgrenzen unverändert, OutboxINTERNUNQUALIFIZIERT/FLH04NICHTDONE/N-DRIVEBLOCKED_EXTERNAL mit substanziellen Code-/internen/externalen Pflichtresten. Letzte Commit-/Tree-IDs, frischer Schlussabgleich und vollständiger Übergabeprompt im zentralen Kopf.
+
+## Unveränderte Historie
+
 ## STOPPED / HANDOVER_READY / ENROLLMENT_ISSUER_CONTRACT_SPECIFIED / RELEASE_BLOCKED · work-196cef9db7a8-20261113
 
 Eigene fachliche Code-/Test-/Vertragsarbeit mit diesem Stand beendet; zentrale Abschlussdokumentation folgt seriell. Kein Hintergrundbetrieb/Agent/Automation/PR/FullCI/Merge/Release/Workflowänderung/Runnerstart/Retry/aktiveSync. Ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen.
