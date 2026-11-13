@@ -13,7 +13,20 @@ Frisch gelesen: Zentral fa0cfd3f/Tree d4ab7d91, Main a27cde2f und FLH04 435ab9a8
 0IN_PROGRESS; zwei historische Queues43095194276/43095194257 unverändert.
 Alte pauschale Ausführungsverbote unten sind ausschließlich für diese zwei Prüfaufgaben durch den
 neuesten Nutzerauftrag ersetzt; übrige Grenzen erhalten.
-Aktuell: UI-Ausführungsweg vorbereiten. Neue Läufe0/4, kein Trigger angelegt.
+Aktuell: UI-Ausführungsweg vorbereiten. Neue Läufe1/4. UI initial Run43512902239/1 IN_PROGRESS.
+Ausführungscommit12b6f7e8b9f5605ab2f13c69f76c7850cfb16e42/Tree60e893525ce903138f733c2bafb6d8232f32d94b,
+Trigger test/ui-alloc01-b7bbb8ab7737-initial-20261113 exakt rückgelesen.
+Vor Trigger: Ref404,0zugehörigeRuns,0IN_PROGRESS; Owner48d28ba1 unverändert.
+Quelle933c3667/Tree82556544/ParentMaina27cde2f frisch bestätigt; Produktdelta3Dateien+2Tests+Teilbeleg,
+Ausführungsdelta ausschließlich bestehenderDiagnoseworkflow vollständig exakt rückgelesen.
+EinJobUbuntu24.04,Node22.23.4,Playwright1.56.1/ChromiumShell,keineMatrix.
+UIHarness/Assertionsunverändert120s+15sKill,Stepbudgets15min<=25min.
+Abweichung: lokalerVorgängerNode24.22.1/Playwright1.62.1nichtverwendet; regulärerhistorischerRunnerwegverwendet.
+Ziel:40/30/20/10,separatesCash,7Breiten,44px,Enter/Touch,Textapproximation,UNKNOWN,LegacyByteinvarianz.
+ErwartetReport+synthetischePNGs+HostBEGIN/STAGE/RESULT+separatesCleanup+SHA256Manifest,
+UploadalwaysauchbeiFAIL. DauerhafteOriginalsicherung: bestehende separateOriginalarchive;
+RendererOriginalV0/1914880undRootV155/406425600frischalsMetadatenverfügbar,keinTransfer/Vollbackup/Zugriffsprobemutation.
+KeinIDB/Restore/Hardware/ReleasebelegdurchdiesenUI-Lauf.
 Vollständiger Vorgänger unverändert gepinnt:
 [fa0cfd3f](https://github.com/joke0071/foliolab-open/blob/fa0cfd3fd8be58caedc77c3b2b48909dd4ca2ebf/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 
