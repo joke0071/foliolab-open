@@ -60,6 +60,20 @@ Queue-/Setup-/Transportfehler, Produkt-/Assertionsfehler und noch ungeklärte Ur
 
 Keine blinden Retries, CI-Abbrüche oder Doppelstarts. Ein gezielter Wiederholungsweg benötigt den bestehenden konkreten Ursachen-/Prüfvertrag und getrennte Originalidentität; UNKNOWN nicht als nachgewiesen transient umetikettieren. Bei Statusbedarf in einer aktiven Sitzung gebündelt prüfen, bei langem unverändertem Incident seltener; keine automatische Hintergrundfortsetzung behaupten.
 
+### Capability-Preflight und eingegrenzte Blocker · Nutzerauftrag 13.11.2026
+
+Vor jedem neuen Arbeitsabschnitt einmal nur die tatsächlich benötigten Fähigkeiten prüfen; gültige Nachweise derselben Laufzeit wiederverwenden. GitHub-Lese-/Schreibzugang, Node/Testwerkzeuge, erforderliche Browserstarts und lokale Unix-Sockets, reguläres TLS/CA/Proxy-Vertrauen, Zielerreichbarkeit sowie bei Abschluss privater Versions-/Readback-/Restoreweg gehören je nach Aufgabe dazu. Ein PASS aus anderer Sitzung ist kein aktueller Fähigkeitsnachweis. Keine pauschale Installation oder Testmutation privater Daten.
+
+Fehlende Fähigkeit sofort als **ENVIRONMENT_BLOCKED** mit exakter Fehlstelle und benötigter Fähigkeit erfassen. Bekannten Fehlstart im unveränderten Kontext nicht wiederholen; daraus keine Produktursache ableiten. Nur eine bereits zulässige geeignete Umgebung verwenden; keine Sicherheitsumgehung. Sichere unabhängige Arbeit fortsetzen.
+
+**Ein Fehler blockiert nur nachweislich abhängige Arbeiten und Freigaben.** Im bestehenden Checkpoint unterscheiden: PRODUCT_BLOCKED = bestätigter Produktfehler; TEST_BLOCKED = erforderlicher Test ohne gültiges Ergebnis/ungeklärte Voraussetzung; ENVIRONMENT_BLOCKED = benötigter Test technisch nicht startbar; RELEASE_BLOCKED = Pflichtabnahme unvollständig; INDEPENDENT_WORK_ALLOWED = isolierte unabhängige Entwicklung zulässig. Diese Begriffe sind keine neue Statusdatenbank. Einmal exakt eingrenzen, Originale erhalten, genau eine begründete Diagnose/Korrektur wählen. Fehlt die Fähigkeit, aktive Diagnose stoppen und unabhängig fortsetzen. Maximal ein eingefrorener Kandidat plus ein isolierter Folgeschnitt, alleiniger Writer und keine zweite finale CI. Parken schließt kein Releasegate und erlaubt keinen Umgehungsrelease.
+
+Vor Freeze konkrete Änderungen an SW/Cache/Offline/IDB/Restore/Browserinitialisierung den vorhandenen kritischen Abläufen zuordnen: Erstinstallation, aktiver Controller/Reload, Offline-Reload, Cacheversionswechsel, fehlgeschlagene/abgebrochene Installation, frischer Kontext und tatsächliches Speichern/Restore. Vorhandene Tests bevorzugen; Browser/Node/Playwright und Ausgangsbedingungen möglichst produktionsgleich, Abweichungen nennen. Lokaler PASS ersetzt keine Produktionsabnahme; Workflowänderungen benötigen die konkrete #229-Freigabe.
+
+Nach sicherem Abschluss des aktuellen Releaseblockers begrenzte vorhandene Fehlerdiagnostik prüfen: vor goto Test-/Contextidentität, Navigation/Requests/HTTP-Fehler, relevante Konsole/pageerror, SW-Registrierung/Installation/Aktivierung/Controller, Dokument-/Assetidentität und Cachebefüllungsfehler erfassen. Vorhandenen Wrapper wiederverwenden; nur synthetische Portfolios, keine allgemeine Nutzerdatenprotokollierung oder umfangreiche Erfolgstraces. Fehleroriginale unverändert erhalten. Bis dahin keinen Diagnostikumbau mit UI-R4 vermischen.
+
+PR334/V2 wiederverwenden: geänderte Skripte statisch, geänderte Bedienung und relevante negative Ausgangszustände früh prüfen. Kein unveränderter CI-Neustart ohne neue Hypothese/geänderte Voraussetzung; Ebene, Ursache (ggf. UNKNOWN) und nächste Entscheidung festhalten. Keine Frist-/Assertionlockerung oder blinde Zusatztests. Bei den nächsten ohnehin regulären Abschlüssen vermeidbare Fehlzyklen und tatsächlich belegte Zeitersparnis knapp im bestehenden Belegindex erfassen; unbekannte Werte UNKNOWN. Kein Dashboard/Statistiklauf und keine Wiedererzeugung geschlossener Original-/Abnahmebelege.
+
 ## Nächste Maßnahmen in bestehenden Paketen
 
 | Priorität | Nächster sinnvoller Schritt | Entscheidungsgrenze |
