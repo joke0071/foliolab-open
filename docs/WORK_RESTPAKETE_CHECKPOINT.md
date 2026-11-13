@@ -1,3 +1,67 @@
+## STOPPED / CONTRACT_DRAFT_PREPARED / DIRECTION_AUTHORIZED / INTERNAL_W1_W2_OPEN / RELEASE_BLOCKED · work-366da675bef5-20261113
+
+Jochen hat AlternativeA ausdrücklich als begrenzte Vertragsausarbeitung bestätigt.
+Keine erneute allgemeine Richtungsbestätigung erforderlich.
+Eigene Schreibarbeit mit diesem Schlussstand beendet; kein Hintergrundbetrieb.
+Anlass: der autorisierte Vertragsentwurf ist vorbereitet und gesichert;
+Umsetzung/Migration/DBmutation/Native-/CI-Ausführung sind weiterhin NICHT freigegeben.
+Keine Übergabe- oder Chatwechselaufforderung nötig.
+
+FLH04 **4745dc0088279f755ff49c3329094ad369f3af7a** /
+Tree **1af71d8376e0923772f2b7771b041ecca48c721e**, Parent44531fc7f0e5fe3960412a9306150edf2b960210.
+Genau3Dokumentationsdeltas:
+[Neuer konkreter Vertragsentwurf](https://github.com/joke0071/foliolab-open/blob/4745dc0088279f755ff49c3329094ad369f3af7a/docs/FLH04_CONTROLLED_VERSION_LIFECYCLE_CONTRACT_2026-11-13.md),
+bestehende Entscheidungsvorlage mit Zustimmung und Fachcheckpoint.
+Alle3vollständig gepinnt bytegleich UND unabhängigGitblob-SHA1-rückgelesen;
+Compare bestätigt. Vorherige Entscheidungs-/Checkpointbytes vollständig erhalten.
+Aussteller§4, Snapshotvertrag, Produkt-/Krypto-/Test-/Workflowcode unverändert.
+
+Entwurf: ausschließlich schema-only1→2 derselben DB/records-Linie,
+keineRecord-/Key-/Outboxmutation imUpgrade; Version2 verleiht keineSyncautorität.
+Phasen für blocked/CANCEL_REQUESTED/spätesUpgrade/Commitverlust/Reopen/Verlust;
+keinPromiseReject als nativenAbbruch oder nachCommit alsRollback ausgeben.
+AlleP-Mutationen/gebundenenVerifier innerhalb gemeinsamer privaterLifecyclegrenze;
+Lockreentranz/Altadapter-Aufrufgraph und20nativeGegenfallklassen konkret.
+KeineNativprobe ausgeführt und keinMechanismus-/Reviewabschluss behauptet.
+
+Neuer gezielter Sourcebefund:
+alterPortfolioStorage.initialize kann nachTombstone-/Intentread ohne äußeren
+withLocalLock und ohneweiterenIDBcommit LocalStorage-Modusmarker ändern.
+Versionchange/db.close beendet keinenJS-Kontext und beweist diesenNachlauf nicht.
+Neuev2-Linie darf nichtallein durchalteMarker umgeschaltet werden;
+legitimerneuerRückwechsel braucht einen persistent/exaktCAS-gebundenenQuellenvertrag.
+Konkrete neueRecordsform bleibtOFFEN,keinneuerRecord angelegt.
+NormaleSpeicherwechsel/Recovery nicht alsAngriff umetikettieren/streichen.
+
+W1: vollständigeunterstützteBuild-/OpenerzuordnungOFFEN.
+W2: Alt-Nachlaufabschluss/neuerQuellen-/RückwechselvertragOFFEN.
+W3–W6: neueWriterkohorte/Native/Review/ReleaseweiterOFFEN.
+Nächster interner Schritt ist genau W1/W2 amvorhandenenStand,keinCodeauftrag
+anJochen und kein156Dateien-/ABA-/Locknamen-Wiederholungsschnitt.
+Richtungsgenehmigung ist keineImplementierungs-/Ausführungsfreigabe.
+N0Originalharness/Host-/Jobkandidat separat vorbereitet,nichtgestartet;
+20N1Fälle sindSollvertrag,keinPASS. Reviewpaketfd3fce4b/17a5a190/Tree44ff9c4d
+unverändertEXTERNAL_REVIEW_PENDING;CR4/CR5offen.
+Prüferwahl/Zugang/Budget weiterseparat,keineBeauftragung/Paketneubau/Selbstfreigabe.
+
+312Heads;nureigeneFLH04-/Zentraländerung vorgesehen;Maina27cde2f/
+Diagnosee9578124/PR332/157/161/UI-R460c1ab09geschützt.
+Reviews/Inline332/157/161/335leer,ConversationvorMutationunverändert.
+0IN_PROGRESS,historischeQueues43095194276/43095194257.
+Älterework-pr333-AusführungNICHTtechnischbeendetnachgewiesen;
+keinebeobachteteFremdrefkollision,keineReleasevollübernahme.
+SicherungenfrischNURMetadatenRootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120;keineprivatenTransfers/
+Uploads/Readbacks/Restores/Schreibfähigkeitsbeweise/Vollbackups.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+A1/A2/format1/P/R/S/D/CAS/Raw-/Retry-/oncomplete-/Budget-/Originalschutzunverändert.
+KeineTests/Browser/CI/Workflowstarts/Retry/PR/Merge/Release/SWbump/aktiveSync.
+[TechnischeBestandsgrenzen](HANDOVER_03b53e88c37d_2026-11-13.md) weitergültig;
+derenfrühereWartefragezurArchitekturrichtungistdurchJochensJaerledigt.
+
+---
+
 ## STOPPED / DECISION_READY / WAITING_ARCHITECTURE_DECISION / RELEASE_BLOCKED · work-366da675bef5-20261113
 
 Eigene Schreibarbeit mit diesem Schlussstand beendet; kein Hintergrundbetrieb.
