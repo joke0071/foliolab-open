@@ -1,3 +1,128 @@
+## STOPPED / HANDOVER_READY / C1_CORRECTION_READY / SPECIFIC_NATIVE_APPROVAL_REQUIRED · work-366da675bef5-20261113
+
+Anlass des Endpunkts: autorisierte Korrektur-/Diagnostikvorbereitung vollständig
+gesichert; die neue konkrete native Ausführung ist noch NICHT freigegeben.
+Keine allgemeine Übernahme-/Arbeitsbestätigung nötig, kein Hintergrundbetrieb.
+
+Produkt-/Prüfkandidat:
+**bfed81728189c71ff88c7a7419f2c51db56b084d**
+Tree **27dad342d21e45b484c7b8ab87d4ed7cc2851b46**
+Parentf73535847f26476da3ea100f0410f391496dafd7.
+[Genau9Deltas](https://github.com/joke0071/foliolab-open/compare/f73535847f26476da3ea100f0410f391496dafd7...bfed81728189c71ff88c7a7419f2c51db56b084d):
+nur browser-portfolio-storage.js unter src; vorhandenerC1-Helper,
+neuesDiagnostikmodul,2gezielteTestdateien/Testdoublefixture,
+[Reviewdokument](https://github.com/joke0071/foliolab-open/blob/bfed81728189c71ff88c7a7419f2c51db56b084d/docs/FLH04_C1_CORRECTION_CANDIDATE_2026-11-13.md),
+lokalerMaschinenbeleg/Fachcheckpoint.
+Alle9vollständig gepinnt bytegleich UND unabhängigGitblob-SHA1-geprüft.
+OriginalerBasisharness vollständig unverändert,38Assertionausdrücke
+inklusiveawait/Reihenfolge erhalten; recoverFromBackup-Körper bytegleich.
+Node24.22.1:6SyntaxchecksExit0;21gezielteTestsPASS/0FAIL/0Skips.
+15Adaptertests mit ausdrücklich gedoppelten IDB-/Modell-/Atomicabhängigkeiten,
+6Node-Diagnostiktests. KEIN nativer/Finanzmodellvoll-/Kryptobeleg.
+Vorbereitungs-/Zwischenfehler offen im Reviewdokument und Testbeleg dokumentiert.
+
+BegrenzteProduktkorrektur:
+private native Quellenprüfung VOR Legacyfallback/Normaloperation/Revert;
+v2 und unbekannteQuellen dort blockiert, automatischeIntentnachläufe eingeschlossen.
+Lock vor Quellenverbindung, vorhandenenHandle wiederverwenden, endlichenVorgang
+inklusiveCleanup vor reguläremVersionswechsel abschließen; keine offeneIDBtxn/
+Cryptoawait/Lease/Steal. Kein vollständigerWriter-/Keyslot-/ABAmechanismus.
+V1-Pfade/Originale erhalten. Originaldownload aus tatsächlicherLinie ohneNeuanlage,
+bestehendeausdrücklicheRecovery samtModus-/CASschutz erhalten.
+Keine produktivev2-Migration, aktiveSync, neueAutorität oder Reviewfreigabe.
+
+NeueDiagnostik: stabilePrüfkennung, Dateianker/tatsächlicheAssertionzeile,
+minimale synthetischeSoll-/Istwerte/erlaubteabweichendeFeldnamen,
+späterNOT_REACHED. Keine Keys/Credentials/Originalportfolios/Stacks/
+Fehlernachrichten/Fingerprints/Preimagedigests.
+AltegenaueFehlerassertionen ausRun43485655271/Versuch1 bleibenUNKNOWN:
+Quellableitung ist KEINE neueLaufzeitbeobachtung. AlteAusführungbleibtFAILURE,
+4GruppenPASS,MARKERS/NO-REVERTFAIL; keinRetry.
+
+STARTBEREITER EINMALIGER AUSFÜHRUNGSKANDIDAT:
+**097aff8a06838a02df14927dc2b7a80ec627eea8**
+Tree **38e04ddb8c6a04a6c4ec15b9456296e8c719d318**
+Parent/Prüfbasis **bfed81728189c71ff88c7a7419f2c51db56b084d**.
+[Kontrolldiff ausschließlichbestehenderDiagnoseworkflow](https://github.com/joke0071/foliolab-open/compare/bfed81728189c71ff88c7a7419f2c51db56b084d...097aff8a06838a02df14927dc2b7a80ec627eea8).
+Workflowblob **9e696d2ed328f24fbc59ec0c245d6c58883cede3**,
+13224UTF8Bytes; vollständig gepinnt bytegleich und unabhängigGitblobgeprüft.
+BeideanderenJobs strukturell unverändert. YAML/5Bash-/4Python-/2JSblöcke
+ausschließlichSyntax geprüft; KEINE Jobnutzlast ausgeführt.
+
+KONKRET NOCH BENÖTIGTE FREIGABE:
+Einmalige Anlage von
+**test/flh04-c1-correction-bfed8172-366da675bef5**
+EXAKT am Ausführungscommit097aff8a06838a02df14927dc2b7a80ec627eea8.
+Nur create/branch/exakterRef/run_attempt==1 trifft
+flh04-c1-native-correction-first. Branch NICHT ANGELEGT.
+Vor Freigabe kein Trigger/Runner/Browserstart.
+WennzwischenzeitlichBranch/Laufvorhanden: zuerstlesendklären, NICHT neu anlegen.
+Bei fehlendemRun nachTrigger nurlesenddiagnostizieren, keinErsatztrigger.
+
+Umfang: EIN Job/Versuch1, ubuntu-24.04, Node22.23.4,
+Playwright1.56.1/Chromium, höchstens25Minuten.
+Ein ursprünglicherHarnessaufruf inklusiveBasis undaller6C1-Gruppen,
+360Sekunden plus15SekundenKillnachlauf.
+ENGINE=chromium
+FLH04_VERSION2_CANDIDATE=1
+BASE_URL=http://127.0.0.1:4173
+Nur synthetischeisolierteContexts. Keine anderenTests/Engines/FullCI.
+SourceParent/Tree werden geprüft;7Code-/Testblobs unabhängiggeprüft;
+keineTests beimJob geändert. KeinAssertionoverride/Skip/continue-on-error.
+FAIL bleibtFAILURE; ohnegültigenReport alle6GruppenNOT_REACHED.
+KeinRetry/Branchneuanlegen/alternativerTrigger/Merge/Deploy/Release.
+
+Sollartefakt:
+flh04-c1-correction-bfed8172-<run_id>-<attempt>, retention7Tage, uploadifalways.
+Originaleingänge inklusiveAdapter/Diagnostik/Testdoubles, ausgeführterWorkflow,
+gepinntesSourceTreeManifest,SourceReceipt/Node/PW/Engine soweitbeobachtet,
+Installations-/HTTP-/Testlogs,echteExitcodes,Originalreport+minimaleFehlerdetails,
+summary.json undvollständigesSHA256-Manifest.
+AuswertungundOriginalsicherunggehörenzurspäterenEinzelausführung.
+Artefakt-/PASSverfügbarkeitvorherNICHTbehaupten.
+AuchgrünerC1-FolgelaufwäreKEINEProdukt-v2-/FullWriter-/Key-/Recoveryvollabnahme.
+
+FrischerSchlussabgleich:
+313Heads, ausschließlich eigenerFLH04-Refvorschub; ZentralrefvorSicherung9419142e.
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325;
+Diagnosee9578124495709ef7550273f239840c96d4a1b1c;
+PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2,
+PR15708714cc602110bae479083b3d38fa1adc9be280c,
+Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74,
+UI-R460c1ab098449151b475563c9fc822b9a5e9a9152 unverändert.
+OffenePRs332/161/157; Reviews/Inline-/Conversation332/157/161/335 unverändert.
+0IN_PROGRESS,0Läufe fürneueSource-/Ausführungs-SHAs/Triggerbranch.
+Originaltestbranchtest/flh04-c1-native-b18c6fcb-366da675bef5weiterf7353584.
+Main43332355188/Versuch1FAILURE/UrsacheUNKNOWN/RELEASE_GATE_OPEN;
+Diagnose43421311524/Versuch1SUCCESSverbrauchterEinzelversuch,
+keinMain-/Release-/Produktionsbeleg.
+Ältere work-pr333-AusführungweiterNICHTtechnischbeendetnachgewiesen.
+
+SicherungenfrischNURMetadaten:
+RootV155/406425600,FAILV0/12748800,
+MainOriginalV0/212408320,DiagnoseV0/2181120.
+KeineprivatenTransfers/Uploads/Readbacks/Restores/Vollbackups;
+Rootalleinunvollständig,alleOriginal-/Oracle-/Companionkettenbewahrt.
+OriginalC1-ZIPunverändertvorhandenund16Manifestdateiengezieltgeprüft.
+
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/
+N-DRIVEBLOCKED_EXTERNALmitinternemUNDexternemRest.
+A1false/A2gesperrt/remoteAnchor+acknowledgedLocalRevisionnull;
+format1-prepared-locked undalleP/R/S/D/CAS/Raw-/Retry/oncomplete/
+Snapshot-/Budget-/USD-/ETH-/CSV-/Management-/UH02-/History-/Purchase-/
+Undo-/Oracle-/Originalgateserhalten.
+Kryptopaketfd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b,
+Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2,
+Tree44ff9c4d60fb22b9519b4b0b344a91045f97f28e
+unverändertEXTERNAL_REVIEW_PENDING/CR4CR5offen.
+NeueAdapteranalysekeinPaketneubau/Selbstreview.
+
+SchreibarbeitnachvollständigreviewbaremKandidatenbeendet;
+konkreteEinzellauf-Freigabeausstehend. KeinHintergrundbetrieb.
+VollständigerFolgepromptdirektimChat;ÜbergabelinknurzurErgänzung.
+
+---
+
 ## C1_NATIVE_ATTEMPT1_EVALUATED / FAILURE / NO_RETRY / STOPPED · work-366da675bef5-20261113
 
 Jochen hat genau die einmalige Branchanlage und Auswertung ausdrücklich freigegeben.

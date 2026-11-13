@@ -1,0 +1,100 @@
+{
+  "kind": "FLH04_C1_CORRECTION_EXECUTION_PREPARED",
+  "status": "NOT_STARTED_APPROVAL_REQUIRED",
+  "source": {
+    "sha": "bfed81728189c71ff88c7a7419f2c51db56b084d",
+    "tree": "27dad342d21e45b484c7b8ab87d4ed7cc2851b46",
+    "parent": "f73535847f26476da3ea100f0410f391496dafd7",
+    "paths": {
+      "src/browser-portfolio-storage.js": {
+        "sha": "ce56e74ff0519331b06e9833ab808e17a136613f",
+        "bytes": 19589
+      },
+      "tests/flh04-version2-candidate-probes.mjs": {
+        "sha": "d87ab642d1ba409814af517c2b28ad50fd924b0c",
+        "bytes": 13495
+      },
+      "tests/flh04-c1-diagnostics.mjs": {
+        "sha": "1e1f5c3bbe66d911a312c246b98f08f11562c4af",
+        "bytes": 3083
+      },
+      "tests/flh04-c1-source-guard.test.mjs": {
+        "sha": "33eeaabce0cebac36fc46592ce2c5bede68e6c26",
+        "bytes": 10257
+      },
+      "tests/flh04-c1-diagnostics.test.mjs": {
+        "sha": "eb53397ca3d6d2aab127b53583408e8402719cc8",
+        "bytes": 2478
+      },
+      "tests/fixtures/c1-storage-dependencies.mjs": {
+        "sha": "02c53fa3c41ff35785021757ceb43eb834dc4b60",
+        "bytes": 2549
+      },
+      "docs/FLH04_C1_CORRECTION_CANDIDATE_2026-11-13.md": {
+        "sha": "daa406c97fb2b4f04c76eb9c3db857dd3badd01f",
+        "bytes": 11489
+      },
+      "docs/release-evidence/flh04-c1-correction-local-2026-11-13.json": {
+        "sha": "46c7c412e119bd3be3a5cd83e23fd54cafda9ee8",
+        "bytes": 5710
+      },
+      "docs/FLH04_WORK_CHECKPOINT.md": {
+        "sha": "abda1624688654ae452592300ebd65568b790298",
+        "bytes": 97944
+      }
+    },
+    "full_pinned_byte_and_independent_gitblob_verified": 9
+  },
+  "execution": {
+    "sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+    "tree": "38e04ddb8c6a04a6c4ec15b9456296e8c719d318",
+    "parent": "bfed81728189c71ff88c7a7419f2c51db56b084d",
+    "workflow_path": ".github/workflows/live-initialization-diagnostics.yml",
+    "workflow_blob": "9e696d2ed328f24fbc59ec0c245d6c58883cede3",
+    "bytes": 13224,
+    "full_pinned_bytes_and_independent_gitblob_verified": true,
+    "compare_exactly_one_workflow": true
+  },
+  "trigger": {
+    "action": "create branch once, only after explicit approval",
+    "branch": "test/flh04-c1-correction-bfed8172-366da675bef5",
+    "sha": "097aff8a06838a02df14927dc2b7a80ec627eea8",
+    "branch_exists": false,
+    "runs_for_branch": 0,
+    "runs_for_source": 0,
+    "runs_for_execution": 0
+  },
+  "limits": {
+    "jobs": 1,
+    "attempt": 1,
+    "job_minutes": 25,
+    "harness_calls": 1,
+    "harness_seconds": 360,
+    "kill_grace_seconds": 15,
+    "retries": 0,
+    "runner": "ubuntu-24.04",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "engine": "chromium",
+    "BASE_URL": "http://127.0.0.1:4173",
+    "FLH04_VERSION2_CANDIDATE": "1",
+    "synthetic_contexts_only": true
+  },
+  "static_only_checks": {
+    "yaml": true,
+    "unchanged_other_jobs": 2,
+    "steps": 8,
+    "bash_blocks": 5,
+    "python_blocks": 4,
+    "javascript_blocks": 2,
+    "job_payload_executed": false
+  },
+  "artifact": {
+    "name": "flh04-c1-correction-bfed8172-<run_id>-<attempt>",
+    "retention_days": 7,
+    "if_always": true,
+    "actual_availability": "NOT_APPLICABLE_NOT_RUN",
+    "contents": "executed workflow; source receipt/tree; original selected source inputs; installation/browser/http/test logs; runtime metadata; exit codes; original C1 report with assertion IDs/locations/minimal values/NOT_REACHED; summary; SHA256 manifest"
+  },
+  "no_product_or_native_release": true
+}
