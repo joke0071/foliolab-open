@@ -1,3 +1,11 @@
+## ACTIVE / PR335_SINGLE_DIAGNOSTIC_AUTHORIZED · work-d62125b28794-20261113
+
+Jochen hat im aktuellen Chat mit „Ja“ genau die Aktivierung des Kandidaten e9578124495709ef7550273f239840c96d4a1b1c als Branch test/pr335-full-kraken-d62125b28794 und EINEN Diagnoselauf bis20Minuten ausdrücklich freigegeben. Kein Retry/PR/Mainmerge/Deployment oder weiterer Kandidat freigegeben. Neuer serieller Arbeitsabschnitt desselben Owners nach STOPPED/HANDOVER_READY. Frischer Abgleich311Heads,Main/FLH04/Checkpoint/PR332/157/161/UI-R4 und Reviews/Inline-/Conversationkommentare unverändert;0IN_PROGRESS. Diagnosebranch noch abwesend. Private Sicherungsmetadaten frisch geprüft, keine neue Schreib-/Restorefähigkeit behauptet. Ältere work-pr333-Ausführung weiterhin NICHT technisch beendet nachgewiesen, keine tatsächliche Fremdschreibkollision beobachtet.
+
+NächsterSchritt exakt freigegebenenBranch EINMAL anlegen; anschließend tatsächliche Action/Run/Job/Versuch/Ergebnis lesen. Falls kein create-Lauf entsteht, keine zweite Trigger-/Retryvariante ohne neue konkrete Entscheidung. Alle Originale und Schutzverträge erhalten. ProduktionsursacheweiterUNKNOWN/RELEASE_GATE_OPEN;keinReleasePASS. FLH04Review-/Keyslotgatesunverändert.
+
+---
+
 ## STOPPED / HANDOVER_READY / PR335_DIAGNOSTIC_CANDIDATE_READY_FOR_DECISION / RELEASE_BLOCKED · work-d62125b28794-20261113
 
 Mit diesem Abschluss sämtliche eigenen Schreibaktivitäten beendet; kein Hintergrundbetrieb oder laufender Nachfolger. Serielle Dokumentationsvorbereitung abgeschlossen. Vorgänger work-25790c57cd29-20261113 STOPPED/HANDOVER_READY; ältere work-pr333-Ausführung weiterhin NICHT technisch als beendet nachgewiesen. Keine Agenten/Parallelisierung/Automation/zweiter Writer/zweite finale CI.
