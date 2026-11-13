@@ -1,3 +1,39 @@
+## Aktueller Vorbereitungsschnitt · 13.11.2026
+
+Owner work-35ee9471eef2-20261113; Nutzer hebt die globale Entwicklungssperre ausdrücklich auf. **PR_CANDIDATE_PREPARED / NOT_FROZEN / RELEASE_BLOCKED**, kein PR/CI/Deploy/LIVE_ACCEPTED. Der nachstehende alte Hinweis „erst Main vollständig schließen, dann vorbereiten“ ist für isolierte Vorbereitung durch den neuen Auftrag ersetzt; Releasegates bleiben offen.
+
+Gegen Main a27cde2f802c26bfec41190911d88bd1d7d8e325 / Tree e55ffa96f641345759eb3779b00de6187c8671b8 abgeglichen. Gemeinsame Basis fa705d04e338364040c60957fff9632309afefe6; seitdem auf Main ausschließlich PR335-Dokumentidentitätsvertrag samt Diagnosepapier, keine Runtimeänderung. Diese beiden Main-Dateien werden unverändert in den bestehenden UI-R4-Branch übernommen. Alle acht bestehenden UI-R4-Produkt-/Testblobs einschließlich SW312 bleiben bytegleich; nur dieses bestehende Scopepapier wird aktualisiert. Keine Prozessänderungen auf dem Produktbranch, kein zweiter Folgeschnitt.
+
+### Fachlicher Vollständigkeitsabgleich
+
+| Bestehendes Kriterium | Implementierung und vorhandener Nachweis | Offene Grenze |
+| --- | --- | --- |
+| Frei wählbare EUR-Schwelle, Default alle | positionValueThreshold; leere/Null-Eingabe, Dezimalkomma und präzise Grenzwerte in position-search.test.mjs | Finale Gesamtgates |
+| UNKNOWN/fehlender Kurs von echtem Nullwert trennen | filterSmallPositionValues bewahrt UNKNOWN/fehlenden Kurs, Ausschluss und Verbindlichkeiten; vorhandene exakte Bewertung wiederverwendet | Keine neue Finanz-/Steuerfreigabe |
+| Suche/Anbieter/Archiv/Paging/verborgene Auswahl | Filter nach vorhandenem Such-/Archiv-/Anbieterscope und vor Paging; Auswahlstatus erhält versteckte IDs | Drei-Engine-Integration und Produktion offen |
+| Nur Darstellung, Summen/Journal/Restore unverändert | Keine Modell-/Settingsmutation; vorhandener Browservertrag vergleicht exakten IDB-Record/Revision vor/nach und Offline-Reload | Historischer lokaler Chromium/Firefox-PASS kein neuer Kandidaten-/Produktions-PASS |
+| Bedienung/A11y/kurze Ansicht | Vorhandener Vertrag fünf Breiten/Axe/44px/Fokus, 320x360/200%-Text und lange Eingabe | Aktuelle native Browserfähigkeit fehlt; Android/WebKit/Hardware offen |
+
+Keine konkrete Produktrestlücke aus diesem Abgleich gefunden; keine künstliche Neuimplementierung. Lokale Eingaben aus gepinnten GitHub-Dateien materialisiert;77 benötigte Quellen/Tests exakt gegen Gitblobs verifiziert. Node24.22.1 (abweichend von CI22/Wallet20), fünf bestehende gerichtete Units PASS/0Fehler/0Skips und node --check auf den drei UI-R4-.mjs-Dateien sowie position-search.js PASS. Dieser lokale Lauf wurde nach exaktem Byteabgleich einmal bestätigt; kein gesamter Unit-/Browser-/Release-PASS.
+
+Capability: AF_UNIX-Erzeugung EPERM; Chromium nicht wieder gestartet. Vorhandener Laufzeitcompiler TypeScript5.8.3 hier nicht auffindbar; kein Installations-/Umgehungsversuch. Historischer V2-Namensprüfungsnachweis bleibt für die bytegleichen drei Testblobs historisch wiederverwendbar; aktueller Namensprüferlauf nicht behauptet. Syntaxprüfung allein ersetzt diesen oder native Tests nicht. Reguläres Browser-TLS/Proxy und aktuelle private Transfer-/Readback-/Restorefähigkeit ungeprüft.
+
+### Fertiger PR-Entwurf (erst bei zulässiger Qualifikation eröffnen)
+
+Titel: UI-R4: kleine Positionswerte mit frei einstellbarer Anzeigegrenze filtern
+
+Die Positionsliste kann kleine bekannte EUR-Werte unter einer frei wählbaren Grenze ausblenden. Standardmäßig bleiben alle Positionen sichtbar; unbekannte Bewertungen, fehlende Kurse und Verbindlichkeiten werden erhalten. Der Filter bleibt in der Sitzung, erhält Suche/Archiv/Paging und verborgene Auswahl und verändert weder Finanzwerte noch gespeicherte Daten.
+
+Vorhandene fünf Units und Syntaxprüfungen bestanden. Historische gezielte Chromium-/Firefoxprüfungen auf bytegleichem Produkt-/UI-R4-Vertrag vorhanden; aktuelle Browserausführung ENVIRONMENT_BLOCKED. WebKit, vollständige PR-/Wallet-/Main-/Produktionsabnahme sowie neue Original-/Sicherungs-/Readback-/Restoregates offen. Mainrun43332355188 bleibt FAILURE/Produktionsursache UNKNOWN; kein Merge oder Release als Umgehung.
+
+### Genau nächste zulässige Qualifikation
+
+Keinen PR allein zur Sichtbarkeit eröffnen: der unveränderte import.yml-Trigger reagiert auch auf opened/converted_to_draft und startet bei diesem Funktionsdiff die vollständige Pflicht-CI; Wallet-CI reagiert ebenfalls auf pull_request. Ein Draft wäre kein CI-freier Ablageort. Ein einziger Kandidatenbranch und dieser fertige Entwurf genügen zur reviewbaren Vorbereitung. Vor Freeze Main/Owner/Refs/Reviews/Kommentare/Actions erneut abgleichen; geeignete Ausführungsfähigkeit und Sicherungsweg klären. Der geparkte Produktionsblocker muss vor abhängiger Integration/Release sicher geschlossen werden. Kein unveränderter Retry, keine Workflowänderung oder Sicherheits-/Fristlockerung.
+
+Die spätere frühe SW-Diagnostik aus dem Effizienzplan bleibt bis zum sicheren Blockerabschluss zurückgestellt und wird nicht in UI-R4 hineingemischt. Bereits vollständig qualifizierte identische Belege erhalten; neue Kandidaten-/Main-/Produktionsgates niemals ersetzen.
+
+## Unveränderter Vorbereitungsnachweis
+
 # UI-R4 – vorbereiteter Kleinstbestandsfilter
 
 **Fortschreibung nach PR334-Integration:** Gegen Main fa705d04e338364040c60957fff9632309afefe6 abgeglichen; dessen Runtime-/Test-/Workflowdateien sind gegenüber der geprüften v311-Basis unverändert. Der isolierte Vorbereitungsbranch enthält den erforderlichen SW-Bump auf v312. Noch kein PR, Freeze oder finale CI; Mainlauf43315231787 hat Vorrang. Die folgenden SW-offen-Angaben dokumentieren den ursprünglichen Vorbereitungsstand.
