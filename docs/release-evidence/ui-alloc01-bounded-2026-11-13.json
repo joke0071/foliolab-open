@@ -1,0 +1,94 @@
+{
+  "scope": "UI-ALLOC01 bounded Linux Chromium",
+  "status": "FROZEN_BOUNDED_PASS_EXTERNAL_GATES_OPEN",
+  "product_source": "933c366793e7f4bcd068c55701d4b1c39c638a35",
+  "product_tree": "82556544576a05e1ed9973be6c023a939edaa2fd",
+  "corrected_test_source": "6dd6035044190a768ec9705a0f33a60b967c9a48",
+  "corrected_test_tree": "e322aa26709d0c52eef4b2819836fd62dcf5e219",
+  "correction": {
+    "files": [
+      "tests/browser-account-allocation.mjs",
+      "tests/text-enlargement-200.css"
+    ],
+    "reason": "Initial inline text-enlargement injection rejected by unchanged CSP. Same-origin test stylesheet now loads under existing style-src self.",
+    "product_delta": false,
+    "assertions": "unchanged",
+    "local": "node syntax and same-origin/CSP static checks PASS; unchanged30Node suite reused"
+  },
+  "runs": [
+    {
+      "id": 43512902239,
+      "attempt": 1,
+      "execution": "12b6f7e8b9f5605ab2f13c69f76c7850cfb16e42",
+      "trigger": "test/ui-alloc01-b7bbb8ab7737-initial-20261113",
+      "result": "FAIL",
+      "cleanup": "PASS",
+      "passed": "7 widths and geometry; Enter/touch reached; text injection failed; UNKNOWN not reached",
+      "artifact": 14078618670,
+      "zip_bytes": 1382856,
+      "zip_sha256": "82251a89798fa502c79943fe1b427230d5b2f5799aca197afc2f0dd8fa549a07",
+      "manifest_entries": 21,
+      "archive_bytes": 4433920,
+      "archive_sha256": "035d4d63ec090661c6814a22cf4e25ca9e28a87b85b404cce07c2fba33d5eb1e",
+      "pinned_readback_entries": 24
+    },
+    {
+      "id": 43513293068,
+      "attempt": 1,
+      "execution": "3623161b1a22eecc1568bad9cdbec46f200d6b39",
+      "trigger": "test/ui-alloc01-b7bbb8ab7737-correction-20261113",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "artifact": 14080345066,
+      "zip_bytes": 1518721,
+      "zip_sha256": "175ab003a6f7db92ceed9dc8941bbc2b996451b59e3c78362f69c987726f15bc",
+      "manifest_entries": 22,
+      "archive_bytes": 4720640,
+      "archive_sha256": "024d9ffe6be712ace226b549155abf9feb07d34a23a5eecd55196e7d5cabdee0",
+      "pinned_readback_entries": 25
+    }
+  ],
+  "runtime": {
+    "os": "Ubuntu24.04.5",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37 build1194",
+    "engine_count": 1,
+    "job_minutes": 25,
+    "harness_seconds": 120,
+    "kill_after_seconds": 15
+  },
+  "verified": [
+    "40/30/20/10 depot + separate5000EUR cash",
+    "320/360/390/412/430/768/1440px geometry and44px summary",
+    "Enter and synthetic touch toggling",
+    "200% CSS text approximation",
+    "UNKNOWN suppresses all account shares",
+    "canonical legacy bytes invariant within reading cases",
+    "original ZIP CRC, inner SHA256 manifest and pinned archive readback"
+  ],
+  "visual_review": {
+    "actually_viewed": [
+      "initial width320",
+      "initial width1440",
+      "final width390",
+      "final UNKNOWN1440"
+    ],
+    "observation": "Account rows show readable names/EUR/36px rings and percent values. UNKNOWN shows empty rings/dashes and incomplete valuation note. Full-page mobile screenshots contain fixed-navigation capture positioning; no new navigation acceptance claimed.",
+    "automated_geometry_is_visual_review": false
+  },
+  "limits": [
+    "Legacy fixture only; no IDB/restore/fresh-install evidence",
+    "Linux Chromium only; no Windows Chrome/Edge, Android hardware/PWA/system zoom",
+    "No full CI/Main/production/release/crypto approval",
+    "No UI-R4 mix; protected financial/storage contracts unchanged"
+  ],
+  "preservation": {
+    "method": "existing separate original archives",
+    "both_versions": 0,
+    "pinned_exact_readback": true,
+    "root_full_backup": false,
+    "private_locators": "WITHHELD"
+  },
+  "session_runs_used": 2
+}

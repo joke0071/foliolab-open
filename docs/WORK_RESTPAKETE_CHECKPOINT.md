@@ -213,4 +213,12 @@ Zwischenzeitlicher Zentralabschluss0f0981c nach STOPPED/HANDOVER_READY gezielt i
 
 ## Laufende Sitzung
 
-Kein Sitzungsende. UI-Diagnosevorbereitung aktiv; keine neue Ausführung bisher.
+UI-ALLOC01 vollständig ausgewertet und separat gesichert; begrenzterLinuxChromiumPASS,
+Produkt933c3667unverändert,eingefrorenerTestkandidat6dd60350.
+Run43512902239/1FAIL(CSPTestfixture),Run43513293068/1PASS/CleanupPASS;
+beideOriginalarchiveV0gepinntbytegleich rückgelesen(24/25Manifestdateien).
+[FrischerBeleg](release-evidence/ui-alloc01-bounded-2026-11-13.json).
+2/4neueLäufe,UIBudgetvollständigverbraucht;keineweitereUIAusführung.
+AlteUIENVIRONMENT_BLOCKED-/NativeNotRunangabenobenhistorischdurchdiesenBelegersetzt.
+Restore775bbdddjetztalsgetrennteAufgabeinVorbereitung;keinRestoreLaufgestartet.
+KeineProduktintegration/Release;Hardware-/Plattform-/Main-/Integrationsgatesoffen.
