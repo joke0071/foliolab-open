@@ -1,0 +1,55 @@
+{
+  "scope": "Restore outcome",
+  "product_source": "775bbdddb5a01b8ed400ea8add9848b1aadc4aa8",
+  "product_tree": "4db8a537abb2f952ac9e0b41d9894be786aea551",
+  "parent_main": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+  "candidate": "8067ec3bfdd686ee475458e179401a679305690a",
+  "candidate_tree": "abf2767b8c4f0ce15db4e82909fe121d5f3cc4eb",
+  "execution": "59085dac146d4ce24937501f5fcf9aac5b21404a",
+  "execution_tree": "0ba284e87f21f4b814dc14c762b91e52245ed576",
+  "trigger": "test/restore-outcome-b7bbb8ab7737-initial-20261113",
+  "product_delta": [],
+  "test_delta": [
+    "tests/browser-drive-restore-outcome.mjs",
+    "tests/restore-text-enlargement.css"
+  ],
+  "execution_delta": [
+    ".github/workflows/live-initialization-diagnostics.yml"
+  ],
+  "goal": "Actual canonical IDB state agrees with pre/post-commit feedback; original cause preserved; one restore and one media GET; no automatic retry/rollback",
+  "cases": [
+    "success",
+    "actual records transaction aborted",
+    "post-commit preferences setItem failure",
+    "simulated password adoption failure",
+    "synthetic optional final-dialog close failure"
+  ],
+  "local": {
+    "source_files_git_blob_verified": 156,
+    "syntax": "PASS",
+    "fixture_cash_EUR": 123.45,
+    "complete_configuration_and_canonical_roundtrip": "PASS",
+    "static_bindings_and_mandatory_cases": "PASS",
+    "original_51_tests": "unchanged reused, not rerun"
+  },
+  "runtime": {
+    "runner": "ubuntu-24.04",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "engine": "Chromium headless shell build1194",
+    "job_minutes": 25,
+    "harness_seconds": 360,
+    "kill_after_seconds": 15,
+    "step_budgets_minutes": 19
+  },
+  "artifacts": "always upload hostBEGIN/STAGE/RESULT,case JSON,before/after record,synthetic screenshots,source inputs,workflow,manifest",
+  "preservation": "existing separate original archives with pinned byte readback before next run; current UI archives freshly verified",
+  "limitations": [
+    "OAuth/Drive media/decrypt/password adoption mocked, no real credentials",
+    "actual app callback/save, independent native IDB open/readonly oncomplete",
+    "SW deliberately blocked, no PWA/recovery/real crypto/platform claim",
+    "LinuxChromium only; WindowsChrome AND Edge/Android remain external"
+  ],
+  "initialRunsAllowed": 1,
+  "correctionRunsAllowed": 1
+}
