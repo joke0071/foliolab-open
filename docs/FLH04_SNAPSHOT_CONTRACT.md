@@ -170,3 +170,38 @@ Begrenzte Implementierung vollständig und gezielte interne Nodeverifikation bes
 Keine Browser/IDB/CryptoKey/Reopen/Mehrtab/echterCrash/realeQuota/CI22/Wallet20/
 PR/Main/Produktions-/externeAbnahme. Kein Ersatz für Keyslotbindung oder
 unabhängiges Kryptoreview. FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL.
+
+## Purchase-Evidence-Snapshot · vor Code festgelegt · 13.11.2026
+
+Owner work-3e1b992cda51-20261113; Ausgang 3f05f5ebcc5ec8ccdc2390937c9a961b9d041c83.
+Vorhanden: safeImport ruft validatePurchaseEvidence auf; vollständig unverändernder
+Snapshotvergleich und bereits belegte kanonische Wallet-/Preis-History bleiben.
+Fehlend ist ausschließlich die rekursiv geschlossene Purchase-Allowlist.
+Ergänzt werden schema1, receipts (id/provider/currency/timestamp/txid und sämtliche
+exakten EUR/BTC-Beträge), decisions (action/walletKey/sessionId/at/receiptIds/events)
+und optional bitcoinLedger (id/ownerDigest/txid/timestamp/amountBTC/events).
+Alle Textfelder strikt Strings, Schema exakt1, Arrays nur passende Strukturen.
+Bestehender Validator prüft Mengen/Gebühren/IDs/Hashform/UTC/Referenzen/Duplikate/
+Link-Unlink-Folge und eigene Limits; dessen Projektion muss vollständig gleich sein.
+Keine zweite Validierungs-/Bewertungsengine. Kein Normalisieren oder Defaulten.
+
+Erfolg: receipts ohne Zuordnung, bestätigte N:M/split-Bezüge, Link→Unlink→Relink,
+optionales leeres/gefülltes Ledger, sämtliche IDs/Hashes/Strings/Reihenfolgen und
+koexistierende Finanz-/UNKNOWN-/Wallet-/Preis-History unverändert erhalten.
+Bestehende veraltete Sitzung/Fingerprint/Wallet-/Ledgerbezüge bleiben dokumentarisch;
+der Snapshot bestätigt sie nicht und erzeugt weder Buchung noch neue Autorität.
+Fehlende/nicht mehr aktuelle History darf nicht still zugeordnet oder repariert werden.
+
+Ablehnung vollständig auf Encoder UND Decoder: unbekannte Felder/Credentials an
+jeder Ebene, falsche Typen/Schema, falsche Receipt-ID, Mengen/Gebührenwiderspruch,
+doppelte Belege/Ledger/aktive Events, verwaiste Receiptrefs, ungültige Link-/Unlinkfolge,
+Timestamp-/Decimalnormalisierung und nichtkanonisches null-Ledger. Jede Abweichung
+blockiert das gesamte Portfolio ohne Quellmutation oder Teilpayload. v5/Import-/
+Management-/Withdrawal-/Bridgebelege/pending-Resume weiterhin unsupported.
+
+Dateigrenze: src/sync-snapshot.js, neue tests/sync-snapshot-purchase-evidence.test.mjs;
+3 vorhandene Snapshot-Suiten ersetzen nur ihre nun überholte empty-Purchase-
+Ablehnung durch echte ungültige Schemafälle. Snapshotvertrag/Fachcheckpoint und
+lokaler Prüfbeleg fortschreiben. Bestehende purchase-evidence.test.mjs unverändert
+gezielt mitprüfen. Keine Storage-/Outbox-/Anker-/Krypto-/Appintegration. Alle Budgets,
+Kryptoreview-/Persistenz-/Recovery-/Releasegates unverändert und ausdrücklich offen.
