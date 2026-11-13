@@ -2,20 +2,20 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED / HANDOVER_READY · work-autonomous-b9a10762f97b-20261113.
-Alleinige Schreibarbeit beendet; Übernahme war durch Nutzerauftrag vom 13.11.2026 autorisiert.
-Vorgänger work-alloc01-331fb5cfdd75-20261113 STOPPED/HANDOVER_READY.
-Keine Zusatzagenten, parallelen Stränge oder Hintergrundautomation.
-UI-ALLOC01 lokalENVIRONMENT_BLOCKED; ein unabhängigerDrive-Restore-Schnitt
-lokal implementiert undgezieltNodegeprüft. Keine offenen eigenen Mutationen
-oder gestarteten lokalen Server/Browserprozesse.
-Keine Actions-/Merge-/Release-/allgemeine native Freigabe.
-Kollision gegen280da5bd geklärt: Vorgängerwork-eff ausdrücklichSTOPPED,
-Zentral/Main/UI-R4/FLH04-Arbeitsref vor Mutation unverändert;
-damaligerOwner an29eb605e mit expectedSHA gespeichert und exakt rückgelesen.
-Überholtes unverknüpftes Objektd72be4b9 bleibt verworfen/keineLease;
-nicht nachträglich übernehmen. Ältere work-pr333-Ausführung weiterhin
-technisch ungeklärt; keine abhängige Release-/Nativeaktion hier.
+ACTIVE · work-bounded-b7bbb8ab7737-20261113. Ein alleiniger HND01-Writer.
+Vorgänger work-autonomous-b9a10762f97b-20261113 STOPPED/HANDOVER_READY.
+Übernahme durch ausdrücklichen Nutzerauftrag 13.11.2026 autorisiert.
+Neu autorisiert: getrennte UI-ALLOC01- und Restore-Diagnose, seriell, maximal vier neue Läufe gesamt,
+je Aufgabe initial plus höchstens eine belegte Korrektur; ein Job/Chromium, maximal25min,
+UI120s/Restore maximal360s, Originalerhalt vor nächstem Lauf.
+Keine Zusatzagenten/Automation/Produkt-PR/Integration/Release.
+Frisch gelesen: Zentral fa0cfd3f/Tree d4ab7d91, Main a27cde2f und FLH04 435ab9a8 unverändert,
+0IN_PROGRESS; zwei historische Queues43095194276/43095194257 unverändert.
+Alte pauschale Ausführungsverbote unten sind ausschließlich für diese zwei Prüfaufgaben durch den
+neuesten Nutzerauftrag ersetzt; übrige Grenzen erhalten.
+Aktuell: UI-Ausführungsweg vorbereiten. Neue Läufe0/4, kein Trigger angelegt.
+Vollständiger Vorgänger unverändert gepinnt:
+[fa0cfd3f](https://github.com/joke0071/foliolab-open/blob/fa0cfd3fd8be58caedc77c3b2b48909dd4ca2ebf/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 
 Dieser Checkpoint ist der aktuelle Einstieg, keine append-only Chronik. Bei Änderung aktuellen Zustand fortschreiben und Vorgänger gepinnt verlinken. **Vollständige bisherige Historie unverändert im [Originalcheckpoint an 0f0981c](https://github.com/joke0071/foliolab-open/blob/0f0981c468d4031f56f4e729e2a8682e9b09a3b0/docs/WORK_RESTPAKETE_CHECKPOINT.md).** Dessen alte Owner-/NEXT-/Freigabeangaben sind historisch; nicht widersprechende Fach-/Originalverträge bleiben verbindlich.
 
@@ -198,26 +198,6 @@ Reviews/Inline/Conversation332/161/157/335 gelesen. KeinfrischerGesamtabgleich
 oder technischeAufklärung ältererAusführungen durch dieseSitzung.
 Zwischenzeitlicher Zentralabschluss0f0981c nach STOPPED/HANDOVER_READY gezielt integriert. Vor Mutation relevante Deltas und expectedSHA prüfen. Bei Kollision nicht überschreiben.
 
-## Tatsächliches Sitzungsende
+## Laufende Sitzung
 
-Endgrund: lokaleSocketvoraussetzung für freigegebenesUI-ALLOC01 fehlt.
-Der eine zulässige isolierteFolgeschnitt ist intern gezieltNodegeprüft;
-dessen notwendige nativeAbnahme ist durch diesenAuftrag nicht freigegeben.
-Die geprüftenNachbarwege benötigen konkreteEingaben/Freigaben oder sind
-bereits abgenommen/geschützt. Ein dritter ungeprüfterKandidat würde die
-ausdrücklicheSammlungsgrenze überschreiten; kein belegter weiterer
-autorisierterSchritt innerhalbderzweiaktuellenSchnitte offen.
-Keine künstlicheMindestlaufzeit/Chatrotation oder Paketabschluss als Endgrund.
-
-VollständigerVorgängerzustand unverändert gepinnt:
-[b9f7e7c6](https://github.com/joke0071/foliolab-open/blob/b9f7e7c6ba52e8cb713a6c28a41f3c656c74a7e0/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-EigeneOwnerübernahmef91415dd expectedSHA-geschützt und exakt rückgelesen.
-KeinevollständigeprivateSicherung/Readback-/Restoreprüfung oder technische
-Releasevollübernahme in dieserSitzung behauptet.
-Originalfehler und finaleNodekonsole im775bbdddTeilbeleg dauerhaft gepinnt;
-lokaleScratchkopien allein werden nicht als unabhängigesBackup ausgegeben.
-KeineZusatzagenten/Automation/Folgesitzung; keineausgelöstenActions.
-
-FrischerSchlussdelta dieserSitzung:Maina27cde2f/UI-R460c1ab09/
-FLH04-Arbeitsref435ab9a8 unverändert;0IN_PROGRESS.
-NeuesterRun43500770689/1 weiterhinCOMPLETED/FAILURE,keinNeustart.
+Kein Sitzungsende. UI-Diagnosevorbereitung aktiv; keine neue Ausführung bisher.
