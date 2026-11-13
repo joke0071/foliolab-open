@@ -1,0 +1,470 @@
+{
+  "kind": "FLH04_C1_FIRST_NATIVE_EXECUTION_EVALUATION",
+  "status": "FAILURE",
+  "date": "2026-11-13",
+  "owner": "work-366da675bef5-20261113",
+  "authorization": {
+    "trigger": "one branch creation",
+    "branch": "test/flh04-c1-native-b18c6fcb-366da675bef5",
+    "calls": 1,
+    "attempts": 1,
+    "retries": 0,
+    "preflight": {
+      "heads_before": 312,
+      "heads_after": 313,
+      "only_new_ref": "authorized execution branch",
+      "existing_heads_unchanged": true,
+      "prior_runs_for_execution_sha": 0,
+      "prior_runs_for_branch": 0,
+      "in_progress_before": 0,
+      "open_prs": [
+        332,
+        161,
+        157
+      ],
+      "reviews_inline_unchanged": true,
+      "conversation_unchanged": true,
+      "older_work_pr333_technical_stop": "NOT_PROVEN"
+    }
+  },
+  "run": {
+    "id": 43485655271,
+    "attempt": 1,
+    "event": "create",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/43485655271",
+    "execution_sha": "f73535847f26476da3ea100f0410f391496dafd7",
+    "execution_tree": "511c047a067f1c04690378232d698cd204f495c0",
+    "source_sha": "b18c6fcb09b22616355355df5efb483503141e69",
+    "source_tree": "2527bebb55b3209a59c90c66627192a751ce1fa1",
+    "status": "completed",
+    "conclusion": "failure",
+    "started_at": "2026-11-13T18:45:10Z",
+    "updated_at": "2026-11-13T18:45:30Z",
+    "run_wall_seconds_to_final_update": 20
+  },
+  "job": {
+    "id": 132093270291,
+    "name": "flh04-c1-native-first",
+    "started_at": "2026-11-13T18:45:13Z",
+    "completed_at": "2026-11-13T18:45:29Z",
+    "duration_seconds": 16,
+    "labels": [
+      "ubuntu-24.04"
+    ],
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-13T18:45:13Z",
+        "completed_at": "2026-11-13T18:45:14Z"
+      },
+      {
+        "name": "Checkout exact execution commit and its source parent",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-13T18:45:14Z",
+        "completed_at": "2026-11-13T18:45:16Z"
+      },
+      {
+        "name": "Select previously used Node version",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-13T18:45:16Z",
+        "completed_at": "2026-11-13T18:45:17Z"
+      },
+      {
+        "name": "Bind execution workflow and unchanged C1 source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-13T18:45:17Z",
+        "completed_at": "2026-11-13T18:45:17Z"
+      },
+      {
+        "name": "Install pinned existing browser tool without package scripts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-13T18:45:17Z",
+        "completed_at": "2026-11-13T18:45:19Z"
+      },
+      {
+        "name": "Install the previously used Chromium shell",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-13T18:45:19Z",
+        "completed_at": "2026-11-13T18:45:23Z"
+      },
+      {
+        "name": "One original harness call with the C1 extension",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 7,
+        "started_at": "2026-11-13T18:45:23Z",
+        "completed_at": "2026-11-13T18:45:27Z"
+      },
+      {
+        "name": "Preserve observed results without reclassifying failures",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-13T18:45:27Z",
+        "completed_at": "2026-11-13T18:45:27Z"
+      },
+      {
+        "name": "Upload original C1 evidence even when tests fail",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-13T18:45:27Z",
+        "completed_at": "2026-11-13T18:45:28Z"
+      },
+      {
+        "name": "Post Select previously used Node version",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 17,
+        "started_at": "2026-11-13T18:45:28Z",
+        "completed_at": "2026-11-13T18:45:28Z"
+      },
+      {
+        "name": "Post Checkout exact execution commit and its source parent",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-13T18:45:28Z",
+        "completed_at": "2026-11-13T18:45:28Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-13T18:45:28Z",
+        "completed_at": "2026-11-13T18:45:28Z"
+      }
+    ],
+    "skipped_other_jobs": [
+      {
+        "id": 132093272699,
+        "name": "diagnostic",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 132093273292,
+        "name": "pchain-diagnostic",
+        "conclusion": "skipped"
+      }
+    ],
+    "harness_step_seconds": 4,
+    "harness_process_exact_duration": "NOT_SEPARATELY_MEASURED",
+    "harness_calls": 1,
+    "test_exit": 1,
+    "tee_exit": 0
+  },
+  "environment": {
+    "os": "Ubuntu 24.04.5",
+    "image": "ubuntu-24.04",
+    "image_version": "20261111.370.1",
+    "node": "v22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "chromium_build": 1194,
+    "ENGINE": "chromium",
+    "FLH04_VERSION2_CANDIDATE": "1",
+    "BASE_URL": "http://127.0.0.1:4173",
+    "isolation": "synthetic new BrowserContexts; no production origin",
+    "runtime_json_browserStarted_false": "Metadata written before harness. Actual browser version and six probe results subsequently observed."
+  },
+  "baseline": {
+    "status": "ASSERTIONS_BEFORE_C1_COMPLETED",
+    "basis": "Observed C1 report plus pinned harness control flow: original baseline assertions precede awaited C1 helper at lines160-162; earlier exceptions are not caught there.",
+    "standalone_pass_line": "NOT_REACHED",
+    "reason": "The original PASS console at line164 follows the helper. Its AggregateError prevented that console.",
+    "assertion_count": "NOT_REPORTED; no invented count",
+    "scope": "Original abort/quota injections, two-page CAS, page close/reopen/reverify, newer save, A1 guard, A2 pseudo-readback rejection, restore/recovery/delete/adoption invalidation and prepared-locked persistence/coherence; limited to this Chromium run."
+  },
+  "observed_summary": {
+    "source_sha": "b18c6fcb09b22616355355df5efb483503141e69",
+    "source_tree": "2527bebb55b3209a59c90c66627192a751ce1fa1",
+    "execution_sha": "f73535847f26476da3ea100f0410f391496dafd7",
+    "run_id": "43485655271",
+    "run_attempt": "1",
+    "test_step_outcome": "failure",
+    "report_count": 1,
+    "source_receipt_available": true,
+    "exit_status": {
+      "test_exit": 1,
+      "tee_exit": 0
+    },
+    "c1_report": {
+      "kind": "FLH04Version2CandidateProbe",
+      "version": 1,
+      "node": "v22.23.4",
+      "playwright": "1.56.1",
+      "engine": "141.0.7390.37",
+      "cases": [
+        {
+          "id": "C1-CANCEL",
+          "status": "PASS"
+        },
+        {
+          "id": "C1-VERSION-FENCE",
+          "status": "PASS"
+        },
+        {
+          "id": "C1-MARKERS",
+          "status": "FAIL",
+          "errorType": "AssertionError"
+        },
+        {
+          "id": "C1-NO-REVERT",
+          "status": "FAIL",
+          "errorType": "AssertionError"
+        },
+        {
+          "id": "C1-RESTORE-CAS",
+          "status": "PASS"
+        },
+        {
+          "id": "C1-RESTORE-FAULT-REPLY",
+          "status": "PASS"
+        }
+      ],
+      "limitations": [
+        "test-only schema transition",
+        "no product v2 startup implementation",
+        "not full writer closure",
+        "reply loss and quota are injections",
+        "not process crash or real quota",
+        "not sync/enrollment/crypto approval"
+      ]
+    },
+    "report_status": "OBSERVED",
+    "expected_source_gaps": [
+      "C1-MARKERS",
+      "C1-NO-REVERT"
+    ],
+    "expected_failures_count_as_pass": false,
+    "scope": "Original browser-sync-outbox baseline plus six C1 groups, one invocation, Chromium only",
+    "not_qualified": [
+      "production v2 adapter",
+      "full writer closure",
+      "real process crash",
+      "real quota",
+      "crypto review",
+      "active sync"
+    ]
+  },
+  "source_receipt": {
+    "GITHUB_SHA": "f73535847f26476da3ea100f0410f391496dafd7",
+    "GITHUB_REF": "refs/heads/test/flh04-c1-native-b18c6fcb-366da675bef5",
+    "GITHUB_RUN_ID": "43485655271",
+    "GITHUB_RUN_ATTEMPT": "1",
+    "GITHUB_JOB": "flh04-c1-native-first",
+    "RUNNER_OS": "Linux",
+    "RUNNER_ARCH": "X64",
+    "C1_SOURCE_SHA": "b18c6fcb09b22616355355df5efb483503141e69",
+    "C1_SOURCE_TREE": "2527bebb55b3209a59c90c66627192a751ce1fa1",
+    "ENGINE": "chromium",
+    "FLH04_VERSION2_CANDIDATE": "1",
+    "BASE_URL": "http://127.0.0.1:4173",
+    "files": [
+      {
+        "path": "tests/browser-sync-outbox.mjs",
+        "bytes": 12119,
+        "git_blob_sha1": "f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c"
+      },
+      {
+        "path": "tests/flh04-version2-candidate-probes.mjs",
+        "bytes": 11200,
+        "git_blob_sha1": "30ca8d464e9ace8994bedb9c1e9d31e5bd742794"
+      }
+    ],
+    "limits": {
+      "job_minutes": 25,
+      "harness_seconds": 360,
+      "harness_calls": 1,
+      "engines": [
+        "chromium"
+      ],
+      "automatic_test_retries": 0
+    }
+  },
+  "not_reached": {
+    "c1_groups": [],
+    "after_c1_original_PASS_console": true,
+    "within_failed_groups": "Only group status and error type retained. First failing assertion, actual/expected values, and later assertions within each failed group are NOT determined by this log. Do not claim all assertions in failed groups ran."
+  },
+  "artifact": {
+    "id": 14066972737,
+    "name": "flh04-c1-b18c6fcb-43485655271-1",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/43485655271/artifacts/14066972737",
+    "bytes": 57855,
+    "expired_at_read": false,
+    "expires_at": "2026-11-20T18:45:27Z",
+    "zip_sha256": "8b830f6b2a1786032e148b12e6a6608d5050cd7f1a924f1687d2dd2a2a0fb3ec",
+    "downloaded_via": "connected GitHub artifact tool",
+    "zip_digest_matches_upload_and_api": true,
+    "manifest_sha256": "656d8f03236a050e446163b12cfe8ec37bbe6e171f9838bc7cd5d81ec29fb29c",
+    "manifest_entries": 16,
+    "verified_bytes_and_sha256": 16,
+    "zip_files": 17,
+    "no_extra_or_missing_files": true,
+    "pinned_input_gitblob_sha1_checks": 5,
+    "executed_workflow_blob": "a2f3eaded7507080feda0ca27e9f1e323bf1fc48",
+    "original_zip_preserved": true,
+    "manifest": [
+      {
+        "path": "browser-install.log",
+        "bytes": 4518,
+        "sha256": "472a424ce75eff59517901c4cddd6e131bdd92e16d5b6fe8673eecdc71585ecd"
+      },
+      {
+        "path": "executed-workflow.yml",
+        "bytes": 12420,
+        "sha256": "1bfad7144023ae079c17cc534abb427d21d0bcab74ea8af449351ce3ad7ae920"
+      },
+      {
+        "path": "execution-delta.txt",
+        "bytes": 54,
+        "sha256": "68305f284c60c36cd2b9a12b90abc2d15f067758aa13f7e4b26d32954cccb69c"
+      },
+      {
+        "path": "exit-status.json",
+        "bytes": 38,
+        "sha256": "3ec64c1e5a3043178b9c3bc0f28960f7e4a07bcc7d0843faa7db37b11a7f296d"
+      },
+      {
+        "path": "http.log",
+        "bytes": 52019,
+        "sha256": "3739cc8f570cfacb74c336d2f517b7c955f7f537e79eaa060bab669aa4c598d5"
+      },
+      {
+        "path": "inputs/package.json",
+        "bytes": 422,
+        "sha256": "c24b89cba6b57fb532161dd441e15be03f97318b51c3d54082af897136791553"
+      },
+      {
+        "path": "inputs/tests/browser-sync-outbox.mjs",
+        "bytes": 12119,
+        "sha256": "4d54549f2cb986a39255dcf2efe5fa73970c80a296cee2247d23235350b657b2"
+      },
+      {
+        "path": "inputs/tests/flh04-version2-candidate-probes.mjs",
+        "bytes": 11200,
+        "sha256": "9e1fae9390a3412b76ca09c8aeb73b09408c25a146c8de08aa2a54119ee707fc"
+      },
+      {
+        "path": "inputs/tests/storage-origin.html",
+        "bytes": 162,
+        "sha256": "e1f614311912ee6e6dbb09df11e0df9684e36b93b3079adb612542ef37783fc4"
+      },
+      {
+        "path": "install.log",
+        "bytes": 73,
+        "sha256": "5ad7260ba01aa9157b0b67fd4050636e4f6b1ac5af37a2b360069408c4c680ec"
+      },
+      {
+        "path": "node.txt",
+        "bytes": 9,
+        "sha256": "2266957ed9a639bd7264d714bfa798a961510bf2e50695c668ab8fc0c3f4e906"
+      },
+      {
+        "path": "pinned-source-tree.txt",
+        "bytes": 109105,
+        "sha256": "e476f2b85cd6249eef850862e0ea38ad712b221e92921da1dba7840a5732d58a"
+      },
+      {
+        "path": "runtime.json",
+        "bytes": 165,
+        "sha256": "3f57e5fafe96055adbe40c52f2649c962cf7c1b5bb9c3e059f039fae3867d662"
+      },
+      {
+        "path": "source-receipt.json",
+        "bytes": 1005,
+        "sha256": "657d067f51d95fa01dd7254b3d431ef1eb7d3dd71c3cbc26980f3e3c0a70bfde"
+      },
+      {
+        "path": "summary.json",
+        "bytes": 1782,
+        "sha256": "f49685c6ce797079ee62d01756cb50a8eaf44858a5854f5bb5b5f1bb28fb5034"
+      },
+      {
+        "path": "test.log",
+        "bytes": 2007,
+        "sha256": "0646462c5537b8e9f73f0134922a6f0a79debf7cf62b152aa71598a3b5f4f7d1"
+      }
+    ]
+  },
+  "logs": {
+    "test": "AggregateError: FLH04 C1 candidate probes failed; C1-MARKERS and C1-NO-REVERT AssertionError; exit1.",
+    "http": {
+      "requests": 625,
+      "status_200": 553,
+      "status_304": 72,
+      "other_statuses": 0
+    },
+    "setup": "Checkout/source binding/Node/npm/Chromium installation successful; result preservation/upload successful.",
+    "failure_localization": "Original per-assertion messages/stacks/actual values discarded by scenario catch. Exact failing assertion remains unknown."
+  },
+  "source_analysis": {
+    "not_runtime_observation": true,
+    "ref": "b18c6fcb09b22616355355df5efb483503141e69",
+    "path": "src/browser-portfolio-storage.js",
+    "blob": "c383901ffe000b82f3a97c1f08460748dbe228eb",
+    "findings": [
+      {
+        "lines": "38-43",
+        "finding": "initialize selects legacy bytes when MODE_KEY absent and STORE_KEY present before consulting IDB."
+      },
+      {
+        "lines": "223-253",
+        "finding": "revertLocked has no db.version2 guard before LocalStorage target/intent writes and IDB tombstone commit."
+      }
+    ],
+    "interpretation": "These source gaps agree with the red group names; the logs alone do not identify the precise failed assertions or dump actual mutated state."
+  },
+  "next_step": {
+    "status": "PREPARE_SEPARATELY_REVIEWABLE_CORRECTION_NO_RUN_AUTHORIZED",
+    "scope": [
+      "Improve only failure evidence in the six existing C1 scenarios: retain failing assertion message/stack/actual/expected and explicit stage; safely capture synthetic stored-state differences without new credentials/key material. Preserve all assertions and failure exit.",
+      "Prepare bounded product candidate for v2 canonical-source detection before legacy fallback/retirement writes, and reject v2 revert/revertLocked before every LocalStorage/IDB write, including automatic intent-resume paths. Preserve v1 behavior and originals; ambiguous/open failures block, never fall back.",
+      "Keep restore assertions as regressions; their PASS with fixture-attached v2 handles does not qualify production startup/recovery.",
+      "Native rerun only after a changed, reviewable candidate and separate concrete execution authorization; never retry this consumed attempt."
+    ],
+    "not_done": [
+      "No source or test corrections implemented by this evaluation",
+      "No product migration",
+      "No complete writer/worker/asset/lifecycle closure",
+      "No keyslot/ABA mechanism completion",
+      "No real crash or real quota proof",
+      "No crypto review or active sync approval"
+    ]
+  },
+  "gates": {
+    "FLH04": "NOT_DONE",
+    "outbox": "INTERN_UNQUALIFIZIERT",
+    "N_DRIVE": "BLOCKED_EXTERNAL_WITH_INTERNAL_AND_EXTERNAL_REMAINDER",
+    "applyAuthorized": false,
+    "Storage_confirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null,
+    "format1_prepared_locked": "No adoption/promotion/overwrite/delete",
+    "review_package": "fd3fce4bb3038e525c78e9a5bdc9bc81f4dab15b",
+    "review_candidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+    "review_status": "EXTERNAL_REVIEW_PENDING; CR4/CR5 open",
+    "protected_original_chains": "Unchanged"
+  },
+  "closure": {
+    "own_writing": "STOPPED_AFTER_EVALUATION_RECORD",
+    "reason": "Exactly authorized first attempt and evaluation completed; two genuine red groups. No automatic retry or implementation authorization inferred.",
+    "background_operation": false,
+    "additional_handover_chat_required": false
+  }
+}

@@ -1,3 +1,74 @@
+## C1_NATIVE_ATTEMPT1_EVALUATED / FAILURE / NO_RETRY / STOPPED · work-366da675bef5-20261113
+
+Jochen hat genau die einmalige Branchanlage und Auswertung ausdrücklich freigegeben.
+Frischer HND01-Abgleich: 312 bestehende Heads unverändert, Ausführungsbranch fehlte,
+0 frühere Läufe für Branch/Ausführungs-SHA und 0 IN_PROGRESS. Offene PRs332/161/157,
+Reviews/Inline-/Conversation unverändert. Ältere work-pr333-Ausführung weiterhin
+NICHT technisch beendet nachgewiesen; historische ACTIVE-Angabe nicht umgedeutet.
+
+Einmalig angelegt: test/flh04-c1-native-b18c6fcb-366da675bef5
+exakt an f73535847f26476da3ea100f0410f391496dafd7 /
+Tree511c047a067f1c04690378232d698cd204f495c0.
+[Run43485655271](https://github.com/joke0071/foliolab-open/actions/runs/43485655271),
+Versuch1, event=create, COMPLETED/FAILURE. Genau EIN Job ausgeführt:
+flh04-c1-native-first/132093270291; andere2Jobs SKIPPED.
+Job18:45:13–18:45:29UTC =16s; Runstart18:45:10 bis finaleAktualisierung18:45:30 =20s.
+Harnessstep4s; exakte Prozessdauer nicht separat gemessen. Ein Aufruf, Exit1,
+teeExit0; kein Timeout/Retry/Ersatztrigger. Branch bleibt unverändert erhalten.
+
+Prüfbasis exakt b18c6fcb09b22616355355df5efb483503141e69 /
+Tree2527bebb55b3209a59c90c66627192a751ce1fa1.
+Ubuntu24.04.5/ubuntu-24.04, Node22.23.4, Playwright1.56.1,
+Chromium141.0.7390.37/build1194. ENGINE=chromium,
+FLH04_VERSION2_CANDIDATE=1, BASE_URL=http://127.0.0.1:4173.
+Synthetische isolierteContexts; keinProduktionsorigin.
+
+Beobachtet: C1-CANCEL PASS; C1-VERSION-FENCE PASS;
+C1-MARKERS FAIL/AssertionError; C1-NO-REVERT FAIL/AssertionError;
+C1-RESTORE-CAS PASS; C1-RESTORE-FAULT-REPLY PASS.
+Alle6Gruppen erreicht; erwartete Fehler bleiben FAILURE.
+Basisassertions vor dem C1-Aufruf durchlaufen (Quellkontrollfluss plus beobachteter
+C1-Report). Original-PASS-Konsole NACH C1 wegen AggregateError NICHT erreicht.
+Keine erfundene Assertionzahl. Catch speichert nur Gruppe/Fehlertyp:
+exakte ersteFehlerassertion/Istwerte und spätere Assertions in den2rotenGruppen
+NICHT aus diesem Report ableitbar. Kein ergänzter Laufzeitzustand aus Quellannahmen.
+
+[Originalartefakt14066972737](https://github.com/joke0071/foliolab-open/actions/runs/43485655271/artifacts/14066972737):
+flh04-c1-b18c6fcb-43485655271-1,57855Bytes, verfügbar,
+Ablauf2026-11-20T18:45:27Z. OriginalZIP zusätzlich unverändert gesichert.
+ZIP-SHA256 8b830f6b2a1786032e148b12e6a6608d5050cd7f1a924f1687d2dd2a2a0fb3ec
+gegen Upload/API bestätigt;17Dateien,16/16Manifestbytes/SHA256 bestanden,
+keine fehlenden/zusätzlichen Dateien. VierOriginaleingänge und ausgeführterWorkflow
+unabhängigGitblob-SHA1-geprüft. HTTP553x200/72x304, keineanderenStatus.
+[Auswertungsbeleg](release-evidence/flh04-c1-native-43485655271-attempt1.json)
+enthält exakteMetadaten/Schritte, Originalreport/Hashmanifest und Aussagegrenzen.
+
+Nächster konkreter technischer Schritt: separat reviewbaren Korrekturkandidaten
+für v2-Quellenwahl VOR Legacyfallback und v2-Revertablehnung VOR JEDEM Write
+vorbereiten, einschließlich automatischem Intentnachlauf; v1/Originale erhalten.
+Dabei bestehendeC1-Assertions erhalten und Fehlerdiagnostik um konkrete
+Assertion/Stufe/Istwerte ergänzen. Quellstellen initialize38ff/revertLocked223ff
+passen zu rotenGruppen; genaueLaufzeitfehlerstelle bleibt offen.
+KEINE solche Implementierung oder erneuteAusführung in diesem Auftrag.
+Nächster Lauf braucht geänderten gepinnten Kandidaten und eigene konkreteFreigabe;
+Versuch1 ist verbraucht. Kein Retry/Branchneuanlegen/alternativerTrigger.
+
+Recovery-PASS nur im geprüften Fixtureumfang; keinProdukt-v2-Startup,
+vollständigerWriter-/Worker-/Asset-/Keyslot-/ABAabschluss, echterCrash/realeQuota,
+Review-/Migration-/Sync-/Main-/Release-/ProduktionsPASS.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL internUNDextern.
+A1false/A2gesperrt/remoteAnchor+acknowledgedLocalRevisionnull;
+format1-prepared-locked und alleP/R/S/D/CAS/Raw-/Originalketten erhalten.
+Kryptopaketfd3fce4b/17a5a190 unverändertEXTERNAL_REVIEW_PENDING;CR4/CR5offen.
+Main/Diagnose/PR332/157/161/UI-R4 unverändert.
+
+Eigene Schreibarbeit nach vollständiger Auswertung und Sicherung beendet:
+STOPPED / HANDOVER_READY; Anlass ist der abgeschlossene exakt begrenzte Auftrag.
+Kein Hintergrundbetrieb, keine Automation, kein weiterer Fortführungschat nötig.
+Ausführungscommit/Branch und Originalprüfdateien bleiben unverändert.
+
+---
+
 ## C1_EXECUTION_CANDIDATE_READY / NOT_STARTED / SPECIFIC_RUN_APPROVAL_REQUIRED · work-366da675bef5-20261113
 
 Konkreter neuer Auftrag: erste native C1-Ausführung vorbereiten; erwartete
