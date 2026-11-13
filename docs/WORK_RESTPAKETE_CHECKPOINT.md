@@ -1,3 +1,54 @@
+## STOPPED / HANDOVER_READY / MAIN_PRODUCTION_BLOCKED / V155 · work-773870884cef-20261113
+
+**Eigene alleinige HND01-Zuständigkeit ausdrücklich abgegeben; sämtliche eigenen Schreibaktivitäten beendet.** Keine Nachfolgerübernahme behauptet; ältere work-pr333-20261112-1942 weiterhin NICHT technisch als beendet nachgewiesen.
+
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325 / Tree e55ffa96f641345759eb3779b00de6187c8671b8 unverändert. Run43332355188 FAILURE, aktueller Tooling-Main NICHT LIVE_ACCEPTED; historische v311-App gesondert erhalten. Keine neue CI/PR/Integration/Produkt-/Test-/Workflow-/SWänderung. Frischer Schlussabgleich0IN_PROGRESS, nur unveränderte historische Queues43095194276/43095194257, geschützte PR332/157/161, PR335Reviews/Kommentare leer, keine tatsächliche konkurrierende Schreibaktivität belegt.
+
+[Neue begrenzte Diagnose samt Wrapper](PR335_PRODUCTION_DIAGNOSIS_2026-11-13_773870884cef.md), Commit703187e2cf6ae8690559ed65650e7f606fadaca1 gepinnt bytegleich rückgelesen: vorhandenes Chromium156.0.8078.79/PW1.62.1/Node24.22.1 (abweichend vom älteren Probe-Toolstand). Reguläre bereitgestellte Proxy-CA im NSS gültig importiert; Browserstart VOR Navigation/Helper an socket() EPERM gescheitert. Vorgesehene Ausführung außerhalb Sandbox durch Berechtigungsprüfung abgelehnt(sandbox_approval=false). Kein Browser-TLS-/Helper-PASS; Produktionsursache UNKNOWN. Wrapper nur SyntaxPASS; exakte Mainhelperbytes Gitblob7ee6568522425c1a4bcb7549d3be68abda96c09f lokal verifiziert. Keine TLS-Ausnahme oder Frist-/Assertionlockerung.
+
+**Genau nächste Aktion:** zulässige vorhandene Chromium-Ausführung mit lokalen Sockets und regulärem CA-/Proxy-Vertrauen; gespeicherter Wrapper aktiviert Netzwerk-/Workerdiagnostik vor goto und ruft unveränderten Helper mit20000ms auf. Konkrete Installations-/Assetfehler korrelieren, cache.addAll-Ursache bislang nur Hypothese. ProbePASS erklärt historischenFehler nicht. Kein identischer Start im bekannten Socketverbot, kein Sandboxumgehen, keine FullCI zur Zugriffsprobe.
+
+V155/Companions nur frische Metadaten bestätigt; historische Readback/Restorebelege wiederverwendet, KEIN neuer privater Download/Restore/Backup/Rootversion. Neue Diagnosedokumentation dauerhaft auf Checkpointref, Originalketten unberührt. Privaten Transfer-/Restoreweg vor späterem Releaseabschluss noch tatsächlich klären. UI-R4HEAD97ea17b… unverändert, erst nach sicherem aktuellenMain. Alle Schutz-/Freigabeverträge erhalten.
+
+### Kopierfertiger Nachfolgerauftrag
+
+```text
+FOLIOLAB OPEN – HND01-ÜBERNAHME UND PRODUKTIONSBLOCKER FORTSETZEN
+
+Repository https://github.com/joke0071/foliolab-open; GitHub ausschließlich über verbundenes Plugin. Nutzer autorisiert alleinige Hauptverantwortung, Entwicklung/QA/PR/qualifizierte Integration/Release/Sicherung/Restore und anschließende gesamte Roadmap. Keine erneute reguläre Einzelschrittfreigabe nötig; konkrete Workflowfreigabe gemäß Issue229 bleibt erforderlich.
+
+Owner work-773870884cef-20261113 ist STOPPED / HANDOVER_READY / MAIN_PRODUCTION_BLOCKED / V155. Eigene Schreibaktivitäten beendet; keine Nachfolgerübernahme behauptet. Vorgänger work-02f19cd404ef-20261112 hatte ausdrücklich abgegeben. Ältere Ausführung work-pr333-20261112-1942 NICHT technisch als beendet nachgewiesen. Vor erster Mutation frischen Kollisionsabgleich durchführen und nur ohne tatsächliche konkurrierende Schreibaktivität allein übernehmen.
+
+Zuerst auf feature/flh05-import-foundation lesen:
+docs/WORK_RESTPAKETE_CHECKPOINT.md
+docs/WORK_EFFICIENCY_PLAN_2026-11-01.md
+docs/KONSOLIDIERTE_ROADMAP.md
+docs/EFF03_WEEK_TARGET_2026-11-11.md
+docs/PR335_PRODUCTION_DIAGNOSIS_2026-11-13_773870884cef.md
+Letzte Datei samt vorbereitetem Wrapper gepinnt bytegleich auf Commit703187e2cf6ae8690559ed65650e7f606fadaca1 rückgelesen. Checkpoint für Owner/SHAs/nächste Aktion, ausschließlich Roadmap für Scope-Status.
+
+Main a27cde2f802c26bfec41190911d88bd1d7d8e325 / Tree e55ffa96f641345759eb3779b00de6187c8671b8. Run43332355188 COMPLETED/FAILURE. PR334/V2 und PR335 bereits integriert, nicht neu entwickeln.1392Units PASS; MainChromium/Cross1–3/Deployment PASS; tatsächliche Produktion Chromium FAIL; Firefox/WebKit dort NICHT ausgeführt. Historisch akzeptierte v311-App an8ecc49f91c2c193e9391ef6f15460e6a40eb10c2 gesondert erhalten; aktueller Tooling-Main NICHT LIVE_ACCEPTED. App/SW weiter311.
+
+Originalfehler tests/browser-kraken-import.mjs:132 → tests/browser-controlled-storage-fixture.mjs:46; unveränderte20000ms nicht erfüllt. Frischer Kontext verlor installierenden Worker, am Ende kein aktiver/wartender/installierender Worker/Controller. Ursache UNKNOWN, Originaltrace0Netzwerkereignisse. Originale behalten; kein unveränderter CI-Retry oder anderer Release als Umgehung.
+
+Neue lokale Diagnose: Chromium156.0.8078.79/PW1.62.1/Node24.22.1 vorhanden – anderer Toolstand als frühere Chromium141-Probe. Bereitgestellte Proxy-CA regulär in NSS importiert/certutil gültig; curl HTTPS200 ist KEIN Browsernachweis. Browserstart mit geerbtem Proxy vor Navigation durch Socket-EPERM in process_singleton_posix.cc:297 gescheitert. Vorgesehener Ausführungsweg außerhalb Sandbox durch Berechtigungsprüfung abgelehnt, sandbox_approval=false. Kein funktionierender Browser-TLS-Pfad/Helperlauf belegt. Keine Zertifikatsausnahme, Zeitlimit-/Assertionlockerung, neue Plattform oder Workflowänderung. Nicht denselben blockierten Start wiederholen oder Sandboxschutz umgehen.
+
+GENAU NÄCHSTE AKTION: In zulässiger bestehender Chromium-Umgebung mit lokalen Sockets regulären CA-/Proxy-Pfad prüfen; gespeicherten Wrapper mit Netzwerk-/Workerdiagnostik vor goto verwenden und exakt Mainhelper Gitblob7ee6568522425c1a4bcb7549d3be68abda96c09f mit20000ms/allen Assertions ausführen. Wrapper nur SyntaxPASS, Lauf nicht erreicht. Bei Installationsfehler konkrete ASSETS-Requests/HTTP-Status/Workerfehler korrelieren; cache.addAll-Abbruch ist bislang nur Hypothese. Bestehende Originale erklären; ein ProbePASS allein erklärt CI-Fehler nicht. Falls Probe besteht, engster weiterer Versuch vollständiger instrumentierter Kraken-link-bridge-Ablauf mit vorausgehenden Kontexten und bytegleicher Mainruntime. Full-CI erst bei fachlich gerechtfertigtem Kandidaten nach allen bestehenden Regeln.
+
+RootV155 unverändert:406425600Bytes/SHA256749f072638409f4643fa9ed0763c4ceaa18bb89fa2557585624953f47722e234; historisch gepinnt und inkrementell restauriert. In dieser Sitzung nur frische Metadatenprüfung, KEIN neuer privater Byte-Readback/Restore/Backup. Companions unverändert vorhanden:
+FolioLab_PR335_production_FAIL_diagnostics_2026-11-13.tar V0/12748800Bytes/SHA256459e5236c9f3d41d16c00bb5cdc5920929044608c19435cc8e64188e78777169
+FolioLab_PWA_identity_Main_originals_2026-11-13.tar V0/212408320Bytes/SHA256af642a587b6e93bf71394430c15a74e1855faf56638beabf34893cd6ba3b490c
+Alle historischen Original-/Companion-/Oracle-/Restoreketten schützen. Root allein unvollständig. Keine identische Vollsicherung oder Überschreibung. Erforderlichen privaten Transfer-/Versions-/Readback-/Restoreweg vor Releaseabschluss tatsächlich klären; Zugriff nicht allein aus Ownertext behaupten.
+
+UI-R4 isoliert vorbereitet: feature/ui-r4-display-filter-02f19cd404ef HEAD97ea17b5e4bfc390e1ef6c5fc68ea4c7dde096aa,9Dateien/SW312,keinPR/Freeze/finaleCI/Release. Lokale Unit/Vorprüfer/Chromium/Firefox PASS durch Vorgänger; WebKit lokal vorStart BLOCKED. Erst nach vollständiger Qualifikation aktuellen Main abgleichen/normal abnehmen.
+
+Schlussabgleich: Main/Checkpoint/PRs335Reviews+Kommentare unverändert,0IN_PROGRESS; historische Queues43095194276/43095194257 seit2026-11-11T20:18:14Z unverändert. PR332 wegen CSV44px UNKNOWN BLOCKED; PR157/161 schützen. Keine Automation/zweiterWriter/parallele finaleCI. Flatex-Entdoppelung zurückgestellt. Kein Checkpoint-Gesamtmerge.
+
+Danach Prioritäten: kritische Finanz-/Speicher-/Sicherheitsfehler, implementierte Abläufe mit fehlenden Nachweisen, Kernfunktionen/UI-R4, übrige Roadmap einschließlich FLH04.18.11.2026 ist Ziel, keine Qualitätsminderung. Effizienzmaßnahmen aus PR334 nutzen, keine Gesamtinventur/Minireleases/unnötigen Fullprüfungen. Sämtliche Finanz/Decimal/Journal/UNKNOWN-FX/IDB/CAS/Datenschutz/A11y/Offline/PWA/Backup/Restoreverträge erhalten. Bei technischer Grenze engsten sicheren Schritt sichern. Bei Ende aktuellen Checkpoint und ausdrücklich STOPPED/HANDOVER_READY setzen, vollständigen kopierbaren Übergabeprompt ausgeben. Keine Hintergrundfortsetzung oder technische Beendigung anderer Ausführungen behaupten.
+```
+
+## Unveränderte Historie
+
 ## ACTIVE / MAIN_PRODUCTION_BLOCKED / V155 · work-773870884cef-20261113
 
 Ausdrückliche Nutzerübernahme vom 13.11.2026. Alleinige HND01-Hauptzuständigkeit übernommen nach frischem kollisionsfreiem Abgleich: Main a27cde2f802c26bfec41190911d88bd1d7d8e325 unverändert; Checkpointref 683dab805723eb350d9b33bb47129e71f878cc3d / Blob83d381527e751d8558b44879572f6e147d023451; PR334/335 Reviews und Kommentare leer, nur geschützte offene PR332/157/161; keine IN_PROGRESS-Action, historische Queues43095194276/43095194257 unverändert seit2026-11-11T20:18:14Z. Keine tatsächliche konkurrierende Schreibaktivität belegt. Vorgänger work-02f19cd404ef-20261112 ausdrücklich STOPPED/HANDOVER_READY; ältere work-pr333-20261112-1942 NICHT technisch als beendet nachgewiesen.
