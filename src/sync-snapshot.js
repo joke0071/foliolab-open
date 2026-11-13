@@ -63,10 +63,19 @@ const historyQuote=object({...fields('network chainId assetId contract mint date
 const historySession=object({...fields('walletScopeDigest id chain walletKey acceptedAt decision providerCache'),
  events:array(historyEvent),streams:array(historyStream),quotes:array(historyQuote),issues:array(v=>typeof v==='string'&&unicode(v))});
 const history=object({schema:v=>v===1,sessions:array(historySession),pending:v=>Array.isArray(v)&&v.length===0});
+// Canonical local CSV or explicitly retained provider history only. safeImport
+// validates dates, limits, FX, provenance and the current position binding;
+// the unchanged-value comparison below rejects every projected/defaulted field.
+const historyText=v=>typeof v==='string'&&unicode(v);
+const pricePoint=object({date:historyText,total:v=>typeof v==='number'&&Number.isFinite(v),valuationDate:nullable(historyText)});
+const priceFX=object({date:historyText,currency:historyText,rate:historyText,source:historyText,referenceDate:historyText});
+const priceProvenance=object({schema:v=>v===1,provider:historyText,identity:historyText,retention:historyText});
+const priceHistory=object({currency:historyText,source:historyText,points:array(pricePoint),
+ priceType:historyText,fxPoints:array(priceFX),provenance:priceProvenance});
 const dataSchema=object({version:v=>v===3||v===4,providers:array(provider),accounts:array(account),assets:array(asset),
  positions:array(position),bookings:array(booking),journalEntries:array(journal),openingPositions:array(opening),
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
- priceHistories:map(()=>false),bookingPresentation:archive,walletHistory:history});
+ priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history});
 const same=(a,b)=>{
  if(a===b)return true;
  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;

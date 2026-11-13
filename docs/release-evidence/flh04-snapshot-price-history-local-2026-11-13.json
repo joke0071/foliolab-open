@@ -1,0 +1,357 @@
+{
+  "kind": "FLH04LosslessPriceHistoryLocalEvidence",
+  "date": "2026-11-13",
+  "owner": "work-f2948d3c3fba-20261113",
+  "baseCommit": "ceaf9dbf14c14643aca582718f946401c12ecce7",
+  "precodeContractCommit": "d3d462e017b5ffc155574c2122b0df7efea3b919",
+  "runtime": "Node v24.22.1",
+  "implementation": "COMPLETE_FOR_BOUNDED_CANONICAL_V3_V4_PRICE_HISTORIES",
+  "internalVerification": "TARGETED_NODE_PASS",
+  "externalAcceptance": "NOT_PERFORMED",
+  "command": "node --test tests/sync-snapshot.test.mjs tests/sync-snapshot-gap-regressions.test.mjs tests/sync-snapshot-history.test.mjs tests/sync-snapshot-price-history.test.mjs tests/historical-csv.test.mjs",
+  "result": {
+    "tests": 58,
+    "pass": 58,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "exitCode": 0
+  },
+  "syntax": {
+    "files": [
+      "src/sync-snapshot.js",
+      "tests/sync-snapshot.test.mjs",
+      "tests/sync-snapshot-history.test.mjs",
+      "tests/sync-snapshot-price-history.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  "originalInputs": [
+    {
+      "path": "package.json",
+      "blobSHA": "76c6961ae4d56593a8f9721de12fc84823b45d88"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "blobSHA": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2"
+    },
+    {
+      "path": "src/assets.js",
+      "blobSHA": "054ba656af6145f96bf93a566009ed40f45603cb"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "blobSHA": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5"
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "blobSHA": "4be2e9af21fd5d66c37938727a43d956292fd6bf"
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "blobSHA": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1"
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "blobSHA": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5"
+    },
+    {
+      "path": "src/booking-history.js",
+      "blobSHA": "77d23820cacdbe9a1efb1112eb609241e88c190d"
+    },
+    {
+      "path": "src/cash-terms.js",
+      "blobSHA": "e0bc7723f1da10ebfedeaebd89905749a3e24c77"
+    },
+    {
+      "path": "src/coin-identity.js",
+      "blobSHA": "e7681a4b1cab7c41c950ea1b8999963148340f5f"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "blobSHA": "1151f42b1315241805923b848a7a2efdf65528ac"
+    },
+    {
+      "path": "src/csv-import.js",
+      "blobSHA": "6522fca91a5b58a1d9f468e7c499bab93153378f"
+    },
+    {
+      "path": "src/csv-records.js",
+      "blobSHA": "a38aad028a30776022c6c8950a2699a6694962b4"
+    },
+    {
+      "path": "src/decimal.js",
+      "blobSHA": "7896c75407ff67763bc9c969ea203f6e5f1b529a"
+    },
+    {
+      "path": "src/defi.js",
+      "blobSHA": "12fbc404d61ce4412cf9120712ea2ed719da4405"
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "blobSHA": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9"
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "blobSHA": "16cab7de80658d72ef01f829e70ebfb75a41e6f8"
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "blobSHA": "d52e116b9280147495316666289962d21988ba3c"
+    },
+    {
+      "path": "src/flatex-native.js",
+      "blobSHA": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2"
+    },
+    {
+      "path": "src/flatex-net-reconciliation.js",
+      "blobSHA": "2d39c199135dc9348271271c60b36876c4660936"
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "blobSHA": "320637c48fc98ebaecc7c46b1a21266767c964e6"
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "blobSHA": "fdafc8f2f1a86d706a049c3b91545551cccf0af9"
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "blobSHA": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63"
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "blobSHA": "16214b0406a740200585f726e9c9b90cb6007dec"
+    },
+    {
+      "path": "src/fx-state.js",
+      "blobSHA": "0c0239573d9306da2f7d66da21ad8537ce123783"
+    },
+    {
+      "path": "src/historical-csv.js",
+      "blobSHA": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4"
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "blobSHA": "0c6f714150b3d78e4e3086f275d63943d36b43ba"
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "blobSHA": "c87b64284e074993fbdf5673ba1f4c5cf926f02e"
+    },
+    {
+      "path": "src/import-identity.js",
+      "blobSHA": "9c80c33266d3c769d0185e3e89cf182c192f1406"
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "blobSHA": "332037a4d578c8128121f799165db3a749a82239"
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "blobSHA": "ae451f421b8442a46f0fd97925f5f736d4b44fc3"
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "blobSHA": "d9b14aa5806089767d43e049df70bbb70507a5ae"
+    },
+    {
+      "path": "src/kraken-link-bridge.js",
+      "blobSHA": "48d8b4594c0c33635bf93a88f51f64c95fe8e423"
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "blobSHA": "782cab38bb79daa0886c6ab66559f61792279dd1"
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "blobSHA": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107"
+    },
+    {
+      "path": "src/ledger-live.js",
+      "blobSHA": "d864f6d36d933e5a1919cce4d88990cd513f9093"
+    },
+    {
+      "path": "src/link-explorer-evidence.js",
+      "blobSHA": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b"
+    },
+    {
+      "path": "src/market.js",
+      "blobSHA": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41"
+    },
+    {
+      "path": "src/marketstack.js",
+      "blobSHA": "a686d3010a804db0d324c45324f7e5b9f5deafae"
+    },
+    {
+      "path": "src/model.js",
+      "blobSHA": "3ab1397af6870f1b356f9696451170697eafbf36"
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "blobSHA": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a"
+    },
+    {
+      "path": "src/position-history.js",
+      "blobSHA": "20afdf678e520b2b361d6c1c02a6604f5130659f"
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "blobSHA": "b98c2e5966815cbe7673e2a789661f8a31e637bd"
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "blobSHA": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90"
+    },
+    {
+      "path": "src/quote-quality.js",
+      "blobSHA": "3ec1f74b2c10caef09a400592db05a5db1dda9d6"
+    },
+    {
+      "path": "src/reference-listings.js",
+      "blobSHA": "3ba091983e64a631ad187ebb302299380db49c02"
+    },
+    {
+      "path": "src/refresh-frequency.js",
+      "blobSHA": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3"
+    },
+    {
+      "path": "src/request-cache.js",
+      "blobSHA": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89"
+    },
+    {
+      "path": "src/retired-providers.js",
+      "blobSHA": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731"
+    },
+    {
+      "path": "src/security-sources.js",
+      "blobSHA": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d"
+    },
+    {
+      "path": "src/solana-history.js",
+      "blobSHA": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1"
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "blobSHA": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d"
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "blobSHA": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a"
+    },
+    {
+      "path": "src/sync-payload-integrity.js",
+      "blobSHA": "99a91dd41d911f5df5b3ef9328a29de4352af57b"
+    },
+    {
+      "path": "src/sync-snapshot.js",
+      "blobSHA": "756f7a2a2f00f09cb5d0f5d642d8ed0063715eb9"
+    },
+    {
+      "path": "src/transactions.js",
+      "blobSHA": "306dfd8f06b41f4e6414ecbb248124fbfb726402"
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "blobSHA": "fe27c60e3181596b2ec792081ede2d5861fb00e2"
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "blobSHA": "edcbe5570a903271d07ddc637bd876071e85a40a"
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "blobSHA": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "blobSHA": "f87f593a4ec2be99f351037cec48316acb8db6a3"
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "blobSHA": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4"
+    },
+    {
+      "path": "src/wallet-identity.js",
+      "blobSHA": "7337ad57a531189676f747fdf6d1a925170f4004"
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "blobSHA": "db6c208030f0d21c528cafaf47d4a51b22055e53"
+    },
+    {
+      "path": "tests/historical-csv.test.mjs",
+      "blobSHA": "37cae247ea8941eeb595ebdf26172c3a8b71c5d3"
+    },
+    {
+      "path": "tests/sync-snapshot-gap-regressions.test.mjs",
+      "blobSHA": "1f5943e754c19c997e761098ccd6be0321a1c167"
+    },
+    {
+      "path": "tests/sync-snapshot-history.test.mjs",
+      "blobSHA": "72f07f12c7cf1bca48a28966241109102309eb0a"
+    },
+    {
+      "path": "tests/sync-snapshot.test.mjs",
+      "blobSHA": "c7feef918bd1a25f312cb40c6422808bf55a19fc"
+    },
+    {
+      "path": "tests/wallet-history-fixtures.mjs",
+      "blobSHA": "1949b9138f70a094b7cd715a9eca4bfe87846adc"
+    }
+  ],
+  "originalInputsVerification": {
+    "beforeProductChange": 68,
+    "afterProductChangeUnchanged": 65,
+    "mismatches": 0,
+    "changedOriginalPaths": [
+      "src/sync-snapshot.js",
+      "tests/sync-snapshot.test.mjs",
+      "tests/sync-snapshot-history.test.mjs"
+    ]
+  },
+  "scope": [
+    "Canonical CSV closing-price histories",
+    "Explicitly user-confirmed retained provider histories; existing provider/position/price-type binding",
+    "Price points, optional crypto valuationDate including null, FX rate strings and reference dates",
+    "Preserved all financial values, IDs, ordering, UNKNOWN FX/null, journal and accepted wallet history; settings excluded",
+    "Unknown fields/types, invalid identity/provenance, malformed/duplicate/reversed dates, FX errors, normalizations and limits reject whole portfolio"
+  ],
+  "unchangedBoundaries": {
+    "snapshotVersion": 1,
+    "maxUTF8Bytes": 3500000,
+    "maxStructureValues": 100000,
+    "maxDepth": 16,
+    "applyAuthorized": false,
+    "StorageConfirm": "BLOCKED",
+    "remoteAnchor": null,
+    "acknowledgedLocalRevision": null
+  },
+  "unsupported": [
+    "v5",
+    "importSource/sourcePayload",
+    "management/withdrawal/bridge/purchase evidence",
+    "pending/resume"
+  ],
+  "firstFindings": [
+    "Initial new test file had invalid regex literal /FX-/Zeitbezug/; compilation failed before tests. Corrected to /FX-|Zeitbezug/; no product code changed.",
+    "Baseline before allowlist: 3 PASS / 8 FAIL. One fixture self-check compared null-prototype priceHistories from safeImport against a JSON object; corrected JSON-value comparison. Positive roundtrips remained blocked by old empty-only schema. Baseline does not establish all failures as product gaps.",
+    "First post-code new-suite run: 7 PASS / 4 FAIL. v4 version2 fixture with empty referenceArchivedIds was invalid; changed fixture to existing valid version1 booking archive. Strict schema/type cases failed earlier than semantic regex expected; separated structural schema2/string-price/numeric-rate rejects from semantic normalization cases. No product weakening.",
+    "First combined run: 56 PASS / 2 FAIL. Two old malformed price payloads still reject, now in existing position/history semantic validators instead of empty-only envelope gate; exact error expectations/titles updated. Original negative cases retained.",
+    "Final combined run: 58 PASS / 0 FAIL / 0 SKIP / 0 CANCELLED, exit0. Added accepted-wallet-history coexistence in positive fixture before final run. No assertion/timeout/limit weakening."
+  ],
+  "reviewImpact": {
+    "candidate": "17a5a190d472f1f07b3508e6f35194371fe95eb2",
+    "status": "EXTERNAL_REVIEW_PENDING",
+    "change": "Post-authentication financial snapshot allowlist only; no crypto/anchor/outbox/storage change; review must account for exact later snapshot delta. No independent review completion."
+  },
+  "limitations": [
+    "No Browser/native IDB/CryptoKey persistence/reopen/multitab qualification",
+    "No real process crash, real quota or recovery acceptance",
+    "Atomic Challenge-to-Commit keyslot binding unresolved",
+    "No CI22/Wallet20/PR/Main/production/device/external acceptance",
+    "No workflow/runner/retry/PR/merge/release/SW bump/active sync"
+  ],
+  "backups": "Fresh metadata only: RootV155/406425600, FAILV0/12748800, MainOriginalV0/212408320, DiagnosisV0/2181120. No private transfer/upload/readback/restore/new write-capability proof.",
+  "finalOutput": "✔ German CSV with semicolon, comma decimals, reversed rows and BOM imports exactly (51.779159ms)\n✔ US export with Date,Close and CSV quoted fields selects actual close, not adjusted close (28.609021ms)\n✔ Historical CSV errors reject invalid identity currency dates conflicting duplicates and bad prices (13.596992ms)\n✔ CSV no identifier requires caller confirmation, but cannot silently change portfolio values (48.911088ms)\n✔ Malicious and oversized histories cannot be imported from backup (20.326233ms)\n✔ Local CSV selection does not fill nonexistent dates or extend beyond selected range (10.997022ms)\n✔ five-year CSV selects actual historic points while max shows complete imported history (5.859503ms)\n✔ B regression: full supported journal/snapshot keeps independent amount11 and all source IDs (123.685007ms)\n✔ B regression: unknown root credentials and foreign portfolio identity reject the whole payload (92.210559ms)\n✔ B regression: booking, journal and posting credentials never survive the closed gate (49.215448ms)\n✔ B regression: historical credential objects reject in revision, quote time and account value (72.952361ms)\n✔ B regression: decimal normalization is rejected without changing source bytes or balances (22.875363ms)\n✔ B regression: complete configuration and wallet resume data are blocked, never dropped or rewritten (18.990237ms)\n✔ B regression: oversized historic metadata cannot use importer row limits to bypass byte limits (292.783673ms)\n✔ B budget regression: multibyte bytes, not just character count, bound received plaintext (118.980037ms)\n✔ B budget regression: deeply nested and excessive-node extensions fail before financial projection (180.702814ms)\n✔ accepted BTC/ETH/SOL facts roundtrip exactly with finance, journal, UNKNOWN, null and provenance (211.840039ms)\n✔ accepted partial/unknown facts preserve null effects, missing opening and missing quotes (140.74355ms)\n✔ v4 archive and accepted history coexist without changing references (61.874876ms)\n✔ unknown fields reject at every accepted-history nesting level, including credentials and object payloads (188.592391ms)\n✔ normalizing sources, status, timestamps, missing fields or quote decimals rejects instead of repairing (246.598396ms)\n✔ duplicate facts/sessions and reordered events cannot be silently deduped or sorted (55.762209ms)\n✔ forged event IDs, orphan streams and false quote bindings reject through existing validators (99.980065ms)\n✔ canonical resume metadata remains unsupported in full; no portable-history projection drops it (10.764198ms)\n✔ v5/import/evidence and malformed price payloads reject even when history is accepted (91.56028ms)\n✔ history retains existing session/event/byte/node/depth limits with no truncation (630.668115ms)\n✔ canonical CSV, FX and retained crypto histories roundtrip together without changing finance (272.867676ms)\n✔ all existing confirmed providers and v4 archives retain provenance and price type (128.634358ms)\n✔ credential-bearing settings excluded while every history value and map order stay intact (30.544367ms)\n✔ unknown keys and object-valued secrets reject at each newly admitted level (106.424722ms)\n✔ orphan and dangerous history map identities block the whole portfolio (68.332251ms)\n✔ retained history cannot change confirmed position, provider, retention, currency or price type (86.199653ms)\n✔ invalid, duplicate or reversed price points never normalize silently (46.133431ms)\n✔ FX source, date, duplicate, reference window and rate validation remain mandatory (38.751427ms)\n✔ known fields needing defaults, uppercase or projection reject lossily (131.854397ms)\n✔ limits reject whole histories without truncation or publishing other valid histories (596.890295ms)\n✔ unsupported evidence, v5 and pending state still block otherwise supported histories (18.124836ms)\n✔ credential-bearing local settings are wholly excluded; source bytes remain unchanged (94.342905ms)\n✔ exact 18-decimal quantity, UNKNOWN FX/null and financial IDs survive without repair (34.368481ms)\n✔ simple journal retains balanced postings, exact amounts, ordering and links (30.109469ms)\n✔ empty history is retained; malformed accepted sessions and any pending history reject (26.615055ms)\n✔ v4 booking archive is preserved with its reference identity (32.522053ms)\n✔ history snapshot exact totals, revisions and quote provenance remain unchanged (19.281682ms)\n✔ unknown top-level payload/configuration/vault/extensions are rejected, not dropped (12.828414ms)\n✔ unknown nested keys cannot hide credentials in allowed financial entities (33.496106ms)\n✔ unrecognized wallet and snapshot nested extensions fail closed (8.105391ms)\n✔ duplicate provider/position and orphan account identity reject via existing financial validator (42.849737ms)\n✔ balanced but orphaned journal posting and duplicate posting IDs reject (53.628387ms)\n✔ unbalanced journal cannot pass an allowlisted shape (8.291065ms)\n✔ unknown fee stays null in allowed booking; no zero default is inserted (15.744304ms)\n✔ opaque import source/proof branches block instead of stripping their identities (15.294186ms)\n✔ malformed price and unsupported evidence/audit branches fail without partial output (10.052459ms)\n✔ normalization, trimmed IDs/labels and numeric FX repair are rejected, never silently emitted (12.428577ms)\n✔ received settings and extra envelope keys are forbidden (9.013982ms)\n✔ duplicate keys, extra whitespace and alternate JSON numeric spellings are rejected (15.526563ms)\n✔ malformed Unicode, malformed JSON and unsupported versions reject (18.733643ms)\n✔ invalid types and over-limit text reject before JSON processing (1.672347ms)\n✔ escaped lone surrogates inside financial strings never reach emitted data (18.789616ms)\nℹ tests 58\nℹ suites 0\nℹ pass 58\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3121.309326\n"
+}

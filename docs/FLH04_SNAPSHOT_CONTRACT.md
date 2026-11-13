@@ -1,4 +1,13 @@
-# FLH04 credential-free snapshot gate — bounded first slice
+# FLH04 credential-free snapshot gate — bounded canonical v3/v4 histories
+
+## Current scope · 13.11.2026
+
+Canonical accepted BTC/ETH/SOL sessions and separate canonical CSV/user-confirmed
+provider priceHistories are supported losslessly under the dated slices below.
+v5, pending/resume and import/management/withdrawal/bridge/purchase evidence remain
+unsupported in full. Earlier empty-only price-history statements below describe
+historical slices and are superseded only for this dated scope.
+No active integration or Apply permission, no independent crypto/native acceptance.
 
 Base: 648cc0fbeef7031d6583231aa05a4d40d379b9bb. Own isolated branch; no activation, IDB, transport, key or Apply code.
 
@@ -138,3 +147,26 @@ präzisierter bestehender Unsupportedtest sowie Fachcheckpoint/Prüfbeleg.
 Keine Krypto-/Anker-/Storage-/Outbox-/Appänderung. Impact zum Reviewkandidaten
 17a5a190d472f1f07b3508e6f35194371fe95eb2: nur nachgelagerte Snapshot-Feldabdeckung;
 Review weiter EXTERNAL_REVIEW_PENDING, keine Freigabe durch diesen Schnitt.
+
+
+## Preis-History: tatsächlich erreichter Abschluss · 13.11.2026
+
+Implementiert: geschlossene History-/Punkt-/FX-/Provenienzallowlists mit
+strikten neuen String-/Zahltypen. Vorhandene safeImport→validateImportedPriceHistory-
+Semantik und vollständiger unverändernder Vergleich bleiben unverändert.
+Keine neuen Datenabrufe, Bestätigungen, Sortierungen, Defaults oder Bewertungen.
+Alle drei Preis-Historyvarianten coexistieren verlustfrei mit akzeptierter
+Wallet-Historie, großem Rohmengenstring, UNKNOWN/null und vorhandenem Journal.
+
+Finaler gezielter Lauf Node24.22.1: 58PASS/0FAIL/0SKIP/0CANCELLED, Prozesscode0
+(21Snapshot+9Gap+10WalletHistory+11PriceHistory+7historicalCSV), Syntax4PASS.
+68ursprünglicheEingaben vor Produktänderung blobgenau;65danach unverändert.
+Drei ursprüngliche Dateien bewusst geändert, eine neue Testdatei.
+[Lokaler Prüfbeleg mit Erstbefunden und finalem Originaloutput](release-evidence/flh04-snapshot-price-history-local-2026-11-13.json).
+Erste Syntax-/Fixture-/Fehlererwartungsbefunde dort ausdrücklich erhalten.
+Bestehende Ablehnungsfälle weiterhin wirksam; keine Produkt-/Grenzlockerung.
+
+Begrenzte Implementierung vollständig und gezielte interne Nodeverifikation bestanden.
+Keine Browser/IDB/CryptoKey/Reopen/Mehrtab/echterCrash/realeQuota/CI22/Wallet20/
+PR/Main/Produktions-/externeAbnahme. Kein Ersatz für Keyslotbindung oder
+unabhängiges Kryptoreview. FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL.

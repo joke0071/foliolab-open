@@ -1,3 +1,51 @@
+## PRODUCT_WORK_STOPPED / LOSSLESS_PRICE_HISTORY_IMPLEMENTED / RELEASE_BLOCKED · work-f2948d3c3fba-20261113
+
+Genau ein vorbereiteter unabhängiger Historyrest vollständig implementiert:
+getrennte kanonische CSV- und ausdrücklich user-confirmed Anbieterpreis-Historien
+im bestehenden v3/v4-Snapshot, einschließlich Position-/Provider-/Kursartbindung,
+Punkten/valuationDate/null und exakten FX-Strings/Referenztagen. Rekursiv geschlossene
+Allowlist, bestehender validateImportedPriceHistory via safeImport und vollständiger
+unverändernder Vergleich; keine zweite Bewertungsengine, kein Abruf/Apply/Sync.
+Quellen/IDs/Reihenfolge/Decimal/UNKNOWN/null/Journal bleiben erhalten.
+Falsche Bindungen/Typen/Daten/FX/normalisierende/zusätzliche Inhalte blockieren ganz.
+v5/Import-/Management-/Withdrawal-/Bridge-/Purchasebelege/pending-Resume weiter unsupported.
+
+Vorcodevertrag d3d462e017b5ffc155574c2122b0df7efea3b919 gepinnt exakt rückgelesen.
+[Vertrag](FLH04_SNAPSHOT_CONTRACT.md), [lokaler Prüfbeleg](release-evidence/flh04-snapshot-price-history-local-2026-11-13.json).
+Final58verschiedene betroffeneNode24.22.1TestsPASS/0FAIL/0SKIP/0CANCELLED/Exit0,
+Syntax4PASS. 68Originaleingaben vorProduktänderung/65unverändert danach blobgenau.
+Drei geänderteOriginaldateien plus neuePriceHistorysuite; Erstbefunde und
+Testpräzisierungen dokumentiert, keine Produkt-/Timeout-/Limitlockerung.
+
+Implementierung des begrenzten Scopes vollständig, gezielte interne Nodeprüfung bestanden.
+Keine CI22/Wallet20/Browser/IDB/CryptoKeyPersistenz/Seitenneustart/Mehrtab/echterCrash/
+realeQuota/Recovery/Geräte/PR/Main/Produktions-/externeAbnahme. BekanntenAF_UNIX-EPERM-
+Chromiumfehlstart nicht wiederholt, keine neue native Fähigkeit behauptet.
+Atomare Keyslotbindung Challenge→Commit bleibt ungelöst; kein JSON-/Envelope-CAS-Ersatz.
+
+Reviewpaket bleibt fertig REVIEW_READY/EXTERNAL_REVIEW_PENDING am unveränderten
+Kryptokandidaten17a5a190d472f1f07b3508e6f35194371fe95eb2; kein Prüfer/Reviewabschluss.
+Impact nur nachgelagerte Snapshot-Allowlist, keine Krypto-/Storage-/Outbox-/Ankeränderung.
+Kein Wrap-/Aussteller-/Signatur-/Entsperrcode und keine aktive Integration.
+Snapshot1/3.500.000UTF8Bytes/100.000Werte/Tiefe16, A1/A2/prepared-locked unverändert.
+
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325, Run43332355188FAILURE/UrsacheUNKNOWN/
+RELEASE_GATE_OPEN. Diagnose43421311524SUCCESS bleibt verbrauchterEinzelversuch.
+Kein Workflow/Runner/Retry/PR/Merge/Release/SW-Bump/zweiteDB/DBVersionsänderung.
+RootV155/406425600,FAILV0/12748800,MainOriginalV0/212408320,DiagnoseV0/2181120
+frisch ausschließlichMetadaten; kein privaterTransfer/Upload/Readback/Restore/
+neuerSchreibfähigkeitsnachweis, alleOriginalkettenbewahrt, kein identischesVollbackup.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL mit internem/externalemRest.
+
+Eigene Produktarbeit beendet; zentrale Schlussdokumentation folgt seriell.
+Nächste unabhängige Aktion: kanonische Purchase-Evidence-Allowlist anhand vorhandener
+validatePurchaseEvidence vorCode abgrenzen; Receipt/Decision/Ledger-Herkunft vollständig
+und unverändernd erhalten, bestehende stale/conflict-Semantik nicht als neue Autorität
+auslegen. Alternativ v5 nur mit vollständig geschlossener abhängiger Belegkette.
+Keine künstliche Wiederholung dieses abgeschlossenen Preis-Historyschnitts.
+
+---
+
 ## PRODUCT_WORK_STOPPED / ACCEPTED_HISTORY_ALLOWLIST_IMPLEMENTED / RELEASE_BLOCKED · work-f236b969b0b1-20261113
 
 Genau ein unabhängiger Produktschnitt: v3/v4-Snapshot übernimmt bereits

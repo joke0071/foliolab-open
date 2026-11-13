@@ -110,11 +110,11 @@ test('opaque import source/proof branches block instead of stripping their ident
  const copy=await exported(model());copy.version=5;copy.flatexNetRemovals=[];
  await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),/envelope/);
 });
-test('nonempty price/evidence/audit branches fail without partial output',async()=>{
+test('malformed price and unsupported evidence/audit branches fail without partial output',async()=>{
  const data=await exported(model());
  for(const [key,value] of [['priceHistories',{position:{points:[]}}],['purchaseEvidence',{schema:1,receipts:[],decisions:[]}]]){
   const copy=structuredClone(data);copy[key]=value;
-  await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),/envelope/);
+  await assert.rejects(()=>validateSyncSnapshot(envelope(copy)),key==='priceHistories'?/Ungültige CSV-Kurshistorie/:/envelope/);
  }
  data.journalEntries=[{id:'audit',type:'booking-management-audit',date:'2026-11-01',postings:[],managementAudit:{originals:[]}}];
  await assert.rejects(()=>validateSyncSnapshot(envelope(data)),/envelope/);

@@ -91,10 +91,11 @@ test('canonical resume metadata remains unsupported in full; no portable-history
  const d=data();d.walletHistory.pending=[{id:'resume',chain:'btc',walletKey:'public',provider:'fixture',filter:'all',tip:null,scope:null,status:'re-fetch-needed',updatedAt:NOW}];
  await rejectUnchanged(d,/envelope/);
 });
-test('v5/import/evidence/price payloads stay unsupported even when history is accepted',async()=>{
+test('v5/import/evidence and malformed price payloads reject even when history is accepted',async()=>{
  const changes=[d=>d.version=5,d=>d.flatexNetRemovals=[],d=>d.purchaseEvidence={schema:1,receipts:[],decisions:[]},
-  d=>d.priceHistories={cash:{points:[]}},d=>d.bookings[0].importSource={sourcePayload:'SYNTHETIC'}];
+  d=>d.bookings[0].importSource={sourcePayload:'SYNTHETIC'}];
  for(const change of changes){const d=data();change(d);await rejectUnchanged(d,/envelope/);}
+ const d=data();d.priceHistories={cash:{points:[]}};await rejectUnchanged(d,/Kurshistorie hat keinen gültigen Positionsbezug/);
 });
 test('history retains existing session/event/byte/node/depth limits with no truncation',async()=>{
  let d=data();d.walletHistory.sessions=Array.from({length:101},(_,i)=>({...structuredClone(d.walletHistory.sessions[0]),id:'s-'+i}));
