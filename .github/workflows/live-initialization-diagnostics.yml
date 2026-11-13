@@ -94,16 +94,16 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  flh04-c1-native-correction-first:
-    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-c1-correction-bfed8172-366da675bef5' && github.run_attempt == 1
+  flh04-source-lifecycle-first:
+    if: github.event_name == 'create' && github.event.ref_type == 'branch' && github.ref == 'refs/heads/test/flh04-source-lifecycle-781cbfc52ec6-20261113' && github.run_attempt == 1
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
-      C1_SOURCE_SHA: bfed81728189c71ff88c7a7419f2c51db56b084d
-      C1_SOURCE_TREE: 27dad342d21e45b484c7b8ab87d4ed7cc2851b46
-      C1_OUT_DIR: artifacts/flh04-c1
+      LC_SOURCE_SHA: 063add5697a1deaf119eec7ca7eb18a663f31bc8
+      LC_SOURCE_TREE: 33d610d2eff09cf383cb003615a7ce3dc9269dd4
+      LC_OUT_DIR: artifacts/flh04-source-lifecycle
       ENGINE: chromium
-      FLH04_VERSION2_CANDIDATE: '1'
+      FLH04_SOURCE_LIFECYCLE: '1'
       BASE_URL: http://127.0.0.1:4173
     steps:
       - name: Checkout exact execution commit and its source parent
@@ -118,38 +118,38 @@ jobs:
         timeout-minutes: 2
         with:
           node-version: '22.23.4'
-      - name: Bind execution workflow and unchanged C1 source
+      - name: Bind execution workflow and frozen lifecycle source
         timeout-minutes: 1
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$C1_OUT_DIR/inputs"
+          mkdir -p "$LC_OUT_DIR/inputs"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          test "$(git rev-parse HEAD^)" = "$C1_SOURCE_SHA"
-          cp .github/workflows/live-initialization-diagnostics.yml "$C1_OUT_DIR/executed-workflow.yml"
-          git diff --name-only "$C1_SOURCE_SHA" "$GITHUB_SHA" > "$C1_OUT_DIR/execution-delta.txt"
+          test "$(git rev-parse HEAD^)" = "$LC_SOURCE_SHA"
+          cp .github/workflows/live-initialization-diagnostics.yml "$LC_OUT_DIR/executed-workflow.yml"
+          git diff --name-only "$LC_SOURCE_SHA" "$GITHUB_SHA" > "$LC_OUT_DIR/execution-delta.txt"
           python3 - <<'PY'
           import os, pathlib
-          out=pathlib.Path(os.environ['C1_OUT_DIR'])
+          out=pathlib.Path(os.environ['LC_OUT_DIR'])
           assert (out/'execution-delta.txt').read_text().splitlines()==['.github/workflows/live-initialization-diagnostics.yml']
           PY
-          git checkout --detach "$C1_SOURCE_SHA"
-          test "$(git rev-parse HEAD)" = "$C1_SOURCE_SHA"
-          test "$(git rev-parse HEAD^{tree})" = "$C1_SOURCE_TREE"
-          git ls-tree -r HEAD > "$C1_OUT_DIR/pinned-source-tree.txt"
-          cp --parents package.json tests/browser-sync-outbox.mjs src/browser-portfolio-storage.js tests/flh04-version2-candidate-probes.mjs tests/flh04-c1-diagnostics.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.test.mjs tests/fixtures/c1-storage-dependencies.mjs tests/storage-origin.html "$C1_OUT_DIR/inputs/"
-          node --version > "$C1_OUT_DIR/node.txt"
+          git checkout --detach "$LC_SOURCE_SHA"
+          test "$(git rev-parse HEAD)" = "$LC_SOURCE_SHA"
+          test "$(git rev-parse HEAD^{tree})" = "$LC_SOURCE_TREE"
+          git ls-tree -r HEAD > "$LC_OUT_DIR/pinned-source-tree.txt"
+          cp --parents package.json src/browser-portfolio-storage.js tests/browser-sync-outbox.mjs tests/flh04-source-lifecycle-harness.mjs tests/flh04-source-lifecycle-probes.mjs tests/flh04-source-lifecycle.test.mjs tests/flh04-c1-source-guard.test.mjs tests/flh04-c1-diagnostics.mjs tests/flh04-version2-candidate-probes.mjs tests/flh04-c1-diagnostics.test.mjs tests/fixtures/c1-storage-dependencies.mjs tests/sync-outbox-fixture.mjs src/atomic-storage.js tests/storage-origin.html "$LC_OUT_DIR/inputs/"
+          node --version > "$LC_OUT_DIR/node.txt"
           python3 - <<'PY'
           import os,json,hashlib,pathlib
-          out=pathlib.Path(os.environ['C1_OUT_DIR'])
-          expected={"tests/browser-sync-outbox.mjs":"f5d6bcab636ff8b9cf5d4b62514dcb98acb2475c","src/browser-portfolio-storage.js":"ce56e74ff0519331b06e9833ab808e17a136613f","tests/flh04-version2-candidate-probes.mjs":"d87ab642d1ba409814af517c2b28ad50fd924b0c","tests/flh04-c1-diagnostics.mjs":"1e1f5c3bbe66d911a312c246b98f08f11562c4af","tests/flh04-c1-source-guard.test.mjs":"33eeaabce0cebac36fc46592ce2c5bede68e6c26","tests/flh04-c1-diagnostics.test.mjs":"eb53397ca3d6d2aab127b53583408e8402719cc8","tests/fixtures/c1-storage-dependencies.mjs":"02c53fa3c41ff35785021757ceb43eb834dc4b60"}
+          out=pathlib.Path(os.environ['LC_OUT_DIR'])
+          expected={"src/browser-portfolio-storage.js":"4743618cbfba19dbb19aaf6a9e6bf563b2311614","tests/browser-sync-outbox.mjs":"f542adf39e8840f0c801b6ff65a3925dbf63fbef","tests/flh04-source-lifecycle-harness.mjs":"d6e2fbdca996b66d78fc184b98dad3bcb6b74fbc","tests/flh04-source-lifecycle-probes.mjs":"65c0b0a031721f9752f592e974583ff673918496","tests/flh04-source-lifecycle.test.mjs":"56bdab130fc012923de8a6b0f9f283584dace19f","tests/flh04-c1-source-guard.test.mjs":"12388345a554a76311de2c34aaba35a8835c1271","tests/flh04-c1-diagnostics.mjs":"d3adb9857a17538070234fbdb28482322b44c4ba","tests/flh04-version2-candidate-probes.mjs":"d87ab642d1ba409814af517c2b28ad50fd924b0c","tests/flh04-c1-diagnostics.test.mjs":"eb53397ca3d6d2aab127b53583408e8402719cc8","tests/fixtures/c1-storage-dependencies.mjs":"02c53fa3c41ff35785021757ceb43eb834dc4b60","tests/sync-outbox-fixture.mjs":"13c338233f5a65b0e107675b5a3b006cbe78f11a","src/atomic-storage.js":"b8bc22967d451150801cd8ac1fd847a768c37ca2"}
           files=[]
           for name,want in expected.items():
            data=pathlib.Path(name).read_bytes()
            actual=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
            assert actual==want,(name,actual)
            files.append({'path':name,'bytes':len(data),'git_blob_sha1':actual})
-          fields=['GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_JOB','RUNNER_OS','RUNNER_ARCH','C1_SOURCE_SHA','C1_SOURCE_TREE','ENGINE','FLH04_VERSION2_CANDIDATE','BASE_URL']
+          fields=['GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_JOB','RUNNER_OS','RUNNER_ARCH','LC_SOURCE_SHA','LC_SOURCE_TREE','ENGINE','FLH04_SOURCE_LIFECYCLE','BASE_URL']
           receipt={name:os.environ.get(name) for name in fields}
           receipt['files']=files
           receipt['limits']={'job_minutes':25,'harness_seconds':360,'harness_calls':1,'engines':['chromium'],'automatic_test_retries':0}
@@ -160,29 +160,29 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1 2>&1 | tee "$C1_OUT_DIR/install.log"
+          npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1 2>&1 | tee "$LC_OUT_DIR/install.log"
       - name: Install the previously used Chromium shell
         timeout-minutes: 3
         shell: bash
         run: |
           set -euo pipefail
-          npx --no-install playwright install chromium --only-shell 2>&1 | tee "$C1_OUT_DIR/browser-install.log"
-          node --input-type=module <<'JS' > "$C1_OUT_DIR/runtime.json"
+          npx --no-install playwright install chromium --only-shell 2>&1 | tee "$LC_OUT_DIR/browser-install.log"
+          node --input-type=module <<'JS' > "$LC_OUT_DIR/runtime.json"
           import {createRequire} from 'node:module';
           import {chromium} from 'playwright';
           const require=createRequire(import.meta.url);
           console.log(JSON.stringify({node:process.version,playwright:require('playwright/package.json').version,
            executable:chromium.executablePath(),browserStarted:false},null,2));
           JS
-      - name: One original harness call with the C1 extension
-        id: c1
+      - name: One original harness call with the lifecycle extension
+        id: lifecycle
         timeout-minutes: 8
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m http.server 4173 --bind 127.0.0.1 > "$C1_OUT_DIR/http.log" 2>&1 &
-          c1_http_pid=$!
-          trap 'kill "$c1_http_pid" 2>/dev/null || true; wait "$c1_http_pid" 2>/dev/null || true' EXIT
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$LC_OUT_DIR/http.log" 2>&1 &
+          lc_http_pid=$!
+          trap 'kill "$lc_http_pid" 2>/dev/null || true; wait "$lc_http_pid" 2>/dev/null || true' EXIT
           node --input-type=module <<'JS'
           import {readFileSync} from 'node:fs';
           const expected=readFileSync('tests/storage-origin.html');
@@ -196,59 +196,59 @@ jobs:
           }
           if(!ready)throw Error('Exact local test origin not ready');
           JS
-          kill -0 "$c1_http_pid"
+          kill -0 "$lc_http_pid"
           set +e
-          timeout --signal=TERM --kill-after=15s 360s node tests/browser-sync-outbox.mjs 2>&1 | tee "$C1_OUT_DIR/test.log"
-          c1_pipe_status=("${PIPESTATUS[@]}")
+          timeout --signal=TERM --kill-after=15s 360s node tests/browser-sync-outbox.mjs 2>&1 | tee "$LC_OUT_DIR/test.log"
+          lc_pipe_status=("${PIPESTATUS[@]}")
           set -e
-          c1_test_status="${c1_pipe_status[0]}"
-          c1_log_status="${c1_pipe_status[1]}"
-          C1_TEST_STATUS="$c1_test_status" C1_LOG_STATUS="$c1_log_status" python3 - <<'PY'
+          lc_test_status="${lc_pipe_status[0]}"
+          lc_log_status="${lc_pipe_status[1]}"
+          LC_TEST_STATUS="$lc_test_status" LC_LOG_STATUS="$lc_log_status" python3 - <<'PY'
           import os,json,pathlib
-          out=pathlib.Path(os.environ['C1_OUT_DIR'])
+          out=pathlib.Path(os.environ['LC_OUT_DIR'])
           (out/'exit-status.json').write_text(json.dumps({
-           'test_exit':int(os.environ['C1_TEST_STATUS']),
-           'tee_exit':int(os.environ['C1_LOG_STATUS'])
+           'test_exit':int(os.environ['LC_TEST_STATUS']),
+           'tee_exit':int(os.environ['LC_LOG_STATUS'])
           },indent=2)+'\n')
           PY
-          if [ "$c1_log_status" -ne 0 ]; then exit "$c1_log_status"; fi
-          exit "$c1_test_status"
+          if [ "$lc_log_status" -ne 0 ]; then exit "$lc_log_status"; fi
+          exit "$lc_test_status"
       - name: Preserve observed results without reclassifying failures
         if: always()
         timeout-minutes: 1
         env:
-          C1_STEP_OUTCOME: ${{ steps.c1.outcome }}
+          LC_STEP_OUTCOME: ${{ steps.lifecycle.outcome }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$C1_OUT_DIR"
+          mkdir -p "$LC_OUT_DIR"
           python3 - <<'PY'
           import os,json,pathlib,hashlib
-          out=pathlib.Path(os.environ['C1_OUT_DIR'])
+          out=pathlib.Path(os.environ['LC_OUT_DIR'])
           log=out/'test.log'
           reports=[]
           if log.exists():
            for line in log.read_text(errors='replace').splitlines():
-            if line.startswith('{"kind":"FLH04Version2CandidateProbe"'):
+            if line.startswith('{"kind":"FLH04SourceLifecycleProbe"'):
              try: reports.append(json.loads(line))
              except json.JSONDecodeError: pass
           observed=reports[0] if len(reports)==1 else None
           summary={
-           'source_sha':os.environ['C1_SOURCE_SHA'],
-           'source_tree':os.environ['C1_SOURCE_TREE'],
+           'source_sha':os.environ['LC_SOURCE_SHA'],
+           'source_tree':os.environ['LC_SOURCE_TREE'],
            'execution_sha':os.environ.get('GITHUB_SHA'),
            'run_id':os.environ.get('GITHUB_RUN_ID'),
            'run_attempt':os.environ.get('GITHUB_RUN_ATTEMPT'),
-           'test_step_outcome':os.environ.get('C1_STEP_OUTCOME'),
+           'test_step_outcome':os.environ.get('LC_STEP_OUTCOME'),
            'report_count':len(reports),
            'source_receipt_available':(out/'source-receipt.json').exists(),
            'exit_status':json.loads((out/'exit-status.json').read_text()) if (out/'exit-status.json').exists() else None,
-           'c1_report':observed,
+           'lifecycle_report':observed,
            'report_status':'OBSERVED' if observed is not None else 'NOT_REACHED_OR_NO_VALID_REPORT',
-           'prior_failed_groups':['C1-MARKERS','C1-NO-REVERT'],
-           'c1_cases':observed.get('cases',[]) if observed is not None else [{'id':name,'status':'NOT_REACHED'} for name in ['C1-CANCEL','C1-VERSION-FENCE','C1-MARKERS','C1-NO-REVERT','C1-RESTORE-CAS','C1-RESTORE-FAULT-REPLY']],
+           'native_forced_close_qualified':False,
+           'lifecycle_cases':observed.get('cases',[]) if observed is not None else [{'id':name,'status':'NOT_REACHED'} for name in ["L1-REVERT","L2-MARKER-FAIL","L3-INITIALIZE","L4-READ-ERROR","L5-CLOSE-EVENT","L6-INTENT","L7-MIGRATE","L8-V2-LOCKED","L9-V1-REMOVE","L10-V2-INTENT","L11-PROBE-ERROR","L11-PROBE-BLOCKED","L12-V2-RECOVERY"]],
            'expected_failures_count_as_pass':False,
-           'scope':'Original browser-sync-outbox baseline plus six C1 groups, one invocation, Chromium only',
+           'scope':'Unchanged browser-sync-outbox baseline plus thirteen source lifecycle groups;C1 opt-in unset;one invocation;Chromium only',
            'not_qualified':['production v2 adapter','full writer closure','real process crash','real quota','crypto review','active sync']
           }
           (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
@@ -259,12 +259,12 @@ jobs:
             files.append({'path':file.relative_to(out).as_posix(),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
           (out/'artifact-manifest.json').write_text(json.dumps(files,indent=2)+'\n')
           PY
-      - name: Upload original C1 evidence even when tests fail
+      - name: Upload original lifecycle evidence even when tests fail
         if: always()
         uses: actions/upload-artifact@v4
         timeout-minutes: 2
         with:
-          name: flh04-c1-correction-bfed8172-${{ github.run_id }}-${{ github.run_attempt }}
-          path: artifacts/flh04-c1/
+          name: flh04-source-lifecycle-781cbfc52ec6-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/flh04-source-lifecycle/
           if-no-files-found: error
           retention-days: 7
