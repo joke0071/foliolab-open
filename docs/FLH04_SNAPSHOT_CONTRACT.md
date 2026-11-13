@@ -486,3 +486,61 @@ geänderterVoraussetzungundkonkretemreviewbarenKandidatenzurAusführungsentschei
 KeineWrap-/Signatur-/Aussteller-/EntsperrimplementierungoderSelbstfreigabe.
 N-DRIVEBLOCKED_EXTERNALmitinternem/externalemRest,FLH04NOTDONE,
 OutboxINTERNUNQUALIFIZIERT. A1/A2/prepared-locked/alleBudgetsundGatesunverändert.
+
+## Vollständige Kraken-USD-Principal-Snapshotkette · vor Code · 13.11.2026
+
+Owner work-3de59b8f2b9b-20261113; Basis d2b4325d6fc8275b8e3dcc248df01516fa4a8ec2.
+Vorhanden: validateUnpricedUSDTransfers bindet vollständige aktive Herkunft/Ownership,
+zwei eigene USD-Cashkonten, UNKNOWN-Journal und exakte native Principalmenge.
+validateKrakenWithdrawals bindet dauerhafte uh03-undo-Originale samt Digest, Journal,
+Quellpayload und Wiederanlagesperre. Acht bestehende Principaltests unverändert PASS.
+Repro: Encoder weist aktive UND zurückgenommene vollständige Fixture ab.
+assertDataVersion/hasFlatexNetState verlangen hier v5 MIT flatexNetRemovals=[].
+Marker löschen oder Version herabsetzen scheitert; keine Versionsumgehung zulässig.
+
+Fehlendes Abschlusskriterium: diesen ganzen vorhandenen Nutzerablauf verlustfrei
+transportieren, nach Restore gleichen Reimport-/Rücknahme-/UNKNOWN-Schutz erhalten.
+Enger Scope: genau kraken-uh03-v1 Transfer mit unpriced-native-usd-principal,
+geschlossene kanonische JSON-sourcePayload(group,payload,bindings,action), vollständige
+Ownership, Originalbookings/-journal/flows und dauerhafter uh03-undo-Digest.
+Bindings genau zwei Stringpaare, action ausschließlich die vorhandenen Principal-
+Transferfelder; keine opaque Erweiterung/Credentials oder Bridgevariante.
+Originale ausschließlich dieser Principalrolle; kein beliebiger Kraken-Withdrawal.
+Leerer flatexNetRemovals-Marker wird nur mit dieser vollständigen aktiven oder
+dauerhaft zurückgenommenen Kette erhalten; gefüllter Flatexzustand bleibt unsupported.
+v5 braucht wie bisher die komplette UH02-Kette ODER diesen vollständigen Principal-
+Ablauf samt Marker, nie Ledger-only/Marker-only. Keine pauschale v5-/Krakenfreigabe.
+Bestehende safeImport/assertDataVersion/Import-/Journal-/Withdrawalvalidatoren sowie
+vollständiger unverändernder Vergleich bleiben unverändert, keine Defaults/Pruning.
+
+Erfolg: aktive Quelle→Snapshot→Restore→Reimportduplikat→Originalgruppenrücknahme→
+Snapshot→Restore→dauerhafte Wiederanlagesperre, Originale/Digest bytegleich, 18Decimal/
+UNKNOWN/kein externer Fluss, Archiv und zulässige UH02-/CSV-/Managementkoexistenz.
+Lokales CSV-Undo weiterhin nur mit exakt identischem Modellpreimage; Snapshot
+portiert keine flüchtigen Receipts oder neue Autorität. Bekannter aktueller FX kann
+historisches UNKNOWN nicht verändern. Ablehnung Encoder UND Decoder: unbekannte
+Felder jeder Ebene einschließlich eingebettetem JSON/Ownership, fehlende Herkunft/
+Originale/Marker, gefüllter Flatexzustand, falsche Rollen/FX/Journal/Bindings/Menge,
+Digeständerung/Verlust, aktive und entfernte Duplikate, andere Kraken-/Bridgeklassen.
+Ein Fehler blockiert ganz ohne Quellmutation; bestehende Budgets unverändert.
+
+Dateien: src/sync-snapshot.js; neue tests/sync-snapshot-usd-principal.test.mjs;
+bestehender Snapshotvertrag/Fachcheckpoint und neuer lokaler Prüfbeleg.
+Alle vorhandenen Tests unverändert; betroffene Snapshots und bestehende acht
+Kraken-Principaltests gemeinsam prüfen; vorhandenen Decimal100-Oracle wiederverwenden.
+Kryptoimpact gegen exakten Kandidaten17a5a190d472f1f07b3508e6f35194371fe95eb2:
+ausschließlich nachgelagerte Snapshotabdeckung, keine Byte-/Autoritätsfreigabe.
+
+Integration bleibt separat offen: originale lokale Raw-/Revision-/CryptoKey-
+Preimages müssen credentialfreie Payloadbytes geschlossen atomar binden.
+Kein Anschluss an sync-outbox-state/Storage/Apply, kein Umdeuten der Rawidentität.
+Hauptowner bearbeitet diesen CAS-Vertrag und ordnet vorhandene native Harnesses
+einer nachweislich geeigneten zulässigen Umgebung zu; Persistenz/Reopen/Mehrtab/
+Prozesscrash/realeQuota/Recovery getrennt nachweisen. Bekannte Fehlstarts nicht
+wiederholen. Jochen bestimmt unabhängigen qualifizierten Kryptoprüfer und ggf.
+Zugang/Budget für bestehendes Paketfd3fce4b; erst gültiger einschlägiger Abschluss
+erfüllt das Gate. Kein Wrap-/Signatur-/Aussteller-/Entsperrcode/Selbstfreigabe.
+Mainbefund nur bei neuer Hypothese/geänderter Voraussetzung und konkretem reviewbarem
+Kandidaten zur Ausführungsentscheidung; kein Retry/Runner/Workflow/PR/Merge/Release/
+SW-Bump/aktiveSync. A1/A2/prepared-locked/Identitäts-/DB-/Budgetgrenzen unverändert.
+FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/N-DRIVEBLOCKED_EXTERNAL intern UND extern.
