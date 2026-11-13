@@ -103,3 +103,38 @@ oder externe Abnahme; kein Release/FLH04-DONE.
 Kryptoreviewpaket [Einstieg](FLH04_CRYPTO_REVIEW_ENTRY_2026-11-13.md)
 bleibt EXTERNAL_REVIEW_PENDING, CryptoKeytausch zwischen Challenge/Commit
 ungelöst. Alle übrigen Pflichtgates gelten unverändert.
+
+
+## Autorisierter nächster Historyrest · 13.11.2026 · work-f2948d3c3fba-20261113
+
+Vor Code festgelegt: Kanonische getrennte priceHistories fehlen in der bestehenden
+v3/v4-Allowlist. Vorhanden sind validateImportedPriceHistory, historyIdentity und
+safeImport mit Positionsreferenz-/Gesamtpunktlimit; diese bleiben unverändert.
+Genau ein vollständiger lokaler Historyumfang: CSV-Schlusskurse und ausdrücklich
+user-confirmed Anbieterhistorien (EODHD/Twelve Data/FMP/CoinGecko/CoinPaprika),
+historische FX-Punkte und Herkunft/Positionsbindung. Kein neuer Anbieterabruf,
+keine Retentionbestätigung, Bewertung, Buchung oder Rechte-/Syncfreigabe.
+
+Rekursiv erlaubte Felder: History currency/source/points/priceType/fxPoints/provenance;
+Punkt date/total/optionales valuationDate; FX date/currency/rate/source/optionales
+referenceDate; Provenienz schema/provider/identity/retention. Bestehende Semantik
+und vollständig unverändernder Vergleich entscheiden über Annahme, nicht allein
+Feldnamen. Alle Reihenfolgen/Typen/Zahlen/Strings/null/Abwesenheiten erhalten.
+Kanonische CSV-History ohne optionale Felder bleibt so; retained history behält
+ihre vorhandene fxPoints-Liste und Provenienz. Keine stille Sortierung oder Defaults.
+
+Erfolg: ganze kanonische v3/v4-Portfolios mit mehreren Positionshistorien
+verlustfrei hin/zurück einschließlich FX-Referenztagen und Krypto-valuationDate/null,
+bei unverändertem Journal/UNKNOWN-FX/Bestand und ausgeschlossenen settings.
+Ablehnung: zusätzliche Felder/Credentials an jeder Ebene, falsche Positionsreferenz
+oder Anbieter-/Identitäts-/Währungs-/Kursartbindung, ungültige/duplizierte/unsortierte
+Kurstage, falsche Zahlen/FX-Referenzen/Normalisierungsbedarf und Budgetüberschreitung.
+Ein Fehler blockiert das gesamte Portfolio, keine Teilausgabe/Pruning.
+v5/Import-/Management-/Withdrawal-/Bridge-/Purchasebelege und pending/Resume bleiben
+vollständig unsupported. Snapshot1/3.500.000UTF8Bytes/100.000Werte/Tiefe16 unverändert.
+
+Betroffen: src/sync-snapshot.js, tests/sync-snapshot-price-history.test.mjs,
+präzisierter bestehender Unsupportedtest sowie Fachcheckpoint/Prüfbeleg.
+Keine Krypto-/Anker-/Storage-/Outbox-/Appänderung. Impact zum Reviewkandidaten
+17a5a190d472f1f07b3508e6f35194371fe95eb2: nur nachgelagerte Snapshot-Feldabdeckung;
+Review weiter EXTERNAL_REVIEW_PENDING, keine Freigabe durch diesen Schnitt.
