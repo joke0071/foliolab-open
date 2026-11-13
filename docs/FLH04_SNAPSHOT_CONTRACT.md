@@ -579,3 +579,129 @@ REVIEW_READY/EXTERNAL_REVIEW_PENDING. Kein Wrap-/Signatur-/Aussteller-/Entsperrc
 Raw-/Payload-/CryptoKey-CAS-Integration und alle zuvor konkret zugeordneten
 Abnahmewege/Gates bleiben offen. FLH04NOTDONE/OutboxINTERNUNQUALIFIZIERT/
 N-DRIVEBLOCKED_EXTERNAL mit internem UND externem Rest.
+
+## Raw-/Payload-/CryptoKey-CAS: Integrationsvertrag und verbleibende Sperre · 13.11.2026
+
+work-0c5363d0ea74-20261113, Produktbasis 920debdad089b085f21f3fc5ca0c84a27577b22b.
+Dies konkretisiert die komplette erforderliche Bindung; **keine gelöste
+CryptoKey-CAS, kein Integrations-/Aussteller-/Entsperrcode und keine Abnahme**.
+Die bisherigen Rawgleichheitsguards bleiben unverändert. Der bestehende
+Ausstellervertrag Abschnitt4 verbietet Cryptoawait in einer IDB-Transaktion.
+
+**Ein Erfassungsversuch bindet einen vollständigen Originalzustand P:**
+Vorhandensein (count, auch belegtes undefined/null), vollständigen
+Portfolio-Record einschließlich schemaVersion/revision/raw/settings/deleted/
+updatedAt/syncEnrollmentRequired samt Feldpräsenz; vollständige Outbox inklusive
+Version/disabled/Ankerkette/allen Frames; vollständigen lokalen Anker inklusive
+Status/Lifecycle/Identitäten/Autoritäts-/Mitgliedschafts-/Wrapreferenzen und aller
+Keyslots einschließlich Schlüsselmaterial, Algorithmus, extractable und usages.
+Nicht-JSON-Werte und unbekannte Feldformen sind kein stiller JSON-Vergleich:
+unqualifizierte Formen blockieren ganz. Private Credentials bleiben ausschließlich
+im lokalen Preimage; weder P noch dessen Digest werden protokolliert/transportiert.
+
+**Exakte Ableitung:** S=createSyncSnapshot(P.portfolio.raw), D=SHA256(UTF8(S)).
+Kein record.settings, kein Backupobjekt und keine spätere Rawfassung als Quelle.
+Originalraw R und S bleiben verschiedene Bytefolgen; Descriptor.payloadDigest
+muss exakt D sein und der verifizierte Frame exakt S enthalten. P, R, S, D,
+vollständiger Descriptor, lokale Erfassungsrevision, exakter Frame und Schlüssel-
+/Mitgliedschaftskontext müssen durch einen privat erzeugten flüchtigen Beleg
+gebunden werden; kein Caller-JSON/verified-Flag und kein serialisierter Beleg.
+Unveränderliche Kopien vor dem ersten Cryptoawait, keine Mutation der Quelle.
+Jeder Cryptoawait (Snapshotdigest, Validierung, Frameprüfung, Keykohärenz,
+Signatur/Wrapprüfung im später reviewten Pfad) liegt innerhalb desselben
+Erfassungsversuchs und entwertet bei irgendeiner Preimageänderung den Versuch.
+
+**Wurzel/Nachfolger/Retry:** neue Wurzel nur nach eigenständig gültigem Enrollment,
+exakter Portfolio-/Epoche-/Writerzuordnung und abwesender Outbox; prepared-locked
+ist niemals ein solches Enrollment. Nachfolger nur an exakt letztem lokalen
+Descriptor und streng neuerem Portfolio-CAS, vollständige alte Outbox unverändert.
+Retry nur identischer persistierter Frame mit seiner ursprünglichen
+Erfassungsrevision und Bindung; niemals alten Frame an neuen CAS hängen, auch
+wenn R oder S zufällig wieder gleich sind. Ein identischer S bei geänderten
+lokalen settings ist keine Erlaubnis, das lokale Recordpreimage wegzulassen.
+
+**Einziger Commit:** bestehende DB/Version/records; Portfolio, Outbox,
+Anker-/Key-/Autoritätszustand im selben readwrite-Commit gegen P prüfen.
+Alle Presencecounts und Werte müssen stimmen. Erst oncomplete macht den
+Erfassungszustand dauerhaft; kein Senden davor. Abort/Quota lässt Originale
+unverändert. Antwortverlust nach Commit bedeutet UNKNOWN-Ausgang: tatsächlich
+gespeicherten Zustand erneut lesen, Frames und Bindung erneut verifizieren,
+keine neue Revision oder Neuverschlüsselung als blinden Retry. Nach
+Page-Reopen kein flüchtiger Beleg wiederhergestellt. confirmed/Remoteherkunft
+und Finanz-Apply bleiben eigene gesperrte Verträge.
+
+| Veränderung/Gegenprobe | Verbindlicher Ausgang |
+| --- | --- |
+| Gleicher CAS, anderes raw/settings/updatedAt/Sperrfeld oder Feldpräsenz | Ganzer Versuch verworfen, kein Commit/Send/Apply |
+| Restore/Adoption/Tombstone/Recovery zwischen beliebigen Cryptoawaits | Bindung ungültig, Originaloutbox/-anker erhalten/gesperrt |
+| Outbox/Anker fehlt versus belegtes undefined/null, zusätzliche/unbekannte Slots | Nicht gleichsetzen, vollständig blockieren |
+| Keyslottausch bei gleichen JSON-/Lifecycle-/Envelopebytes | Muss blockieren; aktueller Vergleich kann dies NICHT beweisen |
+| Identische Attribute, anderer HKDF-/Writerkey; IDB-Klon mit neuer JS-Identität | Metadaten bzw. Objektidentität sind kein vollständiger Schlüssel-CAS |
+| Parallelversuch/älterer Parent/alter Frame an neuerer CAS | Höchstens passender atomarer Nachfolger, sonst blockieren |
+| Aktuelles FX, normalisierende Importprojektion, unknown/unsupported Snapshot | Kein historischer Ersatzwert/Teilpayload |
+| Commit erfolgt, Rückgabe verloren; später neuer lokaler Save | Alten persistierten Versuch rekonstruieren, neueren CAS nicht bestätigen |
+
+**Konkrete ungelöste Voraussetzung:** Kryptochallenge vor dem Commit beweist
+Keykohärenz nur zum Challengezeitpunkt. Erneutes JSONlesen schließt den
+anschließenden Keyslottausch nicht. Der aktuelle prepared-locked-Record enthält
+nicht exportierbare CryptoKeys; count schützt allein dessen bisherige
+Neuanlage gegen vorhandene Slots. Es gibt am Produktstand keinen qualifizierten
+exklusiven Keyslotwriter-/Lebenszyklusmechanismus, der diese Racegrenze schließt.
+Keine Keepalive-/Cryptoawait-Transaktion, zweite DB, DBVersionsänderung,
+Ankerpromotion oder stiller Wechsel zu ausschließlich Envelopebytes als Lösung.
+Daher **Integrationslösung weiterhin OFFEN/NOT_IMPLEMENTED**, nicht
+„Vertrag geschlossen“ aus dieser Anforderungsmatrix ableiten.
+
+Hauptowner: vorhandenen tests/browser-sync-outbox.mjs auf einer zulässigen
+nativen Umgebung mit ausgewähltem Playwright-Browser und lokalem Testorigin
+zuordnen. In dieser Sitzung Node24.22.1, Projektimport Playwright:
+ERR_MODULE_NOT_FOUND; kein bekannter Browser-/AF_UNIX-Fehlstart wiederholt.
+Der aktuelle Harness testet ursprüngliches Raw und PageReopen im selben
+BrowserContext; nicht neue Snapshotintegration, Prozesscrash oder reale Quota.
+Sollbeleg: exakter SHA/Tree, Engine/Version, vollständige erfolgreiche
+CAS-/Presence-/Keyslotraces an JEDER Cryptoawaitgrenze und gespeicherter
+Zustand nach Commit/Antwortverlust; Prozesscrash/realeQuota/Recovery separat.
+Jochen bestimmt ggf. zugängliche geeignete Umgebung sowie den unabhängigen
+qualifizierten Kryptoprüfer/Zugang/Budget. Bestehendes Paket fd3fce4b und
+Kandidat17a5a190d472f1f07b3508e6f35194371fe95eb2 verwenden; keine neue
+Beauftragung/Paketerstellung oder reviewgesperrte Implementierung.
+Ohne nachgewiesene komplette Key-CAS keine Outboxanbindung.
+
+## Vollständige Kraken-ETH-Stakingkette · Vorcode · 13.11.2026
+
+Wegen der oben konkret ungelösten nativen Keyslotgrenze wird gemäß dem
+autorisierten Ersatzpfad ein schon implementierter Portfolioablauf übernommen:
+native ETH-Spot→Earn-Umbuchung, nachfolgender separater Earn-Reward samt
+Kryptogebühr, Originalgruppenrücknahme in umgekehrter Reihenfolge und dauerhafte
+Wiederanlagesperren. Wiederverwendung vorhandener kraken-import-/withdrawal-APIs,
+Fixturen und unveränderter Finanz-/Ownership-/Journalvalidatoren.
+Keine allgemeine Kraken-/Trade-/Bridge-/Fiat-/Flatexfreigabe.
+
+Snapshotumfang: ausschließlich manuelle EUR-bewertete ETH-Kryptopositionen
+(coinId ethereum, keine Walletverwaltung) mit unbekannter Kostenbasis.
+Geschlossene kanonische JSON-sourcePayload group/payload/bindings/action:
+64Hex-Gruppen-/Payloaddigests, ein/zwei explizite Streampositionbindungen;
+nur transfer/reward/fee mit den bereits erzeugten neun/zehn string-Actionfeldern.
+Booking-/Journaltypen und Quell-ID müssen passen; keine zusätzlichen Bridge-
+/Trade-/Credentialsfelder. Ganze aktive Gruppe oder dauerhafter uh03-undo mit
+vollständigen original bookings/journals/flows/Digest/count erhalten.
+Bestehende USD-UNKNOWN-Principal- und UH02-v5-Semantik unverändert; leerer
+Flatexmarker/v5 nur auf bereits erlaubter vollständiger Wirtschaftskette,
+ETH allein kein neuer v5-/Flatexmarkergrund.
+
+Erfolg: Aktiv→Snapshot→Restore→Reimportduplikat→Reward-/Fee-Gruppenrücknahme
+→Snapshot→Restore→Principalrücknahme→Snapshot→Restore→dauerhafte Sperre beider
+Gruppen. Exakte18Decimalmengen, unbekannte Gebühren-/Kostenwerte, Journal,
+keine externen Flüsse, Archiv und Koexistenz mit vorhandenen vollständigen
+Snapshotfamilien. Lokale flüchtige Undo-Receipts nicht übertragen; bestehende
+CSV-Undo-/Management-/Gruppenabhängigkeitsguards unverändert.
+
+Ablehnung Encoder UND Decoder: neue Felder in allen verschachtelten Originalen,
+Sourcepayload/Action/Bindings/Ownership, nichtkanonisches JSON, geänderte
+Originale/Digests, partielle oder veränderte Importgruppen und fremde
+Trade-/Bridge-/Fiat-/andereCoin-/Walletfamilien. Unsupported blockiert den
+gesamten Payload. Keine bestehenden Tests/Assertions/Validatoren ändern.
+Dateien: Snapshotmodul, neue Stakingsnapshotsuite, dieser Vertrag,
+Fachcheckpoint und Originalprüfbeleg; vor Umsetzung Vorcodecommit pinnen.
+Snapshot1/3500000UTF8Bytes/100000Werte/Tiefe16 sowie A1/A2/prepared-locked
+und alle nativen/externalen/CI-/Releasegates unverändert.
