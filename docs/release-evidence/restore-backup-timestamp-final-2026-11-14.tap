@@ -1,0 +1,436 @@
+TAP version 13
+# Subtest: legacy export fits the unchanged 6-million-character reader at the exact GCM/Base64 boundary
+ok 1 - legacy export fits the unchanged 6-million-character reader at the exact GCM/Base64 boundary
+  ---
+  duration_ms: 255.233736
+  type: 'test'
+  ...
+# Subtest: v2 export checks text, UTF-8, GCM tag, padded Base64 and actual envelope overhead separately
+ok 2 - v2 export checks text, UTF-8, GCM tag, padded Base64 and actual envelope overhead separately
+  ---
+  duration_ms: 333.354912
+  type: 'test'
+  ...
+# Subtest: local and Drive readers retain their existing file limits
+ok 3 - local and Drive readers retain their existing file limits
+  ---
+  duration_ms: 0.577851
+  type: 'test'
+  ...
+# Subtest: Unicode envelope bytes must fit the independent unchanged 20-MB local file reader
+ok 4 - Unicode envelope bytes must fit the independent unchanged 20-MB local file reader
+  ---
+  duration_ms: 0.556109
+  type: 'test'
+  ...
+# Subtest: single password allows automatic local/Drive encryption and cross-device recovery
+ok 5 - single password allows automatic local/Drive encryption and cross-device recovery
+  ---
+  duration_ms: 472.291584
+  type: 'test'
+  ...
+# Subtest: password rotation changes future backups, not old passwords or the underlying data key
+ok 6 - password rotation changes future backups, not old passwords or the underlying data key
+  ---
+  duration_ms: 531.713048
+  type: 'test'
+  ...
+# Subtest: malformed backup envelopes fail closed
+ok 7 - malformed backup envelopes fail closed
+  ---
+  duration_ms: 61.666875
+  type: 'test'
+  ...
+# Subtest: oversized Unicode export fails before encryption and leaves the existing vault usable
+ok 8 - oversized Unicode export fails before encryption and leaves the existing vault usable
+  ---
+  duration_ms: 264.74733
+  type: 'test'
+  ...
+# Subtest: actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+ok 9 - actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+  ---
+  duration_ms: 625.753591
+  type: 'test'
+  ...
+# Subtest: default encrypted backup omits all settings and credentials
+ok 10 - default encrypted backup omits all settings and credentials
+  ---
+  duration_ms: 5.911138
+  type: 'test'
+  ...
+# Subtest: opt-in full backup includes the complete user API/RPC configuration and Google OAuth client ID
+ok 11 - opt-in full backup includes the complete user API/RPC configuration and Google OAuth client ID
+  ---
+  duration_ms: 1.15338
+  type: 'test'
+  ...
+# Subtest: untrusted configuration is strictly whitelisted, data must use supported schema
+ok 12 - untrusted configuration is strictly whitelisted, data must use supported schema
+  ---
+  duration_ms: 1.309699
+  type: 'test'
+  ...
+# Subtest: Drive remains voluntary and cannot upload without a configured password
+ok 13 - Drive remains voluntary and cannot upload without a configured password
+  ---
+  duration_ms: 6.397986
+  type: 'test'
+  ...
+# Subtest: Drive restore success commits once before password adoption and clears the password
+ok 14 - Drive restore success commits once before password adoption and clears the password
+  ---
+  duration_ms: 6.453919
+  type: 'test'
+  ...
+# Subtest: Drive restore success never invents a confirmed local rollback backup
+ok 15 - Drive restore success never invents a confirmed local rollback backup
+  ---
+  duration_ms: 3.564212
+  type: 'test'
+  ...
+# Subtest: Drive restore cancellation and decryption failure never reach the local commit
+ok 16 - Drive restore cancellation and decryption failure never reach the local commit
+  ---
+  duration_ms: 10.951264
+  type: 'test'
+  ...
+# Subtest: Drive restore commit rejection never adopts a password or claims restored data
+ok 17 - Drive restore commit rejection never adopts a password or claims restored data
+  ---
+  duration_ms: 3.414541
+  type: 'test'
+  ...
+# Subtest: Drive restore preserves a backend-confirmed commit when settings finalization rejects
+ok 18 - Drive restore preserves a backend-confirmed commit when settings finalization rejects
+  ---
+  duration_ms: 3.566995
+  type: 'test'
+  ...
+# Subtest: Drive restore display failure retains both confirmed operations without replay
+ok 19 - Drive restore display failure retains both confirmed operations without replay
+  ---
+  duration_ms: 3.570791
+  type: 'test'
+  ...
+# Subtest: Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+ok 20 - Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+  ---
+  duration_ms: 3.71886
+  type: 'test'
+  ...
+# Subtest: Drive upload encrypts only the sanitized portfolio through the shared password backend
+ok 21 - Drive upload encrypts only the sanitized portfolio through the shared password backend
+  ---
+  duration_ms: 13.778209
+  type: 'test'
+  ...
+# Subtest: only the user-selected OAuth client ID is stored and no access token persists
+ok 22 - only the user-selected OAuth client ID is stored and no access token persists
+  ---
+  duration_ms: 2.797962
+  type: 'test'
+  ...
+# Subtest: public UI offers full encrypted backup without any recovery-code workflow
+ok 23 - public UI offers full encrypted backup without any recovery-code workflow
+  ---
+  duration_ms: 1.109365
+  type: 'test'
+  ...
+# Subtest: the optional full Drive payload includes validated history and configuration but no OAuth session token
+ok 24 - the optional full Drive payload includes validated history and configuration but no OAuth session token
+  ---
+  duration_ms: 19.129314
+  type: 'test'
+  ...
+# Subtest: compact Drive UI preserves all controls but hides help and advanced actions by default
+ok 25 - compact Drive UI preserves all controls but hides help and advanced actions by default
+  ---
+  duration_ms: 0.714453
+  type: 'test'
+  ...
+# Subtest: Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+ok 26 - Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+  ---
+  duration_ms: 3.862941
+  type: 'test'
+  ...
+# Subtest: header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+ok 27 - header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+  ---
+  duration_ms: 3.267605
+  type: 'test'
+  ...
+# Subtest: reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+ok 28 - reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+  ---
+  duration_ms: 3.835692
+  type: 'test'
+  ...
+# Subtest: cancelled OAuth popup exposes an error and never claims authorization or upload
+ok 29 - cancelled OAuth popup exposes an error and never claims authorization or upload
+  ---
+  duration_ms: 2.301521
+  type: 'test'
+  ...
+# Subtest: invalid OAuth expiry cannot be presented as an hour of valid authorization
+ok 30 - invalid OAuth expiry cannot be presented as an hour of valid authorization
+  ---
+  duration_ms: 2.057732
+  type: 'test'
+  ...
+# Subtest: Drive401 expires the session and gives one reconnect instruction without a false backup
+ok 31 - Drive401 expires the session and gives one reconnect instruction without a false backup
+  ---
+  duration_ms: 2.229305
+  type: 'test'
+  ...
+# Subtest: missing backup guard fails closed before encryption or upload
+ok 32 - missing backup guard fails closed before encryption or upload
+  ---
+  duration_ms: 2.9117
+  type: 'test'
+  ...
+# Subtest: stale canonical snapshot stops Drive upload and never marks it backed up
+ok 33 - stale canonical snapshot stops Drive upload and never marks it backed up
+  ---
+  duration_ms: 2.53841
+  type: 'test'
+  ...
+# Subtest: snapshot change during encryption stops before any upload
+ok 34 - snapshot change during encryption stops before any upload
+  ---
+  duration_ms: 3.129281
+  type: 'test'
+  ...
+# Subtest: snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+ok 35 - snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+  ---
+  duration_ms: 3.357476
+  type: 'test'
+  ...
+# Subtest: stale snapshot cannot prune existing remote backups when retention is lowered
+ok 36 - stale snapshot cannot prune existing remote backups when retention is lowered
+  ---
+  duration_ms: 24.214295
+  type: 'test'
+  ...
+# Subtest: fresh snapshot preserves normal confirmed backup and authorized retention
+ok 37 - fresh snapshot preserves normal confirmed backup and authorized retention
+  ---
+  duration_ms: 3.326611
+  type: 'test'
+  ...
+# Subtest: acknowledged upload is not automatically repeated when local acknowledgement storage fails
+ok 38 - acknowledged upload is not automatically repeated when local acknowledgement storage fails
+  ---
+  duration_ms: 2.621082
+  type: 'test'
+  ...
+# Subtest: export preflight rejection never uploads, prunes or acknowledges a Drive backup
+ok 39 - export preflight rejection never uploads, prunes or acknowledges a Drive backup
+  ---
+  duration_ms: 135.001949
+  type: 'test'
+  ...
+# Subtest: normal plain portfolio JSON keeps its exact readable bytes and MIME type
+ok 40 - normal plain portfolio JSON keeps its exact readable bytes and MIME type
+  ---
+  duration_ms: 1.660396
+  type: 'test'
+  ...
+# Subtest: accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+ok 41 - accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+  ---
+  duration_ms: 1185.062293
+  type: 'test'
+  ...
+# Subtest: plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+ok 42 - plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+  ---
+  duration_ms: 510.303855
+  type: 'test'
+  ...
+# Subtest: Fresh Drive restore does not manufacture a local backup creation timestamp
+ok 43 - Fresh Drive restore does not manufacture a local backup creation timestamp
+  ---
+  duration_ms: 43.317616
+  type: 'test'
+  ...
+# Subtest: Restore preserves an existing real backup timestamp instead of refreshing it
+ok 44 - Restore preserves an existing real backup timestamp instead of refreshing it
+  ---
+  duration_ms: 16.534741
+  type: 'test'
+  ...
+# Subtest: Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+ok 45 - Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+  ---
+  duration_ms: 2.875937
+  type: 'test'
+  ...
+# Subtest: A rejected restore does not mark an uncreated backup or reset unsaved change count
+ok 46 - A rejected restore does not mark an uncreated backup or reset unsaved change count
+  ---
+  duration_ms: 2.744534
+  type: 'test'
+  ...
+# Subtest: Actual backup creation keeps the existing timestamp and counter behavior
+ok 47 - Actual backup creation keeps the existing timestamp and counter behavior
+  ---
+  duration_ms: 1.561841
+  type: 'test'
+  ...
+# Subtest: Drive restore help scopes the rollback offer to existing local data
+ok 48 - Drive restore help scopes the rollback offer to existing local data
+  ---
+  duration_ms: 7.449435
+  type: 'test'
+  ...
+# Subtest: Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+ok 49 - Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+  ---
+  duration_ms: 9.030995
+  type: 'test'
+  ...
+# Subtest: Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+ok 50 - Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+  ---
+  duration_ms: 4.7585
+  type: 'test'
+  ...
+# Subtest: Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+ok 51 - Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+  ---
+  duration_ms: 12.314262
+  type: 'test'
+  ...
+# Subtest: Actual Drive restore callback still saves a valid independent two-unit price once
+ok 52 - Actual Drive restore callback still saves a valid independent two-unit price once
+  ---
+  duration_ms: 3.028392
+  type: 'test'
+  ...
+# Subtest: confirmed reset clears every API field and the update draft flag
+ok 53 - confirmed reset clears every API field and the update draft flag
+  ---
+  duration_ms: 8.394918
+  type: 'test'
+  ...
+# Subtest: reset cancellation and failed deletion preserve the draft and canonical model
+ok 54 - reset cancellation and failed deletion preserve the draft and canonical model
+  ---
+  duration_ms: 7.211024
+  type: 'test'
+  ...
+# Subtest: successful deletion still clears the form if quote-cache cleanup fails
+ok 55 - successful deletion still clears the form if quote-cache cleanup fails
+  ---
+  duration_ms: 3.70565
+  type: 'test'
+  ...
+# Subtest: file accepted settings follow committed model and are masked
+ok 56 - file accepted settings follow committed model and are masked
+  ---
+  duration_ms: 8.693688
+  type: 'test'
+  ...
+# Subtest: file missing configuration preserves the draft
+ok 57 - file missing configuration preserves the draft
+  ---
+  duration_ms: 3.079797
+  type: 'test'
+  ...
+# Subtest: file declined settings preserve the draft
+ok 58 - file declined settings preserve the draft
+  ---
+  duration_ms: 2.434196
+  type: 'test'
+  ...
+# Subtest: file failed commit preserves the draft and previous settings
+ok 59 - file failed commit preserves the draft and previous settings
+  ---
+  duration_ms: 2.734269
+  type: 'test'
+  ...
+# Subtest: file failed post-commit preferences keep the draft while retaining the committed model
+ok 60 - file failed post-commit preferences keep the draft while retaining the committed model
+  ---
+  duration_ms: 2.466373
+  type: 'test'
+  ...
+# Subtest: drive accepted settings follow committed model and are masked
+ok 61 - drive accepted settings follow committed model and are masked
+  ---
+  duration_ms: 2.664055
+  type: 'test'
+  ...
+# Subtest: drive missing configuration preserves the draft
+ok 62 - drive missing configuration preserves the draft
+  ---
+  duration_ms: 2.186111
+  type: 'test'
+  ...
+# Subtest: drive declined settings preserve the draft
+ok 63 - drive declined settings preserve the draft
+  ---
+  duration_ms: 1.942612
+  type: 'test'
+  ...
+# Subtest: drive failed commit preserves the draft and previous settings
+ok 64 - drive failed commit preserves the draft and previous settings
+  ---
+  duration_ms: 2.661822
+  type: 'test'
+  ...
+# Subtest: drive failed post-commit preferences keep the draft while retaining the committed model
+ok 65 - drive failed post-commit preferences keep the draft while retaining the committed model
+  ---
+  duration_ms: 2.842127
+  type: 'test'
+  ...
+# Subtest: file vault adoption failure preserves a visible draft after portfolio commit
+ok 66 - file vault adoption failure preserves a visible draft after portfolio commit
+  ---
+  duration_ms: 3.306351
+  type: 'test'
+  ...
+# Subtest: Drive backend marks only a confirmed portfolio commit before preference failure
+ok 67 - Drive backend marks only a confirmed portfolio commit before preference failure
+  ---
+  duration_ms: 2.858541
+  type: 'test'
+  ...
+# Subtest: Drive backend does not mark a rejected storage operation as committed
+ok 68 - Drive backend does not mark a rejected storage operation as committed
+  ---
+  duration_ms: 2.808337
+  type: 'test'
+  ...
+# Subtest: Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB
+ok 69 - Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB
+  ---
+  duration_ms: 3.254785
+  type: 'test'
+  ...
+# Subtest: Drive recovery rejection never carries a confirmed-commit marker
+ok 70 - Drive recovery rejection never carries a confirmed-commit marker
+  ---
+  duration_ms: 3.015603
+  type: 'test'
+  ...
+# Subtest: Drive backend toast confirms only portfolio data before password adoption
+ok 71 - Drive backend toast confirms only portfolio data before password adoption
+  ---
+  duration_ms: 3.991561
+  type: 'test'
+  ...
+1..71
+# tests 71
+# suites 0
+# pass 71
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2211.116366

@@ -1,0 +1,50 @@
+{
+  "scope": "Drive restore backup-creation status",
+  "parent": "883c4eb0e8137040a9f6bfd2e193bc5833aac0c2",
+  "observedNative": {
+    "run": 43564350387,
+    "attempt": 1,
+    "case": "restore-valid",
+    "image": "restore-valid.png",
+    "finding": "Fresh profile has no rollback download, but #backupStatus shows new download timestamp. Native data/Drive status assertions passed; visual finding prevents unconditional C completion."
+  },
+  "changes": [
+    "backupDone accepts created flag; restore uses created:false to reset existing counter without creating timestamp",
+    "actual backup/download paths retain created:true behavior; real rollback offer before replacing meaningful data retains its timestamp",
+    "static Drive rollback hint explicitly conditional on existing local data"
+  ],
+  "tests": {
+    "new": 6,
+    "originalFail": 3,
+    "originalPass": 3,
+    "targetedPass": 6,
+    "affectedPass": 71,
+    "affectedFail": 0,
+    "skip": 0,
+    "runtime": "Node24.22.1",
+    "syntax": "src/app.js PASS",
+    "oracle": "fixed before timestamp2026-01-02 and current2026-11-14; freshrestore no timestamp/0offers/1save/rev2->3/123.45cash; nonemptyprofile1offer preserves actual creationtime; failure revision2/counter7/no new stamp"
+  },
+  "originalReport": {
+    "file": "restore-timestamp-original.tap",
+    "format": "Node spec reporter",
+    "sha256": "abe399808cc4f6865976d99a57402b44823f63c616b9a0a8573d3b8f084c5c4e"
+  },
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "impact": {
+    "A": "No quote/FX/market/refresh mutation; existing native14/17case proofs source-bound883c4eb0",
+    "B": "No booking or save/CAS logic change; nativeB4/4source-bound883c4eb0",
+    "C": "Restore completion/headerbackup status changed; nativeC4/4mechanical proofs remain old source only, new status fix NOT natively qualified"
+  },
+  "unchanged": [
+    "financial model",
+    "IDB/CAS/save",
+    "Journal",
+    "UNKNOWN-FX",
+    "crypto",
+    "SW",
+    "styles",
+    "workflows"
+  ],
+  "limits": "VM actual source callback and status function with explicit save/DOM/storage adapters; no new native/CI/realOAuth/password/device/production claim"
+}

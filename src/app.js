@@ -118,7 +118,7 @@ const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstig
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
-function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
+function backupDone({created=true}={}){try{if(created)localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
 async function save(){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
  saving=true;syncPortfolioState();
@@ -2588,7 +2588,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         try{await save()}catch(error){model=previous;throw error}
         restoreCommitted=true;
         if(accepted)applyImportedDriveConfiguration(accepted);
-        backupDone();
+        backupDone({created:false});
         if(accepted)syncApiSettingsForm();
         notify('Portfoliodaten aus Google Drive übernommen.');
         return true;
