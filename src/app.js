@@ -97,7 +97,7 @@ const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 document.getElementById('appStartupText').textContent='Lokale Daten werden vorbereitet …';
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
-let headerStatus=null,lastStorageError='';
+let headerStatus=null,lastStorageError='',lastDisplayError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='',qualityReviewOpen=false,qualityReviewOrigin='positions',qualityReviewLimit=50;
@@ -121,22 +121,26 @@ function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-u
 function backupDone({created=true}={}){try{if(created)localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
 async function save(){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
- saving=true;syncPortfolioState();
+ let committed=false;
+ const displayFailure=error=>{lastDisplayError='Daten gespeichert. Anzeige konnte nicht vollständig aktualisiert werden: '+String(error?.message||error)+'. Änderung nicht erneut ausführen.';try{notify(lastDisplayError,true);}catch{}};
+ saving=true;
  try{
+  syncPortfolioState();
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
   await portfolioStore.save(model);
-  lastStorageError='';
+  committed=true;lastStorageError='';lastDisplayError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
  }catch(error){
+  if(committed){displayFailure(error);return;}
   if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;
   lastStorageError=error?.name==='QuotaExceededError'?'Browserspeicher voll. Letzte Änderung nicht gespeichert.':String(error?.message||error);
   if(!loadFailure){try{model=await portfolioStore.reload();}catch(recoveryError){loadFailure=recoveryError;}}
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();if(page==='bookings'&&!loadFailure)renderBookingManagement();}
+ }finally{saving=false;try{syncPortfolioState();if(page==='history')renderReferences();if(page==='bookings'&&!loadFailure)renderBookingManagement();}catch(error){if(committed)displayFailure(error);else throw error;}}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -149,11 +153,11 @@ function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  document.body.classList.toggle('portfolio-unavailable',unavailable);
  document.body.classList.toggle('portfolio-conflict',conflict);
- const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Portfolio lokal gespeichert';
+ const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':lastDisplayError?'Daten gespeichert · Anzeige prüfen':'Portfolio lokal gespeichert';
  // The existing status is visible only while saving or when action is needed.
- $('sidebarPortfolioStatus').hidden=!(unavailable||conflict||saving||lastStorageError);
+ $('sidebarPortfolioStatus').hidden=!(unavailable||conflict||saving||lastStorageError||lastDisplayError);
  $('localPortfolioStatus').textContent=status;
- $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Lokal gespeichert';
+ $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':lastDisplayError?'Daten gespeichert · Anzeige prüfen':'Lokal gespeichert';
  headerStatus?.refresh();
  $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
@@ -2791,7 +2795,7 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
 initNav();initEvents();installCredentialVisibility();
 headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
- readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,indexedDB:portfolioStore.isIndexedDB}),
+ readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,displayError:lastDisplayError,indexedDB:portfolioStore.isIndexedDB}),
  onStorageHelp:()=>{if(!loadFailure){go('more');$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
  onDriveSettings:()=>{go('more');const panel=$('googleDriveBackupSetup');for(let parent=panel;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;panel.scrollIntoView({block:'start'});panel.querySelector('summary').focus();}
 });
