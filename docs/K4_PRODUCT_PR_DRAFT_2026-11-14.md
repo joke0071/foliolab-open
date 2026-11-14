@@ -1,37 +1,38 @@
-# Vorbereiteter Produkt-PR – noch nicht eröffnet
+# K4 Produkt-PR337 – offen für Review, Pflichtchecks abgeschlossen
 
-**Titel:** Restore von Altbackups exakt erhalten und Übernahmefehler korrekt melden
+Datei- und Google-Drive-Restore weisen strukturierte oder boolesche Positionsmengen und Wechselkurse vor der Übernahme ab. Gültige Altbackups behalten exakte Dezimalpreise und lokalisierte Wechselkurse: 2 × 123.450000000000000005 EUR bleiben exakt 246.90000000000000001 EUR; 2 × 100 USD bei FX 0,9 ergeben 180 EUR. UNKNOWN erzeugt keine erfundene EUR-Summe. Bestehende Anzeige-/Exakt-Abweichungen bleiben prüfbar und unbewertet.
 
-**Base:** main / 57ba5fd04b3fc870be3b085c1994c79ff50297d7  
-**Vorgesehener Head:** dcdb094ac44e7d8ca597398d886a121c9bab23e5  
-**Tree:** acd2a876c84055021c22263ac0f8aabdc5a6b4c2  
-**Produktbranch:** nicht angelegt. QA-Runner a77486eb… ist kein Bestandteil dieses Produktvergleichs.
+Gewinnt ein anderer Tab während des Restore, bleiben dessen Daten gespeichert und sichtbar. Nach bestätigter Portfolioübernahme beschreiben spätere Passwort-/Einstellungs-/Anzeigefehler die erfolgte Übernahme und warnen gegen erneuten Vollimport.
 
-## Beschreibung
+**Geprüfter Produkt-Head:** `dcdb094ac44e7d8ca597398d886a121c9bab23e5`, Tree `acd2a876c84055021c22263ac0f8aabdc5a6b4c2`. Base `57ba5fd04b3fc870be3b085c1994c79ff50297d7`, zwei Commits voraus/0 zurück, neun geänderte Dateien. Der getrennte QA-Runner gehört nicht zum Produktdiff.
 
-Datei- und Google-Drive-Restore weisen strukturierte oder boolesche Positionsmengen und Wechselkurse vor der Übernahme ab. Gültige Altbackups behalten ihre exakten Dezimalpreise und lokalisierten Wechselkurse: Zwei Anteile zu123.450000000000000005EUR ergeben weiterhin exakt246.90000000000000001EUR; 2×100USD bei Komma-FX0,9 ergeben180EUR. Fehlendes FX bleibt UNKNOWN und erzeugt keine erfundene EUR-Bewertung. Bestehende Widersprüche zwischen numerischer Anzeige und Exaktwert bleiben prüfbar.
+### Nachweise
 
-Gewinnt während der Wiederherstellung ein anderer Tab, bleiben dessen Daten gespeichert und sichtbar. Ist das Portfolio bereits übernommen, beschreiben spätere Passwort-/Einstellungs-/Anzeigefehler die erfolgte Übernahme und warnen vor einem erneuten Vollimport.
+- Lokales Review: 125/125 gezielte Tests, 0 Fehler/Skips, Syntax aller Produkt-/Worker-JS-Dateien PASS. Enthalten sind v1–v5-Typgrenzen und gültige Nachbarn, Präzisions-/Komma-/Exponentpreise, UNKNOWN, exakte Mengen, Konflikte, Nachbereitungsfehler und Speicherung/Wiederöffnung. Keine vollständige CI aus dieser Teilmenge behauptet.
+- [Neuer nativer Lauf 43603315041, Versuch 1](https://github.com/joke0071/foliolab-open/actions/runs/43603315041), Job 132472521327: **8/8 PASS auf exakt diesem Produkt-Head**, kein Korrekturlauf. Vier identische Datei-/Drive-Paare: exakter v2-Preis ohne priceExact; Komma-FX; widersprüchlicher Legacy-FX (Anzeige 0.9/Exakt 0.8 bleiben erhalten, EUR-null); UNKNOWN mit Menge 17.000000000000000005 und Preis 123.45 USD.
+- Reale App-Dateieingabe und Drive-Button, reale Kryptografie und kanonische IndexedDB. Je Fall Revision8 und unveränderter gesamter Record nach Wiederöffnung im selben Kontext; je Paar gleiche Eingangsbytes, raw und Einstellungen. Sichtbarer ungespeicherter Einstellungsentwurf erhalten. Chromium156.0.8078.4, Playwright1.64.1, Node22.23.4 auf Ubuntu/headless. OAuth/HTTP simuliert, SW blockiert.
+- Original-ZIP Größe/SHA256/CRC geprüft. Originalarchiv 3139259 Bytes/SHA256 `8ff905a648f39604a122054bfc82c24a73857e474048b83d49440c4c0098baf7`, Version0 gepinnt bytegleich rückgelesen; 212 Manifestdateien restauriert und hashgeprüft. [Ergebnis und Sollwerte](https://github.com/joke0071/foliolab-open/blob/7050ceb7eb3f7bbc1ad70bd7f8aa749200099bef/docs/release-evidence/k4-native8-2026-11-14.json).
+- Vorherige 14 native PASS aus Run43588219909 bleiben ausschließlich Produkt5db3803509cfd0824dad5dd12532a1168c161e32 zugeordnet (valid/UNKNOWN/Typablehnung/CAS/Vault-/Meldungsfehler). Sie werden nicht auf diesen Head umetikettiert.
 
-## Geprüfte Fälle
+### Kompatibilität und Grenzen
 
-- Lokal125/125 gezielte Node-Tests,0Fehler/0Skips; Syntax aller Produkt-/Worker-JS-Dateien bestanden. Darunter Typablehnung und gültige Nachbarn v1–v5, alte Preisformen, exakte Mengen, UNKNOWN, Konflikt, Passwort-/Einstellungs-/Renderfehler, Speicher/Wiederöffnung, Verschlüsselung und Cache-Assetabdeckung. Keine vollständige CI behauptet.
-- Zwei zuvor reproduzierte Restbefunde korrigiert: Preisrundung ohne priceExact und NaN/Abweisung bei Komma-FX. Jeweils reale registrierte App-Listener/Drive-Buttons und Produktionsstorage mit simuliertem Transport/DOM/IDB im lokalen Vertragstest. Gültiger Widerspruchsnachbar bleibt unbewertet.
-- Bestehender nativer Chromiumlauf43588219909/1:14/14 in sieben Datei-/Drive-Paaren, gebunden an den vorherigen Produktstand5db3803509cfd0824dad5dd12532a1168c161e32. Echte App/Kryptografie/IDB, CAS-Tabs und Wiederöffnung; simuliertes OAuth/HTTP, SW blockiert. Kein neuerHead-Nachweis.
-- **Offen vor Eröffnung:** vorbereitete native Nachprüfung auf exakt dcdb094…: precise-price, localized-fx, localized-fx-discrepancy und unknown je Datei/Drive; acht Fälle mit exakten gespeicherten Sollwerten und identischen Paarinputs. Noch nicht ausgeführt.
+Unterstützte Portfolio-/Verschlüsselungsformate bleiben erhalten; v5 benötigt gültige geschützte Metadaten. Datei unterstützt zusätzlich direktes unverschlüsseltes Portfolio-JSON, Drive weiterhin passwortverschlüsselte v2-Pakete. Unverschlüsselte vollständige Konfigurationspakete bleiben verboten. Keine Migration oder Änderung von Portfolio-/Installationsidentität.
 
-## Kompatibilität und Grenzen
+Exakte Werte folgen dem bestehenden 18-Nachkommastellenvertrag; bereits in numerischen JSON-Werten verlorene Stellen werden nicht erfunden. Numerische Legacy-Anzeige-/Exakt-Abweichungen werden nicht automatisch repariert. Typ-/Dezimalablehnung erhält den alten Record; CAS-Verlust erhält den neueren Gewinner. Native Korrupt-Recovery, reale Windows-/Android-Profile, echtes OAuth, Prozessabbruch und Eviction bleiben eigenen Nachweisen zugeordnet. K4 insgesamt PARTIAL; K3/FLH04 getrennt.
 
-Unterstützte Portfolioformate und bestehende Verschlüsselung bleiben erhalten; v5 setzt weiterhin gültige geschützte Metadaten voraus. Keine Migration, keine Änderung der Installations-/Portfolioidentität, keine neue Syncimplementierung. Datei unterstützt auch direktes unverschlüsseltes Portfolio-JSON; Drive-Restore weiterhin passwortverschlüsselte v2-Pakete. Unverschlüsselte vollständige Konfigurationspakete werden nicht freigegeben.
+CACHE **v313→v314** ist enthalten, weil geänderte ausgelieferte Module eine neue PWA-Cachekennung brauchen. Assetliste sowie Workerinstallations-/Fetchlogik bleiben unverändert.
 
-Exakte Werte folgen dem bestehenden18-Nachkommastellenvertrag. Bereits als JSON-Number gerundete Präzision wird nicht erfunden. Vorhandene numeric/exact-Abweichungen werden nicht automatisch korrigiert. Bei UNKNOWN gibt es keine vollständige EUR-Summe. Fehlerablehnung erhält den alten Record; Konflikte erhalten den neueren Gewinner. Die nativen Paare sind keine echten OAuth-/Windows-/Android-/OS-Abbruch-/Eviction-Nachweise.
+### Reguläre PR-Checks und Reviewstatus
 
-CACHE v313→v314 ist enthalten, da geänderte ausgelieferte Module sonst im alten PWA-Cache bleiben und der reguläre Revisionscheck ablehnt. Nur die Cachekennung ändert sich; Assetliste und Workerlogik bleiben erhalten.
+**Alle regulären PR-Checks sind abgeschlossen und erfolgreich, jeweils Versuch 1 am unveränderten Head dcdb094…:**
 
-## Offene reguläre Gates
+- [Integration 43603620780](https://github.com/joke0071/foliolab-open/actions/runs/43603620780): SUCCESS; plan=INTEGRATION; 1480/1480 Node-Tests, 0 Fehler/Skips, Syntax PASS; Chromium und alle drei Firefox/WebKit-Crossjobs SUCCESS.
+- [Wallet scan checks 43603620791](https://github.com/joke0071/foliolab-open/actions/runs/43603620791): SUCCESS; ebenfalls 1480/1480 Node-Tests, 0 Fehler/Skips und Syntax PASS.
+- Geprüfter synthetischer Merge `6702d40d63d862026b1779d1b2b93ff24014b0de`: Tree exakt `acd2a876c84055021c22263ac0f8aabdc5a6b4c2`, identisch zum Produkt-Head. Base/Main unverändert.
+- PWA-v314-Berichte in Chromium, Firefox und WebKit PASS: reale Workerwechsel, genaue Cache-Assetbytes, kanonische IndexedDB und Offline-Wiederöffnung unter synthetischem Warmcache. Keine reale Geräteabnahme daraus abgeleitet.
+- FAST, deploy und live-acceptance erwartungsgemäß SKIPPED. Informativer Walletaudit vom Dateidelta nicht ausgelöst. **0 Reruns, 0 Korrekturläufe, keine weiteren Produktänderungen.**
+- Alle sechs neuen Original-ZIPs und sechs exakten Plugin-Joblogs gesichert; GitHub-Größe/Digest/ZIP-CRC PASS. Privates CI-Archiv 211415299 Bytes/SHA256 `e16008f67ed59fbf51a8a098fa8683027ce75986624aaf850a4d369c73f32972`, Version0 gepinnt bytegleich rückgelesen; 200 Manifestdateien restauriert und hashgeprüft. Native Originale bleiben separat wie oben gesichert.
 
-Nach bestandener gezielter nativer Nachprüfung und frischem Base-/Kollisionsabgleich: PR gegen aktuellen Main öffnen und alle regulären INTEGRATION-Checks am tatsächlichen Head/Mergetree abwarten. Erforderliche Workflowausführung: plan, kompletter test-Job (Unit/Syntax/Chromium einschließlich PWA/Storage/Finanzen), cross-engine1–3 Firefox/WebKit, Wallet scan checks/tests. Der informative Wallet-Liveaudit passt nicht zum aktuellen Dateidelta und wird dafür nicht eigens ausgelöst. FAST ist keine Qualifikation für dieses Delta.
+PR bleibt ausdrücklich für Jochens Review offen. **Kein Merge, Auto-Merge oder Deployment autorisiert.** Keine zusätzliche Person oder unabhängige Freigabe wird hier als bereits erfolgt behauptet.
 
-Dieser Text ist ein reviewbarer Entwurf, keine Merge-/Releasefreigabe. Kein PR, Actionslauf, Merge oder Deployment wurde für ihn ausgelöst. Main/Live-Abnahme und Originalsicherung bleiben spätere getrennte Gates; K4 insgesamt PARTIAL, K3 und FLH04 getrennt.
-
-Review und Sollwertmatrix: docs/K4_REVIEW_2026-11-14.md. Reproduktions-/Korrekturbelege: docs/release-evidence/k4-review-2026-11-14/.
+[Ausführliches fachliches Review](https://github.com/joke0071/foliolab-open/blob/6410d003650987b254799ee8c6cb5616f043f905/docs/K4_REVIEW_2026-11-14.md) (dessen damals offenes Achtfallgate ist durch den oben verlinkten neuen Nachweis geschlossen).

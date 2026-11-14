@@ -1,0 +1,181 @@
+{
+  "pr": 337,
+  "url": "https://github.com/joke0071/foliolab-open/pull/337",
+  "state": "OPEN_FOR_JOCHEN_REVIEW",
+  "product": "dcdb094ac44e7d8ca597398d886a121c9bab23e5",
+  "tree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+  "base": "57ba5fd04b3fc870be3b085c1994c79ff50297d7",
+  "testedMerge": "6702d40d63d862026b1779d1b2b93ff24014b0de",
+  "testedMergeTree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+  "cache": "foliolab-open-v314",
+  "native": {
+    "run": 43603315041,
+    "attempt": 1,
+    "job": 132472521327,
+    "passed": 8,
+    "failed": 0,
+    "qaHead": "8da22a14a9c1b149dd77ce75700b6c9280642c76",
+    "originals": "docs/release-evidence/k4-native8-2026-11-14.json",
+    "scope": "Real application file input and Drive button; real cryptography and canonical IndexedDB; reopen in same browser context; OAuth/HTTP simulated; service worker blocked; not real Windows/Android/OAuth/process-abort/eviction"
+  },
+  "integration": {
+    "run": 43603620780,
+    "attempt": 1,
+    "status": "SUCCESS",
+    "unitTests": {
+      "passed": 1480,
+      "failed": 0,
+      "skipped": 0
+    },
+    "syntax": "PASS",
+    "jobs": [
+      {
+        "id": 132473430566,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 132473473526,
+        "name": "cross-engine (2)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 132473473530,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 132473473573,
+        "name": "cross-engine (3)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 132473473597,
+        "name": "cross-engine (1)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 132473475298,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 132479864175,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 132479864896,
+        "name": "live-acceptance",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "wallet": {
+    "run": 43603620791,
+    "attempt": 1,
+    "status": "SUCCESS",
+    "unitTests": {
+      "passed": 1480,
+      "failed": 0,
+      "skipped": 0
+    },
+    "syntax": "PASS",
+    "jobs": [
+      {
+        "id": 132473430580,
+        "name": "tests",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "pwa": {
+    "cache": "foliolab-open-v314",
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS",
+    "scope": "Real worker/cache/IDB with synthetic warm HTTP cache; no physical hardware claim"
+  },
+  "artifactOriginals": [
+    {
+      "id": 14116939216,
+      "name": "ci-stage-6702d40d63d862026b1779d1b2b93ff24014b0de",
+      "bytes": 548,
+      "sha256": "bcb579e6054f29a8bb6ba3ed3eeada90ba0aebdef45a58c01dcc3d7053ed2374",
+      "zipCRC": "PASS",
+      "members": 1
+    },
+    {
+      "id": 14117079928,
+      "name": "cross-engine-gates-6702d40d63d862026b1779d1b2b93ff24014b0de-2",
+      "bytes": 12594866,
+      "sha256": "ab7df5e103ae1f39a4f18f76c90a67036c49494ab83780623aa9706dd8b37d38",
+      "zipCRC": "PASS",
+      "members": 123
+    },
+    {
+      "id": 14117841730,
+      "name": "cross-engine-gates-6702d40d63d862026b1779d1b2b93ff24014b0de-1",
+      "bytes": 60071505,
+      "sha256": "5556006c337e5a97eceab2bb2445a41f011f19fde3e889da91834e43ae35e2d0",
+      "zipCRC": "PASS",
+      "members": 508
+    },
+    {
+      "id": 14117323560,
+      "name": "dialog-visual-reference",
+      "bytes": 934797,
+      "sha256": "a8f21bad65a3e58c97eaec94c6d2cc32c86347929b1d08accbcb969e44cf9189",
+      "zipCRC": "PASS",
+      "members": 20
+    },
+    {
+      "id": 14117238879,
+      "name": "release-gates-6702d40d63d862026b1779d1b2b93ff24014b0de",
+      "bytes": 66376229,
+      "sha256": "3ce4d8dcc8ab9134119818745f44bc60329879a72f46f87cbfcb1a52485d9a41",
+      "zipCRC": "PASS",
+      "members": 816
+    },
+    {
+      "id": 14118252495,
+      "name": "cross-engine-gates-6702d40d63d862026b1779d1b2b93ff24014b0de-3",
+      "bytes": 70272619,
+      "sha256": "fd5d5d1f5e33104bb5eba455e838a72ad89018c64acab957f4e030afa92e0c66",
+      "zipCRC": "PASS",
+      "members": 868
+    }
+  ],
+  "archive": {
+    "archive": "FolioLab_PR337_dcdb094a_CI_originals_V0.tar.gz",
+    "bytes": 211415299,
+    "sha256": "e16008f67ed59fbf51a8a098fa8683027ce75986624aaf850a4d369c73f32972",
+    "manifestFiles": 200,
+    "artifactZIPs": 6,
+    "pluginJobLogs": 6
+  },
+  "archivePinnedReadback": {
+    "pinnedVersion": 0,
+    "byteReadback": "PASS",
+    "restoredManifestFiles": 200,
+    "sha256": "e16008f67ed59fbf51a8a098fa8683027ce75986624aaf850a4d369c73f32972"
+  },
+  "correctionRuns": 0,
+  "reruns": 0,
+  "merge": false,
+  "autoMerge": false,
+  "deployment": false,
+  "informationalWalletAudit": "Not triggered by this file delta",
+  "owner": "sol-k4-eight-native-20261114",
+  "writerStatus": "STOPPED/HANDOVER_READY",
+  "remaining": "Jochen reviews the open PR. K4 overall PARTIAL; real Windows/Android/OAuth/process interruption/eviction retain their separate evidence requirements. K3 and FLH04 untouched."
+}
