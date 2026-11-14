@@ -1,6 +1,6 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-native-seven-77bcb76dd357-20261114. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
+STOPPED/HANDOVER_READY · work-native-seven-77bcb76dd357-20261114. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
 Übernahme046ffb64534f38aa8baae9563a4b189340c4df8a nach frischem Kollisions-/Ref-/Actionsabgleich, expectedSHA-geschützt/gepinnt rückgelesen.
 [Vollständiger Vorgänger](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md), STOPPED/HANDOVER_READY.
 Maßgeblich bleiben Effizienzplan, EFF03_WEEK_TARGET_2026-11-11.md und KONSOLIDIERTE_ROADMAP.md;41Scopes/15DONE unverändert.
@@ -37,14 +37,14 @@ Korrektur ZIP1822772Bytes/SHA2566e3ca22f72166e7128cb188f62401bc86504455b18be4697
 SeparatesArchivV0/8284160Bytes/SHA2561c725374d62235311c4dd5c1752d9513aee0c85d95edcdf2150c6dba8e2fc7c5; gepinntbytegleich/54EinträgePASS.
 UnveränderteOriginale inklJoblogs/Quellinputs/Reports/Bilder erhalten; privateLocators privat. HistorischeArchive nichtüberschrieben.
 
-## Aktiver serieller Folgeschnitt
+## Serielle Folgearbeit nach nativer Auswertung
 
 Aus tatsächlichem C-Screenshot und echtem restoreData-Handler reproduziert: backupDone() erneuert „für Download erstellt“ auch beim Restore in ein leeres Profil.
 Lokaler Fix am Parent883c4eb0: Restoreabschluss setzt nur bestehenden Änderungszähler zurück, erzeugt keinen Sicherungszeitpunkt; vorhandener tatsächlicher Export-/Rückfallsicherungszeitpunkt bleibt erhalten.
 Statischer Drivehinweis nennt die Voraussetzung vorhandener lokaler Daten.
-Neue6NodeGegenproben initial3FAIL/3PASS, gezieltfinal6/6PASS; betroffeneRegression läuft/Ergebnis als nächstes sichern.
-Kein weiterer nativer Lauf für diesen Folgeschnitt. Exakter neuerCommit/Originale/Impact auf vorherige native Belege werden als nächstes gesichert.
-Ein aktiverSchnitt; keinSitzungsende. WeitereRoadmaparbeit nur anhand neuerkonkreterEvidenz, keine wiederholteGesamtinventur.
+Neue6NodeGegenproben initial3FAIL/3PASS, gezieltfinal6/6PASS; betroffeneRegression71/71PASS. Quellstand8d0f68c109644e6906586521718537545d3fc9e1/Treeb93a91fb5e21dec5216523db851bd370c15f50b4.
+Kein weiterer nativer Lauf für diesen Folgeschnitt. Danach zweiter bestätigter Folgefehler lokal geschlossen; siehe unten.
+Die beiden bestätigten lokalen Folgefehler sind geschlossen. Keine offene eigene Produktmutation; genaue Nachweise und Abschlussgrund unten.
 
 ## Geschützte Stände und Grenzen
 
@@ -74,3 +74,36 @@ bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
 
 
 Die Toast-Einmalfreigabe43554653065/1 sowie vier frühere UI/Restore-Diagnosen bleiben verbraucht und getrennt eingefroren. RealeProfile/Versionen OPERATOR_INPUT_PENDING, nicht erneut fragen. Safari/TalkBack DEFERRED_USER. N-PROJ behält Kernmeilenstein. Beide neuen Triggerbranches unverändert erhalten.
+
+## Letzter gemeinsamer Produktstand und zweite Korrektur
+
+**8f9ed1ce0393d7a1b977d613551e50c8bbefd941**, Tree **1c1a6404012cb18f73be01b641da04b9376d63b0**, Parent **8d0f68c109644e6906586521718537545d3fc9e1**.
+[Gemeinsame Abschlussmatrix](release-evidence/seven-native-and-followup-summary-2026-11-14.json).
+[Timestamp-Korrektur](https://github.com/joke0071/foliolab-open/blob/8d0f68c109644e6906586521718537545d3fc9e1/docs/release-evidence/restore-backup-timestamp-local-2026-11-14.json).
+[Speichern/Anzeige-Korrektur](https://github.com/joke0071/foliolab-open/blob/8f9ed1ce0393d7a1b977d613551e50c8bbefd941/docs/release-evidence/save-postcommit-local-2026-11-14.json).
+
+Zweiter bestätigter Originalbefund: echter save()- und Drive-restoreData-Quellhandler inNodeVM; synthetischer Renderfehler nach gespeichertem123.45Bestand führte zuRevision3/gespeichertemneuemPortfolio, sichtbaremLeerstand und falschem „Änderung nicht gespeichert“.
+Jetzt ist ausschließlich nach aufgelöstem portfolioStore.save der Commit bestätigt; spätere Render-/Status-/Managementfehler erhalten Modell/Commit und werden getrennt als Anzeigeproblem gemeldet.
+Eigener lastDisplayError, korrekte Desktop-/Mobil-/Headerwarnung „Daten gespeichert · Anzeige prüfen“, keine Umdeutung zuSpeicherfehler; echtePräcommitfehler lehnen unverändertab.
+Original7Tests2PASS/5FAIL;final9gezieltePASS. Abschließend **305/305PASS in40ausgewählten lokalenNode-Dateien**,0FAIL/0SKIP/0CANCELLED,Node24.22.1,Syntaxapp/headerPASS.
+DOM-/Speicher-/CAS-Adapter ausdrücklichlokal; keine neue nativeIDB-/Browser-/FullCIabnahme.
+Shared save betrifft A/B/C: sämtliche ursprünglichen nativen Aussagen bleiben nur an883c4eb0 gebunden. LetzterProduktstand NICHTnativqualifiziert/NICHTeingefroren/NICHTintegriert.
+BeideFolgeschnittelinear;9Deltapfade/10Stageblobs vollständigremoteexaktrückgelesen, lokaleLaufzeiteingabenblobgenau. styles/SW/Workflows/Finanz-/IDBimplementierungunverändert.
+
+SeparatesFolgearchivV0/1413120Bytes/SHA256e09114d6552c74312af6a1d01e490ee2ee0d82030cdb2a3e34092d4f86ecd5dd,
+75Einträge nachgepinntemReadbackPASS;9DeltapfadeausdiesemReadbacktatsächlichrestauriert/0Gitblobfehler.
+LokaleFehleroriginale und finalverwendete40Testdateien samtFixtures erhalten; erstePostcommit-Testrekonstruktion ausdrücklichalsRekonstruktion markiert, nichtalsbytegenauesOriginalbehauptet.
+ReparierterFXTextvergleich lokalgegen10OriginalfehlertextePASS; KEINnativerWiederholungslauf/KEINReopenbeleg. ArchivierteHarnessreparatur NICHTanletztenProduktstandneugebunden undhatkeinenAusführungsref.
+
+## Konkreter Abschlussgrund und Wiederaufnahme
+
+Die aus neuen Prüfungen belegten intern schließbaren Produktreste (falscherSicherungszeitpunkt und falscheNachcommit-Speichergrenze) sind lokal umgesetzt, gezielt geprüft und gesichert.
+Nächster konkreter Qualifikationsschritt: letzteRevision8f9ed1ce0393d7a1b977d613551e50c8bbefd941 binden; dreiFX-Reopenlücken sowie beide neuen Status-/Nachcommitfälle mit unabhängigemIDBReadback qualifizieren. Dafür fehlt eine neue ausdrückliche Ausführungsentscheidung; ein zweiterKorrekturlauf ist nicht durch freieInitialplätze gedeckt.
+Kein Stopp allein wegen Runende/Budget/Anzahl. TatsächlichzweiLäufe genutzt, nichtvier; keineErsatztrigger.
+Die übrigen bereits konkret geprüften nächsten Roadmapaktionen aus der [Folgegate-Tabelle6f0cb487](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md) haben keine neuen Voraussetzungen erhalten:
+K1/K2-FIN/N-BROKER/N-AT/N-CASHLIEU/N-WALLET/N-FX benötigen benannteOriginal-/Ownership-/Bestands-/Fachbelege;
+K2-ETH tatsächlichenprivatenProvidercursor;K5/K6 echteProfile/Versionen/Geräteereignisse;FLH04/CR4/CR5 unabhängigesReview;
+UI-R4/UI-ALLOC01/P-CI-B getrennteIntegrations-/Workflow-/nativeGates;SekundärnavigationKonzeptabgleich;N-PROJKernmeilenstein.
+Keine erneuteGesamtinventur oder Ersatztests akzeptierter/reinexternoffenerFälle. Kein neuer zusätzlicher belegter lokalerRest in diesen geprüften Abläufen; nichtalle41Scopesfürfertigerklärt.
+FrischerAbschlussabgleich: ZentralstandnurunserWriter;Main/FLH04/PR332/157/161 undbeideTrigger unverändert;keinin_progressRun.
+KeineeigenenBrowser-/Node-/Serverprozesse/Hintergrundarbeit/Folgesitzung. OriginaleundgeschützteStändeerhalten. NeueÜbernahmezuerstfrischabgleichen.

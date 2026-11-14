@@ -1,5 +1,16 @@
 ## Fortschreibung · 12.11.2026 · v310 LIVE_ACCEPTED / V149
 
+## Native Gegenproben und lokale Folgebefunde · 14.11.2026
+
+[Exakte Quell-/Lauf-/Ergebnismatrix](release-evidence/seven-native-and-followup-summary-2026-11-14.json):
+43564045852/1 und43564350387/1 auf Produkt883c4eb0; beideWorkflowläufeFAILURE.
+LetzterLauf A14/17 (dreiHarness-Textvergleiche/Reopenoffen),B4/4begrenztPASS,C4/4mechanischeFällePASS mit zusätzlichem echten Sichtbefund.
+Anschließend falschen Restore-Sicherungszeitpunkt und falsche Speicherungsmeldung nach bestätigtemCommit lokal linear behoben bis8f9ed1ce0393d7a1b977d613551e50c8bbefd941;
+305/305ausgewählteNodeTestsPASS/40Dateien. LetzterProduktstandNICHTnativqualifiziert/integriert/eingefroren.
+Originale allerLäufe separat gepinnt undbytegleichgesichert; Nachweisgrenzen nichtzusammenziehen.
+41Scopes/15DONE,K4PARTIAL,FLH04NOTDONE unverändert. KeineProduktPR/Release/SWBump/LIVE_ACCEPTED.
+
+
 ## Lokaler Fortschritt · 14.11.2026
 
 Toast-Ausführung43554653065/1: fünf native IDB-Fälle begrenzt PASS, Produkt04960e74/Prüfquelled70d81e1 separat eingefroren; simulierte OAuth-/Drive-/Decrypt-/Passwortteile sind keine Geräte-/Kryptoabnahme.

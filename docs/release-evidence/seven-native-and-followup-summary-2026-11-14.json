@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-14",
+  "owner": "work-native-seven-77bcb76dd357-20261114",
+  "nativeProduct": "883c4eb0e8137040a9f6bfd2e193bc5833aac0c2",
+  "nativeProductTree": "9ad46b9ee8b6039f49ddf23b2655227b493692f4",
+  "nativeExecutions": [
+    {
+      "run": 43564045852,
+      "attempt": 1,
+      "source": "76b198e6a26fdb56b6d6e05bd5fb19e4101afcde",
+      "execution": "dbaac9860d6d4d35b471c15166e4e5cb97e4cb9f",
+      "result": "FAILURE",
+      "groups": {
+        "A": "7/17",
+        "B": "4/4",
+        "C": "0/4"
+      },
+      "cause": "harness headline oracle and decrypted fixture wrapper",
+      "preserved": true
+    },
+    {
+      "run": 43564350387,
+      "attempt": 1,
+      "source": "dcdd67866e824a81cfa3738aaa86dd93dfa27e84",
+      "execution": "a5a7d5f8d7375546b2182048d1f8347a4bce7a06",
+      "result": "FAILURE",
+      "groups": {
+        "A": "14/17;3cause-regex failures;reopen NOT_REACHED",
+        "B": "4/4 boundedPASS",
+        "C": "4/4mechanicalPASS;additional visible backup-timestamp defect"
+      },
+      "preserved": true
+    }
+  ],
+  "budget": {
+    "newRuns": 2,
+    "initialUsed": 1,
+    "initialAuthorized": 3,
+    "correctionUsed": 1,
+    "correctionAuthorized": 1,
+    "unspentInitialSlotsAreNotRetryAuthorization": true
+  },
+  "followups": [
+    {
+      "commit": "8d0f68c109644e6906586521718537545d3fc9e1",
+      "tree": "b93a91fb5e21dec5216523db851bd370c15f50b4",
+      "parent": "883c4eb0e8137040a9f6bfd2e193bc5833aac0c2",
+      "result": "Local restore backup-timestamp correction;71/71affectedNodePASS;notnative"
+    },
+    {
+      "commit": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+      "tree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+      "parent": "8d0f68c109644e6906586521718537545d3fc9e1",
+      "result": "Local committed-save/display separation;305/305selectedNodePASSin40files;notnative"
+    }
+  ],
+  "lastProduct": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "lastProductTree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN_NOT_INTEGRATED",
+  "finalDelta": {
+    "paths": 9,
+    "runtime": [
+      "src/app.js",
+      "src/header-status.js",
+      "index.html"
+    ],
+    "deleted": 0,
+    "stylesSwWorkflowsUnchanged": true
+  },
+  "impact": "Shared save and header/restore status changed after native883c4eb0proofs; no native pass transfers to final product. Actual persisted/reopened guarantees remain pinned to executed old source/case.",
+  "localOracleRepair": "Case-insensitive FX cause matcher checked against all10preservedinvalid-response original texts; no native reexecution or newpage readback; not rebound to final product.",
+  "preservation": [
+    {
+      "scope": "initialNative",
+      "bytes": 9523200,
+      "sha256": "a6c6ae29f3f20b3063f32a1e13e9dce1c65ac44b51034df2e912992873b99888",
+      "version": 0,
+      "entries": 62,
+      "pinnedExactReadback": true
+    },
+    {
+      "scope": "correctiveNative",
+      "bytes": 8284160,
+      "sha256": "1c725374d62235311c4dd5c1752d9513aee0c85d95edcdf2150c6dba8e2fc7c5",
+      "version": 0,
+      "entries": 54,
+      "pinnedExactReadback": true
+    },
+    {
+      "scope": "localFollowups",
+      "bytes": 1413120,
+      "sha256": "e09114d6552c74312af6a1d01e490ee2ee0d82030cdb2a3e34092d4f86ecd5dd",
+      "version": 0,
+      "entries": 75,
+      "pinnedExactReadback": true,
+      "actualRestoredDeltaPaths": 9,
+      "gitBlobErrors": 0
+    }
+  ],
+  "limitations": [
+    "LinuxChromiumonly;OAuth/Drive/decrypt/passwordadoptionSIMULATED",
+    "No final product native/fullCI/Windows/Edge/Android/PWA/realcrypto/release acceptance",
+    "No productPR/merge/deploy/release/SWbump/LIVE_ACCEPTED",
+    "FLH04NOTDONE/K4PARTIAL/CR4CR5externalreviewpending;41Scopes15DONE unchanged"
+  ],
+  "next": "New explicit native corrective/requalification decision needed for three missing FX reopen cases and the two local followups on final product; otherwise resume only on concrete new original/device/review evidence from existing gate table."
+}
