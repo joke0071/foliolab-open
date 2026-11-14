@@ -82,3 +82,5 @@ Nach neuerFreigabe Owner/Ref/Actions/Produktblobs/Sicherungswegfrischprüfen; be
 FrischerKollisionsabgleich am1651fda1: Ownerabgegeben, zentraleRefunverändert,kein in_progressRun. Produkt8f9ed1ce/Quelle6a45eea7/Ausführung13ad780b samtTrees/Parents exakt. ZielrefNOT_FOUND/zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
 Historische Aussagen „neueFreigabefehlt“ sind ausschließlich für diesen einen exakten Lauf durch das aktuelle Ja abgelöst.
 Nach letzterProduktblob-/Workflow-/Sicherungswegprüfung genaueinmalTriggeranlegen, terminalauswerten/Originalesichern/relevanteBildersichten. BeiUnklarheitzuerstRef/Actionsrücklesen. KeinGitHubRerun/Ersatztrigger.
+
+Run43568173088/1 gestartet, Zielrefexakt13ad780b rückgelesen. AktuellesJa verbraucht. KeineweitereAnlage/Rerun; genaueinJobbeobachtenbisTerminal/Originalesichern. AnderealteTriggerunverändert.
