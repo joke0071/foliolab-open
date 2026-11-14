@@ -35,13 +35,28 @@ Restoreprodukt775bbddd/Test4ba5cd84 mit43514930241/1 bleibt separat eingefroren.
 FrüherevierDiagnosen verbraucht,einzige neueFreigabe43554653065/1 verbraucht.
 KeinRerun/neuerTrigger/FullCI. KeinProdukt-oderHardware-PASS aus kombiniertenEinzelbelegen.
 
-## Aktiver nächster serieller Schritt
+## Serielle lokale Produktarbeit
 
-A/#266: DreiHilfen-v304 bereitsDONE bestätigt; nicht erneut bauen.
-B/#165/#257: Originalaufträge zugänglich; gezielten bestehenden Verwaltungs-/Archivablauf prüfen,
-nur eine reproduzierte lokaleKernlücke öffnen. Bestehende31Toastassertions/Nachweise nicht wiederholen.
-Noch kein weitererProduktpatch. Nach lokalemFachabschluss nächste unabhängigeRoadmaparbeit fortführen.
-DieserZwischenstand ist keinSitzungsende.
+1. K2-KURSE/#266: 4a138d2e7fe75876869d000c8eac01911a094374/Tree1931f1163b6e49713d191deadcca181ae4f1d2b9,Parent04960e74.
+Alpha liefert boolesche/Array-Schlusskurse nicht mehr als bestätigte Preise.
+4neueGegenproben initial3FAIL/1PASS;final42/42PASS(4neu+38betroffen),SyntaxPASS.
+TatsächlicherrefreshSources-Handler mitDOM/save-Adaptern undechtemAlphaClient:
+fehlerhafteAntwort0save/0snapshot/Modellbytegleich/Cacheerhalten;gültig123.45einmalübernommen.
+[ExakterBeleg](https://github.com/joke0071/foliolab-open/blob/4a138d2e7fe75876869d000c8eac01911a094374/docs/release-evidence/k2-alpha-integrity-local-2026-11-14.json).
+2. K3/#165/#257undK2-FIN/#255: 312a199cf3d2b6359da0547a478a19ad979fdaed/Tree92991988b2f5f851e4e5ae816fe79f6180614372,Parent4a138d2e7fe75876869d000c8eac01911a094374.
+CodierteJSON-/Unicode-Buchungs-/Journal-/Postingreferenzen verhindernabhängigeÄnderungen.
+Initial2FAIL/1PASS;final90/90PASS(6neu+84betroffen),SyntaxPASS.
+EchterBooking-Row-Clicklistener/openBookingChange inNodeVMmitDOM/Dialog/CAS/save-Adaptern:
+gesperrt0save/exaktunverändert;zulässige120→100-Rücknahme1CurrentCheck/1save;Undo/Archiv/Import/Reimport/Restoreerhalten.
+[ExakterBeleg](https://github.com/joke0071/foliolab-open/blob/312a199cf3d2b6359da0547a478a19ad979fdaed/docs/release-evidence/k3-booking-encoded-local-2026-11-14.json).
+Alle5/6Deltadateien derbeidenSchnitte vollständigbytegleichrückgelesen; keineRef/PR/Action dafürangelegt.
+Beide LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN,keineProduktintegration.
+Ein seriellerEntwicklungsstand;keineVariantenstapel. NeueProduktarbeit immer vomtatsächlichenNachfolger.
+
+Aktuell im selben Rücknahmeablauf reproduziert:feeEUR/taxEURnullüberlebenBackup/Restore,
+werden aberdurchNumber(null)als0behandelt;ökonomischeRücknahmeistfälschlichready.
+NächsterSchritt:bekannteNullkosten vonunbekanntenKosten unterscheiden undNotizvorschau ehrlichanzeigen.
+Keinweiterernativer/CI-Lauf. DieserZwischenstand istkeinSitzungsende.
 
 ## Geschützte Stände und Grenzen
 
