@@ -1,0 +1,54 @@
+name: K4 isolated native restore
+on:
+  push:
+    branches: [qa/k4-native-5db38035-20261114]
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 5db3803509cfd0824dad5dd12532a1168c161e32
+          path: k4
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare pinned browser and check candidate
+        run: |
+          set -euo pipefail
+          test "$(git -C k4 rev-parse HEAD^{tree})" = 6a2a1a90b8cca3ae98ab302b28306d3ba226b38a
+          mkdir -p native/evidence/cases
+          cd native
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps chromium --only-shell
+      - name: Compare file and Drive restore in Chromium
+        run: |
+          set -euo pipefail
+          node native/runner.cjs 2>&1 | tee native/evidence/run.log
+      - name: Seal complete evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p native/evidence sealed
+          cp native/runner.cjs native/evidence/
+          git -C k4 rev-parse HEAD HEAD^{tree} > native/evidence/source.txt
+          cd native/evidence
+          find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          cd ../..
+          openssl rand -hex 48 > "$RUNNER_TEMP/archive-key"
+          openssl pkeyutl -encrypt -pubin -inkey native/public.pem -pkeyopt rsa_padding_mode:oaep -in "$RUNNER_TEMP/archive-key" -out sealed/key.bin
+          tar czf - -C native evidence | openssl enc -aes-256-cbc -salt -pbkdf2 -pass file:"$RUNNER_TEMP/archive-key" -out sealed/evidence.enc
+          rm "$RUNNER_TEMP/archive-key"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k4-native-encrypted
+          path: sealed/
+          if-no-files-found: error
