@@ -1,6 +1,7 @@
 # Aktueller HND01-Checkpoint
 
-STOPPED/HANDOVER_READY · work-latest-native-77bcb76dd357-20261114. Ein Writer; keine Agenten/Automation/Folgesitzung.
+ACTIVE · work-display-boundary-77bcb76dd357-20261114.
+Vorgänger work-latest-native-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neue ausdrückliche Nutzerfreigabe „Ja“ autorisiert exakt vorbereitete Ausführung13ad780b, einen create-Lauf/Versuch1/einChromiumjob/max25min/360s+15s; keinen weiteren Korrekturlauf. Ein Writer; keine Agenten/Automation/Folgesitzung.
 Übernahme6a8f27c4a5f90ee621a636a13899bd99b448ad10 nach frischem Kollisionsabgleich amc64430f9764b8b321af0327e42fa06e82cf67420,expectedSHA/gepinntesReadback.
 [Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/c64430f9764b8b321af0327e42fa06e82cf67420/docs/WORK_RESTPAKETE_CHECKPOINT.md).
 Aktuelles ausdrückliches Nutzer-Ja autorisierte exakt einen vorbereiteten Lauf; diese Freigabe ist jetzt verbraucht.
@@ -75,3 +76,9 @@ Keine neuenOriginal-/Geräte-/Revieweingänge für andere bereitsgeprüfteRoadma
 KeineweiterebelegteProduktlücke aus diesemLauf. KeinStoppalleinwegenRunende; lokaleFehlerbehandlungundVorbereitungvollständig.
 KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Folgesitzung.
 Nach neuerFreigabe Owner/Ref/Actions/Produktblobs/Sicherungswegfrischprüfen; beiunklaremTriggerausgangzuerstzurücklesen.
+
+## Neue aktive Einmalfreigabe für den engen C-Korrekturkandidaten
+
+FrischerKollisionsabgleich am1651fda1: Ownerabgegeben, zentraleRefunverändert,kein in_progressRun. Produkt8f9ed1ce/Quelle6a45eea7/Ausführung13ad780b samtTrees/Parents exakt. ZielrefNOT_FOUND/zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
+Historische Aussagen „neueFreigabefehlt“ sind ausschließlich für diesen einen exakten Lauf durch das aktuelle Ja abgelöst.
+Nach letzterProduktblob-/Workflow-/Sicherungswegprüfung genaueinmalTriggeranlegen, terminalauswerten/Originalesichern/relevanteBildersichten. BeiUnklarheitzuerstRef/Actionsrücklesen. KeinGitHubRerun/Ersatztrigger.
