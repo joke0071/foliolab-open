@@ -1,0 +1,51 @@
+{
+  "scope": "K3/#165/#257 and K2-FIN/#255: encoded booking reference protection",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "4a138d2e7fe75876869d000c8eac01911a094374",
+  "base_tree": "1931f1163b6e49713d191deadcca181ae4f1d2b9",
+  "repro": "Stored position notes containing JSON-escaped booking-a survive backup/safeImport but originally allow removal despite a decoded dependency.",
+  "fix": "Existing reference scanner decodes bounded JSON strings and checks decoded keys/values, including nested JSON strings; undecidable Unicode encodings fail closed. Existing ordinary bracketed notes remain usable.",
+  "tests": {
+    "original": "3 new core tests:2FAIL/1PASS; original console retained",
+    "final": "90/90PASS/0FAIL/0SKIP/0CANCELLED;6new+84directly affected tests",
+    "cases": "Booking/journal/posting identities × JSON value/key/nested-string × removal/economic edit/notes; no source mutation; normal120→100removal and exactundo",
+    "UI": "Actual registered booking-row click listener and openBookingChange source executed in Node VM with DOM/dialog/CAS/save adapters. Blocked UI edit/remove has0save/exact model+stored-record adapter; permitted confirmed removal1assertCurrent/1save/exact100. Not native IDB or browser.",
+    "regression": "existing booking/import removal/undo/reimport/archive/transfer/position-selection/reference-management and plain/complete/encrypted restore tests",
+    "fixture_note": "Generated posting IDs replaced with short deterministic synthetic IDs in the new fixture so fully escaped references fit the real note limit; assertions unchanged",
+    "syntax": "product and both new test files PASS",
+    "runtime": "Node24.22.1"
+  },
+  "manifest": [
+    {
+      "path": "src/booking-management.js",
+      "bytes": 22280,
+      "sha256": "570fa6bb151e53ea6d0f3f9abb6ff6fafea33f2bbcb5c264438a36bbb983e3d6"
+    },
+    {
+      "path": "tests/booking-encoded-references.test.mjs",
+      "bytes": 4212,
+      "sha256": "651122920054d6dc3ea29b9d96f64b361015f7f88eacd7203cb83b317901d6be"
+    },
+    {
+      "path": "tests/booking-encoded-ui.test.mjs",
+      "bytes": 4598,
+      "sha256": "277b5b47052ce2e1b4a0ac7cc9f045dd11629de9a2d5fb82ecb69a3ede9bce9e"
+    },
+    {
+      "path": "booking-encoded-original.tap",
+      "bytes": 2144,
+      "sha256": "167edf0c2fa59d3c8b2ca3ca7cd21201e42e8c4c7010092e16d3e7daa71cc909"
+    },
+    {
+      "path": "booking-encoded-final.tap",
+      "bytes": 9792,
+      "sha256": "eef773e922289d1f56bf3d24f6039808100f6cd11b53000a5afd0b653fbb5b5e"
+    }
+  ],
+  "limits": [
+    "No expansion of deletion eligibility; only previously missed dependencies now block",
+    "No journal/CAS/storage/schema/crypto/UNKNOWN-FX mutation",
+    "No native/CI/PR/Main/release gate claimed"
+  ],
+  "next": "Continue serially on this exact successor; remaining native/full integration gates remain open"
+}

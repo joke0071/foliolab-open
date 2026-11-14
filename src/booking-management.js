@@ -55,9 +55,22 @@ const raw=x=>JSON.stringify(x);
 function references(value,ids,guard={nodes:0},depth=0){
  if(++guard.nodes>200000||depth>64)throw Error('Referenzprüfung überschreitet das sichere Prüflimit.');
  if(value==null)return false;
- if(typeof value==='string')return ids.some(id=>value===id||value.includes(id));
+ if(typeof value==='string'){
+  if(ids.some(id=>value.includes(id)))return true;
+  const text=value.trim();
+  if(['{','[','"'].includes(text[0])){
+   let decoded;
+   try{decoded=JSON.parse(text);}catch{
+    if(value.includes('\\u'))throw Error('Codierte Referenzdaten sind nicht vollständig lesbar. Keine Änderungsfreigabe.');
+    return false; // Ordinary bracketed notes are not serialized references.
+   }
+   return references(decoded,ids,guard,depth+1);
+  }
+  if(value.includes('\\u'))throw Error('Ungeklärte codierte Referenzdaten. Keine Änderungsfreigabe.');
+  return false;
+ }
  if(typeof value!=='object')return false;
- return Object.entries(value).some(([k,v])=>ids.includes(k)||references(v,ids,guard,depth+1));
+ return Object.entries(value).some(([k,v])=>references(k,ids,guard,depth+1)||references(v,ids,guard,depth+1));
 }
 const bookingKeys=new Set('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus newSymbol newIsin targetQuantityExact ratioNumerator ratioDenominator importSource importFingerprint transferMatch'.split(' '));
 const journalKeys=new Set('id type date recordedAt sequence postings cashPositionId status source'.split(' '));
