@@ -1,3 +1,3 @@
-# HND01 · ACTIVE · PR #338 Release
+# HND01 · ACTIVE · v315 Live-Abnahme
 
-Alleiniger Writer k4-release-20261114. Nutzerfreigabe für Merge und Deployment erteilt. Vorheriger Checkpoint ea348302d0f9bcfcbc6fe5e3c264b23d340d83ef. PR #338 mit geprüftem Kandidaten 1f05aac57c6f94cdcf2c0a84ba73963e1bb1c728 wird integriert und bis zur Live-Akzeptanz begleitet. K4 bleibt PARTIAL.
+Alleiniger Writer k4-release-20261114. Merge und Deployment vom Nutzer freigegeben. PR #338 gemergt, Main ff60c73e53c973ecb86393be5b4e31b55f352601, Tree 6ad04c0d9e295b4c8c116fb90a139f7f7c0b0e34 entspricht geprüftem Kandidaten. Release-Lauf https://github.com/joke0071/foliolab-open/actions/runs/43630597942 läuft. Chromium mit 1480/1480, drei Firefox-/WebKit-Jobs und Deployment SUCCESS. Live-Abnahme Job 132564684392 noch aktiv. Diesen bestehenden Lauf bis Ergebnis begleiten. K4-Abbruchfall auf Kandidaten PASS, K4 insgesamt PARTIAL. Vorgänger mit Fach- und PR-Belegen ea348302d0f9bcfcbc6fe5e3c264b23d340d83ef.
