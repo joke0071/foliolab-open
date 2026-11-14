@@ -1,7 +1,7 @@
-name: K4 Storage Eviction Targeted QA
+name: K4 Filesystem Pressure Targeted QA
 on:
   push:
-    branches: ["qa/k4-eviction-e4b79f541e28"]
+    branches: ["qa/k4-filesystem-e4b79f541e28"]
 permissions:
   contents: read
 jobs:
@@ -24,14 +24,23 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Observe eviction and conditionally test application
-        run: node .qa/k4-eviction.cjs
+      - name: Prepare bounded isolated profile filesystem
+        run: python3 .qa/k4-setup-disk.py
+      - name: Observe disk pressure and conditionally test application
+        run: |
+          set -o pipefail
+          node .qa/k4-eviction.cjs 2>&1 | tee eviction-evidence/runner.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: k4-storage-eviction-originals
+          name: k4-filesystem-eviction-originals
           path: |
             eviction-evidence
             qa-head.txt
             product-tree.txt
           if-no-files-found: error
+      - name: Unmount only isolated test volume
+        if: always()
+        run: |
+          volume="$RUNNER_TEMP/k4-disk-volume"
+          if mountpoint -q "$volume"; then sudo -n umount "$volume"; fi
