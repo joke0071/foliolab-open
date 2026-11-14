@@ -1,3 +1,9 @@
+# HND01 · K4 Cleanup-korrigierter QA-Lauf · 14.11.2026
+
+**ACTIVE · sol-k4-cleanup-20261114 · alleiniger Writer.** Neuer expliziter Nutzerauftrag für genau den vorbereiteten Cleanup-korrigierten Actionslauf; Produkt/Main/Deployment außerhalb Scope. Aktueller Zentralhead ba4d68580c8d6ef8b5b45da07af06d373f01cd72, Vorgänger STOPPED/HANDOVER_READY, kein korrigierter Lauf unter den neuen Belegen vorhanden. Main48125a2608b27095fbdf89445340f90d04e9291b, PRs332/161/157 unverändert; gelesene neueste Läufe abgeschlossen. Runnerblob a12fa4e33bc8b74192cf9eadb7ec7b4a6f362f73 aus gepinntem Übergabestand bestätigt. Exakter Runner unverändert auf neuer QA-Ref; separater Produktcheckout48125a…/Treeacd2a876… mit Assertions. Vorprüfung/Browser.close-Cleanup, Revision7/200EUR, Hauptprozess-SIGKILL, gleicheOrigin/gleichesProfil/neuePID, bytegleicherRecord/raw/settings und IndexedDB aktiv sind das Soll. Keine lokale Browserdiagnose/FullCI/Releaseprüfung; neue Originale sichern, letzte erreichte Phase erfassen und Writer abgeben. K4PARTIAL erhalten.
+
+---
+
 # HND01 · K4 SIGKILL-QA Ergebnis · 14.11.2026
 
 **STOPPED / HANDOVER_READY · sol-k4-sigkill-20261114 · kein eigener Writer/Lauf mehr aktiv.** **TEST_SETUP_ERROR; K4-Fachtest NOT_RUN; K4 bleibt PARTIAL.** Die Prozess-/Profilvorprüfung ist tatsächlich PASS. v314 LIVE_ACCEPTED und Main48125a2608b27095fbdf89445340f90d04e9291b unverändert; kein Produktfehler, kein neuer K4-Teilabschluss.
