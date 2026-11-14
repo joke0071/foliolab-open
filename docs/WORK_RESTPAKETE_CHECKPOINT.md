@@ -2,11 +2,12 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED/HANDOVER_READY · work-serial-77bcb76dd357-20261114. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
+ACTIVE · work-native-seven-77bcb76dd357-20261114.
+Vorgänger work-serial-77bcb76dd357-20261114 STOPPED/HANDOVER_READY; Übernahme nach frischem Ref-/Actions-/PR-Abgleich am6f0cb487. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
 Übernahme13f048c39e45781f7876d20af818e05f691d4de8 expectedSHA-geschützt und exakt rückgelesen.
 Vorgängerwork-toast-prepare-77bcb76dd357-20261113 STOPPED/HANDOVER_READY.
 [Vollständiger Vorgänger und unveränderte Historie](https://github.com/joke0071/foliolab-open/blob/e00b35711a61a2192be6d7151dfc79ad98202825/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-Aktueller14.11.-Nutzerauftrag: Toast genau einmal nativ ausführen/auswerten/sichern, anschließend gesamte beauftragte Roadmap seriell lokal weiterbearbeiten. Kein ProduktPR/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED; keine weiteren nativen/CI-Läufe.
+Aktueller neuer14.11.-Nutzerauftrag: sieben Korrekturen am883c4eb0 gemeinsam nativ qualifizieren und danach seriell intern weiterarbeiten. Bis zu drei initiale Diagnoseläufe plus insgesamt ein begründeter Korrekturlauf, einzeln/Versuch1/einChromiumjob/max25min/max360s+begrenzterNachlauf. Keine erneute Zustimmung innerhalb dieses Rahmens. Alte Freigaben bleiben verbraucht. Keine ProduktPR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
 Maßgeblich: [Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md),[Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md),[kanonische Roadmap](KONSOLIDIERTE_ROADMAP.md).
 41Scopes/15DONE unverändert. WindowsChrome/Edge undAndroidChrome/PWA; realeProfile/Versionen OPERATOR_INPUT_PENDING, nicht erneut fragen. Safari/TalkBack DEFERRED_USER; normale Bedienhilfen erhalten.
 
@@ -65,7 +66,7 @@ Originalarchiv V0/1249280Bytes/SHA2560b1ab57cbce53ecf30bcad0f29bfc823213696ffd08
 20s-Timeout beim controlledStorageFixture vor Reload; am Schluss kein aktiver/installierender/wartender Worker und controller=null.
 Konkrete Installations-/Transportursache bleibt UNKNOWN. Kein neuer Lauf, kein Timeout-/Fixturepatch.
 
-## Gesicherter Sitzungsabschluss
+## Historischer Sitzungsabschluss des Vorgängers – durch neuen Auftrag teilweise entsperrt
 
 Die sieben bestätigten Korrektheitslücken sind lokal geschlossen und als ein linearer Produktstand gesichert.
 Die zuletzt konkret geprüften Folgearbeiten hängen an folgenden Voraussetzungen; kein zusätzlicher bestätigter lokal schließbarer Rest in diesen geprüften Abläufen:
@@ -119,3 +120,7 @@ KeinePrivatimporte/Appdatenlöschung,Credentials,öffentlichenPrivatlocators,Kon
 bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
 
 
+
+## Aktiver Arbeitspunkt
+
+Neue Budgetnutzung0/4. Erster Diagnosekandidat wird vorbereitet; Gruppen A Kurs/FX, B Buchungsverwaltung und C Restore dürfen bei unabhängiger Auswertung gebündelt werden. Produkt883c4eb0/Tree9ad46b9e bleibt erster nativer Produktstand. Kein Trigger vor vollständiger Identitäts-/Workflow-/Sicherungsprüfung. Vorherige Folgegates nur bei neuer Evidenz wieder öffnen.
