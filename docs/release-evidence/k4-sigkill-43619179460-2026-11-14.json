@@ -1,0 +1,78 @@
+{
+  "status": "TEST_SETUP_ERROR",
+  "k4": "NOT_RUN",
+  "closedCase": false,
+  "preflight": "PASS",
+  "repository": "joke0071/foliolab-open",
+  "product": {
+    "sha": "48125a2608b27095fbdf89445340f90d04e9291b",
+    "tree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+    "separateCheckout": true
+  },
+  "qa": {
+    "sha": "234caaaa44780cac667b654e7eafe588640bbc9c",
+    "tree": "54c89205f71eb80bf1d09fb4699d105714c27d82",
+    "branch": "qa/k4-sigkill-48125a26-20261114",
+    "workflowBlob": "41caa642eb39d1e880e5c40373ced2a13fff3641",
+    "run": 43619179460,
+    "attempt": 1,
+    "job": 132520744512,
+    "conclusion": "failure",
+    "retries": 0
+  },
+  "runtime": {
+    "node": "22.23.4",
+    "playwright": "1.64.1",
+    "chromium": "156.0.8078.4",
+    "headlessShellBuild": 1248,
+    "runner": "ubuntu-24.04",
+    "kernel": "7.0.0-1017-azure"
+  },
+  "preflightEvidence": {
+    "oldPID": 3107,
+    "newPID": 3188,
+    "signal": "SIGKILL",
+    "exitCode": null,
+    "signalRequestedAt": "2026-11-14T17:06:07.908Z",
+    "exitAt": "2026-11-14T17:06:07.924Z",
+    "profile": "/home/runner/work/_temp/k4-disposable-43619179460",
+    "markerBefore": "synthetic-marker-v1",
+    "markerAfter": "synthetic-marker-v1",
+    "marker": "native IDB readwrite strict durability transaction/oncomplete; not product fixture"
+  },
+  "failure": {
+    "error": "preflight cleanup timeout",
+    "cause": "browser.close() on connectOverCDP disconnects connection; separately spawned process did not exit before 15s deadline",
+    "classification": "harness lifecycle error before product fixture setup",
+    "noProductClaim": true,
+    "rawReportCaveat": "failureStage K4 is coarse derived label; k4.status NOT_RUN, no requests, no fixture/before/after proves product phase was not reached",
+    "cleanup": "finally SIGKILL of remaining disposable main process3188; no product profile started"
+  },
+  "original": {
+    "artifact": 14123487060,
+    "bytes": 68830,
+    "sha256": "825a128ffb64b5b4326e52b07208ebf09c1e13624be635673dce851691c22569",
+    "zipCRC": true,
+    "innerManifestFiles": 9,
+    "archive": "FolioLab_K4_SIGKILL_43619179460_attempt1.tar.gz",
+    "version": 0,
+    "archiveBytes": 153419,
+    "archiveSHA256": "fefc7789e301fef76112fa2d72e5add6648b5c4b28521a0daa93985a17a3e102",
+    "pinnedReadbackByteEqual": true,
+    "actualRestoreManifestFiles": 13,
+    "jobLogPreserved": true
+  },
+  "next": {
+    "prepared": "k4-sigkill-cleanup-prepared-2026-11-14.cjs",
+    "change": "explicit Browser.close over browser CDP session, followed by observed child exit; both cleanup sites",
+    "syntax": "PASS",
+    "executed": false,
+    "action": "New authorized targeted QA execution on distinct QA ref/SHA, same exact product; no unchanged rerun of attempt1."
+  },
+  "limits": [
+    "No K4 product crash/reopen result",
+    "No Windows/Android/OAuth/Eviction/open-transaction/power-loss evidence",
+    "K4 PARTIAL, v314 LIVE_ACCEPTED unchanged",
+    "Main/product/deployment unchanged"
+  ]
+}
