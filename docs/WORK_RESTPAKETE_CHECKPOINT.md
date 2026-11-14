@@ -1,5 +1,9 @@
 # Aktueller HND01-Checkpoint
 
+ACTIVE · sol-k4-review-20261114 · einziger HND01-Writer. Frischer Abgleich: Zentralhead 2e17f27f62a47faa68425b6f7ba0af574987b128; Vorgänger STOPPED/HANDOVER_READY. Main 57ba5fd04b3fc870be3b085c1994c79ff50297d7; K4 5db3803509cfd0824dad5dd12532a1168c161e32 genau 1 voraus/0 zurück; offene PRs 332/161/157 getrennte Aufträge. Review und lokale belegte Korrekturen, kein Produktbranch/PR/Actions/Merge/Deploy.
+
+# Aktueller HND01-Checkpoint
+
 **STOPPED/HANDOVER_READY · astra-k4-native-20261114.** PR #336 LIVE_ACCEPTED auf Main 57ba5fd04b3fc870be3b085c1994c79ff50297d7. K4-Kandidat 5db3803509cfd0824dad5dd12532a1168c161e32 / Tree 6a2a1a90b8cca3ae98ab302b28306d3ba226b38a unverändert. Native Chromium-Restorestrecke abgeschlossen. K4 insgesamt PARTIAL.
 
 Lokaler Chromium-Profilstart vor erstem Test an socket EPERM blockiert. Isolierter, getrennt gepinnter QA-Runner a77486eb6ddb553a28f53745c8262fd5ed982bb5: [Run 43588219909 Versuch 1](https://github.com/joke0071/foliolab-open/actions/runs/43588219909), Job 132427177729 SUCCESS. Ubuntu, Chromium Headless 156.0.8078.4, Playwright 1.64.1, Node 22.23.4. 14/14 (7 Paare). Echter Dateiinput und Drive-Button, synthetisches OAuth/HTTP, reale Kryptografie, kanonische IDB, getrennte Browserkontexte pro Fall, zwei Tabs derselben Origin für CAS. Service Worker blockiert. Wiederöffnung als neue App-Seite im selben Kontext. Nach jedem Fall gesamter Record identisch zur Wiederöffnung; Datei vs Drive pro Paar identische Eingangsbytes, gespeicherter raw-Text und Einstellungen gleich, getrennte Commitzeitpunkte. Ungespeicherter synthetischer Einstellungsentwurf blieb vor Wiederöffnung erhalten.
