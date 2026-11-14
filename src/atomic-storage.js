@@ -91,7 +91,7 @@ export function readPortfolioRecord(db) {
  * tombstone, preserving the revision and preventing a stale tab from reviving it.
  * raw=null removes the portfolio without resetting the conflict history.
  */
-export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
+export function commitPortfolioRecord(db, {expectedRevision, raw,settings, confirmedActive = false}) {
   if (expectedRevision !== null &&
       (!Number.isSafeInteger(expectedRevision) || expectedRevision < 1)) {
     return Promise.reject(new TypeError('Ungültige erwartete Speicherrevision.'));
@@ -120,6 +120,7 @@ export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
           schemaVersion: 1,
           revision: (revision ?? 0) + 1,
           raw: portable,
+          ...(confirmedActive && portable !== null ? {confirmedActive: true} : {}),
           ...(portablePrefs===undefined?{}:{settings:portablePrefs}),
           deleted: portable === null,
           updatedAt: new Date().toISOString()

@@ -84,6 +84,19 @@ export class PortfolioStorage {
    try{
     const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=portableSettings(model.settings);
     const existing=await readPortfolioRecord(db);
+    // Only a save from an already active IDB writer sets this field, in the
+    // same transaction as the portfolio. Staging and rollback never set it.
+    if (existing?.confirmedActive === true && !existing.deleted) {
+     restored(existing);
+     if (this.storage.getItem(MODE_KEY) !== null ||
+         this.storage.getItem(STORE_KEY) !== null ||
+         this.storage.getItem(REVERT_INTENT_KEY) !== null) {
+      throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+     }
+     this.storage.setItem(MODE_KEY, MODE_VALUE);
+     db.close();
+     return this.initialize();
+    }
     let record=existing;
     if(existing){
      if(existing.raw!==raw||JSON.stringify(existing.settings)!==JSON.stringify(settings))
@@ -133,7 +146,8 @@ export class PortfolioStorage {
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
-   expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings
+   expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings,
+   confirmedActive:true
   });
   this.revision=current.revision; // only after tx.oncomplete
  }
