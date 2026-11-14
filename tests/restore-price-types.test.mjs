@@ -46,3 +46,20 @@ test('Actual Drive restore callback still saves a valid independent two-unit pri
  assert.equal(await h.restore(raw),true);assert.equal(h.saves(),1);assert.equal(h.rollbackOffers(),1);
  assert.equal(totalExactEUR(JSON.parse(h.stored())),'246.9');assert.equal(h.context.model.positions[0].quantityExact,'2');
 });
+test('Structured exact prices reject before restore replaces or saves the portfolio',async()=>{
+ for(const version of [1,2,3,4])for(const priceExact of [[123.45],[0],[[123.45]],true,false,{}]){
+  const raw=fixture(version);raw.positions[0].priceExact=priceExact;const before=JSON.stringify(raw);
+  assert.throws(()=>safeImport(raw),/Kurs|Dezimal|Zahl/,version+'/'+JSON.stringify(priceExact));
+  const h=harness();await assert.rejects(()=>h.restore(raw),/Kurs|Dezimal|Zahl/);
+  assert.equal(h.saves(),0);assert.equal(h.rollbackOffers(),0);assert.equal(h.stored(),h.before);
+  assert.equal(JSON.stringify(h.context.model),h.before);assert.equal(JSON.stringify(raw),before);
+ }
+});
+test('Scalar exact prices and existing numeric display discrepancies retain their contract',()=>{
+ for(const priceExact of ['123.45',123.45]){
+  const raw=fixture();raw.positions[0].priceExact=priceExact;
+  const restored=safeImport(raw);assert.equal(restored.positions[0].price,100);
+  assert.equal(restored.positions[0].priceExact,'123.45');assert.equal(totalExactEUR(restored),'246.9');
+ }
+});
+

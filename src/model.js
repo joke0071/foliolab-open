@@ -102,6 +102,7 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);
   const priceInput=v.price??0;
   if(!['string','number'].includes(typeof priceInput))throw Error('Der Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');
+  if(v.priceExact!=null&&!['string','number'].includes(typeof v.priceExact))throw Error('Der exakte Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');
   const price=safeNumber(priceInput);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fx=normalizePositionFX({...v,currency},{legacy:legacyFX}),fxRate=fx.fxRate;
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
   assertWalletHoldingAvailable(model,{id:v.id,wallet,valuationMode:v.valuationMode,representedByPositionId:v.representedByPositionId});
