@@ -1,0 +1,21 @@
+{
+  "scope": "Read-only refinement of existing Main failure; no replay",
+  "run": 43332355188,
+  "job": 131591512462,
+  "status": "FAILURE_UNCHANGED_ROOT_CAUSE_UNKNOWN",
+  "observed_boundary": "controlledStorageFixture before-reload acquisition in browser-kraken-import.mjs:132;20s wait timed out. Initial registration installing; final registration has no active/installing/waiting worker; controller null; fixture.ready false/error null.",
+  "original_artifact": {
+    "id": 13996793680,
+    "zip_bytes": 12448968,
+    "zip_sha256": "fd35575239ded0d3ef93ae14b2c18397cc944d3cba623eebdd992b972630a69c",
+    "crc": "PASS",
+    "target_read": "storage-fixture/chromium-1794529173928.json"
+  },
+  "limits": [
+    "No new native run, timeout relaxation, rerun or test mutation",
+    "Trace contains no request status records sufficient to establish transport or installation root cause",
+    "Cache name311 alone is not a proved stale-worker cause",
+    "Original archive chain preserved; no new complete old-artifact backup needed"
+  ],
+  "next": "Root-cause reproduction needs separately authorized native/CI execution; no blind product or fixture fix."
+}

@@ -1,5 +1,14 @@
 ## Fortschreibung · 12.11.2026 · v310 LIVE_ACCEPTED / V149
 
+## Lokaler Fortschritt · 14.11.2026
+
+Toast-Ausführung43554653065/1: fünf native IDB-Fälle begrenzt PASS, Produkt04960e74/Prüfquelled70d81e1 separat eingefroren; simulierte OAuth-/Drive-/Decrypt-/Passwortteile sind keine Geräte-/Kryptoabnahme.
+Danach sieben lineare lokale Korrekturen in Kursantworten/FX, Buchungsrücknahme und Restore bis883c4eb0e8137040a9f6bfd2e193bc5833aac0c2:
+[exakter Umfang, Parents und Nachweisgrenzen](release-evidence/serial-local-summary-2026-11-14.json).
+288/288 ausgewählte Node-Tests PASS; kein nativer/CI-/Releasebeleg dieses Gesamtstands, keine Integration und kein neuer DONE-Status.
+41 Scopes/15 DONE sowie K4 PARTIAL und FLH04 NOT DONE bleiben unverändert.
+
+
 ## Aktuelle Nutzerentscheidung: persönlicher Plattformumfang · 13.11.2026
 
 Maßgeblich sind Windows Chrome UND Edge sowie Android Chrome/PWA. E-SAFARI und E-TALKBACK wechseln ausdrücklich zu **DEFERRED_USER** (bewusst zurückgestellt, nicht DONE). Damit sechs statt acht BLOCKED_EXTERNAL-Scopes und zwei zurückgestellte Scopes; 41 Gesamtpositionen und 15 DONE bleiben erhalten. Alte aggregierte Zählungen/Protokollpflichten unten sind insoweit historisch.

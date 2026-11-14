@@ -35,28 +35,39 @@ Restoreprodukt775bbddd/Test4ba5cd84 mit43514930241/1 bleibt separat eingefroren.
 FrüherevierDiagnosen verbraucht,einzige neueFreigabe43554653065/1 verbraucht.
 KeinRerun/neuerTrigger/FullCI. KeinProdukt-oderHardware-PASS aus kombiniertenEinzelbelegen.
 
-## Serielle lokale Produktarbeit
+## Serielle lokale Produktarbeit – gesicherter Wiederaufnahmepunkt
 
-1. K2-KURSE/#266: 4a138d2e7fe75876869d000c8eac01911a094374/Tree1931f1163b6e49713d191deadcca181ae4f1d2b9,Parent04960e74.
-Alpha liefert boolesche/Array-Schlusskurse nicht mehr als bestätigte Preise.
-4neueGegenproben initial3FAIL/1PASS;final42/42PASS(4neu+38betroffen),SyntaxPASS.
-TatsächlicherrefreshSources-Handler mitDOM/save-Adaptern undechtemAlphaClient:
-fehlerhafteAntwort0save/0snapshot/Modellbytegleich/Cacheerhalten;gültig123.45einmalübernommen.
-[ExakterBeleg](https://github.com/joke0071/foliolab-open/blob/4a138d2e7fe75876869d000c8eac01911a094374/docs/release-evidence/k2-alpha-integrity-local-2026-11-14.json).
-2. K3/#165/#257undK2-FIN/#255: 312a199cf3d2b6359da0547a478a19ad979fdaed/Tree92991988b2f5f851e4e5ae816fe79f6180614372,Parent4a138d2e7fe75876869d000c8eac01911a094374.
-CodierteJSON-/Unicode-Buchungs-/Journal-/Postingreferenzen verhindernabhängigeÄnderungen.
-Initial2FAIL/1PASS;final90/90PASS(6neu+84betroffen),SyntaxPASS.
-EchterBooking-Row-Clicklistener/openBookingChange inNodeVMmitDOM/Dialog/CAS/save-Adaptern:
-gesperrt0save/exaktunverändert;zulässige120→100-Rücknahme1CurrentCheck/1save;Undo/Archiv/Import/Reimport/Restoreerhalten.
-[ExakterBeleg](https://github.com/joke0071/foliolab-open/blob/312a199cf3d2b6359da0547a478a19ad979fdaed/docs/release-evidence/k3-booking-encoded-local-2026-11-14.json).
-Alle5/6Deltadateien derbeidenSchnitte vollständigbytegleichrückgelesen; keineRef/PR/Action dafürangelegt.
-Beide LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN,keineProduktintegration.
-Ein seriellerEntwicklungsstand;keineVariantenstapel. NeueProduktarbeit immer vomtatsächlichenNachfolger.
+Gemeinsamer Produktstand **883c4eb0e8137040a9f6bfd2e193bc5833aac0c2**, Tree **9ad46b9ee8b6039f49ddf23b2655227b493692f4**.
+Eine lineare Folge ab Toastprodukt04960e74; keine Produktrefs/PRs/Actions dafür.
+Alle sieben Schnitte LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN.
+[Exakte Parent-/Tree-/Nachweismatrix](release-evidence/serial-local-summary-2026-11-14.json).
 
-Aktuell im selben Rücknahmeablauf reproduziert:feeEUR/taxEURnullüberlebenBackup/Restore,
-werden aberdurchNumber(null)als0behandelt;ökonomischeRücknahmeistfälschlichready.
-NächsterSchritt:bekannteNullkosten vonunbekanntenKosten unterscheiden undNotizvorschau ehrlichanzeigen.
-Keinweiterernativer/CI-Lauf. DieserZwischenstand istkeinSitzungsende.
+| Schnitt | Commit | Fachliches Ergebnis |
+| --- | --- | --- |
+| K2 Alpha | 4a138d2e7fe75876869d000c8eac01911a094374 | Boolesche/Array-Schlusskurse abweisen; alte Kurse/Cache bei Fehler erhalten. |
+| K3 Buchungsreferenzen | 312a199cf3d2b6359da0547a478a19ad979fdaed | Codierte JSON-/Unicode-Referenzen vor Änderung/Rücknahme erkennen. |
+| K2-FIN unbekannte Kosten | 57c4da121720d60a2c4d320f52b6a994cbae80eb | Unbekannte Fees/Steuern verhindern wirtschaftliche Rücknahme; Vorschau nennt unbekannte Werte. |
+| K2 Kurse/FX | b5cab021ecbad41de28e3dd1f94fbff89852ecea | Ungültige Antworttypen/FX-Datums-/Basisangaben nicht übernehmen; UNKNOWN/alte Kurse erhalten. |
+| K4 Restore-Preise | f5ea22bce3f30720ce18d0a046f44a07fd1476a5 | Falsche Preisdatentypen aus Altbackups vor Übernahme abweisen. |
+| K4 Restore-Status | bdabebf5d0c58b09e88deb86c1999709a4e8f06e | Keine unbelegte lokale Vorsicherung im Erfolgsstatus behaupten. |
+| K2 verbundene Kursquellen | 883c4eb0e8137040a9f6bfd2e193bc5833aac0c2 | Token-/Fallbackpreise und Decimal-/FX-Wertebereich vor Modellübernahme prüfen. |
+
+Ausgangsfehler mit Original-FAIL-TAP je Schnitt erhalten; gültiger Erfolg und Gegenfall mit unabhängigen Sollwerten geprüft.
+Final **288/288 PASS**, 0FAIL/0SKIP/0CANCELLED, Node24.22.1, **37 ausgewählte lokale Testdateien**.
+Quellhandler in NodeVM mit ausdrücklich begrenzten DOM/CAS/save-Adaptern; kein nativer Browser-/IDB-/Realprovider-/FullCI-Nachweis.
+Der native Toast-PASS gilt ausschließlich für d70d81e1/04960e74, nicht für diesen Nachfolgestand.
+Acht Laufzeitdateien geändert; index/styles/SW/Workflows/Abhängigkeiten unverändert.
+47 Stage-Gitblobs vollständig bytegleich rückgelesen; finale44 Delta-Pfade aus gepinntem Archiv tatsächlich wiederhergestellt und Gitblob-genau verifiziert.
+Originalarchiv V0/1249280Bytes/SHA2560b1ab57cbce53ecf30bcad0f29bfc823213696ffd08daa3a22e57120683af370,
+93 Einträge nach gepinntem Readback geprüft. Private Locators bleiben privat; keine Vollsicherung alter Originalketten.
+
+[Vorhandenen Mainfehler gezielt nur gelesen](release-evidence/main-43332355188-readonly-2026-11-14.json):
+20s-Timeout beim controlledStorageFixture vor Reload; am Schluss kein aktiver/installierender/wartender Worker und controller=null.
+Konkrete Installations-/Transportursache bleibt UNKNOWN. Kein neuer Lauf, kein Timeout-/Fixturepatch.
+
+ACTIVE: nächster Schritt ist die gezielte Prüfung des nächsten unabhängig intern bearbeitbaren Roadmap-Ablaufs anhand Originalauftrag und Quellstand.
+Keine Wiederholung akzeptierter Quellen-/Hilfen-/Frequenz-/Einstellungs-/UI-Teile und keine Ersatztests für reine Gerätegates.
+Dieser Wiederaufnahmepunkt beendet die Sitzung nicht.
 
 ## Geschützte Stände und Grenzen
 
