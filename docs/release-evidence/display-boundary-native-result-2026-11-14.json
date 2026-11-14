@@ -1,0 +1,123 @@
+{
+  "scope": "Bounded native completion of shared-product save/restore qualification",
+  "product": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "productTree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+  "run": 43568173088,
+  "attempt": 1,
+  "job": 132366513490,
+  "source": "6a45eea783fdb09431b3a11b9167e6de6139e620",
+  "sourceTree": "7a7654079d076a7a54906811e925649a1b24ecab",
+  "execution": "13ad780b1ce0a95d38211af2a1e3dc47cd265571",
+  "executionTree": "bc5e09a2af3dbf2213b9e59301a962332dc79f8f",
+  "trigger": "test/latest-display-boundary-77bcb76dd357-20261114",
+  "result": "SUCCESS_3_OF_3_BOUNDED_NATIVE_PASS",
+  "cases": [
+    {
+      "id": "restore-valid",
+      "revision": [
+        2,
+        3
+      ],
+      "originalCompletionCalls": 1,
+      "portfolioEUR": "246.9",
+      "toastCount": 1,
+      "readOnlyRecordAndNewpage": "PASS",
+      "newBackupTimestamp": false
+    },
+    {
+      "id": "restore-postcommit-display",
+      "revision": [
+        2,
+        3
+      ],
+      "originalCompletionCalls": 1,
+      "eventSequence": [
+        "provider-settings-render:false",
+        "records-put",
+        "transaction-complete",
+        "provider-settings-render:true",
+        "display-fault"
+      ],
+      "faultActuallyInjected": true,
+      "liveModelEUR": "246.9",
+      "newpageEUR": "246.9",
+      "exactRawAndNewpage": "PASS",
+      "headerState": "warning",
+      "headerLabel": "Daten gespeichert. Anzeige konnte nicht vollständig aktualisiert werden: SYNTHETIC_NATIVE_POSTCOMMIT_RENDER. Änderung nicht erneut ausführen.",
+      "mobileDOMText": "Daten gespeichert · Anzeige prüfen",
+      "portfolioToastCount": 1,
+      "backupTimestamp": null
+    },
+    {
+      "id": "restore-native-commit-abort",
+      "revision": [
+        2,
+        2
+      ],
+      "originalCompletionCalls": 0,
+      "actualAbort": true,
+      "completeMarker": false,
+      "exactOriginalRecordAndNewpage": "PASS",
+      "adoptions": 0,
+      "portfolioToastCount": 0,
+      "headerState": "error",
+      "status": "Wiederherstellung fehlgeschlagen: Speichertransaktion abgebrochen."
+    }
+  ],
+  "runtime": {
+    "os": "Ubuntu24.04.5",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "viewport": [
+      390,
+      850
+    ]
+  },
+  "host": {
+    "assertionRows": 56,
+    "testExit": 0,
+    "teeExit": 0,
+    "browserCleanup": "PASS",
+    "originCleanup": "PASS",
+    "jobs": 1,
+    "harnessCalls": 1,
+    "retries": 0
+  },
+  "original": {
+    "artifact": 14102759691,
+    "zipBytes": 1432185,
+    "zipSHA256": "de261e686afbc486ab1e10bfd247150f12fd332fbfed3a3efa5745c05e87c544",
+    "crc": "PASS",
+    "manifestEntries": 22
+  },
+  "actuallyViewed": [
+    "restore-postcommit-display.png",
+    "restore-native-commit-abort.png",
+    "restore-valid.png"
+  ],
+  "visualLimits": "Success/failure portfolio feedback and warning/error icon observed. Exact display-warning sentence was validated through aria-label and DOM state, not an opened header-status-dialog screenshot. Mobile DOM status text is not claimed as visually readable in the captured fullpage image.",
+  "simulation": [
+    "OAuth",
+    "Drive media",
+    "decryption",
+    "password adoption",
+    "targeted one-time DOMsetter exception"
+  ],
+  "limits": [
+    "LinuxChromium synthetic contexts/serviceWorkersblocked only",
+    "No actualprovider/encryption/OAuth/WindowsEdgeAndroidPWA",
+    "No FullCI/Main/production/release acceptance"
+  ],
+  "authorization": "Current explicitJa exactone execution consumed. No additional branch/rerun/correction authorization.",
+  "preservation": {
+    "archiveVersion": 0,
+    "bytes": 4843520,
+    "sha256": "2ce80bf4ab297a63029db58a7678e8df963e16763de69af223fe09feb91694b4",
+    "entries": 26,
+    "pinnedExactReadback": true,
+    "actualSourceRestoreFiles": 153,
+    "gitBlobErrors": 0,
+    "privateLocators": "WITHHELD"
+  }
+}

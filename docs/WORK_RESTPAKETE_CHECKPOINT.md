@@ -1,86 +1,85 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-display-boundary-77bcb76dd357-20261114.
-Vorgänger work-latest-native-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neue ausdrückliche Nutzerfreigabe „Ja“ autorisiert exakt vorbereitete Ausführung13ad780b, einen create-Lauf/Versuch1/einChromiumjob/max25min/360s+15s; keinen weiteren Korrekturlauf. Ein Writer; keine Agenten/Automation/Folgesitzung.
-Übernahme6a8f27c4a5f90ee621a636a13899bd99b448ad10 nach frischem Kollisionsabgleich amc64430f9764b8b321af0327e42fa06e82cf67420,expectedSHA/gepinntesReadback.
-[Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/c64430f9764b8b321af0327e42fa06e82cf67420/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-Aktuelles ausdrückliches Nutzer-Ja autorisierte exakt einen vorbereiteten Lauf; diese Freigabe ist jetzt verbraucht.
+STOPPED/HANDOVER_READY · work-display-boundary-77bcb76dd357-20261114. AlleinigerWriter; keineAgenten/Automation/Folgesitzung.
+Übernahmecdee0dbe96ad32511bcdc24f77bd0ac791cd7cc8 nach frischemKollisionsabgleich am1651fda198a4a4db92216f97a2a9ccd71c75a056; expectedSHA/gepinntesReadback.
+[Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/1651fda198a4a4db92216f97a2a9ccd71c75a056/docs/WORK_RESTPAKETE_CHECKPOINT.md).
+AktuellesNutzer-Ja autorisierte exakt einen vorbereiteten3Fall-Lauf. DieseFreigabeistverbraucht; keinweitererLauf/Rerun/Ersatztrigger.
 
-## Jüngster nativer Lauf: vollständig ausgewertet und gesichert
+## Ergebnis: begrenzte native Qualifikation vollständig
 
 Produkt **8f9ed1ce0393d7a1b977d613551e50c8bbefd941**, Tree **1c1a6404012cb18f73be01b641da04b9376d63b0**, unverändert.
-Prüfquelle4249a698fda42896099db6e3b7321ba0434121f2/Treefc863347e53e9db279cd23b899ae4e56ada9b9d9, Parent exakt Produkt.
-Ausführung5b968d151c659ce96665e19b7765b922720d5d0c/Tree96cff73fe94c03190d4b103c84c130573a39efaf, Parent exakt Prüfquelle.
-Ref test/latest-save-restore-77bcb76dd357-20261114 genau einmal angelegt/unverändert.
-**Run43567167015/1, Job132363408676: terminal FAILURE,28/29FällePASS.**
-[Exakte Fall-/Grenzen-/Originalauswertung](release-evidence/latest-native-result-2026-11-14.json).
+Status **FROZEN_BOUNDED_NATIVE_PASS_SCOPE29_NOT_RELEASE**, Kandidatgeparkt. KeinProduktPR/Integration/Main/Release.
+305/305ausgewählteNodeTests40Dateien vorherPASS/quellengebunden, nichtohneProduktdeltaerneutausgeführt.
 
-| Gruppe | Ergebnis am8f9ed1ce | Nachweis |
-| --- | --- | --- |
-| A Kurse/FX | 17/17 begrenzt nativ PASS | Alle drei alten FX-Reopenlücken geschlossen; datensatzgenaues readonly-/neueSeiteReadback, UNKNOWN erhalten. |
-| B Buchungsverwaltung | 4/4 begrenzt nativ PASS | Codierte Referenzsperre, unbekannte Fees/Steuern, zulässige120→100mit1CASCommit, neuerÖffnungsreadback. |
-| C Restore | 7/8 begrenzt nativ PASS,einHarnessfalloffen | Gültig2→3/rawexakt;bool/array/object2→2unverändert;alterSicherungszeitpunkt;echterRückfalldownloadmitOriginalpositionen100EUR;echterIDBCommitabbruch2→2. JeweilsneueSeiteReadback. |
+| Gruppe | Vollständig zugeordneter begrenzter Nachweis am selbenProdukt |
+| --- | --- |
+| A Kurse/FX |17/17PASS aus43567167015/1, Quelle4249a698; inklusive aller3früheroffenenFXReopenfälle/UNKNOWN. |
+| B Buchungsverwaltung |4/4PASS aus43567167015/1, Quelle4249a698; codierteReferenzen/unbekannteKosten/zulässige120→100/CAS/Readback. |
+| C Restore |8/8PASS:5weitereC-Fälle aus43567167015/1,Quelle4249a698;Erfolg/NachcommitAnzeigeexception/Commitabbruch aus43568173088/1,Quelle6a45eea7. |
 
-Offen **restore-postcommit-display**: vorgesehener synthetischer Fehler wurde NICHT ausgelöst (displayFaultObserved fehlt).
-Vor dieser Assertion: echterCommit2→3/rawexakt/246.90EUR/sichtbaresModell/1Toast bestätigt; keine nativ ausgeführte Anzeigeexception und kein Reopen dieses Falls.
-Kein GesamtPASS/keinFreeze. Bestehende305/305Node40Dateien weiterhinquellengebunden; keine Wiederholung ohne Produktdelta.
-Alle151Produkt-/HTML-/CSS-/SW-/Manifest-/Packageblobs identisch,AusführungsdeltanurDiagnoseworkflow.
-EinJob/Ubuntu24.04.5/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37,390x850.
-363Assertionzeilen;TestExit1/Tee0, BrowserCleanupPASS undOriginCleanupPASS;0Retries.
-OAuth/Drive/Decrypt/Passwortübernahme simuliert. KeineWindows/Edge/Android/PWA/Realprovider/echteKrypto/FullCI-/Main-/Releaseabnahme.
-Tatsächlich angesehen: FXArrayUnknown,RestoreValid,RealRollback,NativeCommitAbort,PostcommitDisplayFailure.
-LesbareFXFehlerursache,korrekterFrischbackupstatus,SicherungszeitpunktnachrealemDownload,Abbruchstatusbelegt; keineAnzeigeexception-Warnungbehauptet.
+[Exakte29Fall-Matrix mitProdukt,Quelle,Lauf,Revisionen,RawHashes undneuemÖffnen](release-evidence/bounded-native-case-matrix-2026-11-14.json).
+[Originalauswertung desneuenLaufs](release-evidence/display-boundary-native-result-2026-11-14.json).
+Kein erfundener grüner29Fall-Einzellauf:43567167015/1bleibtFAILUREmit28PASS/1nichtausgelösterFaultinjektion.
+43568173088/1istSUCCESS3/3undschließtdengenauoffenenFall,mit2bewusstwiederholtenKontrollen.
+Produkt151Blobs inbeidenQuellen/Ausführungen identisch; nurHarness/Vertrag undisolierterDiagnoseworkflow unterscheiden sich.
+Alle29zugeordnetenFälle haben unabhängigenreadonly/tx.oncompleteReadback undexaktenReadbacknachneuerSeite.
 
-## Unveränderte Originalsicherung
+## Neuer3Fall-Lauf43568173088/1
 
-Artifact14103021893,ZIP2543841Bytes/SHA256cde84157ae1bb4325a7a85077d3383c4dfdfe9ccd2bbc957b9c3ef065b03cced.
-APIgröße/Digest/CRC und56innerManifestdateienPASS; Originalreports/Joblog/Quellinputs/Bilder/Rückfalldownload erhalten.
-SeparatesArchivV0/10362880Bytes/SHA2565d37c3e1a55cb46d5b7aaf3bb220cc592cf34a92489bad64040347978593d6f6.
-Gepinnt bytegleich rückgelesen,60PreservationeinträgePASS. PrivateLocators privat; ältereArchiveunverändert.
-Keine Originalberichte nachträglich aufgrünumgeschrieben.
+Job132366513490, terminalSUCCESS. EinChromiumjob/Versuch1/Harnessaufruf1/0Retries.
+Prüfquelle **6a45eea783fdb09431b3a11b9167e6de6139e620**, Tree **7a7654079d076a7a54906811e925649a1b24ecab**.
+Parent4249a698fda42896099db6e3b7321ba0434121f2;Produkt8f9ed1cezweiterAncestor.
+Ausführung **13ad780b1ce0a95d38211af2a1e3dc47cd265571**, Tree **bc5e09a2af3dbf2213b9e59301a962332dc79f8f**, Parent exaktPrüfquelle.
+Ref **test/latest-display-boundary-77bcb76dd357-20261114** genau einmal angelegt/rückgelesen/unverändert.
+Ausführungsdeltanur.github/workflows/live-initialization-diagnostics.yml; normaleCI/Main/Releaseworkflowsunverändert.
 
-## Lokale Harnesskorrektur und konkret vorbereiteter nächster Kandidat
+- NormalerRestore:1echterCommit/OriginalCompletion1/Revision2→3/rawexakt/246.90EUR/1PortfolioToast;kein erfundenerSicherungszeitpunkt/neueSeiteexakt.
+- NachcommitAnzeigeexception: Ereignisfolgeprovider-settings-render:false→records-put→transaction-complete→provider-settings-render:true→display-faultbelegt.
+  ExceptiontatsächlichnachCommitausgelöst;OriginalCompletiongenau1,Revision2→3/Modell246.90EUR/rawexakt/neueSeite246.90EUR.
+  Headerwarning/aria-labelundmobileDOM„Daten gespeichert · Anzeige prüfen“,keinefalscheSpeicherfehlermeldung/keinModellrollback.
+- EchterIDBCommitabbruch:records-put/abort,keineCompletion,Revision2→2/gesamterOriginalrecordbytegleich/neueSeiteexakt,
+  0Passwortadoption/0Erfolgstoast,echterSpeicherfehlerheaderundpassenderRestorefehlerstatus.
 
-Der zusätzliche complete-Beobachter gab die DOM-Exception nicht rechtzeitig frei.
-Quellcode zeigt: ursprünglicher tx.oncomplete-Resolver wird vor dem zusätzlichen Listener registriert; genaue Browserlistener-/Microtaskfolge ist ohne Originaltimeline nicht vollständig bewiesen.
-Keine Produktursache aus diesem Fehler abgeleitet; Produktcodeunverändert.
-KorrigierterTesthook setzt Commitmarkierung im bestehenden Transaktionsabschluss VOR Aufruf des ursprünglichen Abschlusscallbacks.
-Originalcallbackmitthis/eventgenaueinmal; tatsächlicherIDBCommit/save/CAS/render/restore bleibenimOriginalpfad. Ereignistimeline undCallbackzählung ergänzt.
-Nur drei C-Fälle ausgewählt: normalerErfolg,NachcommitAnzeigeexception,echterCommitabbruch. A/B undübrigeC28Belege am selbenProduktwiederverwenden,keineerneuteGesamtsuite.
-LokalSyntaxPASS und3expliziteTransaktions-/DOMAdaptergegenprobenPASS; **KEIN nativer Nachweis der Korrektur**.
-[Adaptergegenprobe](release-evidence/latest-display-adapter-preflight-2026-11-14.mjs) · [Originalausgabe](release-evidence/latest-display-adapter-preflight-2026-11-14.log).
+Ubuntu24.04.5/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37,Viewport390x850/serviceWorkersblocked.
+56Assertionzeilen,HostExit0/Tee0/BrowserCleanupPASS/OriginCleanupPASS.
+Tatsächlichangesehen:restore-postcommit-display.png,restore-native-commit-abort.png,restore-valid.png.
+Erfolgs-/AbbruchrückmeldungundWarn-/Fehlericonvisuellgeprüft.
+ExakterAnzeige-Warnsatznuralsaria-label/DOMgeprüft,nichtalsvollständigsichtbarerTextinScreenshotbehauptet;kein geöffneterStatusdialogScreenshot.
+OAuth/DriveMedia/Decrypt/Passwortübernahme simuliert;DOMExceptiongezieltsynthetisch;IDBCommit/Abbruchecht.
+KeinWindows/Edge/Android/PWA/Realprovider/echteKrypto/OAuth/Crash/Quota/K4Legacy/FullCI/Main/Produktions-/Releasebeleg.
+AnzeigewarnungistruntimeUIStatus;keinpersistierterWarnzustandüberReloadbehauptet.
 
-Prüfquelle **6a45eea783fdb09431b3a11b9167e6de6139e620**, Tree **7a7654079d076a7a54906811e925649a1b24ecab**, Parent4249a698,ProduktzweiterAncestor.
-VorbereiteteAusführung **13ad780b1ce0a95d38211af2a1e3dc47cd265571**, Tree **bc5e09a2af3dbf2213b9e59301a962332dc79f8f**, Parent exakt Prüfquelle.
-VorgesehenerRef **test/latest-display-boundary-77bcb76dd357-20261114**, NICHTANGELEGT; zugehörigeRuns0.
-[Reviewbare nächste Identitäten](release-evidence/latest-display-boundary-identities-2026-11-14.json).
-151Produktblobsidentisch,PrüfdeltanurHarness+Vertrag,AusführungsdeltanurDiagnoseworkflow;alleDateiengepinntbytegleich.
-Entwurfgenau1create-Lauf/Versuch1/einChromiumjob/max25minJob/360sHarness+15sNachlauf/0Retries/alwaysOriginalupload.
-**Neue ausdrückliche Freigabe fehlt. Nicht auslösen.** KeinRerun/ErsatztriggerausalterFreigabe; historischefreieInitialplätze nichtalsKorrekturfreigabewerten.
+## Originalsicherung und tatsächlicher Quellrestore
 
-## Unveränderte Schutzgrenzen und Abschlussgrund
+Artifact14102759691/ZIP1432185Bytes/SHA256de261e686afbc486ab1e10bfd247150f12fd332fbfed3a3efa5745c05e87c544.
+APIgröße/Digest/CRC und22innerManifestdateienPASS. UnveränderteReports/Joblog/Bilder/Quellinputs/Workflow erhalten.
+SeparatesArchivV0/4843520Bytes/SHA2562ce80bf4ab297a63029db58a7678e8df963e16763de69af223fe09feb91694b4.
+Gepinntbytegleichrückgelesen,26PreservationeinträgePASS.
+AusdiesemgepinntenArchiv153tatsächlich ausgeführteQuellblobs (151Produkt+Harness+Vertrag)restauriertundGitblobgenaugeprüft,0Fehler.
+PrivateLocatorsprivat; sämtlicheälterenOriginalarchive/Initialfehlerunverändert erhalten.
+FrühereAusführungen43564045852/43564350387/43567167015bleibenmitOriginalFAILUREundNachweisgrenzenerhalten.
+Toast43554653065/UI-ALLOC01/Restore-Vorgänger bleibengetrenntquellengebunden;keineunbelegteKombinationzuGesamtrelease.
 
-Maina27cde2f802c26bfec41190911d88bd1d7d8e325 geschützt.
-UI-R460c1ab098449151b475563c9fc822b9a5e9a9152/UI-ALLOC01 unverändert;FLH04feature/flh04-revisions-20261113-b5ddfe1c435ab9a82b87924b2262fafe1f1ad83e4eb326e4 geschützt.
+## Schutzgrenzen und nächste konkrete Aktion
+
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325 unverändertgeschützt.
+UI-R460c1ab098449151b475563c9fc822b9a5e9a9152/UI-ALLOC01unangetastet.
+FLH04feature/flh04-revisions-20261113-b5ddfe1c435ab9a82b87924b2262fafe1f1ad83e4eb326e4 geschützt.
 PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2,PR15708714cc602110bae479083b3d38fa1adc9be280c,Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74 erhalten.
-Alle früheren Diagnose-/Toastrefs/Originalarchive erhalten; keine neueProduktref/PR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
-Zentralbranch niemalsvollständig nachMainmergen; normaleCI/Main/Releaseworkflows/Pflichtgates erhalten.
-Originale/CAS/Revisionen/Journal/UNKNOWN-FX/Finanz-/Backup-/Restore-/Installationsschutzverträgeunverändert.
-FLH04NOTDONE,K4PARTIAL,CR4/CR5/qualifiziertesunabhängigesKryptoreviewoffen;keineaktiveSync/Migration/Identitätsportierung/neueKryptografie.
+Keine Produktref/ProduktPR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED. ZentralbranchniemalsvollständignachMainmergen.
+Originale/CAS/Revisionen/Journal/UNKNOWN-FX/Finanz-/Backup-/Restore-/Installationsschutzverträgeverbindlich.
+FLH04NOTDONE/K4PARTIAL/CR4CR5unabhängigesKryptoreviewoffen;keineaktiveSync/Migration/Identitätsübernahme/neueKryptografie.
 Main43332355188UrsacheUNKNOWN/Renderer43500770689separat,nichtwiederholen.
-RealeProfile/VersionenOPERATOR_INPUT_PENDING,nichterneutfragen;Safari/TalkBackzurückgestellt,N-PROJKernmeilenstein.
-41Scopes/15DONE unverändert. Keine pauschaleRoadmapfreigabe.
+WindowsChrome/Edge/AndroidChromePWA,realeProfile/VersionenOPERATOR_INPUT_PENDING,nichtneufragen;Safari/TalkBackzurückgestellt.
+41Scopes/15DONE unverändert;N-PROJbehältvorgelagertenKernmeilenstein.
 
-Endgrund: autorisierterLaufterminalausgewertet,Originalegesichert,einzigeoffeneHarnessstellelokalkorrigiertundnächster3Fall-Kandidatkonkretreviewbarvorbereitet; tatsächlichernativerNachweis benötigtneueAusführungsfreigabe.
-Keine neuenOriginal-/Geräte-/Revieweingänge für andere bereitsgeprüfteRoadmapgates; keineGesamtinventur/identischenErsatztests.
-KeineweiterebelegteProduktlücke aus diesemLauf. KeinStoppalleinwegenRunende; lokaleFehlerbehandlungundVorbereitungvollständig.
-KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Folgesitzung.
-Nach neuerFreigabe Owner/Ref/Actions/Produktblobs/Sicherungswegfrischprüfen; beiunklaremTriggerausgangzuerstzurücklesen.
-
-## Neue aktive Einmalfreigabe für den engen C-Korrekturkandidaten
-
-FrischerKollisionsabgleich am1651fda1: Ownerabgegeben, zentraleRefunverändert,kein in_progressRun. Produkt8f9ed1ce/Quelle6a45eea7/Ausführung13ad780b samtTrees/Parents exakt. ZielrefNOT_FOUND/zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
-Historische Aussagen „neueFreigabefehlt“ sind ausschließlich für diesen einen exakten Lauf durch das aktuelle Ja abgelöst.
-Nach letzterProduktblob-/Workflow-/Sicherungswegprüfung genaueinmalTriggeranlegen, terminalauswerten/Originalesichern/relevanteBildersichten. BeiUnklarheitzuerstRef/Actionsrücklesen. KeinGitHubRerun/Ersatztrigger.
-
-Run43568173088/1 gestartet, Zielrefexakt13ad780b rückgelesen. AktuellesJa verbraucht. KeineweitereAnlage/Rerun; genaueinJobbeobachtenbisTerminal/Originalesichern. AnderealteTriggerunverändert.
+DiebegrenztzugesagteQualifikationslückeistgeschlossen;keinweiterernativerDiagnoselaufdafürnotwendig.
+NächsterProduktqualifikationsschritt wäreseparaterReview/Integrationdesgeparkten8f9ed1ce-KandidatenunterbestehendenPR-/Main-/Produktionsgates.
+DafürfehltausdrücklicheFreigabe;aktuellerAuftragverbietetProduktPR/Integration/Release. Nichtautomatischfortfahren.
+UnabhängigeRoadmaparbeitnurbeineuemkonkretbelegtemlokalschließbaremRestfortsetzen.
+BereitsgezieltgeprüfteFolgegatesunverändert:K1/K2-FIN/N-Broker/Steuer/Barausgleich/Wallet-SonderfällebenötigenOriginal-/Ownership-/Fachbelege;
+K2-ETHtatsächlichenProvidercursor;K5/K6realeProfile/Geräteereignisse;FLH04/CR4CR5externesReview;P-CI-BgesonderteWorkflowentscheidung;
+SekundärnavigationKonzeptabgleich;N-PROJKernmeilenstein. KeineneuenEingänge/keineweiterenProduktfehlerausdiesemLauf.
+KeineerneuteGesamtinventur oderidentischeErsatztests. KeinStoppalleinwegengrünemRun:Auswertung,Sichtprüfung,Originalsicherung,QuellrestoreundRestzuordnungabgeschlossen.
+Endgrund: konkret nächsterReview-/Integrationsschrittverboten/nichtautorisiert;übrigegeprüfteRestebrauchenfehlendeOriginale/Geräte/Review.
+KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Folgesitzung. NeueÜbernahmezuerstfrischabgleichen.
