@@ -1,27 +1,14 @@
-# K4 · vollständiger Originverlust einschließlich localStorage · Prüfung vor CI
+# K4 · localStorage einschließende Eviction · Nutzdatenverlust und markerloser Start belegt
 
-Writer k4-full-origin-e4b79f541e28, Claim2f56309d1bf6477016930c7933115bc163626e5e, Produkt v315/Main ff60c73e53c973ecb86393be5b4e31b55f352601. K4 PARTIAL; Produktcode/Deployment nicht beauftragt. Frühere Pooldruck-/ext4-Teilfälle unverändert wiederverwenden.
+**Firefox-Nutzdaten-Eviction einschließlich localStorage/Vault: PASS. Markerloser Appstart: PASS. Vollständiger Originverlust einschließlich sämtlicher beobachteter Metadaten: NICHT beobachtet, Service-Worker-Registrierung erhalten. K4 insgesamt PARTIAL.** Keine Produktabweichung im geprüften Appfall. Produkt v315 LIVE_ACCEPTED/Main `ff60c73e53c973ecb86393be5b4e31b55f352601` unverändert; keine Produktänderung/Deployment.
 
-## Entscheidende Pfadfrage: Firefox statt weiterer Chromium-Füllung
+## Belegter Mechanismus und Versionsbezug
 
-Chromium141-QuotaClientType enthält FileSystem, IndexedDatabase, ServiceWorkerCache, ServiceWorker und BackgroundFetch, keinen localStorage-Client. Das stimmt mit beiden tatsächlichen Belegen überein: IDB/Cache/OPFS verdrängt, localStorage erhalten. Keine unbelegte universelle Behauptung über jeden Chromium-Löschpfad; weiterer gleicher Speicherknappheitslauf ist nicht gerechtfertigt.
+Vor CI wurde der [Quellen-/Ereignisvertrag](https://github.com/joke0071/foliolab-open/blob/09abbaa5bcb60d430194b274c73371f7cc88bab6/docs/K4_WHOLE_ORIGIN_2026-11-14.md) gespeichert. Die [Chromium-Quota-Pool-](K4_STORAGE_EVICTION_2026-11-14.md) und [ext4-Knappheitsbelege](K4_FILESYSTEM_EVICTION_2026-11-14.md) bleiben gültig: localStorage überlebt dort. Versionspassendes Chromium141-QuotaClientType enthält keinen LS-Client; deshalb kein erneuter tieferer Chromium-Fülllauf.
 
-Firefox142.0.1 hat den passenden **automatischen QuotaManager-Pfad für Nutzdaten einschließlich LSNG**:
-1. CanonicalQuotaObject::LockedMaybeUpdateSize prüft globalen Speicherverbrauch gegen mTemporaryStorageLimit. Bei Überschreitung CollectOriginsForEviction, danach DeleteOriginDirectory für ausgewählte Originlocks.
-2. CollectOriginsForEviction nimmt nichtpersistierte/inaktive Origins nach Alter; gesperrte/persistierte/Extension-Origins sind ausgeschlossen.
-3. DeleteOriginDirectory entfernt das vollständige per-Origin-Verzeichnis rekursiv; OriginClearCompleted informiert Clients.
-4. Clientregistrierung umfasst IDB, DOMCACHE, FILESYSTEM und LS bei NextGenLocalStorageEnabled. LS-QuotaClient::GetType liefert LS. LocalStorageCommon aktiviert LSNG standardmäßig (unsupported_legacy=false).
-5. GetTemporaryStorageLimit erlaubt den expliziten Benutzerpref dom.quotaManager.temporaryStorage.fixedLimit in KiB. Ein begrenzter32MiB-Pool kann durch erfolgreiche Schreibvorgänge mehrerer anderer Origin-Gruppen überschritten werden. GroupLimit mindestens10MiB erlaubt je8MiB. Kein tieferes Absenken des freien Datenträgerplatzes.
+Firefox142.0.1 dagegen registriert LSNG als QuotaManager-Client. CanonicalQuotaObject::LockedMaybeUpdateSize überschreitet bei tatsächlichen Schreibvorgängen den globalen Pool, sammelt ungeschützte/inaktive LRU-Origins und ruft DeleteOriginDirectory auf. Diese Funktion entfernt das gemeinsame Originverzeichnis rekursiv, einschließlich ls/data.sqlite. LSNG ist standardmäßig aktiv; kein manuelles Browser-/IDB-/CDP-Löschen ist dafür nötig.
 
-WebKit-Herstellerdokumentation nennt ebenfalls originweise Eviction einschließlich localStorage/IDB/Cache/SW/FileSystem (https://webkit.org/blog/14403/updates-to-storage-policy/). Das ist ein weiterer Quellenhinweis, kein ausgeführter Safari-/WebKit-Beleg und nicht der gewählte Lauf.
-
-## Versionsbezug und Grenzen der Quellenzuordnung
-
-Playwright1.56.1 browsers.json nennt Firefoxbuild1495/142.0.1, Chromium141.0.7390.37 und WebKit26.0. Runtimeversion142.0.1 wird vor Fixture geprüft; application.ini/platform.ini werden gesichert.
-
-Die im selben Playwright-Tag hinterlegte UPSTREAM_CONFIG nennt Basis361373160356d92cb5cd4d67783a3806c776ee78 (version.txt140.0.2). Diese Abweichung wird nicht verschwiegen: relevante LSNG-/CanonicalQuotaObject-Blobs sind identisch am142.0.1-Release-Tag und an dieser Basis; Registrierung/Originlöschung/Limitpref auch am Basisstand geprüft. bootstrap.diff verändert keine dom/quota-/dom/localstorage-Datei. Das ist versionspassende Quellprüfung plus zusätzlicher Basisabgleich, kein vollständiger reproduzierbarer Binärbuildbeweis. Der tatsächliche neue Lauf muss das Ereignis selbst belegen.
-
-| Version | Datei | Gitblob |
+| Versionsquelle | Datei / entscheidender Vertrag | Gitblob |
 | --- | --- | --- |
 | Chromium 141.0.7390.37 | [storage/browser/quota/quota_client_type.h](https://github.com/chromium/chromium/blob/141.0.7390.37/storage/browser/quota/quota_client_type.h) | 8d44d792c41aeb5a066bbc02e6119567178e745c |
 | Firefox 142.0.1 | [dom/quota/ActorsParent.cpp](https://github.com/mozilla-firefox/firefox/blob/FIREFOX_142_0_1_RELEASE/dom/quota/ActorsParent.cpp) | a2d37469d1578daf80a5bcd932172b8d1bb45e87 |
@@ -30,24 +17,83 @@ Die im selben Playwright-Tag hinterlegte UPSTREAM_CONFIG nennt Basis361373160356
 | Firefox 142.0.1 | [dom/localstorage/LocalStorageCommon.cpp](https://github.com/mozilla-firefox/firefox/blob/FIREFOX_142_0_1_RELEASE/dom/localstorage/LocalStorageCommon.cpp) | c248030edddd382738a3d107c676ef8c26e1679f |
 | Firefox 142.0.1 | [modules/libpref/init/StaticPrefList.yaml](https://github.com/mozilla-firefox/firefox/blob/FIREFOX_142_0_1_RELEASE/modules/libpref/init/StaticPrefList.yaml) | 08ff84fcced88c75ff798e8218c067fafca082f5 |
 
-## Ausführung und Ereignisnachweis vorab festgelegt
+Playwright1.56.1 browsers.json ordnet Firefoxbuild1495 der Version142.0.1 zu. Der echte Lauf bestätigt Browserversion, application.ini und platform.ini142.0.1 / BuildID20251001122343. Das Playwright-UPSTREAM_CONFIG verweist noch auf361373160356d92cb5cd4d67783a3806c776ee78 (version.txt140.0.2); diese Inkonsistenz ist festgehalten. LSNG-/CanonicalQuotaObject-Blobs sind an dieser Basis und am142.0.1-Release-Tag identisch, relevante Registrierung/rekursive Originlöschung/Pref ebenfalls an beiden Ständen geprüft. bootstrap.diff ändert keine dom/quota-/dom/localstorage-Datei. Keine Behauptung eines vollständig reproduzierten, byteidentischen Herstellerbuilds. Ausschlaggebend ist der zusätzliche native Laufbeleg.
 
-Ein isolierter Linux-Ubuntu24.04-QA-Lauf auf neuer Ref mit unverändertem v315-Produktbaum, Playwright1.56.1 und installiertem Firefoxbuild1495. Ein neues synthetisches Ausgangsprofil wird **nur am Anfang** angelegt, danach dasselbe Profil und dieselbe Origin beibehalten. Fester Server bleibt durchgehend geöffnet.
+## Tatsächlicher Lauf und Ereignis
 
-Befüllt werden kanonische Portfolio-IDB/Revision7/confirmedActive samt Settings, echte Backup-Vault-IDB mit synthetischem Passwort/nicht extrahierbarem Schlüssel, ältere lokale Portfoliokopie, Modusmarker und Sentinel in localStorage, Cache2MiB, OPFS1MiB sowie regulärer v315-ServiceWorker/Appcache. Ausgangsrecord und Inventare außerhalb des Profils sichern. SessionStorage ist tabgebunden und wird nicht als druckbedingt verdrängt ausgegeben.
+[QA43645973137](https://github.com/joke0071/foliolab-open/actions/runs/43645973137), Versuch1, Job132603709532. QA-Ref `qa/k4-whole-origin-e4b79f541e28`, Head `f285bb761c22a736e82f12a6334e73171fd1f4ae`, Tree `1f4d62930e0e552e03dcd215a71483f8c912cd2a`. Ubuntu24.04 / Firefox142.0.1 / Playwright1.56.1. Gegen Main nur QA-Runner und QA-Workflow hinzugefügt. [Runner](https://github.com/joke0071/foliolab-open/blob/f285bb761c22a736e82f12a6334e73171fd1f4ae/.qa/k4-whole-origin.cjs).
 
-Firefox startet mit einzigem druckbezogenem Pref fixedLimit32768KiB, LSNG auf Standard. Vor Browserrestart per-Origin-Verzeichnis/inode/alle Dateien erfassen; ls/data.sqlite muss vorhanden sein. Targettab schließen, Browser regulär schließen; gleiches Profil erneut starten. Danach nur andere Loopback-Origin-Gruppen füllen: höchstens8 Origins ×8MiB Cachepayload, Gesamtfenster120s. Bei Hostavailable<1GiB abbrechen; kein Host-/Profilreset/Füllfile. Stale/Target-Origin während Druckphase nicht öffnen.
+Dasselbe Profil `/home/runner/work/_temp/k4-whole-origin-firefox` und dieselbe Origin `http://127.0.0.1:33133` durchgehend. Neues Profil nur für anfängliche synthetische Einrichtung; nach Seeding kein Profilwechsel oder Reset. HTTP-Server bleibt offen.
 
-Browser beim Drucklauf unter strace -ff für unlink/unlinkat/rmdir/rename, Logdateien außerhalb des Profils. Thread-/Prozesszuordnung über /proc, Browserkommando und Trace-TID sichern. MOZ_LOG QuotaManager/LocalStorage ergänzend. Für die native Beobachtung ist MOZ_DISABLE_CONTENT_SANDBOX=1 als QA-Kompatibilitätsgrenze gesetzt; das ist keine Sicherheits-/Geräteabnahme.
+Vorher außerhalb des Profils gesichert: bestätigte Portfolio-Revision7/confirmedActive, vollständige raw-/Settingsdaten (Synthetic ETF, Menge2, Preis100EUR), echte Vault-IDB mit synthetischem Passwort/nicht extrahierbarem CryptoKey, Modusmarker/ältere lokale Portfoliokopie/Sentinel, Cachepayload, OPFS-Datei sowie aktiver v315-ServiceWorker. Native Dateiinventare und Hashes umfassen insbesondere ls/data.sqlite. Persistenzanforderung nicht erteilt, persisted=false.
 
-Ereignis nur belegt bei: erfolgreiche konkurrierende Speicherwrites, vorher vorhandenes Targetverzeichnis fehlt, native erfolgreiche Browser-syscalls für ls/data.sqlite und das Target-Originverzeichnis, anschließend im selben Profil/Origin vor Appstart leere IDB/Cache/OPFS/localStorage-Inventare. Kein manueller Datenlöschaufruf im Runner; Schreibfehler allein reicht nicht. Tracingfähigkeit fehlt → Ereignis nicht als PASS ausgeben.
+Druckquelle: explizit32MiB globaler Firefox-Pool über normalen Konfigurationspref `dom.quotaManager.temporaryStorage.fixedLimit=32768` (KiB). Keine Behauptung einer vollen physischen Festplatte oder Standardquotaabnahme. Zieltab und Browser wurden regulär geschlossen; dasselbe Profil für native Beobachtung neu geöffnet. Danach nur konkurrierende Loopback-Origin-Gruppen beschrieben, Target während Druckphase nicht geöffnet.
 
-ServiceWorker-Registrierung zusätzlich erfassen. Bleibt sie oder ein anderer relevanter Speicherbereich erhalten, **keinen vollständigen Originverlust behaupten**. Ein belegter vollständiger Nutzdatenverlust einschließlich LS kann trotzdem mit begrenzter Aussagegrenze separat erfasst und das markerlose Appverhalten beobachtet werden.
+Vier erfolgreiche8MiB-Schreibvorgänge mit nicht komprimierbaren synthetischen Cachebytes werden jeweils mit8485187 Bytes Quotanutzung erfasst. Zusammen33940748 Bytes plus anfängliche Zielnutzung2962444 Bytes übersteigen den33554432-Byte-Pool. Fenster maximal120s/8 konkurrierende Origins; Hostfreiplatz blieb weit über der1GiB-Abbruchgrenze.
 
-## Markerloser Fachvertrag
+| Native Beobachtung,14.11.2026 (MEZ) | Befund |
+| --- | --- |
+| 23:03:18.846468 | Firefox-TID3530 löscht ls/data.sqlite per erfolgreichem unlink |
+| 23:03:18.968528 | Derselbe Thread entfernt das gesamte Ziel-Originverzeichnis per erfolgreichem rmdir |
+| 23:03:19.380 | Verzeichnis fehlt, neutrale Probe derselben Origin wird erst anschließend gestartet |
 
-v315 initialize() wählt ohne Modusmarker und ohne Legacy-Kopie initializeNew(). Ohne kanonischen Restrecord ist eine frische leere Revision1 erlaubt. Ein noch vorhandener confirmedActive-Record würde dagegen validiert und übernommen; abweichende unbestätigte Reste bleiben gesperrt. Daher darf das Soll nach wirklich verschwundenen Markern/alten Kopien/IDB/Vaultdaten keine frühere lokale Verlustkenntnis voraussetzen.
+Strace-TID3530 gehört laut /proc/status zu Firefox-TGID3505; dessen tatsächlich aufgezeichnete Kommandozeile nennt Firefox1495 und dasselbe Profil. Tracer3502 und Node-Runner sind getrennte Prozesse. Original-native-fs-Spuren enthalten erfolgreiche Systemaufrufe, nicht nur eine erwartete Fehlermeldung oder QuotaExceededError. Kein Löschaufruf im QA-Runner. Für ptrace-Kompatibilität ist MOZ_DISABLE_CONTENT_SANDBOX=1 gesetzt; das ist eine QA-Grenze, keine Sicherheits-/Geräteabnahme.
 
-Nach nachgewiesenem Datenverlust: Kern initialisiert IndexedDB mit leerem Modell/Revision1, UI meldet aktive Speicherung dieses neuen leeren Modells, kein altes Portfolio/Sentinel/Passwort wird wiederhergestellt. Keine verpflichtende Recoverymeldung ohne erhaltenes belastbares Signal über früher gespeicherte Portfoliodaten. Tatsächlich erhaltene SW-Metadaten gesondert auf Aussagekraft beurteilen; allein eine Registrierung belegt keinen früheren Portfoliobestand.
+## Verlustumfang vor erneuter Appinitialisierung
 
-Ereignisfrage und Appreaktion getrennt berichten; bei unbelegtem vollständigem Verlust keine Gesamtabnahme. K4 bleibt PARTIAL. Quellen/Originalberichte sichern und Writer abgeben.
+| Befüllter Bereich | Vorher | Neutrale Probe nach Ereignis |
+| --- | --- | --- |
+| Portfolio-IDB | Revision7, confirmedActive, Originalraw/Settings | Keine IDB-Datenbank |
+| Backup-Vault-IDB | Konfigurierter synthetischer Schlüssel/Wrap, Passwort vorhanden | Keine IDB-Datenbank; später hasBackupPassword=false |
+| localStorage | idb-v1-Modus, alte Kopie, Sentinel | Vollständig leer |
+| Cache API | Testcache und v315-Appcache | Leer |
+| OPFS | payload-Datei | Leer |
+| Service-Worker-Registrierung | Aktiver /sw.js, Originscope | **Registrierung/aktiver /sw.js erhalten** |
+
+Die Inventare wurden vor PortfolioStorage.initialize und vor normalem Appstart erfasst. OPFS-Lesen kann leere Metastrukturen anlegen; das verdeckt nicht das vorher nativ belegte Entfernen des ursprünglichen Verzeichnisses und seiner Inhalte. SessionStorage ist tabgebunden und wird nicht als druckbedingt gelöscht ausgegeben.
+
+**Damit ist der vollständige Verlust aller befüllten Nutzdatenspeicher einschließlich localStorage und Vault belegt. Ein uneingeschränkt vollständiger Originverlust wird ausdrücklich nicht behauptet**, weil SW-Registrierung und zugehörige Browsermetadaten fortbestehen. Das entspricht dem maschinellen Status PAYLOAD_LOSS_AND_APP_PASS_SERVICEWORKER_RETAINED.
+
+## Markerloser Fachtest: korrektes Appverhalten
+
+v315 initialize()/initializeNew() entscheidet anhand Modusmarker, alter lokaler Kopie und kanonischem Record. Nach deren tatsächlichem Verschwinden existiert kein belastbares Appsignal für ein früher gespeichertes Portfolio. Eine SW-Registrierung belegt allein keinen früheren Portfoliobestand: Sie entsteht auch bei frischem leerem Appbesuch. Keine Recoverymeldung allein aufgrund extern gesicherter Testbelege als Soll erfinden.
+
+Der echte Corestart initialisiert ein neues leeres IndexedDB-Modell mit Revision1. Normale UI danach: „Transaktionale IndexedDB aktiv“ und „Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.“ Keine alte Position, kein Sentinel, kein altes Passwort; neuer kanonischer Record weiterhin Revision1/leere Positionen. Keine stille Altbestandsübernahme, keine unzutreffende Behauptung, der frühere Bestand sei erhalten. after.png visuell geprüft. **Appfall PASS für den tatsächlich belegten markerlosen Nutzdatenverlust.** Kein Produktpatch aus fehlender Recoverymeldung ableiten; kein neuer Backup-Restore-/OAuth-PASS.
+
+## Weiterer vollständiger Pfad: WebKit, aber verfügbare Linux-Ansteuerung fehlt
+
+WebKit-Herstellerdokumentation [Updates to Storage Policy](https://webkit.org/blog/14403/updates-to-storage-policy/) nennt originweise Verdrängung einschließlich localStorage, Cache, IDB, ServiceWorker und FileSystem. Zusätzlich den in Playwright1.56.1 gepinnten WebKit-Quellstand `db897909f7c31d9b38793374c66427b6a4cb3dd3` geprüft:
+
+- NetworkStorageManager::allManagedTypes enthält ausdrücklich ServiceWorkerRegistrations neben LS/IDB/Cache/FileSystem.
+- performEviction verwendet deleteData(allManagedTypes) für ungeschützte inaktive Origins.
+- spaceGrantedForOrigin kehrt jedoch bei fehlendem m_totalQuotaRatio zurück. WebsiteDataStore::defaultTotalQuotaRatio ist außerhalb Cocoa nullopt.
+- GLib WebKitWebsiteDataManager besitzt den **Construct-only**-Parameter total-storage-ratio, Standard -1 (kein Gesamtlimit). Die geprüfte MiniBrowser-/Playwright-Erzeugung setzt ihn nicht; der vorhandene Playwright-WebKit-Treiber/Bootstrap-Patch bietet keine Quota-Einstellung. WebKitNetworkSession fügt keine solche Einstellung hinzu.
+
+[NetworkStorageManager.cpp](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Source/WebKit/NetworkProcess/storage/NetworkStorageManager.cpp) · d11e2a87543c64c0c339620b219f05c71ded7302
+
+[OriginStorageManager.cpp](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Source/WebKit/NetworkProcess/storage/OriginStorageManager.cpp) · 2a3e6791c0b400084bb8a977a7a6e6b2765d4f14
+
+[WebsiteDataStore.cpp](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Source/WebKit/UIProcess/WebsiteData/WebsiteDataStore.cpp) · 606401f719eecd52737fc3f6f15a328f74f4f5d9
+
+[WebKitWebsiteDataManager.cpp](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Source/WebKit/UIProcess/API/glib/WebKitWebsiteDataManager.cpp) · 59da4baba9cc6084cb92d6dfb93ae338d149b7ce
+
+[WebKitNetworkSession.cpp](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Source/WebKit/UIProcess/API/glib/WebKitNetworkSession.cpp) · 4790dbbfb0c33391ee475f0fbf64395c0049b3e4
+
+[main.c](https://github.com/WebKit/WebKit/blob/db897909f7c31d9b38793374c66427b6a4cb3dd3/Tools/MiniBrowser/gtk/main.c) · d3fbb968ee463f86c64fecb855b46c8634b4b72d
+
+**Exakte Nachweislücke:** In der verfügbaren Linux-Playwright-Ansteuerung ist kein aktivierter/erreichbarer globaler Quota-Pfad belegt, der die SW-Metadaten mit verdrängt. Daraus folgt keine universelle Unfähigkeit von WebKit oder Safari. Ein bloß kleineres Volume/mehr Füllbytes würde den fehlenden Quota-Parameter nicht ersetzen; deshalb kein spekulativer WebKit-CI-Lauf.
+
+**Kleinste ausführbare Voraussetzung:** einen zur gepinnten WebKit-Buildversion passenden QA-MiniBrowser/Testlauncher bereitstellen, der beim Erzeugen des persistenten WebsiteDataManagers einen positiven begrenzten total-storage-ratio setzt und dessen Wirksamkeit messbar ausgibt. Beispielscope: ausschließlich isoliertes QA-Profil, tatsächlich gesetzte Gesamtquota und native deleteData(allManagedTypes)-Beobachtung; danach vorhandene Fixture plus strikte SW/LS/IDB/Cache/OPFS-/Vault-Vorher-nachher-Prüfung verwenden. Alternativ echte verfügbare Cocoa-/Safari-Testumgebung mit nachweislich aktiver Gesamtquota. Kein manuelles clearData/Profilreset als Ersatz.
+
+## Originale, Fehlversuch und Sicherung
+
+Voriger Lauf43645760657 war **kein Ereignis-PASS**: Cache-Nullbytes komprimierten auf489667 Bytes je Origin. Acht solcher Schreibvorgänge plus Zielnutzung blieben deutlich unter32MiB; Origin blieb erhalten, App-Nach-Eviction-Test NOT_RUN. Beobachteter Aufbaufehler wurde ausschließlich durch nicht komprimierbare, tatsächlich quotawirksame Druckbytes korrigiert. Kein blindes Retry, keine Änderung am Produkt oder markerlosen Soll.
+
+- [Original43645760657](https://github.com/joke0071/foliolab-open/actions/runs/43645760657/artifacts/14133806646):253311 Bytes,SHA2566d5ed515795592549817a1c776c49da7876f95c30a0f30e166f3869f9a040209,403 Dateien.
+- [Original43645973137](https://github.com/joke0071/foliolab-open/actions/runs/43645973137/artifacts/14134416302):348189 Bytes,SHA2567609abe6eb6975a6ee28a5675cecaf19ea0a18d857cc6c07f0456e1066de9f89,338 Dateien.
+- Beide OriginalZIPs mit GitHub-Größe/Digest und CRC geprüft, vollständige Joblogs/native Spuren/source-review/Zuordnung gesichert.
+- [FolioLab_K4_Whole_Origin_2026-11-14.tar.gz](https://chatgpt.com/library?file_id=libfile_fde3_f-0166cbe62d9c8191b7e0ef97d41f1b83_54e45e8130348191808d9aaa710cf372&account_id=personal),544229 Bytes,SHA256 `4eabbc8b021f9a002c5206d8c2930a6287fd07ce5e8f0ed14ce47850659fb2ca`. Version0 an exakter Dateiidentität gepinnt rückgelesen:9 Archivmitglieder und741 Originaldateien tatsächlich restauriert/hashgeprüft, beide ZIP-CRCs erneut PASS.
+
+## HND01-Abgabe
+
+Claim `2f56309d1bf6477016930c7933115bc163626e5e` mit expected c2dbb23b9707bc3ec5b689f36ddd8284789af87c; Quellenvertrag vor CI09abbaa5bcb60d430194b274c73371f7cc88bab6. Letzter Abgleich: Main unverändert, keine queued/in_progress Actions. K4 PARTIAL. **Writer k4-full-origin-e4b79f541e28 STOPPED / HANDOVER_READY.** Vor nächster Mutation aktuelle expected SHA lesen und HND01 übernehmen; Checkpointbranch niemals vollständig nach Main.
