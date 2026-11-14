@@ -2,7 +2,7 @@
 
 ## Zuständigkeit und Auftrag
 
-ACTIVE · work-serial-77bcb76dd357-20261114. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
+STOPPED/HANDOVER_READY · work-serial-77bcb76dd357-20261114. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
 Übernahme13f048c39e45781f7876d20af818e05f691d4de8 expectedSHA-geschützt und exakt rückgelesen.
 Vorgängerwork-toast-prepare-77bcb76dd357-20261113 STOPPED/HANDOVER_READY.
 [Vollständiger Vorgänger und unveränderte Historie](https://github.com/joke0071/foliolab-open/blob/e00b35711a61a2192be6d7151dfc79ad98202825/docs/WORK_RESTPAKETE_CHECKPOINT.md).
@@ -65,9 +65,33 @@ Originalarchiv V0/1249280Bytes/SHA2560b1ab57cbce53ecf30bcad0f29bfc823213696ffd08
 20s-Timeout beim controlledStorageFixture vor Reload; am Schluss kein aktiver/installierender/wartender Worker und controller=null.
 Konkrete Installations-/Transportursache bleibt UNKNOWN. Kein neuer Lauf, kein Timeout-/Fixturepatch.
 
-ACTIVE: nächster Schritt ist die gezielte Prüfung des nächsten unabhängig intern bearbeitbaren Roadmap-Ablaufs anhand Originalauftrag und Quellstand.
-Keine Wiederholung akzeptierter Quellen-/Hilfen-/Frequenz-/Einstellungs-/UI-Teile und keine Ersatztests für reine Gerätegates.
-Dieser Wiederaufnahmepunkt beendet die Sitzung nicht.
+## Gesicherter Sitzungsabschluss
+
+Die sieben bestätigten Korrektheitslücken sind lokal geschlossen und als ein linearer Produktstand gesichert.
+Die zuletzt konkret geprüften Folgearbeiten hängen an folgenden Voraussetzungen; kein zusätzlicher bestätigter lokal schließbarer Rest in diesen geprüften Abläufen:
+
+| Aufgabe | Noch fehlendes Kriterium | Voraussetzung / nächste ausführbare Aktion |
+| --- | --- | --- |
+| K2/K3/K4 gemeinsamer Nachfolgestand883c4eb0 | Native UI-/IDB-/Integrationsqualifikation der tatsächlich geänderten Pfade | Neue ausdrückliche begrenzte Ausführungsfreigabe; vorher exakten gemeinsamen Quellstand/Impact/Prüfvertrag binden. Toast-PASS nicht übertragen. |
+| K1/#174/#255 und K2-FIN Gesamtdeckung | Unabhängige historische Anfangs-/Endbestände, Ownership-/Stakinganker und benannte fehlende Originalklassen | Passenden privaten Originalbeleg samt unabhängigen Sollwerten zuordnen; bestehenden Fünfanbieterkern/120Reihenfolgen nicht neu bauen. |
+| K2-KURSE/#266 und K2-ETH/#268 übrige Originalgrenzen | Tatsächliche unqualifizierte Provider-/Cursorantwort | Echten Antwortbeleg abgleichen; Quellenhilfen v304 und Frequenz v303 bleiben DONE. Keine erneute pauschale Öffnung. |
+| K4/K5/K6 reale Kernnutzung | WindowsChrome/Edge-/AndroidChrome/PWA-Profile, Versionen, echte Crash-/Quota-/Update-/Gerätewechselereignisse | OPERATOR_INPUT_PENDING; keine erneute Gerätefrage, keine Ersatztests für reine Hardwarekriterien. |
+| UI-R4/UI-ALLOC01 | Integration und verbleibende native/Plattform-/Produktionsgates | Bestehende geschützte Kandidaten und begrenzte Originalbelege wiederverwenden; kein neuer unqualifizierter Variantenstapel. |
+| P-CI-B/#229/Mainfehler43332355188 | CSV44px-Nachweis bzw. bewiesene Worker-Installationsursache | Gesonderte Workflow-/Ausführungsentscheidung und konkrete neue Hypothese; keine Reruns/Timeoutlockerung. P-CI-C erst nach B. |
+| N-DRIVE/FLH04/CR4/CR5 | Unabhängiges Kryptoreview, vertrauenswürdiger Enrollment-/Writer-/Keyslotvertrag und native Persistenzgates | Bestehendes Reviewpaket einem qualifizierten unabhängigen Prüfer zuordnen; keine neue Kryptografie/Sync/Identitätsübernahme oder Rendererwiederholung. |
+| N-BROKER/N-AT/N-CASHLIEU/N-WALLET/N-FX neue Sonderfälle | Benannte Originalklasse und unabhängige wirtschaftliche/Ownership-/Finalitäts-/Fachbehandlung | Nur konkret vollständigen Fall öffnen; keine synthetische Original-/Steuerfreigabe. |
+| N-UI-PLUS Sekundärnavigation/#300 | Vorgelagerter Konzept-/Nutzerabgleich aus Originalauftrag | Keine zweite Navigation ohne diesen Abgleich. Akzeptierte Dashboard-/Installations-/Navigationsanteile nicht neu umsetzen. |
+| N-PROJ/#252 | Vorgelagerter Kernmeilenstein und eigener begrenzter Vertrag gemäß kanonischer Roadmap | Optionales Szenario bleibt ACTIVE/PLANNED; nach Kernabschluss separaten Simulationsvertrag konkretisieren. Keine Prognose im Journal/Istwert. |
+| N-CSP/K6-TRUST/#298 und N-OTHER | Konkreter noch offener Mangel bzw. unentschiedene Scoreformel/Originalanforderung | Ohne belegten Mangel keine pauschale CSP-Härtung; Safari-/Backuphinweise vorhanden, PORT-COMP-Formel nicht entschieden. |
+
+Endgrund: Die konkret geprüften nächsten Kernarbeiten benötigen zusätzliche Ausführungsfreigaben, unabhängige Originale, reale Profile oder das ausstehende externe Review; geplante abhängige Komfortarbeit hat ihren Kernmeilenstein noch nicht erreicht.
+Keine Behauptung, alle41Scopes seien erledigt oder sämtliche denkbaren Fehler ausgeschlossen.
+Kein Stopp allein wegen grünem Toast, Actionsbudget, Paketanzahl oder Kontextkomprimierung.
+Letzte Mutationen eindeutig zugeordnet und erwartet-SHA-geschützt; keine offenen/unklaren eigenen Mutationen.
+Keine eigenen Node-/Browser-/Testserver-/Hintergrundprozesse aktiv; keine Automation/Folgesitzung eingerichtet.
+Frischer Abschlussabgleich: Main/FLH04/Trigger und PR332/157/161 unverändert, kein Actionlauf in_progress; letzter neuer Lauf ausschließlich43554653065/1SUCCESS.
+Die beiden historischen queued43095194276/43095194257 bleiben unverändert; nicht als eigene aktive Ausführung gewertet.
+Neue Übernahme ausschließlich nach frischem Kollisions-/Ref-/Actionsabgleich.
 
 ## Geschützte Stände und Grenzen
 
