@@ -1,0 +1,137 @@
+{
+  "status": "TEST_SETUP_ERROR",
+  "k4": "OPEN_NOT_PASSED",
+  "lastSuccessfulPhase": "PRODUCT_COMMIT",
+  "firstViolatedExpectation": "pre-SIGKILL visible amount text assertion expects trailing euro sign; actual pinned de-AT UI has leading euro sign",
+  "phaseStatus": {
+    "preflight": "PASS",
+    "preflightCleanup": "PASS",
+    "productCommit": "PASS_revision7_record_captured",
+    "plannedSIGKILL": "NOT_REACHED",
+    "reopen": "NOT_REACHED",
+    "dataComparison": "NOT_REACHED",
+    "finalProductCleanup": "SIGKILL_only_no_reopen_not_a_case_PASS"
+  },
+  "product": {
+    "sha": "48125a2608b27095fbdf89445340f90d04e9291b",
+    "tree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+    "separateCheckout": true
+  },
+  "qa": {
+    "sha": "99fc4dc1ff7e13eb4334da3ecaf3c35cbbc4630d",
+    "tree": "ee32602917cb1fcbdfb99ced79b08950b0898b73",
+    "runnerBlob": "a12fa4e33bc8b74192cf9eadb7ec7b4a6f362f73",
+    "workflowBlob": "9f4562dbcbeccdb03e8a7f042976e65d334cdaf8",
+    "branch": "qa/k4-sigkill-cleanup-48125a26-20261114",
+    "run": 43620425859,
+    "attempt": 1,
+    "job": 132524671288,
+    "conclusion": "failure",
+    "retries": 0
+  },
+  "runtime": {
+    "node": "22.23.4",
+    "playwright": "1.64.1",
+    "chromium": "156.0.8078.4",
+    "headlessShell": 1248,
+    "runner": "ubuntu-24.04",
+    "kernel": "7.0.0-1014-aws"
+  },
+  "preflight": {
+    "oldPID": 3117,
+    "newPID": 3196,
+    "sameProfile": true,
+    "markerBefore": "synthetic-marker-v1",
+    "markerAfter": "synthetic-marker-v1",
+    "signalRequestedAt": "2026-11-14T17:19:43.494Z",
+    "observedExitAt": "2026-11-14T17:19:43.506Z",
+    "exit": {
+      "code": null,
+      "signal": "SIGKILL"
+    },
+    "correctedCleanup": {
+      "command": "Browser.close",
+      "exitCode": 0,
+      "signal": null,
+      "observedAt": "2026-11-14T17:19:43.639Z"
+    }
+  },
+  "productBefore": {
+    "pid": 3266,
+    "profile": "/home/runner/work/_temp/k4-product-43620425859",
+    "origin": "http://127.0.0.1:33003",
+    "fixture": "tests/restore-position-fixture.mjs",
+    "revision": 7,
+    "quantityExact": "2",
+    "priceExact": "100",
+    "currency": "EUR",
+    "totalEUR": "200",
+    "visibleText": "€ 200,00",
+    "storageText": "Transaktionale IndexedDB aktiv",
+    "db": {
+      "name": "foliolab-open-portfolio",
+      "version": 1,
+      "stores": [
+        "records"
+      ]
+    },
+    "mode": "idb-v1",
+    "rawSHA256": "1104d4c1ff07a6d794e0c4357040d960895a670218ff178e1cac7666d6fb10e0",
+    "recordBytesSHA256": "0dd35c075b7ad11c0f1aee3735ddab3dcac7816fbdb7f4890025f66435772ced",
+    "fullRawRecordSettings": "original before.json",
+    "serviceWorker": {
+      "controller": null,
+      "active": null,
+      "registrationScope": "http://127.0.0.1:33003/",
+      "caches": [
+        "foliolab-open-v314"
+      ]
+    },
+    "servedAssetRequests": 254,
+    "uniqueAssetPaths": 150,
+    "servedBytesMatchManifest": true,
+    "productCleanupExit": {
+      "code": null,
+      "signal": "SIGKILL",
+      "observedAt": "2026-11-14T17:19:44.431Z",
+      "qualifiesAsRequestedCase": false
+    }
+  },
+  "failure": {
+    "runnerLine": 53,
+    "expectedRegex": "/200[,.]00\\s*€/",
+    "actualLine": "€ 200,00",
+    "classification": "HARNESS_TEXT_ORACLE_ERROR",
+    "productDeviation": false,
+    "caseNotPassed": true,
+    "rawReportCaveat": "k4.status NOT_RUN is coarse; fixture/save/before record already completed, but planned SIGKILL/reopen/data comparison not reached",
+    "screenshotCaveat": "before.png captures current viewport; amount below fold, full positions DOM text preserved in report"
+  },
+  "original": {
+    "artifact": 14122933881,
+    "bytes": 150214,
+    "sha256": "7aa59e66791f3aadfde48446f533e8d99f1adef697ca564cc6245dd83c02d4e6",
+    "zipCRC": true,
+    "innerManifestFiles": 14,
+    "archive": "FolioLab_K4_cleanup_43620425859_attempt1.tar.gz",
+    "version": 0,
+    "archiveBytes": 318129,
+    "archiveSHA256": "a68d292dfb3ffd8af6f1e7afcd5d99b1987abfa8f839df1cee1dd3f57aad4a1f",
+    "pinnedReadbackByteEqual": true,
+    "actualRestoredManifestFiles": 18,
+    "jobLogExactPreserved": true
+  },
+  "next": {
+    "prepared": "k4-sigkill-display-prepared-2026-11-14.cjs",
+    "onlyChange": "two display assertions require exact full line € NBSP 200,00 instead of trailing euro; all process/data/revision assertions unchanged",
+    "syntax": "PASS",
+    "executed": false,
+    "action": "execute new authorized targeted QA with corrected display oracle on distinct QA ref/SHA; no product change/full-CI/release"
+  },
+  "limits": [
+    "Linux Chromium committed SIGKILL K4 case remains OPEN",
+    "K4 PARTIAL",
+    "v314/Main/product/deployment unchanged",
+    "No Windows/Android/OAuth/Eviction/power-loss/open-transaction result"
+  ]
+}
