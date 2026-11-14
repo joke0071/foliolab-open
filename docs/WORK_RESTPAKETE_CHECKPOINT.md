@@ -1,6 +1,7 @@
 # Aktueller HND01-Checkpoint
 
-STOPPED/HANDOVER_READY · work-product-pr-77bcb76dd357-20261114.
+ACTIVE · work-review-pr336-20261114.
+Vorgänger work-product-pr-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Übernahme nach frischem Kollisionsabgleich an 92fbd411ceea7d8803d40335570317982de36a52; PR336/Base/Head unverändert, keine Reviews/Kommentare/neuen zugehörigen Actions oder laufenden Repository-Actions. Ausschließlich serielles fachliches Review; keine Agenten/Automation. Einzelkorrektur bleibt ungenutzt. Merge/Auto-Merge/Main/Deployment/Release/LIVE_ACCEPTED Jochen vorbehalten.
 Vorgänger work-display-boundary-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neuer ausdrücklicher Auftrag autorisiert Produktbranch ab8f9ed1ce, nurCACHE-Revision, reviewbereiteMain-PR/automatischePRWorkflows und eine geprüfte zugeordnete Korrektur aufderselbenPR. Merge/AutoMerge/Mainpush/Deployment/Release/LIVE_ACCEPTED bleibenverboten. AlleinigerWriter; keineAgenten/Automation/Folgesitzung.
 Übernahmecdee0dbe96ad32511bcdc24f77bd0ac791cd7cc8 nach frischemKollisionsabgleich am1651fda198a4a4db92216f97a2a9ccd71c75a056; expectedSHA/gepinntesReadback.
 [Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/1651fda198a4a4db92216f97a2a9ccd71c75a056/docs/WORK_RESTPAKETE_CHECKPOINT.md).
