@@ -124,3 +124,15 @@ bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
 ## Aktiver Arbeitspunkt
 
 Neue Budgetnutzung0/4. Erster Diagnosekandidat wird vorbereitet; Gruppen A Kurs/FX, B Buchungsverwaltung und C Restore dürfen bei unabhängiger Auswertung gebündelt werden. Produkt883c4eb0/Tree9ad46b9e bleibt erster nativer Produktstand. Kein Trigger vor vollständiger Identitäts-/Workflow-/Sicherungsprüfung. Vorherige Folgegates nur bei neuer Evidenz wieder öffnen.
+
+## Erster nativer Kandidat vollständig vorbereitet
+
+Produkt883c4eb0e8137040a9f6bfd2e193bc5833aac0c2/Tree9ad46b9ee8b6039f49ddf23b2655227b493692f4.
+Prüfquelle76b198e6a26fdb56b6d6e05bd5fb19e4101afcde/Treeae95f5f2d7a04737482a98eafa6f5d5907df9266,Parent exakt Produkt.
+Ausführungdbaac9860d6d4d35b471c15166e4e5cb97e4cb9f/Treebbb6352713d7e6617d07bfc041a924c515cc64e9,Parent exakt Prüfquelle.
+Ref test/seven-native-77bcb76dd357-initial-20261114; genau ein create-Trigger/Versuch1 vorgesehen.
+Alle11 gebundenen Produkt-/Index-/Style-/SW-Blobs unverändert; PrüfdeltanurHarness+Vertrag, AusführungsdeltanurDiagnoseworkflow.
+25Fälle unabhängig auswertbar (A17/B4/C4), max360s/15sNachlauf, einJob25min/Chromium/Ubuntu24.04/Node22.23.4/Playwright1.56.1.
+[Sollvertrag am gepinnten Quellstand](https://github.com/joke0071/foliolab-open/blob/76b198e6a26fdb56b6d6e05bd5fb19e4101afcde/docs/release-evidence/seven-native-contract-2026-11-14.json).
+Bestehender Originalarchivweg frisch bestätigt (V0/1249280Bytes); neue Originale separat, unverändert und gepinnt rücklesen. Private Locators unveröffentlicht.
+Noch NICHT ausgelöst; Budget0/4. Unmittelbar nach Trigger Ref/Actions zurücklesen; keine Ersatzanlage bei Unklarheit.
