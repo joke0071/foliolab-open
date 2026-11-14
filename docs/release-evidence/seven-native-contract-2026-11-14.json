@@ -1,0 +1,147 @@
+{
+  "date": "2026-11-14",
+  "scope": "Seven serial fixes; three independent native groups on shared product",
+  "product": "883c4eb0e8137040a9f6bfd2e193bc5833aac0c2",
+  "product_tree": "9ad46b9ee8b6039f49ddf23b2655227b493692f4",
+  "runtime_blobs": [
+    {
+      "path": "index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a37c9fdfbf108b7880bfab29f8c78f418fdf7d83",
+      "size": 50778,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/a37c9fdfbf108b7880bfab29f8c78f418fdf7d83"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2180518e25fd5002fba2c1bae771327c5ccf4083",
+      "size": 10722,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/2180518e25fd5002fba2c1bae771327c5ccf4083"
+    },
+    {
+      "path": "src/app.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "16676be83945d5f36f273e6b78c9b94a5cb5770a",
+      "size": 306309,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/16676be83945d5f36f273e6b78c9b94a5cb5770a"
+    },
+    {
+      "path": "src/booking-management.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f155730716db64f9aaefe633b20f908ce772236",
+      "size": 22680,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/4f155730716db64f9aaefe633b20f908ce772236"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78646b909340c19ad8bb9def5234ecb343147a7e",
+      "size": 7648,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/78646b909340c19ad8bb9def5234ecb343147a7e"
+    },
+    {
+      "path": "src/drive-backup.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc5b8bbd25c86a84cd7bd461b93db310e22363db",
+      "size": 28381,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/fc5b8bbd25c86a84cd7bd461b93db310e22363db"
+    },
+    {
+      "path": "src/market.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "553465166d01d7f7387e93c6e357bcf4095412a4",
+      "size": 34227,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/553465166d01d7f7387e93c6e357bcf4095412a4"
+    },
+    {
+      "path": "src/model.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "85bdb64ee62f4561fdb2817cbc12c6f7b7cf1416",
+      "size": 33342,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/85bdb64ee62f4561fdb2817cbc12c6f7b7cf1416"
+    },
+    {
+      "path": "src/security-sources.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c298f60f2b86a9d972add380140709fb5bc6a0a",
+      "size": 9683,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/0c298f60f2b86a9d972add380140709fb5bc6a0a"
+    },
+    {
+      "path": "styles.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7457647c53f26c3dac76ef7f9043b29ea9ed8aa0",
+      "size": 179495,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/7457647c53f26c3dac76ef7f9043b29ea9ed8aa0"
+    },
+    {
+      "path": "sw.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3432e8f5521d92819cb650179fa9635b10792a03",
+      "size": 5633,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/3432e8f5521d92819cb650179fa9635b10792a03"
+    }
+  ],
+  "groups": {
+    "A": {
+      "cases": 17,
+      "path": "Real #refreshAll -> Web Lock -> provider readers -> render/save -> native IDB -> newly opened page readback",
+      "oracle": "2*123.45=246.90EUR;100USD*.85=85EUR;2*120=240EUR;2*101.25=202.50EUR;2*100*.9=180EUR",
+      "negative": "Alpha boolean/array, malformed crypto/fallback/token, worker1e-20, FX boolean/array/wrong base/1001: entire canonical record unchanged, no put; old Alpha quote cache unchanged; UNKNOWN remains UNKNOWN",
+      "wallet": "Synthetic explorer/RPC failure prevents concurrent unrelated wallet balance adoption; expected partial refresh status retained"
+    },
+    "B": {
+      "cases": 4,
+      "path": "Real bookings navigation -> Verwalten -> row edit -> actual disabled delete or preview/confirmed removal",
+      "oracle": "encoded dependency blocks; null fee/tax disable deletion and show unknown in unsaved note preview; explicit zero valid removal120->100EUR exactlyoneCAScommit",
+      "persistence": "Rejected/cancelled full record byte/field equal, revision unchanged; permittedoneincrement; readonly tx.oncomplete then new page"
+    },
+    "C": {
+      "cases": 4,
+      "path": "Real Drive restore UI; network OAuth/Drive/decrypt/password adapters explicitly simulated; portfolio save/CAS not replaced",
+      "oracle": "Valid2*123.45EUR=246.90EUR, revision2->3; boolean/array/object price rejected before callback/put and revision2->2; valid raw exact expected reader projection; empty local portfolio has no rollback backup and no false local-backup guarantee"
+    }
+  },
+  "capture": {
+    "width": 390,
+    "height": 850,
+    "screenshots": [
+      "alpha-boolean",
+      "fx-array-unknown",
+      "booking-encoded",
+      "booking-fees",
+      "booking-taxes",
+      "restore-valid",
+      "restore-boolean"
+    ],
+    "visual_claim": "Only after actually viewing generated pictures; no Windows/Android/PWA claim"
+  },
+  "budget": {
+    "initial_authorized": 3,
+    "correction_authorized": 1,
+    "executions_this_candidate": 1,
+    "engines": [
+      "chromium"
+    ],
+    "job_minutes": 25,
+    "harness_seconds": 360,
+    "kill_after_seconds": 15,
+    "retries": 0
+  },
+  "failure": "Independent per-case catch, original state/assertion/laststage retained, continue other cases; host progress/exit/cleanup separately, always upload originals incl invalid/missingreport",
+  "workflow": "Only .github/workflows/live-initialization-diagnostics.yml differs at execution from test source. Other workflows unchanged; create exactref attempt1 onejob; no FullCI/PR/main/release.",
+  "source_inputs": "All runtime/index/styles/SW blobs inherited unchanged from product; new harness and this contract only",
+  "local_preflight": "Syntax PASS; all25 constructed fixtures accepted by current backup reader; not native execution. Initial preflight .9 exact-string typo corrected to canonical0.9 before trigger.",
+  "status": "PREPARED_NOT_RUN"
+}
