@@ -1,0 +1,60 @@
+name: K4 pinned eight-case native restore
+on:
+  push:
+    branches: [qa/k4-eight-dcdb094a-20261114]
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: dcdb094ac44e7d8ca597398d886a121c9bab23e5
+          path: k4
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare pinned browser and check exact candidate
+        run: |
+          set -euo pipefail
+          test "$(git -C k4 rev-parse HEAD)" = dcdb094ac44e7d8ca597398d886a121c9bab23e5
+          test "$(git -C k4 rev-parse HEAD^{tree})" = acd2a876c84055021c22263ac0f8aabdc5a6b4c2
+          mkdir -p native/evidence/cases
+          cd native
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps chromium --only-shell
+      - name: Execute four exact file and Drive pairs
+        env:
+          K4_EXPECTED_SHA: dcdb094ac44e7d8ca597398d886a121c9bab23e5
+          K4_ROOT: k4
+          K4_MANIFEST: native/manifest.json
+          K4_OUT: native/evidence
+        run: |
+          set -euo pipefail
+          node native/runner.cjs 2>&1 | tee native/evidence/run.log
+      - name: Seal original evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p native/evidence sealed
+          cp native/runner.cjs native/manifest.json native/evidence/
+          git -C k4 rev-parse HEAD HEAD^{tree} > native/evidence/source.txt
+          cd native/evidence
+          find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          cd ../..
+          openssl rand -hex 48 > "$RUNNER_TEMP/archive-key"
+          openssl pkeyutl -encrypt -pubin -inkey native/public.pem -pkeyopt rsa_padding_mode:oaep -in "$RUNNER_TEMP/archive-key" -out sealed/key.bin
+          tar czf - -C native evidence | openssl enc -aes-256-cbc -salt -pbkdf2 -pass file:"$RUNNER_TEMP/archive-key" -out sealed/evidence.enc
+          rm "$RUNNER_TEMP/archive-key"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k4-eight-original-encrypted
+          path: sealed/
+          if-no-files-found: error

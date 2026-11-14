@@ -1,6 +1,6 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs'), http=require('node:http'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const root=path.resolve('k4'),out=path.resolve('native/evidence'),pw='SYNTHETIC_PASSWORD';
+const root=path.resolve(process.env.K4_ROOT||'candidate'),out=path.resolve(process.env.K4_OUT||'native-review/evidence'),pw='SYNTHETIC_PASSWORD';
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 const write=(name,value)=>fs.writeFileSync(path.join(out,name),typeof value==='string'?value:JSON.stringify(value,null,2));
 const server=http.createServer((req,res)=>{
@@ -12,23 +12,28 @@ const server=http.createServer((req,res)=>{
 });
 async function record(p){return p.evaluate(async()=>{const m=await import('/src/atomic-storage.js');const db=await m.openPortfolioDB();try{return await m.readPortfolioRecord(db)}finally{db.close()}})}
 (async()=>{
+ const manifest=JSON.parse(fs.readFileSync(process.env.K4_MANIFEST||'native-review-manifest.json','utf8'));
+ if(manifest.candidate!==process.env.K4_EXPECTED_SHA||manifest.candidate!=='dcdb094ac44e7d8ca597398d886a121c9bab23e5')throw Error('Exact corrected candidate SHA required');
+ for(const [name,expected] of Object.entries(manifest.files)){const data=fs.readFileSync(path.join(root,name));const actual=crypto.createHash('sha1').update('blob '+data.length+'\0').update(data).digest('hex');assert.equal(actual,expected,'source mismatch: '+name);}
+ fs.mkdirSync(path.join(out,'cases'),{recursive:true});
+ write('source-manifest.json',manifest);
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const url='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE,headless:true});
  const results=[];try{
- write('runtime.json',{chromium:browser.version(),node:process.version,playwright:require('playwright/package.json').version,candidate:'5db3803509cfd0824dad5dd12532a1168c161e32',platform:process.platform});
+ write('runtime.json',{chromium:browser.version(),node:process.version,playwright:require('playwright/package.json').version,candidate:process.env.K4_EXPECTED_SHA,platform:process.platform});
  const generator=await browser.newContext();const gen=await generator.newPage();await gen.goto(url+'/seed');
  const fixtures=await gen.evaluate(async pw=>{
  const {fixture}=await import('/tests/restore-position-fixture.mjs'),v=await import('/src/backup-vault.js'),{createCompleteBackup}=await import('/src/complete-backup.js');
  await v.configureBackupPassword(pw,pw);let result={};
- for(const variant of ['valid','unknown','quantity','fx']){
+ for(const variant of ['precise-price','localized-fx','localized-fx-discrepancy','unknown']){
  const payload=createCompleteBackup(fixture()),p=payload.data.positions[0];Object.assign(p,{price:123.45,priceExact:'123.45'});
  if(variant==='unknown')Object.assign(p,{quantity:17,quantityExact:'17.000000000000000005',currency:'USD',fxRate:null,fxRateExact:'UNKNOWN'});
- if(variant==='quantity')p.quantityExact=[3];
- if(variant==='fx')Object.assign(p,{currency:'USD',fxRate:[1.2],fxRateExact:[1.2]});
+ if(variant==='precise-price'){payload.data.version=2;p.price='123.450000000000000005';delete p.priceExact;}
+ if(variant.startsWith('localized-fx')){payload.data.version=2;Object.assign(p,{price:100,priceExact:'100',currency:'USD',fxRate:'0,9',fxRateExact:variant==='localized-fx'?'0,9':'0,8'});}
  result[variant]=await v.encryptWithBackupPassword(JSON.stringify(payload));
  }return result},pw);await generator.close();
  for(const [k,v] of Object.entries(fixtures))write(k+'.encrypted.json',v);
- for(const scenario of ['valid','unknown','quantity','fx','conflict','vault','display'])for(const route of ['file','drive']){
+ for(const scenario of ['precise-price','localized-fx','localized-fx-discrepancy','unknown'])for(const route of ['file','drive']){
  const key=route+'-'+scenario,bytes=fixtures[scenario]||fixtures.valid,ctx=await browser.newContext({serviceWorkers:'block',viewport:{width:1120,height:840}});ctx.setDefaultTimeout(8000);
  const receipt={key,inputSHA256:hash(bytes),dialogs:[],media:[],errors:[]};let p;
  try{
@@ -58,7 +63,7 @@ async function record(p){return p.evaluate(async()=>{const m=await import('/src/
  if(scenario==='display')await p.evaluate(route=>{const node=document.getElementById(route==='file'?'toast':'driveBackupStatus');const desc=Object.getOwnPropertyDescriptor(Node.prototype,'textContent');Object.defineProperty(node,'textContent',{configurable:true,get(){return desc.get.call(this)},set(v){if(!window.fault&&/^(Backup wiederhergestellt|Drive-Backup wiederhergestellt)/.test(v)){window.fault='final status';throw Error('SYNTHETIC_DISPLAY_FAILURE')}desc.set.call(this,v)}})},route);
  if(route==='file')await p.locator('#backupFile').setInputFiles({name:'synthetic.encrypted.json',mimeType:'application/json',buffer:Buffer.from(bytes)});else await p.locator('#driveRestore').click();
  const selector=route==='file'?'#toast':'#driveBackupStatus';
- const pattern=({valid:'wiederhergestellt',unknown:'wiederhergestellt',quantity:'Positionsmenge',fx:'Wechselkurs',conflict:'anderen Tab',vault:'nicht erneut importieren',display:'nicht erneut importieren'})[scenario];
+ const pattern='wiederhergestellt';
  await p.waitForFunction(({selector,pattern})=>new RegExp(pattern,'i').test(document.querySelector(selector).textContent),{selector,pattern});
  receipt.notice=await p.locator(selector).innerText();assert(await p.locator(selector).isVisible());receipt.draft=await p.locator('[name=coinGeckoKey]').inputValue();assert.equal(receipt.draft,'SYNTHETIC_DRAFT');
  receipt.after=await record(other);receipt.fault=await p.evaluate(()=>window.fault||null);
@@ -68,12 +73,16 @@ async function record(p){return p.evaluate(async()=>{const m=await import('/src/
  await p.evaluate(()=>document.querySelector('[data-page="positions"]').click());receipt.openView=await p.locator('#positionsPage').innerText();
  await p.close();p=await ctx.newPage();await p.goto(url+'/?page=positions');await p.waitForFunction(()=>document.querySelector('#portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));receipt.reopened=await record(p);assert.deepEqual(receipt.reopened,receipt.after);receipt.reopenedView=await p.locator('#positionsPage').innerText();
  const m=JSON.parse(receipt.reopened.raw),pos=m.positions[0];receipt.values=await p.evaluate(async raw=>{const m=await import('/src/model.js');return m.totalExactEUR(m.safeImport(JSON.parse(raw)))},receipt.reopened.raw);
- if(['quantity','fx'].includes(scenario)){assert.deepEqual(receipt.after,receipt.before);assert.equal(receipt.values,'200')}
- else if(scenario==='conflict'){assert.deepEqual(receipt.after,receipt.winner);assert.equal(receipt.after.revision,8);assert.equal(receipt.values,'200');for(const view of [receipt.openView,receipt.reopenedView])assert.match(view,/Newer tab/)}
- else {assert.equal(receipt.after.revision,8);assert.deepEqual([pos.quantity,pos.quantityExact,pos.price,pos.priceExact,pos.currency,pos.fxRate,pos.fxRateExact,receipt.values],scenario==='unknown'?[17,'17.000000000000000005',123.45,'123.45','USD',null,'UNKNOWN',null]:[2,'2',123.45,'123.45','EUR',1,'1','246.9']);assert.deepEqual(receipt.after.settings,receipt.before.settings)}
+ assert.equal(receipt.after.revision,8);assert.deepEqual(receipt.after.settings,receipt.before.settings);
+ const expected=scenario==='unknown'?[17,'17.000000000000000005',123.45,'123.45','USD',null,'UNKNOWN',null]:scenario==='precise-price'?[2,'2',123.45,'123.450000000000000005','EUR',1,'1','246.90000000000000001']:[2,'2',100,'100','USD',0.9,scenario==='localized-fx'?'0.9':'0.8',scenario==='localized-fx'?'180':null];
+ assert.deepEqual([pos.quantity,pos.quantityExact,pos.price,pos.priceExact,pos.currency,pos.fxRate,pos.fxRateExact,receipt.values],expected);
  assert.deepEqual(receipt.errors,[]);receipt.status='PASS';
  }catch(e){receipt.status='FAIL';receipt.error=e.stack;if(p&&!p.isClosed())receipt.diagnostic=await p.locator('body').innerText().catch(()=>null)}
  finally{write('cases/'+key+'.json',receipt);results.push([key,receipt.status,receipt.error?.split('\n')[0]]);console.log(results.at(-1));await ctx.close();}
+ }
+ for(const scenario of ['precise-price','localized-fx','localized-fx-discrepancy','unknown']){
+  const file=JSON.parse(fs.readFileSync(path.join(out,'cases','file-'+scenario+'.json'))),drive=JSON.parse(fs.readFileSync(path.join(out,'cases','drive-'+scenario+'.json')));
+  if(file.status==='PASS'&&drive.status==='PASS'){assert.equal(file.inputSHA256,drive.inputSHA256);assert.equal(file.after.raw,drive.after.raw);assert.deepEqual(file.after.settings,drive.after.settings);}
  }
  write('results.json',results);if(results.some(x=>x[1]!=='PASS'))process.exitCode=1;
  }finally{await browser.close();server.close()}
