@@ -1,0 +1,96 @@
+{
+  "kind": "READ_ONLY_EVIDENCE_RECONCILIATION_NOT_NEW_RUNTIME_TEST",
+  "date": "2026-11-14",
+  "product": {
+    "version": 315,
+    "main": "ff60c73e53c973ecb86393be5b4e31b55f352601"
+  },
+  "baselineHandover": "e50505d6cb88a95ddc5ff91282be6b251d559dbe",
+  "claim": "27e995f0c48f7028afee25266ca327a26ee50d98",
+  "status": "OPERATOR_INPUT_PENDING",
+  "newAcceptanceCriteriaClosed": [],
+  "environment": {
+    "observedOS": "Linux 6.18.57 x86_64",
+    "chromium": "/usr/bin/chromium",
+    "adb": null,
+    "emulator": null,
+    "wine": null,
+    "confirmedWindowsEndpoints": 0,
+    "confirmedAndroidEndpoints": 0,
+    "scope": "Capabilities exposed to this session; no inference about user's private devices"
+  },
+  "sourceBlobs": {
+    "checkpoint": "e063939314e03ecc4361ad22ab960b1429bd4cda",
+    "weekPlan": "a3d98d300587bf5cb48ac7d7850d10a3bb2013ee",
+    "roadmap": "18e5ff32d6c7095b01f5e85aaa02dfa9a9f8482a"
+  },
+  "reused": {
+    "pr337": {
+      "url": "https://github.com/joke0071/foliolab-open/pull/337",
+      "nativeRun": 43603315041,
+      "cases": 8,
+      "platform": "Linux Chromium, no Windows/Android claim",
+      "qualification": "docs/release-evidence/pr337-k4-qualification-2026-11-14.json",
+      "boundary": "Four file/Drive pairs on exact dcdb094ac44e7d8ca597398d886a121c9bab23e5. Older 14-case evidence retains its own product identity; mocked Drive is not OAuth."
+    },
+    "v315": {
+      "run": 43630597942,
+      "job": 132564684392,
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43630597942/job/132564684392",
+      "artifact": 14130886109,
+      "artifactSHA256": "b68e12f62dc39d943c0277c742a20179484ef0ade184908a27397a9c2e6277d6",
+      "logExcerpt": [
+        "2026-11-14T19:40:56.0825658Z LIVE acceptance PASS: 6 groups, 18 Axe scans, 155 asset matches",
+        "2026-11-14T19:42:46.6866997Z chromium: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+        "2026-11-14T19:42:59.8179851Z chromium: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+        "2026-11-14T19:43:05.8902153Z FIN-E2E01 chromium: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+        "2026-11-14T20:25:46.2999104Z firefox: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+        "2026-11-14T20:25:52.3199161Z webkit: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+        "2026-11-14T20:26:04.2194264Z firefox: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+        "2026-11-14T20:26:13.2793721Z webkit: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+        "2026-11-14T20:26:24.5338804Z FIN-E2E01 firefox: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+        "2026-11-14T20:26:32.6970123Z FIN-E2E01 webkit: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS"
+      ],
+      "sourceAssertions": {
+        "path": "tests/browser-live-acceptance.mjs",
+        "lines": "71-73",
+        "checks": [
+          "Actual plain/encrypted UI download",
+          "Fresh browser context UI restore and reload",
+          "Exact bookings equality",
+          "Encrypted wallet history session retained",
+          "Opted-in autoRefresh setting off retained"
+        ],
+        "boundary": "Linux browser contexts, not Windows/Android hardware or manual cross-device file transport"
+      }
+    },
+    "fixture": {
+      "checklist": "docs/PERF_ANDROID03_REAL_DEVICE_CHECKLIST.md",
+      "plainSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+      "encryptedSHA256": "43a3fa184135abc2fc4a1a8054efa812a12182948912acbd37c0fca5f448baaa",
+      "expected": "10000 bookings/journals/flows, exactly 1000 EUR; existing operator package reused"
+    }
+  },
+  "independentFallback": {
+    "checkedOnce": true,
+    "sources": [
+      "KONSOLIDIERTE_ROADMAP.md K4/K3/D-STORAGE/A09",
+      "EFF03_WEEK_TARGET_2026-11-11.md platform addendum",
+      "PR337",
+      "v315 live logs and exact main browser-live-acceptance.mjs"
+    ],
+    "result": "No concretely unproven independently executable desktop/backup criterion identified within this task. Legacy/precision/UNKNOWN, fresh UI encrypted restore and local settings already have bounded proofs. Stale pre-PR337 native-followup wording is not a new gap.",
+    "newCIRuns": 0
+  },
+  "next": {
+    "prerequisite": "A confirmed isolated Windows Chrome/Edge or physical Android Chrome/PWA test endpoint with observed OS/browser/app/SW identity; two endpoints for cross-device transfer",
+    "test": "A09: use existing synthetic fixture, UI encrypted export with history/settings opted in, transfer original file to isolated target, UI import, close/reopen, compare exact 1000 EUR, 10000 bookings/journals/flows and actually included configuration settings to recorded source; platform-specific pass only",
+    "operator": "Authorized operator with access to isolated endpoint; no renewed device request"
+  },
+  "webkit": {
+    "retained": true,
+    "priority": "Not required for this Windows/Android backup acceptance task",
+    "prerequisite": "Version-matching QA launcher setting positive total-storage-ratio on persistent WebsiteDataManager; source path alone is not an executed event"
+  },
+  "overallK4": "PARTIAL"
+}
