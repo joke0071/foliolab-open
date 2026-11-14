@@ -142,6 +142,9 @@
   "failure": "Independent per-case catch, original state/assertion/laststage retained, continue other cases; host progress/exit/cleanup separately, always upload originals incl invalid/missingreport",
   "workflow": "Only .github/workflows/live-initialization-diagnostics.yml differs at execution from test source. Other workflows unchanged; create exactref attempt1 onejob; no FullCI/PR/main/release.",
   "source_inputs": "All runtime/index/styles/SW blobs inherited unchanged from product; new harness and this contract only",
-  "local_preflight": "Syntax PASS; all25 constructed fixtures accepted by current backup reader; not native execution. Initial preflight .9 exact-string typo corrected to canonical0.9 before trigger.",
-  "status": "PREPARED_NOT_RUN"
+  "local_preflight": "Syntax and25fixture constructor/wrapper/oracle checks PASS; expected zero-update status verified against existing refreshHeadline. Original valid raw unchanged; original invalid price types preserved within proper wrapper.",
+  "status": "CORRECTION_PREPARED_NOT_RUN",
+  "supersedes": "76b198e6a26fdb56b6d6e05bd5fb19e4101afcde",
+  "initialRun": 43564045852,
+  "correction": "Only harness headline oracle and complete-backup fixture wrapper corrected; product blobs unchanged; same25cases and every economic/revision/cache/reopen assertion retained; add warning/cause/disclosure assertions."
 }

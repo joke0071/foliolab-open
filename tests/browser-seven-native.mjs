@@ -51,7 +51,7 @@ async function setup(spec){
  await page.goto(base+'/tests/storage-origin.html');
  current.fixture=await page.evaluate(async spec=>{
   const {blankModel,createProvider,createAccount,createPosition,backup,safeImport}=await import('/src/model.js');
-  const {executeTransaction}=await import('/src/transactions.js');const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+  const {executeTransaction}=await import('/src/transactions.js');const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const {createCompleteBackup}=await import('/src/complete-backup.js');
   const m=blankModel();m.settings.autoRefresh='off';
   const provider=createProvider({id:'provider',name:'Synthetic bank'});if(spec.group!=='C'){m.providers.push(provider);m.accounts.push(createAccount({id:'account',providerId:provider.id,name:'Synthetic account',currency:spec.mode==='fx'?'USD':'EUR'},m));}
   const p={id:'asset',providerId:provider.id,accountId:'account',name:'Synthetic asset',quantity:2,price:110.25,kind:'etf',symbol:'VWCE',isin:'IE00BK5BQT80',exchange:'Xetra',mic:'XETR',currency:'EUR'};
@@ -77,7 +77,7 @@ async function setup(spec){
   const next=blankModel();next.settings.autoRefresh='off';next.providers.push(provider);next.accounts.push(createAccount({id:'next-account',providerId:provider.id,name:'Synthetic restored depot'},next));next.positions.push(createPosition({...p,accountId:'next-account',quantity:2,price:123.45,priceExact:'123.45'},next));
   const payload=JSON.parse(backup(next,{includeHistory:true}));
   if(spec.group==='C'&&spec.invalid){payload.positions[0].price=spec.value;delete payload.positions[0].priceExact;}
-  return {payload,expectedRaw:spec.group==='C'&&!spec.invalid?backup(safeImport(payload),{includeHistory:true}):null};
+  return {payload:createCompleteBackup(payload),expectedRaw:spec.group==='C'&&!spec.invalid?backup(safeImport(payload),{includeHistory:true}):null};
  },spec);
  await stage(spec.id+':ready');await ready(page);await page.waitForFunction(()=>window.__seven?.initialized);
  current.before=await record(page);if(spec.mode==='alpha')current.cacheBefore=await alphaRecord(page);
@@ -98,7 +98,7 @@ async function courses(spec){
  if(spec.success){check('revision committed once',current.after.revision,current.before.revision+1);check('economic quantity',x.quantityExact,spec.mode==='fx'?'100':'2');check('expected exact price or FX',spec.mode==='fx'?x.fxRateExact:x.priceExact,String(spec.expected));check('currency preserved',x.currency,spec.mode==='fx'?'USD':'EUR');
   // Independent oracle below uses raw primitive values, not application total code.
   current.oracleEUR=spec.mode==='fx'?100*spec.expected:2*spec.expected;check('stored economic product',Number(x.quantityExact)*Number(x.priceExact)*(x.currency==='EUR'?1:Number(x.fxRateExact)),current.oracleEUR);
- }else{check('whole record retained',current.after,current.before);assert.match(current.status,/Fehler|fehlgeschlagen|aktualisiert|unverändert/i);if(spec.unknown)check('UNKNOWN FX retained',x.fxRateExact,'UNKNOWN');}
+ }else{check('whole record retained',current.after,current.before);assert.match(current.status,/^0 Datenupdates · [1-9]\d* Abfragen prüfen · /);check('warning indicator',await page.locator('#priceInfo').evaluate(e=>e.classList.contains('refresh-warning')),true);check('error disclosure visible',await page.locator('#refreshErrorDetails').isVisible(),true);current.errorText=await page.locator('#refreshErrorDetails').textContent();const reason=spec.mode==='alpha'?/ungültige Tageskurse/:spec.mode==='fx'?/Wechselkurs|Referenz|Währung/:spec.mode==='worker'?/nicht exakt speicherbarer Börsenkurs/:spec.mode==='token'?/Kein gültiger Tokenpreis/:/CoinGecko.*keinen gültigen EUR-Kurs/;assert.match(current.errorText,reason);if(spec.unknown)check('UNKNOWN FX retained',x.fxRateExact,'UNKNOWN');}
  const old=JSON.parse(current.before.raw),now=JSON.parse(current.after.raw);for(const key of ['journalEntries','externalCashFlows','bookings'])check(key+' preserved',now[key],old[key]);
  if(spec.mode==='alpha'){current.cacheAfter=await alphaRecord(page);if(!spec.success)check('old confirmed Alpha cache retained',current.cacheAfter,current.cacheBefore);else check('valid Alpha cache close',current.cacheAfter.data['Time Series (Daily)'][Object.keys(current.cacheAfter.data['Time Series (Daily)'])[0]]['4. close'],spec.value);}
  current.writes=await page.evaluate(()=>window.__seven.writes);check('canonical put count',current.writes,spec.success?1:0);
