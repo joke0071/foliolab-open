@@ -1,0 +1,37 @@
+name: K4 Storage Eviction Targeted QA
+on:
+  push:
+    branches: ["qa/k4-eviction-e4b79f541e28"]
+permissions:
+  contents: read
+jobs:
+  eviction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify unchanged v315 product
+        run: |
+          git diff --exit-code ff60c73e53c973ecb86393be5b4e31b55f352601 -- src index.html styles.css sw.js icons manifest.webmanifest tests
+          git rev-parse HEAD > qa-head.txt
+          git ls-tree -r ff60c73e53c973ecb86393be5b4e31b55f352601 > product-tree.txt
+      - name: Install isolated QA browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Observe eviction and conditionally test application
+        run: node .qa/k4-eviction.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k4-storage-eviction-originals
+          path: |
+            eviction-evidence
+            qa-head.txt
+            product-tree.txt
+          if-no-files-found: error
