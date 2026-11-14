@@ -1,5 +1,16 @@
 ## Fortschreibung · 12.11.2026 · v310 LIVE_ACCEPTED / V149
 
+## Jüngste native Qualifikation am unveränderten Produkt8f9ed1ce · 14.11.2026
+
+[Run43567167015/1 und genaue Grenzen](release-evidence/latest-native-result-2026-11-14.json): WorkflowFAILURE,28/29FällePASS.
+A17/17 undB4/4begrenzt nativPASS; die drei früher fehlenden FX-Reopenfälle sind jetzt belegt.
+C7/8PASS einschließlich korrekterSicherungszeitpunkte, tatsächlichemRückfalldownload und echtemIDBCommitabbruch/neuemÖffnen.
+Ein synthetischerNachcommit-Anzeigefehler wurde vomHarnessnichtausgelöst; zugehörigerWarnungs-/Reopenbeleg bleibtOFFEN, keinGesamtPASS/Freeze/Release.
+Produktcode unverändert. NurHarness lokal korrigiert; [vorbereiteter3Fall-Kandidat](release-evidence/latest-display-boundary-identities-2026-11-14.json) NICHTGESTARTET undbenötigtneueAusführungsfreigabe.
+Originale gepinntbytegleichgesichert; OAuth/Drive/Decrypt/Passwortübernahme simuliert, keineGeräte-/Krypto-/FullCIabnahme.
+41Scopes/15DONE,K4PARTIAL,FLH04NOTDONE unverändert.
+
+
 ## Native Gegenproben und lokale Folgebefunde · 14.11.2026
 
 [Exakte Quell-/Lauf-/Ergebnismatrix](release-evidence/seven-native-and-followup-summary-2026-11-14.json):
