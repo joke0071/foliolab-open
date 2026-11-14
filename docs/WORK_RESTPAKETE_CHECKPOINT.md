@@ -157,3 +157,5 @@ Ohne Freigabe keinen Lauf starten.
 FrischerKollisionsabgleich:c64430f9 unverändert,keinaktiverActionlauf,Produkt8f9ed1ce/Prüfquelle4249a698/Ausführung5b968d15 mitTrees/Parents exakt bestätigt. VorgesehenerBranch NOT_FOUND,zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
 Ausführung ist nach der ausdrücklichen aktuellen Nutzerfreigabe autorisiert; historische Aussagen „nicht freigegeben“ oben sind für diesen exakten einen Lauf abgelöst.
 Vor Trigger Produktblobs/Workflowdelta/Sicherungsweg final prüfen. KeinenRerun/Ersatztrigger. Ergebnissevollständigauswerten/sichern,danachkonkreteinterneFolgebefunde seriell bearbeiten.
+
+Run43567167015/1 gestartet, Ref exakt5b968d15 zurückgelesen. Einmalfreigabe jetzt verbraucht. Kein weitererTrigger/Rerun. Lauf bis terminalauswerten, Originale sichern, relevante Bilder tatsächlich ansehen. Keine Produkt-/Teständerung vor Auswertung dieses unveränderten Kandidaten.
