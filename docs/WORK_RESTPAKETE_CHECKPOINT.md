@@ -2,9 +2,13 @@
 
 ## Zuständigkeit und Auftrag
 
-STOPPED / HANDOVER_READY · work-toast-prepare-77bcb76dd357-20261113.
+ACTIVE · work-serial-77bcb76dd357-20261114.
 Ein alleiniger HND01-Writer; keine Zusatzagenten oder Automation.
-Vorgänger work-bounded-b7bbb8ab7737-20261113 STOPPED/HANDOVER_READY.
+Vorgänger work-toast-prepare-77bcb76dd357-20261113 STOPPED/HANDOVER_READY.
+Aktueller Nutzerauftrag14.11.: genau einmal Triggerbranch test/restore-toast-77bcb76dd357-20261113 an0b4aa1d64daddea7cccad5bfcb29d2f8bd234b89; danach gesamte beauftragte Roadmap seriell lokal weiterbearbeiten. Keine weiteren nativen/CI-Läufe.
+Vor Übernahme: Zentralrefe00b3571,Maina27cde2f,FLH04435ab9a8 unverändert;0IN_PROGRESS; Trigger404/0zugehörigeRuns. Separater Originalarchivweg anhand vorhandenem RestorearchivV0/6563840Bytes und RootV155/406425600Bytes frisch metadata-bestätigt.
+Historische Ausführungsverbote/Abschlussangaben unten gelten nur für den Vorgängerauftrag; aktuelle einmalige Autorisierung oben geht vor.
+Vollständiger Vorgänger unverändert untere00b35711a61a2192be6d7151dfc79ad98202825 gepinnt.
 Übernahmef93c36b51758d04f721898ebd1264a96dc4a541a expectedSHA-geschützt, vollständig exakt rückgelesen.
 Auftrag gezielt abgeschlossen: Toastdelta/Belege geprüft und minimale native Qualifikation vorbereitet; NICHT ausgelöst.
 Vollständiger Vorgänger [21ed0d42](https://github.com/joke0071/foliolab-open/blob/21ed0d42cc84050db11224fb5ae711af14c2f3ea/docs/WORK_RESTPAKETE_CHECKPOINT.md).
