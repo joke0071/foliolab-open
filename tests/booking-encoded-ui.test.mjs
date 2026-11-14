@@ -10,10 +10,11 @@ import {blockedReasonsMarkup} from '../src/blocked-reasons-ui.js';
 const source=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
 const open=source.slice(source.indexOf('function openBookingChange('),source.indexOf('function openBookingUndo('));
 const rowClick=source.split('\n').find(l=>l.startsWith(" $('bookingList').addEventListener('click'"));
-function harness(blocked){
+function harness(blocked,costs={}){
  const model=blankModel();model.providers.push(createProvider({id:'provider',name:'Synthetic'}));model.accounts.push(createAccount({id:'account',providerId:'provider',name:'Cash'},model));
  model.positions.push(createPosition({id:'cash',providerId:'provider',accountId:'account',name:'Cash',kind:'cash',quantity:100,price:1},model));
  const booking=executeTransaction(model,{id:'booking-a',positionId:'cash',type:'deposit',quantity:20,date:'2026-01-02',unitPrice:1,fxRate:1});
+ Object.assign(booking,costs);
  if(blocked)model.positions[0].notes='{"reference":"'+String.fromCharCode(92)+'u0062ooking-a"}';
  const nodes=new Map(),dialogs=[],messages=[];let saves=0,currentChecks=0,stored=JSON.stringify(model);
  const $=id=>{if(!nodes.has(id))nodes.set(id,{hidden:false,textContent:'',events:{},addEventListener(type,fn){this.events[type]=fn;},insertAdjacentHTML(_where,html){this.html=(this.html||'')+html;}});return nodes.get(id);};
@@ -47,4 +48,16 @@ test('Actual permitted removal preview still commits the independent 120-to-100 
  assert.equal(h.currentChecks(),1);assert.equal(h.saves(),1);
  const stored=JSON.parse(h.stored());assert.equal(stored.positions[0].quantityExact,'100');assert.equal(stored.bookings.length,0);assert.equal(stored.externalCashFlows.length,0);
  assert.equal(h.messages.at(-1).text,'Buchungsänderung gespeichert.');
+});
+test('Actual note-only editor names unknown costs and preserves them after one confirmed save',async()=>{
+ const h=harness(false,{feeEUR:null,taxEUR:null});
+ h.$('bookingList').events.click({target:{closest:()=>({disabled:false,dataset:{id:h.booking.id,bookingRowAction:'edit'}})}});
+ assert.equal(h.$('saveDialog').hidden,false);
+ await h.dialogs[0].onSave({reason:'Receipt checked',notes:'New note'});
+ assert.equal(h.dialogs[1].options.readOnly,false);
+ assert.match(h.dialogs[1].html,/Gebühren: unbekannt → unbekannt EUR · Steuern: unbekannt → unbekannt EUR/);
+ await h.dialogs[1].onSave({confirmBookingChange:'on'});
+ const stored=JSON.parse(h.stored());assert.equal(h.saves(),1);assert.equal(stored.positions[0].quantityExact,'120');
+ assert.equal(stored.bookings[0].feeEUR,null);assert.equal(stored.bookings[0].taxEUR,null);assert.equal(stored.bookings[0].notes,'New note');
+ assert.deepEqual(stored.positions,JSON.parse(h.before).positions);assert.deepEqual(stored.externalCashFlows,JSON.parse(h.before).externalCashFlows);
 });

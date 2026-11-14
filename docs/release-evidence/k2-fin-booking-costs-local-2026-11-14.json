@@ -1,0 +1,55 @@
+{
+  "scope": "K3/#165 and K2-FIN/#255: unknown cash-booking costs remain unknown",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "312a199cf3d2b6359da0547a478a19ad979fdaed",
+  "base_tree": "92991988b2f5f851e4e5ae816fe79f6180614372",
+  "repro": "feeEUR/taxEUR:null survived normal backup/safeImport but Number(null)===0 granted economic edit/removal. Note-only effects falsely displayed0charges.",
+  "fix": "Require explicit numeric zero and exact fixed-point zero before existing cash economic mutations; unknown or nonnumeric costs block. Note-only edits retain unknown costs and preview says unbekannt. No new mutation eligibility.",
+  "tests": {
+    "original": "3directed tests:2FAIL/1PASS; console retained",
+    "final": "94/94PASS/0FAIL/0SKIP/0CANCELLED:4new+90previous affected cases",
+    "matrix": "six cash kinds × fee/tax × null/missing/empty/boolean/array/underflowed values; both economic actions blocked, full source unchanged; explicit0/string0/string0.00 keep independently expected100EURinverse and exactundo",
+    "UI": "Actual existing row listener/openBookingChange in NodeVM: unknown-cost notes show unknown before/after;1confirmed save retainsnull costs and unchangedpositions/flows. DOM/CAS/save adapters, not nativebrowser/IDB.",
+    "runtime": "Node24.22.1",
+    "syntax": "app/booking-management/newcosttest/updatedUItestPASS",
+    "previous_source_evidence": "Alpha/refresh source unchanged; nativeToast remains scoped only to04960e74/d70d81e1"
+  },
+  "manifest": [
+    {
+      "path": "src/app.js",
+      "bytes": 306309,
+      "sha256": "0ffcb1b725ca7017f2dae5c36fd25f3802aa1a34531f57eb7205b618f0e9db7a"
+    },
+    {
+      "path": "src/booking-management.js",
+      "bytes": 22680,
+      "sha256": "0421e39b04fc2cdd72ef78dd435b4e0c350c9aa78397e73b50170679eb57f6d0"
+    },
+    {
+      "path": "tests/booking-unknown-costs.test.mjs",
+      "bytes": 3470,
+      "sha256": "5097e8389bed8a335f106c165d6133fb6753b2e6100d62a41cfbb0aa21f7840a"
+    },
+    {
+      "path": "tests/booking-encoded-ui.test.mjs",
+      "bytes": 5680,
+      "sha256": "519c70c503bba7c46052c22d93e03b84b1eed1fbc415badf8b1f99cd9cad6c02"
+    },
+    {
+      "path": "booking-costs-original.tap",
+      "bytes": 2108,
+      "sha256": "16980173693d831b9c1d69b701d880aa4f72d7ac37458b13cfdd9811ebbb76a4"
+    },
+    {
+      "path": "booking-costs-final.tap",
+      "bytes": 10209,
+      "sha256": "949cbdeb69ad3e9ad6182a95a6f91d60500a1f15efc34361fc7379ddc0a48d96"
+    }
+  ],
+  "limits": [
+    "No booking values or stored format rewritten",
+    "Unknown costs are not inferred or corrected from today’s data",
+    "No new native/CI/PR/Main/release/crypto acceptance"
+  ],
+  "next": "Continue next independent supported roadmap gap from this serial successor"
+}
