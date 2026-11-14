@@ -1,0 +1,71 @@
+{
+  "scope": "K2-KURSE/K2-FIN: close connected provider value-boundary gaps",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "bdabebf5d0c58b09e88deb86c1999709a4e8f06e",
+  "base_tree": "f2afc47f3d9058e6a9ee539af94acc34a8d9a4d1",
+  "repro": {
+    "FX": "Provider rates1e-9/1001 passed transport but violate existing positionFX range.",
+    "tokens": "Token-price response true/arrays could become saved1/123.45 prices through actual token refresh.",
+    "fallbacks": "CoinPaprika current/history and DefiLlama price/confidence/time fields accepted primitive/object coercions; historical FX could be malformed.",
+    "securities": "Sub-18-decimal values reached the actual quote-refresh save boundary despite not being canonically representable."
+  },
+  "fix": "Reuse existing positionFX for provider FX acceptance, preserving its exact1e-8..1000 bounds. Token quotes restrict requested contracts and valid supported primitive prices. CoinPaprika/DefiLlama validate raw scalar types and date/quality fields before conversion; historical FX dates/rates remain strict. Existing security quote boundary verifies fixed-point representability before adoption.",
+  "tests": {
+    "original": "5new provider cases FAIL; sixth new actual security quote case FAIL separately; both original consoles retained",
+    "targeted": "100/100PASS/0FAIL/0SKIP/0CANCELLED",
+    "final_serial": "288/288PASS/0FAIL/0SKIP/0CANCELLED across all locally selected Node test files; not whole repository FullCI",
+    "independent_oracles": "FX boundaries1e-8/1000 accepted;outside rejected. Historical100USD×0.9=90EUR eachday. Token invalid0save/oldrecord exact;valid120EUR1save. Security2×101.25=202.5EUR1save;unsavable tiny prices0save/oldrecord exact.",
+    "actual_code": "Real refreshSources source with real provider readers and explicit Node DOM/save adapters. All HTTP responses synthetic; no real URLs requested.",
+    "runtime": "Node24.22.1",
+    "syntax": "market/crypto-fallbacks/security-sources/newtestPASS"
+  },
+  "manifest": [
+    {
+      "path": "src/market.js",
+      "bytes": 34227,
+      "sha256": "023cfe8bbe31b414a3c90c55f3d9a51373ab2addc7159b9bf1eb5d1af9230f60"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "bytes": 7648,
+      "sha256": "839c963bc80f5d2e8a04842ffbae408e55b8981b86c2d4d3e6f5edc51dcb8e3b"
+    },
+    {
+      "path": "src/security-sources.js",
+      "bytes": 9683,
+      "sha256": "72461a9e49ce4273fc72c3d4edac942c8120c2bfc912950d8ba436fd8a0c4b9e"
+    },
+    {
+      "path": "tests/provider-value-boundaries.test.mjs",
+      "bytes": 7705,
+      "sha256": "ceb16c1df5a682d3ac23134bbb285dfc0fa217685c97f0d7a9e2067d6dcbb334"
+    },
+    {
+      "path": "provider-boundaries-original.tap",
+      "bytes": 3866,
+      "sha256": "dbd801681762a34d53a2b00bf364cccae4863ac803b5ee62f2019416abfeb8aa"
+    },
+    {
+      "path": "security-precision-original.tap",
+      "bytes": 927,
+      "sha256": "27ab4ff49929409f3a278dd0a3b06b75cd70ce766c4c97747e405d78e1d3a32e"
+    },
+    {
+      "path": "provider-boundaries-final.tap",
+      "bytes": 10178,
+      "sha256": "607eeba70f891c01e6634a3a3a137bbd9a2feec5b483cf31a4a5813c79068b2a"
+    },
+    {
+      "path": "serial-final-2026-11-14.tap",
+      "bytes": 29057,
+      "sha256": "61e638ad09e03d270c1823a2733036a6ad634ec2c98a9dbab1027c26e76475c0"
+    }
+  ],
+  "limits": [
+    "No new native, IDB, browser, provider-rights/coverage or cryptography proof",
+    "No new financial policy: reuse existing canonical FX/decimal bounds",
+    "No portfolio history/quantity/journal/storage/schema/CAS/SW/workflow changes",
+    "No additional action, PR, integration, deployment or release"
+  ],
+  "next": "Combined native/integration qualification requires a new explicit authorization; preserve exact serial product and bounded original Toast proof"
+}

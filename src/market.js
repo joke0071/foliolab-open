@@ -2,6 +2,7 @@ import {requestJSON,TTL} from './request-cache.js';
 import {readTrustLines,readTrustLineBalance} from './xrpl-assets.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
 import {atomicDecimal,units,exact} from './decimal.js';
+import {positionFX} from './fx-state.js';
 import {discoverCosmos,cosmosLiquidExact,cosmosStakeExact,discoverHedera,hederaBalanceExact,discoverNear,nearAccountBalances,discoverBnb,bnbLiquidExact} from './native-staking-networks.js';
 import {SAVAX_CONTRACT,AVALANCHE_RPC,SONIC_RPC,evmTokenBalanceExact,discoverSonicWallet,sonicNativeBalanceExact,sonicStakeBalanceExact,discoverSolanaStakes,solanaStakeBalanceExact} from './staking-discovery.js';
 import {discoverBnbTokens,bnbBep20BalanceExact} from './bnb-token-scanner.js';
@@ -52,9 +53,10 @@ const validMarketNumber=value=>{
  try{return units(Number(value))>0n;}catch{return false;}
 };
 const validFxDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value;
+const validProviderFx=(value,currency)=>validMarketNumber(value)&&positionFX({currency,fxRate:Number(value),fxRateExact:String(Number(value))}).state==='known';
 function referenceRate(data,from){
  if(data?.base!=null&&data.base!==from)throw Error('Wechselkurs-Basiswährung stimmt nicht mit der angefragten Währung überein.');
- if(!validMarketNumber(data?.rates?.EUR))throw Error('Kein gültiger Tagesreferenzkurs verfügbar.');
+ if(!validProviderFx(data?.rates?.EUR,from))throw Error('Kein gültiger Tagesreferenzkurs im unterstützten Wertebereich verfügbar.');
  return Number(data.rates.EUR);
 }
 /** Daily reference rate with its actual publication date; not a broker execution rate. */
@@ -272,7 +274,12 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
   for(let i=0;i<items.length;i+=30){
     const url=new URL('https://api.coingecko.com/api/v3/simple/token_price/'+platform);
     url.searchParams.set('contract_addresses',items.slice(i,i+30).join(','));url.searchParams.set('vs_currencies','eur');
-    Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));
+    const data=await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher);
+    if(!data||typeof data!=='object'||Array.isArray(data))throw Error('CoinGecko lieferte keine gültige Tokenkursantwort.');
+    for(const id of items.slice(i,i+30)){
+      const value=data[id]?.eur;
+      if(validMarketNumber(value)&&Number(value)<=1e18)result[id]={eur:Number(value)};
+    }
   }
   return result;
 }
@@ -377,7 +384,7 @@ export async function historicalExchangeRates(from,start,end,fetcher=globalThis.
  if(from==='EUR')return [];
  const first=new Date(Date.parse(start)-7*864e5).toISOString().slice(0,10),url=new URL('https://api.frankfurter.dev/v1/'+first+'..'+end);url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
  const data=await json(url.toString(),{ttlMs:TTL.history},fetcher);if(data.base!==from||!data.rates||typeof data.rates!=='object')throw Error('Historische FX-Quelle nicht bestätigt.');
- const rows=Object.entries(data.rates).filter(([d,r])=>d>=first&&d<=end&&validFxDate(d)&&validMarketNumber(r?.EUR)).sort(([a],[b])=>a.localeCompare(b));
+ const rows=Object.entries(data.rates).filter(([d,r])=>d>=first&&d<=end&&validFxDate(d)&&validProviderFx(r?.EUR,from)).sort(([a],[b])=>a.localeCompare(b));
  const result=[];let i=0;for(let t=Date.parse(start);t<=Date.parse(end);t+=864e5){const date=new Date(t).toISOString().slice(0,10);while(i+1<rows.length&&rows[i+1][0]<=date)i++;const row=rows[i];if(row&&row[0]<=date&&(t-Date.parse(row[0]))/864e5<=7)result.push({date,currency:from,rate:String(row[1].EUR),source:'Frankfurter',referenceDate:row[0]});}
  return result;
 }

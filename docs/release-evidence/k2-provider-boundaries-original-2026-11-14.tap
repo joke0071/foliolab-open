@@ -1,0 +1,91 @@
+✖ Provider FX never grants a value outside the existing portfolio FX range (4.303679ms)
+✖ Token and CoinPaprika fallback prices reject non-price primitive/object coercions (1.725923ms)
+✖ Historical CoinPaprika conversion refuses malformed USD prices and FX (2.58683ms)
+✖ DefiLlama requires actual numeric price, confidence and timestamp (1.43929ms)
+✖ Actual token refresh retains the complete old record for malformed values and saves valid120 once (10.036855ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 291.530028
+
+✖ failing tests:
+
+test at tests/provider-value-boundaries.test.mjs:14:1
+✖ Provider FX never grants a value outside the existing portfolio FX range (4.303679ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:16:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/provider-value-boundaries.test.mjs:24:1
+✖ Token and CoinPaprika fallback prices reject non-price primitive/object coercions (1.725923ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:26:97)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/provider-value-boundaries.test.mjs:31:1
+✖ Historical CoinPaprika conversion refuses malformed USD prices and FX (2.58683ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:33:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/provider-value-boundaries.test.mjs:37:1
+✖ DefiLlama requires actual numeric price, confidence and timestamp (1.43929ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:40:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/provider-value-boundaries.test.mjs:53:1
+✖ Actual token refresh retains the complete old record for malformed values and saves valid120 once (10.036855ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:55:71)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
