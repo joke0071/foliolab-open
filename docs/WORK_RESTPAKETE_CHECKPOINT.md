@@ -1,3 +1,9 @@
+# HND01 · K4 SIGKILL-QA · 14.11.2026
+
+**ACTIVE · sol-k4-sigkill-20261114 · alleiniger Writer.** Expliziter Nutzerauftrag: genau ein gezielter GitHub-Actions-QA-Lauf auf separatem QA-Branch, Vorprüfung mit Wegwerfprofil und anschließend harter Chromium-Hauptprozessabbruch nach bestätigter Revision7, Wiederöffnung desselben persistenten Profils. Ausschließlich synthetische Daten. Produkt48125a2608b27095fbdf89445340f90d04e9291b/Treeacd2a876c84055021c22263ac0f8aabdc5a6b4c2 separat ausgecheckt; Main/Produkt/Deployment unverändert. Übernahme vom STOPPED-Vorgänger nach erwartetem Zentralhead33e2435119d73461431bee6c8f906ab79529105a; kein neuer einschlägiger Beleg vorhanden. Main, Owner, PRs332/161/157 und neueste zehn abgeschlossene Läufe abgeglichen. Aufbau43603315041/QA8da22a14 wird wiederverwendet; lokaler Socketfehler nicht erneut geprüft, keine Full-/Release-CI. Ergebnis/Originale sichern und Owner abgeben, K4PARTIAL erhalten.
+
+---
+
 # HND01 · K4 Prozessabbruch / Eviction · 14.11.2026
 
 **STOPPED / HANDOVER_READY · sol-k4-preflight-20261114 · kein eigener Writer oder Lauf mehr aktiv.** Ergebnis: **ENVIRONMENT_BLOCKED / TEST_BLOCKED**, kein neuer K4-Teilfall geschlossen. **K4 bleibt PARTIAL; v314 LIVE_ACCEPTED unverändert.** Main `48125a2608b27095fbdf89445340f90d04e9291b`, Produkt-Tree `acd2a876c84055021c22263ac0f8aabdc5a6b4c2`. Kein Produktfehler festgestellt: die App wurde im neuen Versuch gar nicht geladen.
