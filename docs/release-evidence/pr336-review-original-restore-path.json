@@ -1,0 +1,12 @@
+{
+  "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+  "inputPriceExact": [
+    123.45
+  ],
+  "beforeTotal": "200",
+  "storedTotal": "246.9",
+  "saves": 1,
+  "storedPrice": 100,
+  "storedPriceExact": "123.45",
+  "scope": "actual Drive restore callback and actual model validation; synthetic save adapter, not native IDB"
+}

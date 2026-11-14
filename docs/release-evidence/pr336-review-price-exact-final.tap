@@ -1,0 +1,75 @@
+node:internal/modules/esm/resolve:272
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/scratch/a7faebd876b5/review-work/tests/wallet-history-fixtures.mjs' imported from /workspace/scratch/a7faebd876b5/review-work/tests/drive-backup.test.mjs
+    at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    at moduleResolve (node:internal/modules/esm/resolve:879:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    at #resolve (node:internal/modules/esm/loader:687:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)
+    at ModuleJob.link (node:internal/modules/esm/module_job:381:17) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///workspace/scratch/a7faebd876b5/review-work/tests/wallet-history-fixtures.mjs'
+}
+
+Node.js v24.22.1
+✖ tests/drive-backup.test.mjs (213.058187ms)
+✔ Fresh Drive restore does not manufacture a local backup creation timestamp (8.967273ms)
+✔ Restore preserves an existing real backup timestamp instead of refreshing it (7.568354ms)
+✔ Meaningful old portfolio still offers a real rollback backup and preserves its creation event (2.649141ms)
+✔ A rejected restore does not mark an uncreated backup or reset unsaved change count (1.688026ms)
+✔ Actual backup creation keeps the existing timestamp and counter behavior (1.109444ms)
+✔ Drive restore help scopes the rollback offer to existing local data (8.023214ms)
+✔ Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes (8.097573ms)
+✔ Actual position constructor preserves valid numeric/localized/manual and missing-price behavior (4.20386ms)
+✔ Actual Drive restore callback rejects invalid price before backup offer, model replacement or save (13.608568ms)
+✔ Actual Drive restore callback still saves a valid independent two-unit price once (3.040277ms)
+✔ Structured exact prices reject before restore replaces or saves the portfolio (36.418454ms)
+✔ Scalar exact prices and existing numeric display discrepancies retain their contract (0.494859ms)
+✔ Confirmed save followed by render failure keeps committed model and does not report an unsaved change (7.482396ms)
+✔ Actual Drive restore callback does not roll back visible model after a confirmed save with a display failure (2.727746ms)
+✔ Genuine precommit failure still rejects and reloads the unchanged original (1.886809ms)
+✔ Final status failure after a confirmed commit cannot convert it to a failed save (1.428303ms)
+✔ Booking-management display failure after commit preserves exactly one saved mutation (1.187759ms)
+✔ Persistent render and warning-toast failure cannot invite a second storage attempt (1.031509ms)
+✔ Ordinary successful save keeps the existing one-commit behavior (1.313013ms)
+✔ Persistent header warning describes committed data while real storage failures keep priority (0.352209ms)
+✔ Actual shared desktop and mobile status keep the saved boundary visible after a display failure (2.138889ms)
+✔ confirmed reset clears every API field and the update draft flag (4.648976ms)
+✔ reset cancellation and failed deletion preserve the draft and canonical model (4.306011ms)
+✔ successful deletion still clears the form if quote-cache cleanup fails (2.046904ms)
+✔ file accepted settings follow committed model and are masked (5.826649ms)
+✔ file missing configuration preserves the draft (2.374486ms)
+✔ file declined settings preserve the draft (2.167191ms)
+✔ file failed commit preserves the draft and previous settings (2.28158ms)
+✔ file failed post-commit preferences keep the draft while retaining the committed model (2.072802ms)
+✔ drive accepted settings follow committed model and are masked (2.313006ms)
+✔ drive missing configuration preserves the draft (2.249953ms)
+✔ drive declined settings preserve the draft (1.972935ms)
+✔ drive failed commit preserves the draft and previous settings (3.212976ms)
+✔ drive failed post-commit preferences keep the draft while retaining the committed model (3.040527ms)
+✔ file vault adoption failure preserves a visible draft after portfolio commit (3.118753ms)
+✔ Drive backend marks only a confirmed portfolio commit before preference failure (2.529625ms)
+✔ Drive backend does not mark a rejected storage operation as committed (2.530216ms)
+✔ Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB (3.138891ms)
+✔ Drive recovery rejection never carries a confirmed-commit marker (3.252619ms)
+✔ Drive backend toast confirms only portfolio data before password adoption (4.633313ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 40
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 366.28187
+
+✖ failing tests:
+
+test at tests/drive-backup.test.mjs:1:1
+✖ tests/drive-backup.test.mjs (213.058187ms)
+  'test failed'

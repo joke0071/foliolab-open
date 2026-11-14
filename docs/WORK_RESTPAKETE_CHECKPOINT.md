@@ -124,3 +124,13 @@ Endgrund: autorisierter PR-Auftrag einschließlich aller regulären Checks, Ausw
 Nächster konkreter Schritt: Review der offenen PR336 am exakten Head f36da5e8; spätere Mergeentscheidung separat. Merge/AutoMerge/Mainpush/Deploy/Release/LIVE_ACCEPTED bleiben unautorisiert. Keine neue Diagnosefreigabe aus grünerCI ableiten.
 Bestehende Original-/Geräte-/Reviewgates nicht erneut inventarisiert; FLH04 NOT DONE/K4 PARTIAL/CR4CR5 offen, OPERATOR_INPUT_PENDING erhalten.
 Keine offenen unklaren eigenen Mutationen, keine lokalen laufenden Prozesse/Agenten/Automation/Folgesitzung. NeueÜbernahme zuerst frischeRefs/PR/Actions/Kollisionen prüfen; erwartete Zentralbasis ist dieser Abschlusscommit.
+
+## PR336 fachliches Review: eine belegte Korrektur, automatische Checks laufen
+
+Owner ACTIVE · work-review-pr336-20261114. Ursprünglicher Head f36da5e8023d10b1ddb1f8a458200743e0f34da6 vollständig gelesen; 11 Produktpfade/12 Tests, Reviewvorbereitung und A17/B4/C8-Fallmatrix zugeordnet.
+P1: src/model.js:103–114 prüfte nur price; priceExact:[123.45] passierte units via String(Array). Tatsächlicher Drive-restoreData-Callback mit safeImport nahm 2 Anteile/price100 an und speicherte priceExact123.45/Gesamt246.9 statt200. Speicheradapter synthetisch; kein neuer nativer IDB-Beleg behauptet. Neuer Regressionstest am alten Head FAIL5/6 (Missing expected exception).
+Autorisierte einzelne Korrektur jetzt verbraucht: Head **6399c771d984f55f8abee813f8a7a6e8c584ecf1**, Tree **8e2d1c5f956a1729f2de9b89f24e07510e801b35**, Parent f36da5e8. Nur1Typguard in src/model.js und2gezielte Tests in tests/restore-price-types.test.mjs; numerische Legacy-Abweichungen bleiben erhalten. CACHEv313/Workflows/Storage/CAS/Krypto unverändert.
+Frischer Head-/Owner-Abgleich vor einziger expectedSHA-Branchaktualisierung bestanden; Quellreadback exakt. Alle146lokalen src-Blobs entsprechen dem korrigierten Commit (Materialisierungs-Newline entfernt, danach Hashabgleich0Fehler).
+Lokal Node24.22.1:67/67aus5Restore-/Drive-/Settings-Testdateien PASS, SyntaxPASS. Ein erster kombinierter Prüflauf40PASS/1Modulladefehler wegen fehlender unveränderter wallet-history-fixtures.mjs bleibt erhalten; nach Fetch67/67, danach gepinnte Quellen67/67. KeineTestlockerung.
+Automatisch gestartet, jeVersuch1/Head6399c771:43575921072Integration,43575921060Walletchecks,43575921079informativerWalletaudit. KeinRerun/Dispatch/Diagnosetrigger. OwnerbleibtACTIVEbisTerminalauswertung/Originalsicherung/Abschlussreview.
+Bisherige f36da5e8-Belege/Originale unverändert erhalten; sie qualifizieren nicht pauschal den korrigierten Head. HistorischerMain43332355188 separat. Noch keine abschließende Mergeempfehlung.
