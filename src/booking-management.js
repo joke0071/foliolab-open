@@ -52,12 +52,29 @@ import {sourceDigest,provenCashImport,importSourceKey} from './import-identity.j
 const cashTypes=new Set(['deposit','withdraw','dividend','interest','fee','tax']);
 const clone=x=>structuredClone(x);
 const raw=x=>JSON.stringify(x);
+const costUnits=value=>{
+ if(!['string','number'].includes(typeof value)||String(value).trim()==='')return null;
+ try{return units(value);}catch{return null;}
+};
 function references(value,ids,guard={nodes:0},depth=0){
  if(++guard.nodes>200000||depth>64)throw Error('Referenzprüfung überschreitet das sichere Prüflimit.');
  if(value==null)return false;
- if(typeof value==='string')return ids.some(id=>value===id||value.includes(id));
+ if(typeof value==='string'){
+  if(ids.some(id=>value.includes(id)))return true;
+  const text=value.trim();
+  if(['{','[','"'].includes(text[0])){
+   let decoded;
+   try{decoded=JSON.parse(text);}catch{
+    if(value.includes('\\u'))throw Error('Codierte Referenzdaten sind nicht vollständig lesbar. Keine Änderungsfreigabe.');
+    return false; // Ordinary bracketed notes are not serialized references.
+   }
+   return references(decoded,ids,guard,depth+1);
+  }
+  if(value.includes('\\u'))throw Error('Ungeklärte codierte Referenzdaten. Keine Änderungsfreigabe.');
+  return false;
+ }
  if(typeof value!=='object')return false;
- return Object.entries(value).some(([k,v])=>ids.includes(k)||references(v,ids,guard,depth+1));
+ return Object.entries(value).some(([k,v])=>references(k,ids,guard,depth+1)||references(v,ids,guard,depth+1));
 }
 const bookingKeys=new Set('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus newSymbol newIsin targetQuantityExact ratioNumerator ratioDenominator importSource importFingerprint transferMatch'.split(' '));
 const journalKeys=new Set('id type date recordedAt sequence postings cashPositionId status source'.split(' '));
@@ -94,7 +111,7 @@ function eligibility(model,b,action,{checkReferences=true,index=null}={}){
  if(action==='notes')return [...new Set(reasons)];
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
  if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für vollständig belegte EUR-Geldbuchungen.');
- if(b.cashPositionId||Number(b.feeEUR)!==0||Number(b.taxEUR)!==0)reasons.push('Zusätzliche Gebühren-, Steuer- oder Gegenkontoverknüpfung ist nicht auflösbar.');
+ if(b.cashPositionId||costUnits(b.feeEUR)!==0n||costUnits(b.taxEUR)!==0n||Number(b.feeEUR)!==0||Number(b.taxEUR)!==0)reasons.push('Gebühren oder Steuern sind unbekannt, nicht null oder mit einem Gegenkonto verknüpft. Zuerst beleggebunden prüfen.');
  try{
   validateJournalEntry(e);
   const q=units(b.quantityExact),sign=['deposit','dividend','interest'].includes(b.type)?1n:-1n;
@@ -161,7 +178,15 @@ export function previewBookingChange(model,request){
  safeImport(clone(candidate));
  result.effects=[...new Set(selected.map(b=>b.positionId))].map(positionId=>{
   const before=model.positions.find(p=>p.id===positionId),after=candidate.positions.find(p=>p.id===positionId),group=selected.filter(b=>b.positionId===positionId),groupIds=group.map(b=>b.id),afterGroup=candidate.bookings.filter(b=>groupIds.includes(b.id));
-  const charges=(books,kind)=>exact(books.reduce((n,b)=>n+units(b[kind==='fee'?'feeEUR':'taxEUR']??0)+(b.type===kind?units(b.amountExactEUR):0n),0n));
+  const charges=(books,kind)=>{
+   let total=0n;
+   for(const b of books){
+    const additional=costUnits(b[kind==='fee'?'feeEUR':'taxEUR']),own=b.type===kind?costUnits(b.amountExactEUR):0n;
+    if(additional===null||own===null)return null;
+    total+=additional+own;
+   }
+   return exact(total);
+  };
   return {bookingIds:groupIds,positionId,accountId:before.accountId,currency:before.currency,beforeQuantityExact:before.quantityExact,afterQuantityExact:after.quantityExact,deltaExact:exact(units(after.quantityExact)-units(before.quantityExact)),beforeCostBasisExact:before.costBasisExact??null,afterCostBasisExact:after.costBasisExact??null,feeEUR:charges(group,'fee'),afterFeeEUR:charges(afterGroup,'fee'),taxEUR:charges(group,'tax'),afterTaxEUR:charges(afterGroup,'tax'),beforeFlows:clone(model.externalCashFlows.filter(f=>groupIds.includes(f.id))),afterFlows:clone(candidate.externalCashFlows.filter(f=>groupIds.includes(f.id))),history:action==='notes'?'Nur Notiz; finanzielle Historie unverändert.':'Vorhandene datierte Journalereignisse werden korrigiert; keine Kurse oder Renditewerte erfunden.'};
  });
  result.ready=true;result.candidate=candidate;result.afterTotalEURExact=totalExactEUR(candidate);result.auditId=auditId;return result;

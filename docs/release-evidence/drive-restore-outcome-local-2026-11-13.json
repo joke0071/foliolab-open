@@ -1,0 +1,467 @@
+{
+  "scope": "K4 / E-OAUTH existing manual Drive restore outcome; isolated serial follow-up",
+  "date": "2026-11-13",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_AUTHORIZED_NOT_FROZEN",
+  "base": {
+    "commit": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+    "tree": "e55ffa96f641345759eb3779b00de6187c8671b8"
+  },
+  "before": "A resolved local restore followed by password-adoption rejection was reported as Wiederherstellung fehlgeschlagen despite committed portfolio data.",
+  "after": [
+    "Confirmed portfolio restore, password adoption and final UI are separately reported.",
+    "The real app backend marks only errors after a resolved save/recovery operation with restoreCommitted=true; original cause retained. Pre-commit rejection remains unmarked.",
+    "No retry, rollback, additional import, network write or new cryptography. Existing draft preservation, rollback offer, confirmation, storage/CAS and vault operations unchanged.",
+    "Password input clears and busy state resets in every tested outcome."
+  ],
+  "files": {
+    "src/app.js": {
+      "bytes": 306255,
+      "git_blob": "b40cceb042bf413c7b80b9916f1fc6552653a3a5",
+      "sha256": "79e1b8cb6523743ef8c32863314740fa9e2a3d6107404d55bf7912141c0b5e60"
+    },
+    "src/drive-backup.js": {
+      "bytes": 28415,
+      "git_blob": "cd26ac54551d48311febdeef9cc3ee4d09763fb5",
+      "sha256": "e6fca2a3c71f7a5ec61537d1a1f2c8e0652d6ba2230d24043de05e9254c08311"
+    },
+    "tests/drive-backup.test.mjs": {
+      "bytes": 27398,
+      "git_blob": "f9354b22c044bdd83cd2dea97f47a28e92202929",
+      "sha256": "f1a06bb44f5f8220f1dee03e028eecdd567f410201d9e8a63b7ffaedb8d6da9e"
+    },
+    "tests/settings-replacement.test.mjs": {
+      "bytes": 9554,
+      "git_blob": "bc3cbade90e6ebead02e648dad89967fa8324c60",
+      "sha256": "f11a71b4f822279d5d85c8d97ba4545b2c93cd20ca3100fcb144d777119fc7b3"
+    }
+  },
+  "validation": {
+    "runtime": "Node v24.22.1",
+    "command": "node --test tests/drive-backup.test.mjs tests/settings-replacement.test.mjs tests/complete-backup.test.mjs tests/backup-limits.test.mjs",
+    "tests": 51,
+    "pass": 51,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0,
+    "new_tests": 10,
+    "existing_tests": 41,
+    "syntax": {
+      "pass": [
+        "src/app.js",
+        "src/drive-backup.js",
+        "tests/drive-backup.test.mjs",
+        "tests/settings-replacement.test.mjs"
+      ]
+    },
+    "original_failure": {
+      "result": "FAIL 1/1",
+      "source": "unchanged main drive-backup.js e93573b9b39010a30ee0c2aa4465340f00de2ef7",
+      "case": "Drive restore keeps a confirmed portfolio commit visible when password adoption fails",
+      "actual": "Wiederherstellung fehlgeschlagen: SYNTHETIC_VAULT_FAILURE",
+      "log": "drive-restore-outcome-original-2026-11-13.tap"
+    },
+    "setup_failure": {
+      "result": "45 PASS / 1 module-load FAIL",
+      "cause": "crypto-backup.js was not yet materialized in the local targeted checkout. Exact main crypto-backup.js and backup-vault.js fetched, unchanged; no installation/code relaxation.",
+      "log": "drive-restore-outcome-setup-2026-11-13.tap"
+    },
+    "intermediate": {
+      "tests": 49,
+      "pass": 49,
+      "log": "drive-restore-outcome-intermediate-2026-11-13.tap",
+      "note": "Before adding two recovery-boundary countercases; not summed with final tests."
+    },
+    "final_log": "drive-restore-outcome-final-2026-11-13.tap",
+    "input_integrity": {
+      "files": {
+        "index.html": {
+          "bytes": 50778,
+          "git_blob": "a37c9fdfbf108b7880bfab29f8c78f418fdf7d83",
+          "sha256": "ec12e008dd6de9918960e9e3cc89118cb1d1f24f97c4022d9f0e1b6ee50a25b1"
+        },
+        "package.json": {
+          "bytes": 422,
+          "git_blob": "76c6961ae4d56593a8f9721de12fc84823b45d88",
+          "sha256": "c24b89cba6b57fb532161dd441e15be03f97318b51c3d54082af897136791553"
+        },
+        "src/alpha-vantage.js": {
+          "bytes": 10638,
+          "git_blob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+          "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83"
+        },
+        "src/app.js": {
+          "bytes": 306255,
+          "git_blob": "b40cceb042bf413c7b80b9916f1fc6552653a3a5",
+          "sha256": "79e1b8cb6523743ef8c32863314740fa9e2a3d6107404d55bf7912141c0b5e60"
+        },
+        "src/assets.js": {
+          "bytes": 2208,
+          "git_blob": "054ba656af6145f96bf93a566009ed40f45603cb",
+          "sha256": "d08a1792af9ec0a43742bd2adea90b04253e7e7076df559270ab72d9cf62d5d0"
+        },
+        "src/backup-limits.js": {
+          "bytes": 3335,
+          "git_blob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+          "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f"
+        },
+        "src/bitcoin-hd.js": {
+          "bytes": 11504,
+          "git_blob": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+          "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6"
+        },
+        "src/bitpanda-withdrawal-evidence.js": {
+          "bytes": 3955,
+          "git_blob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+          "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586"
+        },
+        "src/bnb-token-scanner.js": {
+          "bytes": 6350,
+          "git_blob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+          "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c"
+        },
+        "src/booking-history.js": {
+          "bytes": 7676,
+          "git_blob": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+          "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93"
+        },
+        "src/cash-terms.js": {
+          "bytes": 5600,
+          "git_blob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+          "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0"
+        },
+        "src/coin-identity.js": {
+          "bytes": 643,
+          "git_blob": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+          "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26"
+        },
+        "src/complete-backup.js": {
+          "bytes": 4533,
+          "git_blob": "d7af70fe06b61f9db8dffff215f7e8b2782385db",
+          "sha256": "fbb7ed6910a0d4ad5a737bd4a64a77df69098cadebb3b088beb79101b02e19d5"
+        },
+        "src/crypto-backup.js": {
+          "bytes": 2202,
+          "git_blob": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4",
+          "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc"
+        },
+        "src/crypto-fallbacks.js": {
+          "bytes": 6948,
+          "git_blob": "1151f42b1315241805923b848a7a2efdf65528ac",
+          "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a"
+        },
+        "src/csv-import.js": {
+          "bytes": 16795,
+          "git_blob": "6522fca91a5b58a1d9f468e7c499bab93153378f",
+          "sha256": "5c600b07ff0bd8feb14aa38903ff382a8d854a0a2d7a8c8ec4b6731bed1e4e52"
+        },
+        "src/csv-records.js": {
+          "bytes": 1776,
+          "git_blob": "a38aad028a30776022c6c8950a2699a6694962b4",
+          "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921"
+        },
+        "src/decimal.js": {
+          "bytes": 3302,
+          "git_blob": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+          "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611"
+        },
+        "src/defi.js": {
+          "bytes": 1911,
+          "git_blob": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+          "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd"
+        },
+        "src/drive-backup.js": {
+          "bytes": 28415,
+          "git_blob": "cd26ac54551d48311febdeef9cc3ee4d09763fb5",
+          "sha256": "e6fca2a3c71f7a5ec61537d1a1f2c8e0652d6ba2230d24043de05e9254c08311"
+        },
+        "src/eodhd-worker-client.js": {
+          "bytes": 2099,
+          "git_blob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+          "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f"
+        },
+        "src/ethereum-fallback.js": {
+          "bytes": 3002,
+          "git_blob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+          "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e"
+        },
+        "src/flatex-native-ui.js": {
+          "bytes": 23212,
+          "git_blob": "d52e116b9280147495316666289962d21988ba3c",
+          "sha256": "46f7470f9095c1d47c2d59bfeb9a172a2c5fff87e9ffca5ead0ca09005dc9c50"
+        },
+        "src/flatex-native.js": {
+          "bytes": 10291,
+          "git_blob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+          "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e"
+        },
+        "src/flatex-net-reconciliation.js": {
+          "bytes": 17158,
+          "git_blob": "2d39c199135dc9348271271c60b36876c4660936",
+          "sha256": "1fbc1203716c4498122ebbd0c917b434faa469083eee58576f804d425fe28c32"
+        },
+        "src/flatex-net-settlement.js": {
+          "bytes": 77968,
+          "git_blob": "320637c48fc98ebaecc7c46b1a21266767c964e6",
+          "sha256": "034bc1303000ee21c3563cb1c3eaac0f99459a521972d517744c32f30445bcf8"
+        },
+        "src/flatex-reconciliation.js": {
+          "bytes": 3127,
+          "git_blob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+          "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6"
+        },
+        "src/flatex-settlement-audit.js": {
+          "bytes": 6519,
+          "git_blob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+          "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261"
+        },
+        "src/flatex-settlements.js": {
+          "bytes": 10959,
+          "git_blob": "16214b0406a740200585f726e9c9b90cb6007dec",
+          "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89"
+        },
+        "src/fx-state.js": {
+          "bytes": 2914,
+          "git_blob": "0c0239573d9306da2f7d66da21ad8537ce123783",
+          "sha256": "4693c48df97590e8d51d45a3d0ba92ed78f85a79fb4cca9c221c9ba4d0994049"
+        },
+        "src/historical-csv.js": {
+          "bytes": 8496,
+          "git_blob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+          "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b"
+        },
+        "src/historical-position-value.js": {
+          "bytes": 10415,
+          "git_blob": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+          "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73"
+        },
+        "src/history-evidence-cache.js": {
+          "bytes": 2520,
+          "git_blob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+          "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c"
+        },
+        "src/import-identity.js": {
+          "bytes": 11945,
+          "git_blob": "9c80c33266d3c769d0185e3e89cf182c192f1406",
+          "sha256": "f64bcdcf032aac83d4d66fed503535148717338322211c094d0d5b44bf81fd14"
+        },
+        "src/interest-scenario.js": {
+          "bytes": 6000,
+          "git_blob": "332037a4d578c8128121f799165db3a749a82239",
+          "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89"
+        },
+        "src/kraken-bitcoin-bridge.js": {
+          "bytes": 9490,
+          "git_blob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+          "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639"
+        },
+        "src/kraken-ethereum-bridge.js": {
+          "bytes": 12912,
+          "git_blob": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+          "sha256": "d5328824d40dc05e744a6c8c4879e6a9bed2d5834d8a765796d46e021006a3b1"
+        },
+        "src/kraken-link-bridge.js": {
+          "bytes": 4815,
+          "git_blob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+          "sha256": "6e15a9f665549cc3f7516a9041036fc16cee7be36cd9b1fddff35b57e73bd649"
+        },
+        "src/kraken-solana-bridge.js": {
+          "bytes": 14926,
+          "git_blob": "782cab38bb79daa0886c6ab66559f61792279dd1",
+          "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e"
+        },
+        "src/kraken-withdrawal-evidence.js": {
+          "bytes": 3066,
+          "git_blob": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107",
+          "sha256": "30e123182d739039f38958537a534dd7d403c2f5acaf0c498c8be56ffd141be2"
+        },
+        "src/ledger-live.js": {
+          "bytes": 10006,
+          "git_blob": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+          "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc"
+        },
+        "src/link-explorer-evidence.js": {
+          "bytes": 10145,
+          "git_blob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+          "sha256": "4e85163574dc115233eb6ff346ab29c548a0bd7e2c9688170fb0e03071dabe84"
+        },
+        "src/market.js": {
+          "bytes": 32527,
+          "git_blob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+          "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a"
+        },
+        "src/marketstack.js": {
+          "bytes": 8469,
+          "git_blob": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+          "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456"
+        },
+        "src/model.js": {
+          "bytes": 33157,
+          "git_blob": "3ab1397af6870f1b356f9696451170697eafbf36",
+          "sha256": "0dc778ccc9e789cc6ecdf105d70473d1294ed1ce8e3422ccf2e281c9212cfa4c"
+        },
+        "src/native-staking-networks.js": {
+          "bytes": 9479,
+          "git_blob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+          "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2"
+        },
+        "src/position-history.js": {
+          "bytes": 8694,
+          "git_blob": "20afdf678e520b2b361d6c1c02a6604f5130659f",
+          "sha256": "aa5ff870f8a18573e57a8fefb5c17321c84deae8ea2c4b8288f23b6462ec3b75"
+        },
+        "src/public-instruments-client.js": {
+          "bytes": 2690,
+          "git_blob": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+          "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589"
+        },
+        "src/purchase-evidence.js": {
+          "bytes": 10685,
+          "git_blob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+          "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43"
+        },
+        "src/quote-quality.js": {
+          "bytes": 4755,
+          "git_blob": "3ec1f74b2c10caef09a400592db05a5db1dda9d6",
+          "sha256": "c6858e5ccdd9d5af43708c543c3dc3cbb2f96bcd8ea9ad55ad4bf37ea6144afb"
+        },
+        "src/reference-listings.js": {
+          "bytes": 3170,
+          "git_blob": "3ba091983e64a631ad187ebb302299380db49c02",
+          "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0"
+        },
+        "src/refresh-frequency.js": {
+          "bytes": 3894,
+          "git_blob": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3",
+          "sha256": "aed7f2d99842a1f6b90d5924745dc8931b8db3b73b6031a1d7d9dc496898ef29"
+        },
+        "src/request-cache.js": {
+          "bytes": 6160,
+          "git_blob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+          "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1"
+        },
+        "src/retired-providers.js": {
+          "bytes": 608,
+          "git_blob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+          "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279"
+        },
+        "src/security-sources.js": {
+          "bytes": 9505,
+          "git_blob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+          "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d"
+        },
+        "src/solana-history.js": {
+          "bytes": 16250,
+          "git_blob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+          "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070"
+        },
+        "src/solana-rpc.js": {
+          "bytes": 5322,
+          "git_blob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+          "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b"
+        },
+        "src/staking-discovery.js": {
+          "bytes": 7573,
+          "git_blob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+          "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e"
+        },
+        "src/transactions.js": {
+          "bytes": 38965,
+          "git_blob": "306dfd8f06b41f4e6414ecbb248124fbfb726402",
+          "sha256": "eab78f216e9007d14b746a4e9b195dd7ec225f7077e3fce2a14ed67685752155"
+        },
+        "src/unified-bitcoin.js": {
+          "bytes": 17410,
+          "git_blob": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+          "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603"
+        },
+        "src/wallet-history-core.js": {
+          "bytes": 16534,
+          "git_blob": "edcbe5570a903271d07ddc637bd876071e85a40a",
+          "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090"
+        },
+        "src/wallet-history-days.js": {
+          "bytes": 1858,
+          "git_blob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+          "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3"
+        },
+        "src/wallet-history-state.js": {
+          "bytes": 8034,
+          "git_blob": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+          "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c"
+        },
+        "src/wallet-history-valuation.js": {
+          "bytes": 5695,
+          "git_blob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+          "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a"
+        },
+        "src/wallet-identity.js": {
+          "bytes": 2031,
+          "git_blob": "7337ad57a531189676f747fdf6d1a925170f4004",
+          "sha256": "12f327f8ca13240aa8b58dcf08603eec549f2895a4f3293daf4679f2ce5a5982"
+        },
+        "src/xrpl-assets.js": {
+          "bytes": 2745,
+          "git_blob": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+          "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1"
+        },
+        "tests/backup-limits.test.mjs": {
+          "bytes": 3091,
+          "git_blob": "adf4412fd3b0eee670852f4cfe52699de16444be",
+          "sha256": "90878e5b29500148a66b1c3f5ecb8c405921458c9e130e3ff3cc25bbb1484d2d"
+        },
+        "tests/complete-backup.test.mjs": {
+          "bytes": 3071,
+          "git_blob": "cce8516881a96858e51f1f7bf60ce9a2377f67fe",
+          "sha256": "bdd00a85660bdde6fea3e589809855cd151bee5127c1269e068e340a07f2ff1a"
+        },
+        "tests/drive-backup.test.mjs": {
+          "bytes": 27398,
+          "git_blob": "f9354b22c044bdd83cd2dea97f47a28e92202929",
+          "sha256": "f1a06bb44f5f8220f1dee03e028eecdd567f410201d9e8a63b7ffaedb8d6da9e"
+        },
+        "tests/settings-replacement.test.mjs": {
+          "bytes": 9554,
+          "git_blob": "bc3cbade90e6ebead02e648dad89967fa8324c60",
+          "sha256": "f11a71b4f822279d5d85c8d97ba4545b2c93cd20ca3100fcb144d777119fc7b3"
+        },
+        "tests/wallet-history-fixtures.mjs": {
+          "bytes": 879,
+          "git_blob": "1949b9138f70a094b7cd715a9eca4bfe87846adc",
+          "sha256": "66a82268227b3ec1ad3f92324d34c9ebac9788fcf4e0f1cc2ee6b3f67ffbd690"
+        }
+      },
+      "unmodified_verified": 67,
+      "mismatches": []
+    },
+    "test_boundaries": [
+      "VM DOM/OAuth/fetch and backend doubles; no real Google authorization or remote operation.",
+      "App restore callback is extracted from the exact delivered source and tested against in-memory canonical model doubles; recovery uses a double, not native IndexedDB.",
+      "Existing backup-limit tests use unchanged legacy crypto modules; this is not a cryptographic review or Vault-v2 evidence."
+    ]
+  },
+  "prepared_native": {
+    "authorized": false,
+    "executed": false,
+    "required_source": "Exact follow-up commit and four product/test blobs in this report",
+    "minimum_cases": [
+      "Existing synthetic isolated profile with auto refresh off; no private portfolio or real account credentials.",
+      "Normal restore outcome: one canonical revision and same independently expected quantities/settings; password field cleared, no duplicate restore.",
+      "Fail actual local commit: canonical record/revision and draft unchanged; no vault adoption or false success.",
+      "Inject post-commit preferences failure: committed canonical data/revision retained; visible partial outcome; existing draft retained.",
+      "Inject password-vault adoption failure: committed canonical data remains; password status explicitly incomplete; no full retry.",
+      "Final-dialog display failure after both operations: both completed operations remain labelled complete.",
+      "320/390/430/768/1440 px, keyboard/focus/200% text plus actual screenshot review; host reports before awaits and separate cleanup."
+    ],
+    "limits": "Requires separate concrete native authorization; existing UI-ALLOC01 authorization does not extend here. Real OAuth, IDB, Windows Chrome AND Edge, Android/PWA and encrypted native restore remain unproven."
+  },
+  "gates": {
+    "CI": "NOT_STARTED",
+    "main": "UNCHANGED",
+    "SW": "UNCHANGED",
+    "UI_R4": "UNCHANGED",
+    "UI_ALLOC01": "separate frozen 933c3667; not mixed",
+    "K4": "PARTIAL",
+    "E_OAUTH": "BLOCKED_EXTERNAL",
+    "release": "OPEN; no integration, merge, deploy or release"
+  }
+}

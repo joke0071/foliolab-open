@@ -1,0 +1,39 @@
+✔ Only precisely matched familiar ETF EUR listings enrich legacy imports without mutating values or historic snapshots (13.193297ms)
+✔ Ambiguous symbols or existing different venue/ISIN never silently reassign (0.591462ms)
+✔ CoinPaprika uses curated source identity, EUR currency, valid provider timestamp (6.162113ms)
+✔ CoinPaprika historical URL specifies EUR explicitly and rejects conflicting daily values (4.53899ms)
+✔ Failed CoinGecko historical chart safely uses CoinPaprika EUR, not guessed token (3.799882ms)
+✔ DefiLlama fallback demands contract, supported chain, strong confidence, matching token, and dated USD/EUR reference (2.681833ms)
+✔ Four curated Xetra identities survive abbreviated broker names, while every conflicting identity fails closed (0.621356ms)
+✔ Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates (13.732863ms)
+✔ Dated FX readers reject nonexistent and future publication days (2.018075ms)
+✔ Valid numeric/string rates and explicit weekend publication dates retain their existing contract (2.919303ms)
+✔ Batched historical FX never turns malformed observations into a filled daily rate (2.576327ms)
+✔ Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses (20.644571ms)
+✔ Actual refresh handler saves a valid current reference rate once without rewriting journal/history (3.930964ms)
+✔ BTC-Guthaben berücksichtigt Ein- und Ausgänge inklusive Mempool (3.592626ms)
+✔ CoinGecko nutzt Coin-ID und EUR Preise (1.211345ms)
+✔ Etherscan V2 zeigt Adresssaldo, nur eigener Schlüssel (1.145198ms)
+✔ Solana native und Token-Salden (1.310431ms)
+✔ ETF Kurs, FX und Suchfilter (1.279186ms)
+✔ Täglicher EUR-Wechselkurs ohne API-Key (0.964161ms)
+✔ Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden (1.855845ms)
+✔ Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten (4.281731ms)
+✔ Cache deduplicates overlapping requests, isolates returned objects and respects TTL (2.205251ms)
+✔ 429 Retry-After is respected without an unbounded retry loop (1.484328ms)
+✔ Long Retry-After does not cause premature repeated 429 requests (0.653794ms)
+✔ Long Retry-After on HTTP 503 fails safely instead of retrying early (0.335614ms)
+✔ Persistent token secrecy: only memory cache, separated by key and fetch function (0.910342ms)
+✔ Historical reference FX uses exact request date and reports prior working day (3.140179ms)
+✔ Daily reference quote records publication date and source (0.972834ms)
+✔ Security ISIN is stable while listings at different exchanges have distinct IDs (3.904405ms)
+✔ Position quote source, exact conversion, listing identity survives backup roundtrip (5.924503ms)
+✔ TWR is exact on verified cashflow-free endpoints and refuses any unvalued flow (3.741756ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 316.339333

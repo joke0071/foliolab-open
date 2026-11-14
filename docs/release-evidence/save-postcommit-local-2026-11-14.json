@@ -1,0 +1,60 @@
+{
+  "scope": "Confirmed save followed by display failure; preserve committed state and accurate status",
+  "parent": "8d0f68c109644e6906586521718537545d3fc9e1",
+  "parentTree": "b93a91fb5e21dec5216523db851bd370c15f50b4",
+  "originalProbe": {
+    "file": "save-postcommit-original.json",
+    "result": "actual save()+actual Drive restore callback in NodeVM: revision3/new persisted123.45position, visible model0positions, false unsaved notification; one reload; synthetic postcommitrenderfault"
+  },
+  "fix": [
+    "commit boundary recorded only after actual existing portfolioStore.save resolves",
+    "postcommit render/final-status/management UI faults preserve committed model and resolve storage operation; no reload or false rollback",
+    "display warning separate from lastStorageError, retained in mobile/desktop/header presentation; does not become unsaved/storagefailure",
+    "precommit error path continues rejecting and reloading original; no change to IDB/CAS contract"
+  ],
+  "tests": {
+    "original": {
+      "count": 7,
+      "pass": 2,
+      "fail": 5
+    },
+    "targeted": {
+      "count": 9,
+      "pass": 9,
+      "fail": 0
+    },
+    "finalSelected": {
+      "files": 40,
+      "tests": 305,
+      "pass": 305,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0
+    },
+    "runtime": "Node24.22.1",
+    "syntax": [
+      "src/app.js",
+      "src/header-status.js"
+    ],
+    "oracle": "single commit/revision2->3; persisted and visible model identical123.45cash; postcommitfailure0reload; trueQuota error2->2andoldraw/oneReload; separate warning states have correct conflict/storage/saving priority",
+    "intermediate": "Test-only wrong named import from valuation-status corrected to existing quote-quality export; original failure retained."
+  },
+  "impact": {
+    "A": "refresh path uses shared save. Quote/FX reader mutations unchanged, but shared save behavior changed; no new native qualification of final revision",
+    "B": "shared save and management display behavior changed; old nativeB4/4stays pinned883c4eb0",
+    "C": "true save/renderboundary changed after nativeCcase proofs; no new native result of final revision"
+  },
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "limits": [
+    "Actual app source functions/real model serialization with explicit storage/DOM fault adapters",
+    "Synthetic render failures; no actual browser/UI/IDB/crash/realOAuth/release qualification of new code"
+  ],
+  "unchanged": [
+    "storage implementation",
+    "CAS/revision format",
+    "financial arithmetic",
+    "journal/UNKNOWN-FX",
+    "crypto",
+    "styles/SW/workflows"
+  ]
+}

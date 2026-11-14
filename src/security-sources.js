@@ -8,6 +8,7 @@ import {marketstackBars,marketstackQuoteBars,marketstackListing} from './markets
 import {enhanceKnownReferenceListing,referenceSearch} from './reference-listings.js';
 import {configuredMarketWorker,fetchWorkerEodhdBars} from './eodhd-worker-client.js';
 import {alphaVantageBars,alphaListing} from './alpha-vantage.js';
+import {units} from './decimal.js';
 
 const symbolPattern=/^[A-Z0-9^._/-]{1,45}$/i;
 const dayPattern=/^\d{4}-\d{2}-\d{2}$/;
@@ -27,7 +28,12 @@ function verifiedDate(value,now=Date.now()){
  if(ts>now+futureLimitMs||now-ts>8*864e5)throw Error('Kursdatum '+date+' ist nicht aktuell genug – Bestand unverändert.');
  return date;
 }
-function priceNumber(v){const n=Number(v);if(!Number.isFinite(n)||n<=0||n>1e9)throw Error('Ungültiger oder unplausibler Börsenkurs.');return n;}
+function priceNumber(v){
+ const n=['number','string'].includes(typeof v)&&String(v).trim()!==''?Number(v):NaN;
+ try{if(!Number.isFinite(n)||n<=0||n>1e9||units(n)<=0n)throw Error();}
+ catch{throw Error('Ungültiger, unplausibler oder nicht exakt speicherbarer Börsenkurs.');}
+ return n;
+}
 function listingInfo(p){
  const symbol=cleanSymbol(p?.symbol),currency=String(p?.currency||'').trim().toUpperCase();
  const exchange=String(p?.exchange||'').trim().toUpperCase(),mic=String(p?.mic||'').trim().toUpperCase();

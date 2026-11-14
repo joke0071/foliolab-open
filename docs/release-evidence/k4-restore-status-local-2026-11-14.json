@@ -1,0 +1,44 @@
+{
+  "scope": "K4/K6-TRUST/#254/#298: truthful Drive restore completion",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "f5ea22bce3f30720ce18d0a046f44a07fd1476a5",
+  "base_tree": "4b1eedc4555ddd09e779e1518edb52bffe6c871e",
+  "repro": "Full restore success unconditionally claimed that the prior state was locally secured, including an empty-profile restore with no rollback download or backup confirmation.",
+  "fix": "Success status confirms restored backup and position count only. Removes the unproven local-backup guarantee; restore ordering, portfolio/password outcomes and failure statuses unchanged.",
+  "tests": {
+    "original": "1directed regression FAIL,0SKIP; original retained",
+    "final": "65/65PASS/0FAIL/0SKIP/0CANCELLED:1new+64affected restore/vault/settings/limits/configuration tests",
+    "observed": "Actual Drive UI onclick in existing NodeVM fixture:1commit/1passwordadoption/0backupnotification/0nonGETrequests; no invented local-backup claim",
+    "runtime": "Node24.22.1",
+    "syntax": "drive-backup and changed test PASS"
+  },
+  "manifest": [
+    {
+      "path": "src/drive-backup.js",
+      "bytes": 28381,
+      "sha256": "674dad3cee59fb1123107e589a268cdb874869bcd10f1d616aa9861ef74ee260"
+    },
+    {
+      "path": "tests/drive-backup.test.mjs",
+      "bytes": 28142,
+      "sha256": "6073c06ea7ff575ef1192b8b75d017a9f1811a1d3db6307d3f0a34ffc7a8954a"
+    },
+    {
+      "path": "restore-status-original.tap",
+      "bytes": 1153,
+      "sha256": "14ea48b6aaf9a79c611ff5ca4fb210e0ee8719a0746df157adec497a6f08f8c9"
+    },
+    {
+      "path": "restore-status-final.tap",
+      "bytes": 6300,
+      "sha256": "89d56397b89d4f8f7dc2f942ea192bac7d2833c8aed3c50019b2bb86ce920c8d"
+    }
+  ],
+  "limits": [
+    "NodeVM backend/OAuth/Drive/decrypt/password adapters, not new native IDB or encrypted live restore",
+    "Native43554653065 remains scoped to its exact unmodified frozen source",
+    "No download verification or new backup mechanism added",
+    "No native/CI/PR/merge/Main/release/SW bump"
+  ],
+  "next": "All six fixes form one serial local line; next integration/native gates need fresh explicit authorization"
+}

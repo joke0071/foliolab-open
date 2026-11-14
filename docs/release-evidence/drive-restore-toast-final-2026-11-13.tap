@@ -1,0 +1,27 @@
+✔ confirmed reset clears every API field and the update draft flag (21.52916ms)
+✔ reset cancellation and failed deletion preserve the draft and canonical model (14.323786ms)
+✔ successful deletion still clears the form if quote-cache cleanup fails (4.549088ms)
+✔ file accepted settings follow committed model and are masked (11.968262ms)
+✔ file missing configuration preserves the draft (4.343625ms)
+✔ file declined settings preserve the draft (4.969487ms)
+✔ file failed commit preserves the draft and previous settings (9.075032ms)
+✔ file failed post-commit preferences keep the draft while retaining the committed model (6.462058ms)
+✔ drive accepted settings follow committed model and are masked (6.349081ms)
+✔ drive missing configuration preserves the draft (6.746277ms)
+✔ drive declined settings preserve the draft (4.21186ms)
+✔ drive failed commit preserves the draft and previous settings (7.225745ms)
+✔ drive failed post-commit preferences keep the draft while retaining the committed model (3.904928ms)
+✔ file vault adoption failure preserves a visible draft after portfolio commit (4.227343ms)
+✔ Drive backend marks only a confirmed portfolio commit before preference failure (4.112664ms)
+✔ Drive backend does not mark a rejected storage operation as committed (4.114497ms)
+✔ Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB (3.277933ms)
+✔ Drive recovery rejection never carries a confirmed-commit marker (4.180384ms)
+✔ Drive backend toast confirms only portfolio data before password adoption (5.187279ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 600.648475

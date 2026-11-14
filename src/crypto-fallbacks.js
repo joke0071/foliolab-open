@@ -6,6 +6,8 @@
  */
 import {requestJSON,TTL} from './request-cache.js';
 import {exchangeRateQuote} from './market.js';
+import {units} from './decimal.js';
+import {positionFX} from './fx-state.js';
 const PAIRS=Object.freeze({
  'bitcoin':['btc-bitcoin','BTC'],'ethereum':['eth-ethereum','ETH'],
  'solana':['sol-solana','SOL'],'ripple':['xrp-xrp','XRP'],
@@ -24,16 +26,20 @@ export function coinPaprikaMapping(p){
  const info=PAIRS[String(p?.coinId||'')];
  return info&&String(p?.symbol||'').trim().toUpperCase()===info[1]?{id:info[0],symbol:info[1]}:null;
 }
-function validPositivePrice(n){return Number.isFinite(n)&&n>0&&n<1e9;}
+function scalarNumber(value){return ['number','string'].includes(typeof value)&&String(value).trim()!==''&&Number.isFinite(Number(value))?Number(value):null;}
+function validPositivePrice(value){
+ const n=scalarNumber(value);if(n===null||n<=0||n>=1e9)return false;
+ try{return units(n)>0n;}catch{return false;}
+}
 export async function coinPaprikaCurrentQuote(p,fetcher=globalThis.fetch){
  const m=coinPaprikaMapping(p);
  if(!m)throw Error('Keine bestätigte CoinPaprika-ID für diesen Coin.');
  const url='https://api.coinpaprika.com/v1/tickers/'+encodeURIComponent(m.id)+'?quotes=EUR';
  const data=await requestJSON(url,{fetcher,ttlMs:TTL.crypto,attempts:1});
  const price=Number(data?.quotes?.EUR?.price);
- if(data?.id!==m.id||String(data?.symbol||'').toUpperCase()!==m.symbol||!validPositivePrice(price))
+ if(data?.id!==m.id||String(data?.symbol||'').toUpperCase()!==m.symbol||!validPositivePrice(data?.quotes?.EUR?.price))
   throw Error('CoinPaprika-Identität oder EUR-Kurs weicht ab.');
- if(!stampValid(data.last_updated))throw Error('CoinPaprika-Kursdatum fehlt oder ist veraltet.');
+ if(typeof data.last_updated!=='string'||!stampValid(data.last_updated))throw Error('CoinPaprika-Kursdatum fehlt oder ist veraltet.');
  return {price,source:'CoinPaprika',asOf:data.last_updated,quality:'provider-timestamp'};
 }
 export async function coinPaprikaHistoricalQuote(p,fetcher=globalThis.fetch,now=Date.now()){
@@ -51,7 +57,7 @@ export async function coinPaprikaHistoricalQuote(p,fetcher=globalThis.fetch,now=
  const usd=new Map();
  for(const row of data){
   const when=Date.parse(String(row?.timestamp||'')),v=Number(row?.price);
-  if(!Number.isFinite(when)||when>now+864e5||when<now-361*864e5||!validPositivePrice(v))continue;
+  if(typeof row?.timestamp!=='string'||!Number.isFinite(when)||when>now+864e5||when<now-361*864e5||!validPositivePrice(row?.price))continue;
   const day=new Date(when).toISOString().slice(0,10);
   if(usd.has(day)&&usd.get(day)!==v)throw Error('CoinPaprika hat widersprüchliche Tageskurse geliefert.');
   usd.set(day,v);
@@ -62,7 +68,7 @@ export async function coinPaprikaHistoricalQuote(p,fetcher=globalThis.fetch,now=
  const fx=await requestJSON(fxURL.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
  if(fx.base!=='USD'||!fx.rates||typeof fx.rates!=='object')throw Error('Historische USD/EUR-Referenzkurse fehlen.');
  const fxRows=Object.entries(fx.rates).filter(([day,row])=>
-  /^\d{4}-\d{2}-\d{2}$/.test(day)&&day<=end&&day>=start&&Number(row?.EUR)>0&&Number.isFinite(Number(row?.EUR)))
+  /^\d{4}-\d{2}-\d{2}$/.test(day)&&Number.isFinite(Date.parse(day))&&new Date(day+'T12:00:00Z').toISOString().slice(0,10)===day&&day<=end&&day>=start&&scalarNumber(row?.EUR)!==null&&positionFX({currency:'USD',fxRate:Number(row.EUR),fxRateExact:String(Number(row.EUR))}).state==='known')
   .sort(([a],[b])=>a.localeCompare(b));
  if(!fxRows.length)throw Error('Keine datierten USD/EUR-Referenzkurse vorhanden.');
  const points=[];
@@ -91,11 +97,11 @@ export async function defiLlamaCurrentQuote(p,fetcher=globalThis.fetch){
  if(!id)throw Error('DefiLlama benötigt einen eindeutig zugeordneten Token-Contract.');
  const data=await requestJSON('https://coins.llama.fi/prices/current/'+encodeURIComponent(id),{fetcher,ttlMs:TTL.crypto,attempts:1});
  const item=data?.coins?.[id];
- const priceUSD=Number(item?.price),confidence=Number(item?.confidence);
- if(!validPositivePrice(priceUSD)||!(confidence>=.8)||
+ const priceUSD=Number(item?.price),confidence=scalarNumber(item?.confidence),timestamp=scalarNumber(item?.timestamp);
+ if(!validPositivePrice(item?.price)||confidence===null||!(confidence>=.8)||
     String(item?.symbol||'').toUpperCase()!==String(p.symbol||'').toUpperCase())
    throw Error('DefiLlama-Symbol, Kurs oder Datenqualität nicht ausreichend.');
- if(!stampValid(Number(item.timestamp)*1000,Date.now(),2*864e5))throw Error('DefiLlama-Tokenkurs ist veraltet.');
+ if(timestamp===null||!Number.isSafeInteger(timestamp)||!stampValid(timestamp*1000,Date.now(),2*864e5))throw Error('DefiLlama-Tokenkurs ist veraltet.');
  const fx=await exchangeRateQuote('USD','',fetcher);
  if(!stampValid(fx.date,Date.now(),7*864e5)||!Number.isFinite(fx.rate)||fx.rate<=0)
   throw Error('Kein ausreichend aktueller EUR-Referenzwechselkurs.');

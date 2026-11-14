@@ -1,0 +1,88 @@
+✖ Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates (2.732508ms)
+✖ Dated FX readers reject nonexistent and future publication days (0.903251ms)
+✔ Valid numeric/string rates and explicit weekend publication dates retain their existing contract (2.818144ms)
+✖ Batched historical FX never turns malformed observations into a filled daily rate (1.997804ms)
+✖ Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses (9.641812ms)
+✔ Actual refresh handler saves a valid current reference rate once without rewriting journal/history (2.919253ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 2
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 275.677441
+
+✖ failing tests:
+
+test at tests/fx-response-integrity.test.mjs:12:1
+✖ Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates (2.732508ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/fx-response-integrity.test.mjs:14:71)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/fx-response-integrity.test.mjs:18:1
+✖ Dated FX readers reject nonexistent and future publication days (0.903251ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/fx-response-integrity.test.mjs:19:58)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/fx-response-integrity.test.mjs:31:1
+✖ Batched historical FX never turns malformed observations into a filled daily rate (1.997804ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     currency: 'USD',
+  +     date: '2026-11-13',
+  +     rate: 'true',
+  +     referenceDate: '2026-11-13',
+  +     source: 'Frankfurter'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/fx-response-integrity.test.mjs:32:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { date: '2026-11-13', currency: 'USD', rate: 'true', source: 'Frankfurter', referenceDate: '2026-11-13' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fx-response-integrity.test.mjs:49:1
+✖ Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses (9.641812ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/fx-response-integrity.test.mjs:51:65)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

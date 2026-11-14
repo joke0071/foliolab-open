@@ -1,0 +1,1840 @@
+TAP version 13
+# Subtest: Non-price JSON types cannot become a confirmed Alpha close
+ok 1 - Non-price JSON types cannot become a confirmed Alpha close
+  ---
+  duration_ms: 3.027142
+  type: 'test'
+  ...
+# Subtest: Malformed Alpha responses consume one request but preserve the prior quote cache
+ok 2 - Malformed Alpha responses consume one request but preserve the prior quote cache
+  ---
+  duration_ms: 13.31811
+  type: 'test'
+  ...
+# Subtest: Actual refresh handler retains model and stored price when Alpha returns non-price JSON
+ok 3 - Actual refresh handler retains model and stored price when Alpha returns non-price JSON
+  ---
+  duration_ms: 18.155849
+  type: 'test'
+  ...
+# Subtest: Actual refresh handler still adopts a valid raw close once
+ok 4 - Actual refresh handler still adopts a valid raw close once
+  ---
+  duration_ms: 6.820033
+  type: 'test'
+  ...
+# Subtest: Only four proven ETF ISIN/EUR/XETR identities map to DEX; contradictory venues never substitute
+ok 5 - Only four proven ETF ISIN/EUR/XETR identities map to DEX; contradictory venues never substitute
+  ---
+  duration_ms: 6.427052
+  type: 'test'
+  ...
+# Subtest: Daily raw close is used; exact symbol, currency, calendar, finite price and provider date are checked
+ok 6 - Daily raw close is used; exact symbol, currency, calendar, finite price and provider date are checked
+  ---
+  duration_ms: 4.748849
+  type: 'test'
+  ...
+# Subtest: Budget reservations are bounded at 25/day, spaced 2.5 seconds and reset on UTC day rollover
+ok 7 - Budget reservations are bounded at 25/day, spaced 2.5 seconds and reset on UTC day rollover
+  ---
+  duration_ms: 0.686462
+  type: 'test'
+  ...
+# Subtest: Concurrent quote/history reads coalesce; new client reuses IDB-shaped daily cache without storing the key
+ok 8 - Concurrent quote/history reads coalesce; new client reuses IDB-shaped daily cache without storing the key
+  ---
+  duration_ms: 19.313715
+  type: 'test'
+  ...
+# Subtest: Provider limit response is not cached as a price; cooldown prevents repeated probes and keeps quota charged
+ok 9 - Provider limit response is not cached as a price; cooldown prevents repeated probes and keeps quota charged
+  ---
+  duration_ms: 4.208212
+  type: 'test'
+  ...
+# Subtest: Slow provider responses leave a complete 2.5-second gap after completion, also for a new client
+ok 10 - Slow provider responses leave a complete 2.5-second gap after completion, also for a new client
+  ---
+  duration_ms: 3.231212
+  type: 'test'
+  ...
+# Subtest: Alpha key is retained only in opted-in complete configuration and never in plain portfolio export
+ok 11 - Alpha key is retained only in opted-in complete configuration and never in plain portfolio export
+  ---
+  duration_ms: 4.467084
+  type: 'test'
+  ...
+# Subtest: legacy export fits the unchanged 6-million-character reader at the exact GCM/Base64 boundary
+ok 12 - legacy export fits the unchanged 6-million-character reader at the exact GCM/Base64 boundary
+  ---
+  duration_ms: 228.0889
+  type: 'test'
+  ...
+# Subtest: v2 export checks text, UTF-8, GCM tag, padded Base64 and actual envelope overhead separately
+ok 13 - v2 export checks text, UTF-8, GCM tag, padded Base64 and actual envelope overhead separately
+  ---
+  duration_ms: 358.148154
+  type: 'test'
+  ...
+# Subtest: local and Drive readers retain their existing file limits
+ok 14 - local and Drive readers retain their existing file limits
+  ---
+  duration_ms: 0.690648
+  type: 'test'
+  ...
+# Subtest: Unicode envelope bytes must fit the independent unchanged 20-MB local file reader
+ok 15 - Unicode envelope bytes must fit the independent unchanged 20-MB local file reader
+  ---
+  duration_ms: 0.368543
+  type: 'test'
+  ...
+# Subtest: single password allows automatic local/Drive encryption and cross-device recovery
+ok 16 - single password allows automatic local/Drive encryption and cross-device recovery
+  ---
+  duration_ms: 684.79922
+  type: 'test'
+  ...
+# Subtest: password rotation changes future backups, not old passwords or the underlying data key
+ok 17 - password rotation changes future backups, not old passwords or the underlying data key
+  ---
+  duration_ms: 720.124465
+  type: 'test'
+  ...
+# Subtest: malformed backup envelopes fail closed
+ok 18 - malformed backup envelopes fail closed
+  ---
+  duration_ms: 88.632149
+  type: 'test'
+  ...
+# Subtest: oversized Unicode export fails before encryption and leaves the existing vault usable
+ok 19 - oversized Unicode export fails before encryption and leaves the existing vault usable
+  ---
+  duration_ms: 331.09792
+  type: 'test'
+  ...
+# Subtest: actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+ok 20 - actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+  ---
+  duration_ms: 697.996265
+  type: 'test'
+  ...
+# Subtest: archive is presentation-only: exact values, journal, flows, sources and histories unchanged; undo exact
+ok 21 - archive is presentation-only: exact values, journal, flows, sources and histories unchanged; undo exact
+  ---
+  duration_ms: 26.080891
+  type: 'test'
+  ...
+# Subtest: archive round-trips through the actual portable model and preserves old backups with no new field
+ok 22 - archive round-trips through the actual portable model and preserves old backups with no new field
+  ---
+  duration_ms: 3.210522
+  type: 'test'
+  ...
+# Subtest: malformed archive identity/version/extra fields fail closed; no silent dropping or partial operation
+ok 23 - malformed archive identity/version/extra fields fail closed; no silent dropping or partial operation
+  ---
+  duration_ms: 4.323192
+  type: 'test'
+  ...
+# Subtest: archived imported booking remains an exact repeat-import duplicate and its original is untouched
+ok 24 - archived imported booking remains an exact repeat-import duplicate and its original is untouched
+  ---
+  duration_ms: 13.506808
+  type: 'test'
+  ...
+# Subtest: known display references do not block existing safe corrections; removal cleans display IDs and undo restores them
+ok 25 - known display references do not block existing safe corrections; removal cleans display IDs and undo restores them
+  ---
+  duration_ms: 4.589494
+  type: 'test'
+  ...
+# Subtest: technical generated rows can be hidden without removing or ignoring their financial evidence
+ok 26 - technical generated rows can be hidden without removing or ignoring their financial evidence
+  ---
+  duration_ms: 2.138822
+  type: 'test'
+  ...
+# Subtest: note-only unified edits preserve economic classification and no-op requests produce no fake audit
+ok 27 - note-only unified edits preserve economic classification and no-op requests produce no fake audit
+  ---
+  duration_ms: 1.798101
+  type: 'test'
+  ...
+# Subtest: explicit archival alone opts into reader-gated format4; old readers reject before losing metadata
+ok 28 - explicit archival alone opts into reader-gated format4; old readers reject before losing metadata
+  ---
+  duration_ms: 2.651509
+  type: 'test'
+  ...
+# Subtest: the existing asset wizard retains archive metadata and finance history in a format4 portfolio
+ok 29 - the existing asset wizard retains archive metadata and finance history in a format4 portfolio
+  ---
+  duration_ms: 3.652704
+  type: 'test'
+  ...
+# Subtest: Encoded booking and journal identities block the same destructive and note actions as literal references
+ok 30 - Encoded booking and journal identities block the same destructive and note actions as literal references
+  ---
+  duration_ms: 69.927045
+  type: 'test'
+  ...
+# Subtest: Opaque Unicode references fail closed while ordinary bracketed notes remain usable
+ok 31 - Opaque Unicode references fail closed while ordinary bracketed notes remain usable
+  ---
+  duration_ms: 3.456705
+  type: 'test'
+  ...
+# Subtest: Unrelated encoded JSON and a normal receipt still permit exact removal and undo
+ok 32 - Unrelated encoded JSON and a normal receipt still permit exact removal and undo
+  ---
+  duration_ms: 4.807175
+  type: 'test'
+  ...
+# Subtest: Actual booking-row edit listener keeps encoded-reference mutations unavailable
+ok 33 - Actual booking-row edit listener keeps encoded-reference mutations unavailable
+  ---
+  duration_ms: 37.708598
+  type: 'test'
+  ...
+# Subtest: Actual removal preview blocks encoded references without storage calls or model changes
+ok 34 - Actual removal preview blocks encoded references without storage calls or model changes
+  ---
+  duration_ms: 22.251827
+  type: 'test'
+  ...
+# Subtest: Actual permitted removal preview still commits the independent 120-to-100 result once
+ok 35 - Actual permitted removal preview still commits the independent 120-to-100 result once
+  ---
+  duration_ms: 37.310902
+  type: 'test'
+  ...
+# Subtest: Actual note-only editor names unknown costs and preserves them after one confirmed save
+ok 36 - Actual note-only editor names unknown costs and preserves them after one confirmed save
+  ---
+  duration_ms: 16.503544
+  type: 'test'
+  ...
+# Subtest: EUR deposit business removal restores 100 exactly, retains opening and auditable original, undo exact
+ok 37 - EUR deposit business removal restores 100 exactly, retains opening and auditable original, undo exact
+  ---
+  duration_ms: 38.046287
+  type: 'test'
+  ...
+# Subtest: cash correction reuses engine with exact independent 100+7.25 result and capital flow
+ok 38 - cash correction reuses engine with exact independent 100+7.25 result and capital flow
+  ---
+  duration_ms: 15.538663
+  type: 'test'
+  ...
+# Subtest: all six cash kinds roll back independently; income/fee/tax overview matches no-booking reference
+ok 39 - all six cash kinds roll back independently; income/fee/tax overview matches no-booking reference
+  ---
+  duration_ms: 18.961672
+  type: 'test'
+  ...
+# Subtest: notes preserve all financial records and reject extra economics, import identity and wallet references
+ok 40 - notes preserve all financial records and reject extra economics, import identity and wallet references
+  ---
+  duration_ms: 4.323463
+  type: 'test'
+  ...
+# Subtest: same-named separate accounts and multi-remove are atomic, not cascade
+ok 41 - same-named separate accounts and multi-remove are atomic, not cascade
+  ---
+  duration_ms: 7.567915
+  type: 'test'
+  ...
+# Subtest: negative chronology, checkpoints, later historical edit, stale ID/preimage, opaque references block unchanged
+ok 42 - negative chronology, checkpoints, later historical edit, stale ID/preimage, opaque references block unchanged
+  ---
+  duration_ms: 4.248291
+  type: 'test'
+  ...
+# Subtest: mismatched cash provenance and FX do not become mutable despite balanced journal
+ok 43 - mismatched cash provenance and FX do not become mutable despite balanced journal
+  ---
+  duration_ms: 1.586959
+  type: 'test'
+  ...
+# Subtest: restore rejects audit records carrying financial postings or broken evidence
+ok 44 - restore rejects audit records carrying financial postings or broken evidence
+  ---
+  duration_ms: 5.364967
+  type: 'test'
+  ...
+# Subtest: corrected fee/tax preview names actual before/after charges and metadata does not alter returns input
+ok 45 - corrected fee/tax preview names actual before/after charges and metadata does not alter returns input
+  ---
+  duration_ms: 4.554523
+  type: 'test'
+  ...
+# Subtest: non-unit cash quote cannot silently change economic impact
+ok 46 - non-unit cash quote cannot silently change economic impact
+  ---
+  duration_ms: 1.182383
+  type: 'test'
+  ...
+# Subtest: later ordinary transactions keep sequence monotonic after removal and retained audit
+ok 47 - later ordinary transactions keep sequence monotonic after removal and retained audit
+  ---
+  duration_ms: 2.712648
+  type: 'test'
+  ...
+# Subtest: oversized and excessively nested unknown reference evidence fails closed without mutation
+ok 48 - oversized and excessively nested unknown reference evidence fails closed without mutation
+  ---
+  duration_ms: 33.191041
+  type: 'test'
+  ...
+# Subtest: known audit trails permit repeated proven corrections and notes without treating them as foreign dependencies
+ok 49 - known audit trails permit repeated proven corrections and notes without treating them as foreign dependencies
+  ---
+  duration_ms: 11.817698
+  type: 'test'
+  ...
+# Subtest: unknown references and unknown booking fields block even metadata, without writes
+ok 50 - unknown references and unknown booking fields block even metadata, without writes
+  ---
+  duration_ms: 1.489145
+  type: 'test'
+  ...
+# Subtest: mismatched or ambiguous audit chain never permits a later correction
+ok 51 - mismatched or ambiguous audit chain never permits a later correction
+  ---
+  duration_ms: 2.967123
+  type: 'test'
+  ...
+# Subtest: stable booking IDs remain distinct across identical assets; filtered deselection preserves hidden selection
+ok 52 - stable booking IDs remain distinct across identical assets; filtered deselection preserves hidden selection
+  ---
+  duration_ms: 14.868745
+  type: 'test'
+  ...
+# Subtest: manual review is read-only and does not grant mutation permission
+ok 53 - manual review is read-only and does not grant mutation permission
+  ---
+  duration_ms: 1.783509
+  type: 'test'
+  ...
+# Subtest: manual import ownership retains provenance and linked-transfer classification
+ok 54 - manual import ownership retains provenance and linked-transfer classification
+  ---
+  duration_ms: 1.009107
+  type: 'test'
+  ...
+# Subtest: missing journal, stale selection and duplicate identities never receive clearance
+ok 55 - missing journal, stale selection and duplicate identities never receive clearance
+  ---
+  duration_ms: 1.695028
+  type: 'test'
+  ...
+# Subtest: wallet and technical evidence remain separately classified; quantity mismatch stays explicit
+ok 56 - wallet and technical evidence remain separately classified; quantity mismatch stays explicit
+  ---
+  duration_ms: 1.245215
+  type: 'test'
+  ...
+# Subtest: batch row hints exactly preserve ordered fresh legacy reasons, including ambiguity and invalid evidence
+ok 57 - batch row hints exactly preserve ordered fresh legacy reasons, including ambiguity and invalid evidence
+  ---
+  duration_ms: 51.302735
+  type: 'test'
+  ...
+# Subtest: row indices do not survive a subsequent call or grant economic permissions
+ok 58 - row indices do not survive a subsequent call or grant economic permissions
+  ---
+  duration_ms: 4.447666
+  type: 'test'
+  ...
+# Subtest: incoming booking narrows outgoing candidates without amount proof or model mutation
+ok 59 - incoming booking narrows outgoing candidates without amount proof or model mutation
+  ---
+  duration_ms: 12.056851
+  type: 'test'
+  ...
+# Subtest: incoming contexts exclude foreign currencies, same accounts, distant days and missing identities
+ok 60 - incoming contexts exclude foreign currencies, same accounts, distant days and missing identities
+  ---
+  duration_ms: 5.093347
+  type: 'test'
+  ...
+# Subtest: Unknown, empty, coerced and underflowed costs never grant cash editing or removal
+ok 61 - Unknown, empty, coerced and underflowed costs never grant cash editing or removal
+  ---
+  duration_ms: 247.371396
+  type: 'test'
+  ...
+# Subtest: Note-only previews preserve and display unknown fees and taxes rather than zero
+ok 62 - Note-only previews preserve and display unknown fees and taxes rather than zero
+  ---
+  duration_ms: 6.843276
+  type: 'test'
+  ...
+# Subtest: Explicit zero costs retain all six existing independent 100-EUR inverses and exact undo
+ok 63 - Explicit zero costs retain all six existing independent 100-EUR inverses and exact undo
+  ---
+  duration_ms: 48.741199
+  type: 'test'
+  ...
+# Subtest: default encrypted backup omits all settings and credentials
+ok 64 - default encrypted backup omits all settings and credentials
+  ---
+  duration_ms: 6.084329
+  type: 'test'
+  ...
+# Subtest: opt-in full backup includes the complete user API/RPC configuration and Google OAuth client ID
+ok 65 - opt-in full backup includes the complete user API/RPC configuration and Google OAuth client ID
+  ---
+  duration_ms: 1.326335
+  type: 'test'
+  ...
+# Subtest: untrusted configuration is strictly whitelisted, data must use supported schema
+ok 66 - untrusted configuration is strictly whitelisted, data must use supported schema
+  ---
+  duration_ms: 1.346925
+  type: 'test'
+  ...
+# Subtest: CoinGecko quotes reject coerced and unsupported price values and ignore unrequested assets
+ok 67 - CoinGecko quotes reject coerced and unsupported price values and ignore unrequested assets
+  ---
+  duration_ms: 5.695274
+  type: 'test'
+  ...
+# Subtest: Valid CoinGecko prices keep numeric value and genuine timestamps; malformed time stays undated
+ok 68 - Valid CoinGecko prices keep numeric value and genuine timestamps; malformed time stays undated
+  ---
+  duration_ms: 0.987305
+  type: 'test'
+  ...
+# Subtest: Actual crypto refresh retains prior quote and storage on malformed primary and unavailable fallback
+ok 69 - Actual crypto refresh retains prior quote and storage on malformed primary and unavailable fallback
+  ---
+  duration_ms: 17.888946
+  type: 'test'
+  ...
+# Subtest: Actual partial crypto refresh saves only the valid quote and keeps invalid asset price intact
+ok 70 - Actual partial crypto refresh saves only the valid quote and keeps invalid asset price intact
+  ---
+  duration_ms: 4.291926
+  type: 'test'
+  ...
+# Subtest: Drive remains voluntary and cannot upload without a configured password
+ok 71 - Drive remains voluntary and cannot upload without a configured password
+  ---
+  duration_ms: 4.073894
+  type: 'test'
+  ...
+# Subtest: Drive restore success commits once before password adoption and clears the password
+ok 72 - Drive restore success commits once before password adoption and clears the password
+  ---
+  duration_ms: 4.134524
+  type: 'test'
+  ...
+# Subtest: Drive restore success never invents a confirmed local rollback backup
+ok 73 - Drive restore success never invents a confirmed local rollback backup
+  ---
+  duration_ms: 2.217238
+  type: 'test'
+  ...
+# Subtest: Drive restore cancellation and decryption failure never reach the local commit
+ok 74 - Drive restore cancellation and decryption failure never reach the local commit
+  ---
+  duration_ms: 7.70759
+  type: 'test'
+  ...
+# Subtest: Drive restore commit rejection never adopts a password or claims restored data
+ok 75 - Drive restore commit rejection never adopts a password or claims restored data
+  ---
+  duration_ms: 1.773453
+  type: 'test'
+  ...
+# Subtest: Drive restore preserves a backend-confirmed commit when settings finalization rejects
+ok 76 - Drive restore preserves a backend-confirmed commit when settings finalization rejects
+  ---
+  duration_ms: 1.904237
+  type: 'test'
+  ...
+# Subtest: Drive restore display failure retains both confirmed operations without replay
+ok 77 - Drive restore display failure retains both confirmed operations without replay
+  ---
+  duration_ms: 1.843036
+  type: 'test'
+  ...
+# Subtest: Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+ok 78 - Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+  ---
+  duration_ms: 6.371391
+  type: 'test'
+  ...
+# Subtest: Drive upload encrypts only the sanitized portfolio through the shared password backend
+ok 79 - Drive upload encrypts only the sanitized portfolio through the shared password backend
+  ---
+  duration_ms: 8.512016
+  type: 'test'
+  ...
+# Subtest: only the user-selected OAuth client ID is stored and no access token persists
+ok 80 - only the user-selected OAuth client ID is stored and no access token persists
+  ---
+  duration_ms: 1.734216
+  type: 'test'
+  ...
+# Subtest: public UI offers full encrypted backup without any recovery-code workflow
+ok 81 - public UI offers full encrypted backup without any recovery-code workflow
+  ---
+  duration_ms: 1.078669
+  type: 'test'
+  ...
+# Subtest: the optional full Drive payload includes validated history and configuration but no OAuth session token
+ok 82 - the optional full Drive payload includes validated history and configuration but no OAuth session token
+  ---
+  duration_ms: 16.41833
+  type: 'test'
+  ...
+# Subtest: compact Drive UI preserves all controls but hides help and advanced actions by default
+ok 83 - compact Drive UI preserves all controls but hides help and advanced actions by default
+  ---
+  duration_ms: 0.491725
+  type: 'test'
+  ...
+# Subtest: Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+ok 84 - Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+  ---
+  duration_ms: 2.532993
+  type: 'test'
+  ...
+# Subtest: header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+ok 85 - header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+  ---
+  duration_ms: 2.1712
+  type: 'test'
+  ...
+# Subtest: reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+ok 86 - reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+  ---
+  duration_ms: 2.764975
+  type: 'test'
+  ...
+# Subtest: cancelled OAuth popup exposes an error and never claims authorization or upload
+ok 87 - cancelled OAuth popup exposes an error and never claims authorization or upload
+  ---
+  duration_ms: 1.802336
+  type: 'test'
+  ...
+# Subtest: invalid OAuth expiry cannot be presented as an hour of valid authorization
+ok 88 - invalid OAuth expiry cannot be presented as an hour of valid authorization
+  ---
+  duration_ms: 1.105961
+  type: 'test'
+  ...
+# Subtest: Drive401 expires the session and gives one reconnect instruction without a false backup
+ok 89 - Drive401 expires the session and gives one reconnect instruction without a false backup
+  ---
+  duration_ms: 1.243423
+  type: 'test'
+  ...
+# Subtest: missing backup guard fails closed before encryption or upload
+ok 90 - missing backup guard fails closed before encryption or upload
+  ---
+  duration_ms: 2.387579
+  type: 'test'
+  ...
+# Subtest: stale canonical snapshot stops Drive upload and never marks it backed up
+ok 91 - stale canonical snapshot stops Drive upload and never marks it backed up
+  ---
+  duration_ms: 1.98788
+  type: 'test'
+  ...
+# Subtest: snapshot change during encryption stops before any upload
+ok 92 - snapshot change during encryption stops before any upload
+  ---
+  duration_ms: 1.440524
+  type: 'test'
+  ...
+# Subtest: snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+ok 93 - snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+  ---
+  duration_ms: 1.767856
+  type: 'test'
+  ...
+# Subtest: stale snapshot cannot prune existing remote backups when retention is lowered
+ok 94 - stale snapshot cannot prune existing remote backups when retention is lowered
+  ---
+  duration_ms: 19.653727
+  type: 'test'
+  ...
+# Subtest: fresh snapshot preserves normal confirmed backup and authorized retention
+ok 95 - fresh snapshot preserves normal confirmed backup and authorized retention
+  ---
+  duration_ms: 2.965852
+  type: 'test'
+  ...
+# Subtest: acknowledged upload is not automatically repeated when local acknowledgement storage fails
+ok 96 - acknowledged upload is not automatically repeated when local acknowledgement storage fails
+  ---
+  duration_ms: 4.032864
+  type: 'test'
+  ...
+# Subtest: export preflight rejection never uploads, prunes or acknowledges a Drive backup
+ok 97 - export preflight rejection never uploads, prunes or acknowledges a Drive backup
+  ---
+  duration_ms: 104.92611
+  type: 'test'
+  ...
+# Subtest: Only precisely matched familiar ETF EUR listings enrich legacy imports without mutating values or historic snapshots
+ok 98 - Only precisely matched familiar ETF EUR listings enrich legacy imports without mutating values or historic snapshots
+  ---
+  duration_ms: 9.518619
+  type: 'test'
+  ...
+# Subtest: Ambiguous symbols or existing different venue/ISIN never silently reassign
+ok 99 - Ambiguous symbols or existing different venue/ISIN never silently reassign
+  ---
+  duration_ms: 0.966284
+  type: 'test'
+  ...
+# Subtest: CoinPaprika uses curated source identity, EUR currency, valid provider timestamp
+ok 100 - CoinPaprika uses curated source identity, EUR currency, valid provider timestamp
+  ---
+  duration_ms: 7.467736
+  type: 'test'
+  ...
+# Subtest: CoinPaprika historical URL specifies EUR explicitly and rejects conflicting daily values
+ok 101 - CoinPaprika historical URL specifies EUR explicitly and rejects conflicting daily values
+  ---
+  duration_ms: 6.263722
+  type: 'test'
+  ...
+# Subtest: Failed CoinGecko historical chart safely uses CoinPaprika EUR, not guessed token
+ok 102 - Failed CoinGecko historical chart safely uses CoinPaprika EUR, not guessed token
+  ---
+  duration_ms: 4.280458
+  type: 'test'
+  ...
+# Subtest: DefiLlama fallback demands contract, supported chain, strong confidence, matching token, and dated USD/EUR reference
+ok 103 - DefiLlama fallback demands contract, supported chain, strong confidence, matching token, and dated USD/EUR reference
+  ---
+  duration_ms: 7.828458
+  type: 'test'
+  ...
+# Subtest: Four curated Xetra identities survive abbreviated broker names, while every conflicting identity fails closed
+ok 104 - Four curated Xetra identities survive abbreviated broker names, while every conflicting identity fails closed
+  ---
+  duration_ms: 1.435936
+  type: 'test'
+  ...
+# Subtest: Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates
+ok 105 - Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates
+  ---
+  duration_ms: 10.055791
+  type: 'test'
+  ...
+# Subtest: Dated FX readers reject nonexistent and future publication days
+ok 106 - Dated FX readers reject nonexistent and future publication days
+  ---
+  duration_ms: 2.186803
+  type: 'test'
+  ...
+# Subtest: Valid numeric/string rates and explicit weekend publication dates retain their existing contract
+ok 107 - Valid numeric/string rates and explicit weekend publication dates retain their existing contract
+  ---
+  duration_ms: 2.130981
+  type: 'test'
+  ...
+# Subtest: Batched historical FX never turns malformed observations into a filled daily rate
+ok 108 - Batched historical FX never turns malformed observations into a filled daily rate
+  ---
+  duration_ms: 1.264504
+  type: 'test'
+  ...
+# Subtest: Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses
+ok 109 - Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses
+  ---
+  duration_ms: 18.317668
+  type: 'test'
+  ...
+# Subtest: Actual refresh handler saves a valid current reference rate once without rewriting journal/history
+ok 110 - Actual refresh handler saves a valid current reference rate once without rewriting journal/history
+  ---
+  duration_ms: 2.420918
+  type: 'test'
+  ...
+# Subtest: local status never claims success while checking, pending, failed or conflicted
+ok 111 - local status never claims success while checking, pending, failed or conflicted
+  ---
+  duration_ms: 1.592678
+  type: 'test'
+  ...
+# Subtest: Drive setup, auth and backup state remain separate from local storage and from each other
+ok 112 - Drive setup, auth and backup state remain separate from local storage and from each other
+  ---
+  duration_ms: 0.60362
+  type: 'test'
+  ...
+# Subtest: German CSV with semicolon, comma decimals, reversed rows and BOM imports exactly
+ok 113 - German CSV with semicolon, comma decimals, reversed rows and BOM imports exactly
+  ---
+  duration_ms: 9.652868
+  type: 'test'
+  ...
+# Subtest: US export with Date,Close and CSV quoted fields selects actual close, not adjusted close
+ok 114 - US export with Date,Close and CSV quoted fields selects actual close, not adjusted close
+  ---
+  duration_ms: 1.768176
+  type: 'test'
+  ...
+# Subtest: Historical CSV errors reject invalid identity currency dates conflicting duplicates and bad prices
+ok 115 - Historical CSV errors reject invalid identity currency dates conflicting duplicates and bad prices
+  ---
+  duration_ms: 1.710841
+  type: 'test'
+  ...
+# Subtest: CSV no identifier requires caller confirmation, but cannot silently change portfolio values
+ok 116 - CSV no identifier requires caller confirmation, but cannot silently change portfolio values
+  ---
+  duration_ms: 7.233702
+  type: 'test'
+  ...
+# Subtest: Malicious and oversized histories cannot be imported from backup
+ok 117 - Malicious and oversized histories cannot be imported from backup
+  ---
+  duration_ms: 3.28383
+  type: 'test'
+  ...
+# Subtest: Local CSV selection does not fill nonexistent dates or extend beyond selected range
+ok 118 - Local CSV selection does not fill nonexistent dates or extend beyond selected range
+  ---
+  duration_ms: 1.41135
+  type: 'test'
+  ...
+# Subtest: five-year CSV selects actual historic points while max shows complete imported history
+ok 119 - five-year CSV selects actual historic points while max shows complete imported history
+  ---
+  duration_ms: 0.7461
+  type: 'test'
+  ...
+# Subtest: EOD historical quantity, never current quantity times old price; zero mutation
+ok 120 - EOD historical quantity, never current quantity times old price; zero mutation
+  ---
+  duration_ms: 13.554728
+  type: 'test'
+  ...
+# Subtest: unknown opening, unjournalled booking, missing historical FX or incompatible series stays unknown
+ok 121 - unknown opening, unjournalled booking, missing historical FX or incompatible series stays unknown
+  ---
+  duration_ms: 6.11972
+  type: 'test'
+  ...
+# Subtest: known zero before first evidenced purchase is not invented; absent and long price intervals split
+ok 122 - known zero before first evidenced purchase is not invented; absent and long price intervals split
+  ---
+  duration_ms: 1.734607
+  type: 'test'
+  ...
+# Subtest: corrected quantities and multiple transactions in a day respect journal sequence
+ok 123 - corrected quantities and multiple transactions in a day respect journal sequence
+  ---
+  duration_ms: 1.485059
+  type: 'test'
+  ...
+# Subtest: canonical historical days retain strict calendar checks after reuse and cache pressure
+ok 124 - canonical historical days retain strict calendar checks after reuse and cache pressure
+  ---
+  duration_ms: 68.090563
+  type: 'test'
+  ...
+# Subtest: a reused valid day never approves invalid prices, FX or source evidence
+ok 125 - a reused valid day never approves invalid prices, FX or source evidence
+  ---
+  duration_ms: 1.44558
+  type: 'test'
+  ...
+# Subtest: close wins over adjusted_close; adjusted-only CSV is rejected
+ok 126 - close wins over adjusted_close; adjusted-only CSV is rejected
+  ---
+  duration_ms: 2.393337
+  type: 'test'
+  ...
+# Subtest: unproven provider entitlement, quota, license, browser transport and historical range are not capabilities
+ok 127 - unproven provider entitlement, quota, license, browser transport and historical range are not capabilities
+  ---
+  duration_ms: 0.511594
+  type: 'test'
+  ...
+# Subtest: all six exact imported cash events reverse, retain source audit, restore and undo byte-for-byte
+ok 128 - all six exact imported cash events reverse, retain source audit, restore and undo byte-for-byte
+  ---
+  duration_ms: 66.308522
+  type: 'test'
+  ...
+# Subtest: identity, ownership, original payload and journal changes fail closed without touching model
+ok 129 - identity, ownership, original payload and journal changes fail closed without touching model
+  ---
+  duration_ms: 13.627966
+  type: 'test'
+  ...
+# Subtest: later dependent spending, snapshots, references, linked transfers, FX and coupled costs remain blocked
+ok 130 - later dependent spending, snapshots, references, linked transfers, FX and coupled costs remain blocked
+  ---
+  duration_ms: 10.472675
+  type: 'test'
+  ...
+# Subtest: stale preimage, absent consent and a later mutation prevent apply or undo
+ok 131 - stale preimage, absent consent and a later mutation prevent apply or undo
+  ---
+  duration_ms: 2.554936
+  type: 'test'
+  ...
+# Subtest: audit version cannot be downgraded or used for imported edits; source evidence survives backup validation
+ok 132 - audit version cannot be downgraded or used for imported edits; source evidence survives backup validation
+  ---
+  duration_ms: 2.430092
+  type: 'test'
+  ...
+# Subtest: changed source payload and renamed file cannot bypass deleted external identity
+ok 133 - changed source payload and renamed file cannot bypass deleted external identity
+  ---
+  duration_ms: 2.401089
+  type: 'test'
+  ...
+# Subtest: retained imported journal and cash-flow amounts cannot be tampered on restore
+ok 134 - retained imported journal and cash-flow amounts cannot be tampered on restore
+  ---
+  duration_ms: 3.71123
+  type: 'test'
+  ...
+# Subtest: reimport protection also marks changed namespace and ambiguous same-day source for review
+ok 135 - reimport protection also marks changed namespace and ambiguous same-day source for review
+  ---
+  duration_ms: 3.416035
+  type: 'test'
+  ...
+# Subtest: Local audit flags mismatched displayed/precise quotes and non-EUR FX without mutating bytes
+ok 136 - Local audit flags mismatched displayed/precise quotes and non-EUR FX without mutating bytes
+  ---
+  duration_ms: 5.09555
+  type: 'test'
+  ...
+# Subtest: Legitimate 18-decimal dust rounding, zero quotes and EUR identity FX are not false positives
+ok 137 - Legitimate 18-decimal dust rounding, zero quotes and EUR identity FX are not false positives
+  ---
+  duration_ms: 0.47523
+  type: 'test'
+  ...
+# Subtest: Old v3 backup remains read-only under audit and preserves original economic history
+ok 138 - Old v3 backup remains read-only under audit and preserves original economic history
+  ---
+  duration_ms: 6.228981
+  type: 'test'
+  ...
+# Subtest: Provider evidence must be dated, positive, non-future and sufficiently recent
+ok 139 - Provider evidence must be dated, positive, non-future and sufficiently recent
+  ---
+  duration_ms: 0.779679
+  type: 'test'
+  ...
+# Subtest: Only explicit confirmed provider repair changes the current quote; journals and snapshots remain unchanged
+ok 140 - Only explicit confirmed provider repair changes the current quote; journals and snapshots remain unchanged
+  ---
+  duration_ms: 1.363579
+  type: 'test'
+  ...
+# Subtest: FX repair corrects only current USD/EUR quote; any remaining price discrepancy stays visible
+ok 141 - FX repair corrects only current USD/EUR quote; any remaining price discrepancy stays visible
+  ---
+  duration_ms: 0.475791
+  type: 'test'
+  ...
+# Subtest: EODHD diagnostics do not probe without credentials or positions
+ok 142 - EODHD diagnostics do not probe without credentials or positions
+  ---
+  duration_ms: 10.097713
+  type: 'test'
+  ...
+# Subtest: Diagnostic limits calls to four existing securities and never mutates them
+ok 143 - Diagnostic limits calls to four existing securities and never mutates them
+  ---
+  duration_ms: 11.586102
+  type: 'test'
+  ...
+# Subtest: Rate and auth failures stop global probes, never expose user keys
+ok 144 - Rate and auth failures stop global probes, never expose user keys
+  ---
+  duration_ms: 2.403072
+  type: 'test'
+  ...
+# Subtest: Quote evidence remains distinct from staleness and manual values
+ok 145 - Quote evidence remains distinct from staleness and manual values
+  ---
+  duration_ms: 0.549389
+  type: 'test'
+  ...
+# Subtest: BTC-Guthaben berücksichtigt Ein- und Ausgänge inklusive Mempool
+ok 146 - BTC-Guthaben berücksichtigt Ein- und Ausgänge inklusive Mempool
+  ---
+  duration_ms: 2.787669
+  type: 'test'
+  ...
+# Subtest: CoinGecko nutzt Coin-ID und EUR Preise
+ok 147 - CoinGecko nutzt Coin-ID und EUR Preise
+  ---
+  duration_ms: 1.092691
+  type: 'test'
+  ...
+# Subtest: Etherscan V2 zeigt Adresssaldo, nur eigener Schlüssel
+ok 148 - Etherscan V2 zeigt Adresssaldo, nur eigener Schlüssel
+  ---
+  duration_ms: 0.64506
+  type: 'test'
+  ...
+# Subtest: Solana native und Token-Salden
+ok 149 - Solana native und Token-Salden
+  ---
+  duration_ms: 0.579324
+  type: 'test'
+  ...
+# Subtest: ETF Kurs, FX und Suchfilter
+ok 150 - ETF Kurs, FX und Suchfilter
+  ---
+  duration_ms: 0.947566
+  type: 'test'
+  ...
+# Subtest: Täglicher EUR-Wechselkurs ohne API-Key
+ok 151 - Täglicher EUR-Wechselkurs ohne API-Key
+  ---
+  duration_ms: 0.477434
+  type: 'test'
+  ...
+# Subtest: Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden
+ok 152 - Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden
+  ---
+  duration_ms: 0.833919
+  type: 'test'
+  ...
+# Subtest: Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten
+ok 153 - Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten
+  ---
+  duration_ms: 2.027428
+  type: 'test'
+  ...
+# Subtest: Marketstack uses only the four proven exact ISIN/EUR/XETR listings and raw closes
+ok 154 - Marketstack uses only the four proven exact ISIN/EUR/XETR listings and raw closes
+  ---
+  duration_ms: 7.887355
+  type: 'test'
+  ...
+# Subtest: Marketstack rejects wrong instruments, currency, MIC, names, dates, malformed prices, partial pages and conflicting bars
+ok 155 - Marketstack rejects wrong instruments, currency, MIC, names, dates, malformed prices, partial pages and conflicting bars
+  ---
+  duration_ms: 1.320957
+  type: 'test'
+  ...
+# Subtest: 100 monthly reservations count attempts, preserve spacing and reset only in a new UTC month
+ok 156 - 100 monthly reservations count attempts, preserve spacing and reset only in a new UTC month
+  ---
+  duration_ms: 1.201351
+  type: 'test'
+  ...
+# Subtest: Quote/history coalesce and a new client reuses public daily cache without retaining echoed credentials
+ok 157 - Quote/history coalesce and a new client reuses public daily cache without retaining echoed credentials
+  ---
+  duration_ms: 11.565147
+  type: 'test'
+  ...
+# Subtest: Four symbols consume four units rather than one; Friday closes are reused over weekend and before Monday close
+ok 158 - Four symbols consume four units rather than one; Friday closes are reused over weekend and before Monday close
+  ---
+  duration_ms: 10.614224
+  type: 'test'
+  ...
+# Subtest: Rate limits, upstream credential echoes and unavailable IDB cannot cause uncontrolled retries or cached false prices
+ok 159 - Rate limits, upstream credential echoes and unavailable IDB cannot cause uncontrolled retries or cached false prices
+  ---
+  duration_ms: 4.387146
+  type: 'test'
+  ...
+# Subtest: An initial morning read does not hide the new close after the same-day EOD boundary
+ok 160 - An initial morning read does not hide the new close after the same-day EOD boundary
+  ---
+  duration_ms: 2.63936
+  type: 'test'
+  ...
+# Subtest: Marketstack key is opt-in encrypted configuration, never canonical financial JSON
+ok 161 - Marketstack key is opt-in encrypted configuration, never canonical financial JSON
+  ---
+  duration_ms: 111.855594
+  type: 'test'
+  ...
+# Subtest: Historical zero/null observations never become prices: latest quote works, history remains blocked across reload and either request order
+ok 162 - Historical zero/null observations never become prices: latest quote works, history remains blocked across reload and either request order
+  ---
+  duration_ms: 21.605915
+  type: 'test'
+  ...
+# Subtest: A missing or zero latest close cannot fall back to an older observation, even for quote-only use
+ok 163 - A missing or zero latest close cannot fall back to an older observation, even for quote-only use
+  ---
+  duration_ms: 6.982261
+  type: 'test'
+  ...
+# Subtest: Quote-only mode still rejects wrong identity, invalid dates, malformed prices and contradictory missing/valid observations
+ok 164 - Quote-only mode still rejects wrong identity, invalid dates, malformed prices and contradictory missing/valid observations
+  ---
+  duration_ms: 16.001635
+  type: 'test'
+  ...
+# Subtest: unabhängige freie Anbieter und beliebige ETFs
+ok 165 - unabhängige freie Anbieter und beliebige ETFs
+  ---
+  duration_ms: 4.455918
+  type: 'test'
+  ...
+# Subtest: Buchungen ändern Bestand, erstellen Verlauf
+ok 166 - Buchungen ändern Bestand, erstellen Verlauf
+  ---
+  duration_ms: 4.757492
+  type: 'test'
+  ...
+# Subtest: Fremdwährungen werden explizit in EUR umgerechnet
+ok 167 - Fremdwährungen werden explizit in EUR umgerechnet
+  ---
+  duration_ms: 0.416825
+  type: 'test'
+  ...
+# Subtest: Sicherheitsregel: Keine geheimen Wallet-Keys
+ok 168 - Sicherheitsregel: Keine geheimen Wallet-Keys
+  ---
+  duration_ms: 1.605566
+  type: 'test'
+  ...
+# Subtest: Backup verwirft API Keys, Wiederherstellung rein datenbasiert
+ok 169 - Backup verwirft API Keys, Wiederherstellung rein datenbasiert
+  ---
+  duration_ms: 4.131209
+  type: 'test'
+  ...
+# Subtest: Ungültiger Portfolioimport wird abgelehnt
+ok 170 - Ungültiger Portfolioimport wird abgelehnt
+  ---
+  duration_ms: 0.166655
+  type: 'test'
+  ...
+# Subtest: Einstandswerte bleiben unbekannt statt Verluste oder Gewinne zu erfinden
+ok 171 - Einstandswerte bleiben unbekannt statt Verluste oder Gewinne zu erfinden
+  ---
+  duration_ms: 0.495089
+  type: 'test'
+  ...
+# Subtest: Gewichteter EUR-Einstand und Teilverkauf berücksichtigen Gebühren
+ok 172 - Gewichteter EUR-Einstand und Teilverkauf berücksichtigen Gebühren
+  ---
+  duration_ms: 1.854734
+  type: 'test'
+  ...
+# Subtest: Historische Fremdwährungsbuchungen benötigen expliziten EUR-FX
+ok 173 - Historische Fremdwährungsbuchungen benötigen expliziten EUR-FX
+  ---
+  duration_ms: 1.330241
+  type: 'test'
+  ...
+# Subtest: Cache deduplicates overlapping requests, isolates returned objects and respects TTL
+ok 174 - Cache deduplicates overlapping requests, isolates returned objects and respects TTL
+  ---
+  duration_ms: 2.200954
+  type: 'test'
+  ...
+# Subtest: 429 Retry-After is respected without an unbounded retry loop
+ok 175 - 429 Retry-After is respected without an unbounded retry loop
+  ---
+  duration_ms: 2.562978
+  type: 'test'
+  ...
+# Subtest: Long Retry-After does not cause premature repeated 429 requests
+ok 176 - Long Retry-After does not cause premature repeated 429 requests
+  ---
+  duration_ms: 0.996098
+  type: 'test'
+  ...
+# Subtest: Long Retry-After on HTTP 503 fails safely instead of retrying early
+ok 177 - Long Retry-After on HTTP 503 fails safely instead of retrying early
+  ---
+  duration_ms: 0.384096
+  type: 'test'
+  ...
+# Subtest: Persistent token secrecy: only memory cache, separated by key and fetch function
+ok 178 - Persistent token secrecy: only memory cache, separated by key and fetch function
+  ---
+  duration_ms: 0.69894
+  type: 'test'
+  ...
+# Subtest: Historical reference FX uses exact request date and reports prior working day
+ok 179 - Historical reference FX uses exact request date and reports prior working day
+  ---
+  duration_ms: 3.193447
+  type: 'test'
+  ...
+# Subtest: Daily reference quote records publication date and source
+ok 180 - Daily reference quote records publication date and source
+  ---
+  duration_ms: 0.647874
+  type: 'test'
+  ...
+# Subtest: Security ISIN is stable while listings at different exchanges have distinct IDs
+ok 181 - Security ISIN is stable while listings at different exchanges have distinct IDs
+  ---
+  duration_ms: 2.72063
+  type: 'test'
+  ...
+# Subtest: Position quote source, exact conversion, listing identity survives backup roundtrip
+ok 182 - Position quote source, exact conversion, listing identity survives backup roundtrip
+  ---
+  duration_ms: 4.461075
+  type: 'test'
+  ...
+# Subtest: TWR is exact on verified cashflow-free endpoints and refuses any unvalued flow
+ok 183 - TWR is exact on verified cashflow-free endpoints and refuses any unvalued flow
+  ---
+  duration_ms: 2.678388
+  type: 'test'
+  ...
+# Subtest: normal plain portfolio JSON keeps its exact readable bytes and MIME type
+ok 184 - normal plain portfolio JSON keeps its exact readable bytes and MIME type
+  ---
+  duration_ms: 1.91965
+  type: 'test'
+  ...
+# Subtest: accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+ok 185 - accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+  ---
+  duration_ms: 1147.117551
+  type: 'test'
+  ...
+# Subtest: plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+ok 186 - plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+  ---
+  duration_ms: 538.376367
+  type: 'test'
+  ...
+# Subtest: Editing just the note preserves observed valuation, exact amount and per-position history
+ok 187 - Editing just the note preserves observed valuation, exact amount and per-position history
+  ---
+  duration_ms: 3.057035
+  type: 'test'
+  ...
+# Subtest: Value correction requires consent, preserves id, records old revision and clears stale attribution
+ok 188 - Value correction requires consent, preserves id, records old revision and clears stale attribution
+  ---
+  duration_ms: 1.598095
+  type: 'test'
+  ...
+# Subtest: Date changes validate duplicate dates, future dates and calendar validity before mutating
+ok 189 - Date changes validate duplicate dates, future dates and calendar validity before mutating
+  ---
+  duration_ms: 14.726906
+  type: 'test'
+  ...
+# Subtest: Performance start can change note but not date or valuation
+ok 190 - Performance start can change note but not date or valuation
+  ---
+  duration_ms: 0.625072
+  type: 'test'
+  ...
+# Subtest: Delete position rejects booked and DeFi-linked positions without mutating balances
+ok 191 - Delete position rejects booked and DeFi-linked positions without mutating balances
+  ---
+  duration_ms: 2.778695
+  type: 'test'
+  ...
+# Subtest: Stable IDs distinguish same ISIN across accounts; toggles are immutable and ordered
+ok 192 - Stable IDs distinguish same ISIN across accounts; toggles are immutable and ordered
+  ---
+  duration_ms: 8.143694
+  type: 'test'
+  ...
+# Subtest: Select filtered uses the complete existing search result, including 101st+ unrendered matches
+ok 193 - Select filtered uses the complete existing search result, including 101st+ unrendered matches
+  ---
+  duration_ms: 12.951199
+  type: 'test'
+  ...
+# Subtest: All vs filtered requires explicit all intent and never mutates the portfolio
+ok 194 - All vs filtered requires explicit all intent and never mutates the portfolio
+  ---
+  duration_ms: 6.820884
+  type: 'test'
+  ...
+# Subtest: Filter changes retain hidden selection and do not select new matches
+ok 195 - Filter changes retain hidden selection and do not select new matches
+  ---
+  duration_ms: 1.216183
+  type: 'test'
+  ...
+# Subtest: Stale IDs remain explicit and block preview/actions until refresh or clear
+ok 196 - Stale IDs remain explicit and block preview/actions until refresh or clear
+  ---
+  duration_ms: 1.017389
+  type: 'test'
+  ...
+# Subtest: Duplicate selection IDs never multiply candidates; ambiguous model IDs fail closed
+ok 197 - Duplicate selection IDs never multiply candidates; ambiguous model IDs fail closed
+  ---
+  duration_ms: 3.392751
+  type: 'test'
+  ...
+# Subtest: Invalid action, ID, matching scope and empty removal never become all-position actions
+ok 198 - Invalid action, ID, matching scope and empty removal never become all-position actions
+  ---
+  duration_ms: 0.368733
+  type: 'test'
+  ...
+# Subtest: Unreferenced preview lists own opening/price impacts without deleting or persisting anything
+ok 199 - Unreferenced preview lists own opening/price impacts without deleting or persisting anything
+  ---
+  duration_ms: 3.443666
+  type: 'test'
+  ...
+# Subtest: Existing booking/journal/DeFi guards are reused rather than replaced by a second delete engine
+ok 200 - Existing booking/journal/DeFi guards are reused rather than replaced by a second delete engine
+  ---
+  duration_ms: 8.796905
+  type: 'test'
+  ...
+# Subtest: Retained snapshot keys and cash settlement references block proposed batch removal
+ok 201 - Retained snapshot keys and cash settlement references block proposed batch removal
+  ---
+  duration_ms: 0.998552
+  type: 'test'
+  ...
+# Subtest: Wallet sessions, purchase evidence and enabled discovery cannot be silently cascaded
+ok 202 - Wallet sessions, purchase evidence and enabled discovery cannot be silently cascaded
+  ---
+  duration_ms: 1.114172
+  type: 'test'
+  ...
+# Subtest: Serialized provenance and unknown future references are inspected conservatively
+ok 203 - Serialized provenance and unknown future references are inspected conservatively
+  ---
+  duration_ms: 8.276679
+  type: 'test'
+  ...
+# Subtest: A reference from another selected position stays blocked; selection is not cascade consent
+ok 204 - A reference from another selected position stays blocked; selection is not cascade consent
+  ---
+  duration_ms: 0.728794
+  type: 'test'
+  ...
+# Subtest: Malformed opaque JSON, unsupported objects, cycles and limits never yield partial clearance
+ok 205 - Malformed opaque JSON, unsupported objects, cycles and limits never yield partial clearance
+  ---
+  duration_ms: 1.690081
+  type: 'test'
+  ...
+# Subtest: Any later model change, including an unselected quote, invalidates the preview digest
+ok 206 - Any later model change, including an unselected quote, invalidates the preview digest
+  ---
+  duration_ms: 1.837358
+  type: 'test'
+  ...
+# Subtest: Safe-subset batch is detached, exact-preimage bound, blocks snapshot links and shares single removal engine
+ok 207 - Safe-subset batch is detached, exact-preimage bound, blocks snapshot links and shares single removal engine
+  ---
+  duration_ms: 15.708603
+  type: 'test'
+  ...
+# Subtest: Automatically managed/disabled-address wallet positions cannot reappear through deletion
+ok 208 - Automatically managed/disabled-address wallet positions cannot reappear through deletion
+  ---
+  duration_ms: 2.173153
+  type: 'test'
+  ...
+# Subtest: Safe-subset removal does not let CSV or automatic sources silently recreate deleted identities
+ok 209 - Safe-subset removal does not let CSV or automatic sources silently recreate deleted identities
+  ---
+  duration_ms: 4.812063
+  type: 'test'
+  ...
+# Subtest: filtered deselection preserves explicitly selected hidden and archived identities
+ok 210 - filtered deselection preserves explicitly selected hidden and archived identities
+  ---
+  duration_ms: 19.070768
+  type: 'test'
+  ...
+# Subtest: Shared master cycle selects page, full scope, then clears without redundant stages
+ok 211 - Shared master cycle selects page, full scope, then clears without redundant stages
+  ---
+  duration_ms: 8.264121
+  type: 'test'
+  ...
+# Subtest: Pagination and individual deselection derive the next step from coverage
+ok 212 - Pagination and individual deselection derive the next step from coverage
+  ---
+  duration_ms: 1.824199
+  type: 'test'
+  ...
+# Subtest: Provider FX never grants a value outside the existing portfolio FX range
+ok 213 - Provider FX never grants a value outside the existing portfolio FX range
+  ---
+  duration_ms: 21.795825
+  type: 'test'
+  ...
+# Subtest: Token and CoinPaprika fallback prices reject non-price primitive/object coercions
+ok 214 - Token and CoinPaprika fallback prices reject non-price primitive/object coercions
+  ---
+  duration_ms: 3.327375
+  type: 'test'
+  ...
+# Subtest: Historical CoinPaprika conversion refuses malformed USD prices and FX
+ok 215 - Historical CoinPaprika conversion refuses malformed USD prices and FX
+  ---
+  duration_ms: 7.378205
+  type: 'test'
+  ...
+# Subtest: DefiLlama requires actual numeric price, confidence and timestamp
+ok 216 - DefiLlama requires actual numeric price, confidence and timestamp
+  ---
+  duration_ms: 1.981971
+  type: 'test'
+  ...
+# Subtest: Actual token refresh retains the complete old record for malformed values and saves valid120 once
+ok 217 - Actual token refresh retains the complete old record for malformed values and saves valid120 once
+  ---
+  duration_ms: 22.055408
+  type: 'test'
+  ...
+# Subtest: Actual security quote pipeline rejects prices outside canonical decimal precision before any save
+ok 218 - Actual security quote pipeline rejects prices outside canonical decimal precision before any save
+  ---
+  duration_ms: 9.335019
+  type: 'test'
+  ...
+# Subtest: reference archive is visibility only, including actual non-null TWR/XIRR and every original byte
+ok 219 - reference archive is visibility only, including actual non-null TWR/XIRR and every original byte
+  ---
+  duration_ms: 22.459213
+  type: 'test'
+  ...
+# Subtest: archive retains legacy, automatic, unknown and partial originals without promoting their quality
+ok 220 - archive retains legacy, automatic, unknown and partial originals without promoting their quality
+  ---
+  duration_ms: 3.726362
+  type: 'test'
+  ...
+# Subtest: archive rejects mixed states, stale/duplicate/unknown IDs and missing consent without partial changes
+ok 221 - archive rejects mixed states, stale/duplicate/unknown IDs and missing consent without partial changes
+  ---
+  duration_ms: 5.932845
+  type: 'test'
+  ...
+# Subtest: one strict archive envelope rejects malformed reference metadata in both import and backup
+ok 222 - one strict archive envelope rejects malformed reference metadata in both import and backup
+  ---
+  duration_ms: 2.239742
+  type: 'test'
+  ...
+# Subtest: plain, complete and password encrypted roundtrips preserve reference and original data
+ok 223 - plain, complete and password encrypted roundtrips preserve reference and original data
+  ---
+  duration_ms: 130.523083
+  type: 'test'
+  ...
+# Subtest: old v1/v2/v3 imports gain no archive flags and preserve unverified history
+ok 224 - old v1/v2/v3 imports gain no archive flags and preserve unverified history
+  ---
+  duration_ms: 1.538998
+  type: 'test'
+  ...
+# Subtest: booking and reference archives retain each other in both directions and use the old format when possible
+ok 225 - booking and reference archives retain each other in both directions and use the old format when possible
+  ---
+  duration_ms: 25.393507
+  type: 'test'
+  ...
+# Subtest: reference selection preserves hidden IDs, cycles page then full filter, and exposes stale IDs without writes
+ok 226 - reference selection preserves hidden IDs, cycles page then full filter, and exposes stale IDs without writes
+  ---
+  duration_ms: 1.809367
+  type: 'test'
+  ...
+# Subtest: manual correction previews actual before/after values and preserves original revisions, archive and start
+ok 227 - manual correction previews actual before/after values and preserves original revisions, archive and start
+  ---
+  duration_ms: 2.430552
+  type: 'test'
+  ...
+# Subtest: automatic, legacy, unknown and contradictory manual sources block correction at runtime
+ok 228 - automatic, legacy, unknown and contradictory manual sources block correction at runtime
+  ---
+  duration_ms: 2.730494
+  type: 'test'
+  ...
+# Subtest: performance start and duplicate dates stay guarded; note edits retain all financial values
+ok 229 - performance start and duplicate dates stay guarded; note edits retain all financial values
+  ---
+  duration_ms: 2.322013
+  type: 'test'
+  ...
+# Subtest: adding never overwrites an existing or archived original and never resets performance tracking
+ok 230 - adding never overwrites an existing or archived original and never resets performance tracking
+  ---
+  duration_ms: 2.908206
+  type: 'test'
+  ...
+# Subtest: manual endpoint removal preserves finance and start but reports lost boundary returns as unknown
+ok 231 - manual endpoint removal preserves finance and start but reports lost boundary returns as unknown
+  ---
+  duration_ms: 4.287059
+  type: 'test'
+  ...
+# Subtest: manual intermediate removal uses existing projections without inventing a replacement observation
+ok 232 - manual intermediate removal uses existing projections without inventing a replacement observation
+  ---
+  duration_ms: 3.573897
+  type: 'test'
+  ...
+# Subtest: removal blocks start, original-source dependencies and unknown fields, never partially deletes
+ok 233 - removal blocks start, original-source dependencies and unknown fields, never partially deletes
+  ---
+  duration_ms: 13.619263
+  type: 'test'
+  ...
+# Subtest: reference dependencies include opaque/serialized metadata, other originals and duplicate dates
+ok 234 - reference dependencies include opaque/serialized metadata, other originals and duplicate dates
+  ---
+  duration_ms: 5.627074
+  type: 'test'
+  ...
+# Subtest: removal requires exact consent and rejects stale, invalid or duplicate selection without mutation
+ok 235 - removal requires exact consent and rejects stale, invalid or duplicate selection without mutation
+  ---
+  duration_ms: 1.856857
+  type: 'test'
+  ...
+# Subtest: removal cleans only selected reference archive IDs and preserves booking archive format
+ok 236 - removal cleans only selected reference archive IDs and preserves booking archive format
+  ---
+  duration_ms: 4.975403
+  type: 'test'
+  ...
+# Subtest: removed originals retain exact session undo and plain/encrypted backup recovery
+ok 237 - removed originals retain exact session undo and plain/encrypted backup recovery
+  ---
+  duration_ms: 109.959048
+  type: 'test'
+  ...
+# Subtest: today observation cannot be silently regenerated by an automatic current capture after removal
+ok 238 - today observation cannot be silently regenerated by an automatic current capture after removal
+  ---
+  duration_ms: 1.006223
+  type: 'test'
+  ...
+# Subtest: 10,000 reference IDs retain exact explicit scope across pagination and stale records
+ok 239 - 10,000 reference IDs retain exact explicit scope across pagination and stale records
+  ---
+  duration_ms: 71.654656
+  type: 'test'
+  ...
+# Subtest: protected source notes gain an editor without changing provenance, exact observations, history or journal
+ok 240 - protected source notes gain an editor without changing provenance, exact observations, history or journal
+  ---
+  duration_ms: 370.809165
+  type: 'test'
+  ...
+# Subtest: one validated frequency preserves legacy opt-out and daily defaults
+ok 241 - one validated frequency preserves legacy opt-out and daily defaults
+  ---
+  duration_ms: 3.414863
+  type: 'test'
+  ...
+# Subtest: legacy read normalizes in memory without writing source bytes
+ok 242 - legacy read normalizes in memory without writing source bytes
+  ---
+  duration_ms: 7.988905
+  type: 'test'
+  ...
+# Subtest: all four encrypted opt-in preferences roundtrip, other configuration retained
+ok 243 - all four encrypted opt-in preferences roundtrip, other configuration retained
+  ---
+  duration_ms: 508.246643
+  type: 'test'
+  ...
+# Subtest: exact intervals use persisted complete success, never mere attempt
+ok 244 - exact intervals use persisted complete success, never mere attempt
+  ---
+  duration_ms: 1.179538
+  type: 'test'
+  ...
+# Subtest: partial save skips paid successes but retries missing work with bounded backoff
+ok 245 - partial save skips paid successes but retries missing work with bounded backoff
+  ---
+  duration_ms: 0.818837
+  type: 'test'
+  ...
+# Subtest: failed canonical save cannot promote either a task or full success
+ok 246 - failed canonical save cannot promote either a task or full success
+  ---
+  duration_ms: 0.241486
+  type: 'test'
+  ...
+# Subtest: offline and opt-out issue no claim; quota and corrupt state fail closed
+ok 247 - offline and opt-out issue no claim; quota and corrupt state fail closed
+  ---
+  duration_ms: 0.454149
+  type: 'test'
+  ...
+# Subtest: manual remains independent and a backwards clock gets bounded recovery
+ok 248 - manual remains independent and a backwards clock gets bounded recovery
+  ---
+  duration_ms: 3.394223
+  type: 'test'
+  ...
+# Subtest: Aggregates repeated API errors without inventing success or modifying holdings
+ok 249 - Aggregates repeated API errors without inventing success or modifying holdings
+  ---
+  duration_ms: 1.931197
+  type: 'test'
+  ...
+# Subtest: Fresh Drive restore does not manufacture a local backup creation timestamp
+ok 250 - Fresh Drive restore does not manufacture a local backup creation timestamp
+  ---
+  duration_ms: 9.106892
+  type: 'test'
+  ...
+# Subtest: Restore preserves an existing real backup timestamp instead of refreshing it
+ok 251 - Restore preserves an existing real backup timestamp instead of refreshing it
+  ---
+  duration_ms: 12.460716
+  type: 'test'
+  ...
+# Subtest: Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+ok 252 - Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+  ---
+  duration_ms: 4.902546
+  type: 'test'
+  ...
+# Subtest: A rejected restore does not mark an uncreated backup or reset unsaved change count
+ok 253 - A rejected restore does not mark an uncreated backup or reset unsaved change count
+  ---
+  duration_ms: 5.173645
+  type: 'test'
+  ...
+# Subtest: Actual backup creation keeps the existing timestamp and counter behavior
+ok 254 - Actual backup creation keeps the existing timestamp and counter behavior
+  ---
+  duration_ms: 2.837462
+  type: 'test'
+  ...
+# Subtest: Drive restore help scopes the rollback offer to existing local data
+ok 255 - Drive restore help scopes the rollback offer to existing local data
+  ---
+  duration_ms: 18.513858
+  type: 'test'
+  ...
+# Subtest: Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+ok 256 - Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+  ---
+  duration_ms: 7.014288
+  type: 'test'
+  ...
+# Subtest: Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+ok 257 - Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+  ---
+  duration_ms: 3.025059
+  type: 'test'
+  ...
+# Subtest: Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+ok 258 - Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+  ---
+  duration_ms: 9.137268
+  type: 'test'
+  ...
+# Subtest: Actual Drive restore callback still saves a valid independent two-unit price once
+ok 259 - Actual Drive restore callback still saves a valid independent two-unit price once
+  ---
+  duration_ms: 1.610604
+  type: 'test'
+  ...
+# Subtest: Confirmed save followed by render failure keeps committed model and does not report an unsaved change
+ok 260 - Confirmed save followed by render failure keeps committed model and does not report an unsaved change
+  ---
+  duration_ms: 9.516246
+  type: 'test'
+  ...
+# Subtest: Actual Drive restore callback does not roll back visible model after a confirmed save with a display failure
+ok 261 - Actual Drive restore callback does not roll back visible model after a confirmed save with a display failure
+  ---
+  duration_ms: 2.594014
+  type: 'test'
+  ...
+# Subtest: Genuine precommit failure still rejects and reloads the unchanged original
+ok 262 - Genuine precommit failure still rejects and reloads the unchanged original
+  ---
+  duration_ms: 1.849857
+  type: 'test'
+  ...
+# Subtest: Final status failure after a confirmed commit cannot convert it to a failed save
+ok 263 - Final status failure after a confirmed commit cannot convert it to a failed save
+  ---
+  duration_ms: 1.156815
+  type: 'test'
+  ...
+# Subtest: Booking-management display failure after commit preserves exactly one saved mutation
+ok 264 - Booking-management display failure after commit preserves exactly one saved mutation
+  ---
+  duration_ms: 1.076867
+  type: 'test'
+  ...
+# Subtest: Persistent render and warning-toast failure cannot invite a second storage attempt
+ok 265 - Persistent render and warning-toast failure cannot invite a second storage attempt
+  ---
+  duration_ms: 1.975631
+  type: 'test'
+  ...
+# Subtest: Ordinary successful save keeps the existing one-commit behavior
+ok 266 - Ordinary successful save keeps the existing one-commit behavior
+  ---
+  duration_ms: 1.427013
+  type: 'test'
+  ...
+# Subtest: Persistent header warning describes committed data while real storage failures keep priority
+ok 267 - Persistent header warning describes committed data while real storage failures keep priority
+  ---
+  duration_ms: 0.353812
+  type: 'test'
+  ...
+# Subtest: Actual shared desktop and mobile status keep the saved boundary visible after a display failure
+ok 268 - Actual shared desktop and mobile status keep the saved boundary visible after a display failure
+  ---
+  duration_ms: 2.215916
+  type: 'test'
+  ...
+# Subtest: An external TradingView chart API is not exposed; quote sources remain strictly configured
+ok 269 - An external TradingView chart API is not exposed; quote sources remain strictly configured
+  ---
+  duration_ms: 3.028133
+  type: 'test'
+  ...
+# Subtest: FMP and EODHD provider identifiers survive backups, secret API keys never exported
+ok 270 - FMP and EODHD provider identifiers survive backups, secret API keys never exported
+  ---
+  duration_ms: 5.639001
+  type: 'test'
+  ...
+# Subtest: Optional authenticated EODHD worker is a safe first-class market source without local EODHD key
+ok 271 - Optional authenticated EODHD worker is a safe first-class market source without local EODHD key
+  ---
+  duration_ms: 5.744678
+  type: 'test'
+  ...
+# Subtest: Worker endpoint and access key must be an explicitly configured HTTPS pair
+ok 272 - Worker endpoint and access key must be an explicitly configured HTTPS pair
+  ---
+  duration_ms: 0.557742
+  type: 'test'
+  ...
+# Subtest: No worker secrets can escape an unencrypted portfolio backup
+ok 273 - No worker secrets can escape an unencrypted portfolio backup
+  ---
+  duration_ms: 0.448671
+  type: 'test'
+  ...
+# Subtest: five year EODHD chart extends real upstream date boundaries without inventing observations
+ok 274 - five year EODHD chart extends real upstream date boundaries without inventing observations
+  ---
+  duration_ms: 1.104128
+  type: 'test'
+  ...
+# Subtest: Explicit provider mapping cannot override conflicting Xetra venue or curated ISIN
+ok 275 - Explicit provider mapping cannot override conflicting Xetra venue or curated ISIN
+  ---
+  duration_ms: 0.859507
+  type: 'test'
+  ...
+# Subtest: confirmed reset clears every API field and the update draft flag
+ok 276 - confirmed reset clears every API field and the update draft flag
+  ---
+  duration_ms: 5.549659
+  type: 'test'
+  ...
+# Subtest: reset cancellation and failed deletion preserve the draft and canonical model
+ok 277 - reset cancellation and failed deletion preserve the draft and canonical model
+  ---
+  duration_ms: 4.157328
+  type: 'test'
+  ...
+# Subtest: successful deletion still clears the form if quote-cache cleanup fails
+ok 278 - successful deletion still clears the form if quote-cache cleanup fails
+  ---
+  duration_ms: 2.019447
+  type: 'test'
+  ...
+# Subtest: file accepted settings follow committed model and are masked
+ok 279 - file accepted settings follow committed model and are masked
+  ---
+  duration_ms: 5.872506
+  type: 'test'
+  ...
+# Subtest: file missing configuration preserves the draft
+ok 280 - file missing configuration preserves the draft
+  ---
+  duration_ms: 2.1845
+  type: 'test'
+  ...
+# Subtest: file declined settings preserve the draft
+ok 281 - file declined settings preserve the draft
+  ---
+  duration_ms: 2.186613
+  type: 'test'
+  ...
+# Subtest: file failed commit preserves the draft and previous settings
+ok 282 - file failed commit preserves the draft and previous settings
+  ---
+  duration_ms: 2.275694
+  type: 'test'
+  ...
+# Subtest: file failed post-commit preferences keep the draft while retaining the committed model
+ok 283 - file failed post-commit preferences keep the draft while retaining the committed model
+  ---
+  duration_ms: 2.159163
+  type: 'test'
+  ...
+# Subtest: drive accepted settings follow committed model and are masked
+ok 284 - drive accepted settings follow committed model and are masked
+  ---
+  duration_ms: 2.288873
+  type: 'test'
+  ...
+# Subtest: drive missing configuration preserves the draft
+ok 285 - drive missing configuration preserves the draft
+  ---
+  duration_ms: 2.120125
+  type: 'test'
+  ...
+# Subtest: drive declined settings preserve the draft
+ok 286 - drive declined settings preserve the draft
+  ---
+  duration_ms: 2.074398
+  type: 'test'
+  ...
+# Subtest: drive failed commit preserves the draft and previous settings
+ok 287 - drive failed commit preserves the draft and previous settings
+  ---
+  duration_ms: 2.505142
+  type: 'test'
+  ...
+# Subtest: drive failed post-commit preferences keep the draft while retaining the committed model
+ok 288 - drive failed post-commit preferences keep the draft while retaining the committed model
+  ---
+  duration_ms: 2.060988
+  type: 'test'
+  ...
+# Subtest: file vault adoption failure preserves a visible draft after portfolio commit
+ok 289 - file vault adoption failure preserves a visible draft after portfolio commit
+  ---
+  duration_ms: 2.180163
+  type: 'test'
+  ...
+# Subtest: Drive backend marks only a confirmed portfolio commit before preference failure
+ok 290 - Drive backend marks only a confirmed portfolio commit before preference failure
+  ---
+  duration_ms: 2.093385
+  type: 'test'
+  ...
+# Subtest: Drive backend does not mark a rejected storage operation as committed
+ok 291 - Drive backend does not mark a rejected storage operation as committed
+  ---
+  duration_ms: 2.240463
+  type: 'test'
+  ...
+# Subtest: Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB
+ok 292 - Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB
+  ---
+  duration_ms: 2.746708
+  type: 'test'
+  ...
+# Subtest: Drive recovery rejection never carries a confirmed-commit marker
+ok 293 - Drive recovery rejection never carries a confirmed-commit marker
+  ---
+  duration_ms: 2.132634
+  type: 'test'
+  ...
+# Subtest: Drive backend toast confirms only portfolio data before password adoption
+ok 294 - Drive backend toast confirms only portfolio data before password adoption
+  ---
+  duration_ms: 3.441001
+  type: 'test'
+  ...
+# Subtest: missing/null/empty FX remains explicit UNKNOWN at the first constructor boundary
+ok 295 - missing/null/empty FX remains explicit UNKNOWN at the first constructor boundary
+  ---
+  duration_ms: 4.142816
+  type: 'test'
+  ...
+# Subtest: known identity FX and nonidentity rates retain independent exact Decimal100 outcomes
+ok 296 - known identity FX and nonidentity rates retain independent exact Decimal100 outcomes
+  ---
+  duration_ms: 4.340177
+  type: 'test'
+  ...
+# Subtest: invalid rates and unknown/numeric contradictions reject without source mutation
+ok 297 - invalid rates and unknown/numeric contradictions reject without source mutation
+  ---
+  duration_ms: 1.323201
+  type: 'test'
+  ...
+# Subtest: canonical backup and encrypted fresh object restore preserve UNKNOWN and exact native quantities
+ok 298 - canonical backup and encrypted fresh object restore preserve UNKNOWN and exact native quantities
+  ---
+  duration_ms: 100.072617
+  type: 'test'
+  ...
+# Subtest: legacy stored numeric1 is not inferred to be UNKNOWN or repaired
+ok 299 - legacy stored numeric1 is not inferred to be UNKNOWN or repaired
+  ---
+  duration_ms: 1.767995
+  type: 'test'
+  ...
+# Subtest: raw nullable legacy FX is canonicalized fail-closed without mutating raw source
+ok 300 - raw nullable legacy FX is canonicalized fail-closed without mutating raw source
+  ---
+  duration_ms: 0.679632
+  type: 'test'
+  ...
+# Subtest: known partial sum is explicit and no cost basis or performance is inferred from UNKNOWN
+ok 301 - known partial sum is explicit and no cost basis or performance is inferred from UNKNOWN
+  ---
+  duration_ms: 1.832671
+  type: 'test'
+  ...
+# Subtest: current FX never grants historical valuation or historical transaction FX
+ok 302 - current FX never grants historical valuation or historical transaction FX
+  ---
+  duration_ms: 1.949844
+  type: 'test'
+  ...
+# Subtest: zero holdings and excluded contributions are mathematical zeros without proving FX
+ok 303 - zero holdings and excluded contributions are mathematical zeros without proving FX
+  ---
+  duration_ms: 0.227125
+  type: 'test'
+  ...
+# Subtest: legacy storage serialization and reload remain fail-closed for nullable FX
+ok 304 - legacy storage serialization and reload remain fail-closed for nullable FX
+  ---
+  duration_ms: 0.789583
+  type: 'test'
+  ...
+# Subtest: UNKNOWN never rewrites existing independently recorded historical observations
+ok 305 - UNKNOWN never rewrites existing independently recorded historical observations
+  ---
+  duration_ms: 4.09775
+  type: 'test'
+  ...
+1..305
+# tests 305
+# suites 0
+# pass 305
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3078.89245

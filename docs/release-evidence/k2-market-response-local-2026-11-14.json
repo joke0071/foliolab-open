@@ -1,0 +1,71 @@
+{
+  "scope": "K2-KURSE/K2-FIN/#255/#266: provider quote/FX input integrity",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "57c4da121720d60a2c4d320f52b6a994cbae80eb",
+  "base_tree": "b6441f4d2c73bf311974ed1f1371ba9f6a5cf5a5",
+  "repro": {
+    "FX": "Boolean true became1, [rate] was coerced, Infinity and contradictory base currencies accepted, invalid/future publication days passed current FX; actual refresh replaced UNKNOWN and invoked save.",
+    "crypto": "Boolean/array primary prices became confirmed quotes; malformed timestamp arrays acquired provider-timestamp provenance; partial refresh overwrote invalid asset instead of retaining it."
+  },
+  "fix": "At existing transport readers accept only positive finite primitive values supported by fixed-point arithmetic. Confirm FX base when supplied; validate actual calendar/publication dates; retain seven-day historical fallback. CoinGecko retains only requested valid quotes and genuine scalar integer timestamps; malformed items use existing fallback and previous-price behavior.",
+  "tests": {
+    "original_FX": "6new:4FAIL/2PASS",
+    "original_crypto": "4new:4FAIL",
+    "intermediate": "FX test expected null instead of canonical FX_UNKNOWN for fxRateExact; corrected oracle to existing UNKNOWN sentinel. Intermediate failure preserved; no product representation change.",
+    "final": "61/61PASS/0FAIL/0SKIP/0CANCELLED:10new+51directly affected tests",
+    "UI": "Actual refreshSources source with DOM/save/fallback adapters and real market readers. Invalid FX:1request/0save/exact stored+model+UNKNOWN retained;valid100USD×0.85=85EUR/1save. Crypto invalid:no save/oldquote unchanged;partial validBTC120+retainedETH200=320EUR/1save/expliciterror.",
+    "historical": "Weekend6Nov reference for7/8Nov; malformed dates/rates create no historical values. CurrentFX never grants historical valuation; existing UNKNOWN/plain/encrypted restore/performance/CSV tests PASS.",
+    "runtime": "Node24.22.1",
+    "syntax": "market and two new tests PASS"
+  },
+  "manifest": [
+    {
+      "path": "src/market.js",
+      "bytes": 33704,
+      "sha256": "4c8d1696c0bfd7597033b4c33d4dca6e5726dbc451f3fe478e48cff018e571b0"
+    },
+    {
+      "path": "tests/fx-response-integrity.test.mjs",
+      "bytes": 5327,
+      "sha256": "e88534781a1eddb8dc8b36cc947ff82b445de38545a5bec372abf99978592efb"
+    },
+    {
+      "path": "tests/crypto-response-integrity.test.mjs",
+      "bytes": 4118,
+      "sha256": "9eeed7a516bfbde58b542987ec1814f84aa4b8ea7733c68088b358b99828d930"
+    },
+    {
+      "path": "fx-response-original.tap",
+      "bytes": 3640,
+      "sha256": "32a4ec97f31e9c15d2e7c8416b6e4ec89f6d9e3c88fe5ef22975e214fbdfdea6"
+    },
+    {
+      "path": "fx-response-intermediate.tap",
+      "bytes": 3684,
+      "sha256": "e99392971df15b0f923e6ec9dbf2d3fa3223e2f333ecf29139c4624ff0a799eb"
+    },
+    {
+      "path": "fx-response-final.tap",
+      "bytes": 2987,
+      "sha256": "b6f522dafb6febf652a5522101c7fb3923f04cc2fa12fff3283478613ad7c7d9"
+    },
+    {
+      "path": "crypto-response-original.tap",
+      "bytes": 3264,
+      "sha256": "4a2ed6d86780a9ef2188daa90200f2f028baaa92457946a73c3f15bfe22c1ec6"
+    },
+    {
+      "path": "market-response-final.tap",
+      "bytes": 6048,
+      "sha256": "68a766500d4ca3e22aa06cdb03839e6c33006a53f1c0948fac373d4e9c90e1a6"
+    }
+  ],
+  "limits": [
+    "Synthetic HTTP responses only; no real provider calls, rights, credentials or coverage assertion",
+    "DOM/save adapters are not native browser or IDB tests",
+    "Missing base on legacy numeric response remains compatible; contradictory supplied base rejects",
+    "No backfill/rewrite of historical FX, prices, journal, flows, schemas, CAS or crypto",
+    "No new native/CI/PR/Main/release acceptance"
+  ],
+  "next": "Next independent existing roadmap step; all product changes remain one serial successor"
+}

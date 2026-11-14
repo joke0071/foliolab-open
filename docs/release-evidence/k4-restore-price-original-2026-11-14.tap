@@ -1,0 +1,44 @@
+✖ Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes (11.169555ms)
+✔ Actual position constructor preserves valid numeric/localized/manual and missing-price behavior (1.560977ms)
+✖ Actual Drive restore callback rejects invalid price before backup offer, model replacement or save (3.007976ms)
+✔ Actual Drive restore callback still saves a valid independent two-unit price once (1.64443ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 290.111489
+
+✖ failing tests:
+
+test at tests/restore-price-types.test.mjs:13:1
+✖ Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes (11.169555ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: 1/true
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/restore-price-types.test.mjs:16:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Kurs|Zahl/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/restore-price-types.test.mjs:37:1
+✖ Actual Drive restore callback rejects invalid price before backup offer, model replacement or save (3.007976ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/restore-price-types.test.mjs:40:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Kurs|Zahl/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

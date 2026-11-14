@@ -1,0 +1,50 @@
+✖ Encoded booking and journal identities block the same destructive and note actions as literal references (16.950262ms)
+✖ Opaque Unicode references fail closed while ordinary bracketed notes remain usable (2.524731ms)
+✔ Unrelated encoded JSON and a normal receipt still permit exact removal and undo (8.757317ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 277.299044
+
+✖ failing tests:
+
+test at tests/booking-encoded-references.test.mjs:16:1
+✖ Encoded booking and journal identities block the same destructive and note actions as literal references (16.950262ms)
+  AssertionError [ERR_ASSERTION]: booking/value/remove
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/booking-encoded-references.test.mjs:29:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/booking-encoded-references.test.mjs:34:1
+✖ Opaque Unicode references fail closed while ordinary bracketed notes remain usable (2.524731ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/booking-encoded-references.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Referenz/,
+    operator: 'throws',
+    diff: 'simple'
+  }

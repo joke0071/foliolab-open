@@ -1,0 +1,63 @@
+{
+  "scope": "Drive restore premature success notification",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base_product": "775bbdddb5a01b8ed400ea8add9848b1aadc4aa8",
+  "base_tree": "4db8a537abb2f952ac9e0b41d9894be786aea551",
+  "evidence": {
+    "native_run": 43514930241,
+    "screenshots": [
+      "password-320.png",
+      "password-1440.png"
+    ],
+    "observed": "Partial password-failure status appears alongside green 'Google-Drive-Backup erfolgreich wiederhergestellt.' toast, emitted before password adoption"
+  },
+  "change": {
+    "file": "src/app.js",
+    "before": "Google-Drive-Backup erfolgreich wiederhergestellt.",
+    "after": "Portfoliodaten aus Google Drive übernommen.",
+    "reason": "The app callback confirms only the portfolio commit; full restore outcome belongs to the later Drive orchestration status.",
+    "product_delta": "one notification string only; no persistence/financial/crypto/event changes"
+  },
+  "tests": {
+    "original": "1 new directed VM test FAIL before patch,0skip; original console retained",
+    "final": "19/19 PASS,0FAIL/0SKIP/0CANCELLED:1new+18directly affected settings/reset/file/Drive/recovery callback tests",
+    "syntax": [
+      "src/app.js",
+      "tests/settings-replacement.test.mjs"
+    ],
+    "original_51_suite": "not rerun unchanged",
+    "boundaries": "Node/VM/backend doubles only; no native proof for this changed notification",
+    "runtime": "Node24.22.1"
+  },
+  "provenance": {
+    "native_restore_product": "775bbddd unchanged during bounded qualification",
+    "native_test_candidate": "4ba5cd84145aca866f4e55fae91690bd93b5a713",
+    "does_not_reclassify_old_pass": "Native screenshot still contains old message; no claimed screenshot of fixed text"
+  },
+  "gates": {
+    "native": "NOT_RUN;four-run budget exhausted",
+    "integration": "NOT_AUTHORIZED",
+    "main": "UNCHANGED",
+    "UI_ALLOC01": "separate frozen",
+    "release": "OPEN",
+    "K4": "PARTIAL",
+    "crypto": "EXTERNAL_REVIEW_PENDING"
+  },
+  "limits": [
+    "No further local follow-up candidate within this session",
+    "No complete final save/render outcome qualification beyond prior five cases",
+    "No product PR/merge/deploy/SW bump/LIVE_ACCEPTED"
+  ],
+  "manifest": {
+    "src/app.js": {
+      "bytes": 306249,
+      "git_blob": "8edf930d3e45ed12bf6eda3f3203af73dddc4036",
+      "sha256": "8f3f9aeb10f7f664fd42916c5f3214a685fb5c30e6c08aeca0a0f0c3108b05c2"
+    },
+    "tests/settings-replacement.test.mjs": {
+      "bytes": 9896,
+      "git_blob": "3e6237826f7110ba4e633acccf778d34677d4647",
+      "sha256": "9c0ffd3072d6b1556cbbf2f02338298d3916961dc8c34623df977d453ae33d29"
+    }
+  }
+}

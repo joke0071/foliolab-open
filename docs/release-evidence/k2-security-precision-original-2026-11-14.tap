@@ -1,0 +1,28 @@
+✖ Actual security quote pipeline rejects prices outside canonical decimal precision before any save (12.928715ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 267.76199
+
+✖ failing tests:
+
+test at tests/provider-value-boundaries.test.mjs:69:1
+✖ Actual security quote pipeline rejects prices outside canonical decimal precision before any save (12.928715ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/provider-value-boundaries.test.mjs:70:107)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

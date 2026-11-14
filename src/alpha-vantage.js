@@ -76,8 +76,8 @@ export function parseAlphaDaily(data,symbol){
  if(!rows||typeof rows!=='object'||Array.isArray(rows))throw Error('Alpha Vantage liefert keine tägliche Kursreihe.');
  const points=[];
  for(const [date,row]of Object.entries(rows)){
-  const total=Number(row?.['4. close']);
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date||!Number.isFinite(total)||total<=0||total>1e9)
+  const close=row?.['4. close'],total=Number(close);
+  if(!['string','number'].includes(typeof close)||String(close).trim()===''||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date||!Number.isFinite(total)||total<=0||total>1e9)
    throw Error('Alpha Vantage liefert ungültige Tageskurse.');
   points.push({date,total});
  }

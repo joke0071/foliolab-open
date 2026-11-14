@@ -1,9 +1,10 @@
 /** UI only. Auth, encryption, storage and writes remain in their existing owners. */
-export function storagePresentation({checking=false,saving=false,conflict=false,error='',indexedDB=true}={}){
+export function storagePresentation({checking=false,saving=false,conflict=false,error='',displayError='',indexedDB=true}={}){
  if(checking)return {state:'checking',label:'Lokaler Speicher wird geprüft',mark:'…'};
  if(conflict)return {state:'conflict',label:'Datenkonflikt mit anderem Tab. Ungespeicherte Eingaben sichern und neu laden.',mark:'!'};
  if(saving)return {state:'saving',label:'Änderungen werden lokal gespeichert',mark:'…'};
  if(error)return {state:'error',label:'Speicherfehler. '+error,mark:'!'};
+ if(displayError)return {state:'warning',label:displayError,mark:'!'};
  return {state:'saved',label:indexedDB?'Lokal in IndexedDB gespeichert':'Im bisherigen Browser-Speicher gespeichert',mark:'✓'};
 }
 export function drivePresentation(s={}){

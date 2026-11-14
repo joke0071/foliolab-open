@@ -68,3 +68,38 @@ for(const path of ['file','drive']){
 test('file vault adoption failure preserves a visible draft after portfolio commit',async()=>{
  const h=harness({vaultFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.elements.coinGeckoKey.type,'text');assert.equal(h.dirty(),true);
 });
+test('Drive backend marks only a confirmed portfolio commit before preference failure',async()=>{
+ const h=harness({preferencesFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';
+ await assert.rejects(h.drive(),error=>{
+  assert.equal(error.restoreCommitted,true);assert.match(error.message,/SYNTHETIC_PREFERENCES_FAILURE/);
+  assert.match(error.cause.message,/SYNTHETIC_PREFERENCES_FAILURE/);return true;
+ });
+ assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');
+ assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.dirty(),true);
+});
+test('Drive backend does not mark a rejected storage operation as committed',async()=>{
+ const h=harness({fail:true});
+ await assert.rejects(h.drive(),error=>{assert.equal(error.restoreCommitted,undefined);assert.match(error.message,/SYNTHETIC_COMMIT_FAILURE/);return true;});
+ assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_STORED');
+});
+test('Drive recovery marks a resolved recovery before a preferences failure, without claiming native IDB',async()=>{
+ const h=harness({preferencesFail:true});let recoveries=0;
+ h.context.loadFailure=Error('SYNTHETIC_CORRUPTION');h.context.recoveryDownloaded=true;h.context.recoveryOriginal='SYNTHETIC_ORIGINAL';
+ h.context.portfolioStore.isIndexedDB=true;
+ h.context.portfolioStore.recoverFromBackup=async()=>{recoveries++;};
+ await assert.rejects(h.drive(),error=>error.restoreCommitted===true&&/SYNTHETIC_PREFERENCES_FAILURE/.test(error.message));
+ assert.equal(recoveries,1);
+});
+test('Drive recovery rejection never carries a confirmed-commit marker',async()=>{
+ const h=harness();h.context.loadFailure=Error('SYNTHETIC_CORRUPTION');h.context.recoveryDownloaded=true;h.context.recoveryOriginal='SYNTHETIC_ORIGINAL';
+ h.context.portfolioStore.isIndexedDB=true;
+ h.context.portfolioStore.recoverFromBackup=async()=>{throw Error('SYNTHETIC_RECOVERY_REJECTION');};
+ await assert.rejects(h.drive(),error=>error.restoreCommitted===undefined&&/SYNTHETIC_RECOVERY_REJECTION/.test(error.message));
+});
+
+test('Drive backend toast confirms only portfolio data before password adoption',async()=>{
+ const h=harness(),messages=[];h.context.notify=message=>messages.push(message);
+ await h.drive();
+ assert.deepEqual(messages,['Portfoliodaten aus Google Drive übernommen.']);
+ assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');
+});

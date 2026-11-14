@@ -2,6 +2,7 @@ import {requestJSON,TTL} from './request-cache.js';
 import {readTrustLines,readTrustLineBalance} from './xrpl-assets.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
 import {atomicDecimal,units,exact} from './decimal.js';
+import {positionFX} from './fx-state.js';
 import {discoverCosmos,cosmosLiquidExact,cosmosStakeExact,discoverHedera,hederaBalanceExact,discoverNear,nearAccountBalances,discoverBnb,bnbLiquidExact} from './native-staking-networks.js';
 import {SAVAX_CONTRACT,AVALANCHE_RPC,SONIC_RPC,evmTokenBalanceExact,discoverSonicWallet,sonicNativeBalanceExact,sonicStakeBalanceExact,discoverSolanaStakes,solanaStakeBalanceExact} from './staking-discovery.js';
 import {discoverBnbTokens,bnbBep20BalanceExact} from './bnb-token-scanner.js';
@@ -29,12 +30,34 @@ export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
  for(let i=0;i<unique.length;i+=75){
    const url=new URL('https://api.coingecko.com/api/v3/simple/price');
    url.searchParams.set('ids',unique.slice(i,i+75).join(','));url.searchParams.set('vs_currencies','eur');url.searchParams.set('include_last_updated_at','true');
-   try{Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));passed++;}
+   try{
+    const data=await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher);
+    if(!data||typeof data!=='object'||Array.isArray(data))throw Error('CoinGecko lieferte keine gültige Kursantwort.');
+    for(const id of unique.slice(i,i+75)){
+     const item=data[id];
+     if(!validMarketNumber(item?.eur)||Number(item.eur)>1e18)continue;
+     const observed={eur:Number(item.eur)},reported=item.last_updated_at;
+     if(['number','string'].includes(typeof reported)&&Number.isSafeInteger(Number(reported))&&Number(reported)>0)observed.last_updated_at=Number(reported);
+     result[id]=observed;
+    }
+    passed++;
+   }
    catch(e){failures.push(e.message);}
  }
  if(!passed&&failures.length)throw Error(failures[0]);
  if(failures.length)Object.defineProperty(result,'partialFailures',{value:failures,enumerable:false});
  return result;
+}
+const validMarketNumber=value=>{
+ if(!['number','string'].includes(typeof value)||String(value).trim()===''||!Number.isFinite(Number(value))||Number(value)<=0)return false;
+ try{return units(Number(value))>0n;}catch{return false;}
+};
+const validFxDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value;
+const validProviderFx=(value,currency)=>validMarketNumber(value)&&positionFX({currency,fxRate:Number(value),fxRateExact:String(Number(value))}).state==='known';
+function referenceRate(data,from){
+ if(data?.base!=null&&data.base!==from)throw Error('Wechselkurs-Basiswährung stimmt nicht mit der angefragten Währung überein.');
+ if(!validProviderFx(data?.rates?.EUR,from))throw Error('Kein gültiger Tagesreferenzkurs im unterstützten Wertebereich verfügbar.');
+ return Number(data.rates.EUR);
 }
 /** Daily reference rate with its actual publication date; not a broker execution rate. */
 export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
@@ -44,8 +67,8 @@ export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
    const url=new URL('https://api.frankfurter.dev/v1/latest');
    url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
    const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
-   const rate=Number(data.rates?.EUR);
-   if(!(rate>0)||!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(String(data.date||'')))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
+   const rate=referenceRate(data,from);
+   if(!validFxDate(data?.date)||!/^(?:19|20)\d{2}/.test(data.date)||data.date>new Date().toISOString().slice(0,10))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
    return {rate,date:data.date,source:'Frankfurter',reference:true};
  }
 }
@@ -57,8 +80,7 @@ export async function exchangeRate(from,key='',fetcher=globalThis.fetch){
   const url=new URL('https://api.frankfurter.dev/v1/latest');
   url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
   const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
-  const rate=Number(data.rates?.EUR);
-  if(!(rate>0))throw Error('Kein kostenloser Tageswechselkurs verfügbar.');
+  const rate=referenceRate(data,from);
   return rate;
  }
 }
@@ -70,9 +92,9 @@ export async function historicalExchangeRate(from,date,fetcher=globalThis.fetch)
  if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
  const url=new URL('https://api.frankfurter.dev/v1/'+date);
  url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
- const data=await json(url.toString(),{ttlMs:TTL.history},fetcher),rate=Number(data.rates?.EUR);
+ const data=await json(url.toString(),{ttlMs:TTL.history},fetcher),rate=referenceRate(data,from);
  const actual=String(data.date||'');
- if(!(rate>0)||!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(actual)||actual>date||(Date.parse(date)-Date.parse(actual))/86400000>7)throw Error('Kein gültiger historischer Tagesreferenzkurs verfügbar.');
+ if(!validFxDate(actual)||!/^(?:19|20)\d{2}/.test(actual)||actual>date||(Date.parse(date)-Date.parse(actual))/86400000>7)throw Error('Kein gültiger historischer Tagesreferenzkurs verfügbar.');
  return {rate,date:actual,requestedDate:date,source:'Frankfurter',reference:true};
 }
 export async function xrpBalance(address,fetcher=globalThis.fetch){
@@ -252,7 +274,12 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
   for(let i=0;i<items.length;i+=30){
     const url=new URL('https://api.coingecko.com/api/v3/simple/token_price/'+platform);
     url.searchParams.set('contract_addresses',items.slice(i,i+30).join(','));url.searchParams.set('vs_currencies','eur');
-    Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));
+    const data=await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher);
+    if(!data||typeof data!=='object'||Array.isArray(data))throw Error('CoinGecko lieferte keine gültige Tokenkursantwort.');
+    for(const id of items.slice(i,i+30)){
+      const value=data[id]?.eur;
+      if(validMarketNumber(value)&&Number(value)<=1e18)result[id]={eur:Number(value)};
+    }
   }
   return result;
 }
@@ -357,7 +384,7 @@ export async function historicalExchangeRates(from,start,end,fetcher=globalThis.
  if(from==='EUR')return [];
  const first=new Date(Date.parse(start)-7*864e5).toISOString().slice(0,10),url=new URL('https://api.frankfurter.dev/v1/'+first+'..'+end);url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
  const data=await json(url.toString(),{ttlMs:TTL.history},fetcher);if(data.base!==from||!data.rates||typeof data.rates!=='object')throw Error('Historische FX-Quelle nicht bestätigt.');
- const rows=Object.entries(data.rates).filter(([d,r])=>d>=first&&d<=end&&/^\d{4}-\d\d-\d\d$/.test(d)&&Number.isFinite(Number(r.EUR))&&Number(r.EUR)>0).sort(([a],[b])=>a.localeCompare(b));
+ const rows=Object.entries(data.rates).filter(([d,r])=>d>=first&&d<=end&&validFxDate(d)&&validProviderFx(r?.EUR,from)).sort(([a],[b])=>a.localeCompare(b));
  const result=[];let i=0;for(let t=Date.parse(start);t<=Date.parse(end);t+=864e5){const date=new Date(t).toISOString().slice(0,10);while(i+1<rows.length&&rows[i+1][0]<=date)i++;const row=rows[i];if(row&&row[0]<=date&&(t-Date.parse(row[0]))/864e5<=7)result.push({date,currency:from,rate:String(row[1].EUR),source:'Frankfurter',referenceDate:row[0]});}
  return result;
 }
