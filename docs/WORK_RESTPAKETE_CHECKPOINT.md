@@ -91,3 +91,13 @@ KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Fol
 FrischerAbgleich amZentralstandd59da3a2: Maina27cde2 unverändert, Produkt8f9ed1ce/Tree1c1a6404exakt. KeinezugehörigeoffenePR,keinin_progressActionlauf; geschütztePR332/157/161unverändert.
 VorPR-ÖffnungCachekennung/Reservierungen/Guardprüfen, vollständigenPRHeadvorbereiten undgezielteVersions-/Syntax-/SW-Verträgeauswerten.
 HistorischePR-/SW-Bump-Sperreoben fürgenaudiesen Auftrag aufgehoben;keinDiagnosetrigger/manuellerDispatch undkeineMerge-/Releasefreigabe.
+
+## Produkt-PR336 offen und reviewbereit – Auswertung läuft
+
+PR https://github.com/joke0071/foliolab-open/pull/336,Branchfix/portfolio-integrity-restore-77bcb76dd357-20261114.
+Basea27cde2f802c26bfec41190911d88bd1d7d8e325,Headf36da5e8023d10b1ddb1f8a458200743e0f34da6/Tree2b6c37ec6ac087e24e77adb6a29c657b6046151b,Parent8f9ed1ce.
+NurCACHE-Konstante311→313;UI-R4v312erhalten. Lokale15/15SW/PWA/VersionsauswahltestsundSW-SyntaxPASS;Mainvergleich12ahead/0behind/62Pfade.
+VorläufigerGitHubMerge-SHAf2ac129e0b569324dca2cbc2a7b06a8905e046b1; tatsächlicheausgecheckteSHAsausLogs/Artefaktenzuordnen.
+Regulärgestartet:43570848271Integration,43570848283Walletchecks,43570848342informativerWalletLiveAudit,jeVersuch1/Headexaktf36da5e8.
+Pflichtjobs test/cross1-3/Walletnochlaufend,PlanPASS/FASTSKIPPED. PR-EröffnungistZwischenstand,OwnerACTIVEbisallezugehörigenChecksTerminal/Auswertung/Sicherung.
+Merge/AutoMerge/Mainpush/Deployment/Releasebleibenverboten. EinebelegteUmfangskorrekturaufderselbenPRautorisiert;keineBlindreruns/Timeoutlockerungen/Diagnosetrigger.

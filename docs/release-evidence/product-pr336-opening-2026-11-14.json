@@ -1,0 +1,56 @@
+{
+  "pr": 336,
+  "url": "https://github.com/joke0071/foliolab-open/pull/336",
+  "branch": "fix/portfolio-integrity-restore-77bcb76dd357-20261114",
+  "base": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+  "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+  "headTree": "2b6c37ec6ac087e24e77adb6a29c657b6046151b",
+  "productParent": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "provisionalMergeSHA": "f2ac129e0b569324dca2cbc2a7b06a8905e046b1",
+  "cache": "foliolab-open-v313",
+  "cacheSelection": {
+    "main": "v311",
+    "uiR4Protected": "v312",
+    "pr332": "v310",
+    "currentCodeSearchV313Hits": 0,
+    "scope": "Recognizable current checkpoint/openPR/UIR4 reservations checked; not a claim to inspect every historical branch"
+  },
+  "delta": "Only CACHE constant relative to productparent; actualMaincompareahead12behind0paths62; normalworkflows/assets/fetch/install unchanged",
+  "local": {
+    "tests": 15,
+    "pass": 15,
+    "fail": 0,
+    "syntax": "sw.js PASS",
+    "scope": "service-worker.test/pwa-update-drafts.test/ci-stage-plan.test",
+    "cacheGuard": "ActualGitHub Main/Head delta has shipped assets and changed CACHE311->313; CI will execute actual merge guard"
+  },
+  "prior": {
+    "node": "305/305selectedNode40files at8f9ed1ce",
+    "native": "29uniqueA17/B4/C8 at8f9ed1ce across43567167015FAILURE28/29 and43568173088SUCCESS3/3; no new PWA update claim"
+  },
+  "runs": [
+    {
+      "id": 43570848342,
+      "name": "Public wallet live audit (informational)",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "attempt": 1,
+      "status": "in_progress"
+    },
+    {
+      "id": 43570848283,
+      "name": "Wallet scan checks",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "attempt": 1,
+      "status": "in_progress"
+    },
+    {
+      "id": 43570848271,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "attempt": 1,
+      "status": "in_progress"
+    }
+  ],
+  "status": "PR_OPEN_REVIEW_READY_CHECKS_RUNNING",
+  "limits": "No merge/autoMerge/mainpush/deploy/release/LIVE_ACCEPTED; no independentcrypto/device/realOAuth acceptance"
+}
