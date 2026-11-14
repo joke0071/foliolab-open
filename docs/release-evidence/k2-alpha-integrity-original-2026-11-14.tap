@@ -1,0 +1,61 @@
+✖ Non-price JSON types cannot become a confirmed Alpha close (2.855217ms)
+✖ Malformed Alpha responses consume one request but preserve the prior quote cache (11.162938ms)
+✖ Actual refresh handler retains model and stored price when Alpha returns non-price JSON (13.089977ms)
+✔ Actual refresh handler still adopts a valid raw close once (4.912178ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 331.441586
+
+✖ failing tests:
+
+test at tests/alpha-refresh-integrity.test.mjs:14:1
+✖ Non-price JSON types cannot become a confirmed Alpha close (2.855217ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: reject true
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/alpha-refresh-integrity.test.mjs:16:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ungültige Tageskurse/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/alpha-refresh-integrity.test.mjs:19:1
+✖ Malformed Alpha responses consume one request but preserve the prior quote cache (11.162938ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/alpha-refresh-integrity.test.mjs:23:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ungültige Tageskurse/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/alpha-refresh-integrity.test.mjs:49:1
+✖ Actual refresh handler retains model and stored price when Alpha returns non-price JSON (13.089977ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/77bcb76dd357/serial/tests/alpha-refresh-integrity.test.mjs:51:66)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

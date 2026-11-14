@@ -1,0 +1,48 @@
+{
+  "scope": "K2-KURSE/#266: refuse non-price Alpha raw-close values",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "04960e74316a4191223e88aaff65dd79ee6ad239",
+  "base_tree": "93493afbddd9cac50ef495dc9f455daa485a1efd",
+  "repro": "Boolean true was accepted as1EUR and [123.45] as123.45EUR. Actual refreshSources invoked save/snapshot for a malformed provider response.",
+  "fix": "Alpha daily raw close must be a nonblank string or number before existing positive/finite/date/listing checks; invalid types cannot become confirmed prices.",
+  "tests": {
+    "original": "4new directed Node tests:3FAIL/1PASS,original console retained",
+    "final": "42/42PASS/0FAIL/0SKIP/0CANCELLED across4new+38directly affected tests",
+    "runtime": "Node24.22.1",
+    "syntax": [
+      "src/alpha-vantage.js",
+      "tests/alpha-refresh-integrity.test.mjs"
+    ],
+    "independent_oracles": "Valid numeric/string close123.45, prior price110.25 with quantity2; malformed responses cause0save/0snapshot/exact model unchanged; one request and old cache record unchanged",
+    "adapters": "Actual refreshSources source executed in Node VM with DOM/save adapters and real Alpha client; quote-boundary adapter explicit. No native browser/IDB or full fetchSecurityQuote integration claim."
+  },
+  "manifest": [
+    {
+      "path": "src/alpha-vantage.js",
+      "bytes": 10722,
+      "sha256": "8b626ae881195ee03d640bdd97212c56dcab369576fa2507a55b6db806c1a861"
+    },
+    {
+      "path": "tests/alpha-refresh-integrity.test.mjs",
+      "bytes": 4888,
+      "sha256": "406a9f295da6d89902d1ad4d74fb15dd3cceb4e3af6b29057723025d6d359eaa"
+    },
+    {
+      "path": "alpha-integrity-original.tap",
+      "bytes": 2564,
+      "sha256": "596ff837664b6ceead960e757639d8c29d1aa32aae44b5dcd87ba85b71b3bd73"
+    },
+    {
+      "path": "alpha-integrity-final.tap",
+      "bytes": 4459,
+      "sha256": "9237a29c47733ba0022ab61e804a350d74455c8c4d0c3289bf07d1a2bd6e2bc1"
+    }
+  ],
+  "limits": [
+    "No live provider requests or credentials",
+    "Historical normalized bad quotes cannot be identified retrospectively from valid-looking stored numbers; no automatic rewrite",
+    "No finance/storage/schema/CAS/journal/UNKNOWN-FX/crypto change",
+    "No new native/CI/PR/integration/Main/release acceptance"
+  ],
+  "next": "Park internally validated local correction, then next independent existing roadmap gap"
+}
