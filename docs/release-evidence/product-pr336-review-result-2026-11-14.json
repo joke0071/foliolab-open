@@ -1,0 +1,262 @@
+{
+  "schema": 1,
+  "date": "2026-11-14",
+  "owner": "work-review-pr336-20261114",
+  "status": "INTERNAL_CODE_REVIEW_PASS_AFTER_ONE_CORRECTION_NOT_INDEPENDENT_APPROVAL_NOT_RELEASE",
+  "pr": {
+    "number": 336,
+    "url": "https://github.com/joke0071/foliolab-open/pull/336",
+    "base": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+    "originalHead": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+    "head": "6399c771d984f55f8abee813f8a7a6e8c584ecf1",
+    "tree": "8e2d1c5f956a1729f2de9b89f24e07510e801b35",
+    "testedMerge": "3c7206dac7133282240fe5007816e7b558724256",
+    "sameTestedTree": true,
+    "merged": false,
+    "autoMerge": null
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "status": "FIXED",
+      "path": "src/model.js",
+      "originalLines": "103-114",
+      "correctionLine": 105,
+      "trigger": {
+        "quantity": 2,
+        "price": 100,
+        "priceExact": [
+          123.45
+        ]
+      },
+      "effect": "Original actual Drive restore callback accepted structured exact price and saved valuation246.9 instead200 via synthetic save adapter",
+      "trace": [
+        "safeImport:201",
+        "createPosition:103-114",
+        "Drive restoreData:2564-2597"
+      ],
+      "originalFailure": {
+        "tests": 6,
+        "pass": 5,
+        "fail": 1,
+        "reason": "Missing expected exception",
+        "log": "pr336-review-original-price-exact.tap"
+      },
+      "correction": "One scalar type guard for non-null priceExact; preserve supported numeric legacy discrepancies",
+      "regression": "Two new tests:24 invalid type/version combinations before backup offer/model mutation/save, plus scalar/existing-discrepancy controls"
+    }
+  ],
+  "remainingMergeBlockingCodeFindings": [],
+  "openQuestions": [],
+  "local": {
+    "node": "24.22.1",
+    "tests": 67,
+    "pass": 67,
+    "fail": 0,
+    "skip": 0,
+    "files": 5,
+    "syntax": "PASS",
+    "pinnedSourceBlobs": 146,
+    "log": "pr336-review-price-exact-pinned-source.tap",
+    "setupFailurePreserved": true
+  },
+  "runs": [
+    {
+      "id": 43575921060,
+      "attempt": 1,
+      "name": "Wallet scan checks",
+      "event": "pull_request",
+      "head": "6399c771d984f55f8abee813f8a7a6e8c584ecf1",
+      "status": "completed",
+      "conclusion": "success",
+      "created": "2026-11-14T08:27:31Z",
+      "updated": "2026-11-14T08:28:18Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43575921060"
+    },
+    {
+      "id": 43575921079,
+      "attempt": 1,
+      "name": "Public wallet live audit (informational)",
+      "event": "pull_request",
+      "head": "6399c771d984f55f8abee813f8a7a6e8c584ecf1",
+      "status": "completed",
+      "conclusion": "success",
+      "created": "2026-11-14T08:27:31Z",
+      "updated": "2026-11-14T08:28:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43575921079"
+    },
+    {
+      "id": 43575921072,
+      "attempt": 1,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "event": "pull_request",
+      "head": "6399c771d984f55f8abee813f8a7a6e8c584ecf1",
+      "status": "completed",
+      "conclusion": "success",
+      "created": "2026-11-14T08:27:31Z",
+      "updated": "2026-11-14T08:50:14Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43575921072"
+    }
+  ],
+  "node": {
+    "integration": {
+      "tests": 1455,
+      "pass": 1455,
+      "fail": 0,
+      "skip": 0,
+      "job": 132390093493
+    },
+    "wallet": {
+      "tests": 1455,
+      "pass": 1455,
+      "fail": 0,
+      "skip": 0,
+      "job": 132390014025
+    }
+  },
+  "browsers": {
+    "chromium": "SUCCESS",
+    "cross1": "SUCCESS",
+    "cross2": "SUCCESS",
+    "cross3": "SUCCESS"
+  },
+  "pwa": {
+    "cache": "foliolab-open-v313",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "cachedAssetsPerEngine": 154,
+    "modelSHA256": "280633e623a1dc5ef46012660bc0f8aba798f1f40ee04d9adc2c599eae7f9244",
+    "allThreeImagesActuallyViewed": true,
+    "scope": "Synthetic warm HTTP cache; actual SW/IDB/activation/cached bytes/offline/draft protection; no physical device acceptance",
+    "originalProductDelta": "At f36da5e8 only sw.js CACHE311->313 vs product8f9ed1ce",
+    "correctedProductDelta": "Adds exactly model scalar guard and two tests; SW remainsv313, UI-R4v312 preserved"
+  },
+  "corrections": {
+    "productBranchWrites": 1,
+    "correctionCommit": "6399c771d984f55f8abee813f8a7a6e8c584ecf1",
+    "reruns": 0,
+    "manualDispatches": 0,
+    "diagnosticTriggers": 0
+  },
+  "reusedEvidence": {
+    "nativeCases": 29,
+    "product": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+    "notReclassifiedAsNewNativeAcceptance": true,
+    "previousPRResult": "product-pr336-ci-result-2026-11-14.json",
+    "oldOriginalsUnchanged": true
+  },
+  "limits": [
+    "Required independent approval is not supplied by this internal review",
+    "K4 PARTIAL / FLH04 NOT DONE / CR4-CR5 remain open",
+    "Real Windows/Edge/Android/PWA profiles and real OAuth/Drive/decryption/password-adoption acceptance remain separate",
+    "Informational wallet audit includes public provider403/429/blocked probes; not all-provider availability",
+    "Historical main43332355188 remains separate and unresolved",
+    "No merge/auto-merge/main push/deployment/release/LIVE_ACCEPTED"
+  ],
+  "recommendation": "Recommend merge exactly6399c771d984f55f8abee813f8a7a6e8c584ecf1 after required independent approval; no remaining merge-blocking code finding in reviewed scope",
+  "next": "Jochen decides required independent approval and subsequent merge for exact checked head; no automatic continuation",
+  "completion": {
+    "owner": "STOPPED/HANDOVER_READY",
+    "noBackgroundProcesses": true
+  },
+  "originals": {
+    "artifacts": [
+      {
+        "id": 14107450391,
+        "bytes": 66356670,
+        "sha256": "11d130fecd86c7b12d1b85cc2c3638bd1cf455ece2be19259caffcb201725079",
+        "innerFiles": 816,
+        "crc": "PASS"
+      },
+      {
+        "id": 14107166682,
+        "bytes": 70276451,
+        "sha256": "2776e8521430b8388f5d55773376f19432e98b3c4faad26198a757a0a53528b2",
+        "innerFiles": 868,
+        "crc": "PASS"
+      },
+      {
+        "id": 14106630611,
+        "bytes": 12596885,
+        "sha256": "3c79dd6c3571b548ba9fd495fb3a92b74b90d58d4f25aa6b83600947ccfbcbfb",
+        "innerFiles": 123,
+        "crc": "PASS"
+      },
+      {
+        "id": 14106397670,
+        "bytes": 1012,
+        "sha256": "717b5c976e4c04e69415c17b6cced989d8adb9651f65c93b520f67a2e7b63c0a",
+        "innerFiles": 1,
+        "crc": "PASS"
+      },
+      {
+        "id": 14106354349,
+        "bytes": 60077555,
+        "sha256": "1f20b5c0243ee661cdbb6f1db285d05d4d9f926a1af742565cec54f85736ca65",
+        "innerFiles": 508,
+        "crc": "PASS"
+      },
+      {
+        "id": 14105789956,
+        "bytes": 934747,
+        "sha256": "a67d6c1617a757b2077f5c26345f587087e15d227f1f6fed4fb4ee8997058d35",
+        "innerFiles": 20,
+        "crc": "PASS"
+      }
+    ],
+    "logs": [
+      {
+        "job": 132390014025,
+        "bytes": 544790,
+        "sha256": "c18b707b75c451be8170ad91140cad7824791e66924bcfffe9993efb940ef590"
+      },
+      {
+        "job": 132390014154,
+        "bytes": 24690,
+        "sha256": "50b9d380a2708d2c1f168b6f1fb66b593c7315bbeac0ebc5e39293e8fdaf9560"
+      },
+      {
+        "job": 132390014289,
+        "bytes": 81854,
+        "sha256": "97d481d9c77e7fca35619809986f14a523a96db0c2eee61a13c588ec71c518f8"
+      },
+      {
+        "job": 132390093493,
+        "bytes": 1111278,
+        "sha256": "8626ec25bf0aa6ddb5d3a7b86f386c94e9c4a7661062f1d7a73e60912e1f3cd5"
+      },
+      {
+        "job": 132390093520,
+        "bytes": 215083,
+        "sha256": "bf494ced6e6ba1b7bf912b105c8cba0ac0be3e89c875561c6a8f785ccec0de8e"
+      },
+      {
+        "job": 132390093523,
+        "bytes": 158588,
+        "sha256": "79b53f56f7d4d2817bc128073da3f1155797fe927dae1637ca8604abb12a6dca"
+      },
+      {
+        "job": 132390093567,
+        "bytes": 144975,
+        "sha256": "5a5a047eacfb788c18051a9391707a79b6383f021437fbb5a41fd9fe3c9f8b9b"
+      }
+    ],
+    "archive": {
+      "file": "FolioLab_PR336_review_originals_6399c771_2026-11-14_V0.tar.gz",
+      "bytes": 212236334,
+      "sha256": "3ff44895aec6a2cb6fc315d16a69920698bff6b2f5365038bf251a2aad481d4a",
+      "pinnedVersion": 0,
+      "pinnedByteReadback": "PASS",
+      "restoredManifestFiles": 179,
+      "restoreErrors": 0
+    },
+    "sourceBlobs": 146,
+    "apiSizeDigestAndCRC": "PASS all six",
+    "oldOriginalsUnchanged": true,
+    "privateLocatorsOmitted": true
+  }
+}

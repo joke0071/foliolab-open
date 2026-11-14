@@ -1,6 +1,6 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-review-pr336-20261114.
+STOPPED/HANDOVER_READY · work-review-pr336-20261114.
 Vorgänger work-product-pr-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Übernahme nach frischem Kollisionsabgleich an 92fbd411ceea7d8803d40335570317982de36a52; PR336/Base/Head unverändert, keine Reviews/Kommentare/neuen zugehörigen Actions oder laufenden Repository-Actions. Ausschließlich serielles fachliches Review; keine Agenten/Automation. Einzelkorrektur bleibt ungenutzt. Merge/Auto-Merge/Main/Deployment/Release/LIVE_ACCEPTED Jochen vorbehalten.
 Vorgänger work-display-boundary-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neuer ausdrücklicher Auftrag autorisiert Produktbranch ab8f9ed1ce, nurCACHE-Revision, reviewbereiteMain-PR/automatischePRWorkflows und eine geprüfte zugeordnete Korrektur aufderselbenPR. Merge/AutoMerge/Mainpush/Deployment/Release/LIVE_ACCEPTED bleibenverboten. AlleinigerWriter; keineAgenten/Automation/Folgesitzung.
 Übernahmecdee0dbe96ad32511bcdc24f77bd0ac791cd7cc8 nach frischemKollisionsabgleich am1651fda198a4a4db92216f97a2a9ccd71c75a056; expectedSHA/gepinntesReadback.
@@ -125,12 +125,24 @@ Nächster konkreter Schritt: Review der offenen PR336 am exakten Head f36da5e8; 
 Bestehende Original-/Geräte-/Reviewgates nicht erneut inventarisiert; FLH04 NOT DONE/K4 PARTIAL/CR4CR5 offen, OPERATOR_INPUT_PENDING erhalten.
 Keine offenen unklaren eigenen Mutationen, keine lokalen laufenden Prozesse/Agenten/Automation/Folgesitzung. NeueÜbernahme zuerst frischeRefs/PR/Actions/Kollisionen prüfen; erwartete Zentralbasis ist dieser Abschlusscommit.
 
-## PR336 fachliches Review: eine belegte Korrektur, automatische Checks laufen
+## PR336 Reviewkorrektur: damaliger Prüfstart, abgeschlossen – Ergebnis unten
 
-Owner ACTIVE · work-review-pr336-20261114. Ursprünglicher Head f36da5e8023d10b1ddb1f8a458200743e0f34da6 vollständig gelesen; 11 Produktpfade/12 Tests, Reviewvorbereitung und A17/B4/C8-Fallmatrix zugeordnet.
+Beim Korrekturstart: Owner ACTIVE · work-review-pr336-20261114. Ursprünglicher Head f36da5e8023d10b1ddb1f8a458200743e0f34da6 vollständig gelesen; 11 Produktpfade/12 Tests, Reviewvorbereitung und A17/B4/C8-Fallmatrix zugeordnet.
 P1: src/model.js:103–114 prüfte nur price; priceExact:[123.45] passierte units via String(Array). Tatsächlicher Drive-restoreData-Callback mit safeImport nahm 2 Anteile/price100 an und speicherte priceExact123.45/Gesamt246.9 statt200. Speicheradapter synthetisch; kein neuer nativer IDB-Beleg behauptet. Neuer Regressionstest am alten Head FAIL5/6 (Missing expected exception).
 Autorisierte einzelne Korrektur jetzt verbraucht: Head **6399c771d984f55f8abee813f8a7a6e8c584ecf1**, Tree **8e2d1c5f956a1729f2de9b89f24e07510e801b35**, Parent f36da5e8. Nur1Typguard in src/model.js und2gezielte Tests in tests/restore-price-types.test.mjs; numerische Legacy-Abweichungen bleiben erhalten. CACHEv313/Workflows/Storage/CAS/Krypto unverändert.
 Frischer Head-/Owner-Abgleich vor einziger expectedSHA-Branchaktualisierung bestanden; Quellreadback exakt. Alle146lokalen src-Blobs entsprechen dem korrigierten Commit (Materialisierungs-Newline entfernt, danach Hashabgleich0Fehler).
 Lokal Node24.22.1:67/67aus5Restore-/Drive-/Settings-Testdateien PASS, SyntaxPASS. Ein erster kombinierter Prüflauf40PASS/1Modulladefehler wegen fehlender unveränderter wallet-history-fixtures.mjs bleibt erhalten; nach Fetch67/67, danach gepinnte Quellen67/67. KeineTestlockerung.
-Automatisch gestartet, jeVersuch1/Head6399c771:43575921072Integration,43575921060Walletchecks,43575921079informativerWalletaudit. KeinRerun/Dispatch/Diagnosetrigger. OwnerbleibtACTIVEbisTerminalauswertung/Originalsicherung/Abschlussreview.
+Automatisch gestartet, jeVersuch1/Head6399c771:43575921072Integration,43575921060Walletchecks,43575921079informativerWalletaudit. KeinRerun/Dispatch/Diagnosetrigger. Damals OwnerACTIVE bisTerminalauswertung/Originalsicherung/Abschlussreview; abgeschlossen wie unten.
 Bisherige f36da5e8-Belege/Originale unverändert erhalten; sie qualifizieren nicht pauschal den korrigierten Head. HistorischerMain43332355188 separat. Noch keine abschließende Mergeempfehlung.
+
+## PR336 Code-Review abgeschlossen: nach einer Korrektur fachlich PASS
+
+Owner **STOPPED/HANDOVER_READY · work-review-pr336-20261114**. Abschlussabgleich: Main/Basea27cde2f unverändert, PRoffen/mergedfalse/auto_merge=null, Head **6399c771d984f55f8abee813f8a7a6e8c584ecf1**; keine Reviews/Inline-/Gesprächskommentare oder laufenden Repository-Actions, kein fremder Ownerdelta.
+Ein reproduzierbarer hoher Befund (priceExactArray→falsche Restorebewertung) minimal behoben; autorisierte Einzelkorrektur verbraucht. Kein verbleibender mergehindernder Codebefund im geprüften Umfang.
+[Begründetes fachliches Review](release-evidence/product-pr336-code-review-2026-11-14.md) · [Exakte neue Ergebnis-/Originalzuordnung](release-evidence/product-pr336-review-result-2026-11-14.json).
+43575921072/1Integration,43575921060/1Wallet,43575921079/1informativerAudit jeweilsSUCCESS.1455/1455Node/0FAIL/0SKIP, SyntaxPASS, Chromium+alle3CrossjobsSUCCESS. Merge **3c7206dac7133282240fe5007816e7b558724256**/Tree **8e2d1c5f956a1729f2de9b89f24e07510e801b35** exaktzumHead. FAST/deploy/live-acceptanceSKIPPED;0Reruns/Dispatches/Diagnosetrigger.
+PWA-v313Chromium/Firefox/WebKitPASS: jeweils154Asset-Hashes inkl.korrigiertemmodel.js exakt;3Nachupdatebilder angesehen. Synthetischer warmerHTTP-Cache/echteSW/IDB,keineRealgeräteabnahme. GegenProduktbasis jetzt zusätzlich autorisierterModelguard+2Tests;CACHE/Install/Fetch/Workflows/Styles/Manifest unverändert zur erstenPR. UI-R4v312 erhalten.
+6OriginalZIPs APIgröße/SHA256/CRC PASS,7exaktePluginlogtexte undQuellen erhalten. SeparatesArchiv **FolioLab_PR336_review_originals_6399c771_2026-11-14_V0.tar.gz**,212236334Bytes,SHA256 **3ff44895aec6a2cb6fc315d16a69920698bff6b2f5365038bf251a2aad481d4a**. Version0gepinntbytegleichrückgelesen;179Manifestdateien tatsächlichrestauriert/byte-hashgeprüft,0Fehler. PrivateLocators privat. FrühereOriginale/f36da5e8-CI/8f9ed1ce-29Fallmatrix unverändert quellengebunden erhalten.
+Empfehlung: genauHead6399c771 nach vorgeschriebener unabhängigerFreigabe fachlich zumMerge empfehlen. InternesReviewliefertdieseFreigabenicht. NächsterEntscheidungsschrittbeiJochen: unabhängigeFreigabe undseparateMergeentscheidung fürgenaudiesenHead.
+K4PARTIAL/FLH04NOTDONE/CR4CR5/echteOAuth-/Gerätegates bleiben offen; Main43332355188 separat ungeklärt. KeineMerge-/AutoMerge-/Mainpush-/Deploy-/Release-/LIVE_ACCEPTED-Aktion oderFreigabe. GeschützteRefs/Original-/Finanz-/CAS-/Restore-/Kryptoverträge erhalten.
+TatsächlichesEnde: Review,Einzelkorrektur,reguläreChecks,Auswertung,OriginalsicherungundgepinntesRücklesen abgeschlossen. KeineoffenenunklareneigenenMutationen,keineProzesse/Agenten/Hintergrundautomation/Folgesitzung. NeueÜbernahme zuerstfrischabgleichen; erwarteteZentralbasis istdieserAbschlusscommit.
