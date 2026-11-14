@@ -1,0 +1,171 @@
+TAP version 13
+# Subtest: legacy decimal price and localized FX survive actual file and Drive restore
+    # Subtest: file precise-price
+    not ok 1 - file precise-price
+      ---
+      duration_ms: 103.195931
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '123.45'
+        - '123.450000000000000005'
+                 ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '123.450000000000000005'
+      actual: '123.45'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:468:14)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: drive precise-price
+    not ok 2 - drive precise-price
+      ---
+      duration_ms: 73.037718
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '123.45'
+        - '123.450000000000000005'
+                 ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '123.450000000000000005'
+      actual: '123.45'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:468:14)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: file localized-fx
+    not ok 3 - file localized-fx
+      ---
+      duration_ms: 63.221608
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Ungültiger Dezimalwert.
+        
+        7 !== 8
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 8
+      actual: 7
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:464:12)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: drive localized-fx
+    not ok 4 - drive localized-fx
+      ---
+      duration_ms: 97.282364
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Wiederherstellung fehlgeschlagen: Ungültiger Dezimalwert.
+        
+        7 !== 8
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 8
+      actual: 7
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:464:12)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: file localized-fx-discrepancy
+    not ok 5 - file localized-fx-discrepancy
+      ---
+      duration_ms: 62.983888
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Ungültiger Dezimalwert.
+        
+        7 !== 8
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 8
+      actual: 7
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:464:12)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: drive localized-fx-discrepancy
+    not ok 6 - drive localized-fx-discrepancy
+      ---
+      duration_ms: 88.139508
+      type: 'test'
+      location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:48'
+      failureType: 'testCodeFailure'
+      error: |-
+        Wiederherstellung fehlgeschlagen: Ungültiger Dezimalwert.
+        
+        7 !== 8
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 8
+      actual: 7
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:464:12)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:462:40)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    1..6
+not ok 1 - legacy decimal price and localized FX survive actual file and Drive restore
+  ---
+  duration_ms: 589.738303
+  type: 'test'
+  location: '/workspace/scratch/454dbb2c7149/candidate/tests/drive-backup.test.mjs:451:1'
+  failureType: 'subtestsFailed'
+  error: '6 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 7
+# suites 0
+# pass 0
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 872.389897

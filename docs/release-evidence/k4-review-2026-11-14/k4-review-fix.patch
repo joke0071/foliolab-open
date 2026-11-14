@@ -1,0 +1,113 @@
+--- a/src/model.js
++++ b/src/model.js
+@@ -114,7 +114,9 @@
+   const realizedPnLExact=v.realizedPnLExact==null?(v.realizedPnLEUR==null?null:exact(units(v.realizedPnLEUR))):exact(units(v.realizedPnLExact));
+   const realizedPnLEUR=realizedPnLExact==null?null:number(realizedPnLExact);
+   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
+-  const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
++  // Preserve decimal input before the approximate display conversion.
++  const exactPriceInput=typeof priceInput==='string'&&priceInput.trim()?priceInput.replace(/\s/g,'').replace(',','.').replace(/^([+-]?)\./,(_,sign)=>sign+'0.').replace(/\.(?=e|$)/i,'.0'):price;
++  const priceExact=v.priceExact==null?exact(units(exactPriceInput)):exact(units(v.priceExact));
+   const identity=normalizeLegacyCoinId({kind,name,symbol:v.symbol,coinId:v.coinId,coinIdMigration:v.coinIdMigration});
+   return {...(typeof v.archived==='boolean'?{archived:v.archived}:{}),id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
+     economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,
+--- a/src/fx-state.js
++++ b/src/fx-state.js
+@@ -14,7 +14,7 @@
+  try{
+   const raw=missing(precise)?display:precise,n=units(raw);
+   if(n<units('0.00000001')||n>units('1000'))throw Error();
+-  if(!missing(display)&&Number(exact(n))!==Number(display))throw Error();
++  if(!missing(display)&&Number(exact(n))!==Number(exact(units(display))))throw Error();
+   return {state:'known',rateExact:exact(n)};
+  }catch{return {state:'invalid',rateExact:null};}
+ }
+@@ -29,7 +29,7 @@
+   if(legacy&&p.fxRateExact!==FX_UNKNOWN&&!missing(p.fxRate)&&!missing(p.fxRateExact)){
+    const a=units(p.fxRate),b=units(p.fxRateExact);
+    if(a>=units('0.00000001')&&b>=units('0.00000001')&&a<=units(1000)&&b<=units(1000))
+-    return {fxRate:Number(p.fxRate),fxRateExact:exact(b)};
++    return {fxRate:Number(exact(a)),fxRateExact:exact(b)};
+   }
+   throw Error('EUR-Wechselkurs ungültig oder widersprüchlich.');
+  }
+--- a/sw.js
++++ b/sw.js
+@@ -1,4 +1,4 @@
+-const CACHE='foliolab-open-v313';
++const CACHE='foliolab-open-v314';
+ const ASSETS=['./src/install-hint-preference.js','./src/wallet-identity.js','./src/flatex-net-reconciliation.js','./src/shared-flatex-reconciliation-ui.js','./src/shared-import.js','./src/shared-import-ui.js','./src/shared-flatex-ui.js','./','./src/link-explorer-evidence.js','./src/kraken-link-bridge.js','./src/flatex-net-settlement.js','./src/startup.js','./src/loading-ui.js','./icons/flask-192.png','./icons/flask-512.png','./icons/flask-maskable-512.png','./src/unified-bitcoin.js','./src/unified-bitcoin-ui.js','./src/retired-providers.js','./src/marketstack.js','./src/alpha-vantage.js','./src/backup-limits.js','./src/header-status.js','./src/blocked-reasons-ui.js','./src/flatex-native-ui.js','./src/flatex-native.js','./src/bitpanda-preview-ui.js','./src/csv-records.js','./src/bitpanda-preview.js','./src/bitpanda-import.js','./src/bitpanda-withdrawal-evidence.js','./src/bitpanda-import-ui.js','./src/kraken-ledger.js','./src/kraken-ledger-ui.js','./src/kraken-source-plan.js','./src/kraken-bitcoin-bridge.js','./src/kraken-ethereum-bridge.js','./src/kraken-solana-bridge.js','./src/kraken-import.js','./src/kraken-withdrawal-evidence.js','./src/kraken-import-ui.js','./src/pchain-identity.js','./src/reference-management.js','./src/sonic-staking-evidence.js','./src/pchain-evidence.js','./src/ledger-live.js','./src/ledger-live-ui.js','./src/account-evidence.js','./src/booking-management.js','./src/csv-batch.js','./src/history-evidence-cache.js','./src/historical-portfolio-value.js','./src/historical-position-value.js','./src/purchase-evidence.js','./src/purchase-evidence-ui.js','./src/interest-ui.js','./src/interest-account.js','./src/interest-scenario.js','./src/cash-reconciliation.js','./src/cash-terms.js','./src/cash-terms-ui.js','./src/wallet-history-calculation.js','./src/wallet-history-days-worker.js','./src/wallet-history-valuation.js','./src/solana-history.js','./src/wallet-history-days.js','./src/wallet-history-ui.js','./src/wallet-history-state.js','./src/ethereum-history.js','./src/bitcoin-history.js','./src/wallet-history-core.js','./src/import-identity.js','./index.html','./styles.css','./src/credential-visibility.js','./src/economic-form-ui.js','./src/dialog-discard.js','./src/app.js','./src/drive-backup.js','./src/backup-vault.js','./src/complete-backup.js','./src/account-opening.js','./src/portfolio-edit-actions.js','./src/position-selection.js','./src/coin-identity.js','./src/position-search.js','./src/asset-wizard.js','./src/asset-wizard-core.js','./src/public-instruments-client.js','./src/refresh-ui.js','./src/refresh-frequency.js','./src/market-diagnostics.js','./src/quote-quality.js','./src/dashboard-ui.js','./src/chart-periods.js','./src/position-history.js','./src/eodhd-transport.js','./src/eodhd-worker-client.js','./src/security-sources.js','./src/security-discovery.js','./src/onboarding-suggestions.js','./src/reference-listings.js','./src/instrument-catalog.js','./src/security-catalog.js','./src/crypto-fallbacks.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/position-bookings.js','./src/flatex-review-export.js','./src/allocation-ui.js','./src/position-quality-review.js','./src/valuation-status.js','./src/legacy-quote-audit.js','./src/atomic-storage.js','./src/browser-portfolio-storage.js','./src/model.js','./src/fx-state.js','./src/assets.js','./src/decimal.js','./src/transfer-matching-ui.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/staking-discovery.js','./src/bnb-token-scanner.js','./src/solana-rpc.js','./src/wallet-scan-update.js','./src/ethereum-fallback.js','./src/native-staking-networks.js','./src/staking-catalog.js','./src/wallet-visibility.js','./src/request-cache.js','./src/csv-import.js','./src/flatex-import.js','./src/flatex-reconciliation.js','./src/flatex-backfill.js','./src/flatex-cost-basis.js','./src/flatex-settlements.js','./src/flatex-settlement-audit.js','./src/flatex-cash-audit.js','./src/booking-history.js','./src/booking-history-ui.js','./src/booking-insights-ui.js','./src/booking-insights.js','./src/capital-flows.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/position-icons.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+ self.addEventListener('install',event=>{
+   // A new version must not inherit still-fresh HTTP-cache bytes from the old
+--- a/tests/drive-backup.test.mjs
++++ b/tests/drive-backup.test.mjs
+@@ -446,3 +446,35 @@
+   }
+  }finally{globalThis.indexedDB=previous;}
+ });
++
++
++test('legacy decimal price and localized FX survive actual file and Drive restore',async t=>{
++ const previous=globalThis.indexedDB;
++ globalThis.indexedDB=dbMock().indexedDB;
++ try{
++  await configureBackupPassword('SYNTHETIC_PASSWORD','SYNTHETIC_PASSWORD');
++  for(const scenario of ['precise-price','localized-fx','localized-fx-discrepancy']){
++   const data=positionFixture(2),p=data.positions[0];
++   if(scenario==='precise-price'){p.price='123.450000000000000005';delete p.priceExact;}
++   else Object.assign(p,{currency:'USD',fxRate:'0,9',fxRateExact:scenario==='localized-fx'?'0,9':'0,8'});
++   const payload=createCompleteBackup(positionFixture());payload.data=data;
++   const bytes=await encryptWithBackupPassword(JSON.stringify(payload));
++   for(const route of ['file','drive'])await t.test(route+' '+scenario,async()=>{
++    const h=await restoreSetup(bytes,route);
++    assert.equal(h.record.revision,8,h.notice);
++    for(const m of [h.model,h.reopened,JSON.parse(h.record.raw)]){
++     const restored=m.positions[0];
++     if(scenario==='precise-price'){
++      assert.equal(restored.priceExact,'123.450000000000000005');
++      assert.equal(totalExactEUR(m),'246.90000000000000001');
++     }else{
++      assert.equal(restored.fxRate,0.9);
++      assert.equal(restored.fxRateExact,scenario==='localized-fx'?'0.9':'0.8');
++      assert.equal(totalExactEUR(m),scenario==='localized-fx'?'180':null);
++     }
++    }
++    assert.match(h.notice,/wiederhergestellt/i);
++   });
++  }
++ }finally{globalThis.indexedDB=previous;}
++});
+--- a/tests/restore-price-types.test.mjs
++++ b/tests/restore-price-types.test.mjs
+@@ -12,7 +12,7 @@
+ });
+ test('Actual position constructor preserves valid numeric/localized/manual and missing-price behavior',()=>{
+  const m=fixture();
+- for(const [price,expected] of [[123.45,'123.45'],['123,45','123.45'],['1 234,50','1234.5'],[0,'0'],['','0'],[null,'0']]){
++ for(const [price,expected] of [[123.45,'123.45'],['123,45','123.45'],['1 234,50','1234.5'],['.5','0.5'],['123.','123'],['1.e2','100'],['1.2345e2','123.45'],[0,'0'],['','0'],[null,'0']]){
+   const p=createPosition({...m.positions[0],price,priceExact:undefined},m);assert.equal(p.priceExact,expected);
+  }
+  const legacy=fixture();legacy.positions[0].price=110;legacy.positions[0].priceExact='100';
+@@ -57,3 +57,22 @@
+  }
+ });
+ 
++
++
++test('quantity and FX validation retain supported scalar legacy neighbors across v1 to v5',()=>{
++ for(const version of [1,2,3,4,5]){
++  for(const field of ['quantity','quantityExact','fxRate','fxRateExact']){
++   for(const value of [true,false,[],[1.2],{},[[1]]]){
++    const raw=fixture(version);if(version===5)raw.flatexNetRemovals=[];raw.positions[0][field]=value;
++    const before=JSON.stringify(raw);
++    assert.throws(()=>safeImport(raw),/Positionsmenge|Wechselkurs/);
++    assert.equal(JSON.stringify(raw),before);
++   }
++  }
++  const raw=fixture(version),p=raw.positions[0];if(version===5)raw.flatexNetRemovals=[];
++  Object.assign(p,{quantity:'17',quantityExact:'17,000000000000000005',currency:'USD',fxRate:null,fxRateExact:'UNKNOWN'});
++  const restored=safeImport(raw);assert.equal(restored.positions[0].quantityExact,'17.000000000000000005');assert.equal(totalExactEUR(restored),null);
++  Object.assign(p,{fxRate:'0,9',fxRateExact:'0,9'});
++  assert.equal(safeImport(raw).positions[0].fxRateExact,'0.9');
++ }
++});

@@ -1,0 +1,35 @@
+{
+  "base": "57ba5fd04b3fc870be3b085c1994c79ff50297d7",
+  "originalCandidate": "5db3803509cfd0824dad5dd12532a1168c161e32",
+  "correctedCandidate": "dcdb094ac44e7d8ca597398d886a121c9bab23e5",
+  "correctedTree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+  "localTests": {
+    "pass": 125,
+    "fail": 0,
+    "skip": 0,
+    "scope": "13 selected test files, not full repository CI",
+    "node": "24.22.1"
+  },
+  "syntax": "PASS src/*.js + worker/src/*.js",
+  "nativePreparedOnly": true,
+  "newActionsRuns": 0,
+  "productBranchCreated": false,
+  "prOpened": false,
+  "recommendation": "genau diesen zus\u00e4tzlichen Nachweis erbringen",
+  "nativeCases": [
+    "file/drive precise-price",
+    "file/drive localized-fx",
+    "file/drive localized-fx-discrepancy",
+    "file/drive unknown"
+  ],
+  "sha256": {
+    "docs/K4_REVIEW_2026-11-14.md": "dcbf8167e0b48272b44e484338b6f54f685cf24afb6abada8a0a2a5d4c6cee8e",
+    "docs/K4_PRODUCT_PR_DRAFT_2026-11-14.md": "67a184b03c69bab57c54b4f2439b8441d2964fc4fd24a7c4db435e57d7d61ee7",
+    "docs/release-evidence/k4-review-2026-11-14/legacy-original.tap": "d672118a015c3f352df8aa6f237c76af6e65180d40d869125862f83826a16b62",
+    "docs/release-evidence/k4-review-2026-11-14/targeted-final.tap": "7a6572559d0211b6224dfec54c7600e7842f2923678dc1fc9f8f66cc9b4f80c6",
+    "docs/release-evidence/k4-review-2026-11-14/syntax-final.log": "45ec98e8609d91c615ae6a08d540a6f554b02be522fb3483b1c2ab8a267f7965",
+    "docs/release-evidence/k4-review-2026-11-14/k4-review-fix.patch": "e0325cb1a7dd7535ef22f641bd4b97ca3a10e0058a8c4ccabb42c1cde7f22a30",
+    "docs/release-evidence/k4-review-2026-11-14/native-review-prepared.cjs": "49cda6023a838729f62cc46eda07e209e4207a1b1c4ec83861e0de57e68f06e5",
+    "docs/release-evidence/k4-review-2026-11-14/native-review-manifest.json": "ca980f50d1e963745b50b14886772ada7d4da04412f6183c2c1518121030a490"
+  }
+}

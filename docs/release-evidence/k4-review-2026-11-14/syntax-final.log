@@ -1,0 +1,5 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> foliolab-open@1.3.3 check
+> for f in src/*.js worker/src/*.js; do node --check "$f" || exit 1; done
+
