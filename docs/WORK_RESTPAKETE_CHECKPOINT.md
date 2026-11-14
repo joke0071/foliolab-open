@@ -1,7 +1,11 @@
-# HND01 · ACTIVE · k4-display-20261114
+# HND01 · STOPPED / HANDOVER_READY · k4-display-20261114
 
-Alleiniger Writer für den korrigierten K4-Fachtest. Übergabe 887dfd36cae008d0d15ed2c1cfbafebabc6b7101. Runner 4e747dd50f6e7f916785c4f2e3da38ba0d5bb3d4, separater Produktcheckout 48125a2608b27095fbdf89445340f90d04e9291b. Soll nach SIGKILL und Wiederöffnung desselben Profils unter neuer PID: bytegleicher Gesamt­record inklusive raw und Settings, Revision 7, aktive IndexedDB und sichtbare Position € 200,00.
+**K4 PARTIAL. Fachtest FAIL bei der Wiederaufnahme der Oberfläche.** Letzte erfolgreiche Phase war die Wiederöffnung derselben Origin im selben persistenten Profil unter neuer PID. Der nachträgliche Vergleich der vollständigen gesicherten Records besteht.
 
-[Vorgänger](https://github.com/joke0071/foliolab-open/blob/887dfd36cae008d0d15ed2c1cfbafebabc6b7101/docs/WORK_RESTPAKETE_CHECKPOINT.md)
+[Lauf 43623690209, Versuch 1](https://github.com/joke0071/foliolab-open/actions/runs/43623690209) · [Maschinenbeleg](release-evidence/k4-sigkill-display-43623690209.json) · [Originalartefakt](https://github.com/joke0071/foliolab-open/actions/runs/43623690209/artifacts/14125780146). Produkt 48125a2608b27095fbdf89445340f90d04e9291b, QA 704736ea9eea1a64619c9103a28ee4a6a486171a, Runner 4e747dd50f6e7f916785c4f2e3da38ba0d5bb3d4.
 
-[Lauf 43623690209](https://github.com/joke0071/foliolab-open/actions/runs/43623690209), Versuch 1, Job 132534741793, QA 704736ea9eea1a64619c9103a28ee4a6a486171a. Bei Wiederaufnahme denselben Lauf auswerten.
+Reproduktion: frisches Profil, bestehende restore-position-fixture, initialize und sechs bestätigte Saves. Vorher Revision 7, Synthetic ETF, € 200,00 und IndexedDB aktiv. Hauptprozess 3288 unmittelbar nach dem bestätigten Commit per SIGKILL beendet. Unter PID 3375 denselben Profilpfad und dieselbe Origin erneut geöffnet. Der vollständige kanonische Record inklusive raw und Einstellungen blieb bytegleich. Die erste verletzte Erwartung war die Statusanzeige IndexedDB aktiv nach Wiederöffnung (10 s). Der Modusmarker foliolab-open-storage-mode wechselte von idb-v1 zu fehlend. Die 200-EUR-Anzeige nach dem Neustart bleibt ungeprüft. Der Service Worker kontrollierte die Seite erst nach dem Neustart. Die Ursache des fehlenden Markers ist offen.
+
+Nächster Schritt: den belegten Zustand „gültige Revision 7 ohne Modusmarker“ im bestehenden initializeNew-/Recovery-Pfad gezielt nachstellen und sichtbare Recovery-Meldung sowie Schreibsperre prüfen. Vor einer Produktkorrektur das gewünschte Wiederanlaufverhalten gegen den Schutz vor automatischer Übernahme ungekennzeichneter Datensätze klären.
+
+Original-ZIP, Joblog und Belege gesichert, ZIP-Digest/CRC und 16 innere Manifestdateien geprüft. Separates Archiv V0 gepinnt bytegleich rückgelesen, 19 Dateien restauriert und hashgeprüft. Claim 7bfc19cacee7c2513ee98219916f8ab3e9eac333, Laufcheckpoint c80e8e019836e7c104a6ae2645c4140cd4fc5734. Writer abgegeben. [Vorherige Übergabe und Releasebelege](https://github.com/joke0071/foliolab-open/blob/887dfd36cae008d0d15ed2c1cfbafebabc6b7101/docs/WORK_RESTPAKETE_CHECKPOINT.md).

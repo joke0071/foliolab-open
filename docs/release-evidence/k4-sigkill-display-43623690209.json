@@ -1,0 +1,54 @@
+{
+  "result": "FAIL_REOPEN_UI",
+  "lastSuccessfulPhase": "same profile reopened in new Chromium process",
+  "qa": {
+    "sha": "704736ea9eea1a64619c9103a28ee4a6a486171a",
+    "tree": "9b28a2df13c8df06c65ddaabe9c3036a88d22dd4"
+  },
+  "product": "48125a2608b27095fbdf89445340f90d04e9291b",
+  "productTree": "acd2a876c84055021c22263ac0f8aabdc5a6b4c2",
+  "runnerBlob": "4e747dd50f6e7f916785c4f2e3da38ba0d5bb3d4",
+  "run": 43623690209,
+  "attempt": 1,
+  "job": 132534741793,
+  "environment": "Ubuntu 24.04, Linux 7.0.0-1014-aws, Chromium Headless Shell 156.0.8078.4, Playwright 1.64.1, Node 22.23.4",
+  "preflight": "PASS, PID 3132 SIGKILL; PID 3209 same profile/marker; Browser.close exit 0",
+  "origin": "http://127.0.0.1:36793",
+  "profile": "/home/runner/work/_temp/k4-product-43623690209",
+  "commitConfirmedUTC": "2026-11-14T17:55:59.481Z",
+  "signal": "SIGKILL",
+  "exitUTC": "2026-11-14T17:55:59.489Z",
+  "exitCode": null,
+  "oldPid": 3288,
+  "newPid": 3375,
+  "revision": [
+    7,
+    7
+  ],
+  "rawEqual": true,
+  "settingsEqual": true,
+  "recordBytesEqual": true,
+  "recordSHA256": "cef212e654392f68b1e5267afde9ceff8ac3fa7a94a2a19a3bfc8aa14aa5429a",
+  "comparison": "independently evaluated original before.json and after.json; runner stopped at reopened UI status wait",
+  "modeMarker": [
+    "idb-v1",
+    null
+  ],
+  "serviceWorkerController": [
+    null,
+    "http://127.0.0.1:36793/sw.js"
+  ],
+  "cache": "foliolab-open-v314",
+  "assetResponsesChecked": 556,
+  "priceBefore": "€ 200,00",
+  "failure": "Reopened page did not report IndexedDB aktiv within 10s; post-crash position display unverified. Reason marker was lost not established.",
+  "artifact": 14125780146,
+  "artifactSHA256": "sha256:fab2871948024ece97553df8ce68292ba506ffff62587e7b5799a6f5a2eb5e94",
+  "artifactBytes": 154147,
+  "zipCRC": true,
+  "innerManifestFiles": 16,
+  "archiveVersion": 0,
+  "archiveSHA256": "ce731bab2be80c28dad1577efff190105958c6719a6cfe5aba275868086dc4b3",
+  "archiveBytes": 319058,
+  "restoredFiles": 19
+}
