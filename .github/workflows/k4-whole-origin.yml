@@ -1,0 +1,41 @@
+name: K4 Whole Origin Firefox Targeted QA
+on:
+  push:
+    branches: ["qa/k4-whole-origin-e4b79f541e28"]
+permissions:
+  contents: read
+jobs:
+  whole-origin:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify unchanged v315 product
+        run: |
+          git diff --exit-code ff60c73e53c973ecb86393be5b4e31b55f352601 -- src index.html styles.css sw.js icons manifest.webmanifest tests
+          git rev-parse HEAD > qa-head.txt
+          git ls-tree -r ff60c73e53c973ecb86393be5b4e31b55f352601 > product-tree.txt
+      - name: Install pinned Firefox and native observer
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps firefox
+          sudo apt-get install -y strace
+      - name: Observe automatic LSNG eviction and markerless application
+        run: |
+          set -o pipefail
+          mkdir -p whole-origin-evidence
+          node .qa/k4-whole-origin.cjs 2>&1 | tee whole-origin-evidence/runner.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k4-whole-origin-originals
+          path: |
+            whole-origin-evidence
+            qa-head.txt
+            product-tree.txt
+          if-no-files-found: error
