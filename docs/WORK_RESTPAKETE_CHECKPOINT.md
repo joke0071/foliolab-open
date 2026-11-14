@@ -1,6 +1,7 @@
 # Aktueller HND01-Checkpoint
 
-STOPPED/HANDOVER_READY · work-qualify-prepare-77bcb76dd357-20261114.
+ACTIVE · work-latest-native-77bcb76dd357-20261114.
+Vorgänger work-qualify-prepare-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neue ausdrückliche Nutzerfreigabe „Ja“ gilt exakt für vorbereitete Ausführung5b968d15, einen create-Lauf/Versuch1/einChromiumjob/max25min/360s+15s. Keine neue Produkt-/Releasefreigabe.
 Vorgänger work-native-seven-77bcb76dd357-20261114 STOPPED/HANDOVER_READY; Übernahme nach frischem Kollisions-/Ref-/Actionsabgleich am42f32593075f464ea54707f66eeb6345f980f10d. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
 Übernahme046ffb64534f38aa8baae9563a4b189340c4df8a nach frischem Kollisions-/Ref-/Actionsabgleich, expectedSHA-geschützt/gepinnt rückgelesen.
 [Vollständiger Vorgänger](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md), STOPPED/HANDOVER_READY.
@@ -150,3 +151,9 @@ Keine neue Original-/Geräte-/Reviewevidenz für unabhängige Roadmapreste einge
 Kein eigener Hintergrundprozess/Automation/Folgesitzung. Main/FLH04/PR-/Diagnoseschutzstände unverändert.
 Nach Freigabe zunächst Owner/Ref/Actions/Produktblobs/Sicherungsweg frisch prüfen, dann nur exakt benannten Trigger einmal anlegen; unklare Anlage zuerst rücklesen.
 Ohne Freigabe keinen Lauf starten.
+
+## Neue aktive Einmalfreigabe
+
+FrischerKollisionsabgleich:c64430f9 unverändert,keinaktiverActionlauf,Produkt8f9ed1ce/Prüfquelle4249a698/Ausführung5b968d15 mitTrees/Parents exakt bestätigt. VorgesehenerBranch NOT_FOUND,zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
+Ausführung ist nach der ausdrücklichen aktuellen Nutzerfreigabe autorisiert; historische Aussagen „nicht freigegeben“ oben sind für diesen exakten einen Lauf abgelöst.
+Vor Trigger Produktblobs/Workflowdelta/Sicherungsweg final prüfen. KeinenRerun/Ersatztrigger. Ergebnissevollständigauswerten/sichern,danachkonkreteinterneFolgebefunde seriell bearbeiten.
