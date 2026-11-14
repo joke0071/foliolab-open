@@ -446,3 +446,35 @@ test('file and Drive restore identical encrypted position bytes through commit a
   }
  }finally{globalThis.indexedDB=previous;}
 });
+
+
+test('legacy decimal price and localized FX survive actual file and Drive restore',async t=>{
+ const previous=globalThis.indexedDB;
+ globalThis.indexedDB=dbMock().indexedDB;
+ try{
+  await configureBackupPassword('SYNTHETIC_PASSWORD','SYNTHETIC_PASSWORD');
+  for(const scenario of ['precise-price','localized-fx','localized-fx-discrepancy']){
+   const data=positionFixture(2),p=data.positions[0];
+   if(scenario==='precise-price'){p.price='123.450000000000000005';delete p.priceExact;}
+   else Object.assign(p,{currency:'USD',fxRate:'0,9',fxRateExact:scenario==='localized-fx'?'0,9':'0,8'});
+   const payload=createCompleteBackup(positionFixture());payload.data=data;
+   const bytes=await encryptWithBackupPassword(JSON.stringify(payload));
+   for(const route of ['file','drive'])await t.test(route+' '+scenario,async()=>{
+    const h=await restoreSetup(bytes,route);
+    assert.equal(h.record.revision,8,h.notice);
+    for(const m of [h.model,h.reopened,JSON.parse(h.record.raw)]){
+     const restored=m.positions[0];
+     if(scenario==='precise-price'){
+      assert.equal(restored.priceExact,'123.450000000000000005');
+      assert.equal(totalExactEUR(m),'246.90000000000000001');
+     }else{
+      assert.equal(restored.fxRate,0.9);
+      assert.equal(restored.fxRateExact,scenario==='localized-fx'?'0.9':'0.8');
+      assert.equal(totalExactEUR(m),scenario==='localized-fx'?'180':null);
+     }
+    }
+    assert.match(h.notice,/wiederhergestellt/i);
+   });
+  }
+ }finally{globalThis.indexedDB=previous;}
+});

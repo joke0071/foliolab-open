@@ -114,7 +114,9 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   const realizedPnLExact=v.realizedPnLExact==null?(v.realizedPnLEUR==null?null:exact(units(v.realizedPnLEUR))):exact(units(v.realizedPnLExact));
   const realizedPnLEUR=realizedPnLExact==null?null:number(realizedPnLExact);
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
-  const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
+  // Preserve decimal input before the approximate display conversion.
+  const exactPriceInput=typeof priceInput==='string'&&priceInput.trim()?priceInput.replace(/\s/g,'').replace(',','.').replace(/^([+-]?)\./,(_,sign)=>sign+'0.').replace(/\.(?=e|$)/i,'.0'):price;
+  const priceExact=v.priceExact==null?exact(units(exactPriceInput)):exact(units(v.priceExact));
   const identity=normalizeLegacyCoinId({kind,name,symbol:v.symbol,coinId:v.coinId,coinIdMigration:v.coinIdMigration});
   return {...(typeof v.archived==='boolean'?{archived:v.archived}:{}),id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
     economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,

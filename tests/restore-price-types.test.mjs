@@ -12,7 +12,7 @@ test('Backup readers reject non-price JSON types in v1/v2/v3/v4 without source c
 });
 test('Actual position constructor preserves valid numeric/localized/manual and missing-price behavior',()=>{
  const m=fixture();
- for(const [price,expected] of [[123.45,'123.45'],['123,45','123.45'],['1 234,50','1234.5'],[0,'0'],['','0'],[null,'0']]){
+ for(const [price,expected] of [[123.45,'123.45'],['123,45','123.45'],['1 234,50','1234.5'],['.5','0.5'],['123.','123'],['1.e2','100'],['1.2345e2','123.45'],[0,'0'],['','0'],[null,'0']]){
   const p=createPosition({...m.positions[0],price,priceExact:undefined},m);assert.equal(p.priceExact,expected);
  }
  const legacy=fixture();legacy.positions[0].price=110;legacy.positions[0].priceExact='100';
@@ -57,3 +57,22 @@ test('Scalar exact prices and existing numeric display discrepancies retain thei
  }
 });
 
+
+
+test('quantity and FX validation retain supported scalar legacy neighbors across v1 to v5',()=>{
+ for(const version of [1,2,3,4,5]){
+  for(const field of ['quantity','quantityExact','fxRate','fxRateExact']){
+   for(const value of [true,false,[],[1.2],{},[[1]]]){
+    const raw=fixture(version);if(version===5)raw.flatexNetRemovals=[];raw.positions[0][field]=value;
+    const before=JSON.stringify(raw);
+    assert.throws(()=>safeImport(raw),/Positionsmenge|Wechselkurs/);
+    assert.equal(JSON.stringify(raw),before);
+   }
+  }
+  const raw=fixture(version),p=raw.positions[0];if(version===5)raw.flatexNetRemovals=[];
+  Object.assign(p,{quantity:'17',quantityExact:'17,000000000000000005',currency:'USD',fxRate:null,fxRateExact:'UNKNOWN'});
+  const restored=safeImport(raw);assert.equal(restored.positions[0].quantityExact,'17.000000000000000005');assert.equal(totalExactEUR(restored),null);
+  Object.assign(p,{fxRate:'0,9',fxRateExact:'0,9'});
+  assert.equal(safeImport(raw).positions[0].fxRateExact,'0.9');
+ }
+});

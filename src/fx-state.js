@@ -14,7 +14,7 @@ export function positionFX(p){
  try{
   const raw=missing(precise)?display:precise,n=units(raw);
   if(n<units('0.00000001')||n>units('1000'))throw Error();
-  if(!missing(display)&&Number(exact(n))!==Number(display))throw Error();
+  if(!missing(display)&&Number(exact(n))!==Number(exact(units(display))))throw Error();
   return {state:'known',rateExact:exact(n)};
  }catch{return {state:'invalid',rateExact:null};}
 }
@@ -29,7 +29,7 @@ export function normalizePositionFX(p,{legacy=false}={}){
   if(legacy&&p.fxRateExact!==FX_UNKNOWN&&!missing(p.fxRate)&&!missing(p.fxRateExact)){
    const a=units(p.fxRate),b=units(p.fxRateExact);
    if(a>=units('0.00000001')&&b>=units('0.00000001')&&a<=units(1000)&&b<=units(1000))
-    return {fxRate:Number(p.fxRate),fxRateExact:exact(b)};
+    return {fxRate:Number(exact(a)),fxRateExact:exact(b)};
   }
   throw Error('EUR-Wechselkurs ungültig oder widersprüchlich.');
  }
