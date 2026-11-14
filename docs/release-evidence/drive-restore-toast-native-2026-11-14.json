@@ -1,0 +1,95 @@
+{
+  "scope": "Native restore toast delta",
+  "status": "FROZEN_BOUNDED_PASS",
+  "product": "04960e74316a4191223e88aaff65dd79ee6ad239",
+  "product_tree": "93493afbddd9cac50ef495dc9f455daa485a1efd",
+  "source": "d70d81e160c412703fb6e9b3b72b31915cc9eebd",
+  "source_tree": "9980a6980ca4dd7a1304a52b7498edc6b3a16728",
+  "execution": "0b4aa1d64daddea7cccad5bfcb29d2f8bd234b89",
+  "execution_tree": "d75cd59c75fe7e72886aaab8d980e94b50509cb3",
+  "trigger": "test/restore-toast-77bcb76dd357-20261113",
+  "run": 43554653065,
+  "attempt": 1,
+  "job": 132324646623,
+  "result": "PASS",
+  "cases": {
+    "success": {
+      "toast": 1,
+      "revision": "2→3"
+    },
+    "commit": {
+      "toast": 0,
+      "revision": "2→2; full record exact"
+    },
+    "preferences": {
+      "toast": 0,
+      "revision": "2→3; draft and original cause retained"
+    },
+    "password": {
+      "toast": 1,
+      "revision": "2→3; explicit partial failure"
+    },
+    "display": {
+      "toast": 1,
+      "revision": "2→3; explicit final display problem"
+    }
+  },
+  "old_success_toast_count": 0,
+  "actual_toast_DOM": true,
+  "independent_IDB_readback": true,
+  "fixture": "DBv1/idb-v1, synthetic restored cash123.45EUR; raw/settings exact; one restore/one media GET/no retry per case",
+  "checks": {
+    "host": "source-bound/tools-ready/harness-start/RESULT recorded",
+    "test_exit": 0,
+    "tee_exit": 0,
+    "cleanup": "PASS",
+    "pageErrors": 0,
+    "blockedExternal": 0,
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "focus_tab": "PASS",
+    "text_200_percent": "CSS approximation PASS; not OS zoom",
+    "visual_viewed": [
+      "password-320.png",
+      "password-1440.png"
+    ],
+    "visual_finding": "New portfolio-only toast readable with separate explicit password partial-failure status; no old full-success toast",
+    "other_images_viewed": false
+  },
+  "runtime": {
+    "os": "Ubuntu24.04.5",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "job_seconds": 16,
+    "harness_seconds_limit": 360,
+    "job_minutes_limit": 25,
+    "kill_after_seconds": 15
+  },
+  "originals": {
+    "artifact": 14097667825,
+    "zip_bytes": 2380050,
+    "zip_sha256": "c3787316bb00298c2dae250191278b7aeccba1db677081d72b1d88ac1e316c2b",
+    "zip_crc": "PASS",
+    "inner_manifest_entries": 24,
+    "archive_bytes": 6584320,
+    "archive_sha256": "3abed1af9da9c70118c91562c8825d00faeb779d3549d753b7464c9b65e8637b",
+    "archive_version": 0,
+    "pinned_exact_readback": true,
+    "preservation_entries_verified": 30,
+    "private_locators": "WITHHELD",
+    "root_full_backup": false
+  },
+  "limits": [
+    "OAuth, Drive, decrypt and password adoption simulated",
+    "No real encrypted restore, OAuth, recovery, Windows, Edge, Android, PWA, full CI, Main, release or crypto acceptance",
+    "UI-ALLOC01 and historical restore evidence remain separate",
+    "Sole new native/CI authorization consumed; no rerun"
+  ],
+  "next": "Serial local roadmap work; no product integration authorized"
+}
