@@ -1,6 +1,6 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-qualify-prepare-77bcb76dd357-20261114.
+STOPPED/HANDOVER_READY · work-qualify-prepare-77bcb76dd357-20261114.
 Vorgänger work-native-seven-77bcb76dd357-20261114 STOPPED/HANDOVER_READY; Übernahme nach frischem Kollisions-/Ref-/Actionsabgleich am42f32593075f464ea54707f66eeb6345f980f10d. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
 Übernahme046ffb64534f38aa8baae9563a4b189340c4df8a nach frischem Kollisions-/Ref-/Actionsabgleich, expectedSHA-geschützt/gepinnt rückgelesen.
 [Vollständiger Vorgänger](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md), STOPPED/HANDOVER_READY.
@@ -113,3 +113,40 @@ KeineeigenenBrowser-/Node-/Serverprozesse/Hintergrundarbeit/Folgesitzung. Origin
 
 Produkt8f9ed1ce/Tree1c1a6404 bestätigt, Parent8d0f68c1. Main/FLH04/PR332/157/161 undbeideDiagnoserefs unverändert;keinin_progressRun. KeineoffeneeigeneMutation.
 Neue native Ausführungsfreigabe fehlt. Nur aktuellen Harness anletztenProduktstand binden und echteTimestamp-/Nachcommit-/Präcommitgegenfälle ergänzen. Shared-save-Impact erhält A/B/C-Basisfälle. KeinBranchtrigger/Rerun/Action. VorhandeneGates nicht neuinventarisieren.
+
+## Letzter gesicherter Vorbereitungspunkt · neue Ausführung NICHT freigegeben
+
+Produkt8f9ed1ce0393d7a1b977d613551e50c8bbefd941/Tree1c1a6404012cb18f73be01b641da04b9376d63b0 unverändert.
+Prüfquelle **4249a698fda42896099db6e3b7321ba0434121f2**, Tree **fc863347e53e9db279cd23b899ae4e56ada9b9d9**, Parent exakt Produkt8f9ed1ce.
+Vorbereiteter Ausführungscommit **5b968d151c659ce96665e19b7765b922720d5d0c**, Tree **96cff73fe94c03190d4b103c84c130573a39efaf**, Parent exakt Prüfquelle.
+Vorgesehener Ref **test/latest-save-restore-77bcb76dd357-20261114**: frisch NOT_FOUND; zugehörige Runs0.
+[Reviewbare Identitäten](release-evidence/latest-native-identities-2026-11-14.json).
+[Prüfvertrag am exakten Quellstand](https://github.com/joke0071/foliolab-open/blob/4249a698fda42896099db6e3b7321ba0434121f2/docs/release-evidence/latest-native-preparation-2026-11-14.json).
+
+29 unabhängig auszuwertende geplante Fälle: A17/B4 als shared-save-Regression erhalten, C8.
+C ergänzt alten Sicherungszeitpunkt, echte lokale Rückfallsicherung als Browserdownload samt Originalpositionen,
+einmaligen synthetischen Fehler im echten providerSettings.innerHTML-Setter ausschließlich nach echtem IDBtransaction.complete
+und tatsächlichen records-Commitabbruch nach put. save/restore/render/CAS-Funktionen werden dafür nicht ersetzt.
+Soll: Nachcommit246.90EUR/Revision3/Modell und Readback identisch, persistente Anzeige-Warnung statt Speicherfehler;
+echter Abbruch Revision2/gesamterRecordgleich/echteSpeicherfehlermeldung/keinErfolgstoast.
+Timestamp unverändert ohne tatsächlichen Backupdownload; vorhandener Rückfallsicherungsdownload bleibt belegt.
+Alle Fälle lesen unabhängig per readonly/tx.oncomplete und erneut geöffneter Seite zurück.
+OAuth/Drive/Decrypt/Passwortübernahme weiterhin simuliert. Faultinjektion und Downloads NICHT nativ ausgeführt.
+
+151 Produkt-/HTML-/Style-/SW-/Manifest-/Packageblobs in Quelle und Ausführung identisch zum Produkt,
+auch sämtliche lokalen Preflighteingaben Gitblob-genau. Prüfdeltanur2Dateien (Harness+Vertrag);
+Ausführungsdeltanur.github/workflows/live-initialization-diagnostics.yml.
+Quellen und Workflow vollständig gepinnt bytegleich rückgelesen.
+Lokal: HarnesssyntaxPASS,29Fixture-/Wrapper-/OraclesPASS,10erhalteneNativefehlermeldungen mit korrigiertem TextoraclePASS.
+Keine erneute305er-Testausführung ohne Produktdelta. Keine neue native/CI-/Plattform-/Freeze-/Integrations-/Releasebehauptung.
+
+Der Entwurf sieht genau1neuencreate-Lauf/Versuch1/einJob/Ubuntu24.04/Node22.23.4/Playwright1.56.1/Chromium,
+max25minJob/360sHarness+15sAbbruchnachlauf,1Aufruf/0Retries, fortlaufendeHostberichte und always-Originalupload vor.
+Bestehende reguläre PR-/Main-/Releaseworkflows unverändert. Original-/Sicherungsweg wie Vorgänger verwenden; keine neuen Laufartefakte vorhanden.
+Die neue Vorbereitung ist KEINE Ausführungsfreigabe, kein Ersatztrigger und kein GitHubRerun.
+
+Endgrund dieses Arbeitsschritts: konkret reviewbarer Kandidat vollständig vorbereitet; genau dessen Ausführung benötigt die ausdrücklich fehlende neue Nutzerfreigabe.
+Keine neue Original-/Geräte-/Reviewevidenz für unabhängige Roadmapreste eingetroffen; vorhandene Folgegates unverändert, keine erneuteGesamtinventur.
+Kein eigener Hintergrundprozess/Automation/Folgesitzung. Main/FLH04/PR-/Diagnoseschutzstände unverändert.
+Nach Freigabe zunächst Owner/Ref/Actions/Produktblobs/Sicherungsweg frisch prüfen, dann nur exakt benannten Trigger einmal anlegen; unklare Anlage zuerst rücklesen.
+Ohne Freigabe keinen Lauf starten.

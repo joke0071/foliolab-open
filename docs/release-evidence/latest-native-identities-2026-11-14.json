@@ -1,0 +1,41 @@
+{
+  "status": "PREPARED_NOT_RUN_AUTHORIZATION_PENDING",
+  "product": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "productTree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+  "source": "4249a698fda42896099db6e3b7321ba0434121f2",
+  "sourceTree": "fc863347e53e9db279cd23b899ae4e56ada9b9d9",
+  "execution": "5b968d151c659ce96665e19b7765b922720d5d0c",
+  "executionTree": "96cff73fe94c03190d4b103c84c130573a39efaf",
+  "proposedRef": "test/latest-save-restore-77bcb76dd357-20261114",
+  "branchState": "NOT_FOUND",
+  "relatedRuns": 0,
+  "sourceDelta": [
+    "docs/release-evidence/latest-native-preparation-2026-11-14.json",
+    "tests/browser-latest-native.mjs"
+  ],
+  "executionDelta": [
+    ".github/workflows/live-initialization-diagnostics.yml"
+  ],
+  "unchangedProductBlobs": 151,
+  "cases": {
+    "A": 17,
+    "B": 4,
+    "C": 8,
+    "total": 29
+  },
+  "local": "Syntax/29fixtures/10originaltextoracles PASS; existing305Node source-bound unchanged; no native run.",
+  "proposedBounds": {
+    "runs": 1,
+    "attempt": 1,
+    "job": 1,
+    "jobMinutes": 25,
+    "harnessSeconds": 360,
+    "killAfterSeconds": 15,
+    "engine": "Chromium",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "origin": "http://127.0.0.1:4173"
+  },
+  "authorization": "No new execution authorized; old initial budget cannot authorize second correction. No create branch/rerun/replacement trigger.",
+  "limits": "Prepared synthetic DOMfault/native transaction injection NOT RUN. No nativePASS/freeze/integration/platform/crypto/release claim."
+}
