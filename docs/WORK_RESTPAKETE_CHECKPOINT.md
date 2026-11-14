@@ -2,6 +2,8 @@
 
 **ACTIVE · sol-k4-sigkill-20261114 · alleiniger Writer.** Expliziter Nutzerauftrag: genau ein gezielter GitHub-Actions-QA-Lauf auf separatem QA-Branch, Vorprüfung mit Wegwerfprofil und anschließend harter Chromium-Hauptprozessabbruch nach bestätigter Revision7, Wiederöffnung desselben persistenten Profils. Ausschließlich synthetische Daten. Produkt48125a2608b27095fbdf89445340f90d04e9291b/Treeacd2a876c84055021c22263ac0f8aabdc5a6b4c2 separat ausgecheckt; Main/Produkt/Deployment unverändert. Übernahme vom STOPPED-Vorgänger nach erwartetem Zentralhead33e2435119d73461431bee6c8f906ab79529105a; kein neuer einschlägiger Beleg vorhanden. Main, Owner, PRs332/161/157 und neueste zehn abgeschlossene Läufe abgeglichen. Aufbau43603315041/QA8da22a14 wird wiederverwendet; lokaler Socketfehler nicht erneut geprüft, keine Full-/Release-CI. Ergebnis/Originale sichern und Owner abgeben, K4PARTIAL erhalten.
 
+QA gestartet: [Run43619179460](https://github.com/joke0071/foliolab-open/actions/runs/43619179460), Versuch1, Job132520744512. QA-Branch qa/k4-sigkill-48125a26-20261114, QA-SHA234caaaa44780cac667b654e7eafe588640bbc9c/Tree54c89205f71eb80bf1d09fb4699d105714c27d82. Produkt wird separat nach k4 ausgecheckt und gegen SHA/Tree geprüft. Noch kein Ergebnis. Genau ein Trigger, kein Retry. Workflow/Runner remote bytegleich bzw. Syntax geprüft; zwei neue QA-Dateien, kein Produktdelta.
+
 ---
 
 # HND01 · K4 Prozessabbruch / Eviction · 14.11.2026
