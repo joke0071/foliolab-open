@@ -1,0 +1,4 @@
+PASS original completion owner called once with unchanged this/event and marker already true
+PASS no precompletion fault; exactlyone postcompletion fault; original setter resumes
+PASS abort does not manufacture completed commit or invoke owner
+Local explicit transaction/DOM adapters only;NOT native IDB/browser acceptance

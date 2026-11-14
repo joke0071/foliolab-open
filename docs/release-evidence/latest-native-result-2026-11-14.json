@@ -1,0 +1,106 @@
+{
+  "scope": "Latest shared-product native qualification",
+  "run": 43567167015,
+  "attempt": 1,
+  "job": 132363408676,
+  "product": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "productTree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+  "source": "4249a698fda42896099db6e3b7321ba0434121f2",
+  "sourceTree": "fc863347e53e9db279cd23b899ae4e56ada9b9d9",
+  "execution": "5b968d151c659ce96665e19b7765b922720d5d0c",
+  "executionTree": "96cff73fe94c03190d4b103c84c130573a39efaf",
+  "trigger": "test/latest-save-restore-77bcb76dd357-20261114",
+  "result": "FAILURE_PARTIAL_NATIVE_28_OF_29",
+  "groups": {
+    "A": {
+      "pass": 17,
+      "total": 17,
+      "result": "BOUNDED_NATIVE_PASS",
+      "newlyClosed": "All three previously missing FX newpage/readback paths completed; UNKNOWN retained"
+    },
+    "B": {
+      "pass": 4,
+      "total": 4,
+      "result": "BOUNDED_NATIVE_PASS"
+    },
+    "C": {
+      "pass": 7,
+      "total": 8,
+      "result": "PARTIAL",
+      "proved": [
+        "validrestore2->3/exactraw/1toast/newpage",
+        "boolean/array/object rejected2->2/fullrecordsame/0put/newpage",
+        "oldbackuptimestamp retained/newpage",
+        "actualrollbackdownload1/originalpositions100EUR/realcreationtimestampretained/newpage",
+        "actualIDBcommitabort2->2/fullrecordsame/0successToast/realstorageerrorheader/newpage"
+      ],
+      "open": "restore-postcommit-display synthetic exception did not fire; displayFaultObserved undefined. Rev3/exactraw/onecommit/oneToast were reached, but exception/warning/newpage claims after that assertion NOT_REACHED."
+    }
+  },
+  "causeAssessment": {
+    "kind": "HARNESS_FAULT_NOT_INJECTED",
+    "facts": [
+      "Native complete observer true by final capture; guarded innerHTML setter never threw",
+      "Product normal restore committed correctly; no evidence of a product failure from this case",
+      "commitPortfolioRecord assigns tx.oncomplete to resolve commit before records.put observer is added"
+    ],
+    "hypothesis": "Late additional complete listener can be observed after app continuation/render; original report has no event timeline to prove detailed scheduling. Ordering root cause not claimed fully traced.",
+    "localCorrectionPlan": "Wrap the already installed transaction.oncomplete at observed put; mark complete before invoking original completion callback exactly once. Add bounded event timeline and original callback count. No save/CAS/render/restore replacement."
+  },
+  "runtime": {
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "os": "Ubuntu24.04.5",
+    "viewport": [
+      390,
+      850
+    ]
+  },
+  "host": {
+    "testExit": 1,
+    "teeExit": 0,
+    "browserCleanup": "PASS",
+    "originCleanup": "PASS",
+    "assertionRows": 363,
+    "retries": 0,
+    "jobs": 1
+  },
+  "original": {
+    "artifact": 14103021893,
+    "zipBytes": 2543841,
+    "zipSHA256": "cde84157ae1bb4325a7a85077d3383c4dfdfe9ccd2bbc957b9c3ef065b03cced",
+    "crc": "PASS",
+    "manifestEntries": 56
+  },
+  "actuallyViewed": [
+    "fx-array-unknown.png",
+    "restore-valid.png",
+    "restore-real-rollback.png",
+    "restore-native-commit-abort.png",
+    "restore-postcommit-display-failure.png"
+  ],
+  "visual": "390px FXcause, correct fresh-backupstatus, actual backup timestamp, abortfailure and successfeedback read. No postcommitwarning claim because exception not injected.",
+  "simulated": [
+    "OAuth",
+    "Drive media",
+    "decryption",
+    "password adoption"
+  ],
+  "notProved": [
+    "postcommitdisplayexception native behavior",
+    "Windows/Edge/Android/PWA",
+    "realcryptoOAuthDrive",
+    "FullCI/production/release"
+  ],
+  "budget": "Current Ja-authorized exactlyone execution consumed. No automatic correction/rerun/newtrigger authorization. Old unused initialslots not used as replacements.",
+  "next": "Preserve originals and pinnedreadback; locally prepare a corrected narrow3Ccase source. Do not run without new authorization.",
+  "preservation": {
+    "archiveVersion": 0,
+    "bytes": 10362880,
+    "sha256": "5d37c3e1a55cb46d5b7aaf3bb220cc592cf34a92489bad64040347978593d6f6",
+    "entries": 60,
+    "pinnedExactReadback": true,
+    "privateLocators": "WITHHELD"
+  }
+}

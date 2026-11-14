@@ -1,161 +1,77 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-latest-native-77bcb76dd357-20261114.
-Vorgänger work-qualify-prepare-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neue ausdrückliche Nutzerfreigabe „Ja“ gilt exakt für vorbereitete Ausführung5b968d15, einen create-Lauf/Versuch1/einChromiumjob/max25min/360s+15s. Keine neue Produkt-/Releasefreigabe.
-Vorgänger work-native-seven-77bcb76dd357-20261114 STOPPED/HANDOVER_READY; Übernahme nach frischem Kollisions-/Ref-/Actionsabgleich am42f32593075f464ea54707f66eeb6345f980f10d. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
-Übernahme046ffb64534f38aa8baae9563a4b189340c4df8a nach frischem Kollisions-/Ref-/Actionsabgleich, expectedSHA-geschützt/gepinnt rückgelesen.
-[Vollständiger Vorgänger](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md), STOPPED/HANDOVER_READY.
-Maßgeblich bleiben Effizienzplan, EFF03_WEEK_TARGET_2026-11-11.md und KONSOLIDIERTE_ROADMAP.md;41Scopes/15DONE unverändert.
+STOPPED/HANDOVER_READY · work-latest-native-77bcb76dd357-20261114. Ein Writer; keine Agenten/Automation/Folgesitzung.
+Übernahme6a8f27c4a5f90ee621a636a13899bd99b448ad10 nach frischem Kollisionsabgleich amc64430f9764b8b321af0327e42fa06e82cf67420,expectedSHA/gepinntesReadback.
+[Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/c64430f9764b8b321af0327e42fa06e82cf67420/docs/WORK_RESTPAKETE_CHECKPOINT.md).
+Aktuelles ausdrückliches Nutzer-Ja autorisierte exakt einen vorbereiteten Lauf; diese Freigabe ist jetzt verbraucht.
 
-## Native Qualifikation der sieben Korrekturen
+## Jüngster nativer Lauf: vollständig ausgewertet und gesichert
 
-Produkt **883c4eb0e8137040a9f6bfd2e193bc5833aac0c2**, Tree **9ad46b9ee8b6039f49ddf23b2655227b493692f4**, unverändert.
-[Parent-/Nachweismatrix der sieben lokalen Schnitte](release-evidence/serial-local-summary-2026-11-14.json); vorher288/288Node37Dateien, keinFullCI.
-Produkt-/HTML-/CSS-/SW-Blobs in beiden nativen Quellen identisch. Beide Ausführungen änderten gegenüber ihrer Prüfquelle ausschließlich Diagnoseworkflow.
+Produkt **8f9ed1ce0393d7a1b977d613551e50c8bbefd941**, Tree **1c1a6404012cb18f73be01b641da04b9376d63b0**, unverändert.
+Prüfquelle4249a698fda42896099db6e3b7321ba0434121f2/Treefc863347e53e9db279cd23b899ae4e56ada9b9d9, Parent exakt Produkt.
+Ausführung5b968d151c659ce96665e19b7765b922720d5d0c/Tree96cff73fe94c03190d4b103c84c130573a39efaf, Parent exakt Prüfquelle.
+Ref test/latest-save-restore-77bcb76dd357-20261114 genau einmal angelegt/unverändert.
+**Run43567167015/1, Job132363408676: terminal FAILURE,28/29FällePASS.**
+[Exakte Fall-/Grenzen-/Originalauswertung](release-evidence/latest-native-result-2026-11-14.json).
 
-| Versuch | Prüfquelle / Ausführung | Run / Ergebnis |
+| Gruppe | Ergebnis am8f9ed1ce | Nachweis |
 | --- | --- | --- |
-| Initial | 76b198e6a26fdb56b6d6e05bd5fb19e4101afcde / dbaac9860d6d4d35b471c15166e4e5cb97e4cb9f | 43564045852/1 FAILURE; A7/17, B4/4, C0/4. Falscher Meldungsregex und ungeeigneter entschlüsselter Fixturewrapper. |
-| Einziger Korrekturlauf | dcdd67866e824a81cfa3738aaa86dd93dfa27e84 / a5a7d5f8d7375546b2182048d1f8347a4bce7a06 | 43564350387/1 FAILURE; A14/17, B4/4, C4/4 mechanische Fälle; zusätzlicher echter visueller Statusbefund. |
+| A Kurse/FX | 17/17 begrenzt nativ PASS | Alle drei alten FX-Reopenlücken geschlossen; datensatzgenaues readonly-/neueSeiteReadback, UNKNOWN erhalten. |
+| B Buchungsverwaltung | 4/4 begrenzt nativ PASS | Codierte Referenzsperre, unbekannte Fees/Steuern, zulässige120→100mit1CASCommit, neuerÖffnungsreadback. |
+| C Restore | 7/8 begrenzt nativ PASS,einHarnessfalloffen | Gültig2→3/rawexakt;bool/array/object2→2unverändert;alterSicherungszeitpunkt;echterRückfalldownloadmitOriginalpositionen100EUR;echterIDBCommitabbruch2→2. JeweilsneueSeiteReadback. |
 
-[Initialauswertung](release-evidence/seven-native-initial-2026-11-14.json) · [Korrekturauswertung und genaue Grenzen](release-evidence/seven-native-correction-2026-11-14.json).
-25 unabhängige Fälle, einChromiumjob jeRun, Ubuntu24.04/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37.
-HostExit1/Tee0, Browser-/OriginCleanupPASS beiderLäufe. Zwei neue Läufe insgesamt: initial1/3, Korrektur1/1 verbraucht.
-Keine weitere Wiederholung der fehlgeschlagenen Fälle als angeblich freier Initialplatz; kein zweiter Korrekturlauf autorisiert.
+Offen **restore-postcommit-display**: vorgesehener synthetischer Fehler wurde NICHT ausgelöst (displayFaultObserved fehlt).
+Vor dieser Assertion: echterCommit2→3/rawexakt/246.90EUR/sichtbaresModell/1Toast bestätigt; keine nativ ausgeführte Anzeigeexception und kein Reopen dieses Falls.
+Kein GesamtPASS/keinFreeze. Bestehende305/305Node40Dateien weiterhinquellengebunden; keine Wiederholung ohne Produktdelta.
+Alle151Produkt-/HTML-/CSS-/SW-/Manifest-/Packageblobs identisch,AusführungsdeltanurDiagnoseworkflow.
+EinJob/Ubuntu24.04.5/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37,390x850.
+363Assertionzeilen;TestExit1/Tee0, BrowserCleanupPASS undOriginCleanupPASS;0Retries.
+OAuth/Drive/Decrypt/Passwortübernahme simuliert. KeineWindows/Edge/Android/PWA/Realprovider/echteKrypto/FullCI-/Main-/Releaseabnahme.
+Tatsächlich angesehen: FXArrayUnknown,RestoreValid,RealRollback,NativeCommitAbort,PostcommitDisplayFailure.
+LesbareFXFehlerursache,korrekterFrischbackupstatus,SicherungszeitpunktnachrealemDownload,Abbruchstatusbelegt; keineAnzeigeexception-Warnungbehauptet.
 
-A: FXboolean-known/array-unknown/outside-range bestätigen volleDatensatz-/Revisionsgleichheit und Warnzustand; Zusatz-Readback bei Fehler ebenfalls gleich, FX0.9/UNKNOWN/0.9.
-Danach scheitert ein zu enger groß-/kleinschreibungsabhängiger Textvergleich auf korrektes „Tagesreferenzkurs“. Wiederöffnen dieser3Fälle NICHTERREICHT, kein Gesamt-PASS.
-B: Tatsächliche Verwaltung/Zeileneditor/Löschsperre, lesbareunbekannteFees/Steuern und zulässige120→100mit1CASCommit; unabhängigesIDBReadback/neueSeite4/4PASS.
-C: EchteRestoreUI/IDB, gültig2→3/exakteRaw, falschebool/array/objectPreise2→2/0Callback/0Put, je1MediaGET;4/4mechanischeFällePASS.
-Sichtbefund C zusätzlich: #backupStatus behauptet nach frischem Restore einen neuen Downloadzeitpunkt ohne lokale Rückfallsicherung. Deswegen kein vorbehaltloser C-Gesamtabschluss.
-OAuth/Drive/Decrypt/Passwortübernahme ausdrücklich simuliert. KeineHardware/PWA/Realprovider/echteKrypto/Crash/Quota/K4Legacy/FullCI/Main/Releaseabnahme.
-Tatsächlich angesehen InitialBFees/Taxes/Encoded und KorrekturAlpha-Boolean/RestoreValid/RestoreBoolean/FXArrayFailure; andere Bilder nicht alsgesehen behauptet.
+## Unveränderte Originalsicherung
 
-## Originalsicherung
+Artifact14103021893,ZIP2543841Bytes/SHA256cde84157ae1bb4325a7a85077d3383c4dfdfe9ccd2bbc957b9c3ef065b03cced.
+APIgröße/Digest/CRC und56innerManifestdateienPASS; Originalreports/Joblog/Quellinputs/Bilder/Rückfalldownload erhalten.
+SeparatesArchivV0/10362880Bytes/SHA2565d37c3e1a55cb46d5b7aaf3bb220cc592cf34a92489bad64040347978593d6f6.
+Gepinnt bytegleich rückgelesen,60PreservationeinträgePASS. PrivateLocators privat; ältereArchiveunverändert.
+Keine Originalberichte nachträglich aufgrünumgeschrieben.
 
-Initial ZIP2623456Bytes/SHA256ceaab17115ba7e6ecdc1958eb3ea0c496555727f4d7d6c1b3f7e1dc931dc0fd6;CRC/58innerManifestdateienPASS.
-SeparatesArchivV0/9523200Bytes/SHA256a6c6ae29f3f20b3063f32a1e13e9dce1c65ac44b51034df2e912992873b99888; gepinntbytegleich/62EinträgePASS.
-Korrektur ZIP1822772Bytes/SHA2566e3ca22f72166e7128cb188f62401bc86504455b18be4697c1e780ab1a1c1bd0;CRC/50innerManifestdateienPASS.
-SeparatesArchivV0/8284160Bytes/SHA2561c725374d62235311c4dd5c1752d9513aee0c85d95edcdf2150c6dba8e2fc7c5; gepinntbytegleich/54EinträgePASS.
-UnveränderteOriginale inklJoblogs/Quellinputs/Reports/Bilder erhalten; privateLocators privat. HistorischeArchive nichtüberschrieben.
+## Lokale Harnesskorrektur und konkret vorbereiteter nächster Kandidat
 
-## Serielle Folgearbeit nach nativer Auswertung
+Der zusätzliche complete-Beobachter gab die DOM-Exception nicht rechtzeitig frei.
+Quellcode zeigt: ursprünglicher tx.oncomplete-Resolver wird vor dem zusätzlichen Listener registriert; genaue Browserlistener-/Microtaskfolge ist ohne Originaltimeline nicht vollständig bewiesen.
+Keine Produktursache aus diesem Fehler abgeleitet; Produktcodeunverändert.
+KorrigierterTesthook setzt Commitmarkierung im bestehenden Transaktionsabschluss VOR Aufruf des ursprünglichen Abschlusscallbacks.
+Originalcallbackmitthis/eventgenaueinmal; tatsächlicherIDBCommit/save/CAS/render/restore bleibenimOriginalpfad. Ereignistimeline undCallbackzählung ergänzt.
+Nur drei C-Fälle ausgewählt: normalerErfolg,NachcommitAnzeigeexception,echterCommitabbruch. A/B undübrigeC28Belege am selbenProduktwiederverwenden,keineerneuteGesamtsuite.
+LokalSyntaxPASS und3expliziteTransaktions-/DOMAdaptergegenprobenPASS; **KEIN nativer Nachweis der Korrektur**.
+[Adaptergegenprobe](release-evidence/latest-display-adapter-preflight-2026-11-14.mjs) · [Originalausgabe](release-evidence/latest-display-adapter-preflight-2026-11-14.log).
 
-Aus tatsächlichem C-Screenshot und echtem restoreData-Handler reproduziert: backupDone() erneuert „für Download erstellt“ auch beim Restore in ein leeres Profil.
-Lokaler Fix am Parent883c4eb0: Restoreabschluss setzt nur bestehenden Änderungszähler zurück, erzeugt keinen Sicherungszeitpunkt; vorhandener tatsächlicher Export-/Rückfallsicherungszeitpunkt bleibt erhalten.
-Statischer Drivehinweis nennt die Voraussetzung vorhandener lokaler Daten.
-Neue6NodeGegenproben initial3FAIL/3PASS, gezieltfinal6/6PASS; betroffeneRegression71/71PASS. Quellstand8d0f68c109644e6906586521718537545d3fc9e1/Treeb93a91fb5e21dec5216523db851bd370c15f50b4.
-Kein weiterer nativer Lauf für diesen Folgeschnitt. Danach zweiter bestätigter Folgefehler lokal geschlossen; siehe unten.
-Die beiden bestätigten lokalen Folgefehler sind geschlossen. Keine offene eigene Produktmutation; genaue Nachweise und Abschlussgrund unten.
+Prüfquelle **6a45eea783fdb09431b3a11b9167e6de6139e620**, Tree **7a7654079d076a7a54906811e925649a1b24ecab**, Parent4249a698,ProduktzweiterAncestor.
+VorbereiteteAusführung **13ad780b1ce0a95d38211af2a1e3dc47cd265571**, Tree **bc5e09a2af3dbf2213b9e59301a962332dc79f8f**, Parent exakt Prüfquelle.
+VorgesehenerRef **test/latest-display-boundary-77bcb76dd357-20261114**, NICHTANGELEGT; zugehörigeRuns0.
+[Reviewbare nächste Identitäten](release-evidence/latest-display-boundary-identities-2026-11-14.json).
+151Produktblobsidentisch,PrüfdeltanurHarness+Vertrag,AusführungsdeltanurDiagnoseworkflow;alleDateiengepinntbytegleich.
+Entwurfgenau1create-Lauf/Versuch1/einChromiumjob/max25minJob/360sHarness+15sNachlauf/0Retries/alwaysOriginalupload.
+**Neue ausdrückliche Freigabe fehlt. Nicht auslösen.** KeinRerun/ErsatztriggerausalterFreigabe; historischefreieInitialplätze nichtalsKorrekturfreigabewerten.
 
-## Geschützte Stände und Grenzen
+## Unveränderte Schutzgrenzen und Abschlussgrund
 
-Maina27cde2f802c26bfec41190911d88bd1d7d8e325 unverändert.
-UI-R460c1ab098449151b475563c9fc822b9a5e9a9152 geschützt.
-FLH04feature/flh04-revisions-20261113-b5ddfe1c435ab9a82b87924b2262fafe1f1ad83e4eb326e4 geschützt.
-PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2,
-PR15708714cc602110bae479083b3d38fa1adc9be280c,
-Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74,
-KrakenDiagnosee9578124495709ef7550273f239840c96d4a1b1c erhalten.
-Zentralbranch niemals vollständig nachMainmergen.
-KeineProduktPR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
-NormaleCI/Main/PR/Releaseworkflows undPflichtgates nicht ändern.
+Maina27cde2f802c26bfec41190911d88bd1d7d8e325 geschützt.
+UI-R460c1ab098449151b475563c9fc822b9a5e9a9152/UI-ALLOC01 unverändert;FLH04feature/flh04-revisions-20261113-b5ddfe1c435ab9a82b87924b2262fafe1f1ad83e4eb326e4 geschützt.
+PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2,PR15708714cc602110bae479083b3d38fa1adc9be280c,Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74 erhalten.
+Alle früheren Diagnose-/Toastrefs/Originalarchive erhalten; keine neueProduktref/PR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
+Zentralbranch niemalsvollständig nachMainmergen; normaleCI/Main/Releaseworkflows/Pflichtgates erhalten.
+Originale/CAS/Revisionen/Journal/UNKNOWN-FX/Finanz-/Backup-/Restore-/Installationsschutzverträgeunverändert.
+FLH04NOTDONE,K4PARTIAL,CR4/CR5/qualifiziertesunabhängigesKryptoreviewoffen;keineaktiveSync/Migration/Identitätsportierung/neueKryptografie.
+Main43332355188UrsacheUNKNOWN/Renderer43500770689separat,nichtwiederholen.
+RealeProfile/VersionenOPERATOR_INPUT_PENDING,nichterneutfragen;Safari/TalkBackzurückgestellt,N-PROJKernmeilenstein.
+41Scopes/15DONE unverändert. Keine pauschaleRoadmapfreigabe.
 
-Main43332355188FAILURE/UrsacheUNKNOWN,KrakenSUCCESSkeineMainfreigabe.
-Renderer43500770689FAILURE/Timeout124/fehlenderReport; nicht wiederholen.
-K4PARTIAL,keine zusätzlicheK4Legacyabnahme/c5dc913dReproduktion;K3v308abgenommen.
-P-CI-B/PR332 gesonderteWorkflowentscheidung.
-FLH04NOTDONE,OutboxINTERNUNQUALIFIZIERT,A1false/A2gesperrt/Ankernull.
-Format1-prepared-lockedunantastbar,V2Normalpfadeblockiert;keineaktiveSync/Migration/
-Writer-/Geräte-/Autoritätsportierung,ZeitstempelLWW/CRDT/Feldfusion.
-KryptoEXTERNAL_REVIEW_PENDING/CR4/CR5offen,keineKI/Selbstfreigabe.
-Originalerhalt,CAS,Konflikt-/Finanz-/UNKNOWNFX-/Journal-/Backup-/Restoreverträge erhalten.
-KeinePrivatimporte/Appdatenlöschung,Credentials,öffentlichenPrivatlocators,Konten,
-bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
-
-
-
-Die Toast-Einmalfreigabe43554653065/1 sowie vier frühere UI/Restore-Diagnosen bleiben verbraucht und getrennt eingefroren. RealeProfile/Versionen OPERATOR_INPUT_PENDING, nicht erneut fragen. Safari/TalkBack DEFERRED_USER. N-PROJ behält Kernmeilenstein. Beide neuen Triggerbranches unverändert erhalten.
-
-## Letzter gemeinsamer Produktstand und zweite Korrektur
-
-**8f9ed1ce0393d7a1b977d613551e50c8bbefd941**, Tree **1c1a6404012cb18f73be01b641da04b9376d63b0**, Parent **8d0f68c109644e6906586521718537545d3fc9e1**.
-[Gemeinsame Abschlussmatrix](release-evidence/seven-native-and-followup-summary-2026-11-14.json).
-[Timestamp-Korrektur](https://github.com/joke0071/foliolab-open/blob/8d0f68c109644e6906586521718537545d3fc9e1/docs/release-evidence/restore-backup-timestamp-local-2026-11-14.json).
-[Speichern/Anzeige-Korrektur](https://github.com/joke0071/foliolab-open/blob/8f9ed1ce0393d7a1b977d613551e50c8bbefd941/docs/release-evidence/save-postcommit-local-2026-11-14.json).
-
-Zweiter bestätigter Originalbefund: echter save()- und Drive-restoreData-Quellhandler inNodeVM; synthetischer Renderfehler nach gespeichertem123.45Bestand führte zuRevision3/gespeichertemneuemPortfolio, sichtbaremLeerstand und falschem „Änderung nicht gespeichert“.
-Jetzt ist ausschließlich nach aufgelöstem portfolioStore.save der Commit bestätigt; spätere Render-/Status-/Managementfehler erhalten Modell/Commit und werden getrennt als Anzeigeproblem gemeldet.
-Eigener lastDisplayError, korrekte Desktop-/Mobil-/Headerwarnung „Daten gespeichert · Anzeige prüfen“, keine Umdeutung zuSpeicherfehler; echtePräcommitfehler lehnen unverändertab.
-Original7Tests2PASS/5FAIL;final9gezieltePASS. Abschließend **305/305PASS in40ausgewählten lokalenNode-Dateien**,0FAIL/0SKIP/0CANCELLED,Node24.22.1,Syntaxapp/headerPASS.
-DOM-/Speicher-/CAS-Adapter ausdrücklichlokal; keine neue nativeIDB-/Browser-/FullCIabnahme.
-Shared save betrifft A/B/C: sämtliche ursprünglichen nativen Aussagen bleiben nur an883c4eb0 gebunden. LetzterProduktstand NICHTnativqualifiziert/NICHTeingefroren/NICHTintegriert.
-BeideFolgeschnittelinear;9Deltapfade/10Stageblobs vollständigremoteexaktrückgelesen, lokaleLaufzeiteingabenblobgenau. styles/SW/Workflows/Finanz-/IDBimplementierungunverändert.
-
-SeparatesFolgearchivV0/1413120Bytes/SHA256e09114d6552c74312af6a1d01e490ee2ee0d82030cdb2a3e34092d4f86ecd5dd,
-75Einträge nachgepinntemReadbackPASS;9DeltapfadeausdiesemReadbacktatsächlichrestauriert/0Gitblobfehler.
-LokaleFehleroriginale und finalverwendete40Testdateien samtFixtures erhalten; erstePostcommit-Testrekonstruktion ausdrücklichalsRekonstruktion markiert, nichtalsbytegenauesOriginalbehauptet.
-ReparierterFXTextvergleich lokalgegen10OriginalfehlertextePASS; KEINnativerWiederholungslauf/KEINReopenbeleg. ArchivierteHarnessreparatur NICHTanletztenProduktstandneugebunden undhatkeinenAusführungsref.
-
-## Konkreter Abschlussgrund und Wiederaufnahme
-
-Die aus neuen Prüfungen belegten intern schließbaren Produktreste (falscherSicherungszeitpunkt und falscheNachcommit-Speichergrenze) sind lokal umgesetzt, gezielt geprüft und gesichert.
-Nächster konkreter Qualifikationsschritt: letzteRevision8f9ed1ce0393d7a1b977d613551e50c8bbefd941 binden; dreiFX-Reopenlücken sowie beide neuen Status-/Nachcommitfälle mit unabhängigemIDBReadback qualifizieren. Dafür fehlt eine neue ausdrückliche Ausführungsentscheidung; ein zweiterKorrekturlauf ist nicht durch freieInitialplätze gedeckt.
-Kein Stopp allein wegen Runende/Budget/Anzahl. TatsächlichzweiLäufe genutzt, nichtvier; keineErsatztrigger.
-Die übrigen bereits konkret geprüften nächsten Roadmapaktionen aus der [Folgegate-Tabelle6f0cb487](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md) haben keine neuen Voraussetzungen erhalten:
-K1/K2-FIN/N-BROKER/N-AT/N-CASHLIEU/N-WALLET/N-FX benötigen benannteOriginal-/Ownership-/Bestands-/Fachbelege;
-K2-ETH tatsächlichenprivatenProvidercursor;K5/K6 echteProfile/Versionen/Geräteereignisse;FLH04/CR4/CR5 unabhängigesReview;
-UI-R4/UI-ALLOC01/P-CI-B getrennteIntegrations-/Workflow-/nativeGates;SekundärnavigationKonzeptabgleich;N-PROJKernmeilenstein.
-Keine erneuteGesamtinventur oder Ersatztests akzeptierter/reinexternoffenerFälle. Kein neuer zusätzlicher belegter lokalerRest in diesen geprüften Abläufen; nichtalle41Scopesfürfertigerklärt.
-FrischerAbschlussabgleich: ZentralstandnurunserWriter;Main/FLH04/PR332/157/161 undbeideTrigger unverändert;keinin_progressRun.
-KeineeigenenBrowser-/Node-/Serverprozesse/Hintergrundarbeit/Folgesitzung. OriginaleundgeschützteStändeerhalten. NeueÜbernahmezuerstfrischabgleichen.
-
-## Aktueller Auftrag: Qualifikation vorbereiten, nicht auslösen
-
-Produkt8f9ed1ce/Tree1c1a6404 bestätigt, Parent8d0f68c1. Main/FLH04/PR332/157/161 undbeideDiagnoserefs unverändert;keinin_progressRun. KeineoffeneeigeneMutation.
-Neue native Ausführungsfreigabe fehlt. Nur aktuellen Harness anletztenProduktstand binden und echteTimestamp-/Nachcommit-/Präcommitgegenfälle ergänzen. Shared-save-Impact erhält A/B/C-Basisfälle. KeinBranchtrigger/Rerun/Action. VorhandeneGates nicht neuinventarisieren.
-
-## Letzter gesicherter Vorbereitungspunkt · neue Ausführung NICHT freigegeben
-
-Produkt8f9ed1ce0393d7a1b977d613551e50c8bbefd941/Tree1c1a6404012cb18f73be01b641da04b9376d63b0 unverändert.
-Prüfquelle **4249a698fda42896099db6e3b7321ba0434121f2**, Tree **fc863347e53e9db279cd23b899ae4e56ada9b9d9**, Parent exakt Produkt8f9ed1ce.
-Vorbereiteter Ausführungscommit **5b968d151c659ce96665e19b7765b922720d5d0c**, Tree **96cff73fe94c03190d4b103c84c130573a39efaf**, Parent exakt Prüfquelle.
-Vorgesehener Ref **test/latest-save-restore-77bcb76dd357-20261114**: frisch NOT_FOUND; zugehörige Runs0.
-[Reviewbare Identitäten](release-evidence/latest-native-identities-2026-11-14.json).
-[Prüfvertrag am exakten Quellstand](https://github.com/joke0071/foliolab-open/blob/4249a698fda42896099db6e3b7321ba0434121f2/docs/release-evidence/latest-native-preparation-2026-11-14.json).
-
-29 unabhängig auszuwertende geplante Fälle: A17/B4 als shared-save-Regression erhalten, C8.
-C ergänzt alten Sicherungszeitpunkt, echte lokale Rückfallsicherung als Browserdownload samt Originalpositionen,
-einmaligen synthetischen Fehler im echten providerSettings.innerHTML-Setter ausschließlich nach echtem IDBtransaction.complete
-und tatsächlichen records-Commitabbruch nach put. save/restore/render/CAS-Funktionen werden dafür nicht ersetzt.
-Soll: Nachcommit246.90EUR/Revision3/Modell und Readback identisch, persistente Anzeige-Warnung statt Speicherfehler;
-echter Abbruch Revision2/gesamterRecordgleich/echteSpeicherfehlermeldung/keinErfolgstoast.
-Timestamp unverändert ohne tatsächlichen Backupdownload; vorhandener Rückfallsicherungsdownload bleibt belegt.
-Alle Fälle lesen unabhängig per readonly/tx.oncomplete und erneut geöffneter Seite zurück.
-OAuth/Drive/Decrypt/Passwortübernahme weiterhin simuliert. Faultinjektion und Downloads NICHT nativ ausgeführt.
-
-151 Produkt-/HTML-/Style-/SW-/Manifest-/Packageblobs in Quelle und Ausführung identisch zum Produkt,
-auch sämtliche lokalen Preflighteingaben Gitblob-genau. Prüfdeltanur2Dateien (Harness+Vertrag);
-Ausführungsdeltanur.github/workflows/live-initialization-diagnostics.yml.
-Quellen und Workflow vollständig gepinnt bytegleich rückgelesen.
-Lokal: HarnesssyntaxPASS,29Fixture-/Wrapper-/OraclesPASS,10erhalteneNativefehlermeldungen mit korrigiertem TextoraclePASS.
-Keine erneute305er-Testausführung ohne Produktdelta. Keine neue native/CI-/Plattform-/Freeze-/Integrations-/Releasebehauptung.
-
-Der Entwurf sieht genau1neuencreate-Lauf/Versuch1/einJob/Ubuntu24.04/Node22.23.4/Playwright1.56.1/Chromium,
-max25minJob/360sHarness+15sAbbruchnachlauf,1Aufruf/0Retries, fortlaufendeHostberichte und always-Originalupload vor.
-Bestehende reguläre PR-/Main-/Releaseworkflows unverändert. Original-/Sicherungsweg wie Vorgänger verwenden; keine neuen Laufartefakte vorhanden.
-Die neue Vorbereitung ist KEINE Ausführungsfreigabe, kein Ersatztrigger und kein GitHubRerun.
-
-Endgrund dieses Arbeitsschritts: konkret reviewbarer Kandidat vollständig vorbereitet; genau dessen Ausführung benötigt die ausdrücklich fehlende neue Nutzerfreigabe.
-Keine neue Original-/Geräte-/Reviewevidenz für unabhängige Roadmapreste eingetroffen; vorhandene Folgegates unverändert, keine erneuteGesamtinventur.
-Kein eigener Hintergrundprozess/Automation/Folgesitzung. Main/FLH04/PR-/Diagnoseschutzstände unverändert.
-Nach Freigabe zunächst Owner/Ref/Actions/Produktblobs/Sicherungsweg frisch prüfen, dann nur exakt benannten Trigger einmal anlegen; unklare Anlage zuerst rücklesen.
-Ohne Freigabe keinen Lauf starten.
-
-## Neue aktive Einmalfreigabe
-
-FrischerKollisionsabgleich:c64430f9 unverändert,keinaktiverActionlauf,Produkt8f9ed1ce/Prüfquelle4249a698/Ausführung5b968d15 mitTrees/Parents exakt bestätigt. VorgesehenerBranch NOT_FOUND,zugehörigeRuns0. Main/FLH04/PR332/157/161 unverändert.
-Ausführung ist nach der ausdrücklichen aktuellen Nutzerfreigabe autorisiert; historische Aussagen „nicht freigegeben“ oben sind für diesen exakten einen Lauf abgelöst.
-Vor Trigger Produktblobs/Workflowdelta/Sicherungsweg final prüfen. KeinenRerun/Ersatztrigger. Ergebnissevollständigauswerten/sichern,danachkonkreteinterneFolgebefunde seriell bearbeiten.
-
-Run43567167015/1 gestartet, Ref exakt5b968d15 zurückgelesen. Einmalfreigabe jetzt verbraucht. Kein weitererTrigger/Rerun. Lauf bis terminalauswerten, Originale sichern, relevante Bilder tatsächlich ansehen. Keine Produkt-/Teständerung vor Auswertung dieses unveränderten Kandidaten.
+Endgrund: autorisierterLaufterminalausgewertet,Originalegesichert,einzigeoffeneHarnessstellelokalkorrigiertundnächster3Fall-Kandidatkonkretreviewbarvorbereitet; tatsächlichernativerNachweis benötigtneueAusführungsfreigabe.
+Keine neuenOriginal-/Geräte-/Revieweingänge für andere bereitsgeprüfteRoadmapgates; keineGesamtinventur/identischenErsatztests.
+KeineweiterebelegteProduktlücke aus diesemLauf. KeinStoppalleinwegenRunende; lokaleFehlerbehandlungundVorbereitungvollständig.
+KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Folgesitzung.
+Nach neuerFreigabe Owner/Ref/Actions/Produktblobs/Sicherungswegfrischprüfen; beiunklaremTriggerausgangzuerstzurücklesen.

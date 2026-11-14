@@ -1,0 +1,38 @@
+{
+  "status": "PREPARED_NOT_RUN_NEW_AUTHORIZATION_REQUIRED",
+  "product": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+  "productTree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+  "source": "6a45eea783fdb09431b3a11b9167e6de6139e620",
+  "sourceTree": "7a7654079d076a7a54906811e925649a1b24ecab",
+  "sourceParent": "4249a698fda42896099db6e3b7321ba0434121f2",
+  "productAncestor": 2,
+  "execution": "13ad780b1ce0a95d38211af2a1e3dc47cd265571",
+  "executionTree": "bc5e09a2af3dbf2213b9e59301a962332dc79f8f",
+  "proposedRef": "test/latest-display-boundary-77bcb76dd357-20261114",
+  "branch": "NOT_CREATED",
+  "runs": 0,
+  "selection": [
+    "restore-valid",
+    "restore-postcommit-display",
+    "restore-native-commit-abort"
+  ],
+  "unchangedProductBlobs": 151,
+  "executionDelta": [
+    ".github/workflows/live-initialization-diagnostics.yml"
+  ],
+  "bounds": {
+    "runs": 1,
+    "attempt": 1,
+    "jobs": 1,
+    "jobMinutes": 25,
+    "harnessSeconds": 360,
+    "killAfterSeconds": 15,
+    "retries": 0,
+    "engine": "Chromium",
+    "os": "Ubuntu24.04",
+    "node": "22.23.4",
+    "playwright": "1.56.1"
+  },
+  "local": "SyntaxPASS;3explicittransaction/DOMadapterchecksPASS;notnative",
+  "authorization": "Not authorized by previousJa. That one-run authorization consumed by43567167015/1. No correction/rerun/replacementtrigger."
+}
