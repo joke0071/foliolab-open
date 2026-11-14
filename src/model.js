@@ -99,6 +99,9 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const mic=cleanString(v.mic,8).toUpperCase();
   if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
+  for(const value of [v.quantity,v.quantityExact,v.fxRate,v.fxRateExact]){
+    if(value!=null&&typeof value!=='string'&&typeof value!=='number'&&typeof value!=='bigint')throw Error('Positionsmenge und Wechselkurs dürfen keine strukturierten oder booleschen Werte enthalten.');
+  }
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);
   const priceInput=v.price??0;
   if(!['string','number'].includes(typeof priceInput))throw Error('Der Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');
@@ -111,7 +114,9 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   const realizedPnLExact=v.realizedPnLExact==null?(v.realizedPnLEUR==null?null:exact(units(v.realizedPnLEUR))):exact(units(v.realizedPnLExact));
   const realizedPnLEUR=realizedPnLExact==null?null:number(realizedPnLExact);
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
-  const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
+  // Preserve decimal input before the approximate display conversion.
+  const exactPriceInput=typeof priceInput==='string'&&priceInput.trim()?priceInput.replace(/\s/g,'').replace(',','.').replace(/^([+-]?)\./,(_,sign)=>sign+'0.').replace(/\.(?=e|$)/i,'.0'):price;
+  const priceExact=v.priceExact==null?exact(units(exactPriceInput)):exact(units(v.priceExact));
   const identity=normalizeLegacyCoinId({kind,name,symbol:v.symbol,coinId:v.coinId,coinIdMigration:v.coinIdMigration});
   return {...(typeof v.archived==='boolean'?{archived:v.archived}:{}),id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
     economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,

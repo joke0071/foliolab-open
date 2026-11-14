@@ -2484,6 +2484,8 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  const file=e.target.files?.[0];e.target.value='';
  if(!file)return;
  const restoreStatus=$('backupStatus');restoreStatus.textContent='Sicherung wird wiederhergestellt …';setLoading(restoreStatus,true);
+ let restoreCommitted=false;
+ let followUp='Abschlussanzeige';
  try{
   assertLocalBackupFileSize(file.size);
   let parsed=JSON.parse(await file.text()),v2Envelope=null,password='';
@@ -2504,24 +2506,34 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
     if(!recoveryDownloaded)throw Error('Zuerst die beschädigte IndexedDB-Originaldatei herunterladen.');
     imported.settings=configuration?configuration.settings:defaultSettings();
     await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
-    if(v2Envelope)await adoptBackupPassword(v2Envelope,password);
+    restoreCommitted=true;
+    if(v2Envelope){followUp='Backup-Passwort';await adoptBackupPassword(v2Envelope,password);}
+    followUp='Einstellungen und Abschlussanzeige';
     if(configuration)applyImportedDriveConfiguration(configuration);
     location.reload();return;
   }
   imported.settings=configuration?configuration.settings:{...defaultSettings(),...model.settings};
   const previous=model;
   model=imported;filter='all';
-  try{await save()}catch(error){model=previous;throw error}
-  loadFailure=null;
+  try{await save()}catch(error){
+    // save() may already have reloaded a newer canonical revision.
+    if(model===imported)model=previous;
+    throw error;
+  }
+  restoreCommitted=true;loadFailure=null;
   if(v2Envelope){
+    followUp='Backup-Passwort';
     await adoptBackupPassword(v2Envelope,password);
     await refreshBackupPasswordStatus();
     await window.FolioDriveBackup?.refreshVaultStatus?.();
   }
+  followUp='Einstellungen und Abschlussanzeige';
   if(configuration)applyImportedDriveConfiguration(configuration);
   if(configuration)syncApiSettingsForm();
   notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
- }catch(err){notify(err.message,true)}finally{setLoading(restoreStatus,false);renderBackupStatus();}
+ }catch(err){
+  notify(restoreCommitted?'Portfolio wiederhergestellt. '+followUp+' prüfen: '+err.message+'. Portfolio nicht erneut importieren.':err.message,true);
+ }finally{setLoading(restoreStatus,false);renderBackupStatus();}
 });
   // Drive only receives an encrypted package. API/RPC credentials are added to
   // that package exclusively when the user has enabled full backups.
@@ -2589,7 +2601,10 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         imported.settings=accepted?accepted.settings:{...defaultSettings(),...model.settings};
         const previous=model;
         model=imported;filter='all';
-        try{await save()}catch(error){model=previous;throw error}
+        try{await save()}catch(error){
+          if(model===imported)model=previous;
+          throw error;
+        }
         restoreCommitted=true;
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone({created:false});
