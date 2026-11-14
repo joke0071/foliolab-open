@@ -1,11 +1,3 @@
-# HND01 · STOPPED / HANDOVER_READY · K4 Recovery
+# HND01 · ACTIVE · K4 Produkt-PR
 
-**Linux-Chromium-Abbruch nach bestätigtem Commit: PASS auf dem Produktkandidaten. K4 insgesamt PARTIAL.** Der Produktbranch [fix/k4-confirmed-idb-reopen](https://github.com/joke0071/foliolab-open/commit/1f05aac57c6f94cdcf2c0a84ba73963e1bb1c728) enthält die Korrektur, Tree 6ad04c0d9e295b4c8c116fb90a139f7f7c0b0e34. Produktiv gilt weiterhin v314 auf 48125a2608b27095fbdf89445340f90d04e9291b.
-
-Ein regulärer Save eines bereits aktiven IDB-Writers schreibt confirmedActive=true atomar mit dem Record. Fehlt später der lokale Marker, validiert der Start den bestätigten Record unter dem bestehenden Lock und stellt den Marker wieder her. Ungekennzeichnete alte Records ohne Marker bleiben im expliziten Recoverypfad. Der Kandidat reserviert Cache v315.
-
-[QA-Lauf 43624232130](https://github.com/joke0071/foliolab-open/actions/runs/43624232130), Versuch 1, Job 132536400144, QA 235ffc121b9b0ad0595e6e502964ad0b5159a7f2. Chromium-Hauptprozess 3271 nach bestätigter Revision 7 per SIGKILL beendet. Unter PID 3352 dieselbe Origin und dasselbe Profil wieder geöffnet. Der Record inklusive raw und Einstellungen blieb bytegleich (SHA256 e69c6134ef4e319e95563ffe024fedc869f9221a5e99e972b25de459b5a0857b). Modus idb-v1, aktive IndexedDB und sichtbare Position € 200,00 vor und nach Neustart. Fünf negative Browserfälle bestanden: unbestätigter Bestand, Rückwechselabsicht, beschädigter Record, unbekannter Modus und Löschmarker. Syntaxprüfung und 1480/1480 Repositorytests bestanden.
-
-[Originalartefakt](https://github.com/joke0071/foliolab-open/actions/runs/43624232130/artifacts/14125551882) mit Größe, SHA256, ZIP-CRC und Inhaltsmanifest verifiziert. Separates Archiv FolioLab_K4_repair_43624232130.tar.gz, SHA256 fc6c46123bcac5adf3122814bcf4d78b366ef56c0fdf9374120305dac2153eb8, Version 0 gepinnt rückgelesen und 23 Dateien restauriert/hashgeprüft. [Fehlerreproduktion auf v314](https://github.com/joke0071/foliolab-open/blob/ce408eb6c6ee084e675487ebbff07536b2f1c44e/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-
-Nächster Schritt: geprüften Produktcommit als PR gegen aktuellen Main integrieren und die regulären PR-/Releasegates durchführen. HND01 vor weiterer Mutation übernehmen. Writer abgegeben.
+Alleiniger Writer k4-pr-20261114. Fortsetzung des geprüften Kandidaten 1f05aac57c6f94cdcf2c0a84ba73963e1bb1c728 gegen Main 48125a2608b27095fbdf89445340f90d04e9291b. [Synthetischer Crashnachweis und Übergabe](https://github.com/joke0071/foliolab-open/blob/1e06bf1d48b04835528c309e673adf1cad54d6ee/docs/WORK_RESTPAKETE_CHECKPOINT.md).
