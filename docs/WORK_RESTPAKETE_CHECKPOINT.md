@@ -1,15 +1,15 @@
 # Aktueller HND01-Checkpoint
 
-ACTIVE · work-product-pr-77bcb76dd357-20261114.
+STOPPED/HANDOVER_READY · work-product-pr-77bcb76dd357-20261114.
 Vorgänger work-display-boundary-77bcb76dd357-20261114 STOPPED/HANDOVER_READY. Neuer ausdrücklicher Auftrag autorisiert Produktbranch ab8f9ed1ce, nurCACHE-Revision, reviewbereiteMain-PR/automatischePRWorkflows und eine geprüfte zugeordnete Korrektur aufderselbenPR. Merge/AutoMerge/Mainpush/Deployment/Release/LIVE_ACCEPTED bleibenverboten. AlleinigerWriter; keineAgenten/Automation/Folgesitzung.
 Übernahmecdee0dbe96ad32511bcdc24f77bd0ac791cd7cc8 nach frischemKollisionsabgleich am1651fda198a4a4db92216f97a2a9ccd71c75a056; expectedSHA/gepinntesReadback.
 [Vollständiger Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/1651fda198a4a4db92216f97a2a9ccd71c75a056/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-AktuellesNutzer-Ja autorisierte exakt einen vorbereiteten3Fall-Lauf. DieseFreigabeistverbraucht; keinweitererLauf/Rerun/Ersatztrigger.
+HistorischesNutzer-Ja vor dem neuen PR-Auftrag autorisierte exakt einen vorbereiteten3Fall-Lauf. DieseFreigabeistverbraucht; keinweitererLauf/Rerun/Ersatztrigger.
 
 ## Ergebnis: begrenzte native Qualifikation vollständig
 
 Produkt **8f9ed1ce0393d7a1b977d613551e50c8bbefd941**, Tree **1c1a6404012cb18f73be01b641da04b9376d63b0**, unverändert.
-Status **FROZEN_BOUNDED_NATIVE_PASS_SCOPE29_NOT_RELEASE**, Kandidatgeparkt. KeinProduktPR/Integration/Main/Release.
+Status der Produktbasis **FROZEN_BOUNDED_NATIVE_PASS_SCOPE29_NOT_RELEASE**. Nachfolgende Produkt-PR336 mit separater CACHE-Revision ist jetzt offen und regulär CI-grün; kein Merge/Main/Release.
 305/305ausgewählteNodeTests40Dateien vorherPASS/quellengebunden, nichtohneProduktdeltaerneutausgeführt.
 
 | Gruppe | Vollständig zugeordneter begrenzter Nachweis am selbenProdukt |
@@ -67,7 +67,7 @@ Maina27cde2f802c26bfec41190911d88bd1d7d8e325 unverändertgeschützt.
 UI-R460c1ab098449151b475563c9fc822b9a5e9a9152/UI-ALLOC01unangetastet.
 FLH04feature/flh04-revisions-20261113-b5ddfe1c435ab9a82b87924b2262fafe1f1ad83e4eb326e4 geschützt.
 PR33271dfb05d5dae6a7e5d7c3979120462e0862fe7e2,PR15708714cc602110bae479083b3d38fa1adc9be280c,Draft1610d980c2f43f28fd06ef9a7403b2144b6099fbc74 erhalten.
-Keine Produktref/ProduktPR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED. ZentralbranchniemalsvollständignachMainmergen.
+Historische PR-/SW-Sperre ist ausschließlich für PR336 aufgehoben; deren Ergebnis siehe aktuellen Abschluss unten. Kein Merge/Deploy/Release/LIVE_ACCEPTED. ZentralbranchniemalsvollständignachMainmergen.
 Originale/CAS/Revisionen/Journal/UNKNOWN-FX/Finanz-/Backup-/Restore-/Installationsschutzverträgeverbindlich.
 FLH04NOTDONE/K4PARTIAL/CR4CR5unabhängigesKryptoreviewoffen;keineaktiveSync/Migration/Identitätsübernahme/neueKryptografie.
 Main43332355188UrsacheUNKNOWN/Renderer43500770689separat,nichtwiederholen.
@@ -77,13 +77,13 @@ WindowsChrome/Edge/AndroidChromePWA,realeProfile/VersionenOPERATOR_INPUT_PENDING
 DiebegrenztzugesagteQualifikationslückeistgeschlossen;keinweiterernativerDiagnoselaufdafürnotwendig.
 Gezielter lesender Mainvergleich und lokalerPR-Entwurf sind abgeschlossen: [Reviewvorbereitung](release-evidence/qualified-candidate-review-draft-2026-11-14.md).
 MainistMergebase,ahead11/behind0;61Pfade=10Produkt/12Test/39Belege,keineWorkflow-/SW-/Style-/Manifest-/Packageänderung.
-NächsterAusführungsschritt wäreerst dieProdukt-PR unterregulärenPR-/Main-/Produktionsgates. DieseErstellung/Integration/Releasebleibenaktuell ausdrücklichverboten; lesendeReviewarbeitwurdeohneunnötigeFreigabefrageerledigt.
+Damals nächster Schritt: Produkt-PR unter regulären Gates. Diese frühere Erstellungssperre wurde durch den aktuellen PR336-Auftrag ausdrücklich aufgehoben; Merge/Release bleiben gesperrt.
 UnabhängigeRoadmaparbeitnurbeineuemkonkretbelegtemlokalschließbaremRestfortsetzen.
 BereitsgezieltgeprüfteFolgegatesunverändert:K1/K2-FIN/N-Broker/Steuer/Barausgleich/Wallet-SonderfällebenötigenOriginal-/Ownership-/Fachbelege;
 K2-ETHtatsächlichenProvidercursor;K5/K6realeProfile/Geräteereignisse;FLH04/CR4CR5externesReview;P-CI-BgesonderteWorkflowentscheidung;
 SekundärnavigationKonzeptabgleich;N-PROJKernmeilenstein. KeineneuenEingänge/keineweiterenProduktfehlerausdiesemLauf.
 KeineerneuteGesamtinventur oderidentischeErsatztests. KeinStoppalleinwegengrünemRun:Auswertung,Sichtprüfung,Originalsicherung,QuellrestoreundRestzuordnungabgeschlossen.
-Endgrund: begrenzteQualifikationundlokaleReviewvorbereitungabgeschlossen;konkreteProdukt-PR-Erstellung/Integrationnichtautorisiertundausdrücklichverboten. ÜbrigegeprüfteRestebrauchenfehlendeOriginale/Geräte/externesReview.
+Historischer Endgrund vor der neuen PR-Freigabe: begrenzteQualifikationundlokaleReviewvorbereitungabgeschlossen;konkreteProdukt-PR-Erstellung/Integrationnichtautorisiertundausdrücklichverboten. ÜbrigegeprüfteRestebrauchenfehlendeOriginale/Geräte/externesReview.
 KeineoffeneunklareeigeneMutation/keineHintergrundprozesse/Agenten/Automation/Folgesitzung. NeueÜbernahmezuerstfrischabgleichen.
 
 ## Aktiver Produkt-PR-Auftrag
@@ -92,12 +92,34 @@ FrischerAbgleich amZentralstandd59da3a2: Maina27cde2 unverändert, Produkt8f9ed1
 VorPR-ÖffnungCachekennung/Reservierungen/Guardprüfen, vollständigenPRHeadvorbereiten undgezielteVersions-/Syntax-/SW-Verträgeauswerten.
 HistorischePR-/SW-Bump-Sperreoben fürgenaudiesen Auftrag aufgehoben;keinDiagnosetrigger/manuellerDispatch undkeineMerge-/Releasefreigabe.
 
-## Produkt-PR336 offen und reviewbereit – Auswertung läuft
+## Produkt-PR336: reguläre Prüfungen vollständig PASS, reviewbereit offen
 
-PR https://github.com/joke0071/foliolab-open/pull/336,Branchfix/portfolio-integrity-restore-77bcb76dd357-20261114.
-Basea27cde2f802c26bfec41190911d88bd1d7d8e325,Headf36da5e8023d10b1ddb1f8a458200743e0f34da6/Tree2b6c37ec6ac087e24e77adb6a29c657b6046151b,Parent8f9ed1ce.
-NurCACHE-Konstante311→313;UI-R4v312erhalten. Lokale15/15SW/PWA/VersionsauswahltestsundSW-SyntaxPASS;Mainvergleich12ahead/0behind/62Pfade.
-VorläufigerGitHubMerge-SHAf2ac129e0b569324dca2cbc2a7b06a8905e046b1; tatsächlicheausgecheckteSHAsausLogs/Artefaktenzuordnen.
-Regulärgestartet:43570848271Integration,43570848283Walletchecks,43570848342informativerWalletLiveAudit,jeVersuch1/Headexaktf36da5e8.
-Pflichtjobs test/cross1-3/Walletnochlaufend,PlanPASS/FASTSKIPPED. PR-EröffnungistZwischenstand,OwnerACTIVEbisallezugehörigenChecksTerminal/Auswertung/Sicherung.
-Merge/AutoMerge/Mainpush/Deployment/Releasebleibenverboten. EinebelegteUmfangskorrekturaufderselbenPRautorisiert;keineBlindreruns/Timeoutlockerungen/Diagnosetrigger.
+PR https://github.com/joke0071/foliolab-open/pull/336.
+Branch **fix/portfolio-integrity-restore-77bcb76dd357-20261114**.
+Base/Main **a27cde2f802c26bfec41190911d88bd1d7d8e325**, Head **f36da5e8023d10b1ddb1f8a458200743e0f34da6**, Tree **2b6c37ec6ac087e24e77adb6a29c657b6046151b**, Parent exakt **8f9ed1ce0393d7a1b977d613551e50c8bbefd941**.
+Zusatzcommit nur CACHE-Konstante **foliolab-open-v311 → foliolab-open-v313**; UI-R4v312 reserviert/erhalten. Keine Install-/Asset-/Fetch-/Workflowänderung.
+Mainvergleich12ahead/0behind/62Pfade; Zentral-/Diagnosecommits nicht in Produktbranch.
+Lokale bestehende SW/PWA/CI-Auswahlprüfungen15/15PASS, SW-SyntaxPASS.
+305/305 vorherige ausgewählte Node-Tests und29 eindeutige native Fälle bleiben an Produkt8f9ed1ce gebunden, keine Umdeutung zum grünen Einzellauf.
+
+| Regulärer PR-Lauf / Versuch | Terminales Ergebnis |
+| --- | --- |
+|43570848271/1 Integration|SUCCESS: Plan INTEGRATION, Cacheguard311→313PASS,1453/1453NodePASS/0FAIL/0SKIP undSyntaxPASS, Chromium undalle3Firefox/WebKit-Crossjobs SUCCESS.|
+|43570848283/1 Wallet scan checks|SUCCESS:1453/1453NodePASS/0FAIL/0SKIP undnpm check.|
+|43570848342/1 Public wallet live audit informational|SUCCESS; einzelne öffentliche Browser-Liveproben blockiert/403/429, keine vollständige Providerverfügbarkeit behauptet.|
+
+Alle gestarteten Checks terminal. FAST/deploy/live-acceptance erwartungsgemäß SKIPPED. Tatsächlich geprüfter GitHub-Merge-SHA **f2ac129e0b569324dca2cbc2a7b06a8905e046b1**, durch7Joblogs und tested-sha.txt belegt; Workflowhead stets f36da5e8.
+Node22.23.4Integration/Audit/Cross, Node20.20.2Wallet. Bestehende Pins: ChromiumPlaywright1.56.1; Firefox/WebKitPlaywright1.64.1; Crosslogs Firefox157.0/WebKit27.2.
+PWA-Update-CACHEv313 Chromium/Firefox/WebKitPASS: synthetischer warmer HTTP-Cache mit echten SW/IDB, fehlgeschlagene Installation erhält alten Offlinebestand, neue Aktivierung/Cachebytes/OfflineReload/Entwurfsabbruch undexpliziteVerwerfung geprüft. Drei tatsächliche Nachupdatebilder390px angesehen. Kein physisches Gerät/keine reale Windows-/Androidabnahme.
+Kein Fehlerkorrekturcommit nötig;0Reruns/0Dispatches/0Diagnosetrigger. HistorischerMainfehler43332355188 nicht reproduziert und weiterhin separat.
+
+[Exakte PR-Ergebniszuordnung](release-evidence/product-pr336-ci-result-2026-11-14.json).
+Originale:6unveränderteArtifactZIPs/7exaktePluginJoblogtexte/API-Metadaten/Berichte/Bilder erhalten; jedesZIP APIgröße/SHA256/CRC geprüft.
+Archiv **FolioLab_PR336_originals_2026-11-14_V0.tar.gz**,210874548Bytes,SHA256 **1f7ab4a271ccbb9985e09e642d2cb69ba6ba6331a53e4aab581aef75f0eb5ae8**.
+Gepinnte Version0 bytegleich rückgelesen,21Manifestdateien einzeln byte-/hashgleich geprüft; private Locators bleiben privat.
+PR-Beschreibung auf terminale Ergebnisse aktualisiert und exakt rückgelesen. Main/PRHead unverändert, PRoffen/reviewbereit, auto_merge=null, merged=false.
+
+Endgrund: autorisierter PR-Auftrag einschließlich aller regulären Checks, Auswertung und Originalsicherung vollständig abgeschlossen. Kein neuer unabhängiger lokaler Korrektheitsfehler beobachtet.
+Nächster konkreter Schritt: Review der offenen PR336 am exakten Head f36da5e8; spätere Mergeentscheidung separat. Merge/AutoMerge/Mainpush/Deploy/Release/LIVE_ACCEPTED bleiben unautorisiert. Keine neue Diagnosefreigabe aus grünerCI ableiten.
+Bestehende Original-/Geräte-/Reviewgates nicht erneut inventarisiert; FLH04 NOT DONE/K4 PARTIAL/CR4CR5 offen, OPERATOR_INPUT_PENDING erhalten.
+Keine offenen unklaren eigenen Mutationen, keine lokalen laufenden Prozesse/Agenten/Automation/Folgesitzung. NeueÜbernahme zuerst frischeRefs/PR/Actions/Kollisionen prüfen; erwartete Zentralbasis ist dieser Abschlusscommit.

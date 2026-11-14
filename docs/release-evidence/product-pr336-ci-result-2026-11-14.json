@@ -1,0 +1,309 @@
+{
+  "schema": 1,
+  "date": "2026-11-14",
+  "owner": "work-product-pr-77bcb76dd357-20261114",
+  "pr": {
+    "number": 336,
+    "url": "https://github.com/joke0071/foliolab-open/pull/336",
+    "state": "open",
+    "draft": false,
+    "base": "a27cde2f802c26bfec41190911d88bd1d7d8e325",
+    "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+    "tree": "2b6c37ec6ac087e24e77adb6a29c657b6046151b",
+    "branch": "fix/portfolio-integrity-restore-77bcb76dd357-20261114",
+    "testedMerge": "f2ac129e0b569324dca2cbc2a7b06a8905e046b1"
+  },
+  "product": {
+    "sha": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+    "tree": "1c1a6404012cb18f73be01b641da04b9376d63b0",
+    "headDelta": "sw.js CACHE constant only; v311 -> v313; v312 reserved by protected UI-R4"
+  },
+  "result": "REGULAR_PR_CHECKS_PASS_NOT_MERGED_NOT_RELEASE",
+  "runs": [
+    {
+      "id": 43570848271,
+      "attempt": 1,
+      "workflow": "FolioLab Open – testen und veröffentlichen",
+      "event": "pull_request",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:04Z",
+      "completed": "2026-11-14T07:45:34Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271"
+    },
+    {
+      "id": 43570848283,
+      "attempt": 1,
+      "workflow": "Wallet scan checks",
+      "event": "pull_request",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:04Z",
+      "completed": "2026-11-14T07:23:53Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848283"
+    },
+    {
+      "id": 43570848342,
+      "attempt": 1,
+      "workflow": "Public wallet live audit (informational)",
+      "event": "pull_request",
+      "head": "f36da5e8023d10b1ddb1f8a458200743e0f34da6",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:04Z",
+      "completed": "2026-11-14T07:23:53Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848342"
+    }
+  ],
+  "checks": [
+    {
+      "id": 132379945766,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started": "2026-11-14T07:45:34Z",
+      "completed": "2026-11-14T07:45:33Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132379945766"
+    },
+    {
+      "id": 132379945473,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started": "2026-11-14T07:45:34Z",
+      "completed": "2026-11-14T07:45:33Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132379945473"
+    },
+    {
+      "id": 132374723763,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started": "2026-11-14T07:23:15Z",
+      "completed": "2026-11-14T07:23:15Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374723763"
+    },
+    {
+      "id": 132374722821,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:17Z",
+      "completed": "2026-11-14T07:39:01Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374722821"
+    },
+    {
+      "id": 132374722766,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:17Z",
+      "completed": "2026-11-14T07:30:14Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374722766"
+    },
+    {
+      "id": 132374722731,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:16Z",
+      "completed": "2026-11-14T07:33:32Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374722731"
+    },
+    {
+      "id": 132374722678,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:17Z",
+      "completed": "2026-11-14T07:45:33Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374722678"
+    },
+    {
+      "id": 132374682370,
+      "name": "real-browser-connectivity",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:07Z",
+      "completed": "2026-11-14T07:23:52Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848342/job/132374682370"
+    },
+    {
+      "id": 132374682265,
+      "name": "tests",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:07Z",
+      "completed": "2026-11-14T07:23:53Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848283/job/132374682265"
+    },
+    {
+      "id": 132374682134,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success",
+      "started": "2026-11-14T07:23:07Z",
+      "completed": "2026-11-14T07:23:15Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43570848271/job/132374682134"
+    }
+  ],
+  "node": {
+    "preflight": {
+      "tests": 15,
+      "pass": 15,
+      "fail": 0,
+      "skip": 0,
+      "syntax": "PASS"
+    },
+    "integration": {
+      "job": 132374722821,
+      "node": "22.23.4",
+      "tests": 1453,
+      "pass": 1453,
+      "fail": 0,
+      "skip": 0
+    },
+    "wallet": {
+      "job": 132374682265,
+      "node": "20.20.2",
+      "tests": 1453,
+      "pass": 1453,
+      "fail": 0,
+      "skip": 0
+    },
+    "priorSelected": {
+      "tests": 305,
+      "files": 40,
+      "source": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+      "notRerunWithoutProductDelta": true
+    }
+  },
+  "nativePrior": {
+    "uniqueCases": 29,
+    "source": "8f9ed1ce0393d7a1b977d613551e50c8bbefd941",
+    "runs": [
+      {
+        "id": 43567167015,
+        "conclusion": "failure",
+        "pass": 28,
+        "missingFaultInjection": 1
+      },
+      {
+        "id": 43568173088,
+        "conclusion": "success",
+        "pass": 3,
+        "repeatedControls": 2
+      }
+    ],
+    "matrix": "docs/release-evidence/bounded-native-case-matrix-2026-11-14.json"
+  },
+  "pwaUpdate": {
+    "cache": "foliolab-open-v313",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "scope": "synthetic warm HTTP cache; actual previous/current Service Workers and IndexedDB; exact cached bytes; failed installation preserves old offline portfolio; successful activation and old cache removal; editor draft survives cancel and explicit discard permits reload; canonical bytes/revision unchanged",
+    "imagesActuallyViewed": [
+      "pwa-update/chromium-updated-390.png",
+      "pwa-update/firefox-updated-390.png",
+      "pwa-update/webkit-updated-390.png"
+    ],
+    "visualScope": "synthetic post-update 390px portfolio screens only; no full visual acceptance"
+  },
+  "originals": {
+    "artifacts": [
+      {
+        "id": 14103834026,
+        "path": "pr336-originals/initial/artifact-14103834026.zip",
+        "bytes": 1013,
+        "sha256": "9aa198a2e88bb12bdb03e3768da6a11e3b9d3958186a70427633942384e6a109",
+        "run": 43570848271
+      },
+      {
+        "id": 14104024779,
+        "path": "pr336-originals/initial/artifact-14104024779.zip",
+        "bytes": 12596294,
+        "sha256": "8a920c9b17d41118024b28e90943cce4ea0c9ab57c8853f1a121219c1a1485f4",
+        "run": 43570848271
+      },
+      {
+        "id": 14104671597,
+        "path": "pr336-originals/initial/artifact-14104671597.zip",
+        "bytes": 60072373,
+        "sha256": "8a934a9d64d2a506de047e86a13142cdfb71ecefbeef981b589112b28f6339b7",
+        "run": 43570848271
+      },
+      {
+        "id": 14105280262,
+        "path": "pr336-originals/initial/artifact-14105280262.zip",
+        "bytes": 66352921,
+        "sha256": "5f7be0551bef54fee219bc7a97a5c50f6597efa32afe5d8bdff8efd70671a638",
+        "run": 43570848271
+      },
+      {
+        "id": 14104896172,
+        "path": "pr336-originals/initial/artifact-14104896172.zip",
+        "bytes": 934747,
+        "sha256": "8fc22826e6b208c089d7e696ccd21f3d75d572ce26ae0b8c58c244a754fcd9ec",
+        "run": 43570848271
+      },
+      {
+        "id": 14105126559,
+        "path": "pr336-originals/initial/artifact-14105126559.zip",
+        "bytes": 70277342,
+        "sha256": "f421360c0f15acabfb99d7af7680494cd63a7d48651d037c2597d36f6895ad80",
+        "run": 43570848271
+      }
+    ],
+    "logs": [
+      132374682134,
+      132374682265,
+      132374682370,
+      132374722678,
+      132374722731,
+      132374722766,
+      132374722821
+    ],
+    "zipSizeDigestAndCRC": "PASS for all six; metadata and all original inner reports/images retained",
+    "artifactlessRuns": [
+      43570848283,
+      43570848342
+    ],
+    "jobLogFormat": "exact decoded text supplied by connected GitHub plugin; not claimed as raw log ZIP",
+    "archive": {
+      "file": "FolioLab_PR336_originals_2026-11-14_V0.tar.gz",
+      "bytes": 210874548,
+      "sha256": "1f7ab4a271ccbb9985e09e642d2cb69ba6ba6331a53e4aab581aef75f0eb5ae8",
+      "version": 0,
+      "pinnedByteReadback": "PASS",
+      "manifestEntries": 21,
+      "innerEntries": "PASS"
+    }
+  },
+  "correction": {
+    "required": false,
+    "productCommitsAfterOpening": 0,
+    "reruns": 0,
+    "manualDispatches": 0,
+    "diagnosticTriggers": 0
+  },
+  "limits": [
+    "No merge, auto-merge, main push, deployment, release, LIVE_ACCEPTED",
+    "No real Windows/Edge/Android profile or physical PWA qualification; OPERATOR_INPUT_PENDING",
+    "Prior OAuth/Drive/decrypt/password adoption simulated; synthetic display fault; actual IDB operations",
+    "Informational audit green does not establish every provider reachable: browser live probes include blocked/403/429 responses",
+    "CR4/CR5 independent crypto review open; K4 PARTIAL; FLH04 NOT DONE",
+    "Historical main43332355188 and renderer43500770689 remain separate; no analogous PR failure observed"
+  ],
+  "next": "Review PR336 exact head f36da5e8 and decide separately whether to authorize merge; no further execution automatically authorized",
+  "completion": {
+    "owner": "STOPPED/HANDOVER_READY",
+    "reason": "Authorized PR checks, evaluation and originals preservation complete; review and separate merge decision remain",
+    "noBackgroundProcesses": true
+  }
+}
