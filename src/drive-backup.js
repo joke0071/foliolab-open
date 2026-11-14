@@ -426,7 +426,7 @@ async function restore(){
   await backend.adoptPasswordVault(envelope,password);
   passwordAdopted=true;
   get('restoreBackupDialog')?.close();
-  status('Drive-Backup wiederhergestellt. '+next.positions.length+' Positionen geladen. Vorheriger Stand lokal gesichert.');
+  status('Drive-Backup wiederhergestellt. '+next.positions.length+' Positionen geladen.');
  }catch(e){
   // A later password/settings/UI error cannot undo a confirmed portfolio commit.
   // Keep that boundary visible rather than inviting a destructive full retry.

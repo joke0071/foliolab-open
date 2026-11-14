@@ -95,6 +95,16 @@ test('Drive restore success commits once before password adoption and clears the
  assert.equal(t.window.FolioDriveBackup.getStatus().error,false);assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
  assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
 });
+test('Drive restore success never invents a confirmed local rollback backup',async()=>{
+ const t=await selectedRestore();let commits=0,adoptions=0;
+ t.backend.readData=()=>({version:3,positions:[],snapshots:[],providers:[],accounts:[]});
+ t.backend.restoreData=async()=>{commits++;};t.backend.adoptPasswordVault=async()=>{adoptions++;};
+ await t.elements.driveRestore.onclick();
+ assert.equal(commits,1);assert.equal(adoptions,1);assert.equal(t.backedUpCount,0);
+ assert.equal(t.elements.driveBackupStatus.textContent,'Drive-Backup wiederhergestellt. 0 Positionen geladen.');
+ assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/lokal gesichert|Backup.*erstellt/);
+ assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
+});
 test('Drive restore cancellation and decryption failure never reach the local commit',async()=>{
  for(const kind of ['cancel','decrypt']){
   const t=await selectedRestore({confirmRestore:kind!=='cancel'});let restores=0,adoptions=0;
@@ -332,3 +342,4 @@ test('export preflight rejection never uploads, prunes or acknowledges a Drive b
  assert.equal(JSON.parse(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).lastBackupAt,previous);
  assert.match(t.elements.driveBackupStatus.textContent,/Backup fehlgeschlagen:.*sichere Wiederherstellung.*unverändert/);
 });
+
