@@ -12,7 +12,7 @@ const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 
-function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false,httpStatus=200,retention=3,oldBackups=false,existingFolder=false,confirmRestore=true}={}){
+function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false,httpStatus=200,retention=3,oldBackups=false,existingFolder=false,confirmRestore=true,media=null}={}){
  const values=new Map(),requests=[],written=[],events=[];let oauthRequests=0,backedUpCount=0;
  if(clientId)values.set('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId,retention,mode:'off'}));
  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
@@ -49,7 +49,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
  let uploaded=false;
  async function fetch(url,opts={}){
   requests.push({url,method:opts.method||'GET',body:opts.body});
-  if(new URL(url).searchParams.get('alt')==='media')return response({format:'foliolab-open-encrypted-v2',synthetic:true});
+  if(new URL(url).searchParams.get('alt')==='media')return media===null?response({format:'foliolab-open-encrypted-v2',synthetic:true}):{ok:true,text:async()=>media};
   const qs=new URL(url).searchParams,q=qs.get('q')||'';
   if(url.includes('upload/drive/v3/files')){uploaded=true;return response({id:'backup123456789'})}
   if(opts.method==='POST'&&url.includes('/drive/v3/files'))return response({id:'folder123456789',name:'FolioLab Backups'});
@@ -343,3 +343,106 @@ test('export preflight rejection never uploads, prunes or acknowledges a Drive b
  assert.match(t.elements.driveBackupStatus.textContent,/Backup fehlgeschlagen:.*sichere Wiederherstellung.*unverändert/);
 });
 
+
+import {fixture as positionFixture} from './restore-position-fixture.mjs';
+import {dbMock} from './backup-vault-db-fixture.mjs';
+import {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup,isPasswordBackup} from '../src/backup-vault.js';
+import {defaultSettings,totalExactEUR} from '../src/model.js';
+import {COMPLETE_BACKUP_KIND} from '../src/complete-backup.js';
+import {assertLocalBackupFileSize} from '../src/backup-limits.js';
+import {createContext,runInContext} from 'node:vm';
+
+import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
+
+// A transaction takes a copy and publishes it only on completion. Production
+// storage performs the serialization, CAS, validation and fresh-open readback.
+function simulatedDisk(initial){
+ let record={schemaVersion:1,revision:7,raw:backup(initial,{includeHistory:true}),settings:initial.settings,deleted:false,updatedAt:'2026-01-01'};
+ const db={close(){},objectStoreNames:{contains:()=>true},transaction(){
+  let pending=structuredClone(record),aborted=false;
+  const tx={abort(){aborted=true;},objectStore:()=>({
+   get(){const request={result:structuredClone(record)};queueMicrotask(()=>{
+    request.onsuccess();if(aborted){tx.onabort();return;}record=pending;tx.oncomplete();
+   });return request;},
+   put(value){pending=structuredClone(value);}
+  })};return tx;
+ }};
+ const factory={open(){const request={result:db};queueMicrotask(()=>request.onsuccess());return request;}};
+ const storage={getItem:key=>key===MODE_KEY?MODE_VALUE:null};
+ async function open(){const store=new PortfolioStorage(storage);const model=await store.initialize();return {store,model};}
+ return {factory,open,read:()=>structuredClone(record)};
+}
+// Exercise the registered file listener and the selected Drive button with the
+// same encrypted bytes. Only transport, DOM, vault storage and disk are simulated.
+async function restoreSetup(bytes,route,fault){
+ const initial=positionFixture();
+ const disk=simulatedDisk(initial),savedFactory=globalThis.indexedDB;
+ globalThis.indexedDB=disk.factory;
+ try{
+ const {store}=await disk.open(),before=disk.read();
+ let fileHandler;
+ const notices=[],t=await selectedRestore({media:bytes});
+ const ctx=createContext({model:initial,loadFailure:null,saving:false,otherTabChangedPortfolio:false,
+  isPasswordBackup,decryptPasswordBackup,assertLocalBackupFileSize,COMPLETE_BACKUP_KIND,
+  unpackCompleteBackup,safeImport,defaultSettings,prompt:()=>'SYNTHETIC_PASSWORD',confirm:()=>true,
+  $:id=>id==='backupFile'?{addEventListener(type,fn){fileHandler=fn;}}:{},
+  decideImportedConfiguration:()=>null,notify:msg=>notices.push(msg),setLoading(){},renderBackupStatus(){},
+  hasBackupPassword:async()=>false,downloadBackup(){},backupDone(){},unresolvedListings:()=>[],
+  syncPortfolioState(){},render(){},localStorage:{setItem(){}},backupCounter:()=>0,page:'more',
+  window:{},refreshBackupPasswordStatus(){},async adoptBackupPassword(){if(fault==='vault')throw Error('SYNTHETIC_VAULT_FAILURE');},
+  portfolioStore:{
+   async save(model){
+    if(fault==='conflict'){
+     const newer=positionFixture();newer.positions[0].name='Newer tab';
+     const other=await disk.open();await other.store.save(newer);
+    }
+    await store.save(model);
+   },
+   async reload(){return store.reload();}
+  }
+ });
+ const section=(a,b)=>{const start=app.indexOf(a),end=app.indexOf(b,start);assert.ok(start>=0&&end>start);return app.slice(start,end);};
+ runInContext(section('async function save(){','function notify('),ctx);
+ runInContext(section("$('backupFile').addEventListener('change'",'  // Drive only receives'),ctx);
+ Object.assign(t.backend,{validateData:safeImport,unpackCompleteBackup,decryptPasswordBackup,
+  restoreData:runInContext('({'+section('      async restoreData(data,configuration=null){','      onBackedUp()')+'}).restoreData',ctx),
+  adoptPasswordVault:ctx.adoptBackupPassword});
+ if(route==='file')await fileHandler({target:{files:[new Blob([bytes])],value:'selected'}});
+ else await t.elements.driveRestore.onclick();
+ return {record:disk.read(),before,model:ctx.model,reopened:(await disk.open()).model,notice:route==='file'?notices.at(-1):t.elements.driveBackupStatus.textContent};
+ }finally{globalThis.indexedDB=savedFactory;}
+}
+test('file and Drive restore identical encrypted position bytes through commit and reopen',async t=>{
+ const previous=globalThis.indexedDB;
+ globalThis.indexedDB=dbMock().indexedDB;
+ try{
+  await configureBackupPassword('SYNTHETIC_PASSWORD','SYNTHETIC_PASSWORD');
+  const payload=createCompleteBackup(positionFixture());
+  Object.assign(payload.data.positions[0],{price:123.45,priceExact:'123.45'});
+  for(const scenario of ['valid','unknown','legacy','legacy-v2','quantity','fx','vault','conflict']){
+   const candidate=structuredClone(payload),p=candidate.data.positions[0];
+   if(scenario==='quantity')p.quantityExact=[3];
+   if(scenario==='fx')Object.assign(p,{currency:'USD',fxRate:[1.2],fxRateExact:[1.2]});
+   if(scenario==='legacy'){candidate.data.version=1;delete candidate.data.accounts;delete p.accountId;p.quantityExact='2,0';p.priceExact=123.45;}
+   if(scenario==='legacy-v2'){candidate.data.version=2;delete p.quantityExact;p.price='123,45';delete p.priceExact;}
+   if(scenario==='unknown')Object.assign(p,{quantity:17,quantityExact:'17.000000000000000005',currency:'USD',fxRate:null,fxRateExact:'UNKNOWN'});
+   const bytes=await encryptWithBackupPassword(JSON.stringify(candidate));
+   for(const route of ['file','drive'])await t.test(route+' '+scenario,async()=>{
+    const h=await restoreSetup(bytes,route,scenario);
+    if(scenario==='quantity'||scenario==='fx'){
+     assert.equal(h.record.revision,7);assert.deepEqual(h.record,h.before);assert.equal(totalExactEUR(h.model),'200');assert.match(h.notice,/Menge|Positionsmenge|Wechselkurs/i);assert.equal(totalExactEUR(h.reopened),'200');return;
+    }
+    assert.equal(h.record.revision,8);
+    if(scenario==='conflict'){
+     assert.equal(h.reopened.positions[0].name,'Newer tab');assert.equal(h.model.positions[0].name,'Newer tab');assert.match(h.notice,/anderen Tab/);return;
+    }
+    for(const m of [h.model,h.reopened]){
+     const p=m.positions[0];assert.deepEqual([p.quantity,p.quantityExact,p.price,p.priceExact],scenario==='unknown'?[17,'17.000000000000000005',123.45,'123.45']:[2,'2',123.45,'123.45']);
+     assert.deepEqual([p.currency,p.fxRateExact,totalExactEUR(m)],scenario==='unknown'?['USD','UNKNOWN',null]:['EUR','1','246.9']);
+    }
+    if(scenario==='vault')assert.match(h.notice,/Portfolio wiederhergestellt.*Passwort.*nicht erneut importieren/i);
+    else assert.match(h.notice,/wiederhergestellt/i);
+   });
+  }
+ }finally{globalThis.indexedDB=previous;}
+});

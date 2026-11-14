@@ -99,6 +99,9 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const mic=cleanString(v.mic,8).toUpperCase();
   if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
+  for(const value of [v.quantity,v.quantityExact,v.fxRate,v.fxRateExact]){
+    if(value!=null&&typeof value!=='string'&&typeof value!=='number'&&typeof value!=='bigint')throw Error('Positionsmenge und Wechselkurs dürfen keine strukturierten oder booleschen Werte enthalten.');
+  }
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);
   const priceInput=v.price??0;
   if(!['string','number'].includes(typeof priceInput))throw Error('Der Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');

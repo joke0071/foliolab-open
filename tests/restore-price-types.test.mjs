@@ -2,14 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-import {blankModel,createProvider,createAccount,createPosition,safeImport,snapshot,defaultSettings,totalExactEUR} from '../src/model.js';
-function fixture(version=3){
- const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'Synthetic depot'},m));
- m.positions.push(createPosition({id:'asset',providerId:'p',accountId:'a',name:'Synthetic ETF',kind:'etf',quantity:2,price:100},m));
- if(version===4){snapshot(m,'2026-01-02','Synthetic manual observation',{manualTotalEUR:'200'});m.bookingPresentation={version:2,archivedIds:[],referenceArchivedIds:[m.snapshots[0].id]};}
- m.version=version;if(version===1){delete m.accounts;delete m.positions[0].accountId;}
- return m;
-}
+import {createPosition,safeImport,defaultSettings,totalExactEUR} from '../src/model.js';
+import {fixture} from './restore-position-fixture.mjs';
 test('Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes',()=>{
  for(const version of [1,2,3,4])for(const price of [true,false,[123.45],[],{}]){
   const raw=fixture(version);raw.positions[0].price=price;delete raw.positions[0].priceExact;const before=JSON.stringify(raw);
