@@ -1,98 +1,50 @@
 # Aktueller HND01-Checkpoint
 
-## Zuständigkeit und Auftrag
+ACTIVE · work-native-seven-77bcb76dd357-20261114. Alleiniger Writer; keine Agenten/Automation/Folgesitzungen.
+Übernahme046ffb64534f38aa8baae9563a4b189340c4df8a nach frischem Kollisions-/Ref-/Actionsabgleich, expectedSHA-geschützt/gepinnt rückgelesen.
+[Vollständiger Vorgänger](https://github.com/joke0071/foliolab-open/blob/6f0cb487997592175d5c7b6024259601d7db5fc7/docs/WORK_RESTPAKETE_CHECKPOINT.md), STOPPED/HANDOVER_READY.
+Maßgeblich bleiben Effizienzplan, EFF03_WEEK_TARGET_2026-11-11.md und KONSOLIDIERTE_ROADMAP.md;41Scopes/15DONE unverändert.
 
-ACTIVE · work-native-seven-77bcb76dd357-20261114.
-Vorgänger work-serial-77bcb76dd357-20261114 STOPPED/HANDOVER_READY; Übernahme nach frischem Ref-/Actions-/PR-Abgleich am6f0cb487. Ein alleiniger Writer; keine Zusatzagenten/Automation/Folgesitzung.
-Übernahme13f048c39e45781f7876d20af818e05f691d4de8 expectedSHA-geschützt und exakt rückgelesen.
-Vorgängerwork-toast-prepare-77bcb76dd357-20261113 STOPPED/HANDOVER_READY.
-[Vollständiger Vorgänger und unveränderte Historie](https://github.com/joke0071/foliolab-open/blob/e00b35711a61a2192be6d7151dfc79ad98202825/docs/WORK_RESTPAKETE_CHECKPOINT.md).
-Aktueller neuer14.11.-Nutzerauftrag: sieben Korrekturen am883c4eb0 gemeinsam nativ qualifizieren und danach seriell intern weiterarbeiten. Bis zu drei initiale Diagnoseläufe plus insgesamt ein begründeter Korrekturlauf, einzeln/Versuch1/einChromiumjob/max25min/max360s+begrenzterNachlauf. Keine erneute Zustimmung innerhalb dieses Rahmens. Alte Freigaben bleiben verbraucht. Keine ProduktPR/Integration/Merge/Deploy/Release/SWBump/LIVE_ACCEPTED.
-Maßgeblich: [Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md),[Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md),[kanonische Roadmap](KONSOLIDIERTE_ROADMAP.md).
-41Scopes/15DONE unverändert. WindowsChrome/Edge undAndroidChrome/PWA; realeProfile/Versionen OPERATOR_INPUT_PENDING, nicht erneut fragen. Safari/TalkBack DEFERRED_USER; normale Bedienhilfen erhalten.
+## Native Qualifikation der sieben Korrekturen
 
-## Toast: abgeschlossen, begrenzt eingefroren und geparkt
+Produkt **883c4eb0e8137040a9f6bfd2e193bc5833aac0c2**, Tree **9ad46b9ee8b6039f49ddf23b2655227b493692f4**, unverändert.
+[Parent-/Nachweismatrix der sieben lokalen Schnitte](release-evidence/serial-local-summary-2026-11-14.json); vorher288/288Node37Dateien, keinFullCI.
+Produkt-/HTML-/CSS-/SW-Blobs in beiden nativen Quellen identisch. Beide Ausführungen änderten gegenüber ihrer Prüfquelle ausschließlich Diagnoseworkflow.
 
-[Native Originalauswertung](release-evidence/drive-restore-toast-native-2026-11-14.json).
-Produkt04960e74316a4191223e88aaff65dd79ee6ad239/Tree93493afbddd9cac50ef495dc9f455daa485a1efd unverändert.
-Quelled70d81e160c412703fb6e9b3b72b31915cc9eebd/Tree9980a6980ca4dd7a1304a52b7498edc6b3a16728 eingefroren.
-Ausführung0b4aa1d64daddea7cccad5bfcb29d2f8bd234b89/Treed75cd59c75fe7e72886aaab8d980e94b50509cb3.
-Triggerbranchtest/restore-toast-77bcb76dd357-20261113 genau einmal angelegt; unverändert erhalten.
-Run43554653065/1SUCCESS,einJob132324646623. 5/5FällePASS,Toast1/0/0/1/1,IDB2→3/2→2/2→3/2→3/2→3.
-AlterVollerfolgstext0,echterToastDOM; unabhängigerIDBReadback/gesamtraw/settings/Cash123.45EUR,1Restore/1MediaGET/0RetryjeFall.
-Exit0/Tee0/CleanupPASS,0pageErrors/0unerwarteteExterne;5Breiten/Fokus/Tab/200%CSSApproximationPASS.
-Tatsächlich angesehen:password320und1440; neuerToast und separaterPasswortteilfehler lesbar. Keine Sichtprüfung anderer Bilder behauptet.
-Ubuntu24.04.5/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37.
-OAuth/Drive/Decrypt/Passwortübernahme simuliert;keineHardware/PWA/echteKrypto/OAuth/Recovery/FullCI/Main/Releaseabnahme.
-
-OriginalZIP2380050Bytes/SHA256c3787316bb00298c2dae250191278b7aeccba1db677081d72b1d88ac1e316c2b,
-API/Uploadlog/CRC/24innerManifestdateienPASS.
-SeparaterOriginalarchivweg wieVorgänger; neuesArchivV0/6584320Bytes/SHA2563abed1af9da9c70118c91562c8825d00faeb779d3549d753b7464c9b65e8637b
-gepinntbytegleichrückgelesen/30Preservationeinträgegeprüft. PrivateLocatorsnurprivat.
-KeineVollsicherung/Originalkettenänderung. HistorischeRootV155/406425600 undRestoreOriginalV0/6563840 frisch metadata-bestätigt, nicht erneut komplett übertragen.
-
-UI-ALLOC01-Produkt933c3667/Test6dd60350 mit43513293068/1 bleibt separat eingefroren.
-Restoreprodukt775bbddd/Test4ba5cd84 mit43514930241/1 bleibt separat eingefroren.
-FrüherevierDiagnosen verbraucht,einzige neueFreigabe43554653065/1 verbraucht.
-KeinRerun/neuerTrigger/FullCI. KeinProdukt-oderHardware-PASS aus kombiniertenEinzelbelegen.
-
-## Serielle lokale Produktarbeit – gesicherter Wiederaufnahmepunkt
-
-Gemeinsamer Produktstand **883c4eb0e8137040a9f6bfd2e193bc5833aac0c2**, Tree **9ad46b9ee8b6039f49ddf23b2655227b493692f4**.
-Eine lineare Folge ab Toastprodukt04960e74; keine Produktrefs/PRs/Actions dafür.
-Alle sieben Schnitte LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN.
-[Exakte Parent-/Tree-/Nachweismatrix](release-evidence/serial-local-summary-2026-11-14.json).
-
-| Schnitt | Commit | Fachliches Ergebnis |
+| Versuch | Prüfquelle / Ausführung | Run / Ergebnis |
 | --- | --- | --- |
-| K2 Alpha | 4a138d2e7fe75876869d000c8eac01911a094374 | Boolesche/Array-Schlusskurse abweisen; alte Kurse/Cache bei Fehler erhalten. |
-| K3 Buchungsreferenzen | 312a199cf3d2b6359da0547a478a19ad979fdaed | Codierte JSON-/Unicode-Referenzen vor Änderung/Rücknahme erkennen. |
-| K2-FIN unbekannte Kosten | 57c4da121720d60a2c4d320f52b6a994cbae80eb | Unbekannte Fees/Steuern verhindern wirtschaftliche Rücknahme; Vorschau nennt unbekannte Werte. |
-| K2 Kurse/FX | b5cab021ecbad41de28e3dd1f94fbff89852ecea | Ungültige Antworttypen/FX-Datums-/Basisangaben nicht übernehmen; UNKNOWN/alte Kurse erhalten. |
-| K4 Restore-Preise | f5ea22bce3f30720ce18d0a046f44a07fd1476a5 | Falsche Preisdatentypen aus Altbackups vor Übernahme abweisen. |
-| K4 Restore-Status | bdabebf5d0c58b09e88deb86c1999709a4e8f06e | Keine unbelegte lokale Vorsicherung im Erfolgsstatus behaupten. |
-| K2 verbundene Kursquellen | 883c4eb0e8137040a9f6bfd2e193bc5833aac0c2 | Token-/Fallbackpreise und Decimal-/FX-Wertebereich vor Modellübernahme prüfen. |
+| Initial | 76b198e6a26fdb56b6d6e05bd5fb19e4101afcde / dbaac9860d6d4d35b471c15166e4e5cb97e4cb9f | 43564045852/1 FAILURE; A7/17, B4/4, C0/4. Falscher Meldungsregex und ungeeigneter entschlüsselter Fixturewrapper. |
+| Einziger Korrekturlauf | dcdd67866e824a81cfa3738aaa86dd93dfa27e84 / a5a7d5f8d7375546b2182048d1f8347a4bce7a06 | 43564350387/1 FAILURE; A14/17, B4/4, C4/4 mechanische Fälle; zusätzlicher echter visueller Statusbefund. |
 
-Ausgangsfehler mit Original-FAIL-TAP je Schnitt erhalten; gültiger Erfolg und Gegenfall mit unabhängigen Sollwerten geprüft.
-Final **288/288 PASS**, 0FAIL/0SKIP/0CANCELLED, Node24.22.1, **37 ausgewählte lokale Testdateien**.
-Quellhandler in NodeVM mit ausdrücklich begrenzten DOM/CAS/save-Adaptern; kein nativer Browser-/IDB-/Realprovider-/FullCI-Nachweis.
-Der native Toast-PASS gilt ausschließlich für d70d81e1/04960e74, nicht für diesen Nachfolgestand.
-Acht Laufzeitdateien geändert; index/styles/SW/Workflows/Abhängigkeiten unverändert.
-47 Stage-Gitblobs vollständig bytegleich rückgelesen; finale44 Delta-Pfade aus gepinntem Archiv tatsächlich wiederhergestellt und Gitblob-genau verifiziert.
-Originalarchiv V0/1249280Bytes/SHA2560b1ab57cbce53ecf30bcad0f29bfc823213696ffd08daa3a22e57120683af370,
-93 Einträge nach gepinntem Readback geprüft. Private Locators bleiben privat; keine Vollsicherung alter Originalketten.
+[Initialauswertung](release-evidence/seven-native-initial-2026-11-14.json) · [Korrekturauswertung und genaue Grenzen](release-evidence/seven-native-correction-2026-11-14.json).
+25 unabhängige Fälle, einChromiumjob jeRun, Ubuntu24.04/Node22.23.4/Playwright1.56.1/Chromium141.0.7390.37.
+HostExit1/Tee0, Browser-/OriginCleanupPASS beiderLäufe. Zwei neue Läufe insgesamt: initial1/3, Korrektur1/1 verbraucht.
+Keine weitere Wiederholung der fehlgeschlagenen Fälle als angeblich freier Initialplatz; kein zweiter Korrekturlauf autorisiert.
 
-[Vorhandenen Mainfehler gezielt nur gelesen](release-evidence/main-43332355188-readonly-2026-11-14.json):
-20s-Timeout beim controlledStorageFixture vor Reload; am Schluss kein aktiver/installierender/wartender Worker und controller=null.
-Konkrete Installations-/Transportursache bleibt UNKNOWN. Kein neuer Lauf, kein Timeout-/Fixturepatch.
+A: FXboolean-known/array-unknown/outside-range bestätigen volleDatensatz-/Revisionsgleichheit und Warnzustand; Zusatz-Readback bei Fehler ebenfalls gleich, FX0.9/UNKNOWN/0.9.
+Danach scheitert ein zu enger groß-/kleinschreibungsabhängiger Textvergleich auf korrektes „Tagesreferenzkurs“. Wiederöffnen dieser3Fälle NICHTERREICHT, kein Gesamt-PASS.
+B: Tatsächliche Verwaltung/Zeileneditor/Löschsperre, lesbareunbekannteFees/Steuern und zulässige120→100mit1CASCommit; unabhängigesIDBReadback/neueSeite4/4PASS.
+C: EchteRestoreUI/IDB, gültig2→3/exakteRaw, falschebool/array/objectPreise2→2/0Callback/0Put, je1MediaGET;4/4mechanischeFällePASS.
+Sichtbefund C zusätzlich: #backupStatus behauptet nach frischem Restore einen neuen Downloadzeitpunkt ohne lokale Rückfallsicherung. Deswegen kein vorbehaltloser C-Gesamtabschluss.
+OAuth/Drive/Decrypt/Passwortübernahme ausdrücklich simuliert. KeineHardware/PWA/Realprovider/echteKrypto/Crash/Quota/K4Legacy/FullCI/Main/Releaseabnahme.
+Tatsächlich angesehen InitialBFees/Taxes/Encoded und KorrekturAlpha-Boolean/RestoreValid/RestoreBoolean/FXArrayFailure; andere Bilder nicht alsgesehen behauptet.
 
-## Historischer Sitzungsabschluss des Vorgängers – durch neuen Auftrag teilweise entsperrt
+## Originalsicherung
 
-Die sieben bestätigten Korrektheitslücken sind lokal geschlossen und als ein linearer Produktstand gesichert.
-Die zuletzt konkret geprüften Folgearbeiten hängen an folgenden Voraussetzungen; kein zusätzlicher bestätigter lokal schließbarer Rest in diesen geprüften Abläufen:
+Initial ZIP2623456Bytes/SHA256ceaab17115ba7e6ecdc1958eb3ea0c496555727f4d7d6c1b3f7e1dc931dc0fd6;CRC/58innerManifestdateienPASS.
+SeparatesArchivV0/9523200Bytes/SHA256a6c6ae29f3f20b3063f32a1e13e9dce1c65ac44b51034df2e912992873b99888; gepinntbytegleich/62EinträgePASS.
+Korrektur ZIP1822772Bytes/SHA2566e3ca22f72166e7128cb188f62401bc86504455b18be4697c1e780ab1a1c1bd0;CRC/50innerManifestdateienPASS.
+SeparatesArchivV0/8284160Bytes/SHA2561c725374d62235311c4dd5c1752d9513aee0c85d95edcdf2150c6dba8e2fc7c5; gepinntbytegleich/54EinträgePASS.
+UnveränderteOriginale inklJoblogs/Quellinputs/Reports/Bilder erhalten; privateLocators privat. HistorischeArchive nichtüberschrieben.
 
-| Aufgabe | Noch fehlendes Kriterium | Voraussetzung / nächste ausführbare Aktion |
-| --- | --- | --- |
-| K2/K3/K4 gemeinsamer Nachfolgestand883c4eb0 | Native UI-/IDB-/Integrationsqualifikation der tatsächlich geänderten Pfade | Neue ausdrückliche begrenzte Ausführungsfreigabe; vorher exakten gemeinsamen Quellstand/Impact/Prüfvertrag binden. Toast-PASS nicht übertragen. |
-| K1/#174/#255 und K2-FIN Gesamtdeckung | Unabhängige historische Anfangs-/Endbestände, Ownership-/Stakinganker und benannte fehlende Originalklassen | Passenden privaten Originalbeleg samt unabhängigen Sollwerten zuordnen; bestehenden Fünfanbieterkern/120Reihenfolgen nicht neu bauen. |
-| K2-KURSE/#266 und K2-ETH/#268 übrige Originalgrenzen | Tatsächliche unqualifizierte Provider-/Cursorantwort | Echten Antwortbeleg abgleichen; Quellenhilfen v304 und Frequenz v303 bleiben DONE. Keine erneute pauschale Öffnung. |
-| K4/K5/K6 reale Kernnutzung | WindowsChrome/Edge-/AndroidChrome/PWA-Profile, Versionen, echte Crash-/Quota-/Update-/Gerätewechselereignisse | OPERATOR_INPUT_PENDING; keine erneute Gerätefrage, keine Ersatztests für reine Hardwarekriterien. |
-| UI-R4/UI-ALLOC01 | Integration und verbleibende native/Plattform-/Produktionsgates | Bestehende geschützte Kandidaten und begrenzte Originalbelege wiederverwenden; kein neuer unqualifizierter Variantenstapel. |
-| P-CI-B/#229/Mainfehler43332355188 | CSV44px-Nachweis bzw. bewiesene Worker-Installationsursache | Gesonderte Workflow-/Ausführungsentscheidung und konkrete neue Hypothese; keine Reruns/Timeoutlockerung. P-CI-C erst nach B. |
-| N-DRIVE/FLH04/CR4/CR5 | Unabhängiges Kryptoreview, vertrauenswürdiger Enrollment-/Writer-/Keyslotvertrag und native Persistenzgates | Bestehendes Reviewpaket einem qualifizierten unabhängigen Prüfer zuordnen; keine neue Kryptografie/Sync/Identitätsübernahme oder Rendererwiederholung. |
-| N-BROKER/N-AT/N-CASHLIEU/N-WALLET/N-FX neue Sonderfälle | Benannte Originalklasse und unabhängige wirtschaftliche/Ownership-/Finalitäts-/Fachbehandlung | Nur konkret vollständigen Fall öffnen; keine synthetische Original-/Steuerfreigabe. |
-| N-UI-PLUS Sekundärnavigation/#300 | Vorgelagerter Konzept-/Nutzerabgleich aus Originalauftrag | Keine zweite Navigation ohne diesen Abgleich. Akzeptierte Dashboard-/Installations-/Navigationsanteile nicht neu umsetzen. |
-| N-PROJ/#252 | Vorgelagerter Kernmeilenstein und eigener begrenzter Vertrag gemäß kanonischer Roadmap | Optionales Szenario bleibt ACTIVE/PLANNED; nach Kernabschluss separaten Simulationsvertrag konkretisieren. Keine Prognose im Journal/Istwert. |
-| N-CSP/K6-TRUST/#298 und N-OTHER | Konkreter noch offener Mangel bzw. unentschiedene Scoreformel/Originalanforderung | Ohne belegten Mangel keine pauschale CSP-Härtung; Safari-/Backuphinweise vorhanden, PORT-COMP-Formel nicht entschieden. |
+## Aktiver serieller Folgeschnitt
 
-Endgrund: Die konkret geprüften nächsten Kernarbeiten benötigen zusätzliche Ausführungsfreigaben, unabhängige Originale, reale Profile oder das ausstehende externe Review; geplante abhängige Komfortarbeit hat ihren Kernmeilenstein noch nicht erreicht.
-Keine Behauptung, alle41Scopes seien erledigt oder sämtliche denkbaren Fehler ausgeschlossen.
-Kein Stopp allein wegen grünem Toast, Actionsbudget, Paketanzahl oder Kontextkomprimierung.
-Letzte Mutationen eindeutig zugeordnet und erwartet-SHA-geschützt; keine offenen/unklaren eigenen Mutationen.
-Keine eigenen Node-/Browser-/Testserver-/Hintergrundprozesse aktiv; keine Automation/Folgesitzung eingerichtet.
-Frischer Abschlussabgleich: Main/FLH04/Trigger und PR332/157/161 unverändert, kein Actionlauf in_progress; letzter neuer Lauf ausschließlich43554653065/1SUCCESS.
-Die beiden historischen queued43095194276/43095194257 bleiben unverändert; nicht als eigene aktive Ausführung gewertet.
-Neue Übernahme ausschließlich nach frischem Kollisions-/Ref-/Actionsabgleich.
+Aus tatsächlichem C-Screenshot und echtem restoreData-Handler reproduziert: backupDone() erneuert „für Download erstellt“ auch beim Restore in ein leeres Profil.
+Lokaler Fix am Parent883c4eb0: Restoreabschluss setzt nur bestehenden Änderungszähler zurück, erzeugt keinen Sicherungszeitpunkt; vorhandener tatsächlicher Export-/Rückfallsicherungszeitpunkt bleibt erhalten.
+Statischer Drivehinweis nennt die Voraussetzung vorhandener lokaler Daten.
+Neue6NodeGegenproben initial3FAIL/3PASS, gezieltfinal6/6PASS; betroffeneRegression läuft/Ergebnis als nächstes sichern.
+Kein weiterer nativer Lauf für diesen Folgeschnitt. Exakter neuerCommit/Originale/Impact auf vorherige native Belege werden als nächstes gesichert.
+Ein aktiverSchnitt; keinSitzungsende. WeitereRoadmaparbeit nur anhand neuerkonkreterEvidenz, keine wiederholteGesamtinventur.
 
 ## Geschützte Stände und Grenzen
 
@@ -121,34 +73,4 @@ bezahltenDienste,externenNachrichten/Beauftragungen oderSicherheitsumgehung.
 
 
 
-## Aktiver Arbeitspunkt
-
-Neue Budgetnutzung0/4. Erster Diagnosekandidat wird vorbereitet; Gruppen A Kurs/FX, B Buchungsverwaltung und C Restore dürfen bei unabhängiger Auswertung gebündelt werden. Produkt883c4eb0/Tree9ad46b9e bleibt erster nativer Produktstand. Kein Trigger vor vollständiger Identitäts-/Workflow-/Sicherungsprüfung. Vorherige Folgegates nur bei neuer Evidenz wieder öffnen.
-
-## Erster nativer Kandidat vollständig vorbereitet
-
-Produkt883c4eb0e8137040a9f6bfd2e193bc5833aac0c2/Tree9ad46b9ee8b6039f49ddf23b2655227b493692f4.
-Prüfquelle76b198e6a26fdb56b6d6e05bd5fb19e4101afcde/Treeae95f5f2d7a04737482a98eafa6f5d5907df9266,Parent exakt Produkt.
-Ausführungdbaac9860d6d4d35b471c15166e4e5cb97e4cb9f/Treebbb6352713d7e6617d07bfc041a924c515cc64e9,Parent exakt Prüfquelle.
-Ref test/seven-native-77bcb76dd357-initial-20261114; genau ein create-Trigger/Versuch1 vorgesehen.
-Alle11 gebundenen Produkt-/Index-/Style-/SW-Blobs unverändert; PrüfdeltanurHarness+Vertrag, AusführungsdeltanurDiagnoseworkflow.
-25Fälle unabhängig auswertbar (A17/B4/C4), max360s/15sNachlauf, einJob25min/Chromium/Ubuntu24.04/Node22.23.4/Playwright1.56.1.
-[Sollvertrag am gepinnten Quellstand](https://github.com/joke0071/foliolab-open/blob/76b198e6a26fdb56b6d6e05bd5fb19e4101afcde/docs/release-evidence/seven-native-contract-2026-11-14.json).
-Bestehender Originalarchivweg frisch bestätigt (V0/1249280Bytes); neue Originale separat, unverändert und gepinnt rücklesen. Private Locators unveröffentlicht.
-Noch NICHT ausgelöst; Budget0/4. Unmittelbar nach Trigger Ref/Actions zurücklesen; keine Ersatzanlage bei Unklarheit.
-
-Triggeranlage erfolgreich eindeutig rückgelesen: Ref exakt dbaac986. Neuer Run43564045852/1 gestartet; Budget1/4 (initial1/3, Korrektur0/1). Lauf bis terminal beobachten und Originale sichern. Keine weitere Anlage/Rerun.
-
-## Initialer Lauf ausgewertet; gezielte Harnesskorrektur vorbereitet
-
-Run43564045852/1 terminalFAILURE; Exit1/Tee0, Browser-/OriginCleanupPASS.
-B4/4PASS. A7/17PASS; zehn Gegenfälle bestätigten volleByte-/Revisionsgleichheit, scheiterten danach am falschen Meldungsregex, Cache-/Reopenfolge dortNICHTERREICHT.
-C0/4: ungeeignetes entschlüsseltes Fixtureformat, Preisprüfung/CommitNICHTERREICHT. Keine Produktursache aus diesen Fehlern belegt.
-[Originalauswertung](release-evidence/seven-native-initial-2026-11-14.json).
-OriginalZIP2623456Bytes/SHA256ceaab17115ba7e6ecdc1958eb3ea0c496555727f4d7d6c1b3f7e1dc931dc0fd6/CRC/58innerManifestdateienPASS.
-UnveränderteOriginale separat V0/9523200Bytes/SHA256a6c6ae29f3f20b3063f32a1e13e9dce1c65ac44b51034df2e912992873b99888; gepinntbytegleich/62PreservationeinträgePASS.
-Tatsächlich angesehen B-Gebühren/Steuern/codierterFall; unbekannteKosten lesbar, Löschsperre sichtbar; Referenzerklärung nicht alsvisuellgelesen behauptet.
-Korrektur ausschließlichHarness: tatsächliche0Datenupdates/NAbfragenprüfen+Warnzustand/Fehlerursache prüfen; vorhandenen CompleteBackup-Wrapper um identische Portfoliodaten verwenden. Allewirtschaftlichen/Cache-/Reopenassertionen erhalten. 25Fixture-/Wrapper-/OraclegegenprobenundSyntax lokalPASS.
-Produkt883c4eb0 unverändert. Korrekturquelledcdd67866e824a81cfa3738aaa86dd93dfa27e84/Tree0a6cd9093cd9b1bbe45ae248895004f677186a93,Parent76b198e6a26fdb56b6d6e05bd5fb19e4101afcde; ProduktdirekterzweiterAncestor.
-Korrekturausführunga5a7d5f8d7375546b2182048d1f8347a4bce7a06/Treed4f5ffa4a6e4e9059bd8c815efcb1ccc44f4772c; WorkfloweinzigerAusführungsdelta, alle11Produktblobsbytegleich.
-VorbereiteterRef test/seven-native-77bcb76dd357-correction-20261114; nochNICHTausgelöst. Budgetinitial1/3; Korrektur0/1. NächsterAufruf verwendet genau autorisiertenKorrekturlauf, keinenRerun/Ersatztrigger.
+Die Toast-Einmalfreigabe43554653065/1 sowie vier frühere UI/Restore-Diagnosen bleiben verbraucht und getrennt eingefroren. RealeProfile/Versionen OPERATOR_INPUT_PENDING, nicht erneut fragen. Safari/TalkBack DEFERRED_USER. N-PROJ behält Kernmeilenstein. Beide neuen Triggerbranches unverändert erhalten.
