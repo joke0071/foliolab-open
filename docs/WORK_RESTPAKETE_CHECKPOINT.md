@@ -138,3 +138,17 @@ Bestehender Originalarchivweg frisch bestätigt (V0/1249280Bytes); neue Original
 Noch NICHT ausgelöst; Budget0/4. Unmittelbar nach Trigger Ref/Actions zurücklesen; keine Ersatzanlage bei Unklarheit.
 
 Triggeranlage erfolgreich eindeutig rückgelesen: Ref exakt dbaac986. Neuer Run43564045852/1 gestartet; Budget1/4 (initial1/3, Korrektur0/1). Lauf bis terminal beobachten und Originale sichern. Keine weitere Anlage/Rerun.
+
+## Initialer Lauf ausgewertet; gezielte Harnesskorrektur vorbereitet
+
+Run43564045852/1 terminalFAILURE; Exit1/Tee0, Browser-/OriginCleanupPASS.
+B4/4PASS. A7/17PASS; zehn Gegenfälle bestätigten volleByte-/Revisionsgleichheit, scheiterten danach am falschen Meldungsregex, Cache-/Reopenfolge dortNICHTERREICHT.
+C0/4: ungeeignetes entschlüsseltes Fixtureformat, Preisprüfung/CommitNICHTERREICHT. Keine Produktursache aus diesen Fehlern belegt.
+[Originalauswertung](release-evidence/seven-native-initial-2026-11-14.json).
+OriginalZIP2623456Bytes/SHA256ceaab17115ba7e6ecdc1958eb3ea0c496555727f4d7d6c1b3f7e1dc931dc0fd6/CRC/58innerManifestdateienPASS.
+UnveränderteOriginale separat V0/9523200Bytes/SHA256a6c6ae29f3f20b3063f32a1e13e9dce1c65ac44b51034df2e912992873b99888; gepinntbytegleich/62PreservationeinträgePASS.
+Tatsächlich angesehen B-Gebühren/Steuern/codierterFall; unbekannteKosten lesbar, Löschsperre sichtbar; Referenzerklärung nicht alsvisuellgelesen behauptet.
+Korrektur ausschließlichHarness: tatsächliche0Datenupdates/NAbfragenprüfen+Warnzustand/Fehlerursache prüfen; vorhandenen CompleteBackup-Wrapper um identische Portfoliodaten verwenden. Allewirtschaftlichen/Cache-/Reopenassertionen erhalten. 25Fixture-/Wrapper-/OraclegegenprobenundSyntax lokalPASS.
+Produkt883c4eb0 unverändert. Korrekturquelledcdd67866e824a81cfa3738aaa86dd93dfa27e84/Tree0a6cd9093cd9b1bbe45ae248895004f677186a93,Parent76b198e6a26fdb56b6d6e05bd5fb19e4101afcde; ProduktdirekterzweiterAncestor.
+Korrekturausführunga5a7d5f8d7375546b2182048d1f8347a4bce7a06/Treed4f5ffa4a6e4e9059bd8c815efcb1ccc44f4772c; WorkfloweinzigerAusführungsdelta, alle11Produktblobsbytegleich.
+VorbereiteterRef test/seven-native-77bcb76dd357-correction-20261114; nochNICHTausgelöst. Budgetinitial1/3; Korrektur0/1. NächsterAufruf verwendet genau autorisiertenKorrekturlauf, keinenRerun/Ersatztrigger.

@@ -1,0 +1,109 @@
+{
+  "product": "883c4eb0e8137040a9f6bfd2e193bc5833aac0c2",
+  "productTree": "9ad46b9ee8b6039f49ddf23b2655227b493692f4",
+  "source": "dcdd67866e824a81cfa3738aaa86dd93dfa27e84",
+  "sourceTree": "0a6cd9093cd9b1bbe45ae248895004f677186a93",
+  "execution": "a5a7d5f8d7375546b2182048d1f8347a4bce7a06",
+  "executionTree": "d4f5ffa4a6e4e9059bd8c815efcb1ccc44f4772c",
+  "trigger": "test/seven-native-77bcb76dd357-correction-20261114",
+  "sourceDelta": [
+    "docs/release-evidence/seven-native-contract-2026-11-14.json",
+    "tests/browser-seven-native.mjs"
+  ],
+  "executionDelta": [
+    ".github/workflows/live-initialization-diagnostics.yml"
+  ],
+  "bound": [
+    {
+      "path": "index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a37c9fdfbf108b7880bfab29f8c78f418fdf7d83",
+      "size": 50778,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/a37c9fdfbf108b7880bfab29f8c78f418fdf7d83"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2180518e25fd5002fba2c1bae771327c5ccf4083",
+      "size": 10722,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/2180518e25fd5002fba2c1bae771327c5ccf4083"
+    },
+    {
+      "path": "src/app.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "16676be83945d5f36f273e6b78c9b94a5cb5770a",
+      "size": 306309,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/16676be83945d5f36f273e6b78c9b94a5cb5770a"
+    },
+    {
+      "path": "src/booking-management.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f155730716db64f9aaefe633b20f908ce772236",
+      "size": 22680,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/4f155730716db64f9aaefe633b20f908ce772236"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78646b909340c19ad8bb9def5234ecb343147a7e",
+      "size": 7648,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/78646b909340c19ad8bb9def5234ecb343147a7e"
+    },
+    {
+      "path": "src/drive-backup.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc5b8bbd25c86a84cd7bd461b93db310e22363db",
+      "size": 28381,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/fc5b8bbd25c86a84cd7bd461b93db310e22363db"
+    },
+    {
+      "path": "src/market.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "553465166d01d7f7387e93c6e357bcf4095412a4",
+      "size": 34227,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/553465166d01d7f7387e93c6e357bcf4095412a4"
+    },
+    {
+      "path": "src/model.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "85bdb64ee62f4561fdb2817cbc12c6f7b7cf1416",
+      "size": 33342,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/85bdb64ee62f4561fdb2817cbc12c6f7b7cf1416"
+    },
+    {
+      "path": "src/security-sources.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c298f60f2b86a9d972add380140709fb5bc6a0a",
+      "size": 9683,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/0c298f60f2b86a9d972add380140709fb5bc6a0a"
+    },
+    {
+      "path": "styles.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7457647c53f26c3dac76ef7f9043b29ea9ed8aa0",
+      "size": 179495,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/7457647c53f26c3dac76ef7f9043b29ea9ed8aa0"
+    },
+    {
+      "path": "sw.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3432e8f5521d92819cb650179fa9635b10792a03",
+      "size": 5633,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/git/blobs/3432e8f5521d92819cb650179fa9635b10792a03"
+    }
+  ],
+  "sourceParent": "76b198e6a26fdb56b6d6e05bd5fb19e4101afcde",
+  "productAncestor": 2,
+  "correctionOf": 43564045852
+}
