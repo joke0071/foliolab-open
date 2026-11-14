@@ -136,3 +136,5 @@ Alle11 gebundenen Produkt-/Index-/Style-/SW-Blobs unverändert; PrüfdeltanurHar
 [Sollvertrag am gepinnten Quellstand](https://github.com/joke0071/foliolab-open/blob/76b198e6a26fdb56b6d6e05bd5fb19e4101afcde/docs/release-evidence/seven-native-contract-2026-11-14.json).
 Bestehender Originalarchivweg frisch bestätigt (V0/1249280Bytes); neue Originale separat, unverändert und gepinnt rücklesen. Private Locators unveröffentlicht.
 Noch NICHT ausgelöst; Budget0/4. Unmittelbar nach Trigger Ref/Actions zurücklesen; keine Ersatzanlage bei Unklarheit.
+
+Triggeranlage erfolgreich eindeutig rückgelesen: Ref exakt dbaac986. Neuer Run43564045852/1 gestartet; Budget1/4 (initial1/3, Korrektur0/1). Lauf bis terminal beobachten und Originale sichern. Keine weitere Anlage/Rerun.
