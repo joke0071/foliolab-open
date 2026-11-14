@@ -1,0 +1,50 @@
+{
+  "scope": "K4/K3/#254/#255: restore price types",
+  "status": "LOCAL_NODE_VALIDATED_NATIVE_NOT_RUN_NOT_FROZEN",
+  "base": "b5cab021ecbad41de28e3dd1f94fbff89852ecea",
+  "base_tree": "fda624cd2bfa248f7894a38318fe0e33cae58ef3",
+  "repro": "v1/v2/v3/v4 readers and actual Drive restore callback converted booltrue to1 and a one-element array to a price; invalid inputs reached backup offer and save.",
+  "fix": "Existing createPosition constructor requires price input to be a number or string before safeNumber. Missing/null/blank prices and numeric legacy display/exact discrepancies retain their existing behavior. No rewrite or schema migration.",
+  "tests": {
+    "original": "4new:2FAIL/2PASS; console retained",
+    "targeted": "86/86PASS/0FAIL/0SKIP/0CANCELLED",
+    "serial_combined": "243/243PASS/0FAIL/0SKIP/0CANCELLED across all locally selected test files after the shared constructor change; NOT repository FullCI",
+    "cases": "v1/v2/v3/v4 reject boolean/array/object source without mutation; real constructor retains numeric/localized/manual values; actual Drive restoreData source rejects before rollback offer/model replacement/save, exactstored bytes retained; valid2×123.45=246.9/1save",
+    "adapters": "NodeVM actual backend method with rollback/save/UI adapters. No OAuth/Drive/decrypt/browser/native IDB claim.",
+    "runtime": "Node24.22.1",
+    "syntax": "model and new test PASS"
+  },
+  "manifest": [
+    {
+      "path": "src/model.js",
+      "bytes": 33342,
+      "sha256": "cf7f510b9b9e7fdd54febc97e495eff523fda2fd4cce95ffa9630eac5d9cc949"
+    },
+    {
+      "path": "tests/restore-price-types.test.mjs",
+      "bytes": 3895,
+      "sha256": "e65be647554435192946dd45aa22cd2764c3ce22bba569226e58aee48a0c4052"
+    },
+    {
+      "path": "restore-price-original.tap",
+      "bytes": 1968,
+      "sha256": "be4eb9f1e426b286ece305abd7df683b9082e00d3b50f37eccbbabf19a697d00"
+    },
+    {
+      "path": "restore-price-final.tap",
+      "bytes": 8488,
+      "sha256": "3f49b5d9498da8645e585632414f31a5f82079981e9e79ca803bf4976339df55"
+    },
+    {
+      "path": "serial-selected-final.tap",
+      "bytes": 24600,
+      "sha256": "39906b21e80e1abc29fd525ab3fc76b4bed21ca390a65709712ac4681bdfb172"
+    }
+  ],
+  "limits": [
+    "No new native/CI run, PR, integration, release, migration or cryptography",
+    "Old numeric legacy price mismatches intentionally not auto-repaired",
+    "Native toast evidence stays bound to original04960e74/d70d81e1, not this changed product"
+  ],
+  "next": "Park completed local serial line; check next explicitly open roadmap step without rebuilding accepted features"
+}
