@@ -1,0 +1,71 @@
+name: K4 Linux Chromium SIGKILL corrected EUR display
+on:
+  push:
+    branches: [qa/k4-confirmed-idb-reopen]
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 1f05aac57c6f94cdcf2c0a84ba73963e1bb1c728
+          path: k4
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare pinned Chromium from existing K4 QA setup
+        run: |
+          set -euo pipefail
+          test "$(git -C k4 rev-parse HEAD)" = 1f05aac57c6f94cdcf2c0a84ba73963e1bb1c728
+          test "$(git -C k4 rev-parse HEAD^{tree})" = 6ad04c0d9e295b4c8c116fb90a139f7f7c0b0e34
+          mkdir -p native/evidence
+          cd native
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps chromium --only-shell
+      - name: Disposable process preflight then committed K4 case
+        env:
+          K4_ROOT: k4
+          K4_OUT: native/evidence
+        run: |
+          set -euo pipefail
+          export CHROMIUM_EXECUTABLE="$(find "$HOME/.cache/ms-playwright" -type f -name chrome-headless-shell | head -n 1)"
+          test -x "$CHROMIUM_EXECUTABLE"
+          node --check native/sigkill.cjs
+          timeout --signal=TERM --kill-after=15s 240s node native/sigkill.cjs 2>&1 | tee native/evidence/run.log
+      - name: Check protected startup states and repository tests
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory k4 >/tmp/server.log 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          curl --retry 8 --retry-connrefused --retry-delay 1 -fsS http://127.0.0.1:4173/tests/storage-origin.html >/dev/null
+          node native/guards.cjs | tee native/evidence/guards.log
+          cd k4
+          npm run check
+          npm test > ../native/evidence/unit.tap || { tail -80 ../native/evidence/unit.tap; exit 1; }
+          tail -12 ../native/evidence/unit.tap
+      - name: Seal exact synthetic originals
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p native/evidence
+          cp native/sigkill.cjs native/evidence/
+          cp .github/workflows/k4-sigkill.yml native/evidence/workflow.yml
+          git rev-parse HEAD HEAD^{tree} > native/evidence/qa-source.txt
+          git -C k4 rev-parse HEAD HEAD^{tree} > native/evidence/product-source.txt
+          cd native/evidence
+          find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k4-sigkill-synthetic-originals
+          path: native/evidence/
+          if-no-files-found: error
+          retention-days: 14
