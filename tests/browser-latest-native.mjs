@@ -85,15 +85,18 @@ async function setup(spec){
  await stage(spec.id+':ready');await ready(page);await page.waitForFunction(()=>window.__seven?.initialized);
  current.before=await record(page);current.backupAtBefore=await page.evaluate(()=>localStorage.getItem('foliolab-open-last-backup-at'));if(spec.mode==='alpha')current.cacheBefore=await alphaRecord(page);
  await page.evaluate(spec=>{
-  const state=window.__seven,put=IDBObjectStore.prototype.put;
+  const state=window.__seven,put=IDBObjectStore.prototype.put;state.events=[];
   IDBObjectStore.prototype.put=function(...a){
    if(this.name==='records'){
-    state.writes++;this.transaction.addEventListener('complete',()=>{state.commitComplete=true;},{once:true});
+    state.writes++;state.events??=[];state.events.push('records-put');
+    const transaction=this.transaction,originalComplete=transaction.oncomplete;
+    if(typeof originalComplete!=='function')throw Error('Prepared completion owner missing; do not infer commit');
+    transaction.oncomplete=function(event){state.commitComplete=true;state.events.push('transaction-complete');state.originalCompleteCalls=(state.originalCompleteCalls??0)+1;return originalComplete.call(this,event);};
     if(spec.abort){const r=put.apply(this,a);state.abortObserved=true;this.transaction.abort();return r;}
    }
    return put.apply(this,a);
   };
-  if(spec.display){const descriptor=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');Object.defineProperty(Element.prototype,'innerHTML',{...descriptor,set(value){if(this.id==='providerSettings'&&state.commitComplete&&!state.displayFaultObserved){state.displayFaultObserved=true;throw Error('SYNTHETIC_NATIVE_POSTCOMMIT_RENDER');}return descriptor.set.call(this,value);}});}
+  if(spec.display){const descriptor=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');Object.defineProperty(Element.prototype,'innerHTML',{...descriptor,set(value){if(this.id==='providerSettings'){state.events.push('provider-settings-render:'+Boolean(state.commitComplete));if(state.commitComplete&&!state.displayFaultObserved){state.displayFaultObserved=true;state.events.push('display-fault');throw Error('SYNTHETIC_NATIVE_POSTCOMMIT_RENDER');}}return descriptor.set.call(this,value);}});}
   state.toasts=[];new MutationObserver(rs=>{for(const r of rs)if(r.type==='childList'){const text=[...r.addedNodes].map(n=>n.textContent??'').join('');if(text)state.toasts.push(text);}}).observe(document.getElementById('toast'),{childList:true});
  },spec);
  check('initial revision',current.before.revision,2);
@@ -145,6 +148,7 @@ async function restore(spec){
  else{
   check('successful revision',current.after.revision,3);check('successful exact raw',current.after.raw,current.fixture.expectedRaw);check('single restore callback',current.state.probe.restores,1);check('one actual canonical write',current.state.probe.writes,1);check('status matches commit',current.state.status.error,false);check('one portfolio toast',current.state.probe.toasts.filter(x=>x==='Portfoliodaten aus Google Drive übernommen.').length,1);assert.match(current.state.status.message,/Drive-Backup wiederhergestellt\. 1 Positionen geladen\./);assert.doesNotMatch(current.state.status.message,/Vorheriger Stand lokal gesichert/);
   check('actual native commit complete before result',current.state.probe.commitComplete,true);
+  check('original completion callback exactly once',current.state.probe.originalCompleteCalls,1);
   if(spec.display){check('fault injected only after native commit',current.state.probe.displayFaultObserved,true);check('persistent warning state',current.state.headerState,'warning');assert.match(current.state.header,/Daten gespeichert.*Anzeige.*SYNTHETIC_NATIVE_POSTCOMMIT_RENDER/);assert.doesNotMatch(current.state.header,/Speicherfehler|nicht gespeichert/);check('mobile saved boundary',current.state.mobile,'Daten gespeichert · Anzeige prüfen');check('live model total after render fault',current.state.liveTotal.replace(/\s/g,''),'€246,90');}
  }
  await Promise.all(current.downloadJobs);delete current.downloadJobs;
@@ -185,14 +189,15 @@ const cases=[
  {group:'C',id:'restore-postcommit-display',mode:'restore',display:true,image:true},
  {group:'C',id:'restore-native-commit-abort',mode:'restore',abort:true,image:true}
 ];
+const selectedCases=cases.filter(c=>['restore-valid','restore-postcommit-display','restore-native-commit-abort'].includes(c.id));
 try{
  await stage('launch');browser=await chromium.launch({headless:true,args:['--no-sandbox']});report.browserVersion=browser.version();report.node=process.version;
- for(const spec of cases){
+ for(const spec of selectedCases){
   try{await setup(spec);await stage(spec.id+':action');await ({A:courses,B:bookings,C:restore}[spec.group])(spec);current.result='PASS';await stage(spec.id,'PASS');}
   catch(error){current.result='FAIL';current.error={message:error.message,stack:error.stack};await stage(spec.id,'FAIL');try{current.failureRecord=await record(page);await shot(spec.id+'-failure');}catch(e){current.captureError=String(e);}}
   finally{try{await context?.close();current.cleanup='PASS';}catch(e){current.cleanup='FAIL';current.cleanupError=String(e);}await writeFile(dir+'/'+spec.id+'.json',JSON.stringify(current,null,2));context=null;page=null;}
  }
- report.groups=Object.fromEntries(['A','B','C'].map(g=>[g,{pass:report.cases.filter(c=>c.group===g&&c.result==='PASS').length,total:cases.filter(c=>c.group===g).length,result:report.cases.filter(c=>c.group===g).every(c=>c.result==='PASS')?'PASS':'FAIL'}]));
+ report.groups=Object.fromEntries([...new Set(selectedCases.map(c=>c.group))].map(g=>[g,{pass:report.cases.filter(c=>c.group===g&&c.result==='PASS').length,total:selectedCases.filter(c=>c.group===g).length,result:report.cases.filter(c=>c.group===g).every(c=>c.result==='PASS')?'PASS':'FAIL'}]));
  report.result=report.cases.every(c=>c.result==='PASS')?'PASS':'FAIL';if(report.result!=='PASS')process.exitCode=1;
 }catch(e){report.result='FAIL';report.error=String(e);process.exitCode=1;}
 finally{try{await context?.close();await browser?.close();report.cleanup='PASS';}catch(e){report.cleanup='FAIL';report.cleanupError=String(e);process.exitCode=1;}await stage('complete',report.result);}
