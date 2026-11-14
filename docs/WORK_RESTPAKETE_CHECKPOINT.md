@@ -1,3 +1,11 @@
+# HND01 · K4-Restnachweis · 14.11.2026
+
+**ACTIVE · sol-k4-preflight-20261114 · alleiniger Writer für diesen begrenzten Lauf.** Übernahme vom ausdrücklich STOPPED/HANDOVER_READY gesetzten Vorgänger sol-v314-live-20261114. Erwarteter Zentralhead: `670f3bda19266bcba1e43279e1256d7f08ca5c72`; Main unverändert `48125a2608b27095fbdf89445340f90d04e9291b`, Tree `acd2a876c84055021c22263ac0f8aabdc5a6b4c2`, v314 LIVE_ACCEPTED. Nutzerauftrag: ersten gültig prüfbaren offenen K4-Fall, zuerst Prozessabbruch, danach Eviction; Ergebnis sichern und Zuständigkeit abgeben. Kein Produkt-/Workflowpatch beauftragt.
+
+Einstieg gelesen: K4-Zeile der kanonischen Roadmap, #44/#254 mit Nullverlust-/Commit-/Wiederanlaufkriterien, K4_REVIEW_2026-11-14.md und bisherige native Belege. Main, Zentralref, offene PRs332/161/157 und letzte zehn Actionsläufe frisch abgeglichen; keine dieser Arbeiten übernommen, alle gelesenen Läufe abgeschlossen. Vorherige PR337-/Restore-/Releaseabnahme wird weiterverwendet. Nur Voraussetzungsprüfung vor Ausführung; kein K4-PASS aus Browserinstallation, simuliertem Crash oder Datensatzlöschung.
+
+---
+
 # Aktueller HND01-Checkpoint
 
 **STOPPED/HANDOVER_READY · sol-v314-live-20261114 · kein eigener Writer/Lauf mehr aktiv.** Nutzerauftrag Produktionsabnahme nach PR337 vollständig abgeschlossen. **v314 LIVE_ACCEPTED** auf https://foliolab.unperfekt.at/. Bestehenden Main-Lauf bis zum erfolgreichen Abschluss begleitet; kein manueller Zusatzstart, Rerun, erneutes Deployment oder Produktpatch. Nur dieser Checkpoint wurde aktualisiert.
