@@ -32,8 +32,14 @@ test('closed or unresponsive page cannot replace the original gate result with a
  const closed=await observeLiveStartup(page(async()=>{throw Error('page closed');}),base);assert.match((await closed()).state.captureError,/page closed/);
  const hung=await observeLiveStartup(page(()=>new Promise(()=>{})),base,{captureBudget:10});assert.match((await hung()).state.captureError,/exceeded diagnostic budget/);
 });
-test('pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport',()=>{
- let source=readFileSync(new URL('./browser-live-acceptance.mjs',import.meta.url),'utf8');
+const liveSource=readFileSync(new URL('./browser-live-acceptance.mjs',import.meta.url),'utf8');
+function assertHistoricalLiveContract(source){
+ // Reverse only the two exact asset-observation deltas; keep every gate byte.
+ const assetDiagnosticDeltas=[
+  ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
+  ["const observation={path,url:url.href,requestedAt:Date.now()};report.assetResponses.push(observation);let r;try{r=await c.request.get(url.href);observation.status=r.status();observation.headers=r.headers();if(r.status()!==200)observation.body=(await r.text()).slice(0,2048);}catch(error){observation.networkError=String(error);throw error;}","const r=await c.request.get(url.href);"]
+ ];
+ for(const [current,previous] of assetDiagnosticDeltas){assert.equal(source.split(current).length,2,'Exact asset diagnostic delta required once');source=source.replace(current,previous);}
  const additions=["import {observeLiveStartup} from './live-startup-diagnostics.mjs';\n",'let diagnoseStartup=null;\n',' diagnoseStartup=await observeLiveStartup(p,base);\n','if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();'];
  for(const line of additions){assert.equal(source.split(line).length,2);source=source.replace(line,'');}
  // The checkbox became one canonical frequency select. Require these exact
@@ -44,4 +50,13 @@ test('pre-existing live assertions and deadlines remain byte-identical except th
  ];
  for(const [current,previous] of frequencyDeltas){assert.equal(source.split(current).length,2);source=source.replace(current,previous);}
  assert.equal(createHash('sha256').update(source).digest('hex'),'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3');
+}
+test('pre-existing live assertions and deadlines remain byte-identical except exact frequency and diagnostic deltas',()=>assertHistoricalLiveContract(liveSource));
+test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
+ for(const changed of [
+  liveSource.replace('assetResponses:[],',''),
+  liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
+  liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),
+  liveSource.replace("assert.equal(actual,expected,'published bytes '+path);","assert.equal(actual,actual,'published bytes '+path);")
+ ])assert.throws(()=>assertHistoricalLiveContract(changed));
 });
