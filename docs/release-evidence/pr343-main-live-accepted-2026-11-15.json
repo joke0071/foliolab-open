@@ -1,0 +1,122 @@
+{
+  "technicalResult": "PASS",
+  "head": "8c53cbfd77be9a37cce31cc4df8396e9f2f06ede",
+  "tree": "359e369dd4de3095e27f21cd5de2b0fa5d359950",
+  "approvedHead": "109813179bad4da7990688361dcbc2ed20a3ca0a",
+  "approvedBase": "127019cf71304981c0c7f1a446f4dee8bc27404d",
+  "run": 43758292489,
+  "attempt": 1,
+  "unitTests": 1492,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "mainJsonReports": 261,
+  "mainExplicitAssertions": 646,
+  "mainManualSchemas": 8,
+  "csvHeightMeasurements": 15,
+  "csvMinimumPx": 44,
+  "csvControlsEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "deployJob": 132954441037,
+  "liveJob": 132954532737,
+  "mainCI": "SUCCESS",
+  "deploy": "SUCCESS",
+  "live": "SUCCESS",
+  "productionJsonReports": 196,
+  "productionExplicitAssertions": 254,
+  "productionManualSchemas": 26,
+  "pagesFiles": 154,
+  "liveAssetMatches": 155,
+  "loadedAssetMatches": 142,
+  "proxyCertificateException": false,
+  "workerDiagnosticFiles": 208,
+  "workerEngines": {
+    "chromium": 70,
+    "firefox": 69,
+    "webkit": 69
+  },
+  "flagsBeforeBrowserClosing": 0,
+  "postClosingFlags": 1,
+  "postClosingDisposition": "Sonic Runtime.runIfWaitingForDebugger timeout4986ms after browserClosing and4959ms after browserClosed, preserved. No instrumentation flag before browserClosing. This does not establish an earlier acquisition failure or the cause of historical503/SW events; historical causes remain UNKNOWN.",
+  "visualReview": {
+    "result": "BOUNDED_OWN_VISUAL_REVIEW_NO_NEW_SCOPE_FINDINGS",
+    "members": [
+      "live/320.png",
+      "live/390.png",
+      "live/1440.png",
+      "bitpanda-import/chromium-390.png"
+    ],
+    "scope": "Actual production captures at320/390/1440 and Bitpanda CSV dialog; fixed headers/footer and visible controls checked.320px restore toast is transient; modal screenshot is scrolled. No physical Android/Windows or independent reviewer claim."
+  },
+  "retries": 0,
+  "cancelledRuns": 0,
+  "preservation": {
+    "result": "PASS",
+    "package": {
+      "file_name": "FolioLab_PR343_Main43758292489_Originalbelege_2026-11-15.tar",
+      "bytes": 364328960,
+      "sha256": "fabfe409b04429afff30416940810b82c104f70a24de0f9fac5ad26f36139b3d",
+      "manifestFiles": 48,
+      "originalZipCount": 8,
+      "head": "8c53cbfd77be9a37cce31cc4df8396e9f2f06ede",
+      "tree": "359e369dd4de3095e27f21cd5de2b0fa5d359950",
+      "run": 43758292489,
+      "attempt": 1,
+      "scope": "New exact main/deployment/live originals; qualified PR343 and accepted v318 predecessor pins retained separately. Final durability and physical restore receipt is external, avoiding circular self-hash."
+    },
+    "file_id": "file_000000002ec082129e1da376f06a5d1d",
+    "library_file_id": "libfile_fde3_f-f3a3a6138da481918e436b8550a3aa58_54e45e8130348191808d9aaa710cf372",
+    "pinnedVersion": 0,
+    "independentReadbackByteEqual": true,
+    "distinctFileIdentity": true,
+    "manifestFiles": 48,
+    "originalZIPs": 8,
+    "physicallyRestoredOriginalFiles": 4237,
+    "physicallyRestoredPagesFiles": 154,
+    "zipCounts": [
+      {
+        "zip": "chromium.zip",
+        "files": 825
+      },
+      {
+        "zip": "cross1.zip",
+        "files": 515
+      },
+      {
+        "zip": "cross2.zip",
+        "files": 123
+      },
+      {
+        "zip": "cross3.zip",
+        "files": 878
+      },
+      {
+        "zip": "dialogs.zip",
+        "files": 20
+      },
+      {
+        "zip": "pages.zip",
+        "files": 1
+      },
+      {
+        "zip": "production.zip",
+        "files": 1874
+      },
+      {
+        "zip": "stage.zip",
+        "files": 1
+      }
+    ],
+    "fullRestoreManifest": {
+      "bytes": 1015189,
+      "sha256": "3496665cf5e2ce48b6369996243f8d057443bf6aca10a445cb1065af774d4962",
+      "gzipBytes": 220244,
+      "gzipSha256": "1b1c7dbe97dba004153a4b20330c224200d8b89ac2665449c8efbfc6aedb21d3"
+    },
+    "limits": "Evidence and deployed bytes physically restored. Actual portfolio UI plain/encrypted FreshRestore is independently proven in production live/report.json; no real Windows/Android or independent historical finance claim."
+  },
+  "limits": "Synthetic headless browser portfolios; physical Windows/Android, original ETH cursor and independent historical balance/ownership evidence remain open. SW/productbytes remain v318.",
+  "status": "LIVE_ACCEPTED"
+}
