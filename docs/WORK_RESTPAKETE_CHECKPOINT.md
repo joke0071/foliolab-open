@@ -4,7 +4,7 @@ Writer: NONE. Vorheriger alleiniger Writer: k3-emergency-9142fbd8f0d0. Geordnete
 
 ## Verbindlicher Produktstand
 
-- PR340 https://github.com/joke0071/foliolab-open/pull/340 ist gemergt. Freigegebener Head f03cc26182d40fa3f10fd88a133c725cef0, tatsächlicher Main/Merge a53856e385ef1d9fd65d8710618244e80b8341e7, exakt freigegebener Tree b70a02558a89158f80420b2c895bbcb2c18ab7c7. Eltern82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69 undf03cc261. Keine relevante Abweichung der Mergegrundlage.
+- PR340 https://github.com/joke0071/foliolab-open/pull/340 ist gemergt. Freigegebener Head f03cc26182d40fa3f10fd88a133c725be925cef0, tatsächlicher Main/Merge a53856e385ef1d9fd65d8710618244e80b8341e7, exakt freigegebener Tree b70a02558a89158f80420b2c895bbcb2c18ab7c7. Eltern82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69 undf03cc261. Keine relevante Abweichung der Mergegrundlage.
 - v317 DEPLOYED, ausdrücklich NICHT LIVE_ACCEPTED. Letzter vollständig akzeptierter Release v316; kein Rollback. Regulärer Main43713836553: Plan/Chromium/alle3Crossjobs/Deployment SUCCESS;1481Units/0Fehler/0Skips;154Pagesdateien gegen freigegebeneGitblobs unabhängigbytegenau.
 - Alter44px-Befund wurde vonJochen als offenerDiagnosepunkt akzeptiert. >=44-Anforderung und Messdiagnostik unverändert aktiv. Alle15Main-Rechtecke exakt44px; keineWiederkehr. KeinebehaupteteUrsachenbehebung.
 
