@@ -1,0 +1,35 @@
+name: v317 actual worker install failure observation
+on:
+  push:
+    branches: [diagnostic/v317-sw-install-9142fbd8]
+permissions:
+  contents: read
+concurrency:
+  group: v317-sw-install-9142fbd8
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install identical Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium --only-shell
+      - name: Observe fresh real installation and unchanged fixture predicate
+        run: node tests/v317-sw-install-diagnosis.mjs
+      - name: Preserve worker and network originals
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v317-sw-install-${{ github.sha }}
+          path: |
+            artifacts/v317-sw-install/
+            artifacts/gates/storage-fixture/
+          if-no-files-found: error
