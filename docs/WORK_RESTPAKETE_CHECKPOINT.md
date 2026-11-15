@@ -6,9 +6,11 @@ Writer k3-emergency-9142fbd8f0d0. Jochen hat am15.11.2026 den dokumentierten nic
 
 PR340 per expected_head_sha=f03cc26182d40fa3f10fd88a133c725be925cef0 gemergt. Tatsächlicher Mainmerge a53856e385ef1d9fd65d8710618244e80b8341e7, Tree b70a02558a89158f80420b2c895bbcb2c18ab7c7 stimmt exakt mit Freigabe überein; Eltern82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69 undf03cc26182d40fa3f10fd88a133c725be925cef0. Kein weiterer Produkt-/Workflowpatch.
 
-Regulärer Mainlauf [43713836553](https://github.com/joke0071/foliolab-open/actions/runs/43713836553)/Versuch1 IN_PROGRESS; PlanSUCCESS, vierBrowserjobs laufen. Deployment/Live noch nicht abgenommen; v317 ausdrücklich noch nichtLIVE_ACCEPTED. >=44-Prädikat und Messdiagnostik unverändert aktiv. Bei erneutemFail dessen tatsächliches Rechteck/Viewport/Styles/Ancestors/Screenshot sichern und untersuchen, kein blinder Retry.
+Regulärer Mainlauf [43713836553](https://github.com/joke0071/foliolab-open/actions/runs/43713836553)/Versuch1 IN_PROGRESS; PlanSUCCESS; Chromium/test sowie cross-engine(1) und(2) SUCCESS, ausschließlich cross-engine(3) nochIN_PROGRESS (Browserblock seit12:27:49UTC, Job132811033006). Deployment/Live noch nicht abgenommen; v317 ausdrücklich noch nichtLIVE_ACCEPTED. >=44-Prädikat und Messdiagnostik unverändert aktiv. Bei erneutemFail dessen tatsächliches Rechteck/Viewport/Styles/Ancestors/Screenshot sichern und untersuchen, kein blinder Retry.
 
 GeprüfteMainquellen: sw.js SHA25687a78a1b47651b89a801c97fcf117d93ce80a2fc0727b4b9b3c90815fdc6d706, src/app.js SHA2561670dc517cab83bd134b66e44554e54c2d24d27431d6f8122d8cbacfaf2318e0. ErwarteteBerichtpfade vor Ergebnis aus gesichertenPR-Originalen und akzeptiertemv316-Produktionsartefakt14153304955 bestimmt; keine aus künftigen Istwerten abgeleitete Sollfreigabe.
+
+Bereits geladene Mainoriginale:14161875496(Stage),14162160595(Cross2,22JSON),14161957193(Cross1,18JSON),14162535504(Chromium,105JSON),14161449227(Dialog20PNG); Größe/Digest/CRC und erwartete Berichtpfade geprüft. Neue Archivhinweis-Regression23Checks jeEnginePASS; Chromium5×44px,1481Units/0Fehler/0Skips. Noch kein neuer44px-Fail gemeldet. Vollständige Releaseoriginalsicherung/Readback/Restore bleiben bis zum vollständigen Main-/Deploy-/Live-Ergebnis PENDING. Kein weiterer Lauf gestartet.
 
 ## Weiterverwendung / Abschlussauftrag
 
