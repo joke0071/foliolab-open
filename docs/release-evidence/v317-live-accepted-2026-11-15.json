@@ -1,0 +1,937 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "release": "v317",
+  "main": "0d1638cb2034805dace789e3072fbb7bcda8d52c",
+  "tree": "2644817dfb558da9668ec0a55bd7e6092cd80324",
+  "approvedHead": "61b56ac50a2e87796db0aad0027675ae3fd5c142",
+  "approvedBase": "a53856e385ef1d9fd65d8710618244e80b8341e7",
+  "run": 43734167356,
+  "attempt": 1,
+  "mainCI": "SUCCESS",
+  "deploymentJob": 132879585194,
+  "liveJob": 132879689077,
+  "liveResult": "SUCCESS",
+  "production": "https://foliolab.unperfekt.at/",
+  "unitTests": 1483,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "ordinaryTLS": true,
+  "pagesGitBlobMatches": 154,
+  "liveAssetHashMatches": 155,
+  "loadedAssetMatches": 142,
+  "coreChecks": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+  ],
+  "coreAxeScans": 18,
+  "coreErrors": [],
+  "productionReports": [
+    {
+      "member": "production-ui-chromium.json",
+      "sha256": "9bf99ce82df2059cb047114fb058e09026d16e1720fa8dc1a68130c876c16300",
+      "engines": [
+        {
+          "engine": "chromium",
+          "status": "PASS",
+          "scans": 66
+        }
+      ]
+    },
+    {
+      "member": "production-ui-cross.json",
+      "sha256": "b7e9e0bb0ce797c4ea24f85e7eb68d4926490772738ab68d046bab36d71de846",
+      "engines": [
+        {
+          "engine": "firefox",
+          "status": "PASS",
+          "scans": 66
+        },
+        {
+          "engine": "webkit",
+          "status": "PASS",
+          "scans": 66
+        }
+      ]
+    },
+    {
+      "member": "production-transfers-chromium.json",
+      "sha256": "a88f412aba083368451d566fdd1e137eb73e5296a1c51004e83f19a4fce43d9f",
+      "engines": [
+        {
+          "engine": "chromium",
+          "status": "PASS",
+          "scans": 10
+        }
+      ]
+    },
+    {
+      "member": "production-transfers-cross.json",
+      "sha256": "ba44a1a298be1e134f8853a3e13dd0855152449a9538ae00c5a0648ddc4ec84d",
+      "engines": [
+        {
+          "engine": "firefox",
+          "status": "PASS",
+          "scans": 10
+        },
+        {
+          "engine": "webkit",
+          "status": "PASS",
+          "scans": 10
+        }
+      ]
+    }
+  ],
+  "cacheObservations": [
+    {
+      "engine": "chromium",
+      "member": "storage-fixture/chromium-1794760700022.json",
+      "stage": "after-reload",
+      "controller": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "active": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "controlled": true,
+      "caches": [
+        "foliolab-open-v317"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "member": "storage-fixture/firefox-1794761322133.json",
+      "stage": "after-reload",
+      "controller": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "active": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "controlled": true,
+      "caches": [
+        "foliolab-open-v317"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "member": "storage-fixture/webkit-1794761335998.json",
+      "stage": "after-reload",
+      "controller": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "active": {
+        "script": "https://foliolab.unperfekt.at/sw.js",
+        "state": "activated"
+      },
+      "controlled": true,
+      "caches": [
+        "foliolab-open-v317"
+      ]
+    }
+  ],
+  "mainHeightMeasurements": [
+    {
+      "engine": "chromium",
+      "width": 320,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "chromium",
+      "width": 430,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "firefox",
+      "width": 430,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "firefox",
+      "width": 1440,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "webkit",
+      "width": 430,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "result": "PASS",
+      "height": 44
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "result": "PASS",
+      "height": 44
+    }
+  ],
+  "workerDiagnostics": {
+    "files": 208,
+    "engines": {
+      "chromium": 70,
+      "firefox": 69,
+      "webkit": 69
+    },
+    "allBrowsersClosed": true,
+    "allChromiumCaptureReady": true,
+    "preClosingInstrumentationErrors": 0,
+    "postClosingInstrumentationErrors": [
+      {
+        "member": "worker-diagnostics/chromium-6576-0.jsonl",
+        "script": "/home/runner/work/foliolab-open/foliolab-open/tests/browser-pchain-evidence.mjs",
+        "failure": {
+          "at": 1794760954766,
+          "event": "instrumentationError",
+          "error": "Error: Runtime.runIfWaitingForDebugger timeout"
+        },
+        "eventsBeforeAndAfter": [
+          {
+            "at": 1794760949772,
+            "event": "browserClosing"
+          },
+          {
+            "at": 1794760949774,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.198",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/historical-position-value.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630663,
+              "wallTime": 1794760949.755736,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949774,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.199",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/purchase-evidence.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630735,
+              "wallTime": 1794760949.755806,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949775,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.200",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/purchase-evidence-ui.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630778,
+              "wallTime": 1794760949.755847,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949787,
+            "event": "contextClosed",
+            "context": 0
+          },
+          {
+            "at": 1794760949803,
+            "event": "browserClosed"
+          },
+          {
+            "at": 1794760954766,
+            "event": "instrumentationError",
+            "error": "Error: Runtime.runIfWaitingForDebugger timeout"
+          }
+        ],
+        "lastEvents": [
+          {
+            "at": 1794760949774,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.198",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/historical-position-value.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630663,
+              "wallTime": 1794760949.755736,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949774,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.199",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/purchase-evidence.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630735,
+              "wallTime": 1794760949.755806,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949775,
+            "event": "cdp",
+            "sessionId": "8F86BD702DC3F0A6B647D92D167D7EA5",
+            "method": "Network.requestWillBeSent",
+            "params": {
+              "requestId": "6635.200",
+              "loaderId": "",
+              "documentURL": "https://foliolab.unperfekt.at/sw.js",
+              "request": {
+                "url": "https://foliolab.unperfekt.at/src/purchase-evidence-ui.js",
+                "method": "GET",
+                "headers": {
+                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+                  "Referer": "https://foliolab.unperfekt.at/sw.js"
+                },
+                "initialPriority": "High",
+                "referrerPolicy": "strict-origin-when-cross-origin"
+              },
+              "timestamp": 432.630778,
+              "wallTime": 1794760949.755847,
+              "initiator": {
+                "type": "script",
+                "stack": {
+                  "callFrames": [
+                    {
+                      "functionName": "",
+                      "scriptId": "3",
+                      "url": "https://foliolab.unperfekt.at/sw.js",
+                      "lineNumber": 5,
+                      "columnNumber": 55
+                    }
+                  ]
+                }
+              },
+              "redirectHasExtraInfo": false,
+              "type": "Fetch",
+              "hasUserGesture": false
+            }
+          },
+          {
+            "at": 1794760949787,
+            "event": "contextClosed",
+            "context": 0
+          },
+          {
+            "at": 1794760949803,
+            "event": "browserClosed"
+          },
+          {
+            "at": 1794760954766,
+            "event": "instrumentationError",
+            "error": "Error: Runtime.runIfWaitingForDebugger timeout"
+          }
+        ],
+        "classification": "POST_BROWSER_CLOSING_CDP_TEARDOWN",
+        "browserClosingAt": 1794760949772
+      },
+      {
+        "member": "worker-diagnostics/chromium-6656-0.jsonl",
+        "script": "/home/runner/work/foliolab-open/foliolab-open/tests/browser-sonic-staking-evidence.mjs",
+        "failure": {
+          "at": 1794760955462,
+          "event": "instrumentationError",
+          "error": "Error: {\"code\":-32001,\"message\":\"Session with given id not found.\"}"
+        },
+        "eventsBeforeAndAfter": [
+          {
+            "at": 1794760955456,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.loadingFinished",
+            "params": {
+              "requestId": "347C7D0259DBAF285FED50884AA7131C",
+              "timestamp": 438.323557,
+              "encodedDataLength": 302
+            }
+          },
+          {
+            "at": 1794760955456,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Runtime.executionContextCreated",
+            "params": {
+              "context": {
+                "id": 1,
+                "origin": "https://foliolab.unperfekt.at/sw.js",
+                "name": "",
+                "uniqueId": "7516843284068809858.-3316133920065494864"
+              }
+            }
+          },
+          {
+            "at": 1794760955460,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.requestWillBeSentExtraInfo",
+            "params": {
+              "requestId": "6717.145",
+              "associatedCookies": [],
+              "headers": {
+                ":authority": "foliolab.unperfekt.at",
+                ":method": "GET",
+                ":path": "/src/install-hint-preference.js",
+                ":scheme": "https",
+                "accept": "*/*",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "priority": "u=1, i",
+                "referer": "https://foliolab.unperfekt.at/sw.js",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+              },
+              "connectTiming": {
+                "requestTime": 438.327202
+              },
+              "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "PermissionBlock"
+              },
+              "siteHasCookieInOtherPartition": false
+            }
+          },
+          {
+            "at": 1794760955460,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.requestWillBeSentExtraInfo",
+            "params": {
+              "requestId": "6717.146",
+              "associatedCookies": [],
+              "headers": {
+                ":authority": "foliolab.unperfekt.at",
+                ":method": "GET",
+                ":path": "/src/wallet-identity.js",
+                ":scheme": "https",
+                "accept": "*/*",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "priority": "u=1, i",
+                "referer": "https://foliolab.unperfekt.at/sw.js",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+              },
+              "connectTiming": {
+                "requestTime": 438.327465
+              },
+              "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "PermissionBlock"
+              },
+              "siteHasCookieInOtherPartition": false
+            }
+          },
+          {
+            "at": 1794760955460,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.requestWillBeSentExtraInfo",
+            "params": {
+              "requestId": "6717.147",
+              "associatedCookies": [],
+              "headers": {
+                ":authority": "foliolab.unperfekt.at",
+                ":method": "GET",
+                ":path": "/src/flatex-net-reconciliation.js",
+                ":scheme": "https",
+                "accept": "*/*",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "priority": "u=1, i",
+                "referer": "https://foliolab.unperfekt.at/sw.js",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+              },
+              "connectTiming": {
+                "requestTime": 438.327622
+              },
+              "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "PermissionBlock"
+              },
+              "siteHasCookieInOtherPartition": false
+            }
+          },
+          {
+            "at": 1794760955461,
+            "event": "cdp",
+            "method": "Target.detachedFromTarget",
+            "params": {
+              "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+              "targetId": "347C7D0259DBAF285FED50884AA7131C"
+            }
+          },
+          {
+            "at": 1794760955462,
+            "event": "instrumentationError",
+            "error": "Error: {\"code\":-32001,\"message\":\"Session with given id not found.\"}"
+          },
+          {
+            "at": 1794760955468,
+            "event": "contextClosed",
+            "context": 0
+          },
+          {
+            "at": 1794760955484,
+            "event": "browserClosed"
+          }
+        ],
+        "lastEvents": [
+          {
+            "at": 1794760955460,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.requestWillBeSentExtraInfo",
+            "params": {
+              "requestId": "6717.146",
+              "associatedCookies": [],
+              "headers": {
+                ":authority": "foliolab.unperfekt.at",
+                ":method": "GET",
+                ":path": "/src/wallet-identity.js",
+                ":scheme": "https",
+                "accept": "*/*",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "priority": "u=1, i",
+                "referer": "https://foliolab.unperfekt.at/sw.js",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+              },
+              "connectTiming": {
+                "requestTime": 438.327465
+              },
+              "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "PermissionBlock"
+              },
+              "siteHasCookieInOtherPartition": false
+            }
+          },
+          {
+            "at": 1794760955460,
+            "event": "cdp",
+            "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+            "method": "Network.requestWillBeSentExtraInfo",
+            "params": {
+              "requestId": "6717.147",
+              "associatedCookies": [],
+              "headers": {
+                ":authority": "foliolab.unperfekt.at",
+                ":method": "GET",
+                ":path": "/src/flatex-net-reconciliation.js",
+                ":scheme": "https",
+                "accept": "*/*",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "priority": "u=1, i",
+                "referer": "https://foliolab.unperfekt.at/sw.js",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+              },
+              "connectTiming": {
+                "requestTime": 438.327622
+              },
+              "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "PermissionBlock"
+              },
+              "siteHasCookieInOtherPartition": false
+            }
+          },
+          {
+            "at": 1794760955461,
+            "event": "cdp",
+            "method": "Target.detachedFromTarget",
+            "params": {
+              "sessionId": "4BB689F7A2E172376AA36AA6B8707749",
+              "targetId": "347C7D0259DBAF285FED50884AA7131C"
+            }
+          },
+          {
+            "at": 1794760955462,
+            "event": "instrumentationError",
+            "error": "Error: {\"code\":-32001,\"message\":\"Session with given id not found.\"}"
+          },
+          {
+            "at": 1794760955468,
+            "event": "contextClosed",
+            "context": 0
+          },
+          {
+            "at": 1794760955484,
+            "event": "browserClosed"
+          }
+        ],
+        "classification": "POST_BROWSER_CLOSING_CDP_TEARDOWN",
+        "browserClosingAt": 1794760955455
+      }
+    ],
+    "scope": "CDP affects timing; Firefox/WebKit context/document observations only; historical503/SW causes UNKNOWN"
+  },
+  "visualReview": {
+    "scope": "Bounded manual review of five original production screenshots, plus Main archive-limit Firefox/WebKit shots; existing UI assets unchanged by PR341. Full-page captures contain fixed-header/navigation/scroll/focus artifacts; no new UI source regression inferred. No all-image or physical-device audit.",
+    "members": [
+      "live/320.png",
+      "live/390.png",
+      "live/1440.png",
+      "ui-positions-390.png",
+      "c5-bookings-390.png"
+    ]
+  },
+  "historical503AndSWCauses": "UNKNOWN",
+  "artifacts": [
+    {
+      "id": 14171773607,
+      "name": "production-live-acceptance-0d1638cb2034805dace789e3072fbb7bcda8d52c",
+      "size_in_bytes": 148396140,
+      "digest": "sha256:1791382c2e67e4b2184948a9ea084ac130b81f99838bb3b67a755452823a36d4",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14170760388,
+      "name": "cross-engine-gates-0d1638cb2034805dace789e3072fbb7bcda8d52c-3",
+      "size_in_bytes": 70300226,
+      "digest": "sha256:f3e9eeaab302212f1fb21da931da8277c6d7177bdc512b197f821f00dc2705e9",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14170326246,
+      "name": "cross-engine-gates-0d1638cb2034805dace789e3072fbb7bcda8d52c-2",
+      "size_in_bytes": 12592926,
+      "digest": "sha256:75d07b54c2d3d7748d439db0c8c6d4384d7006e51eced9f9b481c5d18281d77d",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14170183247,
+      "name": "release-gates-0d1638cb2034805dace789e3072fbb7bcda8d52c",
+      "size_in_bytes": 66674592,
+      "digest": "sha256:f6377b3f39cd2025eef8197c48c978a3537e5ae6811a6c39f2fadbd17751e411",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14170020319,
+      "name": "ci-stage-0d1638cb2034805dace789e3072fbb7bcda8d52c",
+      "size_in_bytes": 354,
+      "digest": "sha256:67464a4ea21036a463e7a53b0a24526ee4a3b5a70efc6879806bab848d3f81bd",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14170013770,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934735,
+      "digest": "sha256:33f5e9c56331b7175ee41dda00f9b065c38d6c6a09317ee382ecb5b186791828",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14169767993,
+      "name": "cross-engine-gates-0d1638cb2034805dace789e3072fbb7bcda8d52c-1",
+      "size_in_bytes": 60705925,
+      "digest": "sha256:319fd9380055abd56868d49f2976e1069391900d52ef31e8162a37dbe67d611b",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    },
+    {
+      "id": 14169459239,
+      "name": "github-pages",
+      "size_in_bytes": 574364,
+      "digest": "sha256:4a4aa9bbe85327fca1104c35f9069aa2013cc591109ada8c60bd149d6118e7a3",
+      "workflow_run": {
+        "id": 43734167356,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "0d1638cb2034805dace789e3072fbb7bcda8d52c"
+      }
+    }
+  ],
+  "backup": {
+    "result": "PASS",
+    "file_name": "FolioLab_v317_Main43734167356_Originalbelege_2026-11-15.tar",
+    "file_id": "file_00000000033881f5bed4585a83691f26",
+    "library_file_id": "libfile_fde3_f-8da5b78b42cc8191a219fb27e84d8a42_54e45e8130348191808d9aaa710cf372",
+    "version": 0,
+    "bytes": 365086720,
+    "sha256": "471f9f2f26b0a6b02a1ba56078e906d4f9440377bfe2f944343f52b56b62bf30",
+    "independentPinnedReadback": true,
+    "distinctInode": true,
+    "outerManifestFiles": 36,
+    "originalZips": 8,
+    "physicallyRestoredFiles": 4237,
+    "restoredSiteFiles": 154,
+    "mode": "ACTUAL_RESTORE_NOT_INDEX_ONLY",
+    "scope": "Evidence archive and delivered154 files restored physically. Actual plain/encrypted portfolio UI FreshRestore is separately proven by production report."
+  },
+  "k3": {
+    "archiveHint": "DONE",
+    "overall": "PARTIAL",
+    "internalCodeGap": "No concrete remaining gap after existing18selection/9volume/3amount proofs and this complete release.",
+    "external": "A09 actual Windows Chrome/Edge and Android Chrome/PWA remains parked OPERATOR_INPUT_PENDING.",
+    "limits": "5000 positions for1.0;10000 bookings and10000 reference dates remain independently proven;5000 simultaneously archived bookings is action-only."
+  },
+  "next": "K2-KURSE/#266/SEC-03 credential diagnostic/cache boundary; local9 red->green regressions,38 targeted PASS, exact IDB unchanged in Chromium; separate qualified PR and later merge decision."
+}

@@ -107,3 +107,10 @@ Produktionslauf43713836553 scheiterte zuerst an HTTP503 beim Assetcheck, der beg
 
 
 Die vorherige abschließende44px-Blockerentscheidung ist historisch: Jochen akzeptierte diesen offenen Diagnosepunkt und gab den exakten Head frei. Maßgeblicher aktueller Blocker ist der fehlende vollständige Produktionsnachweis nach den zwei gesicherten Live-Fehlern. Die erfolgreiche gezielte Kraken-Gegenprobe erklärt den ursprünglichen Installationsausfall nicht. Writerübergabe steht ausschließlich im aktuellen HND01-Checkpoint.
+
+
+## Maßgeblicher Abschluss · 15.11.2026 · v317 LIVE_ACCEPTED
+
+Der [vollständige Release43734167356/1](V317_RELEASE_ACCEPTANCE_2026-11-15.md) auf Main0d1638cb/Tree2644817d schließt den bislang offenen Produktionsnachweis. PR341 nur am ausdrücklich freigegebenen61b56ac5 gemergt. **Archivhinweis DONE.**23Main-Checks je Engine, vollständige Produktion3Engines, reguläresTLS,155Assethashes und neue gepinnteOriginale/4237-Dateien-Restore belegt.15Zielhöhen44px; alte44px-/HTTP503-/SW-Ursachen nicht nachträglich kausal erklärt. Zwei CDP-Abschlussflags nach browserClosing erhalten und exakt eingeordnet.
+
+**Verbleibendes Gesamt-K3 separat PARTIAL:** tatsächliche Windows-Chrome/Edge-/Android-Chrome/PWA-Abnahme A09 geparkt/OPERATOR_INPUT_PENDING. Nach Abgleich der18Auswahl-/9Großmengen-/3Betragsfälle und bestehenden sicheren Normaltypen wurde keine zusätzliche konkrete interne Codelücke gefunden.5.000Positionen für1.0 ausdrücklich entschieden;10.000Buchungen und10.000Stichtage weiter unabhängig belegt.5.000gleichzeitig archivierte Buchungen betrifft ausschließlich die Aktion. Keine erneute Mengen-/Notiz-/Auswahlsuite nötig. Fachlich geschützte Spezialmutationen bleiben in ihren eigenen Scopes; A09/Grafikherkunft nicht wieder geöffnet.
