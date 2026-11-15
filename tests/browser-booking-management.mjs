@@ -58,3 +58,6 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
 
 // Exercise imported economic removal through every existing required engine gate.
 import "./browser-import-cash-removal.mjs";
+
+// Keep the archive-size explanation in all existing required engine gates.
+await import("./browser-booking-archive-limit.mjs");
