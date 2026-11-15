@@ -1,10 +1,16 @@
+## Fortschreibung · 15.11.2026 · 1.0-Positionsumfang entschieden / v317-Diagnostik in QA
+
+Produktentscheidung Jochen, 15.11.2026: Für Version 1.0 reichen 5.000 Positionen (aktuell 19 Positionen, erwartetes Wachstum vor allem bei Buchungen). Die historische Forderung nach 10.000 Positionen entfällt für 1.0; bestehendes Formatlimit unverändert 5.000. Scope-Frage GESCHLOSSEN, keine Codeänderung und keine zusätzliche CI dafür. Die bestandenen Nachweise für 10.000 Buchungen und 10.000 Stichtage gelten eigenständig weiter. Die Grenze von 5.000 gleichzeitig zur Archivierung ausgewählten Buchungen betrifft ausschließlich diese einzelne Aktion.
+
+Gesamt-K3 bleibt PARTIAL wegen der ausstehenden vollständigen v317-Produktionsabnahme; die Positions-Scope-Frage ist kein offener K3-/1.0-Punkt mehr. A09 und Grafikherkunft bleiben geparkt. Aktiver Kandidat: direkte Worker-CDP-/Lifecycle-Erfassung und getrennte HTTP-Assetantwortdiagnostik im regulären Live-Pfad; isolierte QA 43720723312 am Head 1ba24bfc8592b1f20e94b9c2548d6d7054901b93 läuft, Erfolgs-/kontrollierter 503-Installationsfall bereits erfolgreich. Historische Ursachen bleiben UNKNOWN. Kein neuer Main, Merge, Deployment oder unveränderter Live-Retry.
+
 ## Fortschreibung · 15.11.2026 · v317 veröffentlicht, Live-Abnahme blockiert
 
 **[v317 DEPLOYED / LIVE_BLOCKED](V317_RELEASE_BLOCKER_2026-11-15.md)**. PR340 am ausdrücklich freigegebenen Head f03cc261 gemergt; Main a53856e385ef1d9fd65d8710618244e80b8341e7 hat exakt den freigegebenen Tree b70a0255. Reguläre Main-Prüfungen, 1.481 Units und Deployment erfolgreich; 154 veröffentlichte Dateien bytegenau. Alle 15 Main-Messungen 44 px; alte Abweichung als offener Diagnosepunkt ausdrücklich akzeptiert, Anforderung und Messdiagnostik unverändert.
 
 Produktionslauf43713836553 scheiterte zuerst an HTTP503 beim Assetcheck, der begründete zweite Live-Versuch später an fehlgeschlagener SW-Installation im Kraken-Setup. Aktueller vollständiger Kraken-Gegenbeleg erfolgreich (sieben Szenarien, 1.109 Worker-Antworten HTTP200); historische Ursachen bleiben UNKNOWN. Keine weitere unveränderte Wiederholung, keine vollständige Live-Abnahme behauptet. 13 neue Original-ZIPs gepinnt bytegleich zurückgelesen und 2.721 Dateien tatsächlich restauriert; [Belegindex](release-evidence/v317-live-blocked-2026-11-15/decision.json).
 
-**K3 PARTIAL:** Archivhinweis implementiert/gemergt/Main-geprüft, Abschluss wartet gemäß Auftrag auf vollständige Produktionsabnahme. Vorhandene 18/9/3 Fachfälle und 25/13-Dateien-Restores weiterverwenden. Nächste Release-Entscheidung: aussagekräftige Worker-Fehlerdiagnostik im regulären Live-Pfad als eigenen geprüften Head integrieren oder neue kausale Auslieferungs-/Installationsbelege bearbeiten. Danach historische 10.000-Positionsforderung gegenüber 5.000-Formatgrenze separat entscheiden. A09/Grafikherkunft bleiben geparkt.
+**K3 PARTIAL:** Archivhinweis implementiert/gemergt/Main-geprüft, Abschluss wartet gemäß Auftrag auf vollständige Produktionsabnahme. Vorhandene 18/9/3 Fachfälle und 25/13-Dateien-Restores weiterverwenden. Nächste Release-Entscheidung: aussagekräftige Worker-Fehlerdiagnostik im regulären Live-Pfad als eigenen geprüften Head integrieren oder neue kausale Auslieferungs-/Installationsbelege bearbeiten. Die Positionsfrage wurde anschließend durch Jochen für 1.0 mit 5.000 Positionen geschlossen (siehe aktuelle Fortschreibung). A09/Grafikherkunft bleiben geparkt.
 
 ---
 
