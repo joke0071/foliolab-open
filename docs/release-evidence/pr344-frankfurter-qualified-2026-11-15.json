@@ -1,0 +1,113 @@
+{
+  "technicalResult": "PASS",
+  "status": "QUALIFIED",
+  "pr": 344,
+  "head": "fe2e6791762c96590e3cb781f6cff1c4ae99730b",
+  "tree": "b775686abb60cd8d2e74af7ec601f3a8da8a5c2b",
+  "base": "8c53cbfd77be9a37cce31cc4df8396e9f2f06ede",
+  "executionMerge": "8875345ae9776c11b0383f7df083308ddc01be47",
+  "run": 43765440994,
+  "attempt": 1,
+  "walletRun": 43765441005,
+  "informationalWalletRun": 43765441020,
+  "regularCI": "SUCCESS",
+  "walletCI": "SUCCESS",
+  "informationalPublicWalletJob": "SUCCESS",
+  "informationalPublicAvailability": "11/14 initial public probes valid; usable balance read through1/7 Solana providers;0/7 usable stake-index results;4/4 integration calls reported ok, partial warnings retained in original log.",
+  "unitTestsPerRequiredRun": 1493,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "fullIntegration": true,
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "jsonReports": 264,
+  "existingReportAssertions": 646,
+  "existingManualSchemaReports": 8,
+  "newNativeFxReports": 3,
+  "nativeFxCases": 24,
+  "fxCasesPerEngine": 8,
+  "fixedClock": "2026-11-15T18:00:00.000Z",
+  "shippedAssetDelta": [
+    "src/market.js",
+    "sw.js"
+  ],
+  "unchangedShippedAssets": 152,
+  "mainBaseRelease": "PR343 LIVE_ACCEPTED;8c53cbfd",
+  "mergeDecision": "PENDING_USER_EXACT_HEAD",
+  "merged": false,
+  "deploy": "CORRECTLY_SKIPPED_IN_PR",
+  "live": "CORRECTLY_SKIPPED_IN_PR",
+  "ownDiffReview": "NO_FINDINGS;no independent foreign review claimed",
+  "reviews": 0,
+  "openThreads": 0,
+  "comments": 0,
+  "retries": 0,
+  "cancelledRuns": 0,
+  "localSupplement": "Original native old-reader repro seven cases; final eight direct cases and instrumented eight contexts clean; separate regular three-engine24cases authoritative. Local counts not additive.",
+  "limits": [
+    "Synthetic fixed responses/clock; no real Frankfurter daily quote acceptance",
+    "Headless native Linux engines; no physical Windows Chrome/Edge or Android Chrome/PWA evidence",
+    "Historical and numeric legacy readers unchanged; no migration of old stored data",
+    "Public read-only wallet connectivity audit has three unavailable/unexpected probes; not private cursor/ownership evidence",
+    "Independent historical balances/ownership and actual ETH original cursor remain open"
+  ],
+  "preservation": {
+    "result": "PASS",
+    "package": {
+      "file_name": "FolioLab_PR344_Frankfurter_Originalbelege_2026-11-15.tar",
+      "bytes": 215920640,
+      "sha256": "fd279f0ca7bee47f7304dfe44a98d1083776231c996f512d58b6227494ea4e7b",
+      "manifestFiles": 64,
+      "originalZipCount": 6,
+      "head": "fe2e6791762c96590e3cb781f6cff1c4ae99730b",
+      "tree": "b775686abb60cd8d2e74af7ec601f3a8da8a5c2b",
+      "run": 43765440994,
+      "attempt": 1,
+      "scope": "Exact PR344 integration originals plus local native baseline/proof. Accepted main8c and PR343 originals remain separate. No PR344 merge/deployment authorized. Final durability and physical restore receipt is external, avoiding circular self-hash."
+    },
+    "file_id": "file_000000003c4c81f5a39724174351cb27",
+    "library_file_id": "libfile_fde3_f-e93153b4af748191895e1db5335eb2b7_54e45e8130348191808d9aaa710cf372",
+    "pinnedVersion": 0,
+    "independentReadbackByteEqual": true,
+    "distinctFileIdentity": true,
+    "manifestFiles": 64,
+    "originalZIPs": 6,
+    "physicallyRestoredOriginalFiles": 2368,
+    "zipCounts": [
+      {
+        "zip": "chromium.zip",
+        "files": 827
+      },
+      {
+        "zip": "cross1.zip",
+        "files": 515
+      },
+      {
+        "zip": "cross2.zip",
+        "files": 127
+      },
+      {
+        "zip": "cross3.zip",
+        "files": 878
+      },
+      {
+        "zip": "dialogs.zip",
+        "files": 20
+      },
+      {
+        "zip": "stage.zip",
+        "files": 1
+      }
+    ],
+    "fullRestoreManifest": {
+      "bytes": 534126,
+      "sha256": "da58ca630cbc489a3ed0938709d1fdef1ccd1a6942b829bb469c9ef95967745e",
+      "gzipBytes": 116358,
+      "gzipSha256": "da16ef937600a47671a7fa8c9056ef8f82991c5b240827c921babd98a8d53f24"
+    },
+    "limits": "PR evidence originals physically restored. Native FX save/reopen is independently proven in the three fx-age reports. No PR344 merge/main/deployment/live or actual Windows/Android/historical finance claim."
+  }
+}
