@@ -1,0 +1,43 @@
+{
+  "main": "a53856e385ef1d9fd65d8710618244e80b8341e7",
+  "head": "61b56ac50a2e87796db0aad0027675ae3fd5c142",
+  "tree": "2644817dfb558da9668ec0a55bd7e6092cd80324",
+  "changeVsPreviousPRHead": {
+    "path": "tests/live-startup-diagnostics.test.mjs",
+    "blob": "54c6e82d85e20fc7435c048d0101480a4d4642eb",
+    "sha256": "f08955aa78468061c177564bf635b5e478a74ba6c67a20fcfc9a82af86e0131c"
+  },
+  "localNode": "24.22.1",
+  "targeted": {
+    "tests": 22,
+    "pass": 22,
+    "fail": 0,
+    "skip": 0
+  },
+  "negativeCases": [
+    "missing asset diagnostic field",
+    "duplicate asset diagnostic field",
+    "HTTP status assertion 200 changed to 503",
+    "asset hash equality changed to self-comparison"
+  ],
+  "historicalBaselineRetained": "f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3",
+  "qaReuse": {
+    "run": 43720723312,
+    "head": "1ba24bfc8592b1f20e94b9c2548d6d7054901b93",
+    "unchangedPaths": [
+      "tests/live-worker-diagnostics.mjs",
+      "tests/live-worker-diagnostics-qa.mjs",
+      "tests/browser-live-acceptance.mjs",
+      "tests/browser-controlled-storage-fixture.mjs",
+      "tests/browser-kraken-import.mjs"
+    ],
+    "reason": "Only historical source-contract test changed. Relevant QA/live/product/dependency bytes unchanged."
+  },
+  "limits": [
+    "Historical HTTP503 and service worker installation failure remain UNKNOWN",
+    "Chromium CDP instrumentation pauses worker until Network.enable and alters timing",
+    "Firefox/WebKit context/document observations do not provide direct worker CDP capture",
+    "Full Main/deployment/production acceptance pending explicit user authorization"
+  ],
+  "optionalPreflight": "BLOCKED: local TypeScript5.8.3 unavailable; runtime, syntax and final CI remain required"
+}

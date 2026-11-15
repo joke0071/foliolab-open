@@ -1,0 +1,30 @@
+✔ FAST is limited to explicit draft documentation and modified CSS (2.04326ms)
+✔ all financial, storage, PWA and unknown paths force full regression, including mixed changes (0.619779ms)
+✔ main push and manual release can never inherit reduced draft selection (0.244062ms)
+✔ real git diff handles addition, removal, rename, symlink, stale base and CLI receipt without optimistic fallback (220.920211ms)
+✔ stage workflow preserves every full regression, deployment and live body byte-for-byte (9.605584ms)
+✔ worker observation is mandatory only in the two live steps and cannot change sealed commands (10.599558ms)
+✔ live orchestration has one bounded 55-minute budget while all sealed test commands stay unchanged (14.493593ms)
+✔ stage policy rejects missing review event, unsafe gate, reduced deploy dependency or dropped FAST audit (21.049555ms)
+✔ superseded PR runs share one concurrency group while main remains separate (0.186517ms)
+✔ UH03 Kraken additions are mandatory without changing any sealed earlier gate (3.006838ms)
+✔ UH03 Bitpanda is mandatory in all four integration and production paths (7.179958ms)
+✔ UI289 gesture and text scaling gates are additive and mandatory on all four integration/live paths (13.844791ms)
+✔ UH04 net economics is additive and mandatory in all four integration/production paths (1.936181ms)
+✔ Ubuntu mirror amendment rejects removed probes, non-HTTPS alternatives and skipped dependency installation (3.339371ms)
+✔ Ubuntu mirror selector succeeds and fails safely under seven isolated network simulations (585.625688ms)
+✔ failure request evidence removes credentials, query and fragment and rejects other origins (1.449169ms)
+✔ pending, failed and HTTP errors are distinguished without retaining request objects or query secrets (1.627493ms)
+✔ failed-request evidence is bounded even when the browser produces many errors (1.524611ms)
+✔ the full 152-asset startup graph is retained so a late pending module is not hidden (5.559014ms)
+✔ closed or unresponsive page cannot replace the original gate result with a successful snapshot (11.162643ms)
+✔ pre-existing live assertions and deadlines remain byte-identical except exact frequency and diagnostic deltas (1.424362ms)
+✔ asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes (3.088119ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 866.335734

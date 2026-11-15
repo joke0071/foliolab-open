@@ -1,0 +1,39 @@
+✔ failure request evidence removes credentials, query and fragment and rejects other origins (1.264886ms)
+✔ pending, failed and HTTP errors are distinguished without retaining request objects or query secrets (1.754322ms)
+✔ failed-request evidence is bounded even when the browser produces many errors (1.075555ms)
+✔ the full 152-asset startup graph is retained so a late pending module is not hidden (2.725902ms)
+✔ closed or unresponsive page cannot replace the original gate result with a successful snapshot (10.894625ms)
+✖ pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport (2.568999ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 155.985209
+
+✖ failing tests:
+
+test at tests/live-startup-diagnostics.test.mjs:35:1
+✖ pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport (2.568999ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '816aaf74c3f13a1d8881b4846f61772ac7917a696c3317cfff6d31e92cea4b4b'
+  - 'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/e14f2dfb9b8b/foliolab-open/tests/live-startup-diagnostics.test.mjs:46:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '816aaf74c3f13a1d8881b4846f61772ac7917a696c3317cfff6d31e92cea4b4b',
+    expected: 'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
