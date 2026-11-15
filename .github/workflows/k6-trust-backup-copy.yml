@@ -1,0 +1,56 @@
+name: K6 TRUST targeted backup copy QA
+on:
+  push:
+    branches: ["qa/k6-trust-backup-copy-2026-11-15"]
+permissions:
+  contents: read
+jobs:
+  trust-copy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Record exact candidate and baseline
+        run: |
+          mkdir -p trust-evidence
+          git rev-parse HEAD > trust-evidence/qa-head.txt
+          git ls-tree -r HEAD > trust-evidence/qa-tree.txt
+          git diff --exit-code 2a773073f2887e8701ee893eee2e8619ab980be8 HEAD -- src tests index.html styles.css sw.js icons manifest.webmanifest package.json
+          git show ff60c73e53c973ecb86393be5b4e31b55f352601:src/drive-backup.js > trust-evidence/v315-drive-backup.js
+          git diff ff60c73e53c973ecb86393be5b4e31b55f352601 2a773073f2887e8701ee893eee2e8619ab980be8 -- src/drive-backup.js > trust-evidence/product-copy.diff
+      - name: Targeted existing unit suite and syntax
+        run: |
+          set -o pipefail
+          node --test tests/drive-backup.test.mjs tests/backup-vault.test.mjs 2>&1 | tee trust-evidence/targeted-node.tap
+          node --check src/drive-backup.js
+          node --check tests/browser-trust-backup-copy.mjs
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: foliolab-pw1.56.1-chromium-shell-v1-Linux-X64
+      - name: Install pinned browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium --only-shell
+      - name: Actual UI baseline and candidate with controlled display fault
+        env:
+          TRUST_BASELINE_DRIVE: trust-evidence/v315-drive-backup.js
+          TRUST_EVIDENCE_DIR: trust-evidence
+        run: |
+          set -o pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 > trust-evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-trust-backup-copy.mjs 2>&1 | tee trust-evidence/native-ui.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k6-trust-backup-copy-originals
+          path: trust-evidence
+          if-no-files-found: error
