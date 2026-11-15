@@ -136,13 +136,14 @@ test('Drive restore preserves a backend-confirmed commit when settings finalizat
  assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Wiederherstellung fehlgeschlagen/);
  assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.window.FolioDriveBackup.getStatus().error,true);
 });
-test('Drive restore display failure retains both confirmed operations without replay',async()=>{
+test('Drive restore display failure reports the confirmed portfolio without promising password adoption',async()=>{
  const t=await selectedRestore();let restores=0,adoptions=0;
  t.backend.restoreData=async()=>{restores++;};t.backend.adoptPasswordVault=async()=>{adoptions++;};
  t.elements.restoreBackupDialog={close(){throw Error('SYNTHETIC_DIALOG_FAILURE');}};
  await t.elements.driveRestore.onclick();
  assert.equal(restores,1);assert.equal(adoptions,1);
- assert.match(t.elements.driveBackupStatus.textContent,/Portfolio und Backup-Passwort übernommen.*Abschlussanzeige fehlgeschlagen/);
+ assert.match(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt.*Abschlussanzeige fehlgeschlagen/);
+ assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Backup-Passwort übernommen/);
  assert.equal(t.elements.driveRecoveryInput.value,'');assert.equal(t.window.FolioDriveBackup.getStatus().busy,false);
  assert.equal(t.requests.filter(r=>r.method!=='GET').length,0);
 });
@@ -476,5 +477,30 @@ test('legacy decimal price and localized FX survive actual file and Drive restor
     assert.match(h.notice,/wiederhergestellt/i);
    });
   }
+ }finally{globalThis.indexedDB=previous;}
+});
+
+test('existing device vault survives restore display failure without a false password takeover claim',async()=>{
+ const previous=globalThis.indexedDB,mock=dbMock();globalThis.indexedDB=mock.indexedDB;
+ try{
+  await configureBackupPassword('SYNTHETIC_REMOTE_PASSWORD','SYNTHETIC_REMOTE_PASSWORD');
+  const envelope=JSON.parse(await encryptWithBackupPassword(JSON.stringify(createCompleteBackup(positionFixture()))));
+  mock.map.clear();
+  await configureBackupPassword('SYNTHETIC_DEVICE_PASSWORD','SYNTHETIC_DEVICE_PASSWORD');
+  const before=mock.map.get('active'),t=await selectedRestore();let commits=0;
+  t.backend.restoreData=async()=>{commits++;};
+  // Production's app adapter intentionally ignores adoptBackupPassword(false).
+  t.backend.adoptPasswordVault=async()=>{
+   const {adoptBackupPassword}=await import('../src/backup-vault.js');
+   assert.equal(await adoptBackupPassword(envelope,'SYNTHETIC_REMOTE_PASSWORD'),false);
+  };
+  t.elements.restoreBackupDialog={close(){throw Error('SYNTHETIC_DISPLAY_FAILURE');}};
+  await t.elements.driveRestore.onclick();
+  assert.equal(commits,1);assert.equal(mock.map.get('active'),before);
+  const after=JSON.parse(await encryptWithBackupPassword('SYNTHETIC_DEVICE_PAYLOAD'));
+  assert.equal(await decryptPasswordBackup(after,'SYNTHETIC_DEVICE_PASSWORD'),'SYNTHETIC_DEVICE_PAYLOAD');
+  await assert.rejects(decryptPasswordBackup(after,'SYNTHETIC_REMOTE_PASSWORD'),/Passwort/);
+  assert.match(t.elements.driveBackupStatus.textContent,/Portfolio wiederhergestellt.*Abschlussanzeige fehlgeschlagen.*nicht erneut importieren/);
+  assert.doesNotMatch(t.elements.driveBackupStatus.textContent,/Backup-Passwort übernommen/);
  }finally{globalThis.indexedDB=previous;}
 });

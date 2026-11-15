@@ -436,7 +436,7 @@ async function restore(){
   }else if(portfolioRestored&&!passwordAdopted){
    status('Portfolio wiederhergestellt. Das Backup-Passwort konnte nicht vollständig übernommen werden: '+message+'. Passwortstatus unter „Backup-Verschlüsselung“ prüfen. Portfolio nicht erneut importieren.',true);
   }else if(portfolioRestored){
-   status('Portfolio und Backup-Passwort übernommen. Abschlussanzeige fehlgeschlagen: '+message+'. Portfolio nicht erneut importieren.',true);
+   status('Portfolio wiederhergestellt. Abschlussanzeige fehlgeschlagen: '+message+'. Portfolio nicht erneut importieren.',true);
   }else status('Wiederherstellung fehlgeschlagen: '+message,true);
  }
  finally{get('driveRecoveryInput').value='';busy=false;updateUi()}
