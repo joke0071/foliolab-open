@@ -1,6 +1,6 @@
 # HND01 · ACTIVE · v317 LIVE_BLOCKED
 
-Writer: v317-worker-diagnostics-38043b27f933 (alleiniger HND01-Writer). Übernahme am 15.11.2026 nach frischem Abgleich: Main a53856e385ef1d9fd65d8710618244e80b8341e7; Übergabe 793a6317a2c13c73f896b04bd4abd556db6f70f2, Writer NONE; jüngste Jobs abgeschlossen. Autorisiert: Diagnose, gezielte QA, separater Korrekturbranch, PR und PR-Checks. Neuer Main-Head, Merge und Deployment benötigen Jochens Freigabe. Arbeitsziel: Worker-Netzwerk- und Zustandsdiagnostik im regulären Live-Pfad, Erfolg und kontrollierter Installationsfehler auf isolierter QA-Ref vor finaler CI. Keine unveränderten Live-Retries.
+Writer: v317-hash-contract-e14f2dfb9b8b (alleiniger HND01-Writer). Notfallübernahme durch Jochen am 15.11.2026 ausdrücklich autorisiert; vorheriger Writer v317-worker-diagnostics-38043b27f933 abgelöst. Frisch geprüfte Grundlage: Checkpoint 678d9fa304bde2864d03d47c8db78e56169201da, Main a53856e385ef1d9fd65d8710618244e80b8341e7, PR341 1787fe45808a702ecafd82f821b653409179309e. Neueste Schreibaktivität PR341 13:49 UTC; keine laufenden Jobs/neuere Korrektur. Autorisiert: gezielte Hashvertragskorrektur und finale PR-Qualifikation; Merge, neuer Main-Head und Deployment nur nach ausdrücklicher Freigabe. Übernahme am 15.11.2026 nach frischem Abgleich: Main a53856e385ef1d9fd65d8710618244e80b8341e7; Übergabe 793a6317a2c13c73f896b04bd4abd556db6f70f2, Writer NONE; jüngste Jobs abgeschlossen. Autorisiert: Diagnose, gezielte QA, separater Korrekturbranch, PR und PR-Checks. Neuer Main-Head, Merge und Deployment benötigen Jochens Freigabe. Arbeitsziel: Worker-Netzwerk- und Zustandsdiagnostik im regulären Live-Pfad, Erfolg und kontrollierter Installationsfehler auf isolierter QA-Ref vor finaler CI. Keine unveränderten Live-Retries.
 
 ## Verbindlicher Produktstand
 
@@ -34,7 +34,11 @@ ZuerstregulärenLive-Fehlerpfad mitWorker-Netzwerk-/Installationsdiagnostik als 
 
 Produktentscheidung Jochen, 15.11.2026: Für Version 1.0 reichen 5.000 Positionen (aktuell 19 Positionen, erwartetes Wachstum vor allem bei Buchungen). Die historische Forderung nach 10.000 Positionen entfällt für 1.0; bestehendes Formatlimit unverändert 5.000. Scope-Frage GESCHLOSSEN, keine Codeänderung und keine zusätzliche CI dafür. Die bestandenen Nachweise für 10.000 Buchungen und 10.000 Stichtage gelten eigenständig weiter. Die Grenze von 5.000 gleichzeitig zur Archivierung ausgewählten Buchungen betrifft ausschließlich diese einzelne Aktion. A09undGrafikherkunft bleiben ausdrücklichgeparkt; keineerneuteGeräte-/Quellenanfrage. KeineuniverselleSpezialmutationsfreigabe.
 
-## Laufende Worker-Diagnostik
+## Aktueller Notfallauftrag
+
+QA 43720723312 vollständig SUCCESS (inklusive sieben Kraken-Fälle). PR 43721020747 und Wallet 43721020733 vollständig abgeschlossen FAILURE; gemeinsamer Fehler tests/live-startup-diagnostics.test.mjs:35. Nächster Schritt: ausschließlich diesen Test am PR-Head reproduzieren, normalisierten Main-/PR-Bytediff bestimmen, kleinste exakte Korrektur mit historischem Referenzhash und Negativprobe. Bestehende Originale wiederverwenden. Keine Live-Ursache als behoben ausgeben.
+
+## Historische Worker-Diagnostik
 
 Isolierte QA 43720723312 am Head 1ba24bfc8592b1f20e94b9c2548d6d7054901b93: Erfolg und kontrollierter 503-Installationsfall erfolgreich; unveränderte sieben Kraken-Szenarien mit Beobachtung noch laufend. Vor vollständiger Kandidaten-CI erst QA-Originale auswerten. Kein Main-/Merge-/Deploymentauftrag.
 
