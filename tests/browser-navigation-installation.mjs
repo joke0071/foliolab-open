@@ -5,9 +5,24 @@ const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/';
 const proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
 const key='foliolab-open-install-hint-dismissed-v1';
 mkdirSync('artifacts/gates/navigation-installation',{recursive:true});
+// A queued details toggle can replace a resolved Playwright element before its
+// evaluation. Query and measure the current target in the same browser task.
+function measureCsvImportTarget(){
+ const e=document.querySelector('.position-csv-import');
+ if(!e){window.__folioNavCsvHeightFailure={viewport:{width:innerWidth,height:innerHeight,scrollY},target:null,ancestors:[],matches:[],capturedAt:performance.now()};return false;}
+ const rect=e.getBoundingClientRect();
+ const measured={viewport:{width:innerWidth,height:innerHeight,scrollY},target:{html:e.outerHTML,connected:e.isConnected,rect:rect.toJSON()},ancestors:[],capturedAt:performance.now()};
+ const describe=node=>{const r=node.getBoundingClientRect(),style=getComputedStyle(node);return {tag:node.tagName,id:node.id,className:node.className,hidden:node.hidden,open:node.open??null,rect:r.toJSON(),display:style.display,visibility:style.visibility,minHeight:style.minHeight,height:style.height,width:style.width,boxSizing:style.boxSizing,padding:style.padding,border:style.border,lineHeight:style.lineHeight,fontSize:style.fontSize,flex:style.flex,zoom:style.zoom,transition:style.transition,animation:style.animation,transform:style.transform};};
+ measured.target={...measured.target,...describe(e)};
+ for(let parent=e.parentElement;parent;parent=parent.parentElement)measured.ancestors.push(describe(parent));
+ measured.matches=[...document.querySelectorAll('.position-csv-import')].map(describe);
+ measured.outerViewport={width:outerWidth,height:outerHeight,dpr:devicePixelRatio,visual:visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale}:null};
+ window.__folioNavCsvHeightFailure=measured;
+ return e.isConnected&&rect.width>0&&rect.height>=44&&measured.target.visibility==='visible';
+}
 for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
- const contexts=[],checks=[];
+ const contexts=[],checks=[];let csvMeasurementLifecycle=null,csvMeasurementControls=null,csvMeasurementControlObservations=null;
  const fresh=async(blocked='none',standalone=false)=>{
   const c=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'block',ignoreHTTPSErrors:Boolean(proxy)});contexts.push(c);
   await c.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
@@ -98,22 +113,20 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet','compact summary never invents an EUR valuation for unknown FX');
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
-   // Capture the exact rectangle used by the unchanged >=44 predicate.
-   // No polling, forced layout state, retry or relaxed threshold is introduced.
+   if(width===430){
+    // Use the real app listener to reproduce the old retained-node failure.
+    csvMeasurementLifecycle=await layout.evaluate(()=>{
+     const retained=document.querySelector('.position-csv-import');
+     const before={connected:retained.isConnected,height:retained.getBoundingClientRect().height};
+     document.querySelector('details[data-position-id="nav-etf"]').dispatchEvent(new Event('toggle'));
+     const current=document.querySelector('.position-csv-import');
+     return {before,retainedAfterRender:{connected:retained.isConnected,height:retained.getBoundingClientRect().height},currentAfterRender:{connected:current.isConnected,height:current.getBoundingClientRect().height}};
+    });
+    assert.deepEqual(csvMeasurementLifecycle,{before:{connected:true,height:44},retainedAfterRender:{connected:false,height:0},currentAfterRender:{connected:true,height:44}});
+   }
+   // Keep the >=44 threshold and full diagnostics, without polling or retries.
    try{
-    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>{
-     const rect=e.getBoundingClientRect();
-     const measured={viewport:{width:innerWidth,height:innerHeight,scrollY},target:{html:e.outerHTML,connected:e.isConnected,rect:rect.toJSON()},ancestors:[],capturedAt:performance.now()};
-     {
-      const describe=node=>{const r=node.getBoundingClientRect(),style=getComputedStyle(node);return {tag:node.tagName,id:node.id,className:node.className,hidden:node.hidden,open:node.open??null,rect:r.toJSON(),display:style.display,visibility:style.visibility,minHeight:style.minHeight,height:style.height,width:style.width,boxSizing:style.boxSizing,padding:style.padding,border:style.border,lineHeight:style.lineHeight,fontSize:style.fontSize,flex:style.flex,zoom:style.zoom,transition:style.transition,animation:style.animation,transform:style.transform};};
-      measured.target={...measured.target,...describe(e)};
-      for(let parent=e.parentElement;parent;parent=parent.parentElement)measured.ancestors.push(describe(parent));
-      measured.matches=[...document.querySelectorAll('.position-csv-import')].map(describe);
-      measured.outerViewport={width:outerWidth,height:outerHeight,dpr:devicePixelRatio,visual:visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale}:null};
-      window.__folioNavCsvHeightFailure=measured;
-     }
-     return rect.height>=44;
-    }));
+    assert.ok(await layout.evaluate(measureCsvImportTarget));
     const measured=await layout.evaluate(()=>window.__folioNavCsvHeightFailure??null);
     writeFileSync(`artifacts/gates/navigation-installation/${engine}-csv-height-${iteration}-${width}.json`,JSON.stringify({engine,iteration,width,result:'PASS',measured},null,2));
    }catch(error){
@@ -133,6 +146,28 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(await layout.locator('.dashboard-overview').evaluate((root,width)=>{const history=root.querySelector('.dashboard-history').getBoundingClientRect(),side=root.querySelector('.dashboard-side').getBoundingClientRect(),allocation=root.querySelector('.dashboard-allocation').getBoundingClientRect(),providers=root.querySelector('.dashboard-providers').getBoundingClientRect();return width===980?history.bottom<=side.top&&allocation.bottom<=providers.top:history.right<=side.left&&Math.abs(history.top-side.top)<2&&allocation.bottom<=providers.top;},width),'natural card arrangement at each new grid breakpoint');await scan(layout);assert.deepEqual(await record(layout),stored);
   }
   checks.push('980/1180 grid breakpoint edges; natural card alignment; no overflow or portfolio writes');
+  // Isolated DOM controls use the very same measurement function. No app data
+  // or asynchronous detail renderer can replace these deliberately faulty nodes.
+  const negativeContext=await browser.newContext();contexts.push(negativeContext);const negative=await negativeContext.newPage();
+  const targetStyle='height:44px;min-height:44px;width:200px;box-sizing:border-box;';
+  await negative.setContent('<button class="position-csv-import" style="'+targetStyle+'">Synthetic CSV control</button>');
+  assert.equal(await negative.evaluate(measureCsvImportTarget),true,'a real visible 44px target remains valid');
+  csvMeasurementControls={};csvMeasurementControlObservations={};
+  for(const [name,style]of [['height43Accepted','height:43px;min-height:0;width:200px;box-sizing:border-box;'],['displayNoneAccepted',targetStyle+'display:none;'],['visibilityHiddenAccepted',targetStyle+'visibility:hidden;']]){
+   await negative.locator('.position-csv-import').evaluate((e,style)=>e.style.cssText=style,style);
+   csvMeasurementControls[name]=await negative.evaluate(measureCsvImportTarget);assert.equal(csvMeasurementControls[name],false,name);
+   const observed=await negative.evaluate(()=>window.__folioNavCsvHeightFailure.target);
+   csvMeasurementControlObservations[name]={connected:observed.connected,height:observed.rect.height,display:observed.display,visibility:observed.visibility};
+   assert.equal(observed.connected,true,name+' remains a real connected target');
+   if(name==='height43Accepted'){assert.equal(observed.rect.height,43);assert.equal(observed.visibility,'visible');}
+   if(name==='displayNoneAccepted'){assert.equal(observed.rect.height,0);assert.equal(observed.display,'none');}
+   if(name==='visibilityHiddenAccepted'){assert.equal(observed.rect.height,44);assert.equal(observed.visibility,'hidden');}
+  }
+  await negative.locator('.position-csv-import').evaluate(e=>e.remove());
+  csvMeasurementControls.missingAccepted=await negative.evaluate(measureCsvImportTarget);assert.equal(csvMeasurementControls.missingAccepted,false);
+  assert.equal(await negative.evaluate(()=>window.__folioNavCsvHeightFailure.target),null,'missing target replaces prior diagnostic data');
+  assert.deepEqual(await record(layout),stored,'measurement fault controls preserve the exact app IDB record');
+  checks.push('current-DOM CSV measurement after real detail renewal; stale reference0/current44; real43px,display:none,visibility:hidden,missing controls rejected; no wait/retry/threshold relaxation');
   await layout.evaluate(async()=>{
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{createProvider,createAccount,createPosition}=await import('/src/model.js');const s=new PortfolioStorage();const m=await s.initialize();
    for(let i=1;i<=11;i++){const providerId='nav-large-p'+i,accountId='nav-large-a'+i;m.providers.push(createProvider({id:providerId,name:'Synthetic large-list provider '+i}));m.accounts.push(createAccount({id:accountId,providerId,name:'Synthetic large-list account '+i,type:'securities'},m));for(let j=0;j<8;j++)m.positions.push(createPosition({id:'nav-large-'+i+'-'+j,providerId,accountId,name:'Synthetic readable holding '+i+' / '+j,kind:'etf',currency:'EUR',quantity:'1.23456789',price:'100'},m));}
@@ -142,6 +177,6 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});assert.ok(await lastCsv.isVisible());await scan(layout);
   await layout.locator('#dashboardPage').evaluate(root=>{const sizes=[...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const[e,size]of sizes)e.style.fontSize=size*1.5+'px';});await scan(layout);assert.ok(await layout.locator('.donut-inner').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+1),'large amount remains inside the scaled donut centre');assert.deepEqual(await record(layout),large,'large list, actual disclosures and synthetic text scale preserve canonical record');
   checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
-  writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],breakpoints:[980,1180],checks,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
+  writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],breakpoints:[980,1180],checks,csvMeasurementLifecycle,csvMeasurementControls,csvMeasurementControlObservations,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
 }
