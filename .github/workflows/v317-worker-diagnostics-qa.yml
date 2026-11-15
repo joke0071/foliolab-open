@@ -1,0 +1,39 @@
+name: v317 worker diagnostic success and controlled failure QA
+on:
+  push:
+    branches: [qa/v317-worker-diagnostics-38043b27]
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - name: Validate success and controlled installation failure
+        env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
+        run: node tests/live-worker-diagnostics-qa.mjs
+      - name: Unchanged seven-scenario Kraken regression with observation
+        env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
+        run: |
+          python3 -m http.server 4173 > /tmp/v317-qa-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          node tests/browser-kraken-import.mjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v317-worker-qa-${{ github.sha }}
+          path: artifacts/
+          if-no-files-found: error
