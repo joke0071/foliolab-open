@@ -1,0 +1,27 @@
+name: v317 unchanged Kraken sequence worker diagnosis
+on:
+  push:
+    branches: [diagnostic/v317-kraken-worker-9142fbd8]
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - run: node tests/v317-kraken-worker-diagnosis.mjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v317-kraken-worker-${{ github.sha }}
+          path: artifacts/
+          if-no-files-found: error
