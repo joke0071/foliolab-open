@@ -1,4 +1,4 @@
-# HND01 · ACTIVE · PR343 LIVE_ACCEPTED / FRANKFURTER PR NEXT
+# HND01 · ACTIVE · PR343 LIVE_ACCEPTED / PR344 INTEGRATION_RUNNING
 
 Writer: `takeover-pr343-fx-20261115-root`, alleiniger HND01-Hauptagent; Nutzer hat vorherigen Writer `release-v318-20261115-root` ausdrücklich beendet. [Vollständiger vorheriger Stand](https://github.com/joke0071/foliolab-open/blob/df8b91dadb19227f9dc85bb2529655ec3b361b0d/docs/WORK_RESTPAKETE_CHECKPOINT.md). Kein zweiter Writer/Agent.
 
@@ -14,7 +14,9 @@ Regulärer Main43758292489/1, Deployment132954441037 und vollständige Live-Abna
 
 Branch `fix/frankfurter-age-20261115`, Head `fe2e6791762c96590e3cb781f6cff1c4ae99730b`, Tree `b775686abb60cd8d2e74af7ec601f3a8da8a5c2b`, Basis8c53cbfd; sieben Dateien lokal/remote treegleich. [Taskkarte](https://github.com/joke0071/foliolab-open/blob/fe2e6791762c96590e3cb781f6cff1c4ae99730b/docs/K2_FRANKFURTER_AGE_2026-11-15.md). Sieben UTC-Publikationstage, SWv319; Altcodefehler auch nativ reproduziert. Acht native Chromium-Refresh-/IDB-/Reopenfälle, inklusive Bestand/UNKNOWN bei tatsächlich gespeichertem anderem FX, und aktuelle Quellenkette bestanden. Finale23gezielteNodeTests, Syntax/Namenprüfung; zusätzlich derselbe native Harness unter unveränderter Live-Diagnostik:8Kontexte sauber geschlossen, keine Instrumentierungsfehler, SW bewusst blockiert. Exakte volle reguläre PR-/Wallet-/Cross-CI noch offen.
 
-**Nächster Schritt:** eigenen PR öffnen, reguläre Pflichtchecks bis Ergebnis begleiten, Originale sichern/Readback/Restore, exakten Head zur neuen Mergeentscheidung vorlegen. Kein Merge/Deployment des Frankfurter-Folgeschnitts autorisiert. Keine zweite finale CI vor diesem nun abgeschlossenen Release gestartet.
+**[PR344](https://github.com/joke0071/foliolab-open/pull/344) geöffnet**, exakt Headfe2e6791762c96590e3cb781f6cff1c4ae99730b/Basis8c53cbfd. Ausführungsmerge `8875345ae9776c11b0383f7df083308ddc01be47`, Tree exaktb775686a und ParentsBasis+Head. Reguläre INTEGRATION43765440994/1 läuft; Planfull=true/BaseIsAncestor=true und genau sieben Dateien bestätigt. Wallet43765441005 SUCCESS,1493Tests/0Fehler/Skips. Zusätzlicher bestehender informativer Public-Wallet-Lauf43765441020 ebenfalls SUCCESS; nur öffentliche bekannte Adressen/Erreichbarkeit, keine private ETH-Cursor- oder Frankfurter-Providerabnahme. Native Browser-/Cross-Prüfungen und neue Originalsicherung/Readback/Restore nochPENDING.
+
+**Nächster Schritt:** reguläre PR-CI bis Ergebnis begleiten, alle Originale auswerten/sichern/Readback/Restore, dann exakten Head zur neuen Mergeentscheidung vorlegen. Kein Merge/Deployment des Frankfurter-Folgeschnitts autorisiert. Keine zweite finale CI vor diesem nun abgeschlossenen Release gestartet.
 
 ## Konkrete Restinputs
 
