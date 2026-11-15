@@ -1,0 +1,162 @@
+{
+  "status": "PASS",
+  "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "qaHead": "bd5ded4580dfd8c8667f9223384cc3e111f5098d",
+  "run": 43705457585,
+  "checks": 120,
+  "cases": [
+    {
+      "engine": "chromium",
+      "category": "positions",
+      "browserVersion": "141.0.7390.37",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 5000,
+        "active": 4997,
+        "total": "10000",
+        "oversizedPositionRejection": "Backup \u00fcberschreitet die vorgesehenen Gr\u00f6\u00dfenlimits oder ist besch\u00e4digt."
+      },
+      "allStatus": "4997 ausgew\u00e4hlt, davon 4997 im aktuellen Filter \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (4997) \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "4997 ausgew\u00e4hlt, davon 0 im aktuellen Filter \u00b7 4997 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (3) \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "81fff4a536edb799c7d78af2f022286b0f308ac79190767224ca908ed713cf89"
+    },
+    {
+      "engine": "chromium",
+      "category": "bookings",
+      "browserVersion": "141.0.7390.37",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "10200",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "b29fcf38eea1439ce8368f50db1498a95b5fcd2e4151e6107a2c33a611a7f9c1"
+    },
+    {
+      "engine": "chromium",
+      "category": "references",
+      "browserVersion": "141.0.7390.37",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "100",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "110ec76bad82c1eb5c7bccc4e54c352a4f0b965b14376a660012f0ed51a424c8"
+    },
+    {
+      "engine": "firefox",
+      "category": "positions",
+      "browserVersion": "142.0.1",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 5000,
+        "active": 4997,
+        "total": "10000",
+        "oversizedPositionRejection": "Backup \u00fcberschreitet die vorgesehenen Gr\u00f6\u00dfenlimits oder ist besch\u00e4digt."
+      },
+      "allStatus": "4997 ausgew\u00e4hlt, davon 4997 im aktuellen Filter \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (4997) \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "4997 ausgew\u00e4hlt, davon 0 im aktuellen Filter \u00b7 4997 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (3) \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "869faf9e886221566b8138fed1a2a270f949c5a86a62332f21b70220ca2011a6"
+    },
+    {
+      "engine": "firefox",
+      "category": "bookings",
+      "browserVersion": "142.0.1",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "10200",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "21b9be1bfcd255a0c1b8525abfc3213fbf24a6290b702ae462f70f88177f8edb"
+    },
+    {
+      "engine": "firefox",
+      "category": "references",
+      "browserVersion": "142.0.1",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "100",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "65e72d96b437b1221438d03cbeffbd341fa26916074093e62b0b57d00db7d541"
+    },
+    {
+      "engine": "webkit",
+      "category": "positions",
+      "browserVersion": "26.0",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 5000,
+        "active": 4997,
+        "total": "10000",
+        "oversizedPositionRejection": "Backup \u00fcberschreitet die vorgesehenen Gr\u00f6\u00dfenlimits oder ist besch\u00e4digt."
+      },
+      "allStatus": "4997 ausgew\u00e4hlt, davon 4997 im aktuellen Filter \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (4997) \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "4997 ausgew\u00e4hlt, davon 0 im aktuellen Filter \u00b7 4997 ausgeblendet \u00b7 0 archiviert \u00b7 Auswahlbereich: gefilterte Positionen (3) \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "5a72e8c74a2c4485da59c685e8389713f2e400fbb95cc26f654e98d2d7d085a3"
+    },
+    {
+      "engine": "webkit",
+      "category": "bookings",
+      "browserVersion": "26.0",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "10200",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "7c88b9dab3392cd7ace4704ac30afc439164717d9abbbdc8545f20d0c95b81c1"
+    },
+    {
+      "engine": "webkit",
+      "category": "references",
+      "browserVersion": "26.0",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "stage": "complete",
+      "expected": {
+        "count": 10000,
+        "active": 9997,
+        "total": "100",
+        "oversizedPositionRejection": null
+      },
+      "allStatus": "9997 ausgew\u00e4hlt \u00b7 9997 gefiltert \u00b7 0 ausgeblendet \u00b7 0 archiviert \u00b7 100 auf aktueller Seite",
+      "hiddenStatus": "9997 ausgew\u00e4hlt \u00b7 3 gefiltert \u00b7 9997 ausgeblendet \u00b7 0 archiviert \u00b7 0 auf aktueller Seite",
+      "baselineSha256": "294065f3f0bc22f31c876fb27564f5868fbfc046ce37494c081612bd4304317f"
+    }
+  ]
+}

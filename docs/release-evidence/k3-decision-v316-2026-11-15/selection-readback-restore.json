@@ -1,0 +1,220 @@
+{
+  "status": "PASS",
+  "pinnedCommit": "ff75be5720b4192c3d8876a2c44643239ba7ab26",
+  "originals": [
+    {
+      "run": 43704954048,
+      "archiveBytes": 1810823,
+      "archiveSha256": "25c71247dc3a949770dc820367eb5114248c88289125a424a1140a1d25352b74",
+      "pinnedIndependentReadbackByteEqual": true,
+      "crc": "PASS",
+      "actualRestore": "PASS",
+      "restoredMembers": 34,
+      "passedCases": 15,
+      "manifest": [
+        {
+          "path": "k3-selection/chromium-bookings-hidden-preview.png",
+          "sha256": "a25992f6bf829ccb797bc92324d83f67f4bbd1afc2ce9eabb0f8cb6281592885"
+        },
+        {
+          "path": "k3-selection/chromium-positions-hidden-preview.png",
+          "sha256": "fddc2ef2b1066e2582fe69f894005153cc7579db9e4442b069369c2153a7e0dd"
+        },
+        {
+          "path": "k3-selection/chromium-references-hidden-archive-failure.png",
+          "sha256": "fcf30b23aba89e580826d8fb2d733efbfd896849cda6cab085232fce432752eb"
+        },
+        {
+          "path": "k3-selection/firefox-bookings-hidden-preview.png",
+          "sha256": "d377fb6f8b268288c101b4fd6c2987bb69b28b018faf491964847557074c27d2"
+        },
+        {
+          "path": "k3-selection/firefox-positions-hidden-preview.png",
+          "sha256": "4f84b0645c34372fb378bc5d05dfce8310115899e6dee2c4216bda097e5ff38f"
+        },
+        {
+          "path": "k3-selection/firefox-references-hidden-archive-failure.png",
+          "sha256": "c9a61872c4a17072baa8be368a96375a8de2b672e7e94e11facccb7c370772ed"
+        },
+        {
+          "path": "k3-selection/http.log",
+          "sha256": "3d559c534bdc317244537dcaae772c4ab65b4b155258799dcd1b2ffec2df3fd7"
+        },
+        {
+          "path": "k3-selection/install.log",
+          "sha256": "224b65b5c038969d23b39e231e4e81926f8912a387d3d48d94c7c81a65b73c6a"
+        },
+        {
+          "path": "k3-selection/native.log",
+          "sha256": "ac091a0c8fe7c0ada6a9c417ea1f69eba0f02b4ceddaa6e6bd30878c4b37f5dc"
+        },
+        {
+          "path": "k3-selection/product-head.txt",
+          "sha256": "945338426d4ec622c3d4b5ef1f7250591559d21e8262d52791f86868f1b7c41a"
+        },
+        {
+          "path": "k3-selection/qa-delta.txt",
+          "sha256": "c60d4dcd2d7ab12c6f6c88f6cc8fc32e41a253b2d59d6005b3658905647b2a9b"
+        },
+        {
+          "path": "k3-selection/qa-head.txt",
+          "sha256": "4f478d618688672d4abf2bb6d2e01bc757a1723ed94fe8964a9c782ae9090049"
+        },
+        {
+          "path": "k3-selection/report.json",
+          "sha256": "60dd7a91ab24aa2b88965b2c06964ad7c32023a533c0ca63005f863ebbbaa4ca"
+        },
+        {
+          "path": "k3-selection/webkit-bookings-hidden-preview.png",
+          "sha256": "f9626540f5419be3432383dae87ae4d8528cffc709e64e9672a33eacfb63053c"
+        },
+        {
+          "path": "k3-selection/webkit-positions-hidden-preview.png",
+          "sha256": "15121c2ff78cee671057f74c1ddd326ebb640be3d9a156875a4721ee83278f6a"
+        },
+        {
+          "path": "k3-selection/webkit-references-hidden-archive-failure.png",
+          "sha256": "83e90fb36fb52b899d5a747486a48867b7574d05701e1f5b70db23cb89ec9874"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739077831.json",
+          "sha256": "f11a9f1becd651999eb02fb56b0da461476fdc127c2ef66ea76c8683d7c47d29"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739080174.json",
+          "sha256": "0da25adbf80a894ef8e329d9a2d1fcf5c8e4544a7fe44ef8b810a5c67ed70a73"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739082299.json",
+          "sha256": "cfd6b05a73cade6914a9abc1c15abd74b591f90c5f1ad4b5f1e39402181e57e8"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739084940.json",
+          "sha256": "c6c0aa1251c62f9d2ec4d24a6d8fec88dbb27aae0f7c7fe4e206f035f857a554"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739087566.json",
+          "sha256": "a898b215d469c592ef32d564f56e0bb87a9bc932450a7e860cb40624fb53d9fd"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739089362.json",
+          "sha256": "cc4d72aff2a053097a3dac33f2c96b5d86b152e5fca90cfeae65cbe1dfa51e47"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739092918.json",
+          "sha256": "a5c837a845e7b2c6c98975c703147283fec50d1598f7d47b87cad366b98361b4"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739097878.json",
+          "sha256": "e1c1cf0fc333e2756d5e8d96daa245b9402a73b4672d80f9fd4266fb34ec94f5"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739102169.json",
+          "sha256": "40515942a2fb3e195f2f3e31c8bfce322ff6bf19f8b463c750f45f21c6d48210"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739108421.json",
+          "sha256": "ab9887ecbc46a89ba14f71cc09b959320832a28e978239a6c4311b66e021f101"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739113506.json",
+          "sha256": "6779f43405901cf4f034657de93339e905d0234fd087e2a05e82f83df8423e7d"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739116854.json",
+          "sha256": "abd3b025a6dff6a3f87ba4496f2b7fc3d1f39622c0ffab03f5f322f269eeb2af"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739126055.json",
+          "sha256": "cc67ddcd1a6dddb3809eeb14d31ffca2c61874b852e31aa28fbc433aecd9eeff"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739131875.json",
+          "sha256": "03ff807d296ec6e11a11ea2bbd987351a56f7028acc6ff6ec60c044b6d846971"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739141047.json",
+          "sha256": "42e11e5b9931aef64b8eda13c5f9d2afa14c33e24ee6cd9f939f52665ceac764"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739136307.json",
+          "sha256": "41d5f6431e3a73997492623203b934c40c31400be1029a232acf4bbd4daf1fa6"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739146037.json",
+          "sha256": "53547681f3b650c84ee45fb08a1e07c21f39bc9a653938cfc69f45f39d3461c5"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739149086.json",
+          "sha256": "5202eaa52323b8172eb61019aad5f0407f8df28f0c287560a77ac296f530b633"
+        }
+      ]
+    },
+    {
+      "run": 43705260426,
+      "archiveBytes": 260881,
+      "archiveSha256": "1e6684e56d2e9a5db60853a9caa701999fe944af830773c9898311de16baf193",
+      "pinnedIndependentReadbackByteEqual": true,
+      "crc": "PASS",
+      "actualRestore": "PASS",
+      "restoredMembers": 13,
+      "passedCases": 3,
+      "manifest": [
+        {
+          "path": "k3-selection/firefox-references-hidden-preview.png",
+          "sha256": "3341d8e6fb74e3f5ee541a99410bd31445a45f7adc4a803db1810784d68e7e2c"
+        },
+        {
+          "path": "k3-selection/http.log",
+          "sha256": "c232bf42af9a0fa437053410f26dc67b895758684748405a29d5db8ddc9179be"
+        },
+        {
+          "path": "k3-selection/chromium-references-hidden-preview.png",
+          "sha256": "d3f5dc55f48a86a0f41e3da59f2265cbf61752460b233253c93643da2f410726"
+        },
+        {
+          "path": "k3-selection/install.log",
+          "sha256": "fd3bb164c3f5668d9c0d3841f860631efddb0f7de163ac5f87f1c1a3f29acd2b"
+        },
+        {
+          "path": "k3-selection/native.log",
+          "sha256": "1912b4e96133abcf937c74549f20232e526995b4c04756f9c3019b3861ef56ec"
+        },
+        {
+          "path": "k3-selection/product-head.txt",
+          "sha256": "945338426d4ec622c3d4b5ef1f7250591559d21e8262d52791f86868f1b7c41a"
+        },
+        {
+          "path": "k3-selection/qa-delta.txt",
+          "sha256": "c60d4dcd2d7ab12c6f6c88f6cc8fc32e41a253b2d59d6005b3658905647b2a9b"
+        },
+        {
+          "path": "k3-selection/qa-head.txt",
+          "sha256": "8e257eed61290a2e9f971fe564618e450635f4da035ed2b632f84ed572bc7ae9"
+        },
+        {
+          "path": "k3-selection/report.json",
+          "sha256": "448f4177f2ac93cb2987b5bfe57be86bdd70be856e165e1b9764b7a91b5a67aa"
+        },
+        {
+          "path": "k3-selection/webkit-references-hidden-preview.png",
+          "sha256": "65dc56d4a742495ad434878c1aa4aecfa6644e130b17c250853e8126309b8324"
+        },
+        {
+          "path": "gates/storage-fixture/chromium-1794739313977.json",
+          "sha256": "2a1da9c33e054eefd1ee927d1dbd759e18afaa0dc78717da73a8ed8f17fbfbff"
+        },
+        {
+          "path": "gates/storage-fixture/firefox-1794739318213.json",
+          "sha256": "375163053b10744d82bff5d3f9b172abdf42d384f5976a5348020d9f5a823b53"
+        },
+        {
+          "path": "gates/storage-fixture/webkit-1794739324182.json",
+          "sha256": "3a8457d501c60ee2abfcfd8dd9899eda581781ba5ac2749d68f5137498189da9"
+        }
+      ]
+    }
+  ],
+  "distinctPassingCases": 18,
+  "originalFailurePreserved": true
+}

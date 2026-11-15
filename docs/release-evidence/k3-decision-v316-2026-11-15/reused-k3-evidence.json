@@ -1,0 +1,621 @@
+{
+  "identityBasis": "same exact current accepted product tree; no intervening product change",
+  "releaseRecord": "docs/release-evidence/v316-live-accepted.json",
+  "reports": [
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/booking-management.json",
+      "sha256": "48af3715bb4b32ad306c0a73ecc553b28f06fc53cf99c3ffce14a3f40102cc65",
+      "report": {
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross1/booking-management.json",
+      "sha256": "586c2f1f256a071a87a061fd9050d9bc8fe5fee48b11462695daa2c98042b266",
+      "report": {
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/position-archive.json",
+      "sha256": "404f9face14b7526ba34c4658e0ab298f1ac1dae9b77a63ec91327b27b6b510d",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "FLH03-14",
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "scans": [
+              {
+                "width": 320,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 390,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 430,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 768,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1024,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1440,
+                "height": 560,
+                "status": "PASS"
+              }
+            ],
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          }
+        ],
+        "walletEditors": [
+          {
+            "engine": "chromium",
+            "networks": 8,
+            "status": "PASS",
+            "checks": [
+              "actual native selected network",
+              "eight text-only one-revision commits",
+              "unchanged wallet/quantity/economic records",
+              "discard",
+              "quota exact-record retention",
+              "actual reload",
+              "peer CAS winner retained"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross1/position-archive.json",
+      "sha256": "6508bc610dbb656abb4fb0666ee1652665ca168c7de1c1750ed01c15a2eaccaa",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "FLH03-14",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": [
+              {
+                "width": 320,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 390,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 430,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 768,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1024,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1440,
+                "height": 560,
+                "status": "PASS"
+              }
+            ],
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": [
+              {
+                "width": 320,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 390,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 430,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 768,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1024,
+                "height": 560,
+                "status": "PASS"
+              },
+              {
+                "width": 1440,
+                "height": 560,
+                "status": "PASS"
+              }
+            ],
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          }
+        ],
+        "walletEditors": [
+          {
+            "engine": "firefox",
+            "networks": 8,
+            "status": "PASS",
+            "checks": [
+              "actual native selected network",
+              "eight text-only one-revision commits",
+              "unchanged wallet/quantity/economic records",
+              "discard",
+              "quota exact-record retention",
+              "actual reload",
+              "peer CAS winner retained"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "networks": 8,
+            "status": "PASS",
+            "checks": [
+              "actual native selected network",
+              "eight text-only one-revision commits",
+              "unchanged wallet/quantity/economic records",
+              "discard",
+              "quota exact-record retention",
+              "actual reload",
+              "peer CAS winner retained"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/reference-management/report.json",
+      "sha256": "21bb57c6db188d6d30c5fc1ed1663ca7e7a193e9c8ca6e031d8f9e998079c04b",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "references": 210,
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "normal/manage/visible page/partial/filter/no hidden selection",
+              "existing management editor/protected note-only original/cancelled correction retains draft/invalid/quota/start/impact correction/add/duplicate",
+              "exact original and non-null TWR/XIRR invariance",
+              "quota/post-put/cancel/retry/CAS",
+              "combined booking/reference archive/restore",
+              "plain and fresh password V2 UI restore",
+              "actual offline commit/reload",
+              "keyboard/focus/axe/44px"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross3/reference-management/report.json",
+      "sha256": "cf47f56af33a7459ad794c7dfd7813cb53656e61dcc59e0c9076cad340501c83",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "references": 210,
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "normal/manage/visible page/partial/filter/no hidden selection",
+              "existing management editor/protected note-only original/cancelled correction retains draft/invalid/quota/start/impact correction/add/duplicate",
+              "exact original and non-null TWR/XIRR invariance",
+              "quota/post-put/cancel/retry/CAS",
+              "combined booking/reference archive/restore",
+              "plain and fresh password V2 UI restore",
+              "actual offline commit/reload",
+              "keyboard/focus/axe/44px"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "references": 210,
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "normal/manage/visible page/partial/filter/no hidden selection",
+              "existing management editor/protected note-only original/cancelled correction retains draft/invalid/quota/start/impact correction/add/duplicate",
+              "exact original and non-null TWR/XIRR invariance",
+              "quota/post-put/cancel/retry/CAS",
+              "combined booking/reference archive/restore",
+              "plain and fresh password V2 UI restore",
+              "actual offline commit/reload",
+              "keyboard/focus/axe/44px"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/reference-removal/report.json",
+      "sha256": "170e9078fd1fa8356a333d5622c440b9d17af4a22eb761e5cdaed614e3db53e7",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "synthetic manual reference inverse; no private data",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "editor 7 widths/44px/axe/protected start/new entry without deletion",
+              "dirty draft decline/accept and original row focus",
+              "actual single editor deletion via same backup/consent/inverse/CAS path",
+              "mixed/start blocks",
+              "actual original backup and separate consent/forged submit",
+              "actual endpoint unknown metrics and selected identities",
+              "quota/post-put exact record/settings/revision",
+              "offline one-revision removal/reload",
+              "session exact undo",
+              "fresh plain/encrypted original recovery",
+              "stale writer and actual CAS race after freshness",
+              "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross3/reference-removal/report.json",
+      "sha256": "a61a4fa6f36b328bb3dfe783e4a88ab8b868f68a859c1da382b069b4079035b1",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "synthetic manual reference inverse; no private data",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "editor 7 widths/44px/axe/protected start/new entry without deletion",
+              "dirty draft decline/accept and original row focus",
+              "actual single editor deletion via same backup/consent/inverse/CAS path",
+              "mixed/start blocks",
+              "actual original backup and separate consent/forged submit",
+              "actual endpoint unknown metrics and selected identities",
+              "quota/post-put exact record/settings/revision",
+              "offline one-revision removal/reload",
+              "session exact undo",
+              "fresh plain/encrypted original recovery",
+              "stale writer and actual CAS race after freshness",
+              "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "editor 7 widths/44px/axe/protected start/new entry without deletion",
+              "dirty draft decline/accept and original row focus",
+              "actual single editor deletion via same backup/consent/inverse/CAS path",
+              "mixed/start blocks",
+              "actual original backup and separate consent/forged submit",
+              "actual endpoint unknown metrics and selected identities",
+              "quota/post-put exact record/settings/revision",
+              "offline one-revision removal/reload",
+              "session exact undo",
+              "fresh plain/encrypted original recovery",
+              "stale writer and actual CAS race after freshness",
+              "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/management-parity/report.json",
+      "sha256": "cb4f1ba9e2f0b1f37cff8e2f85987b8c998472a448e85588c6c08bbd2ed4bb73",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "P1A presentation contract; synthetic canonical IDB fixtures",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "counts": [
+              0,
+              1,
+              100,
+              101
+            ],
+            "views": [
+              "active",
+              "archived",
+              "all"
+            ],
+            "widths": [
+              320,
+              360,
+              390,
+              412,
+              430,
+              768,
+              1440
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross3/management-parity/report.json",
+      "sha256": "fcabf76f07a6e95683134d186c90de973c2cd7790c8f68076df247aee3293a98",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "P1A presentation contract; synthetic canonical IDB fixtures",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "counts": [
+              0,
+              1,
+              100,
+              101
+            ],
+            "views": [
+              "active",
+              "archived",
+              "all"
+            ],
+            "widths": [
+              320,
+              360,
+              390,
+              412,
+              430,
+              768,
+              1440
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "counts": [
+              0,
+              1,
+              100,
+              101
+            ],
+            "views": [
+              "active",
+              "archived",
+              "all"
+            ],
+            "widths": [
+              320,
+              360,
+              390,
+              412,
+              430,
+              768,
+              1440
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "chromium/ui-alltag10/long-press.json",
+      "sha256": "c2e0594e18f31aa24a61f9a2c71ac8a64681c3dd73ffedb9373b1b48896ac1e3",
+      "report": {
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": {
+              "positions": "PASS",
+              "bookings": "PASS",
+              "references": "PASS",
+              "realTouch": "PASS"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "releaseRun": 43690187392,
+      "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "restoredArtifactPath": "cross1/ui-alltag10/long-press.json",
+      "sha256": "d0375c633dec7cecc9bb6eae9e230ef395ca685ab92d2afab2ae2f66bc6899e5",
+      "report": {
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": {
+              "positions": "PASS",
+              "bookings": "PASS",
+              "references": "PASS"
+            }
+          },
+          {
+            "engine": "webkit",
+            "result": {
+              "positions": "PASS",
+              "bookings": "PASS",
+              "references": "PASS"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
