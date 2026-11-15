@@ -41,6 +41,13 @@ const pinnedCacheSteps = [
  * stanzas, mandatory additional recovery/finance/ETF suites and the increased live timeout.
  * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
+ const diagnostics="          LIVE_WORKER_DIAGNOSTICS: '1'\n          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'\n";
+ for(const name of ['Verify published bytes, core flows and targeted UI in Chromium','Verify targeted production UI in Firefox and WebKit']){
+  const original='      - name: '+name+'\n        env:\n';
+  const observed=original+diagnostics;
+  assert.equal(source.split(observed).length,2,'Exact worker observation required once in each live engine path');
+  source=source.replace(observed,original);
+ }
  source=normalizeUbuntuMirrorSetup(source);
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
@@ -129,6 +136,10 @@ function validate(s) {
   assert.match(s, /name: fast-only-not-integration-/);
 }
 test('stage workflow preserves every full regression, deployment and live body byte-for-byte', () => validate(source));
+test('worker observation is mandatory only in the two live steps and cannot change sealed commands',()=>{
+ const block="          LIVE_WORKER_DIAGNOSTICS: '1'\n          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'\n";
+ for(const changed of [source.replace(block,''),source.replace(block,block+block),source.replace("LIVE_WORKER_DIAGNOSTICS: '1'","LIVE_WORKER_DIAGNOSTICS: '0'"),source.replace('--import ./tests/live-worker-diagnostics.mjs','--import ./tests/other.mjs'),source.replace('node tests/browser-kraken-import.mjs 2>&1','echo skipped tests/browser-kraken-import.mjs 2>&1')])assert.throws(()=>validate(changed));
+});
 test('live orchestration has one bounded 55-minute budget while all sealed test commands stay unchanged',()=>{
  const live=source.slice(source.indexOf('  live-acceptance:\n'));
  assert.match(live,/^    timeout-minutes: 55$/m);

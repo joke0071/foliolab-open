@@ -458,6 +458,8 @@ jobs:
           npx playwright install chromium --only-shell 2>&1 | tee -a artifacts/gates/live-browser-install.log
       - name: Verify published bytes, core flows and targeted UI in Chromium
         env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
           UI_QUALITY_SCREENSHOTS: '1'
         run: |
           set -euo pipefail
@@ -508,6 +510,8 @@ jobs:
           DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
       - name: Verify targeted production UI in Firefox and WebKit
         env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
           UI_QUALITY_ENGINES: firefox,webkit
           TRANSFER_STATE_ENGINES: firefox,webkit
         run: |
