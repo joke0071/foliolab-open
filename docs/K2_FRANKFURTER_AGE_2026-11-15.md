@@ -22,7 +22,7 @@ Feste Browserzeit `2026-11-15T18:00:00.000Z` (Sonntag), ausschließlich syntheti
 | Gültiger Tageskurs | 2026-11-15 | `0.85`, tatsächliches Datum und fester Abrufzeitpunkt gespeichert |
 | Wochenende → Freitag | 2026-11-13 | `0.85` mit Freitagdatum gespeichert |
 | Sieben-Tage-Grenze | 2026-11-08 | Noch akzeptiert, Datum unverändert |
-| Alter USD-Kurs und anderer gültiger GBP-Kurs | 2000-01-03 / 2026-11-13 | USD vollständig erhalten, GBP `1.1` tatsächlich gespeichert, kein USD-Completionmarker und kein vollständiger Erfolgszeitpunkt |
+| Alter USD-Kurs und anderer gültiger GBP-Kurs, je mit Bestand und UNKNOWN | 2000-01-03 / 2026-11-13 | USD vollständig erhalten, GBP `1.1` tatsächlich gespeichert, kein USD-Completionmarker und kein vollständiger Erfolgszeitpunkt |
 
 Bei isolierter Ablehnung: UI `0 Datenupdates · 1 Abfragen prüfen`, keine „Portfolio aktualisiert.“-Meldung; `lastSuccessAt=null`, keine abgeschlossene FX-Teilaufgabe, Fehlversuch gespeichert. Bei Erfolg: tatsächlicher gespeicherter Kurs plus Erfolg/Completionmarker. In jedem Fall vollständige Gleichheit des nachher tatsächlich wieder geöffneten IDBRecords und des Schedulerzustands; Journal und externe Flüsse bleiben unverändert. Stageprotokoll vor jedem Fall und vor den kritischen Refresh-/Cleanup-Grenzen, damit Abbrüche lokalisierbar bleiben.
 

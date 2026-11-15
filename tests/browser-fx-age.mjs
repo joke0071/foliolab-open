@@ -15,7 +15,8 @@ const cases=[
  {id:'today',date:'2026-11-15',known:false,accept:true},
  {id:'weekend-friday',date:'2026-11-13',known:false,accept:true},
  {id:'seven-days-boundary',date:'2026-11-08',known:false,accept:true},
- {id:'old-known-other-fx-saved',date:'2000-01-03',known:true,accept:false,mixed:true}
+ {id:'old-known-other-fx-saved',date:'2000-01-03',known:true,accept:false,mixed:true},
+ {id:'old-unknown-other-fx-saved',date:'2000-01-03',known:false,accept:false,mixed:true}
 ];
 const deadline=setTimeout(()=>{console.error('FX age browser deadline exceeded');process.exit(1);},180000);deadline.unref();
 for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
