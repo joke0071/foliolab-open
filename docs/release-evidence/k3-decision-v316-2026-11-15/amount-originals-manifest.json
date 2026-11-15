@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "run": 43705912741,
+  "job": 132786820044,
+  "attempt": 1,
+  "qaHead": "97c967be94f6ddc1a97f40e47c5e8a43b147de08",
+  "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "artifactId": 14158715083,
+  "archiveBytes": 244276,
+  "archiveSha256": "c87dea52cd1548d610d4c44005226ed0263bd54ce78cb0081776ffbf146fc5de",
+  "parts": [
+    {
+      "path": "amount-original.zip.part00",
+      "bytes": 180000,
+      "sha256": "c90d12cd4f0ee79e101cb11aca85f5af0877deb0b810c9459032e6c9d5e47350",
+      "gitBlob": "97bf114ea1392ecc7f17d4cad58b06e39b11277d"
+    },
+    {
+      "path": "amount-original.zip.part01",
+      "bytes": 64276,
+      "sha256": "5d2d8414626c60287188d7ddb8aebf16bf96bc5ac4f778455a077736fc04fcf7",
+      "gitBlob": "d1ea01f6ae458e642864ce9552d48e3a9988c537"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "status": "PASS",
+  "pinnedCommit": "40c410b21a82cd8383d7eab9eff1804a39507d7f",
+  "run": 43705457585,
+  "archiveBytes": 2266349,
+  "archiveSha256": "3d52ea4c2c44c4cdacc7019c69b354c07248d5de542157dafdc2957868697713",
+  "independentPinnedReadback": "13 parts read by exact commit through connected GitHub API; each part and joined archive match prior original manifest",
+  "crc": "PASS",
+  "actualRestore": "PASS",
+  "restoredMembers": 25,
+  "cases": 9,
+  "checks": 120,
+  "baselineDigests": "all 9 records independently rehashed",
+  "manifest": [
+    {
+      "path": "gates/storage-fixture/chromium-1794739467478.json",
+      "bytes": 3770,
+      "sha256": "e40bcf4a79c246091b1b79f47cd8d5a2cf69df9ad76002c90da1250466d52aff"
+    },
+    {
+      "path": "gates/storage-fixture/chromium-1794739472383.json",
+      "bytes": 3576,
+      "sha256": "af69a2eff69dbf8daeabbaa99b67ffffd99d2532dc8db4dcac1879dde2731e7c"
+    },
+    {
+      "path": "gates/storage-fixture/chromium-1794739497874.json",
+      "bytes": 3576,
+      "sha256": "3c0f8885e8957879d95908466995828ce365e1cd721075404187362b5eb2f66f"
+    },
+    {
+      "path": "gates/storage-fixture/firefox-1794739504197.json",
+      "bytes": 3567,
+      "sha256": "5aad5f779e8635bed0d62e88a7a77dd2658e33bdec54768951196a82c8f0212d"
+    },
+    {
+      "path": "gates/storage-fixture/firefox-1794739513123.json",
+      "bytes": 3567,
+      "sha256": "abc0dc4b9825f7f1d38da789d358aadd18af08ff7804f17392b58a8479df9064"
+    },
+    {
+      "path": "gates/storage-fixture/firefox-1794739550740.json",
+      "bytes": 3567,
+      "sha256": "53610c379565e0a313877d87c58c6b558796eda57835a5b21ced0f89eee433fa"
+    },
+    {
+      "path": "gates/storage-fixture/webkit-1794739559998.json",
+      "bytes": 3586,
+      "sha256": "4093942041e3c71dc193bcc388f25e8f4e7cbb70506ab74af429578452068ed7"
+    },
+    {
+      "path": "gates/storage-fixture/webkit-1794739571053.json",
+      "bytes": 3526,
+      "sha256": "96e627a39ec445c67858e0005fdc48b4653d92246933e64799707e1ae4bef22d"
+    },
+    {
+      "path": "gates/storage-fixture/webkit-1794739600344.json",
+      "bytes": 3526,
+      "sha256": "d7158863c4eb69e2dc36b663f5ccf682a4c546eb7952bcc4a738f02c26900b52"
+    },
+    {
+      "path": "k3-volume/chromium-bookings-hidden.png",
+      "bytes": 49685,
+      "sha256": "1b4292318837db45c6722aab2b3f758f2fbe2f1c2867f39feb3940b23ee11c47"
+    },
+    {
+      "path": "k3-volume/chromium-positions-hidden.png",
+      "bytes": 66681,
+      "sha256": "d93900af0466649274052e1e4a9e4a9f9dffefa53cf37afaac4b59b6f4ca43b2"
+    },
+    {
+      "path": "k3-volume/chromium-references-hidden.png",
+      "bytes": 66645,
+      "sha256": "40354509226e5a97f82f622e5ab0f710679d4646bd3412efd85521753017cc7d"
+    },
+    {
+      "path": "k3-volume/firefox-bookings-hidden.png",
+      "bytes": 59509,
+      "sha256": "b2c3c01a9f5fc2be03fab282600a856fbd14ebd82652d11692dd859d0c40e1b8"
+    },
+    {
+      "path": "k3-volume/firefox-positions-hidden.png",
+      "bytes": 76964,
+      "sha256": "f17ab4f7af327e79cc5f1c872de15c6930a78879e5137a856c2dbf832285e322"
+    },
+    {
+      "path": "k3-volume/firefox-references-hidden.png",
+      "bytes": 77716,
+      "sha256": "cb90c5a89d15abb894f9d2b6d9ae8105f874fc303203805c873491d3cdf53f03"
+    },
+    {
+      "path": "k3-volume/http.log",
+      "bytes": 224667,
+      "sha256": "f3b4d5e263176bb5102e2e25b5d0bef647f447f4a0a510b94f056c9f4dc5a930"
+    },
+    {
+      "path": "k3-volume/install.log",
+      "bytes": 87985,
+      "sha256": "0c31b44a051f36bd471db35c421c59954aedd6eeb0a4cfb23ee851f54bf7463c"
+    },
+    {
+      "path": "k3-volume/native.log",
+      "bytes": 19229,
+      "sha256": "4a029fa37df9ce716bd3c2bf61017edeaf39f19a3441b283e32884ed25b98fd3"
+    },
+    {
+      "path": "k3-volume/product-head.txt",
+      "bytes": 41,
+      "sha256": "945338426d4ec622c3d4b5ef1f7250591559d21e8262d52791f86868f1b7c41a"
+    },
+    {
+      "path": "k3-volume/qa-delta.txt",
+      "bytes": 122,
+      "sha256": "695b02bdcdf7e3be9a2133f9e4f8be078bfaf72c645534e87be477fa4192b228"
+    },
+    {
+      "path": "k3-volume/qa-head.txt",
+      "bytes": 41,
+      "sha256": "e5ad09a95f8c3946303c81ab99f93880875664aee6a5efb3bb4ce6777fcc4b1e"
+    },
+    {
+      "path": "k3-volume/report.json",
+      "bytes": 81785409,
+      "sha256": "44b67e60b961b81f6753e23cbee549541f94e36ad1b10d3919dc48f6c373c04d"
+    },
+    {
+      "path": "k3-volume/webkit-bookings-hidden.png",
+      "bytes": 64143,
+      "sha256": "f85aa8b90e1008f13b6f276dc336aa9be630b4ba6e116ebd5d7fbe0ac8aecd84"
+    },
+    {
+      "path": "k3-volume/webkit-positions-hidden.png",
+      "bytes": 82294,
+      "sha256": "6c8e01a179b5ee6fdc8794eff39db5995bb2d89bcb417f52bbad78dd39d73ccb"
+    },
+    {
+      "path": "k3-volume/webkit-references-hidden.png",
+      "bytes": 74430,
+      "sha256": "b849de3c28dbb1a941040c1b7d0d7bfe75ade86d6f3664922aad75f658157a2b"
+    }
+  ]
+}
