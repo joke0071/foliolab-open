@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "pinnedCommit": "032856dad03657625a1f3492e7d2c8c1a4d9f471",
+  "run": 43705912741,
+  "archiveBytes": 244276,
+  "archiveSha256": "c87dea52cd1548d610d4c44005226ed0263bd54ce78cb0081776ffbf146fc5de",
+  "pinnedIndependentReadbackByteEqual": true,
+  "crc": "PASS",
+  "actualRestore": "PASS",
+  "restoredMembers": 13,
+  "passedCases": 3,
+  "checks": 99,
+  "independentOracles": "only p001 quantity changes 2 to 3.000000000001; archived preserved; Decimal total 209.000000000001; revision +1; all report actual/expected values independently equal",
+  "manifest": [
+    {
+      "path": "gates/storage-fixture/chromium-1794739805480.json",
+      "bytes": 3579,
+      "sha256": "438785e8462221c847372e90cd537029aeeb33c6b650a005cf57fd70016a6936"
+    },
+    {
+      "path": "gates/storage-fixture/firefox-1794739809091.json",
+      "bytes": 3570,
+      "sha256": "bba121415e19299b6a28d0ef1d9a2c2ef3e038e73c3547af23b4be3999d6d45b"
+    },
+    {
+      "path": "gates/storage-fixture/webkit-1794739818116.json",
+      "bytes": 3569,
+      "sha256": "81a34c5fc98940ce9b4509355739f8e8d8497c10c4c1c45152d82b74fa41ea34"
+    },
+    {
+      "path": "k3-selection/chromium-quantity-editor.png",
+      "bytes": 39722,
+      "sha256": "3a504a78de907564239a62036de72b99d1a5b425ab7f3333f59acdad44d2dc3e"
+    },
+    {
+      "path": "k3-selection/firefox-quantity-editor.png",
+      "bytes": 49577,
+      "sha256": "a703d02eab32f11f9010733d3730cb0bcaff70e5902ff0b1d0f65695bef9dcb9"
+    },
+    {
+      "path": "k3-selection/http.log",
+      "bytes": 74343,
+      "sha256": "b9c0f4ca51c237c239d881d3d4c6ab931ee3495fc51e20bf2dd9ccab5285a0aa"
+    },
+    {
+      "path": "k3-selection/install.log",
+      "bytes": 87984,
+      "sha256": "c823dbdc5ef8aeb9a1bc4b9f74c7469f5b8959589fe389bcc92c8f29a8a40f64"
+    },
+    {
+      "path": "k3-selection/native.log",
+      "bytes": 7416,
+      "sha256": "eec179a86ceafac8fc78fee2b38afa585ae50451a7638550f5d10662c51641e0"
+    },
+    {
+      "path": "k3-selection/product-head.txt",
+      "bytes": 41,
+      "sha256": "945338426d4ec622c3d4b5ef1f7250591559d21e8262d52791f86868f1b7c41a"
+    },
+    {
+      "path": "k3-selection/qa-delta.txt",
+      "bytes": 100,
+      "sha256": "c60d4dcd2d7ab12c6f6c88f6cc8fc32e41a253b2d59d6005b3658905647b2a9b"
+    },
+    {
+      "path": "k3-selection/qa-head.txt",
+      "bytes": 41,
+      "sha256": "c7ee26f7ef233983a6a5eca624670041380140371bfd151af933fa92f2311afc"
+    },
+    {
+      "path": "k3-selection/report.json",
+      "bytes": 5710994,
+      "sha256": "0ffb5b1c169e890fbb13657cc795d06bddbe0b13490d817e3b4957776a7d897b"
+    },
+    {
+      "path": "k3-selection/webkit-quantity-editor.png",
+      "bytes": 47330,
+      "sha256": "440f7070372a1a1d18c2cabd493bd136cc09f3e4807418deaf13d38a8034dd07"
+    }
+  ]
+}
