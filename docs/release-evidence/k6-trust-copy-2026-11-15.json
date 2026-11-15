@@ -1,0 +1,148 @@
+{
+  "date": "2026-11-15",
+  "scope": "K6-TRUST visible storage/export/restore and missing portfolio copy",
+  "productBase": {
+    "version": 315,
+    "main": "ff60c73e53c973ecb86393be5b4e31b55f352601"
+  },
+  "outcome": "ONE_COPY_DEVIATION_REPRODUCED_CANDIDATE_TARGETED_QA_PASS_NOT_MERGED",
+  "candidate": {
+    "branch": "fix/k6-trust-backup-copy-2026-11-15",
+    "head": "2a773073f2887e8701ee893eee2e8619ab980be8",
+    "files": [
+      "src/drive-backup.js",
+      "tests/drive-backup.test.mjs",
+      "tests/browser-trust-backup-copy.mjs"
+    ],
+    "runtimeDelta": "One error message in src/drive-backup.js; no storage, crypto, restore or SW behavior changes",
+    "review": "Prepared comparison and review description, no PR/full-integration run created"
+  },
+  "qa": {
+    "run": 43685258218,
+    "attempt": 1,
+    "job": 132724291169,
+    "head": "352cb441127446f31e0f367b242a9d7ef9eb7223",
+    "workflow": ".github/workflows/k6-trust-backup-copy.yml",
+    "status": "SUCCESS",
+    "platform": "Ubuntu24.04 Chromium141.0.7390.37 Playwright1.56.1 Node22.23.4",
+    "node": {
+      "tests": 57,
+      "pass": 57,
+      "fail": 0,
+      "skipped": 0
+    },
+    "native": "PASS",
+    "sw": "blocked",
+    "oauth": "synthetic callback",
+    "drive": "synthetic GET responses, no remote mutation",
+    "fault": "One status text assignment throws after actual confirmed portfolio commit and actual vault adoption attempt; no added dialog, no storage/crypto fault",
+    "assertions": [
+      "v315 false takeover statement reproduced",
+      "candidate states only confirmed portfolio restore",
+      "one IDB commit per restore",
+      "source portfolio positions preserved exactly",
+      "existing target vault keyId/wrap unchanged",
+      "new UI export decrypts with target password and rejects source password",
+      "IDB record and target vault unchanged after reload",
+      "confirmation dialogs captured before commit",
+      "no page errors"
+    ]
+  },
+  "finding": {
+    "uiPath": "Mehr → Google Drive Backup → Backups verwalten → Wiederherstellen; target already has a different Backup-Passwort; final display fault",
+    "old": "Portfolio und Backup-Passwort übernommen. Abschlussanzeige fehlgeschlagen: … Portfolio nicht erneut importieren.",
+    "new": "Portfolio wiederhergestellt. Abschlussanzeige fehlgeschlagen: … Portfolio nicht erneut importieren.",
+    "cause": "adoptBackupPassword returns false for an existing vault; app adapter ignores the return value; successful no-op must not be described as adoption",
+    "userExpectation": "The source password would protect future local/Drive exports, but the existing target password actually does."
+  },
+  "reused": {
+    "v315Release": 43630597942,
+    "liveJob": 132564684392,
+    "pr337": 337,
+    "restoreNative": 43603315041,
+    "eviction": {
+      "chromiumPool": "K4_STORAGE_EVICTION_2026-11-14.md",
+      "chromiumDisk": "K4_FILESYSTEM_EVICTION_2026-11-14.md",
+      "firefox": 43645973137,
+      "wholeOrigin": "K4_WHOLE_ORIGIN_2026-11-14.md"
+    },
+    "boundary": "No repeat of accepted restore/eviction; no new physical Windows/Android, real OAuth, new eviction or whole-origin claim"
+  },
+  "archive": {
+    "artifact": 14149754641,
+    "bytes": 1013700,
+    "sha256": "bf2baa27cccbf786117fab960f6770b34986184667421d97ed5022302ab9e74b",
+    "crc": "PASS",
+    "members": [
+      {
+        "name": "candidate-restore-status.png",
+        "size": 372448,
+        "sha256": "90d66d27a164cfae9fc63fe6883f5874cf8fcf60d54a4949e8356dc5b63b3683"
+      },
+      {
+        "name": "export-source.png",
+        "size": 270234,
+        "sha256": "02961133cfe2bd550690dd8b7e70253add6306c3a4be1e0ce9190d77377b5374"
+      },
+      {
+        "name": "native-ui.log",
+        "size": 40,
+        "sha256": "2b8ff0be9632d5c82ee4ac4296d485eb7cc825f62d6866a583b0bf9389ccbdaa"
+      },
+      {
+        "name": "product-copy.diff",
+        "size": 907,
+        "sha256": "aabd5420ceb0dfa8b82e72fd07224c68b16cb9c2598db0e395d7dcfc05888d00"
+      },
+      {
+        "name": "qa-head.txt",
+        "size": 41,
+        "sha256": "f45fa61d71a75f578992cd71fe05fa75b46b8dc7885bb00cdd95489fcbce4880"
+      },
+      {
+        "name": "qa-tree.txt",
+        "size": 110175,
+        "sha256": "ce99aa05508606b06b030b4a3b06f5b5df45d7a5adb095031a34701dc37acbe3"
+      },
+      {
+        "name": "report.json",
+        "size": 26355,
+        "sha256": "f6fe4e552c23f0db2910c0a0dc166192b0dac28bf354223bc81c009e93adcd00"
+      },
+      {
+        "name": "server.log",
+        "size": 58752,
+        "sha256": "ff5687948fcd0d05d854c9646300f591feceb09620f27e094c6b3ccb3cd43844"
+      },
+      {
+        "name": "targeted-node.tap",
+        "size": 11092,
+        "sha256": "081324b1d39ef321c57c9db170f127f099b17acb455c6715965ecff90100029e"
+      },
+      {
+        "name": "v315-drive-backup.js",
+        "size": 28381,
+        "sha256": "674dad3cee59fb1123107e589a268cdb874869bcd10f1d616aa9861ef74ee260"
+      },
+      {
+        "name": "v315-restore-status.png",
+        "size": 373986,
+        "sha256": "3fbe2b0b262e7a1b3f6820fba77f50fefe8de4baebc7c03a0beccfaf83301d7d"
+      }
+    ],
+    "durableRepositoryDirectory": "docs/release-evidence/k6-trust-2026-11-15/originals",
+    "note": "All 11 extracted original artifact files preserved individually, with original bytes. Screenshots contain only synthetic QA data; all three visually reviewed."
+  },
+  "hnd": {
+    "previous": "116f7d92bc3d8662a42632730686d1ee200de644",
+    "claim": "88e1cf548e596daeb3b0d86b2ca4af9ccf228d05",
+    "writer": "trust-copy-e4b79f541e28"
+  },
+  "boundaries": {
+    "K6_TRUST": "VERIFY, correction not LIVE",
+    "K4": "PARTIAL",
+    "A09": "OPERATOR_INPUT_PENDING",
+    "WebKit": "Existing total-storage-ratio launcher prerequisite retained, not prioritized"
+  },
+  "next": "Review exact candidate; obtain separate integration/merge/deployment authorization. Release integration requires cache revision and unchanged normal mandatory gates. A09 requires confirmed isolated Windows/Android endpoint(s)."
+}

@@ -1,0 +1,1095 @@
+﻿2026-11-15T06:24:04.0439527Z Current runner version: '2.338.2'
+2026-11-15T06:24:04.0467228Z ##[group]Runner Image Provisioner
+2026-11-15T06:24:04.0468163Z Hosted Compute Agent
+2026-11-15T06:24:04.0468766Z Version: 20261103.629
+2026-11-15T06:24:04.0469527Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-15T06:24:04.0470292Z Build Date: 2026-11-03T17:26:59Z
+2026-11-15T06:24:04.0471046Z Worker ID: {2ff5b35d-df57-444e-81a6-4f700e6fa6e5}
+2026-11-15T06:24:04.0471819Z Region: eastus2
+2026-11-15T06:24:04.0472371Z Cloud: Azure
+2026-11-15T06:24:04.0472956Z ##[endgroup]
+2026-11-15T06:24:04.0474553Z ##[group]Operating System
+2026-11-15T06:24:04.0475689Z Ubuntu
+2026-11-15T06:24:04.0476334Z 24.04.5
+2026-11-15T06:24:04.0476868Z LTS
+2026-11-15T06:24:04.0477491Z ##[endgroup]
+2026-11-15T06:24:04.0478058Z ##[group]Runner Image
+2026-11-15T06:24:04.0479094Z Image: ubuntu-24.04
+2026-11-15T06:24:04.0479767Z Version: 20261111.370.1
+2026-11-15T06:24:04.0481092Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-15T06:24:04.0482684Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-15T06:24:04.0484034Z ##[endgroup]
+2026-11-15T06:24:04.0485674Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T06:24:04.0488266Z Contents: read
+2026-11-15T06:24:04.0488901Z Metadata: read
+2026-11-15T06:24:04.0489455Z ##[endgroup]
+2026-11-15T06:24:04.0491783Z Secret source: Actions
+2026-11-15T06:24:04.0492773Z Cache mode: write
+2026-11-15T06:24:04.0493858Z Prepare workflow directory
+2026-11-15T06:24:04.0849367Z Prepare all required actions
+2026-11-15T06:24:04.0899536Z Getting action download info
+2026-11-15T06:24:04.3662038Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-15T06:24:04.4921543Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-15T06:24:04.5878582Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-11-15T06:24:04.6861983Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-15T06:24:04.9484300Z Complete job name: trust-copy
+2026-11-15T06:24:05.0583191Z ##[group]Run actions/checkout@v4
+2026-11-15T06:24:05.0584669Z with:
+2026-11-15T06:24:05.0585803Z   fetch-depth: 0
+2026-11-15T06:24:05.0586808Z   repository: joke0071/foliolab-open
+2026-11-15T06:24:05.0595436Z   token: ***
+2026-11-15T06:24:05.0596382Z   ssh-strict: true
+2026-11-15T06:24:05.0597303Z   ssh-user: git
+2026-11-15T06:24:05.0598242Z   persist-credentials: true
+2026-11-15T06:24:05.0599268Z   clean: true
+2026-11-15T06:24:05.0600203Z   sparse-checkout-cone-mode: true
+2026-11-15T06:24:05.0601322Z   fetch-tags: false
+2026-11-15T06:24:05.0602269Z   show-progress: true
+2026-11-15T06:24:05.0603544Z   lfs: false
+2026-11-15T06:24:05.0604755Z   submodules: false
+2026-11-15T06:24:05.0606225Z   set-safe-directory: true
+2026-11-15T06:24:05.0607472Z   allow-unsafe-pr-checkout: false
+2026-11-15T06:24:05.0609079Z ##[endgroup]
+2026-11-15T06:24:05.3895519Z Syncing repository: joke0071/foliolab-open
+2026-11-15T06:24:05.3899040Z ##[group]Getting Git version info
+2026-11-15T06:24:05.3901303Z Working directory is '/home/runner/work/foliolab-open/foliolab-open'
+2026-11-15T06:24:05.3903973Z [command]/usr/bin/git version
+2026-11-15T06:24:05.4011754Z git version 2.56.1
+2026-11-15T06:24:05.4037799Z ##[endgroup]
+2026-11-15T06:24:05.4053404Z Temporarily overriding HOME='/home/runner/work/_temp/74635c28-0073-483d-b13b-f459ad4d3965' before making global git config changes
+2026-11-15T06:24:05.4058621Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T06:24:05.4062825Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:24:05.4170741Z Deleting the contents of '/home/runner/work/foliolab-open/foliolab-open'
+2026-11-15T06:24:05.4177456Z ##[group]Initializing the repository
+2026-11-15T06:24:05.4180116Z [command]/usr/bin/git init /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:24:05.4331710Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T06:24:05.4336509Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T06:24:05.4340169Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T06:24:05.4350656Z hint: call:
+2026-11-15T06:24:05.4356574Z hint:
+2026-11-15T06:24:05.4357953Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T06:24:05.4360016Z hint:
+2026-11-15T06:24:05.4361937Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T06:24:05.4365429Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T06:24:05.4368163Z hint:
+2026-11-15T06:24:05.4369520Z hint: 	git branch -m <name>
+2026-11-15T06:24:05.4371058Z hint:
+2026-11-15T06:24:05.4373164Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T06:24:05.4377082Z Initialized empty Git repository in /home/runner/work/foliolab-open/foliolab-open/.git/
+2026-11-15T06:24:05.4382889Z [command]/usr/bin/git remote add origin https://github.com/joke0071/foliolab-open
+2026-11-15T06:24:05.4415647Z ##[endgroup]
+2026-11-15T06:24:05.4418203Z ##[group]Disabling automatic garbage collection
+2026-11-15T06:24:05.4423101Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-15T06:24:05.4463070Z ##[endgroup]
+2026-11-15T06:24:05.4465576Z ##[group]Setting up auth
+2026-11-15T06:24:05.4471161Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T06:24:05.4520414Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T06:24:05.4977062Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T06:24:05.5022625Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T06:24:05.5264491Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T06:24:05.5310275Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T06:24:05.5552275Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T06:24:05.5602661Z ##[endgroup]
+2026-11-15T06:24:05.5604146Z ##[group]Fetching the repository
+2026-11-15T06:24:05.5617381Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-15T06:24:07.9027989Z From https://github.com/joke0071/foliolab-open
+2026-11-15T06:24:07.9029815Z  * [new branch]        audit/2026-10-22-request-resilience -> origin/audit/2026-10-22-request-resilience
+2026-11-15T06:24:07.9030936Z  * [new branch]        audit/2026-10-23-backup-referential-integrity -> origin/audit/2026-10-23-backup-referential-integrity
+2026-11-15T06:24:07.9032295Z  * [new branch]        audit/2026-10-23-backup-restore-release -> origin/audit/2026-10-23-backup-restore-release
+2026-11-15T06:24:07.9033677Z  * [new branch]        audit/2026-10-23-browser-performance -> origin/audit/2026-10-23-browser-performance
+2026-11-15T06:24:07.9034944Z  * [new branch]        audit/2026-10-23-crossbrowser-accessibility -> origin/audit/2026-10-23-crossbrowser-accessibility
+2026-11-15T06:24:07.9036846Z  * [new branch]        audit/2026-10-23-final-legacy-quotes-chevrons -> origin/audit/2026-10-23-final-legacy-quotes-chevrons
+2026-11-15T06:24:07.9038433Z  * [new branch]        audit/2026-10-23-fx-corporate-actions -> origin/audit/2026-10-23-fx-corporate-actions
+2026-11-15T06:24:07.9039433Z  * [new branch]        audit/2026-10-23-fx-corporate-release -> origin/audit/2026-10-23-fx-corporate-release
+2026-11-15T06:24:07.9040634Z  * [new branch]        audit/2026-10-23-integrity-stability -> origin/audit/2026-10-23-integrity-stability
+2026-11-15T06:24:07.9041504Z  * [new branch]        audit/2026-10-23-key-storage-dataflow -> origin/audit/2026-10-23-key-storage-dataflow
+2026-11-15T06:24:07.9042350Z  * [new branch]        audit/2026-10-23-ledger-reference -> origin/audit/2026-10-23-ledger-reference
+2026-11-15T06:24:07.9043187Z  * [new branch]        audit/2026-10-23-live-deployment-smoke -> origin/audit/2026-10-23-live-deployment-smoke
+2026-11-15T06:24:07.9044207Z  * [new branch]        audit/2026-10-23-multitab-release -> origin/audit/2026-10-23-multitab-release
+2026-11-15T06:24:07.9045258Z  * [new branch]        audit/2026-10-23-multitab-sync -> origin/audit/2026-10-23-multitab-sync
+2026-11-15T06:24:07.9046621Z  * [new branch]        audit/2026-10-23-pwa-cache-release-gate -> origin/audit/2026-10-23-pwa-cache-release-gate
+2026-11-15T06:24:07.9047403Z  * [new branch]        audit/2026-10-23-security-privacy -> origin/audit/2026-10-23-security-privacy
+2026-11-15T06:24:07.9048227Z  * [new branch]        audit/2026-10-23-wallet-valuation-consistency -> origin/audit/2026-10-23-wallet-valuation-consistency
+2026-11-15T06:24:07.9049129Z  * [new branch]        audit/2026-10-23-wallet-valuation-release -> origin/audit/2026-10-23-wallet-valuation-release
+2026-11-15T06:24:07.9050039Z  * [new branch]        audit/avalanche-rpc-valuation-labels-20261022 -> origin/audit/avalanche-rpc-valuation-labels-20261022
+2026-11-15T06:24:07.9051023Z  * [new branch]        audit/csv-focus-programmatic-drafts-2026-10-24 -> origin/audit/csv-focus-programmatic-drafts-2026-10-24
+2026-11-15T06:24:07.9051855Z  * [new branch]        audit/csv-parser-hardening-20261021 -> origin/audit/csv-parser-hardening-20261021
+2026-11-15T06:24:07.9052574Z  * [new branch]        audit/data-integrity-20261021 -> origin/audit/data-integrity-20261021
+2026-11-15T06:24:07.9053934Z  * [new branch]        audit/defi-dialog-context-2026-10-24 -> origin/audit/defi-dialog-context-2026-10-24
+2026-11-15T06:24:07.9055490Z  * [new branch]        audit/dialog-accessibility-mobile-2026-10-24 -> origin/audit/dialog-accessibility-mobile-2026-10-24
+2026-11-15T06:24:07.9056629Z  * [new branch]        audit/dialog-final-signoff-2026-10-24 -> origin/audit/dialog-final-signoff-2026-10-24
+2026-11-15T06:24:07.9057466Z  * [new branch]        audit/dialog-final-signoff-v123-2026-10-24 -> origin/audit/dialog-final-signoff-v123-2026-10-24
+2026-11-15T06:24:07.9058286Z  * [new branch]        audit/dialog-form-consistency-2026-10-24 -> origin/audit/dialog-form-consistency-2026-10-24
+2026-11-15T06:24:07.9059057Z  * [new branch]        audit/dialog-guard-wording-2026-10-24 -> origin/audit/dialog-guard-wording-2026-10-24
+2026-11-15T06:24:07.9060014Z  * [new branch]        audit/dialog-wallet-account-choice-2026-10-24 -> origin/audit/dialog-wallet-account-choice-2026-10-24
+2026-11-15T06:24:07.9061046Z  * [new branch]        audit/financial-wallet-quality-20261021 -> origin/audit/financial-wallet-quality-20261021
+2026-11-15T06:24:07.9061915Z  * [new branch]        audit/staking-dialog-disclosure-2026-10-24 -> origin/audit/staking-dialog-disclosure-2026-10-24
+2026-11-15T06:24:07.9137481Z  * [new branch]        audit/ui07-final-usability -> origin/audit/ui07-final-usability
+2026-11-15T06:24:07.9139048Z  * [new branch]        audit/valuation-completeness-20261021 -> origin/audit/valuation-completeness-20261021
+2026-11-15T06:24:07.9140834Z  * [new branch]        audit/wallet-realworld-reliability-20261022 -> origin/audit/wallet-realworld-reliability-20261022
+2026-11-15T06:24:07.9142313Z  * [new branch]        audit/xrpl-ledger-consistency-20261021 -> origin/audit/xrpl-ledger-consistency-20261021
+2026-11-15T06:24:07.9143797Z  * [new branch]        candidate/k4-restore-57ba5fd0-20261114 -> origin/candidate/k4-restore-57ba5fd0-20261114
+2026-11-15T06:24:07.9145407Z  * [new branch]        chore/ci-b-balance-0981e24cc507 -> origin/chore/ci-b-balance-0981e24cc507
+2026-11-15T06:24:07.9147220Z  * [new branch]        chore/k6-private-file-guard-74f8b54eb065 -> origin/chore/k6-private-file-guard-74f8b54eb065
+2026-11-15T06:24:07.9148673Z  * [new branch]        chore/preflight-v2-02f19cd404ef -> origin/chore/preflight-v2-02f19cd404ef
+2026-11-15T06:24:07.9150054Z  * [new branch]        chore/prepare-unperfekt-custom-domain -> origin/chore/prepare-unperfekt-custom-domain
+2026-11-15T06:24:07.9151378Z  * [new branch]        ci/ci-opt01-cross-balance-v1 -> origin/ci/ci-opt01-cross-balance-v1
+2026-11-15T06:24:07.9152524Z  * [new branch]        ci/ci-opt01-draft-stages-v1 -> origin/ci/ci-opt01-draft-stages-v1
+2026-11-15T06:24:07.9153598Z  * [new branch]        ci/cross-engine-shards  -> origin/ci/cross-engine-shards
+2026-11-15T06:24:07.9154841Z  * [new branch]        ci/cross2-ui-balance-4f3aff7885f4 -> origin/ci/cross2-ui-balance-4f3aff7885f4
+2026-11-15T06:24:07.9156465Z  * [new branch]        ci/opt01-playwright-browser-cache -> origin/ci/opt01-playwright-browser-cache
+2026-11-15T06:24:07.9158092Z  * [new branch]        copilot/draft-pr-ui-visual01 -> origin/copilot/draft-pr-ui-visual01
+2026-11-15T06:24:07.9159666Z  * [new branch]        copilot/ui-alltag10-drei-listen-bedienung -> origin/copilot/ui-alltag10-drei-listen-bedienung
+2026-11-15T06:24:07.9161499Z  * [new branch]        diagnostic/pr332-csv-height-4f3aff7885f4 -> origin/diagnostic/pr332-csv-height-4f3aff7885f4
+2026-11-15T06:24:07.9163477Z  * [new branch]        docs/benchmark-restarbeiten-2026-10 -> origin/docs/benchmark-restarbeiten-2026-10
+2026-11-15T06:24:07.9164602Z  * [new branch]        docs/flh02-v175-acceptance -> origin/docs/flh02-v175-acceptance
+2026-11-15T06:24:07.9165564Z  * [new branch]        docs/flh02-v175-release -> origin/docs/flh02-v175-release
+2026-11-15T06:24:07.9166487Z  * [new branch]        docs/flh02-v176-acceptance -> origin/docs/flh02-v176-acceptance
+2026-11-15T06:24:07.9167369Z  * [new branch]        docs/k2-source-help-e595fcc6d453 -> origin/docs/k2-source-help-e595fcc6d453
+2026-11-15T06:24:07.9168132Z  * [new branch]        feat/catalog-crypto-oekb-2026-10-22 -> origin/feat/catalog-crypto-oekb-2026-10-22
+2026-11-15T06:24:07.9169133Z  * [new branch]        feat/compact-responsive-action-bars-v92 -> origin/feat/compact-responsive-action-bars-v92
+2026-11-15T06:24:07.9170081Z  * [new branch]        feat/extended-price-chart-periods-20261024 -> origin/feat/extended-price-chart-periods-20261024
+2026-11-15T06:24:07.9170920Z  * [new branch]        feat/history-calendar-compact-v90 -> origin/feat/history-calendar-compact-v90
+2026-11-15T06:24:07.9171737Z  * [new branch]        feat/issue-44-idb-transaction-foundation -> origin/feat/issue-44-idb-transaction-foundation
+2026-11-15T06:24:07.9172586Z  * [new branch]        feat/issue-44-transactional-idb-cutover -> origin/feat/issue-44-transactional-idb-cutover
+2026-11-15T06:24:07.9173467Z  * [new branch]        feat/mvp-reth-bep20-solana-fallback-20261022 -> origin/feat/mvp-reth-bep20-solana-fallback-20261022
+2026-11-15T06:24:07.9174330Z  * [new branch]        feat/optional-eodhd-worker-perf-ui-v81 -> origin/feat/optional-eodhd-worker-perf-ui-v81
+2026-11-15T06:24:07.9175451Z  * [new branch]        feat/security-catalog-sources-2026-10-22 -> origin/feat/security-catalog-sources-2026-10-22
+2026-11-15T06:24:07.9176492Z  * [new branch]        feat/staking-coverage-catalog-native-networks-20261022 -> origin/feat/staking-coverage-catalog-native-networks-20261022
+2026-11-15T06:24:07.9177509Z  * [new branch]        feat/ui-integrity-2026-10-22 -> origin/feat/ui-integrity-2026-10-22
+2026-11-15T06:24:07.9178296Z  * [new branch]        feat/v82-market-diagnostics-quote-quality -> origin/feat/v82-market-diagnostics-quote-quality
+2026-11-15T06:24:07.9179097Z  * [new branch]        feature/at01-quality-actions -> origin/feature/at01-quality-actions
+2026-11-15T06:24:07.9179784Z  * [new branch]        feature/at02-a-deposit-maturity -> origin/feature/at02-a-deposit-maturity
+2026-11-15T06:24:07.9180497Z  * [new branch]        feature/at02-b-interest-scenarios -> origin/feature/at02-b-interest-scenarios
+2026-11-15T06:24:07.9181385Z  * [new branch]        feature/at03-b-transfer-matching -> origin/feature/at03-b-transfer-matching
+2026-11-15T06:24:07.9182182Z  * [new branch]        feature/at03-current-cash-reconciliation -> origin/feature/at03-current-cash-reconciliation
+2026-11-15T06:24:07.9182940Z  * [new branch]        feature/at05-a-annual-overview -> origin/feature/at05-a-annual-overview
+2026-11-15T06:24:07.9183686Z  * [new branch]        feature/booking-management-foundation -> origin/feature/booking-management-foundation
+2026-11-15T06:24:07.9184419Z  * [new branch]        feature/booking-management-ui -> origin/feature/booking-management-ui
+2026-11-15T06:24:07.9185506Z  * [new branch]        feature/complete-password-backups -> origin/feature/complete-password-backups
+2026-11-15T06:24:07.9186325Z  * [new branch]        feature/consolidated-rest-audit-v179 -> origin/feature/consolidated-rest-audit-v179
+2026-11-15T06:24:07.9187172Z  * [new branch]        feature/etf-crypto-data-fallbacks-20261022 -> origin/feature/etf-crypto-data-fallbacks-20261022
+2026-11-15T06:24:07.9187953Z  * [new branch]        feature/flatex-broker-import -> origin/feature/flatex-broker-import
+2026-11-15T06:24:07.9188654Z  * [new branch]        feature/flatex-broker-import-main -> origin/feature/flatex-broker-import-main
+2026-11-15T06:24:07.9189356Z  * [new branch]        feature/flatex-on-current-main -> origin/feature/flatex-on-current-main
+2026-11-15T06:24:07.9190038Z  * [new branch]        feature/flh01-unified-history -> origin/feature/flh01-unified-history
+2026-11-15T06:24:07.9190739Z  * [new branch]        feature/flh02-bittr-wallet-evidence -> origin/feature/flh02-bittr-wallet-evidence
+2026-11-15T06:24:07.9191535Z  * [new branch]        feature/flh02-position-value-foundation -> origin/feature/flh02-position-value-foundation
+2026-11-15T06:24:07.9192324Z  * [new branch]        feature/flh03-00-01-import-foundation -> origin/feature/flh03-00-01-import-foundation
+2026-11-15T06:24:07.9193065Z  * [new branch]        feature/flh03-08-selection-preview -> origin/feature/flh03-08-selection-preview
+2026-11-15T06:24:07.9193864Z  * [new branch]        feature/flh03-08-sw-ready -> origin/feature/flh03-08-sw-ready
+2026-11-15T06:24:07.9194523Z  * [new branch]        feature/flh03-14-position-archive -> origin/feature/flh03-14-position-archive
+2026-11-15T06:24:07.9195574Z  * [new branch]        feature/flh03-account-completeness -> origin/feature/flh03-account-completeness
+2026-11-15T06:24:07.9196287Z  * [new branch]        feature/flh03-bitpanda-preview -> origin/feature/flh03-bitpanda-preview
+2026-11-15T06:24:07.9196931Z  * [new branch]        feature/flh03-d-native-guard -> origin/feature/flh03-d-native-guard
+2026-11-15T06:24:07.9197618Z  * [new branch]        feature/flh03-flatex-native-amounts -> origin/feature/flh03-flatex-native-amounts
+2026-11-15T06:24:07.9198349Z  * [new branch]        feature/flh03-flatex-native-format -> origin/feature/flh03-flatex-native-format
+2026-11-15T06:24:07.9199136Z  * [new branch]        feature/flh03-flatex-native-identity -> origin/feature/flh03-flatex-native-identity
+2026-11-15T06:24:07.9200578Z  * [new branch]        feature/flh03-flatex-native-projection -> origin/feature/flh03-flatex-native-projection
+2026-11-15T06:24:07.9201362Z  * [new branch]        feature/flh03-flatex-order-links -> origin/feature/flh03-flatex-order-links
+2026-11-15T06:24:07.9202083Z  * [new branch]        feature/flh03-kraken-ledger-preview -> origin/feature/flh03-kraken-ledger-preview
+2026-11-15T06:24:07.9202783Z  * [new branch]        feature/flh03-pchain-evidence -> origin/feature/flh03-pchain-evidence
+2026-11-15T06:24:07.9203537Z  * [new branch]        feature/flh03-pchain-identity -> origin/feature/flh03-pchain-identity
+2026-11-15T06:24:07.9204691Z  * [new branch]        feature/flh03-sonic-evidence -> origin/feature/flh03-sonic-evidence
+2026-11-15T06:24:07.9205810Z  * [new branch]        feature/flh03-ui-a-e    -> origin/feature/flh03-ui-a-e
+2026-11-15T06:24:07.9206851Z  * [new branch]        feature/flh03-ui-abce-release -> origin/feature/flh03-ui-abce-release
+2026-11-15T06:24:07.9207823Z  * [new branch]        feature/flh03-v180-live-checkpoint -> origin/feature/flh03-v180-live-checkpoint
+2026-11-15T06:24:07.9208610Z  * [new branch]        feature/flh04-revisions-20261113-b5ddfe1c -> origin/feature/flh04-revisions-20261113-b5ddfe1c
+2026-11-15T06:24:07.9209510Z  * [new branch]        feature/flh04-snapshot-allowlist-0910b01a-20261113 -> origin/feature/flh04-snapshot-allowlist-0910b01a-20261113
+2026-11-15T06:24:07.9210449Z  * [new branch]        feature/flh04-snapshot-allowlist-once-20261113 -> origin/feature/flh04-snapshot-allowlist-once-20261113
+2026-11-15T06:24:07.9211308Z  * [new branch]        feature/flh04-sync-design -> origin/feature/flh04-sync-design
+2026-11-15T06:24:07.9212219Z  * [new branch]        feature/flh05-import-foundation -> origin/feature/flh05-import-foundation
+2026-11-15T06:24:07.9212983Z  * [new branch]        feature/folio-open-completion-20261021 -> origin/feature/folio-open-completion-20261021
+2026-11-15T06:24:07.9213746Z  * [new branch]        feature/google-drive-own-oauth -> origin/feature/google-drive-own-oauth
+2026-11-15T06:24:07.9214543Z  * [new branch]        feature/history-calendar-under-more-20261112 -> origin/feature/history-calendar-under-more-20261112
+2026-11-15T06:24:07.9215676Z  * [new branch]        feature/history-ui-followup -> origin/feature/history-ui-followup
+2026-11-15T06:24:07.9216317Z  * [new branch]        feature/idb-phase-b     -> origin/feature/idb-phase-b
+2026-11-15T06:24:07.9216925Z  * [new branch]        feature/indexeddb-only-phase-a -> origin/feature/indexeddb-only-phase-a
+2026-11-15T06:24:07.9217661Z  * [new branch]        feature/integrated-booking-transfers -> origin/feature/integrated-booking-transfers
+2026-11-15T06:24:07.9218520Z  * [new branch]        feature/k2-refresh-frequency-v303-7b9e47799d13 -> origin/feature/k2-refresh-frequency-v303-7b9e47799d13
+2026-11-15T06:24:07.9219298Z  * [new branch]        feature/ledger-live-preview -> origin/feature/ledger-live-preview
+2026-11-15T06:24:07.9219935Z  * [new branch]        feature/loading-pwa-foliolab -> origin/feature/loading-pwa-foliolab
+2026-11-15T06:24:07.9220868Z  * [new branch]        feature/local-etf-history-csv-20261022 -> origin/feature/local-etf-history-csv-20261022
+2026-11-15T06:24:07.9221698Z  * [new branch]        feature/marketstack-secret-inputs-266 -> origin/feature/marketstack-secret-inputs-266
+2026-11-15T06:24:07.9222632Z  * [new branch]        feature/navigation-overview-518556806b3b -> origin/feature/navigation-overview-518556806b3b
+2026-11-15T06:24:07.9223532Z  * [new branch]        feature/open-2-modernisierung-20261021 -> origin/feature/open-2-modernisierung-20261021
+2026-11-15T06:24:07.9224356Z  * [new branch]        feature/perf-calendar-projection-lookup -> origin/feature/perf-calendar-projection-lookup
+2026-11-15T06:24:07.9225423Z  * [new branch]        feature/perf01-date-validation-cache -> origin/feature/perf01-date-validation-cache
+2026-11-15T06:24:07.9226257Z  * [new branch]        feature/phase1-ledger-v3-20261021 -> origin/feature/phase1-ledger-v3-20261021
+2026-11-15T06:24:07.9227101Z  * [new branch]        feature/phase2-market-fx-performance-20261021 -> origin/feature/phase2-market-fx-performance-20261021
+2026-11-15T06:24:07.9227960Z  * [new branch]        feature/phase3-csv-wallet-defi-20261021 -> origin/feature/phase3-csv-wallet-defi-20261021
+2026-11-15T06:24:07.9228735Z  * [new branch]        feature/proven-import-cash-removal -> origin/feature/proven-import-cash-removal
+2026-11-15T06:24:07.9229526Z  * [new branch]        feature/recovery-backup-size-preflight -> origin/feature/recovery-backup-size-preflight
+2026-11-15T06:24:07.9230316Z  * [new branch]        feature/recovery-envelope-utf8-size -> origin/feature/recovery-envelope-utf8-size
+2026-11-15T06:24:07.9231015Z  * [new branch]        feature/reference-management -> origin/feature/reference-management
+2026-11-15T06:24:07.9231740Z  * [new branch]        feature/reference-removal-safe-subset -> origin/feature/reference-removal-safe-subset
+2026-11-15T06:24:07.9232686Z  * [new branch]        feature/retired-provider-cleanup-266 -> origin/feature/retired-provider-cleanup-266
+2026-11-15T06:24:07.9233585Z  * [new branch]        feature/smart-onboarding-provider-account-20261022 -> origin/feature/smart-onboarding-provider-account-20261022
+2026-11-15T06:24:07.9234416Z  * [new branch]        feature/sol-wh01-history-core -> origin/feature/sol-wh01-history-core
+2026-11-15T06:24:07.9235352Z  * [new branch]        feature/sol-wh02-bitcoin-history -> origin/feature/sol-wh02-bitcoin-history
+2026-11-15T06:24:07.9236078Z  * [new branch]        feature/sol-wh03-ethereum-history -> origin/feature/sol-wh03-ethereum-history
+2026-11-15T06:24:07.9236762Z  * [new branch]        feature/sol-wh04-07-integrated -> origin/feature/sol-wh04-07-integrated
+2026-11-15T06:24:07.9237447Z  * [new branch]        feature/structured-quality-review -> origin/feature/structured-quality-review
+2026-11-15T06:24:07.9238117Z  * [new branch]        feature/uh02-unified-bitcoin -> origin/feature/uh02-unified-bitcoin
+2026-11-15T06:24:07.9238780Z  * [new branch]        feature/uh03-bitpanda-economic -> origin/feature/uh03-bitpanda-economic
+2026-11-15T06:24:07.9239557Z  * [new branch]        feature/uh03-bitpanda-terminal-withdrawal -> origin/feature/uh03-bitpanda-terminal-withdrawal
+2026-11-15T06:24:07.9240351Z  * [new branch]        feature/uh03-kraken-bitcoin-bridge -> origin/feature/uh03-kraken-bitcoin-bridge
+2026-11-15T06:24:07.9241058Z  * [new branch]        feature/uh03-link-local-finality -> origin/feature/uh03-link-local-finality
+2026-11-15T06:24:07.9241720Z  * [new branch]        feature/uh03-native-eth-bridge -> origin/feature/uh03-native-eth-bridge
+2026-11-15T06:24:07.9242357Z  * [new branch]        feature/uh03-native-exchange -> origin/feature/uh03-native-exchange
+2026-11-15T06:24:07.9242996Z  * [new branch]        feature/uh03-native-sol-bridge -> origin/feature/uh03-native-sol-bridge
+2026-11-15T06:24:07.9243716Z  * [new branch]        feature/uh04-depot13-account8-context -> origin/feature/uh04-depot13-account8-context
+2026-11-15T06:24:07.9244411Z  * [new branch]        feature/uh04-flatex-depot13 -> origin/feature/uh04-flatex-depot13
+2026-11-15T06:24:07.9245624Z  * [new branch]        feature/uh04-flatex-net-settlement -> origin/feature/uh04-flatex-net-settlement
+2026-11-15T06:24:07.9246513Z  * [new branch]        feature/uh04-incremental-eur-pairs -> origin/feature/uh04-incremental-eur-pairs
+2026-11-15T06:24:07.9247296Z  * [new branch]        feature/uh04-native-cash-augmentation -> origin/feature/uh04-native-cash-augmentation
+2026-11-15T06:24:07.9248020Z  * [new branch]        feature/uh04-native-cash-batch -> origin/feature/uh04-native-cash-batch
+2026-11-15T06:24:07.9248788Z  * [new branch]        feature/uh05-dated-journal-reconciliation -> origin/feature/uh05-dated-journal-reconciliation
+2026-11-15T06:24:07.9249607Z  * [new branch]        feature/uh05-earlier-sparplan-funding -> origin/feature/uh05-earlier-sparplan-funding
+2026-11-15T06:24:07.9250440Z  * [new branch]        feature/uh05-external-funding-0a8644a36676 -> origin/feature/uh05-external-funding-0a8644a36676
+2026-11-15T06:24:07.9251310Z  * [new branch]        feature/uh05-kraken-allocation-382a573e6a17 -> origin/feature/uh05-kraken-allocation-382a573e6a17
+2026-11-15T06:24:07.9252193Z  * [new branch]        feature/uh05-native-fiat-binding-b510a73fed43 -> origin/feature/uh05-native-fiat-binding-b510a73fed43
+2026-11-15T06:24:07.9252998Z  * [new branch]        feature/uh05-net-closing-backfill -> origin/feature/uh05-net-closing-backfill
+2026-11-15T06:24:07.9253693Z  * [new branch]        feature/uh05-net-group-selection -> origin/feature/uh05-net-group-selection
+2026-11-15T06:24:07.9254334Z  * [new branch]        feature/uh05-shared-import -> origin/feature/uh05-shared-import
+2026-11-15T06:24:07.9255305Z  * [new branch]        feature/uh05-three-fill-eur-b1b383f4f228 -> origin/feature/uh05-three-fill-eur-b1b383f4f228
+2026-11-15T06:24:07.9256038Z  * [new branch]        feature/uh05-two-fill-eur -> origin/feature/uh05-two-fill-eur
+2026-11-15T06:24:07.9256931Z  * [new branch]        feature/uh05-unknown-fx-usd-principal-v299 -> origin/feature/uh05-unknown-fx-usd-principal-v299
+2026-11-15T06:24:07.9257735Z  * [new branch]        feature/uh05-value-date-706dbcb4272b -> origin/feature/uh05-value-date-706dbcb4272b
+2026-11-15T06:24:07.9258498Z  * [new branch]        feature/ui-audit-precision-touch-v212 -> origin/feature/ui-audit-precision-touch-v212
+2026-11-15T06:24:07.9259245Z  * [new branch]        feature/ui-c5-live-disclosure-gate -> origin/feature/ui-c5-live-disclosure-gate
+2026-11-15T06:24:07.9259962Z  * [new branch]        feature/ui-known-valuation-totals -> origin/feature/ui-known-valuation-totals
+2026-11-15T06:24:07.9260700Z  * [new branch]        feature/ui-m28-k01-remove-tradingview -> origin/feature/ui-m28-k01-remove-tradingview
+2026-11-15T06:24:07.9261351Z  * [new branch]        feature/ui-quality-b1   -> origin/feature/ui-quality-b1
+2026-11-15T06:24:07.9262002Z  * [new branch]        feature/ui-quality-c1-transfer-state -> origin/feature/ui-quality-c1-transfer-state
+2026-11-15T06:24:07.9262773Z  * [new branch]        feature/ui-quality-c2-history-display -> origin/feature/ui-quality-c2-history-display
+2026-11-15T06:24:07.9263513Z  * [new branch]        feature/ui-quality-c3-chart-metric -> origin/feature/ui-quality-c3-chart-metric
+2026-11-15T06:24:07.9264220Z  * [new branch]        feature/ui-quality-c4-chart-units -> origin/feature/ui-quality-c4-chart-units
+2026-11-15T06:24:07.9265158Z  * [new branch]        feature/ui-quality-c5-secondary-actions -> origin/feature/ui-quality-c5-secondary-actions
+2026-11-15T06:24:07.9266226Z  * [new branch]        feature/ui-r4-display-filter-02f19cd404ef -> origin/feature/ui-r4-display-filter-02f19cd404ef
+2026-11-15T06:24:07.9266962Z  * [new branch]        feature/ui-selection-header -> origin/feature/ui-selection-header
+2026-11-15T06:24:07.9267632Z  * [new branch]        feature/ui-selection-reasons-v214 -> origin/feature/ui-selection-reasons-v214
+2026-11-15T06:24:07.9268276Z  * [new branch]        feature/ui-small-rests  -> origin/feature/ui-small-rests
+2026-11-15T06:24:07.9269069Z  * [new branch]        feature/ui-visual01-compact-periods -> origin/feature/ui-visual01-compact-periods
+2026-11-15T06:24:07.9269939Z  * [new branch]        feature/ui-visual02-mehr -> origin/feature/ui-visual02-mehr
+2026-11-15T06:24:07.9270557Z  * [new branch]        feature/ui-visual03-bookings -> origin/feature/ui-visual03-bookings
+2026-11-15T06:24:07.9271347Z  * [new branch]        feature/ui-visual04-navigation -> origin/feature/ui-visual04-navigation
+2026-11-15T06:24:07.9271983Z  * [new branch]        feature/ui-visual05-dialogs -> origin/feature/ui-visual05-dialogs
+2026-11-15T06:24:07.9272702Z  * [new branch]        feature/ui-visual06-compact-empty-states -> origin/feature/ui-visual06-compact-empty-states
+2026-11-15T06:24:07.9273475Z  * [new branch]        feature/ui-visual07-overview-stats -> origin/feature/ui-visual07-overview-stats
+2026-11-15T06:24:07.9274201Z  * [new branch]        feature/ui-visual08-history-details -> origin/feature/ui-visual08-history-details
+2026-11-15T06:24:07.9275354Z  * [new branch]        feature/ui-visual09-positions-bookings-filters -> origin/feature/ui-visual09-positions-bookings-filters
+2026-11-15T06:24:07.9276908Z  * [new branch]        feature/unified-backup-password -> origin/feature/unified-backup-password
+2026-11-15T06:24:07.9277645Z  * [new branch]        feature/unified-list-management -> origin/feature/unified-list-management
+2026-11-15T06:24:07.9278533Z  * [new branch]        feature/universal-security-listing-discovery-20261022 -> origin/feature/universal-security-listing-discovery-20261022
+2026-11-15T06:24:07.9279605Z  * [new branch]        feature/verified-security-prices-multisource-20261022 -> origin/feature/verified-security-prices-multisource-20261022
+2026-11-15T06:24:07.9280448Z  * [new branch]        fix/alpha-vantage-direct-266 -> origin/fix/alpha-vantage-direct-266
+2026-11-15T06:24:07.9281785Z  * [new branch]        fix/booking-mobile-readability-v231-20261031 -> origin/fix/booking-mobile-readability-v231-20261031
+2026-11-15T06:24:07.9282780Z  * [new branch]        fix/cash-account-ux-267-264 -> origin/fix/cash-account-ux-267-264
+2026-11-15T06:24:07.9283495Z  * [new branch]        fix/catalog-source-accuracy-2026-10-22 -> origin/fix/catalog-source-accuracy-2026-10-22
+2026-11-15T06:24:07.9284349Z  * [new branch]        fix/chart-failure-collapse-eye-hover-20261023 -> origin/fix/chart-failure-collapse-eye-hover-20261023
+2026-11-15T06:24:07.9285450Z  * [new branch]        fix/chart-time-spacing-v220 -> origin/fix/chart-time-spacing-v220
+2026-11-15T06:24:07.9286190Z  * [new branch]        fix/compact-catalog-import-2026-10-22 -> origin/fix/compact-catalog-import-2026-10-22
+2026-11-15T06:24:07.9286988Z  * [new branch]        fix/crypto-history-resilience-20261022 -> origin/fix/crypto-history-resilience-20261022
+2026-11-15T06:24:07.9287758Z  * [new branch]        fix/csv-review-test-race-2026-10-24 -> origin/fix/csv-review-test-race-2026-10-24
+2026-11-15T06:24:07.9288389Z  * [new branch]        fix/de-at-displays      -> origin/fix/de-at-displays
+2026-11-15T06:24:07.9289131Z  * [new branch]        fix/eodhd-transport-credential-visibility-v76 -> origin/fix/eodhd-transport-credential-visibility-v76
+2026-11-15T06:24:07.9289890Z  * [new branch]        fix/etf-browser-sources-266 -> origin/fix/etf-browser-sources-266
+2026-11-15T06:24:07.9290491Z  * [new branch]        fix/eth-history-cursor-268 -> origin/fix/eth-history-cursor-268
+2026-11-15T06:24:07.9291301Z  * [new branch]        fix/history-offline-worker-lifecycle -> origin/fix/history-offline-worker-lifecycle
+2026-11-15T06:24:07.9292138Z  * [new branch]        fix/history-worker-error-handling -> origin/fix/history-worker-error-handling
+2026-11-15T06:24:07.9292853Z  * [new branch]        fix/issue-44-crash-safe-revert-v87 -> origin/fix/issue-44-crash-safe-revert-v87
+2026-11-15T06:24:07.9293610Z  * [new branch]        fix/issue-44-stale-source-migration-v86 -> origin/fix/issue-44-stale-source-migration-v86
+2026-11-15T06:24:07.9294473Z  * [new branch]        fix/k3-settings-replacement-v308-b180b1102417 -> origin/fix/k3-settings-replacement-v308-b180b1102417
+2026-11-15T06:24:07.9295648Z  * [new branch]        fix/k3-wallet-editor-v304-e595fcc6d453 -> origin/fix/k3-wallet-editor-v304-e595fcc6d453
+2026-11-15T06:24:07.9296367Z  * [new branch]        fix/k4-confirmed-idb-reopen -> origin/fix/k4-confirmed-idb-reopen
+2026-11-15T06:24:07.9297016Z  * [new branch]        fix/k4-restore-dcdb094a-20261114 -> origin/fix/k4-restore-dcdb094a-20261114
+2026-11-15T06:24:07.9297763Z  * [new branch]        fix/k4-update-drafts-v307-75ea9fa46556 -> origin/fix/k4-update-drafts-v307-75ea9fa46556
+2026-11-15T06:24:07.9299023Z  * [new branch]        fix/k6-backup-copy-v305-93890745b277 -> origin/fix/k6-backup-copy-v305-93890745b277
+2026-11-15T06:24:07.9299828Z  * [new branch]        fix/k6-navigation-focus-v306-40aba94dd4bd -> origin/fix/k6-navigation-focus-v306-40aba94dd4bd
+2026-11-15T06:24:07.9300611Z  * [new branch]        fix/k6-trust-backup-copy-2026-11-15 -> origin/fix/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:07.9301445Z  * [new branch]        fix/ledger-xpub-hd-address-types-20261022 -> origin/fix/ledger-xpub-hd-address-types-20261022
+2026-11-15T06:24:07.9302288Z  * [new branch]        fix/marketstack-history-gaps-266 -> origin/fix/marketstack-history-gaps-266
+2026-11-15T06:24:07.9302949Z  * [new branch]        fix/missing-position-value -> origin/fix/missing-position-value
+2026-11-15T06:24:07.9303769Z  * [new branch]        fix/native-chart-axis-tooltip-v216 -> origin/fix/native-chart-axis-tooltip-v216
+2026-11-15T06:24:07.9305397Z  * [new branch]        fix/native-market-history-ui-20261023 -> origin/fix/native-market-history-ui-20261023
+2026-11-15T06:24:07.9306653Z  * [new branch]        fix/plain-json-backup-reader-limits -> origin/fix/plain-json-backup-reader-limits
+2026-11-15T06:24:07.9307603Z  * [new branch]        fix/portfolio-integrity-restore-77bcb76dd357-20261114 -> origin/fix/portfolio-integrity-restore-77bcb76dd357-20261114
+2026-11-15T06:24:07.9308641Z  * [new branch]        fix/position-archive-view -> origin/fix/position-archive-view
+2026-11-15T06:24:07.9309374Z  * [new branch]        fix/provider-allocation-scope-20261023 -> origin/fix/provider-allocation-scope-20261023
+2026-11-15T06:24:07.9310208Z  * [new branch]        fix/pwa-document-identity-02f19cd404ef -> origin/fix/pwa-document-identity-02f19cd404ef
+2026-11-15T06:24:07.9310964Z  * [new branch]        fix/pwa-update-fresh-assets-v215 -> origin/fix/pwa-update-fresh-assets-v215
+2026-11-15T06:24:07.9311613Z  * [new branch]        fix/pwa-update-reload-v91 -> origin/fix/pwa-update-reload-v91
+2026-11-15T06:24:07.9312213Z  * [new branch]        fix/qa01-a11y-label-in-name -> origin/fix/qa01-a11y-label-in-name
+2026-11-15T06:24:07.9312901Z  * [new branch]        fix/reference-offline-test-baseline -> origin/fix/reference-offline-test-baseline
+2026-11-15T06:24:07.9313689Z  * [new branch]        fix/references-startup-v309-a845c64598ab -> origin/fix/references-startup-v309-a845c64598ab
+2026-11-15T06:24:07.9314762Z  * [new branch]        fix/remove-curated-etf-suggestions-20261022 -> origin/fix/remove-curated-etf-suggestions-20261022
+2026-11-15T06:24:07.9315900Z  * [new branch]        fix/returns-chevron-mobile-v82 -> origin/fix/returns-chevron-mobile-v82
+2026-11-15T06:24:07.9316863Z  * [new branch]        fix/returns-chevron-mobile-v83 -> origin/fix/returns-chevron-mobile-v83
+2026-11-15T06:24:07.9317553Z  * [new branch]        fix/snapshot-position-crud-v79 -> origin/fix/snapshot-position-crud-v79
+2026-11-15T06:24:07.9318340Z  * [new branch]        fix/solana-rpc-onboarding-clarity-20261023 -> origin/fix/solana-rpc-onboarding-clarity-20261023
+2026-11-15T06:24:07.9319765Z  * [new branch]        fix/sonic-benqi-solana-staking-wallet-scan -> origin/fix/sonic-benqi-solana-staking-wallet-scan
+2026-11-15T06:24:07.9320649Z  * [new branch]        fix/uh03-kraken-cross-reference-chronology -> origin/fix/uh03-kraken-cross-reference-chronology
+2026-11-15T06:24:07.9321405Z  * [new branch]        fix/uh03-kraken-exact-trail -> origin/fix/uh03-kraken-exact-trail
+2026-11-15T06:24:07.9322264Z  * [new branch]        fix/uh03-kraken-group-withdrawal -> origin/fix/uh03-kraken-group-withdrawal
+2026-11-15T06:24:07.9323231Z  * [new branch]        fix/ui-master28-management-v222 -> origin/fix/ui-master28-management-v222
+2026-11-15T06:24:07.9324238Z  * [new branch]        fix/ui-text01-position-facts-v218 -> origin/fix/ui-text01-position-facts-v218
+2026-11-15T06:24:07.9324952Z  * [new branch]        fix/ui-text01-quote-display-v217 -> origin/fix/ui-text01-quote-display-v217
+2026-11-15T06:24:07.9326002Z  * [new branch]        fix/ui-text02-three-year-v219 -> origin/fix/ui-text02-three-year-v219
+2026-11-15T06:24:07.9326629Z  * [new branch]        fix/unified-detail-actions -> origin/fix/unified-detail-actions
+2026-11-15T06:24:07.9327225Z  * [new branch]        fix/unified-header-status -> origin/fix/unified-header-status
+2026-11-15T06:24:07.9327816Z  * [new branch]        fix/v231-mobile-readability -> origin/fix/v231-mobile-readability
+2026-11-15T06:24:07.9328485Z  * [new branch]        fix/v269-chart-controlled-fixture -> origin/fix/v269-chart-controlled-fixture
+2026-11-15T06:24:07.9329120Z  * [new branch]        fix/v269-live-job-budget -> origin/fix/v269-live-job-budget
+2026-11-15T06:24:07.9329794Z  * [new branch]        fix/v289-review-integrity-414503ed33c6 -> origin/fix/v289-review-integrity-414503ed33c6
+2026-11-15T06:24:07.9330562Z  * [new branch]        fix/v292-live-job-budget-e8b533803735 -> origin/fix/v292-live-job-budget-e8b533803735
+2026-11-15T06:24:07.9331347Z  * [new branch]        fix/xetra-import-pwa-refresh-2026-10-22 -> origin/fix/xetra-import-pwa-refresh-2026-10-22
+2026-11-15T06:24:07.9332062Z  * [new branch]        fix/xetra-real-csv-2026-10-22 -> origin/fix/xetra-real-csv-2026-10-22
+2026-11-15T06:24:07.9332840Z  * [new branch]        integration/p0-storage-current-main-20261024 -> origin/integration/p0-storage-current-main-20261024
+2026-11-15T06:24:07.9333906Z  * [new branch]        integration/plus01-current-main-20261024 -> origin/integration/plus01-current-main-20261024
+2026-11-15T06:24:07.9334719Z  * [new branch]        main                    -> origin/main
+2026-11-15T06:24:07.9335561Z  * [new branch]        ops/cloudflare-worker-manual-deploy-20261025 -> origin/ops/cloudflare-worker-manual-deploy-20261025
+2026-11-15T06:24:07.9336295Z  * [new branch]        p0/wp01-release-gates   -> origin/p0/wp01-release-gates
+2026-11-15T06:24:07.9336887Z  * [new branch]        p0/wp02-financial-invariants -> origin/p0/wp02-financial-invariants
+2026-11-15T06:24:07.9337499Z  * [new branch]        p0/wp03-storage-integrity -> origin/p0/wp03-storage-integrity
+2026-11-15T06:24:07.9338059Z  * [new branch]        p0/wp04-import-identity -> origin/p0/wp04-import-identity
+2026-11-15T06:24:07.9338611Z  * [new branch]        perf/booking-row-index  -> origin/perf/booking-row-index
+2026-11-15T06:24:07.9339212Z  * [new branch]        perf/bounded-decimal-parsing -> origin/perf/bounded-decimal-parsing
+2026-11-15T06:24:07.9339861Z  * [new branch]        perf/measured-render-startup -> origin/perf/measured-render-startup
+2026-11-15T06:24:07.9340544Z  * [new branch]        perf/perf01-v222-benchmark-runner -> origin/perf/perf01-v222-benchmark-runner
+2026-11-15T06:24:07.9341283Z  * [new branch]        perf/perf01-v222-reconciliation-index -> origin/perf/perf01-v222-reconciliation-index
+2026-11-15T06:24:07.9342005Z  * [new branch]        plus01/financial-import-delta -> origin/plus01/financial-import-delta
+2026-11-15T06:24:07.9342633Z  * [new branch]        qa/k4-confirmed-idb-reopen -> origin/qa/k4-confirmed-idb-reopen
+2026-11-15T06:24:07.9343257Z  * [new branch]        qa/k4-eight-dcdb094a-20261114 -> origin/qa/k4-eight-dcdb094a-20261114
+2026-11-15T06:24:07.9343878Z  * [new branch]        qa/k4-eviction-e4b79f541e28 -> origin/qa/k4-eviction-e4b79f541e28
+2026-11-15T06:24:07.9344486Z  * [new branch]        qa/k4-filesystem-e4b79f541e28 -> origin/qa/k4-filesystem-e4b79f541e28
+2026-11-15T06:24:07.9345316Z  * [new branch]        qa/k4-native-5db38035-20261114 -> origin/qa/k4-native-5db38035-20261114
+2026-11-15T06:24:07.9346208Z  * [new branch]        qa/k4-sigkill-48125a26-20261114 -> origin/qa/k4-sigkill-48125a26-20261114
+2026-11-15T06:24:07.9346951Z  * [new branch]        qa/k4-sigkill-cleanup-48125a26-20261114 -> origin/qa/k4-sigkill-cleanup-48125a26-20261114
+2026-11-15T06:24:07.9347740Z  * [new branch]        qa/k4-sigkill-display-48125a26-20261114 -> origin/qa/k4-sigkill-display-48125a26-20261114
+2026-11-15T06:24:07.9348458Z  * [new branch]        qa/k4-whole-origin-e4b79f541e28 -> origin/qa/k4-whole-origin-e4b79f541e28
+2026-11-15T06:24:07.9349148Z  * [new branch]        qa/k6-trust-backup-copy-2026-11-15 -> origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:07.9349764Z  * [new branch]        qa/v188-live-targeted   -> origin/qa/v188-live-targeted
+2026-11-15T06:24:07.9350286Z  * [new branch]        qa/v189-account-live    -> origin/qa/v189-account-live
+2026-11-15T06:24:07.9350802Z  * [new branch]        qa/v190-ledger-live     -> origin/qa/v190-ledger-live
+2026-11-15T06:24:07.9351320Z  * [new branch]        qa/v191-booking-live    -> origin/qa/v191-booking-live
+2026-11-15T06:24:07.9351842Z  * [new branch]        qa/v192-booking-live    -> origin/qa/v192-booking-live
+2026-11-15T06:24:07.9352477Z  * [new branch]        test/bounded-cross-engine-readiness -> origin/test/bounded-cross-engine-readiness
+2026-11-15T06:24:07.9353138Z  * [new branch]        test/fin-e2e01-cash-chain -> origin/test/fin-e2e01-cash-chain
+2026-11-15T06:24:07.9353763Z  * [new branch]        test/fin-e2e01-fx-partial-fills -> origin/test/fin-e2e01-fx-partial-fills
+2026-11-15T06:24:07.9354554Z  * [new branch]        test/flh04-c1-correction-bfed8172-366da675bef5 -> origin/test/flh04-c1-correction-bfed8172-366da675bef5
+2026-11-15T06:24:07.9355706Z  * [new branch]        test/flh04-c1-native-b18c6fcb-366da675bef5 -> origin/test/flh04-c1-native-b18c6fcb-366da675bef5
+2026-11-15T06:24:07.9356662Z  * [new branch]        test/flh04-renderer-termination-4cd697ef5bd2-20261113 -> origin/test/flh04-renderer-termination-4cd697ef5bd2-20261113
+2026-11-15T06:24:07.9357825Z  * [new branch]        test/flh04-source-lifecycle-781cbfc52ec6-20261113 -> origin/test/flh04-source-lifecycle-781cbfc52ec6-20261113
+2026-11-15T06:24:07.9358811Z  * [new branch]        test/generic-provider-allocation-fixtures-20261023 -> origin/test/generic-provider-allocation-fixtures-20261023
+2026-11-15T06:24:07.9359769Z  * [new branch]        test/issue-44-idb-cross-engine-corruption-v83 -> origin/test/issue-44-idb-cross-engine-corruption-v83
+2026-11-15T06:24:07.9360616Z  * [new branch]        test/issue-44-migration-matrix-doc-v75 -> origin/test/issue-44-migration-matrix-doc-v75
+2026-11-15T06:24:07.9361514Z  * [new branch]        test/latest-display-boundary-77bcb76dd357-20261114 -> origin/test/latest-display-boundary-77bcb76dd357-20261114
+2026-11-15T06:24:07.9362466Z  * [new branch]        test/latest-save-restore-77bcb76dd357-20261114 -> origin/test/latest-save-restore-77bcb76dd357-20261114
+2026-11-15T06:24:07.9363311Z  * [new branch]        test/offline-throttled-mobile-stress -> origin/test/offline-throttled-mobile-stress
+2026-11-15T06:24:07.9364074Z  * [new branch]        test/pr335-full-kraken-d62125b28794 -> origin/test/pr335-full-kraken-d62125b28794
+2026-11-15T06:24:07.9365296Z  * [new branch]        test/restore-outcome-b7bbb8ab7737-correction-20261113 -> origin/test/restore-outcome-b7bbb8ab7737-correction-20261113
+2026-11-15T06:24:07.9366404Z  * [new branch]        test/restore-outcome-b7bbb8ab7737-initial-20261113 -> origin/test/restore-outcome-b7bbb8ab7737-initial-20261113
+2026-11-15T06:24:07.9367311Z  * [new branch]        test/restore-toast-77bcb76dd357-20261113 -> origin/test/restore-toast-77bcb76dd357-20261113
+2026-11-15T06:24:07.9368205Z  * [new branch]        test/seven-native-77bcb76dd357-correction-20261114 -> origin/test/seven-native-77bcb76dd357-correction-20261114
+2026-11-15T06:24:07.9369150Z  * [new branch]        test/seven-native-77bcb76dd357-initial-20261114 -> origin/test/seven-native-77bcb76dd357-initial-20261114
+2026-11-15T06:24:07.9370214Z  * [new branch]        test/ui-alloc01-b7bbb8ab7737-correction-20261113 -> origin/test/ui-alloc01-b7bbb8ab7737-correction-20261113
+2026-11-15T06:24:07.9371151Z  * [new branch]        test/ui-alloc01-b7bbb8ab7737-initial-20261113 -> origin/test/ui-alloc01-b7bbb8ab7737-initial-20261113
+2026-11-15T06:24:07.9371939Z  * [new branch]        test/ui-m28-k02-crypto-coverage -> origin/test/ui-m28-k02-crypto-coverage
+2026-11-15T06:24:07.9372722Z  * [new branch]        test/v220-live-initialization-diagnostics -> origin/test/v220-live-initialization-diagnostics
+2026-11-15T06:24:07.9373639Z  * [new branch]        test/v221-live-pchain-initialization-diagnostics -> origin/test/v221-live-pchain-initialization-diagnostics
+2026-11-15T06:24:07.9374564Z  * [new branch]        test/v292-live-startup-evidence-0bfa85b5b416 -> origin/test/v292-live-startup-evidence-0bfa85b5b416
+2026-11-15T06:24:07.9375773Z  * [new branch]        test/v294-alpha-idb-lifecycle-96c2624a1e89 -> origin/test/v294-alpha-idb-lifecycle-96c2624a1e89
+2026-11-15T06:24:07.9376591Z  * [new branch]        test/v310-storage-module-503-codex -> origin/test/v310-storage-module-503-codex
+2026-11-15T06:24:07.9377449Z  * [new branch]        test/v310-work-startup-observability-0df17fb9958a -> origin/test/v310-work-startup-observability-0df17fb9958a
+2026-11-15T06:24:07.9378238Z  * [new branch]        ui/beta-badge-2026-10-26 -> origin/ui/beta-badge-2026-10-26
+2026-11-15T06:24:07.9378861Z  * [new branch]        ui/compact-panel-status-v297 -> origin/ui/compact-panel-status-v297
+2026-11-15T06:24:07.9379617Z  * [new branch]        ui/compact-valuation-drilldown-20261023 -> origin/ui/compact-valuation-drilldown-20261023
+2026-11-15T06:24:07.9380456Z  * [new branch]        ui/consistent-actions-and-density-20261023 -> origin/ui/consistent-actions-and-density-20261023
+2026-11-15T06:24:07.9381266Z  * [new branch]        ui/history-flat-disclosures-20261023 -> origin/ui/history-flat-disclosures-20261023
+2026-11-15T06:24:07.9382181Z  * [new branch]        ui/history-insights-header-20261023 -> origin/ui/history-insights-header-20261023
+2026-11-15T06:24:07.9382943Z  * [new branch]        ui/history-save-action-align-20261023 -> origin/ui/history-save-action-align-20261023
+2026-11-15T06:24:07.9383747Z  * [new branch]        ui/interactive-allocation-donut-20261022 -> origin/ui/interactive-allocation-donut-20261022
+2026-11-15T06:24:07.9384531Z  * [new branch]        ui/mobile-dashboard-polish-20261022 -> origin/ui/mobile-dashboard-polish-20261022
+2026-11-15T06:24:07.9385605Z  * [new branch]        ui/position-asset-class-icons-20261025 -> origin/ui/position-asset-class-icons-20261025
+2026-11-15T06:24:07.9386418Z  * [new branch]        ui/position-drilldown-charts-20261022 -> origin/ui/position-drilldown-charts-20261022
+2026-11-15T06:24:07.9387126Z  * [new branch]        ui/shared-plus-icon-20261023 -> origin/ui/shared-plus-icon-20261023
+2026-11-15T06:24:07.9387865Z  * [new branch]        ui/ui-r1-loader-install-v300-20d9afddc0ae -> origin/ui/ui-r1-loader-install-v300-20d9afddc0ae
+2026-11-15T06:24:07.9388677Z  * [new branch]        ui/ui-r2-selection-v301-39ca9a8217a6 -> origin/ui/ui-r2-selection-v301-39ca9a8217a6
+2026-11-15T06:24:07.9389460Z  * [new branch]        ui/ui-r3-review-periods-v302-c43b5e91f20a -> origin/ui/ui-r3-review-periods-v302-c43b5e91f20a
+2026-11-15T06:24:07.9390176Z  * [new branch]        ui/ui300-bounded-414503ed33c6 -> origin/ui/ui300-bounded-414503ed33c6
+2026-11-15T06:24:07.9390948Z  * [new branch]        ui/unified-mobile-history-actions-20261023 -> origin/ui/unified-mobile-history-actions-20261023
+2026-11-15T06:24:07.9391752Z  * [new branch]        ux/booking-wallet-simplify-20261023 -> origin/ux/booking-wallet-simplify-20261023
+2026-11-15T06:24:07.9392582Z  * [new branch]        ux/clarify-security-listing-review-2026-10-24 -> origin/ux/clarify-security-listing-review-2026-10-24
+2026-11-15T06:24:07.9393377Z  * [new branch]        ux/compact-google-drive-backup -> origin/ux/compact-google-drive-backup
+2026-11-15T06:24:07.9394139Z  * [new branch]        ux/compact-password-and-return-details -> origin/ux/compact-password-and-return-details
+2026-11-15T06:24:07.9395208Z  * [new branch]        ux/inline-advanced-position-20261024 -> origin/ux/inline-advanced-position-20261024
+2026-11-15T06:24:07.9396095Z  * [new branch]        ux/mehr-hilfe-verlauf-entschlacken-20261024 -> origin/ux/mehr-hilfe-verlauf-entschlacken-20261024
+2026-11-15T06:24:07.9396954Z  * [new branch]        ux/more-settings-progressive-disclosure -> origin/ux/more-settings-progressive-disclosure
+2026-11-15T06:24:07.9397790Z  * [new branch]        ux/position-editor-streamline-2026-10-24 -> origin/ux/position-editor-streamline-2026-10-24
+2026-11-15T06:24:07.9398591Z  * [new branch]        ux/simplify-add-position-csv-20261023 -> origin/ux/simplify-add-position-csv-20261023
+2026-11-15T06:24:07.9399405Z  * [new branch]        ux/unified-chart-period-controls-20261024 -> origin/ux/unified-chart-period-controls-20261024
+2026-11-15T06:24:07.9400208Z  * [new branch]        wip/pr330-kernel-mirror-518556806b3b -> origin/wip/pr330-kernel-mirror-518556806b3b
+2026-11-15T06:24:07.9400990Z  * [new branch]        wip/pr330-legacy-contract-a845c64598ab -> origin/wip/pr330-legacy-contract-a845c64598ab
+2026-11-15T06:24:07.9401759Z  * [new branch]        wip/pr330-ubuntu-setup-518556806b3b -> origin/wip/pr330-ubuntu-setup-518556806b3b
+2026-11-15T06:24:07.9402418Z  * [new branch]        work/continuation-20261027 -> origin/work/continuation-20261027
+2026-11-15T06:24:07.9403844Z [command]/usr/bin/git branch --list --remote origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:07.9404436Z   origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:07.9405675Z [command]/usr/bin/git rev-parse refs/remotes/origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:07.9406199Z 352cb441127446f31e0f367b242a9d7ef9eb7223
+2026-11-15T06:24:07.9407054Z ##[endgroup]
+2026-11-15T06:24:07.9407494Z ##[group]Determining the checkout info
+2026-11-15T06:24:07.9408184Z ##[endgroup]
+2026-11-15T06:24:07.9408477Z [command]/usr/bin/git sparse-checkout disable
+2026-11-15T06:24:07.9409346Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T06:24:07.9410283Z ##[group]Checking out the ref
+2026-11-15T06:24:07.9410979Z [command]/usr/bin/git checkout --progress --force -B qa/k6-trust-backup-copy-2026-11-15 refs/remotes/origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:24:08.1177985Z Switched to a new branch 'qa/k6-trust-backup-copy-2026-11-15'
+2026-11-15T06:24:08.1183629Z branch 'qa/k6-trust-backup-copy-2026-11-15' set up to track 'origin/qa/k6-trust-backup-copy-2026-11-15'.
+2026-11-15T06:24:08.1196736Z ##[endgroup]
+2026-11-15T06:24:08.1253234Z [command]/usr/bin/git log -1 --format=%H
+2026-11-15T06:24:08.1289812Z 352cb441127446f31e0f367b242a9d7ef9eb7223
+2026-11-15T06:24:08.1571301Z ##[group]Run actions/setup-node@v4
+2026-11-15T06:24:08.1571653Z with:
+2026-11-15T06:24:08.1571896Z   node-version: 22
+2026-11-15T06:24:08.1572158Z   always-auth: false
+2026-11-15T06:24:08.1572435Z   check-latest: false
+2026-11-15T06:24:08.1574887Z   token: ***
+2026-11-15T06:24:08.1575346Z ##[endgroup]
+2026-11-15T06:24:08.3122139Z (node:2340) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:24:08.3123398Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:24:08.3124374Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-11-15T06:24:08.3125792Z ##[group]Environment details
+2026-11-15T06:24:08.7806726Z node: v22.23.4
+2026-11-15T06:24:08.7807250Z npm: 10.9.9
+2026-11-15T06:24:08.7807588Z yarn: 1.22.22
+2026-11-15T06:24:08.7808380Z ##[endgroup]
+2026-11-15T06:24:08.7948457Z ##[group]Run mkdir -p trust-evidence
+2026-11-15T06:24:08.7948837Z [36;1mmkdir -p trust-evidence[0m
+2026-11-15T06:24:08.7949177Z [36;1mgit rev-parse HEAD > trust-evidence/qa-head.txt[0m
+2026-11-15T06:24:08.7949584Z [36;1mgit ls-tree -r HEAD > trust-evidence/qa-tree.txt[0m
+2026-11-15T06:24:08.7950330Z [36;1mgit diff --exit-code 2a773073f2887e8701ee893eee2e8619ab980be8 HEAD -- src tests index.html styles.css sw.js icons manifest.webmanifest package.json[0m
+2026-11-15T06:24:08.7951233Z [36;1mgit show ff60c73e53c973ecb86393be5b4e31b55f352601:src/drive-backup.js > trust-evidence/v315-drive-backup.js[0m
+2026-11-15T06:24:08.7952156Z [36;1mgit diff ff60c73e53c973ecb86393be5b4e31b55f352601 2a773073f2887e8701ee893eee2e8619ab980be8 -- src/drive-backup.js > trust-evidence/product-copy.diff[0m
+2026-11-15T06:24:08.7986560Z shell: /usr/bin/bash -e {0}
+2026-11-15T06:24:08.7986833Z ##[endgroup]
+2026-11-15T06:24:08.8207041Z ##[group]Run set -o pipefail
+2026-11-15T06:24:08.8207362Z [36;1mset -o pipefail[0m
+2026-11-15T06:24:08.8207882Z [36;1mnode --test tests/drive-backup.test.mjs tests/backup-vault.test.mjs 2>&1 | tee trust-evidence/targeted-node.tap[0m
+2026-11-15T06:24:08.8208450Z [36;1mnode --check src/drive-backup.js[0m
+2026-11-15T06:24:08.8208797Z [36;1mnode --check tests/browser-trust-backup-copy.mjs[0m
+2026-11-15T06:24:08.8227539Z shell: /usr/bin/bash -e {0}
+2026-11-15T06:24:08.8227795Z ##[endgroup]
+2026-11-15T06:24:08.8781299Z TAP version 13
+2026-11-15T06:24:09.2576999Z # Subtest: single password allows automatic local/Drive encryption and cross-device recovery
+2026-11-15T06:24:09.2596559Z ok 1 - single password allows automatic local/Drive encryption and cross-device recovery
+2026-11-15T06:24:09.2625983Z   ---
+2026-11-15T06:24:09.2626505Z   duration_ms: 348.470482
+2026-11-15T06:24:09.2627208Z   type: 'test'
+2026-11-15T06:24:09.2627742Z   ...
+2026-11-15T06:24:09.7336590Z # Subtest: password rotation changes future backups, not old passwords or the underlying data key
+2026-11-15T06:24:09.7338025Z ok 2 - password rotation changes future backups, not old passwords or the underlying data key
+2026-11-15T06:24:09.7338845Z   ---
+2026-11-15T06:24:09.7339187Z   duration_ms: 476.464676
+2026-11-15T06:24:09.7339598Z   type: 'test'
+2026-11-15T06:24:09.7339929Z   ...
+2026-11-15T06:24:09.7895981Z # Subtest: malformed backup envelopes fail closed
+2026-11-15T06:24:09.7916118Z ok 3 - malformed backup envelopes fail closed
+2026-11-15T06:24:09.7928869Z   ---
+2026-11-15T06:24:09.7961646Z   duration_ms: 57.394435
+2026-11-15T06:24:09.7962345Z   type: 'test'
+2026-11-15T06:24:09.7965451Z   ...
+2026-11-15T06:24:10.0531353Z # Subtest: oversized Unicode export fails before encryption and leaves the existing vault usable
+2026-11-15T06:24:10.0549407Z ok 4 - oversized Unicode export fails before encryption and leaves the existing vault usable
+2026-11-15T06:24:10.0553168Z   ---
+2026-11-15T06:24:10.0554066Z   duration_ms: 199.315159
+2026-11-15T06:24:10.0554548Z   type: 'test'
+2026-11-15T06:24:10.0585685Z   ...
+2026-11-15T06:24:10.4987951Z # Subtest: actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+2026-11-15T06:24:10.4990063Z ok 5 - actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+2026-11-15T06:24:10.5025859Z   ---
+2026-11-15T06:24:10.5026307Z   duration_ms: 510.423034
+2026-11-15T06:24:10.5026753Z   type: 'test'
+2026-11-15T06:24:10.5027185Z   ...
+2026-11-15T06:24:10.5521542Z # Subtest: Drive remains voluntary and cannot upload without a configured password
+2026-11-15T06:24:10.5523089Z ok 6 - Drive remains voluntary and cannot upload without a configured password
+2026-11-15T06:24:10.5523973Z   ---
+2026-11-15T06:24:10.5524466Z   duration_ms: 4.045994
+2026-11-15T06:24:10.5525176Z   type: 'test'
+2026-11-15T06:24:10.5525670Z   ...
+2026-11-15T06:24:10.5526480Z # Subtest: Drive restore success commits once before password adoption and clears the password
+2026-11-15T06:24:10.5556694Z ok 7 - Drive restore success commits once before password adoption and clears the password
+2026-11-15T06:24:10.5557353Z   ---
+2026-11-15T06:24:10.5557793Z   duration_ms: 4.094225
+2026-11-15T06:24:10.5558209Z   type: 'test'
+2026-11-15T06:24:10.5558554Z   ...
+2026-11-15T06:24:10.5559256Z # Subtest: Drive restore success never invents a confirmed local rollback backup
+2026-11-15T06:24:10.5559967Z ok 8 - Drive restore success never invents a confirmed local rollback backup
+2026-11-15T06:24:10.5560343Z   ---
+2026-11-15T06:24:10.5560551Z   duration_ms: 1.756135
+2026-11-15T06:24:10.5560777Z   type: 'test'
+2026-11-15T06:24:10.5560972Z   ...
+2026-11-15T06:24:10.5561627Z # Subtest: Drive restore cancellation and decryption failure never reach the local commit
+2026-11-15T06:24:10.5562438Z ok 9 - Drive restore cancellation and decryption failure never reach the local commit
+2026-11-15T06:24:10.5562958Z   ---
+2026-11-15T06:24:10.5563163Z   duration_ms: 3.467426
+2026-11-15T06:24:10.5564040Z   type: 'test'
+2026-11-15T06:24:10.5564297Z   ...
+2026-11-15T06:24:10.5564775Z # Subtest: Drive restore commit rejection never adopts a password or claims restored data
+2026-11-15T06:24:10.5565887Z ok 10 - Drive restore commit rejection never adopts a password or claims restored data
+2026-11-15T06:24:10.5566315Z   ---
+2026-11-15T06:24:10.5566518Z   duration_ms: 1.876882
+2026-11-15T06:24:10.5566759Z   type: 'test'
+2026-11-15T06:24:10.5567029Z   ...
+2026-11-15T06:24:10.5567520Z # Subtest: Drive restore preserves a backend-confirmed commit when settings finalization rejects
+2026-11-15T06:24:10.5568268Z ok 11 - Drive restore preserves a backend-confirmed commit when settings finalization rejects
+2026-11-15T06:24:10.5568699Z   ---
+2026-11-15T06:24:10.5568896Z   duration_ms: 2.223896
+2026-11-15T06:24:10.5569117Z   type: 'test'
+2026-11-15T06:24:10.5569311Z   ...
+2026-11-15T06:24:10.5569839Z # Subtest: Drive restore display failure reports the confirmed portfolio without promising password adoption
+2026-11-15T06:24:10.5570658Z ok 12 - Drive restore display failure reports the confirmed portfolio without promising password adoption
+2026-11-15T06:24:10.5571134Z   ---
+2026-11-15T06:24:10.5571327Z   duration_ms: 2.357707
+2026-11-15T06:24:10.5571565Z   type: 'test'
+2026-11-15T06:24:10.5571759Z   ...
+2026-11-15T06:24:10.5572236Z # Subtest: Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+2026-11-15T06:24:10.5573286Z ok 13 - Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+2026-11-15T06:24:10.5573719Z   ---
+2026-11-15T06:24:10.5573917Z   duration_ms: 1.970368
+2026-11-15T06:24:10.5574140Z   type: 'test'
+2026-11-15T06:24:10.5574335Z   ...
+2026-11-15T06:24:10.5574813Z # Subtest: Drive upload encrypts only the sanitized portfolio through the shared password backend
+2026-11-15T06:24:10.5576217Z ok 14 - Drive upload encrypts only the sanitized portfolio through the shared password backend
+2026-11-15T06:24:10.5576791Z   ---
+2026-11-15T06:24:10.5577042Z   duration_ms: 17.059245
+2026-11-15T06:24:10.5577277Z   type: 'test'
+2026-11-15T06:24:10.5577475Z   ...
+2026-11-15T06:24:10.5578253Z # Subtest: only the user-selected OAuth client ID is stored and no access token persists
+2026-11-15T06:24:10.5579409Z ok 15 - only the user-selected OAuth client ID is stored and no access token persists
+2026-11-15T06:24:10.5580105Z   ---
+2026-11-15T06:24:10.5580434Z   duration_ms: 1.33423
+2026-11-15T06:24:10.5580804Z   type: 'test'
+2026-11-15T06:24:10.5581126Z   ...
+2026-11-15T06:24:10.5581856Z # Subtest: public UI offers full encrypted backup without any recovery-code workflow
+2026-11-15T06:24:10.5582927Z ok 16 - public UI offers full encrypted backup without any recovery-code workflow
+2026-11-15T06:24:10.5583591Z   ---
+2026-11-15T06:24:10.5583914Z   duration_ms: 0.792221
+2026-11-15T06:24:10.5584288Z   type: 'test'
+2026-11-15T06:24:10.5584612Z   ...
+2026-11-15T06:24:10.5596258Z # Subtest: the optional full Drive payload includes validated history and configuration but no OAuth session token
+2026-11-15T06:24:10.5597927Z ok 17 - the optional full Drive payload includes validated history and configuration but no OAuth session token
+2026-11-15T06:24:10.5598851Z   ---
+2026-11-15T06:24:10.5599206Z   duration_ms: 13.667541
+2026-11-15T06:24:10.5599616Z   type: 'test'
+2026-11-15T06:24:10.5599967Z   ...
+2026-11-15T06:24:10.5600851Z # Subtest: compact Drive UI preserves all controls but hides help and advanced actions by default
+2026-11-15T06:24:10.5602177Z ok 18 - compact Drive UI preserves all controls but hides help and advanced actions by default
+2026-11-15T06:24:10.5602954Z   ---
+2026-11-15T06:24:10.5603289Z   duration_ms: 0.418518
+2026-11-15T06:24:10.5603694Z   type: 'test'
+2026-11-15T06:24:10.5604075Z   ...
+2026-11-15T06:24:10.5605286Z # Subtest: Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+2026-11-15T06:24:10.5606832Z ok 19 - Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+2026-11-15T06:24:10.5607990Z   ---
+2026-11-15T06:24:10.5608394Z   duration_ms: 2.547314
+2026-11-15T06:24:10.5608826Z   type: 'test'
+2026-11-15T06:24:10.5609180Z   ...
+2026-11-15T06:24:10.5610124Z # Subtest: header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+2026-11-15T06:24:10.5611560Z ok 20 - header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+2026-11-15T06:24:10.5612413Z   ---
+2026-11-15T06:24:10.5612750Z   duration_ms: 1.866532
+2026-11-15T06:24:10.5613151Z   type: 'test'
+2026-11-15T06:24:10.5613484Z   ...
+2026-11-15T06:24:10.5614489Z # Subtest: reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+2026-11-15T06:24:10.5616378Z ok 21 - reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+2026-11-15T06:24:10.5617289Z   ---
+2026-11-15T06:24:10.5617630Z   duration_ms: 2.458447
+2026-11-15T06:24:10.5618058Z   type: 'test'
+2026-11-15T06:24:10.5618506Z   ...
+2026-11-15T06:24:10.5619351Z # Subtest: cancelled OAuth popup exposes an error and never claims authorization or upload
+2026-11-15T06:24:10.5620652Z ok 22 - cancelled OAuth popup exposes an error and never claims authorization or upload
+2026-11-15T06:24:10.5621452Z   ---
+2026-11-15T06:24:10.5621824Z   duration_ms: 0.959275
+2026-11-15T06:24:10.5622247Z   type: 'test'
+2026-11-15T06:24:10.5623078Z   ...
+2026-11-15T06:24:10.5623887Z # Subtest: invalid OAuth expiry cannot be presented as an hour of valid authorization
+2026-11-15T06:24:10.5624766Z ok 23 - invalid OAuth expiry cannot be presented as an hour of valid authorization
+2026-11-15T06:24:10.5625586Z   ---
+2026-11-15T06:24:10.5625943Z   duration_ms: 0.885406
+2026-11-15T06:24:10.5626339Z   type: 'test'
+2026-11-15T06:24:10.5626665Z   ...
+2026-11-15T06:24:10.5627162Z # Subtest: Drive401 expires the session and gives one reconnect instruction without a false backup
+2026-11-15T06:24:10.5627897Z ok 24 - Drive401 expires the session and gives one reconnect instruction without a false backup
+2026-11-15T06:24:10.5628322Z   ---
+2026-11-15T06:24:10.5628511Z   duration_ms: 1.145084
+2026-11-15T06:24:10.5628732Z   type: 'test'
+2026-11-15T06:24:10.5628928Z   ...
+2026-11-15T06:24:10.5631217Z # Subtest: missing backup guard fails closed before encryption or upload
+2026-11-15T06:24:10.5631815Z ok 25 - missing backup guard fails closed before encryption or upload
+2026-11-15T06:24:10.5632356Z   ---
+2026-11-15T06:24:10.5632666Z   duration_ms: 1.608417
+2026-11-15T06:24:10.5632908Z   type: 'test'
+2026-11-15T06:24:10.5633115Z   ...
+2026-11-15T06:24:10.5633546Z # Subtest: stale canonical snapshot stops Drive upload and never marks it backed up
+2026-11-15T06:24:10.5634321Z ok 26 - stale canonical snapshot stops Drive upload and never marks it backed up
+2026-11-15T06:24:10.5634823Z   ---
+2026-11-15T06:24:10.5635347Z   duration_ms: 1.750104
+2026-11-15T06:24:10.5635786Z   type: 'test'
+2026-11-15T06:24:10.5636137Z   ...
+2026-11-15T06:24:10.5636759Z # Subtest: snapshot change during encryption stops before any upload
+2026-11-15T06:24:10.5637401Z ok 27 - snapshot change during encryption stops before any upload
+2026-11-15T06:24:10.5637740Z   ---
+2026-11-15T06:24:10.5637938Z   duration_ms: 1.367583
+2026-11-15T06:24:10.5638168Z   type: 'test'
+2026-11-15T06:24:10.5638356Z   ...
+2026-11-15T06:24:10.5638845Z # Subtest: snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+2026-11-15T06:24:10.5639603Z ok 28 - snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+2026-11-15T06:24:10.5640044Z   ---
+2026-11-15T06:24:10.5640235Z   duration_ms: 1.654333
+2026-11-15T06:24:10.5640457Z   type: 'test'
+2026-11-15T06:24:10.5640647Z   ...
+2026-11-15T06:24:10.5641080Z # Subtest: stale snapshot cannot prune existing remote backups when retention is lowered
+2026-11-15T06:24:10.5641725Z ok 29 - stale snapshot cannot prune existing remote backups when retention is lowered
+2026-11-15T06:24:10.5642123Z   ---
+2026-11-15T06:24:10.5642485Z   duration_ms: 30.621157
+2026-11-15T06:24:10.5642777Z   type: 'test'
+2026-11-15T06:24:10.5642976Z   ...
+2026-11-15T06:24:10.5643398Z # Subtest: fresh snapshot preserves normal confirmed backup and authorized retention
+2026-11-15T06:24:10.5644024Z ok 30 - fresh snapshot preserves normal confirmed backup and authorized retention
+2026-11-15T06:24:10.5644408Z   ---
+2026-11-15T06:24:10.5644595Z   duration_ms: 3.626224
+2026-11-15T06:24:10.5644821Z   type: 'test'
+2026-11-15T06:24:10.5645248Z   ...
+2026-11-15T06:24:10.5645913Z # Subtest: acknowledged upload is not automatically repeated when local acknowledgement storage fails
+2026-11-15T06:24:10.5646681Z ok 31 - acknowledged upload is not automatically repeated when local acknowledgement storage fails
+2026-11-15T06:24:10.5647123Z   ---
+2026-11-15T06:24:10.5647311Z   duration_ms: 1.463955
+2026-11-15T06:24:10.5647531Z   type: 'test'
+2026-11-15T06:24:10.5647723Z   ...
+2026-11-15T06:24:10.5656414Z # Subtest: export preflight rejection never uploads, prunes or acknowledges a Drive backup
+2026-11-15T06:24:10.5657318Z ok 32 - export preflight rejection never uploads, prunes or acknowledges a Drive backup
+2026-11-15T06:24:10.5657749Z   ---
+2026-11-15T06:24:10.5658105Z   duration_ms: 30.170419
+2026-11-15T06:24:10.5658499Z   type: 'test'
+2026-11-15T06:24:10.5658811Z   ...
+2026-11-15T06:24:10.5659514Z # Subtest: file and Drive restore identical encrypted position bytes through commit and reopen
+2026-11-15T06:24:10.5660144Z     # Subtest: file valid
+2026-11-15T06:24:10.5660383Z     ok 1 - file valid
+2026-11-15T06:24:10.5660599Z       ---
+2026-11-15T06:24:10.5660800Z       duration_ms: 79.178356
+2026-11-15T06:24:10.5661044Z       type: 'test'
+2026-11-15T06:24:10.5661251Z       ...
+2026-11-15T06:24:10.5661444Z     # Subtest: drive valid
+2026-11-15T06:24:10.5661678Z     ok 2 - drive valid
+2026-11-15T06:24:10.5662014Z       ---
+2026-11-15T06:24:10.5662374Z       duration_ms: 75.658859
+2026-11-15T06:24:10.5662804Z       type: 'test'
+2026-11-15T06:24:10.5663158Z       ...
+2026-11-15T06:24:10.5663510Z     # Subtest: file unknown
+2026-11-15T06:24:10.5663941Z     ok 3 - file unknown
+2026-11-15T06:24:10.5664343Z       ---
+2026-11-15T06:24:10.5664708Z       duration_ms: 51.343084
+2026-11-15T06:24:10.5665417Z       type: 'test'
+2026-11-15T06:24:10.5665797Z       ...
+2026-11-15T06:24:10.5666148Z     # Subtest: drive unknown
+2026-11-15T06:24:10.5666581Z     ok 4 - drive unknown
+2026-11-15T06:24:10.5666980Z       ---
+2026-11-15T06:24:10.5667336Z       duration_ms: 54.439228
+2026-11-15T06:24:10.5667757Z       type: 'test'
+2026-11-15T06:24:10.5668125Z       ...
+2026-11-15T06:24:10.5668487Z     # Subtest: file legacy
+2026-11-15T06:24:10.5668912Z     ok 5 - file legacy
+2026-11-15T06:24:10.5669293Z       ---
+2026-11-15T06:24:10.5669662Z       duration_ms: 54.054758
+2026-11-15T06:24:10.5670098Z       type: 'test'
+2026-11-15T06:24:10.5670455Z       ...
+2026-11-15T06:24:10.5670804Z     # Subtest: drive legacy
+2026-11-15T06:24:10.5671236Z     ok 6 - drive legacy
+2026-11-15T06:24:10.5671680Z       ---
+2026-11-15T06:24:10.5710468Z       duration_ms: 51.698413
+2026-11-15T06:24:10.5710937Z       type: 'test'
+2026-11-15T06:24:10.5711279Z       ...
+2026-11-15T06:24:10.5711612Z     # Subtest: file legacy-v2
+2026-11-15T06:24:10.5712042Z     ok 7 - file legacy-v2
+2026-11-15T06:24:10.5712419Z       ---
+2026-11-15T06:24:10.5712753Z       duration_ms: 52.641348
+2026-11-15T06:24:10.5713151Z       type: 'test'
+2026-11-15T06:24:10.5713488Z       ...
+2026-11-15T06:24:10.5713853Z     # Subtest: drive legacy-v2
+2026-11-15T06:24:10.5714285Z     ok 8 - drive legacy-v2
+2026-11-15T06:24:10.5714659Z       ---
+2026-11-15T06:24:10.5715166Z       duration_ms: 59.641952
+2026-11-15T06:24:10.5715578Z       type: 'test'
+2026-11-15T06:24:10.5715903Z       ...
+2026-11-15T06:24:10.5716216Z     # Subtest: file quantity
+2026-11-15T06:24:10.5716611Z     ok 9 - file quantity
+2026-11-15T06:24:10.5716980Z       ---
+2026-11-15T06:24:10.5717297Z       duration_ms: 50.562865
+2026-11-15T06:24:10.5717689Z       type: 'test'
+2026-11-15T06:24:10.5718011Z       ...
+2026-11-15T06:24:10.5718525Z     # Subtest: drive quantity
+2026-11-15T06:24:10.5718945Z     ok 10 - drive quantity
+2026-11-15T06:24:10.5719316Z       ---
+2026-11-15T06:24:10.5719625Z       duration_ms: 66.29802
+2026-11-15T06:24:10.5720002Z       type: 'test'
+2026-11-15T06:24:10.5720316Z       ...
+2026-11-15T06:24:10.5720620Z     # Subtest: file fx
+2026-11-15T06:24:10.5720972Z     ok 11 - file fx
+2026-11-15T06:24:10.5721311Z       ---
+2026-11-15T06:24:10.5721621Z       duration_ms: 79.820027
+2026-11-15T06:24:10.5722005Z       type: 'test'
+2026-11-15T06:24:10.5722321Z       ...
+2026-11-15T06:24:10.5722624Z     # Subtest: drive fx
+2026-11-15T06:24:10.5722984Z     ok 12 - drive fx
+2026-11-15T06:24:10.5723313Z       ---
+2026-11-15T06:24:10.5723631Z       duration_ms: 73.726479
+2026-11-15T06:24:10.5724009Z       type: 'test'
+2026-11-15T06:24:10.5724322Z       ...
+2026-11-15T06:24:10.5724635Z     # Subtest: file vault
+2026-11-15T06:24:10.5725174Z     ok 13 - file vault
+2026-11-15T06:24:10.5725527Z       ---
+2026-11-15T06:24:10.5725861Z       duration_ms: 52.127689
+2026-11-15T06:24:10.5726258Z       type: 'test'
+2026-11-15T06:24:10.5726579Z       ...
+2026-11-15T06:24:10.5726890Z     # Subtest: drive vault
+2026-11-15T06:24:10.5727274Z     ok 14 - drive vault
+2026-11-15T06:24:10.5727626Z       ---
+2026-11-15T06:24:10.5727944Z       duration_ms: 62.447564
+2026-11-15T06:24:10.5728333Z       type: 'test'
+2026-11-15T06:24:10.5728830Z       ...
+2026-11-15T06:24:10.5740103Z     # Subtest: file conflict
+2026-11-15T06:24:10.5740703Z     ok 15 - file conflict
+2026-11-15T06:24:10.5741181Z       ---
+2026-11-15T06:24:10.5741592Z       duration_ms: 58.859549
+2026-11-15T06:24:10.5741974Z       type: 'test'
+2026-11-15T06:24:10.5742243Z       ...
+2026-11-15T06:24:10.5742489Z     # Subtest: drive conflict
+2026-11-15T06:24:10.5742799Z     ok 16 - drive conflict
+2026-11-15T06:24:10.5743072Z       ---
+2026-11-15T06:24:10.5743313Z       duration_ms: 54.414685
+2026-11-15T06:24:10.5743721Z       type: 'test'
+2026-11-15T06:24:10.5743983Z       ...
+2026-11-15T06:24:10.5744209Z     1..16
+2026-11-15T06:24:10.5756635Z ok 33 - file and Drive restore identical encrypted position bytes through commit and reopen
+2026-11-15T06:24:10.5757435Z   ---
+2026-11-15T06:24:10.5757760Z   duration_ms: 1051.727883
+2026-11-15T06:24:10.5758110Z   type: 'test'
+2026-11-15T06:24:10.5758314Z   ...
+2026-11-15T06:24:10.5758761Z # Subtest: legacy decimal price and localized FX survive actual file and Drive restore
+2026-11-15T06:24:10.5759239Z     # Subtest: file precise-price
+2026-11-15T06:24:10.5759521Z     ok 1 - file precise-price
+2026-11-15T06:24:10.5759773Z       ---
+2026-11-15T06:24:10.5759973Z       duration_ms: 52.763788
+2026-11-15T06:24:10.5760219Z       type: 'test'
+2026-11-15T06:24:10.5760419Z       ...
+2026-11-15T06:24:10.5760649Z     # Subtest: drive precise-price
+2026-11-15T06:24:10.5760936Z     ok 2 - drive precise-price
+2026-11-15T06:24:10.5761165Z       ---
+2026-11-15T06:24:10.5761355Z       duration_ms: 51.005645
+2026-11-15T06:24:10.5761589Z       type: 'test'
+2026-11-15T06:24:10.5761783Z       ...
+2026-11-15T06:24:10.5761995Z     # Subtest: file localized-fx
+2026-11-15T06:24:10.5762243Z     ok 3 - file localized-fx
+2026-11-15T06:24:10.5762465Z       ---
+2026-11-15T06:24:10.5762651Z       duration_ms: 50.726003
+2026-11-15T06:24:10.5762991Z       type: 'test'
+2026-11-15T06:24:10.5763362Z       ...
+2026-11-15T06:24:10.5763769Z     # Subtest: drive localized-fx
+2026-11-15T06:24:10.5764262Z     ok 4 - drive localized-fx
+2026-11-15T06:24:10.5764690Z       ---
+2026-11-15T06:24:10.5765285Z       duration_ms: 51.432282
+2026-11-15T06:24:10.5765740Z       type: 'test'
+2026-11-15T06:24:10.5766098Z       ...
+2026-11-15T06:24:10.5766545Z     # Subtest: file localized-fx-discrepancy
+2026-11-15T06:24:10.5767091Z     ok 5 - file localized-fx-discrepancy
+2026-11-15T06:24:10.5767623Z       ---
+2026-11-15T06:24:10.5771174Z       duration_ms: 51.266711
+2026-11-15T06:24:10.5771450Z       type: 'test'
+2026-11-15T06:24:10.5771663Z       ...
+2026-11-15T06:24:10.5773172Z     # Subtest: drive localized-fx-discrepancy
+2026-11-15T06:24:10.5773703Z     ok 6 - drive localized-fx-discrepancy
+2026-11-15T06:24:10.5773981Z       ---
+2026-11-15T06:24:10.5774180Z       duration_ms: 56.01675
+2026-11-15T06:24:10.5774410Z       type: 'test'
+2026-11-15T06:24:10.5774605Z       ...
+2026-11-15T06:24:10.5774786Z     1..6
+2026-11-15T06:24:10.5775565Z ok 34 - legacy decimal price and localized FX survive actual file and Drive restore
+2026-11-15T06:24:10.5775984Z   ---
+2026-11-15T06:24:10.5776184Z   duration_ms: 372.737455
+2026-11-15T06:24:10.5776411Z   type: 'test'
+2026-11-15T06:24:10.5776602Z   ...
+2026-11-15T06:24:10.7616473Z # Subtest: existing device vault survives restore display failure without a false password takeover claim
+2026-11-15T06:24:10.7618040Z ok 35 - existing device vault survives restore display failure without a false password takeover claim
+2026-11-15T06:24:10.7618914Z   ---
+2026-11-15T06:24:10.7619278Z   duration_ms: 211.275867
+2026-11-15T06:24:10.7619698Z   type: 'test'
+2026-11-15T06:24:10.7620085Z   ...
+2026-11-15T06:24:10.7750938Z 1..35
+2026-11-15T06:24:10.7768183Z # tests 57
+2026-11-15T06:24:10.7768524Z # suites 0
+2026-11-15T06:24:10.7768846Z # pass 57
+2026-11-15T06:24:10.7769140Z # fail 0
+2026-11-15T06:24:10.7769441Z # cancelled 0
+2026-11-15T06:24:10.7769847Z # skipped 0
+2026-11-15T06:24:10.7770195Z # todo 0
+2026-11-15T06:24:10.7770580Z # duration_ms 1917.66418
+2026-11-15T06:24:10.8384689Z ##[group]Run actions/cache@v4
+2026-11-15T06:24:10.8384966Z with:
+2026-11-15T06:24:10.8385577Z   path: ~/.cache/ms-playwright
+2026-11-15T06:24:10.8386034Z   key: foliolab-pw1.56.1-chromium-shell-v1-Linux-X64
+2026-11-15T06:24:10.8386370Z   enableCrossOsArchive: false
+2026-11-15T06:24:10.8386619Z   fail-on-cache-miss: false
+2026-11-15T06:24:10.8386849Z   lookup-only: false
+2026-11-15T06:24:10.8387055Z   save-always: false
+2026-11-15T06:24:10.8387259Z ##[endgroup]
+2026-11-15T06:24:10.9471705Z (node:2424) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:24:10.9472704Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:24:11.0293561Z Cache hit for: foliolab-pw1.56.1-chromium-shell-v1-Linux-X64
+2026-11-15T06:24:11.0427772Z (node:2424) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T06:24:11.6418110Z Received 107360731 of 107360731 (100.0%), 196.1 MBs/sec
+2026-11-15T06:24:11.6418998Z Cache Size: ~102 MB (107360731 B)
+2026-11-15T06:24:11.6448320Z [command]/usr/bin/tar -xf /home/runner/work/_temp/95300ad2-10bf-4021-968b-3b9067dbb821/cache.tzst -P -C /home/runner/work/foliolab-open/foliolab-open --use-compress-program unzstd
+2026-11-15T06:24:12.2021423Z Cache restored successfully
+2026-11-15T06:24:12.2271485Z Cache restored from key: foliolab-pw1.56.1-chromium-shell-v1-Linux-X64
+2026-11-15T06:24:12.2517340Z ##[group]Run npm install --no-save playwright@1.56.1
+2026-11-15T06:24:12.2517772Z [36;1mnpm install --no-save playwright@1.56.1[0m
+2026-11-15T06:24:12.2518189Z [36;1mnpx playwright install --with-deps chromium --only-shell[0m
+2026-11-15T06:24:12.2539080Z shell: /usr/bin/bash -e {0}
+2026-11-15T06:24:12.2539337Z ##[endgroup]
+2026-11-15T06:24:14.1573569Z 
+2026-11-15T06:24:14.1574461Z added 2 packages, and audited 3 packages in 2s
+2026-11-15T06:24:14.1583364Z 
+2026-11-15T06:24:14.1583664Z found 0 vulnerabilities
+2026-11-15T06:24:15.1126169Z Installing dependencies...
+2026-11-15T06:24:15.1183111Z Switching to root user to install dependencies...
+2026-11-15T06:24:15.2177236Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-15T06:24:15.2563081Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-15T06:24:15.2570444Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-15T06:24:15.2579987Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-15T06:24:15.2616527Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-15T06:24:15.2633671Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-15T06:24:15.4855655Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [702 kB]
+2026-11-15T06:24:15.5042189Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [772 kB]
+2026-11-15T06:24:15.5548457Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
+2026-11-15T06:24:15.5607701Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
+2026-11-15T06:24:15.5665966Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
+2026-11-15T06:24:15.5714359Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
+2026-11-15T06:24:15.5758245Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
+2026-11-15T06:24:15.5846228Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
+2026-11-15T06:24:15.5866517Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
+2026-11-15T06:24:15.6926962Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
+2026-11-15T06:24:15.6973193Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
+2026-11-15T06:24:15.6998137Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1228 kB]
+2026-11-15T06:24:15.7488800Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
+2026-11-15T06:24:15.7526742Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
+2026-11-15T06:24:15.7614861Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
+2026-11-15T06:24:19.1019656Z Fetched 13.1 MB in 1s (9042 kB/s)
+2026-11-15T06:24:20.2781991Z Reading package lists...
+2026-11-15T06:24:20.3110155Z Reading package lists...
+2026-11-15T06:24:20.5189117Z Building dependency tree...
+2026-11-15T06:24:20.5196621Z Reading state information...
+2026-11-15T06:24:20.6563306Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-11-15T06:24:20.6564412Z libasound2t64 set to manually installed.
+2026-11-15T06:24:20.6565604Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-15T06:24:20.6566352Z libatk-bridge2.0-0t64 set to manually installed.
+2026-11-15T06:24:20.6567033Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-15T06:24:20.6567889Z libatk1.0-0t64 set to manually installed.
+2026-11-15T06:24:20.6568641Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-15T06:24:20.6569287Z libatspi2.0-0t64 set to manually installed.
+2026-11-15T06:24:20.6570377Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-11-15T06:24:20.6570968Z libcairo2 set to manually installed.
+2026-11-15T06:24:20.6571759Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-11-15T06:24:20.6572377Z libcups2t64 set to manually installed.
+2026-11-15T06:24:20.6572992Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-11-15T06:24:20.6573593Z libdbus-1-3 set to manually installed.
+2026-11-15T06:24:20.6574201Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-11-15T06:24:20.6574673Z libdrm2 set to manually installed.
+2026-11-15T06:24:20.6575429Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-11-15T06:24:20.6575883Z libgbm1 set to manually installed.
+2026-11-15T06:24:20.6576348Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.10).
+2026-11-15T06:24:20.6576828Z libglib2.0-0t64 set to manually installed.
+2026-11-15T06:24:20.6577299Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-11-15T06:24:20.6577727Z libnspr4 set to manually installed.
+2026-11-15T06:24:20.6578161Z libnss3 is already the newest version (2:3.98-1ubuntu0.3).
+2026-11-15T06:24:20.6578573Z libnss3 set to manually installed.
+2026-11-15T06:24:20.6579150Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-11-15T06:24:20.6579615Z libpango-1.0-0 set to manually installed.
+2026-11-15T06:24:20.6580086Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+2026-11-15T06:24:20.6580519Z libx11-6 set to manually installed.
+2026-11-15T06:24:20.6580928Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-11-15T06:24:20.6581339Z libxcb1 set to manually installed.
+2026-11-15T06:24:20.6581795Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-11-15T06:24:20.6582261Z libxcomposite1 set to manually installed.
+2026-11-15T06:24:20.6582733Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-11-15T06:24:20.6583173Z libxdamage1 set to manually installed.
+2026-11-15T06:24:20.6583623Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-11-15T06:24:20.6584159Z libxext6 set to manually installed.
+2026-11-15T06:24:20.6584599Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-11-15T06:24:20.6585124Z libxfixes3 set to manually installed.
+2026-11-15T06:24:20.6585700Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-11-15T06:24:20.6586105Z libxkbcommon0 set to manually installed.
+2026-11-15T06:24:20.6586719Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-11-15T06:24:20.6587105Z libxrandr2 set to manually installed.
+2026-11-15T06:24:20.6587507Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-11-15T06:24:20.6588043Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-11-15T06:24:20.6588595Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-11-15T06:24:20.6589134Z libfontconfig1 set to manually installed.
+2026-11-15T06:24:20.6589605Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+2026-11-15T06:24:20.6590034Z libfreetype6 set to manually installed.
+2026-11-15T06:24:20.6590455Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-11-15T06:24:20.6590859Z fonts-liberation set to manually installed.
+2026-11-15T06:24:20.6591252Z The following additional packages will be installed:
+2026-11-15T06:24:20.6591610Z   xfonts-encodings xfonts-utils
+2026-11-15T06:24:20.6591892Z Recommended packages:
+2026-11-15T06:24:20.6592175Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-11-15T06:24:20.6763449Z The following NEW packages will be installed:
+2026-11-15T06:24:20.6764070Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-11-15T06:24:20.6769548Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-11-15T06:24:20.6770003Z   xfonts-utils
+2026-11-15T06:24:20.6970405Z 0 upgraded, 9 newly installed, 0 to remove and 20 not upgraded.
+2026-11-15T06:24:20.6970874Z Need to get 21.1 MB of archives.
+2026-11-15T06:24:20.6971583Z After this operation, 79.5 MB of additional disk space will be used.
+2026-11-15T06:24:20.6972099Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-15T06:24:20.8191048Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-11-15T06:24:20.9972956Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-11-15T06:24:21.1248701Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-11-15T06:24:21.1439373Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-11-15T06:24:21.1995557Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-11-15T06:24:21.2861896Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-11-15T06:24:21.3082891Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-11-15T06:24:21.3272260Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-11-15T06:24:21.3480314Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-11-15T06:24:21.6109904Z Fetched 21.1 MB in 1s (31.7 MB/s)
+2026-11-15T06:24:21.6364340Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-11-15T06:24:21.6705015Z (Reading database ... 
+2026-11-15T06:24:21.6705864Z (Reading database ... 5%
+2026-11-15T06:24:21.6706186Z (Reading database ... 10%
+2026-11-15T06:24:21.6706463Z (Reading database ... 15%
+2026-11-15T06:24:21.6706736Z (Reading database ... 20%
+2026-11-15T06:24:21.6706998Z (Reading database ... 25%
+2026-11-15T06:24:21.6707267Z (Reading database ... 30%
+2026-11-15T06:24:21.6707521Z (Reading database ... 35%
+2026-11-15T06:24:21.6708138Z (Reading database ... 40%
+2026-11-15T06:24:21.6708613Z (Reading database ... 45%
+2026-11-15T06:24:21.6708886Z (Reading database ... 50%
+2026-11-15T06:24:21.6761277Z (Reading database ... 55%
+2026-11-15T06:24:21.7915521Z (Reading database ... 60%
+2026-11-15T06:24:21.9937698Z (Reading database ... 65%
+2026-11-15T06:24:22.1514314Z (Reading database ... 70%
+2026-11-15T06:24:22.3911492Z (Reading database ... 75%
+2026-11-15T06:24:22.4533966Z (Reading database ... 80%
+2026-11-15T06:24:22.5451291Z (Reading database ... 85%
+2026-11-15T06:24:22.6909946Z (Reading database ... 90%
+2026-11-15T06:24:22.7598693Z (Reading database ... 95%
+2026-11-15T06:24:22.7599233Z (Reading database ... 100%
+2026-11-15T06:24:22.7599809Z (Reading database ... 216752 files and directories currently installed.)
+2026-11-15T06:24:22.7640221Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-11-15T06:24:22.7744754Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-11-15T06:24:23.0092419Z Selecting previously unselected package fonts-freefont-ttf.
+2026-11-15T06:24:23.0236483Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-11-15T06:24:23.0244919Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-11-15T06:24:23.1109989Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-11-15T06:24:23.1254315Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-11-15T06:24:23.1261003Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-11-15T06:24:23.1492092Z Selecting previously unselected package fonts-unifont.
+2026-11-15T06:24:23.1634276Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-11-15T06:24:23.1642167Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-11-15T06:24:23.2968343Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-11-15T06:24:23.3111041Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-11-15T06:24:23.3224373Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-11-15T06:24:23.8002351Z Selecting previously unselected package xfonts-encodings.
+2026-11-15T06:24:23.8147699Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-11-15T06:24:23.8157149Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-15T06:24:23.8576453Z Selecting previously unselected package xfonts-utils.
+2026-11-15T06:24:23.8700559Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-11-15T06:24:23.8709677Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-11-15T06:24:23.9133118Z Selecting previously unselected package xfonts-cyrillic.
+2026-11-15T06:24:23.9277812Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-11-15T06:24:23.9286464Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-11-15T06:24:23.9659000Z Selecting previously unselected package xfonts-scalable.
+2026-11-15T06:24:23.9804130Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-11-15T06:24:23.9812357Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-11-15T06:24:24.0283923Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-11-15T06:24:24.0415858Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-11-15T06:24:24.0438601Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-11-15T06:24:24.0463315Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-15T06:24:24.0488879Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-11-15T06:24:24.0563909Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-11-15T06:24:24.0582901Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-11-15T06:24:24.0607391Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-11-15T06:24:24.0652757Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-11-15T06:24:24.0997794Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-11-15T06:24:24.1309067Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-11-15T06:24:24.1333063Z Not building database; man-db/auto-update is not 'true'.
+2026-11-15T06:24:24.1347390Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-11-15T06:24:24.9461209Z 
+2026-11-15T06:24:24.9461856Z Running kernel seems to be up-to-date.
+2026-11-15T06:24:24.9462163Z 
+2026-11-15T06:24:24.9462353Z No services need to be restarted.
+2026-11-15T06:24:24.9462581Z 
+2026-11-15T06:24:24.9462753Z No containers need to be restarted.
+2026-11-15T06:24:24.9462977Z 
+2026-11-15T06:24:24.9463496Z No user sessions are running outdated binaries.
+2026-11-15T06:24:24.9463761Z 
+2026-11-15T06:24:24.9464126Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-15T06:24:25.9063561Z ##[group]Run set -o pipefail
+2026-11-15T06:24:25.9063909Z [36;1mset -o pipefail[0m
+2026-11-15T06:24:25.9064313Z [36;1mpython3 -m http.server 4173 --bind 127.0.0.1 > trust-evidence/server.log 2>&1 &[0m
+2026-11-15T06:24:25.9064748Z [36;1mserver_pid=$![0m
+2026-11-15T06:24:25.9066368Z [36;1mtrap 'kill "$server_pid" 2>/dev/null || true' EXIT[0m
+2026-11-15T06:24:25.9066964Z [36;1mfor attempt in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done[0m
+2026-11-15T06:24:25.9067598Z [36;1mnode tests/browser-trust-backup-copy.mjs 2>&1 | tee trust-evidence/native-ui.log[0m
+2026-11-15T06:24:25.9087809Z shell: /usr/bin/bash -e {0}
+2026-11-15T06:24:25.9088067Z env:
+2026-11-15T06:24:25.9088339Z   TRUST_BASELINE_DRIVE: trust-evidence/v315-drive-backup.js
+2026-11-15T06:24:25.9088710Z   TRUST_EVIDENCE_DIR: trust-evidence
+2026-11-15T06:24:25.9088976Z ##[endgroup]
+2026-11-15T06:24:25.9246212Z curl: (7) Failed to connect to 127.0.0.1 port 4173 after 0 ms: Couldn't connect to server
+2026-11-15T06:24:31.7748998Z K6-TRUST native UI copy regression PASS
+2026-11-15T06:24:31.7990919Z ##[group]Run actions/upload-artifact@v4
+2026-11-15T06:24:31.7991232Z with:
+2026-11-15T06:24:31.7991452Z   name: k6-trust-backup-copy-originals
+2026-11-15T06:24:31.7991730Z   path: trust-evidence
+2026-11-15T06:24:31.7991962Z   if-no-files-found: error
+2026-11-15T06:24:31.7992198Z   compression-level: 6
+2026-11-15T06:24:31.7992415Z   overwrite: false
+2026-11-15T06:24:31.7992629Z   include-hidden-files: false
+2026-11-15T06:24:31.7992869Z ##[endgroup]
+2026-11-15T06:24:31.9719044Z (node:3900) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:24:31.9719854Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:24:31.9795309Z With the provided path, there will be 11 files uploaded
+2026-11-15T06:24:31.9803270Z Artifact name is valid!
+2026-11-15T06:24:31.9804161Z Root directory input is valid!
+2026-11-15T06:24:32.1930184Z Beginning upload of artifact content to blob storage
+2026-11-15T06:24:32.2688637Z (node:3900) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T06:24:32.3780034Z Uploaded bytes 1013700
+2026-11-15T06:24:32.3956777Z Finished uploading artifact content to blob storage!
+2026-11-15T06:24:32.3957794Z SHA256 digest of uploaded artifact zip is bf2baa27cccbf786117fab960f6770b34986184667421d97ed5022302ab9e74b
+2026-11-15T06:24:32.3960005Z Finalizing artifact upload
+2026-11-15T06:24:32.7504016Z Artifact k6-trust-backup-copy-originals.zip successfully finalized. Artifact ID 14149754641
+2026-11-15T06:24:32.7505876Z Artifact k6-trust-backup-copy-originals has been successfully uploaded! Final size is 1013700 bytes. Artifact ID is 14149754641
+2026-11-15T06:24:32.7512823Z Artifact download URL: https://github.com/joke0071/foliolab-open/actions/runs/43685258218/artifacts/14149754641
+2026-11-15T06:24:32.7705873Z Post job cleanup.
+2026-11-15T06:24:32.8809146Z Cache hit occurred on the primary key foliolab-pw1.56.1-chromium-shell-v1-Linux-X64, not saving cache.
+2026-11-15T06:24:32.8810816Z (node:3913) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:24:32.8811913Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:24:32.8927657Z Post job cleanup.
+2026-11-15T06:24:33.0189511Z (node:3921) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:24:33.0190581Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:24:33.0348338Z Post job cleanup.
+2026-11-15T06:24:33.1366493Z [command]/usr/bin/git version
+2026-11-15T06:24:33.1419774Z git version 2.56.1
+2026-11-15T06:24:33.1476259Z Temporarily overriding HOME='/home/runner/work/_temp/7c877184-4e49-4f39-acfb-a32a42bee84d' before making global git config changes
+2026-11-15T06:24:33.1477835Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T06:24:33.1481930Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:24:33.1527416Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T06:24:33.1566151Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T06:24:33.1831875Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T06:24:33.1863815Z http.https://github.com/.extraheader
+2026-11-15T06:24:33.1881514Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-15T06:24:33.1926375Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T06:24:33.2205714Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T06:24:33.2250571Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T06:24:33.2677755Z Cleaning up orphan processes
+2026-11-15T06:24:33.3146887Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache@v4, actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

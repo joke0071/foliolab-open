@@ -1,0 +1,354 @@
+TAP version 13
+# Subtest: single password allows automatic local/Drive encryption and cross-device recovery
+ok 1 - single password allows automatic local/Drive encryption and cross-device recovery
+  ---
+  duration_ms: 348.470482
+  type: 'test'
+  ...
+# Subtest: password rotation changes future backups, not old passwords or the underlying data key
+ok 2 - password rotation changes future backups, not old passwords or the underlying data key
+  ---
+  duration_ms: 476.464676
+  type: 'test'
+  ...
+# Subtest: malformed backup envelopes fail closed
+ok 3 - malformed backup envelopes fail closed
+  ---
+  duration_ms: 57.394435
+  type: 'test'
+  ...
+# Subtest: oversized Unicode export fails before encryption and leaves the existing vault usable
+ok 4 - oversized Unicode export fails before encryption and leaves the existing vault usable
+  ---
+  duration_ms: 199.315159
+  type: 'test'
+  ...
+# Subtest: actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+ok 5 - actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file
+  ---
+  duration_ms: 510.423034
+  type: 'test'
+  ...
+# Subtest: Drive remains voluntary and cannot upload without a configured password
+ok 6 - Drive remains voluntary and cannot upload without a configured password
+  ---
+  duration_ms: 4.045994
+  type: 'test'
+  ...
+# Subtest: Drive restore success commits once before password adoption and clears the password
+ok 7 - Drive restore success commits once before password adoption and clears the password
+  ---
+  duration_ms: 4.094225
+  type: 'test'
+  ...
+# Subtest: Drive restore success never invents a confirmed local rollback backup
+ok 8 - Drive restore success never invents a confirmed local rollback backup
+  ---
+  duration_ms: 1.756135
+  type: 'test'
+  ...
+# Subtest: Drive restore cancellation and decryption failure never reach the local commit
+ok 9 - Drive restore cancellation and decryption failure never reach the local commit
+  ---
+  duration_ms: 3.467426
+  type: 'test'
+  ...
+# Subtest: Drive restore commit rejection never adopts a password or claims restored data
+ok 10 - Drive restore commit rejection never adopts a password or claims restored data
+  ---
+  duration_ms: 1.876882
+  type: 'test'
+  ...
+# Subtest: Drive restore preserves a backend-confirmed commit when settings finalization rejects
+ok 11 - Drive restore preserves a backend-confirmed commit when settings finalization rejects
+  ---
+  duration_ms: 2.223896
+  type: 'test'
+  ...
+# Subtest: Drive restore display failure reports the confirmed portfolio without promising password adoption
+ok 12 - Drive restore display failure reports the confirmed portfolio without promising password adoption
+  ---
+  duration_ms: 2.357707
+  type: 'test'
+  ...
+# Subtest: Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+ok 13 - Drive restore keeps a confirmed portfolio commit visible when password adoption fails
+  ---
+  duration_ms: 1.970368
+  type: 'test'
+  ...
+# Subtest: Drive upload encrypts only the sanitized portfolio through the shared password backend
+ok 14 - Drive upload encrypts only the sanitized portfolio through the shared password backend
+  ---
+  duration_ms: 17.059245
+  type: 'test'
+  ...
+# Subtest: only the user-selected OAuth client ID is stored and no access token persists
+ok 15 - only the user-selected OAuth client ID is stored and no access token persists
+  ---
+  duration_ms: 1.33423
+  type: 'test'
+  ...
+# Subtest: public UI offers full encrypted backup without any recovery-code workflow
+ok 16 - public UI offers full encrypted backup without any recovery-code workflow
+  ---
+  duration_ms: 0.792221
+  type: 'test'
+  ...
+# Subtest: the optional full Drive payload includes validated history and configuration but no OAuth session token
+ok 17 - the optional full Drive payload includes validated history and configuration but no OAuth session token
+  ---
+  duration_ms: 13.667541
+  type: 'test'
+  ...
+# Subtest: compact Drive UI preserves all controls but hides help and advanced actions by default
+ok 18 - compact Drive UI preserves all controls but hides help and advanced actions by default
+  ---
+  duration_ms: 0.418518
+  type: 'test'
+  ...
+# Subtest: Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+ok 19 - Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise
+  ---
+  duration_ms: 2.547314
+  type: 'test'
+  ...
+# Subtest: header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+ok 20 - header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts
+  ---
+  duration_ms: 1.866532
+  type: 'test'
+  ...
+# Subtest: reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+ok 21 - reconnect immediately performs a due encrypted backup once; status reads never trigger another upload
+  ---
+  duration_ms: 2.458447
+  type: 'test'
+  ...
+# Subtest: cancelled OAuth popup exposes an error and never claims authorization or upload
+ok 22 - cancelled OAuth popup exposes an error and never claims authorization or upload
+  ---
+  duration_ms: 0.959275
+  type: 'test'
+  ...
+# Subtest: invalid OAuth expiry cannot be presented as an hour of valid authorization
+ok 23 - invalid OAuth expiry cannot be presented as an hour of valid authorization
+  ---
+  duration_ms: 0.885406
+  type: 'test'
+  ...
+# Subtest: Drive401 expires the session and gives one reconnect instruction without a false backup
+ok 24 - Drive401 expires the session and gives one reconnect instruction without a false backup
+  ---
+  duration_ms: 1.145084
+  type: 'test'
+  ...
+# Subtest: missing backup guard fails closed before encryption or upload
+ok 25 - missing backup guard fails closed before encryption or upload
+  ---
+  duration_ms: 1.608417
+  type: 'test'
+  ...
+# Subtest: stale canonical snapshot stops Drive upload and never marks it backed up
+ok 26 - stale canonical snapshot stops Drive upload and never marks it backed up
+  ---
+  duration_ms: 1.750104
+  type: 'test'
+  ...
+# Subtest: snapshot change during encryption stops before any upload
+ok 27 - snapshot change during encryption stops before any upload
+  ---
+  duration_ms: 1.367583
+  type: 'test'
+  ...
+# Subtest: snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+ok 28 - snapshot changed during confirmed upload keeps older backups and newer unbacked changes
+  ---
+  duration_ms: 1.654333
+  type: 'test'
+  ...
+# Subtest: stale snapshot cannot prune existing remote backups when retention is lowered
+ok 29 - stale snapshot cannot prune existing remote backups when retention is lowered
+  ---
+  duration_ms: 30.621157
+  type: 'test'
+  ...
+# Subtest: fresh snapshot preserves normal confirmed backup and authorized retention
+ok 30 - fresh snapshot preserves normal confirmed backup and authorized retention
+  ---
+  duration_ms: 3.626224
+  type: 'test'
+  ...
+# Subtest: acknowledged upload is not automatically repeated when local acknowledgement storage fails
+ok 31 - acknowledged upload is not automatically repeated when local acknowledgement storage fails
+  ---
+  duration_ms: 1.463955
+  type: 'test'
+  ...
+# Subtest: export preflight rejection never uploads, prunes or acknowledges a Drive backup
+ok 32 - export preflight rejection never uploads, prunes or acknowledges a Drive backup
+  ---
+  duration_ms: 30.170419
+  type: 'test'
+  ...
+# Subtest: file and Drive restore identical encrypted position bytes through commit and reopen
+    # Subtest: file valid
+    ok 1 - file valid
+      ---
+      duration_ms: 79.178356
+      type: 'test'
+      ...
+    # Subtest: drive valid
+    ok 2 - drive valid
+      ---
+      duration_ms: 75.658859
+      type: 'test'
+      ...
+    # Subtest: file unknown
+    ok 3 - file unknown
+      ---
+      duration_ms: 51.343084
+      type: 'test'
+      ...
+    # Subtest: drive unknown
+    ok 4 - drive unknown
+      ---
+      duration_ms: 54.439228
+      type: 'test'
+      ...
+    # Subtest: file legacy
+    ok 5 - file legacy
+      ---
+      duration_ms: 54.054758
+      type: 'test'
+      ...
+    # Subtest: drive legacy
+    ok 6 - drive legacy
+      ---
+      duration_ms: 51.698413
+      type: 'test'
+      ...
+    # Subtest: file legacy-v2
+    ok 7 - file legacy-v2
+      ---
+      duration_ms: 52.641348
+      type: 'test'
+      ...
+    # Subtest: drive legacy-v2
+    ok 8 - drive legacy-v2
+      ---
+      duration_ms: 59.641952
+      type: 'test'
+      ...
+    # Subtest: file quantity
+    ok 9 - file quantity
+      ---
+      duration_ms: 50.562865
+      type: 'test'
+      ...
+    # Subtest: drive quantity
+    ok 10 - drive quantity
+      ---
+      duration_ms: 66.29802
+      type: 'test'
+      ...
+    # Subtest: file fx
+    ok 11 - file fx
+      ---
+      duration_ms: 79.820027
+      type: 'test'
+      ...
+    # Subtest: drive fx
+    ok 12 - drive fx
+      ---
+      duration_ms: 73.726479
+      type: 'test'
+      ...
+    # Subtest: file vault
+    ok 13 - file vault
+      ---
+      duration_ms: 52.127689
+      type: 'test'
+      ...
+    # Subtest: drive vault
+    ok 14 - drive vault
+      ---
+      duration_ms: 62.447564
+      type: 'test'
+      ...
+    # Subtest: file conflict
+    ok 15 - file conflict
+      ---
+      duration_ms: 58.859549
+      type: 'test'
+      ...
+    # Subtest: drive conflict
+    ok 16 - drive conflict
+      ---
+      duration_ms: 54.414685
+      type: 'test'
+      ...
+    1..16
+ok 33 - file and Drive restore identical encrypted position bytes through commit and reopen
+  ---
+  duration_ms: 1051.727883
+  type: 'test'
+  ...
+# Subtest: legacy decimal price and localized FX survive actual file and Drive restore
+    # Subtest: file precise-price
+    ok 1 - file precise-price
+      ---
+      duration_ms: 52.763788
+      type: 'test'
+      ...
+    # Subtest: drive precise-price
+    ok 2 - drive precise-price
+      ---
+      duration_ms: 51.005645
+      type: 'test'
+      ...
+    # Subtest: file localized-fx
+    ok 3 - file localized-fx
+      ---
+      duration_ms: 50.726003
+      type: 'test'
+      ...
+    # Subtest: drive localized-fx
+    ok 4 - drive localized-fx
+      ---
+      duration_ms: 51.432282
+      type: 'test'
+      ...
+    # Subtest: file localized-fx-discrepancy
+    ok 5 - file localized-fx-discrepancy
+      ---
+      duration_ms: 51.266711
+      type: 'test'
+      ...
+    # Subtest: drive localized-fx-discrepancy
+    ok 6 - drive localized-fx-discrepancy
+      ---
+      duration_ms: 56.01675
+      type: 'test'
+      ...
+    1..6
+ok 34 - legacy decimal price and localized FX survive actual file and Drive restore
+  ---
+  duration_ms: 372.737455
+  type: 'test'
+  ...
+# Subtest: existing device vault survives restore display failure without a false password takeover claim
+ok 35 - existing device vault survives restore display failure without a false password takeover claim
+  ---
+  duration_ms: 211.275867
+  type: 'test'
+  ...
+1..35
+# tests 57
+# suites 0
+# pass 57
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1917.66418

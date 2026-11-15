@@ -1,0 +1,318 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "synthetic": true,
+  "transport": "Mocked Google OAuth and Drive HTTP; real delivered UI, crypto and IndexedDB",
+  "fault": "One post-commit status text assignment throws; no added dialog, no storage fault",
+  "phases": [
+    {
+      "label": "source",
+      "dialogs": [
+        {
+          "type": "confirm",
+          "message": "Backup mit 1 Positionen und 1 Anbietern wiederherstellen? Der aktuelle Datenbestand wird ersetzt."
+        }
+      ],
+      "pageErrors": [],
+      "blockedExternal": [],
+      "driveRequests": [],
+      "emptyOnboarding": "Willkommen bei FolioLabStarte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.Anlage hinzufügenAnbieter verwaltenWallet verbindenBackup importieren",
+      "plainHint": "Der JSON-Export ist unverschlüsselt und enthält Portfolio, Buchungen und Stichtage, aber keine bestätigten Wallet-Historien oder persönlichen Einstellungen und API-Zugangsdaten. Für diese Zusatzdaten nutze die Auswahl unter „Backup-Passwort“. Beim Wiederherstellen werden lokale Daten ersetzt; die Datei wird vorher geprüft.",
+      "exportCopy": "Backup-Passwort\n\nDein Passwort schützt verschlüsselte Backups auf deinem Gerät und in Google Drive. Zur Wiederherstellung benötigst du das Backup und dieses Passwort.\n\nBackup-Passwort eingerichtet\n\nPasswort ändern\nVerschlüsseltes Backup herunterladen\nZusätzliche Daten sichern\n\nPortfolio, Buchungen und historische Stichtage werden standardmäßig gesichert. Wähle, welche weiteren Daten in zukünftige verschlüsselte Backups aufgenommen werden sollen.\n\nBestätigte Wallet-Historien einschließen\nEinstellungen und API-Zugangsdaten einschließen\n\nDiese Auswahl gilt für zukünftige verschlüsselte Backups auf deinem Gerät und in Google Drive.\n\nWas wird gesichert?",
+      "encryptedSHA256": "a74d8868b63773ef3fc89b8b251c1f73006e612c98999fbf8f42bc1e08a95a4e",
+      "exportIncludesConfiguration": true,
+      "sourceRecord": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"Synthetic\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"Synthetic depot\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"key\": \"security:unverified:synthetic etf::eur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"asset\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"manual\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"100\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 2,\n      \"quantityExact\": \"2\",\n      \"price\": 100,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:28.038Z"
+      }
+    },
+    {
+      "label": "v315",
+      "dialogs": [
+        {
+          "type": "confirm",
+          "message": "Dieses Backup mit 1 Positionen und 0 Stichtagen wiederherstellen? Deine aktuellen lokalen Daten werden ersetzt."
+        },
+        {
+          "type": "confirm",
+          "message": "Diese verschlüsselte Sicherung enthält auch Einstellungen und möglicherweise API-Schlüssel. Sollen diese Einstellungen und Schlüssel auf diesem Gerät wiederhergestellt werden? Vorhandene Einstellungen werden ersetzt. Entfernte FMP-, Twelve-Data- und direkte EODHD-Schlüssel werden nicht wiederhergestellt."
+        }
+      ],
+      "pageErrors": [],
+      "blockedExternal": [],
+      "driveRequests": [
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files/syntheticBackup123",
+          "media": true
+        }
+      ],
+      "vaultBefore": {
+        "keyId": "S+Z3ohAeo3onlwpCArcKEQ==",
+        "wrap": {
+          "salt": "VDbtBaOV9jefSR++vzITCA==",
+          "iv": "LLoFZ8imir9WW+hp",
+          "data": "nMllp967NnAKPLVqVJaKol3/gn4706FgE482kSnSea+hlFkn1tH474kckZpuXSLJ"
+        },
+        "extractable": false
+      },
+      "before": {
+        "schemaVersion": 1,
+        "revision": 1,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [],\n  \"accounts\": [],\n  \"assets\": [],\n  \"positions\": [],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:28.939Z"
+      },
+      "status": "Portfolio und Backup-Passwort übernommen. Abschlussanzeige fehlgeschlagen: SYNTHETIC_POST_COMMIT_DISPLAY_FAILURE. Portfolio nicht erneut importieren.",
+      "faultCount": 1,
+      "after": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"Synthetic\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"Synthetic depot\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"key\": \"security:unverified:synthetic etf::eur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"asset\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"manual\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"100\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 2,\n      \"quantityExact\": \"2\",\n      \"price\": 100,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:29.453Z"
+      },
+      "vaultAfter": {
+        "keyId": "S+Z3ohAeo3onlwpCArcKEQ==",
+        "wrap": {
+          "salt": "VDbtBaOV9jefSR++vzITCA==",
+          "iv": "LLoFZ8imir9WW+hp",
+          "data": "nMllp967NnAKPLVqVJaKol3/gn4706FgE482kSnSea+hlFkn1tH474kckZpuXSLJ"
+        },
+        "extractable": false
+      },
+      "newExportKeyId": "S+Z3ohAeo3onlwpCArcKEQ==",
+      "passwordCheck": {
+        "local": true,
+        "remote": false
+      },
+      "reopened": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"Synthetic\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"Synthetic depot\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"key\": \"security:unverified:synthetic etf::eur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"asset\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"manual\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"100\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 2,\n      \"quantityExact\": \"2\",\n      \"price\": 100,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:29.453Z"
+      }
+    },
+    {
+      "label": "candidate",
+      "dialogs": [
+        {
+          "type": "confirm",
+          "message": "Dieses Backup mit 1 Positionen und 0 Stichtagen wiederherstellen? Deine aktuellen lokalen Daten werden ersetzt."
+        },
+        {
+          "type": "confirm",
+          "message": "Diese verschlüsselte Sicherung enthält auch Einstellungen und möglicherweise API-Schlüssel. Sollen diese Einstellungen und Schlüssel auf diesem Gerät wiederhergestellt werden? Vorhandene Einstellungen werden ersetzt. Entfernte FMP-, Twelve-Data- und direkte EODHD-Schlüssel werden nicht wiederhergestellt."
+        }
+      ],
+      "pageErrors": [],
+      "blockedExternal": [],
+      "driveRequests": [
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files",
+          "media": false
+        },
+        {
+          "method": "GET",
+          "path": "/drive/v3/files/syntheticBackup123",
+          "media": true
+        }
+      ],
+      "vaultBefore": {
+        "keyId": "9hy6RhuxM6w7dBPdkC8kSw==",
+        "wrap": {
+          "salt": "6vVmRVChCI+VYVpRT5BcVA==",
+          "iv": "BqfSEy4gI/+t49Lw",
+          "data": "WrdAH1xuRVhw/13JZHBcy5fH6E3WZxofq7XkWY9xUJeQlLpYnriEerb2bwcjt3Rh"
+        },
+        "extractable": false
+      },
+      "before": {
+        "schemaVersion": 1,
+        "revision": 1,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [],\n  \"accounts\": [],\n  \"assets\": [],\n  \"positions\": [],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:30.509Z"
+      },
+      "status": "Portfolio wiederhergestellt. Abschlussanzeige fehlgeschlagen: SYNTHETIC_POST_COMMIT_DISPLAY_FAILURE. Portfolio nicht erneut importieren.",
+      "faultCount": 1,
+      "after": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"Synthetic\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"Synthetic depot\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"key\": \"security:unverified:synthetic etf::eur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"asset\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"manual\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"100\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 2,\n      \"quantityExact\": \"2\",\n      \"price\": 100,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:31.021Z"
+      },
+      "vaultAfter": {
+        "keyId": "9hy6RhuxM6w7dBPdkC8kSw==",
+        "wrap": {
+          "salt": "6vVmRVChCI+VYVpRT5BcVA==",
+          "iv": "BqfSEy4gI/+t49Lw",
+          "data": "WrdAH1xuRVhw/13JZHBcy5fH6E3WZxofq7XkWY9xUJeQlLpYnriEerb2bwcjt3Rh"
+        },
+        "extractable": false
+      },
+      "newExportKeyId": "9hy6RhuxM6w7dBPdkC8kSw==",
+      "passwordCheck": {
+        "local": true,
+        "remote": false
+      },
+      "reopened": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 3,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"Synthetic\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"Synthetic depot\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"key\": \"security:unverified:synthetic etf::eur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"asset\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"manual\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"100\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:security%3Aunverified%3Asynthetic%20etf%3A%3Aeur\",\n      \"kind\": \"etf\",\n      \"name\": \"Synthetic ETF\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 2,\n      \"quantityExact\": \"2\",\n      \"price\": 100,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [],\n  \"journalEntries\": [],\n  \"openingPositions\": [],\n  \"externalCashFlows\": [],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T06:24:31.021Z"
+      }
+    }
+  ],
+  "stage": "completed",
+  "browser": "141.0.7390.37",
+  "result": "PASS"
+}
