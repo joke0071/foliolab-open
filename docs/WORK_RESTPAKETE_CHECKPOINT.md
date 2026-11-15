@@ -19,3 +19,7 @@ Bei neuer503-Beobachtung tatsächlicheHeader/Body auswerten, vorerst keinenweite
 ## Belege / Abschlussgrenze
 
 Alle8Originalarchive desMainlaufs geladen bzw. ihreIdentitäten gesichert; neueGesamtsicherung/gepinntesReadback/tatsächlicherRestore bleiben biszumEndbefund offen. PR-/K3-Originalkette ausb9be8f60 samt25/13Dateien-Restores unverändert weiterverwenden. Archivhinweis-K3-Teilpunkt erstnachvollständigemProduktionsnachweis schließen. Historische10000Positionsforderung gegenüber5000Formatgrenze bleibt eigeneScope-Entscheidung. A09/Grafikherkunft geparkt, keineerneuteAnfrage. Writer nachsicheremAbschluss oderkonkretemBlocker geordnetabgeben.
+
+## Diagnoseentscheidung / begrenzter Folgeschritt
+
+Diagnose43717059117/1SUCCESS auf0f6cfb64491c5c1dbbacb2280af241b106ceb351: identischerUbuntu24.04/Node22/Playwright1.56.1/Chromium141-Kontext, normaleTLS-Prüfung,155Assets mitderselben8erParallelität sowie3Kontrollen ausnahmslosHTTP200/exaktpassendeQuellhashes,0Request-Retries. AuchnormalerBrowserimport wallet-visibility.js200 undAppstart/IDB aktiv. Originaler503-Edgegrund bleibtUNKNOWN. DamitaktuellfunktionsfähigeAuslieferung alsgeänderteVoraussetzung belegt; ein gezielterregulärerWiederholungsversuch ausschließlichdesfehlgeschlagenenLivejobs istbegründet. Maina538,Produktbytes,Assertions,TLS,Fristenunverändert; keinweiteresDeployment. OriginalerFAIL samtZIP-Teilen dauerhaftgepinntimfolgendenCommit bewahrt, WiederholungbeiweiteremFehlernichtautomatisch.

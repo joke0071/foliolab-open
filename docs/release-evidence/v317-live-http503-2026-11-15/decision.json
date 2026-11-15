@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "run": 43713836553,
+  "attempt": 1,
+  "job": 132819643122,
+  "main": "a53856e385ef1d9fd65d8710618244e80b8341e7",
+  "tree": "b70a02558a89158f80420b2c895bbcb2c18ab7c7",
+  "originalArtifact": 14162991942,
+  "bytes": 306524,
+  "sha256": "f3f41d8eda16e9e7420346c63b7a8b04a7f296a309ea12e2e4ab72005c0f2cfb",
+  "parts": [
+    {
+      "path": "live-attempt1-original.zip.part00",
+      "bytes": 180000,
+      "sha256": "bf7ee230553a1476efdf3cc635544dac45a62d4f910f5749f854a90e57a26545",
+      "gitBlob": "a97778e77d4c9fefea18dda97d57c5e86fd72d10"
+    },
+    {
+      "path": "live-attempt1-original.zip.part01",
+      "bytes": 126524,
+      "sha256": "eeb0a18d613246a9d56bf4ffa7d69264033d3c75da267b22c6d3030d317393f8",
+      "gitBlob": "6175fa72efb821ddf52fa9b39f633f49f1c69942"
+    }
+  ],
+  "observedFailure": "HTTP503 instead of200 for wallet-visibility.js at 8-parallel published-byte verification;151 hashes verified; no44px failure",
+  "originalRootCause": "UNKNOWN; original HTTP headers/body not captured",
+  "changedObservedPrerequisite": {
+    "diagnosticRun": 43717059117,
+    "diagnosticHead": "0f6cfb64491c5c1dbbacb2280af241b106ceb351",
+    "browser": "141.0.7390.37",
+    "parallelism": 8,
+    "parallelRequests": 155,
+    "controls": 3,
+    "allCurrentRequestsHTTP200AndExactHashes": true,
+    "requestRetries": 0,
+    "ordinaryTLS": true,
+    "productHashes": {
+      "src/app.js": "1670dc517cab83bd134b66e44554e54c2d24d27431d6f8122d8cbacfaf2318e0",
+      "sw.js": "87a78a1b47651b89a801c97fcf117d93ce80a2fc0727b4b9b3c90815fdc6d706"
+    }
+  },
+  "retryContract": "One regular rerun of failed live job only at unchanged Maina538 after positive exact-context HTTP/hash diagnostic. No redeploy/Main repeat, no assertion/TLS/timing changes. Current probe does not retrospectively identify original503 cause; another failure is retained and investigated before further attempts."
+}
