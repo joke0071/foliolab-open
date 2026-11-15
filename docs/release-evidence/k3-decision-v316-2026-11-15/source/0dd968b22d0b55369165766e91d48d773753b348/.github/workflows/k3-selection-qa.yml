@@ -1,0 +1,54 @@
+name: K3 exact selection and row identity QA
+on:
+  push:
+    branches: [test/k3-selection-v316-20261115]
+permissions:
+  contents: read
+concurrency:
+  group: k3-selection-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  exact-selection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      FOLIOLAB_TEST_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install existing acceptance tools
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/k3-selection
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 2>&1 | tee artifacts/k3-selection/install.log
+          npx playwright install chromium --only-shell 2>&1 | tee -a artifacts/k3-selection/install.log
+          npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/k3-selection/install.log
+      - name: Verify six independent K3 cases in three engines
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD > artifacts/k3-selection/qa-head.txt
+          git rev-parse HEAD^ > artifacts/k3-selection/product-head.txt
+          git diff --name-only HEAD^ HEAD > artifacts/k3-selection/qa-delta.txt
+          node --check tests/browser-k3-selection.mjs
+          node --check tests/k3-selection-fixture.mjs
+          python3 -m http.server 4173 --bind 127.0.0.1 > artifacts/k3-selection/http.log 2>&1 &
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node tests/browser-k3-selection.mjs 2>&1 | tee artifacts/k3-selection/native.log
+      - name: Preserve every case and original failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k3-selection-${{ github.sha }}
+          path: |
+            artifacts/k3-selection/
+            artifacts/gates/storage-fixture/
+          if-no-files-found: error
+          retention-days: 30

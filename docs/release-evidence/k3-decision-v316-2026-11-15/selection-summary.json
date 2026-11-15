@@ -1,0 +1,579 @@
+{
+  "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "status": "BOUNDED_PASS_18_DISTINCT_CASES_ACROSS_TWO_RUNS",
+  "originalRunConclusion": "FAILURE",
+  "original15Pass3HarnessDateOracleFailures": true,
+  "rerunOnlyAffected3": true,
+  "productChanges": false,
+  "cases": [
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "positions",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "positions",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "bookings",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "bookings",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "FAIL",
+      "cleanup": "PASS",
+      "checks": 12,
+      "stage": "preview-cancel",
+      "failure": "r103 dated in preview",
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        null
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "chromium",
+      "category": "references",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 27,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "positions",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "positions",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "bookings",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "bookings",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "FAIL",
+      "cleanup": "PASS",
+      "checks": 12,
+      "stage": "preview-cancel",
+      "failure": "r103 dated in preview",
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        null
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "firefox",
+      "category": "references",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 27,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "positions",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "positions",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "p103",
+        "p003"
+      ],
+      "rowTarget": "p001",
+      "expectedTotal": "208",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "bookings",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "bookings",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 29,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "b103",
+        "b003"
+      ],
+      "rowTarget": "b001",
+      "expectedTotal": "304",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "FAIL",
+      "cleanup": "PASS",
+      "checks": 12,
+      "stage": "preview-cancel",
+      "failure": "r103 dated in preview",
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        null
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43704954048,
+      "qaHead": "0dd968b22d0b55369165766e91d48d773753b348",
+      "engine": "webkit",
+      "category": "references",
+      "kind": "row-edit-with-other-selection",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 27,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43705260426,
+      "qaHead": "418388d5fda0ad9642fb6148a01a83cff02342ae",
+      "engine": "chromium",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "141.0.7390.37",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43705260426,
+      "qaHead": "418388d5fda0ad9642fb6148a01a83cff02342ae",
+      "engine": "firefox",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "142.0.1",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "run": 43705260426,
+      "qaHead": "418388d5fda0ad9642fb6148a01a83cff02342ae",
+      "engine": "webkit",
+      "category": "references",
+      "kind": "hidden-archive",
+      "result": "PASS",
+      "cleanup": "PASS",
+      "checks": 28,
+      "stage": "complete",
+      "failure": null,
+      "selectedIds": [
+        "r103",
+        "r003"
+      ],
+      "rowTarget": "r001",
+      "expectedTotal": "100",
+      "revisions": [
+        2,
+        3
+      ],
+      "browserVersion": "26.0",
+      "origin": "http://127.0.0.1:4173",
+      "caches": [
+        "foliolab-open-v316"
+      ]
+    }
+  ],
+  "passedDistinctCases": 18,
+  "checksInPassingCases": 507
+}
