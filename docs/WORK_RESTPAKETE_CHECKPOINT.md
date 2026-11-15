@@ -23,3 +23,7 @@ Alle8Originalarchive desMainlaufs geladen bzw. ihreIdentitäten gesichert; neueG
 ## Diagnoseentscheidung / begrenzter Folgeschritt
 
 Diagnose43717059117/1SUCCESS auf0f6cfb64491c5c1dbbacb2280af241b106ceb351: identischerUbuntu24.04/Node22/Playwright1.56.1/Chromium141-Kontext, normaleTLS-Prüfung,155Assets mitderselben8erParallelität sowie3Kontrollen ausnahmslosHTTP200/exaktpassendeQuellhashes,0Request-Retries. AuchnormalerBrowserimport wallet-visibility.js200 undAppstart/IDB aktiv. Originaler503-Edgegrund bleibtUNKNOWN. DamitaktuellfunktionsfähigeAuslieferung alsgeänderteVoraussetzung belegt; ein gezielterregulärerWiederholungsversuch ausschließlichdesfehlgeschlagenenLivejobs istbegründet. Maina538,Produktbytes,Assertions,TLS,Fristenunverändert; keinweiteresDeployment. OriginalerFAIL samtZIP-Teilen dauerhaftgepinntimfolgendenCommit bewahrt, WiederholungbeiweiteremFehlernichtautomatisch.
+
+## Live-Versuch2 tatsächlich gestartet
+
+Gezielt job132819643122 per rerun_workflow_job neu gestartet; regulärerMainlauf43713836553/Versuch2 IN_PROGRESS, neuerLivejob132821674164. Mainprüfungen/Deployment ausVersuch1 wiederverwendet (Originalzeitstempel12:26–13:00UTC); keinneuerMain-Testlauf und keinRedeployment. Quellen/Maina538 undTreeb70 unverändert. OriginalerLiveFAILURE bleibtVersuch1; aktuellerLiveabschluss offen. Vor Start OriginalZIP ausRepo-Pin bfcdf5b39b8ce28d15d4b0c2c5f6c4599fcc0f9a unabhängig bytegleich zurückgelesen,CRC geprüft und9Dateien tatsächlich restauriert. Kein weiterergeplanterRetry ohne neuesBefund-/Ursachenreview.
