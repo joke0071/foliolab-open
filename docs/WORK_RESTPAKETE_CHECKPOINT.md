@@ -27,3 +27,10 @@ Diagnose43717059117/1SUCCESS auf0f6cfb64491c5c1dbbacb2280af241b106ceb351: identi
 ## Live-Versuch2 tatsächlich gestartet
 
 Gezielt job132819643122 per rerun_workflow_job neu gestartet; regulärerMainlauf43713836553/Versuch2 IN_PROGRESS, neuerLivejob132821674164. Mainprüfungen/Deployment ausVersuch1 wiederverwendet (Originalzeitstempel12:26–13:00UTC); keinneuerMain-Testlauf und keinRedeployment. Quellen/Maina538 undTreeb70 unverändert. OriginalerLiveFAILURE bleibtVersuch1; aktuellerLiveabschluss offen. Vor Start OriginalZIP ausRepo-Pin bfcdf5b39b8ce28d15d4b0c2c5f6c4599fcc0f9a unabhängig bytegleich zurückgelesen,CRC geprüft und9Dateien tatsächlich restauriert. Kein weiterergeplanterRetry ohne neuesBefund-/Ursachenreview.
+
+
+## Live-Versuch 2 / gezielte Worker-Diagnose
+
+Versuch 2 ist FAILURE: Core-Produktion mit allen155Assethashes/normalemTLS/6Kernchecks/18Axe-Scans PASS, danach Kraken Chromium browser-controlled-storage-fixture.mjs:46:20s-Prädikat für aktivenSW/Controller scheitert. Anfang installing, Ende installing/waiting/active/controller leer; keine44px-Abweichung. Keine Behauptung einer langsamen Installation oder Behebung durch zusätzlicheWartezeit. Original14161949855/12445716Bytes/SHA25689ec76a8c791f3903b37665ac8883278603ccd2470bc5a1ba5dd69ca59ca5f07 erhalten. Originaltrace enthältkeineWorker-Netzwerkantworten, exakterInstallationsgrundUNKNOWN.
+
+Begrenzte8frischeInstallationsdiagnose43718173048SUCCESS: alle8unterunverändertem20s-Prädikat aktiviert, keineReproduktion. Beobachter aufBrowserContext erfasstejedochkeineWorker-Requests; positiverInstallationsnachweis, keinevollständigeNetzwerkursachenklärung. Daherjetzt letztegezielteDiagnose desunveränderten vollständigenbrowser-kraken-import.mjs mitCDPdirektamServiceWorker. Ref diagnostic/v317-kraken-worker-9142fbd8, Head1ae31854badee9984ed254811a200718068dff4e, ParentMaina538; nur2Diagnosedateien, keineProdukt-/Fixture-/Friständerung. Ergebnisoffen. KeinweitererregulärerLive-Retrybeauftragt. VollständigeOriginalsicherung/gepinntesRücklesen/tatsächlicherRestore erfolgtzumEndbefund; v317DEPLOYED/LIVE_BLOCKED,ArchivhinweisnochkeinDONE.
