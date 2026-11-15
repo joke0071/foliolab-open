@@ -1,0 +1,266 @@
+{
+  "repo": "joke0071/foliolab-open",
+  "main": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "tree": "11429de9e06d9d014875af624cb80bafafb38f20",
+  "lastAudit": {
+    "sha": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+    "comment": "https://github.com/joke0071/foliolab-open/issues/298#issuecomment-6784038991",
+    "baseline": {
+      "icons/flask-192.png": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b",
+      "icons/flask-512.png": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0",
+      "icons/flask-maskable-512.png": "645419333138793ef88441a53d2f362e324fed4a",
+      "icons/flask.svg": "823323630cb3fe1b9a6342e9d6e5421554c1194d",
+      "index.html": "d5fd37b8c436857b49a560e64fd4c6dd70f6c350",
+      "manifest.webmanifest": "60f13ef827812f0066043295f65316b6144e618c",
+      "src/account-evidence.js": "3024e91230fc586a4c9f1e4a0746a815794e1d18",
+      "src/account-opening.js": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50",
+      "src/allocation-ui.js": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+      "src/alpha-vantage.js": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+      "src/app.js": "30d3a3ae3efb05f638280c423da273a04548b1ea",
+      "src/asset-wizard-core.js": "bcd7d08446adff32223374cce1e8f1f569c214fa",
+      "src/asset-wizard.js": "3a863542ab6d02ce0def12c735f31069293efb60",
+      "src/assets.js": "054ba656af6145f96bf93a566009ed40f45603cb",
+      "src/atomic-storage.js": "485703e05390176cc02a8b1502e1ec3ef4b1adf8",
+      "src/backup-limits.js": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+      "src/backup-vault.js": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0",
+      "src/bitcoin-hd.js": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+      "src/bitcoin-history.js": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1",
+      "src/bitpanda-import-ui.js": "e87f56685ee33026ce64d677a0a8e7f4517061f0",
+      "src/bitpanda-import.js": "b42e81350784dd4f4654dfc90c7461e2189e770b",
+      "src/bitpanda-preview-ui.js": "5fc4467fc103116b5cc2d1cb4a50683c64085988",
+      "src/bitpanda-preview.js": "38ed3103272fe7110387c68f24f889e1a88f7ca6",
+      "src/bitpanda-withdrawal-evidence.js": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+      "src/blockchain-adapters.js": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16",
+      "src/blocked-reasons-ui.js": "93f5550fb59337ce3c78642b9b36c8acd5dc1381",
+      "src/bnb-token-scanner.js": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+      "src/booking-history-ui.js": "61212dc0c360a44dbd261ecd70f2314bc4a2e857",
+      "src/booking-history.js": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+      "src/booking-insights-ui.js": "249e18771d565045a809d6b636016b3d488a40b9",
+      "src/booking-insights.js": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36",
+      "src/booking-management.js": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+      "src/browser-portfolio-storage.js": "59ca3068fc38820d4b7e31d10b26ebdf6ed326a4",
+      "src/capital-flows.js": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c",
+      "src/cash-reconciliation.js": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda",
+      "src/cash-terms-ui.js": "4809fc05f141d39ad7e378c44d6e7a287995024c",
+      "src/cash-terms.js": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+      "src/chart-periods.js": "e7ca59776ce800626ce5309887206baf4b25625f",
+      "src/coin-identity.js": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+      "src/complete-backup.js": "d7af70fe06b61f9db8dffff215f7e8b2782385db",
+      "src/credential-visibility.js": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a",
+      "src/crypto-backup.js": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4",
+      "src/crypto-fallbacks.js": "1151f42b1315241805923b848a7a2efdf65528ac",
+      "src/csv-batch.js": "0356e6cd8550f3107742603da2fde9fa7fbcc7df",
+      "src/csv-import.js": "6522fca91a5b58a1d9f468e7c499bab93153378f",
+      "src/csv-records.js": "a38aad028a30776022c6c8950a2699a6694962b4",
+      "src/dashboard-ui.js": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb",
+      "src/decimal.js": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+      "src/defi.js": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+      "src/dialog-discard.js": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3",
+      "src/drive-backup.js": "e93573b9b39010a30ee0c2aa4465340f00de2ef7",
+      "src/economic-form-ui.js": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f",
+      "src/eodhd-transport.js": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72",
+      "src/eodhd-worker-client.js": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+      "src/ethereum-fallback.js": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+      "src/ethereum-history.js": "21e056201e74bbb6490e74c430601af839699d71",
+      "src/flatex-backfill.js": "ad07376e1830b08e636f2201fadf695b4b2ead44",
+      "src/flatex-cash-audit.js": "484a7fba8494f912d4968df553a3fa7bfdc913d5",
+      "src/flatex-cost-basis.js": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1",
+      "src/flatex-import.js": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69",
+      "src/flatex-native-ui.js": "d52e116b9280147495316666289962d21988ba3c",
+      "src/flatex-native.js": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "src/flatex-net-reconciliation.js": "2d39c199135dc9348271271c60b36876c4660936",
+      "src/flatex-net-settlement.js": "320637c48fc98ebaecc7c46b1a21266767c964e6",
+      "src/flatex-reconciliation.js": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+      "src/flatex-review-export.js": "1de187107010784e4a8d0f47e74d3bad17e2f4fd",
+      "src/flatex-settlement-audit.js": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "src/flatex-settlements.js": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "src/format.js": "251c4e369b3b47aa56e5efb8e65f7106a987f9b7",
+      "src/fx-state.js": "0c0239573d9306da2f7d66da21ad8537ce123783",
+      "src/header-status.js": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd",
+      "src/historical-csv.js": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+      "src/historical-portfolio-value.js": "3a49409f21ed1e51c18b641127d461a4898423d1",
+      "src/historical-position-value.js": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+      "src/history-evidence-cache.js": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+      "src/import-identity.js": "9c80c33266d3c769d0185e3e89cf182c192f1406",
+      "src/instrument-catalog.js": "8012ff3fe03d60b24aff246f7e4ea73170159ea1",
+      "src/interest-account.js": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d",
+      "src/interest-scenario.js": "332037a4d578c8128121f799165db3a749a82239",
+      "src/interest-ui.js": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248",
+      "src/kraken-bitcoin-bridge.js": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+      "src/kraken-ethereum-bridge.js": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+      "src/kraken-import-ui.js": "b652fb6bae3feedd0cb7e57bdc82b195c5c2e10b",
+      "src/kraken-import.js": "c232ff453d806a9ef093f59ab5e835713cac5f63",
+      "src/kraken-ledger-ui.js": "2b3436487f0e78c66e783d46f90baefb5fa2692f",
+      "src/kraken-ledger.js": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+      "src/kraken-link-bridge.js": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+      "src/kraken-solana-bridge.js": "782cab38bb79daa0886c6ab66559f61792279dd1",
+      "src/kraken-source-plan.js": "35139f556f80b2fb38567e6139c23448d32a7fa0",
+      "src/kraken-withdrawal-evidence.js": "6eafe11d6a175dc35c6ebb693fd7a0f91e813107",
+      "src/ledger-live-ui.js": "ee847ff772e1c109c0837616fdc84f7f909e6ae9",
+      "src/ledger-live.js": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+      "src/legacy-quote-audit.js": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e",
+      "src/link-explorer-evidence.js": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+      "src/loading-ui.js": "0ea66097716c8083ea8906ce02f9b6c99b954f10",
+      "src/market-diagnostics.js": "030b05243edf7e956dfdea404e92dd30e12a0e9a",
+      "src/market.js": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+      "src/marketstack.js": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+      "src/model.js": "3ab1397af6870f1b356f9696451170697eafbf36",
+      "src/native-staking-networks.js": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+      "src/onboarding-suggestions.js": "2c045c706fb7cf3090d8a462f36834ade5e2dee7",
+      "src/pchain-evidence.js": "3c248f1087f0d3273811c50715a1cf888e6d55ed",
+      "src/pchain-identity.js": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d",
+      "src/performance.js": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a",
+      "src/portfolio-edit-actions.js": "3412841500a16abd99aa37e2603603e676d2ad94",
+      "src/position-bookings.js": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19",
+      "src/position-detail-ui.js": "70caf38e71fdf30228ecac2029433a1a2167e003",
+      "src/position-history.js": "20afdf678e520b2b361d6c1c02a6604f5130659f",
+      "src/position-icons.js": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+      "src/position-quality-review.js": "0764c02af562c7e73d6232cf9ec19196c18ff646",
+      "src/position-search.js": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc",
+      "src/position-selection.js": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+      "src/public-instruments-client.js": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+      "src/purchase-evidence-ui.js": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634",
+      "src/purchase-evidence.js": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+      "src/quote-quality.js": "3ec1f74b2c10caef09a400592db05a5db1dda9d6",
+      "src/reference-listings.js": "3ba091983e64a631ad187ebb302299380db49c02",
+      "src/reference-management.js": "d6d06b032d70ca85adeae4f770d3a7ea2bded0af",
+      "src/refresh-frequency.js": "b62752d0c4b8f2cda17c40b2e1687b6dee0c01e3",
+      "src/refresh-ui.js": "cd4b56d8d392c90f638b089c91e721a13c3a7d29",
+      "src/request-cache.js": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+      "src/retired-providers.js": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+      "src/security-catalog.js": "b5edf8651d6a3157a80c0087d28f6482d198e161",
+      "src/security-discovery.js": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9",
+      "src/security-sources.js": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+      "src/shared-flatex-reconciliation-ui.js": "c836f5a5ee0f3208978b7df1fb658bfb530805bb",
+      "src/shared-flatex-ui.js": "8e567ab68ac4d0f6e0b952c491623824deb46423",
+      "src/shared-import-ui.js": "fb28c9bbc44ed7729383df1d619ddf3d532000dd",
+      "src/shared-import.js": "f4d0787bf0ba6d99bbd818fc5384ec33779a0ef7",
+      "src/solana-history.js": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+      "src/solana-rpc.js": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+      "src/sonic-staking-evidence.js": "eefd659b275830d83d4ae36709cce0475ce9e7cd",
+      "src/staking-catalog.js": "8a4b4b1206b6949176e6b21a72acea4911467884",
+      "src/staking-discovery.js": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+      "src/startup.js": "4121fea8edcd900d456f1dc87abd06d7012aed6b",
+      "src/transactions.js": "306dfd8f06b41f4e6414ecbb248124fbfb726402",
+      "src/transfer-matching-ui.js": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e",
+      "src/unified-bitcoin-ui.js": "1893fc655d4f910ecacfc6949250fde82a0dc580",
+      "src/unified-bitcoin.js": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+      "src/valuation-status.js": "cfbb845f8ecc6fdbf2847e675054f29e6e0eac41",
+      "src/wallet-history-calculation.js": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7",
+      "src/wallet-history-core.js": "edcbe5570a903271d07ddc637bd876071e85a40a",
+      "src/wallet-history-days-worker.js": "f0389e11f47eb92ce06a3ea2804a1ea343256245",
+      "src/wallet-history-days.js": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+      "src/wallet-history-state.js": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+      "src/wallet-history-ui.js": "012f97dcdf3b5da96627be04c70f87c00dcaef8e",
+      "src/wallet-history-valuation.js": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+      "src/wallet-identity.js": "7337ad57a531189676f747fdf6d1a925170f4004",
+      "src/wallet-scan-update.js": "0924d07398250b2c6ba778455391cb0052bdd33c",
+      "src/wallet-visibility.js": "fa4b9e49fff050b82d287409af37562b72e97b07",
+      "src/xrpl-assets.js": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+      "styles.css": "62ba53231bac960a58b9740d9e46b2075b73f0c2",
+      "sw.js": "d30116e1df75cd064b85f22baa9a71e4f1819f0d"
+    }
+  },
+  "earlierAudit": {
+    "sha": "7ae902f3e24b5166592a8fc35f90432817be1f3a",
+    "path": "docs/QUALITY298_RUNTIME_AUDIT_PREPARATION_2026-11-08.md"
+  },
+  "upstreamComparisons": {
+    "featherFolder": {
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\"/></svg>",
+      "url": "https://github.com/feathericons/feather/blob/v4.29.2/icons/folder.svg"
+    },
+    "featherLicense": {
+      "content": "The MIT License (MIT)\n\nCopyright (c) 2013-2023 Cole Bemis\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n",
+      "url": "https://github.com/feathericons/feather/blob/v4.29.2/LICENSE"
+    },
+    "lucideFolder": {
+      "content": "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\" />\n</svg>\n",
+      "url": "https://github.com/lucide-icons/lucide/blob/0.468.0/icons/folder.svg"
+    },
+    "lucideLicense": {
+      "content": "ISC License\n\nCopyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022.\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES\nWITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF\nMERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR\nANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES\nWHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN\nACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF\nOR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.\n",
+      "url": "https://github.com/lucide-icons/lucide/blob/0.468.0/LICENSE"
+    }
+  },
+  "history": {
+    "formatHistory": [
+      {
+        "sha": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+        "message": "UI-R3: integrate wealth review entry and quiet period/icon presentation (v302)\n\nReuse existing grouped review and navigation, hide zero without a container, retain financial/storage semantics. Shared mandatory UI contract covers 0/1/5, seven widths, 200% text, keyboard/Axe and exact bytes/revision."
+      },
+      {
+        "sha": "4def94b43008b8b36c243e586696d0a152010d32",
+        "message": "feat(ui): unify list management, installation and loading (#289)\n\nPreserve finance, v5, identity and storage contracts; add independently verified gesture, text scale and CSV UI gates. Final PR CI41681836593 and Wallet41681836866 passed; full evidence on checkpoint branch."
+      },
+      {
+        "sha": "4a10aefaf065b8840b14a78d93a3e8e61330d84b",
+        "message": "fix(ui): Austrian calendar and exact quantity displays with compact restriction details"
+      },
+      {
+        "sha": "7fa5575f0e629f097a5b0c3aa23a8eff29d4c549",
+        "message": "fix(ui): precise compact amounts and accessible chart controls\n\nReproduce Sonnet A01/A02/A04 and calendar contrast/SVG focus gaps. Share compact presentation formatter, expose exact donut values, distinct EUR axis labels, scoped44px targets, balanced mobile presets and bounded seven-day calendar. Preserve financial/storage logic. 948 units and dedicated Chromium/Firefox/WebKit controls checks pass locally; full CI required."
+      },
+      {
+        "sha": "a486c826c20f24b98f17cc10444f8035ff9ef416",
+        "message": "ui: consolidate history disclosures, compact basis and provider separators"
+      },
+      {
+        "sha": "d6b45110c5fcef0b21ddf7511e6e9c0f1d7d354c",
+        "message": "UI C5: collapse secondary actions, use archive icons and unify optional connections"
+      },
+      {
+        "sha": "bf8d10e8be9f1ba9d4003d908d337d4d30f29e90",
+        "message": "feat(ui): include asset symbols in existing icon renderer"
+      },
+      {
+        "sha": "ea931ac696d50101a6ac37caa84eeb2647300b05",
+        "message": "Fix EODHD network failures, add password eyes, remove provider links (v76) (#57)\n\n* fix(market): EODHD official-host network fallback and private credential visibility\n\n* test(settings): expect link-free Helius help and masked RPC token\n\n* fix(credentials): include external form-associated blockchain key inputs in eye toggles\n\n* docs: record v76 market reliability and credential visibility changes"
+      },
+      {
+        "sha": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+        "message": "feat: publish FolioLab Open standalone app"
+      }
+    ],
+    "flaskHistory": [
+      {
+        "sha": "4557f190e2569edf943e76a0f5c91e2e0337ea4d",
+        "message": "Apply approved slimmer flask design to hero and icons"
+      },
+      {
+        "sha": "a2554cc10abbf7c9b5da4e1e569a3e0cc44e8aa1",
+        "message": "Increase icon arrowhead clearance without changing hero emblem"
+      },
+      {
+        "sha": "211aa77f2a4ca7b5e72915ad8f6c14a037d36727",
+        "message": "Refine flask arrow clearance and hero liquid opacity"
+      },
+      {
+        "sha": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+        "message": "feat: publish FolioLab Open standalone app"
+      }
+    ],
+    "iconHistory": [
+      {
+        "sha": "550837c342002277e2669bc52d682f25b09e89ff",
+        "message": "feat(ui): add position icon mapping and matching stroke artwork"
+      }
+    ],
+    "pngHistory": [
+      {
+        "sha": "040853ca948554fb6a1e985ca5e5bc69836d421e",
+        "message": "feat(UI-LOAD01/PWA-FULL01): Originalkolben, sichere Startzustände und FolioLab-PWA (v267)"
+      }
+    ]
+  },
+  "originalSourceChecks": {
+    "asOf": "2026-11-15",
+    "GoogleIdentityLoader": "https://developers.google.com/identity/oauth2/web/guides/load-3p-authorization-library",
+    "GoogleAPITerms": "https://developers.google.com/terms",
+    "GoogleAPITermsRevision": "2021-11-09",
+    "GISLoaderGuideRevision": "2026-10-28",
+    "GISResponseCapture": "Not captured in v316 isolated live acceptance (third-party requests blocked). Read-only direct source tool request to accounts.google.com/gsi/client was unavailable. No exact external build/license inventory claimed.",
+    "scope": "Manufacturer documentation establishes mandated direct loading; do not infer that the hosted GIS binary has the Apache license of documentation samples.",
+    "upstreamIconComparisons": "Feather v4.29.2 folder and Lucide0.468.0 folder fetched with their tag LICENSE files only as reference hypotheses. Neither folder path is byte-identical to FolioLab format.js folder. No import/version/author evidence assigns either project to FolioLab."
+  }
+}

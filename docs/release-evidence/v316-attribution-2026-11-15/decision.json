@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "product": "v316 LIVE_ACCEPTED",
+  "main": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "tree": "11429de9e06d9d014875af624cb80bafafb38f20",
+  "issue": 298,
+  "section": "C",
+  "result": "VERIFY_PROVENANCE_UNRESOLVED",
+  "closedSubchecks": [
+    "Pinned v316 Pages inventory and local dependency/worker graph",
+    "Font delivery in FolioLab's own Pages payload/styles.css: no font binary or font loading rule; assets potentially loaded internally by the uncaptured Google SDK are not covered.",
+    "No newly declared/imported runtime vendor package in v305-to-v316 delta",
+    "PR339 roadmap status reconciled to v316 productive DONE"
+  ],
+  "provenMissingNotice": [],
+  "correctionCandidate": null,
+  "reasonNoCandidate": "No third-party source/version has been proven for unresolved SVGs; adding speculative MIT/ISC attribution would invent provenance. No empty notices file or license menu.",
+  "components": [
+    {
+      "id": "fonts",
+      "paths": [
+        "styles.css"
+      ],
+      "origin": "Font-family preference for user-installed Inter/OS fonts; no font binary, @font-face, CSS import or CSS URL in FolioLab's own payload/styles.css. Google SDK internal resources are outside this no-font statement.",
+      "license": "No bundled font-license notice obligation established",
+      "existingNotice": "Not required for this bounded no-font-distribution finding",
+      "status": "CLOSED_NO_FONT_FILE"
+    },
+    {
+      "id": "local-modules-workers",
+      "paths": [
+        "src/*.js",
+        "sw.js",
+        "src/wallet-history-days-worker.js"
+      ],
+      "origin": "147 tracked JS files,502 static local import edges,4 literal local dynamic imports,1 local module worker; root/worker manifests no runtime dependency. No imported bare package. This does not establish authorship of all source.",
+      "license": "Repository MIT applies to project code; cannot assign unknown upstream rights from it",
+      "existingNotice": "Repository LICENSE, not in Pages payload. No known copied vendor component found in audited delta.",
+      "status": "CLOSED_DELIVERY_GRAPH_ONLY"
+    },
+    {
+      "id": "google-identity-services",
+      "paths": [
+        "src/drive-backup.js:88-98",
+        "https://accounts.google.com/gsi/client"
+      ],
+      "origin": "Official Google Identity Services direct-loading endpoint, conditional on configured client ID / connection.",
+      "license": "Google APIs Terms (revision2021-11-09) and API-specific documentation; not inferred Apache-2.0 from documentation sample footer. Remote binary unversioned/provider-controlled.",
+      "existingNotice": "UI Google Drive Backup / Google-Drive-Autorisierung; direct provider response not copied, bundled or added to app precache. No specific missing distributed notice proven.",
+      "status": "ORIGIN_AND_LOAD_MODE_CONFIRMED_EXTERNAL_BUILD_NOT_PINNED",
+      "boundary": "No capture of exact external binary/notice set in original isolated v316 run; real OAuth and full provider branding/terms audit not claimed.",
+      "decidingEvidence": "If an exact hosted SDK notice inventory is required: record an unauthenticated provider response with URL, fetch time, final URL, SHA256 and included notice blocks from an allowed network environment, preserving the unmodified response. This is a new dated provider build sample, not retroactive evidence of the uncaptured v316 release-run response."
+    },
+    {
+      "id": "functional-svg",
+      "paths": [
+        "src/format.js",
+        "index.html:20 inline SVG blocks (line/hash inventory attached)"
+      ],
+      "origin": "FolioLab history exists: initial format module b248890792ca56987d16a5bc7884d9c84970e9a3 plus documented later UI edits. No source-import/version declaration found. Sample folder comparisons against Feather4.29.2 and Lucide0.468.0 do not establish a relationship.",
+      "license": null,
+      "existingNotice": "No per-icon source or upstream notice found in these sources or154-file payload; no upstream duty can be conclusively assigned yet.",
+      "status": "PROVENANCE_UNRESOLVED",
+      "decidingEvidence": "Creation record/source drawing establishing own artwork for the identified glyphs, or original upstream repository+immutable version+file-to-glyph mapping and original LICENSE/NOTICE."
+    },
+    {
+      "id": "position-svg",
+      "paths": [
+        "src/position-icons.js"
+      ],
+      "origin": "Introduced550837c342002277e2669bc52d682f25b09e89ff, unchanged since prior audit. Commit creates matching stroke artwork but supplies no external-source/version or explicit independent-creation provenance.",
+      "license": null,
+      "existingNotice": "No individual upstream notice; repository MIT alone does not prove ownership.",
+      "status": "PROVENANCE_UNRESOLVED",
+      "decidingEvidence": "Author/source record for the7 POSITION_ICON_PATHS symbols tied to550837c3, or upstream version and symbol mapping."
+    },
+    {
+      "id": "brand-assets",
+      "paths": [
+        "icons/flask.svg",
+        "icons/flask-192.png",
+        "icons/flask-512.png",
+        "icons/flask-maskable-512.png",
+        "index.html:hero emblem"
+      ],
+      "origin": "SVG revisions b2488907→211aa77f→a2554cc1→4557f190; PNGs introduced040853ca948554fb6a1e985ca5e5bc69836d421e. All4asset blobs unchanged from previous audited main. Naming, visuals and commit history are not proof of original rights/export lineage.",
+      "license": null,
+      "existingNotice": "No asset provenance/license declaration in asset bytes; initial own-brand classification retained as project context, not ownership certification.",
+      "status": "PROVENANCE_UNRESOLVED",
+      "decidingEvidence": "Original source drawing/creation declaration for flask SVG/hero plus export/build record binding3PNGs to that source, or upstream asset/version and license."
+    },
+    {
+      "id": "charts-and-loader",
+      "paths": [
+        "src/allocation-ui.js",
+        "src/dashboard-ui.js",
+        "src/loading-ui.js",
+        "index.html:startup loader"
+      ],
+      "origin": "Local geometric SVG generators in tracked project modules; no imported chart/spinner library; unchanged SVG modules since prior audited main.",
+      "license": "No separate third-party component identified; no general authorship certification",
+      "existingNotice": "Repository MIT; no newly established vendor notice requirement.",
+      "status": "CLOSED_NO_VENDOR_LIBRARY_IDENTIFIED"
+    }
+  ],
+  "excluded": [
+    "Playwright, Axe, pngjs, Node and other dev/test tooling, none among154shipped files",
+    "Provider/API response redistribution rights remain PROVIDER-RIGHTS-UNKNOWN as in prior audit; no API responses treated as bundled code or silently granted rights",
+    "Optional server worker source not in Pages payload; browser module worker is included",
+    "No CSP hardening, real OAuth, Windows/Android test, WebKit eviction or new CI/release"
+  ],
+  "nextExecutable1_0Step": "Obtain the exact SVG creation/import provenance for format.js/index inline glyphs and position-icons.js, plus original brand source/export mapping. Then bind any actual upstream license/NOTICE to those shipped bytes and prepare only the required notice correction for review. No new CI or device request needed to obtain this evidence.",
+  "scopeStatus": {
+    "K6_TRUST": "VERIFY",
+    "K4": "PARTIAL",
+    "A09": "OPERATOR_INPUT_PENDING",
+    "driveRestoreHint": "DONE in v316",
+    "N_CSP": "optional NACH_1.0, not promoted"
+  }
+}
