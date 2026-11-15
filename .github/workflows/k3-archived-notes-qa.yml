@@ -1,0 +1,53 @@
+name: Bounded K3 archived UNKNOWN-cost note UI
+on:
+  push:
+    branches: [test/k3-archived-notes-v316-20261115]
+permissions:
+  contents: read
+concurrency:
+  group: k3-archived-notes-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  archived-note-ui:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      FOLIOLAB_TEST_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install existing Chromium acceptance tools
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/k3-archived-notes
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 2>&1 | tee artifacts/k3-archived-notes/install.log
+          npx playwright install chromium --only-shell 2>&1 | tee -a artifacts/k3-archived-notes/install.log
+      - name: Verify one bounded regular UI flow on unchanged v316
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD > artifacts/k3-archived-notes/qa-head.txt
+          git rev-parse HEAD^ > artifacts/k3-archived-notes/product-head.txt
+          git diff --name-only HEAD^ HEAD > artifacts/k3-archived-notes/qa-delta.txt
+          node --check tests/browser-k3-archived-notes.mjs
+          node --check tests/k3-archived-notes-fixture.mjs
+          python3 -m http.server 4173 --bind 127.0.0.1 > artifacts/k3-archived-notes/http.log 2>&1 &
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node tests/browser-k3-archived-notes.mjs 2>&1 | tee artifacts/k3-archived-notes/native.log
+      - name: Preserve bounded original evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k3-archived-notes-${{ github.sha }}
+          path: |
+            artifacts/k3-archived-notes/
+            artifacts/gates/storage-fixture/
+          if-no-files-found: error
+          retention-days: 30
