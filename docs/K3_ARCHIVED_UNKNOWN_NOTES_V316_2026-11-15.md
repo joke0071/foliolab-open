@@ -16,4 +16,31 @@ Produkt: v316 LIVE_ACCEPTED, Main 82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69, Tree
 
 Vor Start: Fixture/Vertrags-Vorabcheck und Syntaxprüfung lokal PASS, kein nativer lokaler Browsernachweis. Jeder Laufabschnitt schreibt seinen Beginn in report.json; Fehlerzustand/DB/Screenshot werden soweit erreichbar gesichert; Cleanup separat bewertet. Originalartefakt enthält Report, vollständige Records, Quell-/Laufidentitäten, native Logs und drei Dialogbilder. Nach erstem Ergebnis betroffenen Job/Artefakt auswerten; keine blinde Wiederholung.
 
-Ergebnis: NATIVER TEST AUSSTEHEND. Dieser vorab festgelegte Vertrag ist kein PASS.
+## Ergebnis: begrenzter K3-Teilpunkt DONE / PASS
+
+[GitHub-Lauf 43704011917, Versuch 1](https://github.com/joke0071/foliolab-open/actions/runs/43704011917) und Job132781073772 sind SUCCESS. QA-Head 0dd0f76d6791cc91924a28222d9c92b3f6c58c3e; Produktbasis unverändert v316/Main82ce. Ubuntu24.04, Chromium141.0.7390.37, Playwright1.56.1, Node22.23.4. Ein isoliertes Profil/Origin http://127.0.0.1:4173, aktiver Controller /sw.js, Cache foliolab-open-v316, DB-Version1 und Modus idb-v1 tatsächlich beobachtet. QA-Diff enthält ausschließlich die drei vorab eingefrorenen Workflow-/Test-/Fixturedateien.
+
+| Geprüfter Schritt | Beobachtung |
+| --- | --- |
+| Ausgangszustand | Archivierte booking-a; exakt120 EUR, externer Geldfluss20 EUR, Gebühren/Steuern null/UNKNOWN, ursprüngliche Notiz; Revision2. |
+| Bearbeiten/Vorschau | Notiz bearbeitbar; Betrag, Datum und Löschen geschützt. Gebühren und Steuern ausdrücklich unbekannt → unbekannt; Gesamtvermögen120 →120. |
+| Abbrechen | Vollständiger Record einschließlich raw/settings/revision unverändert;0 native puts/commits. |
+| Bestätigen | Genau1 Portfolio-put und1 vollständiger Commit,0 Abbrüche; Revision3. Notiz geändert, genau1 dokumentierender Audit; nach dessen Abzug und Rücksetzung der Notiz entspricht das gesamte Modell dem Ausgangsmodell. Archivstatus, Quellen, unbekannte Originalkosten und Finanzhistorie bewahrt. |
+| Zweite Seite, gleiche Origin/gleiches Profil | Vollständiger Record exakt gleich gespeichertem Nachzustand; Notiz über normalen Archive-/Verwalten-/Bearbeiten-Einstieg wiedergefunden; Schutzfelder weiterhin gesperrt;0 implizite Writes. Archivfilter bewusst erneut gewählt, keine Persistenz dieses Ansichtsfilters behauptet. |
+| Undo im ursprünglichen offenen Fenster | Genau1 weiterer nativer Commit, Revision4; raw und settings exakt vor Notizänderung wiederhergestellt. |
+| Wiederöffnung nach Undo | Vollständiger rückgenommener Record unverändert; ursprüngliche Notiz im Editor,0 implizite Writes. |
+
+41 protokollierte Gleichheitsprüfungen bestanden, keine Pageerrors, beide begrenzten Dialog-Axe-Scans0 Verstöße. Drei Originalbilder tatsächlich visuell geprüft: Vorschau zeigt unbekannte Kosten/unverändertes Vermögen; Editor nach Öffnen zeigt neue Notiz und geschützte Finanzfelder; Editor nach Undo/Reload zeigt ursprüngliche Notiz. Cleanup separat PASS. Es gab keinen nativen Fehlversuch und keine Korrektur am Produkt. Die vorab lokale Fixtureinitialisierung wurde vor Freeze berichtigt; der native Lauf war einmalig und erfolgreich.
+
+## Dauerhafte Belege und Rückprüfung
+
+- [Vollständiger Originalreport mit Vorher-/Nachher-/Undo-Records](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/report.json).
+- [Originalartefakt ZIP](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/original.zip), [vollständiges Joblog](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/job.log), [Laufmetadaten](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/run.json), [Artefakt-ID/Digest](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/artifact.json).
+- Artefakt14158310086,183288Bytes,SHA256 0641245c1e9c800860ffdcc2bba6313594c9d73fd9e4d5018986a07b9a2c3ad5; Downloadgröße/Digest/ZIP-CRC geprüft. Original unverändert auf Dokumentationsbranch gespeichert, Commit c66c14a44f08aa4b7096fa34781e7cb2a3207627, Gitblob20ae6035473db67882261789afd8f8f441e6d85f. Unabhängiges gepinntes GitHub-Rücklesen bytegleich; daraus tatsächlich alle11 Originaldateien extrahiert, per Datei gehasht und Report/41Prüfungen/exakte Undo-Bytes erneut geprüft. [Rücklese-/Restoremanifest](release-evidence/k3-archived-unknown-notes-v316-2026-11-15/readback-restore.json).
+- Keine neue Voll-/Release-Sicherung nötig: neuer synthetischer QA-Originalsatz vollständig und unveränderlich gepinnt im Repo, bestehende v316-/ältere Originalketten unverändert weiterverwendet. Kein Produktcode, Main, Merge oder Deployment verändert.
+
+## Aussagegrenze und Fortsetzung
+
+Nur der oben benannte unterstützte K3-Ablauf ist geschlossen. Gesamt-K3 bleibt PARTIAL; keine universelle Bearbeitungs-/Löschfreigabe. Die reine Archivierung war Fixtureaufbau und ist durch bestehende Archivbelege zu beurteilen. Wiederöffnung meint zweite Seite im selben Browserkontext sowie Reload, keinen OS-Neustart; Undo bleibt an die ursprüngliche aktive Sitzung und unverändertes Portfolio gebunden. Kein Windows-/Edge-/Android-Gerätebeleg, keine neue Restore-/Eviction-Abnahme oder vollständige1.0-Freigabe. Bestehende Release-/Restore-/Evictionbelege gelten weiter.
+
+Nächste ausführbare1.0-Arbeit: für den verbleibenden K3-Gesamtabschluss die zugesagten Normaltypen aus #165/#257 den vorhandenen Archiv-/Buchungs-/FIN-Abnahmen zuordnen und ausschließlich eine konkret noch unbelegte Integration als nächsten Testvertrag benennen; bereits geschlossene Notiz-/Einstellungs-/Walletfälle nicht wiederholen. A09 bleibt ohne bestätigten Endpunkt OPERATOR_INPUT_PENDING. #298 C wartet ausschließlich auf neuen Entwurf/Erstellungs-Chat/Originalquelle/konkrete Auskunft von Jochen; interne Zuordnungen und offene Ursprungs-/PNG-Exportnachweise bleiben erhalten. Keine erneute Quellen- oder Geräteanfrage aus diesem Abschluss.

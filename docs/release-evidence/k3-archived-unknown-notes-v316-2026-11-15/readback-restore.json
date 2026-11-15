@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "evidenceCommit": "c66c14a44f08aa4b7096fa34781e7cb2a3207627",
+  "gitBlob": "20ae6035473db67882261789afd8f8f441e6d85f",
+  "originalArtifact": 14158310086,
+  "archiveBytes": 183288,
+  "archiveSha256": "0641245c1e9c800860ffdcc2bba6313594c9d73fd9e4d5018986a07b9a2c3ad5",
+  "pinnedIndependentReadbackByteEqual": true,
+  "zipCrc": "PASS",
+  "actualRestore": "PASS",
+  "restoredFiles": 11,
+  "manifest": [
+    {
+      "path": "k3-archived-notes/http.log",
+      "bytes": 25197,
+      "sha256": "c2ff7b4d4858bd002527907467e2f151eef7122603a5c97a0fe64e93804d97dc"
+    },
+    {
+      "path": "k3-archived-notes/install.log",
+      "bytes": 4591,
+      "sha256": "ad8714e20bef47b904c282646384782cc47a381234f8ee1ae1ff734c7e4248cc"
+    },
+    {
+      "path": "k3-archived-notes/native.log",
+      "bytes": 2772,
+      "sha256": "6e62110d40115859604090c09118e2eff54b26cb852ac40cc577cc3c9f4e745d"
+    },
+    {
+      "path": "k3-archived-notes/preview-unknown-390.png",
+      "bytes": 79888,
+      "sha256": "66e815f857c2db7004c5dd7987813d9530a03a72a0c385e4b789b41edbd56c38"
+    },
+    {
+      "path": "k3-archived-notes/product-head.txt",
+      "bytes": 41,
+      "sha256": "945338426d4ec622c3d4b5ef1f7250591559d21e8262d52791f86868f1b7c41a"
+    },
+    {
+      "path": "k3-archived-notes/qa-delta.txt",
+      "bytes": 115,
+      "sha256": "648ecc30fb24a1c5acf6032ebd797788e80a1fdf00cc7bd45378926fbd7a0b26"
+    },
+    {
+      "path": "k3-archived-notes/qa-head.txt",
+      "bytes": 41,
+      "sha256": "15f4977f027b3fbdfb56fe7225642227f6aa221590ee154409b2833bc2a9b710"
+    },
+    {
+      "path": "k3-archived-notes/reopened-editor-390.png",
+      "bytes": 49166,
+      "sha256": "caea2ab6aecc62b283278e5f030b36c71b35d91e01d8a7047ae307ac865921db"
+    },
+    {
+      "path": "k3-archived-notes/report.json",
+      "bytes": 96084,
+      "sha256": "b583d25670b02125488903d62e09a17ce60968a82804f95cfb4e66fd08aa2713"
+    },
+    {
+      "path": "k3-archived-notes/undo-reopened-390.png",
+      "bytes": 48789,
+      "sha256": "a0774d4670aa8a813e6310541281c7d67f53a31f5a9331384f61b64d9dd40c45"
+    },
+    {
+      "path": "gates/storage-fixture/chromium-1794738346211.json",
+      "bytes": 3583,
+      "sha256": "2ec7c4a376138f47abecce87451eea2349675d2712bc2ce708e05ecf18e3367c"
+    }
+  ],
+  "restoredReportResult": "PASS",
+  "restoredChecks": 41
+}
