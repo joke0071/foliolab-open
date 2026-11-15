@@ -1,0 +1,55 @@
+name: PR340 paired exact rectangle and resize diagnosis
+on:
+  push:
+    branches: [diagnostic/pr340-paired-geometry-9142fbd8]
+permissions:
+  contents: read
+concurrency:
+  group: pr340-paired-geometry
+  cancel-in-progress: false
+jobs:
+  paired:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69
+          path: baseline
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install exact Chromium tools
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - name: Observe both pinned products with unchanged 44px predicate
+        run: |
+          set -uo pipefail
+          mkdir -p artifacts/pair
+          git rev-parse HEAD > artifacts/pair/diagnostic-head.txt
+          git -C baseline rev-parse HEAD > artifacts/pair/main-head.txt
+          python3 -m http.server 4173 --bind 127.0.0.1 > artifacts/pair/pr-http.log 2>&1 &
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory baseline > artifacts/pair/main-http.log 2>&1 &
+          for port in 4173 4174; do
+            for attempt in $(seq 1 20); do curl -fsS http://127.0.0.1:$port/ >/dev/null && break || sleep 1; done
+          done
+          UI_QUALITY_BASE=http://127.0.0.1:4173/ node tests/browser-navigation-installation.mjs > artifacts/pair/pr-native.log 2>&1
+          pr_status=$?
+          mv artifacts/gates artifacts/pair/pr-gates
+          UI_QUALITY_BASE=http://127.0.0.1:4174/ node tests/browser-navigation-installation.mjs > artifacts/pair/main-native.log 2>&1
+          main_status=$?
+          mv artifacts/gates artifacts/pair/main-gates
+          printf 'PR=%s\nMAIN=%s\n' "$pr_status" "$main_status" > artifacts/pair/status.txt
+          test "$pr_status" -eq 0 && test "$main_status" -eq 0
+      - name: Preserve all original observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr340-paired-geometry-${{ github.sha }}
+          path: artifacts/pair/
+          if-no-files-found: error

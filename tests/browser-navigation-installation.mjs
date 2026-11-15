@@ -89,7 +89,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    if(m.positions.at(-1).fxRateExact!=='UNKNOWN'||m.positions.at(-1).fxRate!==null)throw Error('Fixture must preserve UNKNOWN FX');
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await layout.reload();await ready(layout);const stored=await record(layout);
-  for(const width of [320,390,430,768,1440]){
+  for(const [iteration,width] of Array.from({length:10},()=>[320,390,430,768,1440]).flat().entries()){
    await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');
    assert.equal(await layout.locator('#providerOverview').count(),1);assert.equal(await layout.locator('#donut').count(),1);
    assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const content=e.querySelector('.allocation-layout').getBoundingClientRect(),box=e.getBoundingClientRect();return box.bottom-content.bottom<50;}),'allocation has no stretched empty tail');
@@ -98,7 +98,29 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet','compact summary never invents an EUR valuation for unknown FX');
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
-   assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>e.getBoundingClientRect().height>=44));
+   // Capture the exact rectangle used by the unchanged >=44 predicate.
+   // No polling, forced layout state, retry or relaxed threshold is introduced.
+   try{
+    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>{
+     const rect=e.getBoundingClientRect();
+     const measured={viewport:{width:innerWidth,height:innerHeight,scrollY},target:{html:e.outerHTML,connected:e.isConnected,rect:rect.toJSON()},ancestors:[],capturedAt:performance.now()};
+     {
+      const describe=node=>{const r=node.getBoundingClientRect(),style=getComputedStyle(node);return {tag:node.tagName,id:node.id,className:node.className,hidden:node.hidden,open:node.open??null,rect:r.toJSON(),display:style.display,visibility:style.visibility,minHeight:style.minHeight,height:style.height,width:style.width,boxSizing:style.boxSizing,padding:style.padding,border:style.border,lineHeight:style.lineHeight,fontSize:style.fontSize,flex:style.flex,zoom:style.zoom,transition:style.transition,animation:style.animation,transform:style.transform};};
+      measured.target={...measured.target,...describe(e)};
+      for(let parent=e.parentElement;parent;parent=parent.parentElement)measured.ancestors.push(describe(parent));
+      measured.matches=[...document.querySelectorAll('.position-csv-import')].map(describe);
+      measured.outerViewport={width:outerWidth,height:outerHeight,dpr:devicePixelRatio,visual:visualViewport?{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale}:null};
+      window.__folioNavCsvHeightFailure=measured;
+     }
+     return rect.height>=44;
+    }));
+    const measured=await layout.evaluate(()=>window.__folioNavCsvHeightFailure??null);
+    writeFileSync(`artifacts/gates/navigation-installation/${engine}-csv-height-${iteration}-${width}.json`,JSON.stringify({engine,iteration,width,result:'PASS',measured},null,2));
+   }catch(error){
+    const measured=await layout.evaluate(()=>window.__folioNavCsvHeightFailure??null);
+    writeFileSync(`artifacts/gates/navigation-installation/${engine}-csv-height-failure.json`,JSON.stringify({engine,width,result:'FAIL',error:String(error),measured},null,2));
+    await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-csv-height-failure.png`,fullPage:true});throw error;
+   }
    if(width<=430){
     assert.ok(await layout.locator('#providerOverview>.provider-accordion').first().evaluate(root=>{const row=root.querySelector(':scope>.provider-row'),name=row.querySelector('.provider-l>div');return name.getBoundingClientRect().width>=row.getBoundingClientRect().width*.55;}),'narrow provider name retains readable width beside the separate value row');
     assert.ok(await layout.locator('.provider-account-head').first().evaluate(head=>head.querySelector(':scope>div').getBoundingClientRect().width>=head.getBoundingClientRect().width*.8),'narrow account name retains a full row above value and positions action');
