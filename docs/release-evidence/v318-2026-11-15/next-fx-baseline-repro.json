@@ -1,0 +1,18 @@
+{
+  "source": "127019cf71304981c0c7f1a446f4dee8bc27404d",
+  "probe": "READ_ONLY_SYNTHETIC_MAIN_REPRO",
+  "quote": {
+    "rate": 0.1,
+    "date": "2000-01-03",
+    "source": "Frankfurter",
+    "reference": true
+  },
+  "beforeEUR": "90",
+  "afterEUR": "10",
+  "saveHandlerCalls": 1,
+  "storedFxDate": "2000-01-03",
+  "message": {
+    "text": "Portfolio aktualisiert."
+  },
+  "limits": "Actual refresh handler, in-memory synthetic model and save double; no native IDB/real provider/hardware claim."
+}

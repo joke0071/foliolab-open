@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "package": {
+    "file_name": "FolioLab_v318_Main43744866312_Originalbelege_2026-11-15.tar",
+    "bytes": 381870080,
+    "sha256": "78085b313933e06c047f65784f4483142b1f1b9cf670b9d80ddf71d89304a027",
+    "manifestFiles": 71,
+    "originalZipCount": 8,
+    "technicalResult": "PASS; final preservation receipt pending"
+  },
+  "file_id": "file_00000000b96c82129375356b6d691f10",
+  "library_file_id": "libfile_fde3_f-6435e692ff8c819187da53fd3364cf06_54e45e8130348191808d9aaa710cf372",
+  "pinnedVersion": 0,
+  "independentReadbackByteEqual": true,
+  "distinctFileIdentity": true,
+  "manifestFiles": 71,
+  "originalZIPs": 8,
+  "physicallyRestoredOriginalFiles": 4237,
+  "physicallyRestoredPagesFiles": 154,
+  "zipCounts": [
+    {
+      "zip": "chromium.zip",
+      "files": 825
+    },
+    {
+      "zip": "cross1.zip",
+      "files": 515
+    },
+    {
+      "zip": "cross2.zip",
+      "files": 123
+    },
+    {
+      "zip": "cross3.zip",
+      "files": 878
+    },
+    {
+      "zip": "dialogs.zip",
+      "files": 20
+    },
+    {
+      "zip": "pages.zip",
+      "files": 1
+    },
+    {
+      "zip": "production.zip",
+      "files": 1874
+    },
+    {
+      "zip": "stage.zip",
+      "files": 1
+    }
+  ],
+  "fullRestoreManifest": {
+    "bytes": 1015190,
+    "sha256": "19e2f54afb87f59ad6de1af6ccd46e91b7dfdf57d34e15538bb38d27ef242979",
+    "gzipBytes": 220235,
+    "gzipSha256": "99c2b71deae62a437a5c2b46099a9e8f5a89bc066e466302392dd07679336006"
+  },
+  "scope": "Evidence archive and deployed files physically restored. Actual portfolio plain/encrypted UI FreshRestore is independently proven in live/report.json. No circular archive self-hash."
+}

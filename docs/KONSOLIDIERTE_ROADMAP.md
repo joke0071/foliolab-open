@@ -1,3 +1,11 @@
+## Fortschreibung · 15.11.2026 · v318 LIVE_ACCEPTED / konkrete1.0-Restübersicht
+
+[PR342/v318 vollständig abgenommen](V318_RELEASE_ACCEPTANCE_2026-11-15.md): ausschließlich freigegebenera9ac99f7, Main127019cf/Tree1d5a1f2d.43744866312/2 Main/Deploy/Produktion3EnginesSUCCESS;1492Units/0Fehler/Skips,154Pages-/155Live-Hashvergleiche,UIFreshRestore/Offline/IDB. Genau ein kausal begründeter Main-Rerun nach erfasstem disconnected0px-/current44px-Befund; Erstfehler und alleOriginale erhalten. NeuesVersion0-Paket unabhängigbytegleich und4237Originaldateien+154Pages-Dateien tatsächlich restauriert. EinSonic-Diagnoseflag erstnachClosing, historische503-/SW-UrsachenUNKNOWN.
+
+[Verbleibende1.0-Pflichten samtAbschlusskriterien/Operatorbedarf](FOLIOLAB_1_0_REMAINING_2026-11-15.md) ausMatrix,frischemCheckpoint und31offenenIssues. K2-Zugangsdaten-TeilschnittDONE,keinK2-Gesamtabschluss. KonkreternächsterPflichtschnitt: K6/release-gate, aktuelleDOM-Auswahl undCSV-Höhenmessung atomar, echte43px-/hidden-/missing-Ziele weiter abweisen; eigenerqualifizierterPR,separateMergeentscheidung. Zusätzlich konkretreproduzierterK2-FIN-Altersrest beiaktuellemFrankfurter-Kurs bleibt offen. Keine neueScope-ID/zweiteRoadmap/pauschaleIssue-Schließung. K3-/K4-GerätebelegeA09 undK5/K6-Zielplattformen weiteroffen, geparkteGrafikherkunft ohnebelegtePflichtverletzung;Safari/TalkBack/Autosync gemäßNutzerumfang nachrangig.
+
+---
+
 ## Fortschreibung · 15.11.2026 · PR342 qualifiziert, separate Freigabe offen
 
 [PR342-Prüfbericht](PR342_REQUEST_CREDENTIAL_BOUNDARY_REVIEW_2026-11-15.md): K2-KURSE/#266/SEC-03, konkrete Diagnose-/Header-/Cachegrenze für Zugangsdaten. Head `a9ac99f710571df04884f571cb557a8b52d0828c`, Tree `1d5a1f2db0d6e7d7fa39590deea44954868611b9`, Basis akzeptierter Main0d1638cb. Genau vier Dateien; 38 gerichtete Tests, reguläre PR-/Wallet-CI mit jeweils1492Tests und alle drei Engines bestanden. 15 Zielhöhen44px, PWA-Vertragv318. Originale gepinnt bytegleich rückgelesen und2362Dateien tatsächlich restauriert. **Nur qualifizierter PR, kein neuer Main/Deployment und kein K2-Gesamtabschluss.** Jochen entscheidet separat über Merge/Release. v317 bleibt LIVE_ACCEPTED; K3-Archivhinweis DONE, K3-Gesamtstatus wegen geparktem A09 PARTIAL. Historische503-/SW-UrsachenUNKNOWN, Grafikherkunft geparkt.
