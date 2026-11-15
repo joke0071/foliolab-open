@@ -1,3 +1,5 @@
+> Fortschreibung15.11.2026: Jochen hat den exakten Head ausdrücklich für Merge/Deployment freigegeben. PR339 ist nun in Main82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69 gemergt; Produkt-Tree unverändert. **[v316 LIVE_ACCEPTED](V316_RELEASE_ACCEPTANCE_2026-11-15.md)** einschließlich vollständigem Main/Deployment/Produktionsnachweis,Sicherung,gepinntemReadback und tatsächlichemRestore. BegrenzterDrive-HinweisTeilpunktDONE,K6-TRUSTinsgesamtVERIFY. Die folgende Dokumentation bleibt das historische Review bis zur damaligen Merge-Entscheidung; damalige Offen-/Freigabeaussagen sind durch diese Fortschreibung überholt.
+
 # K6-TRUST · PR339 bis Merge-Entscheidung · 15.11.2026
 
 **Merge empfohlen für Head `8b239f1ec021b23fba82a13b39cf0e666e483566`.** [PR339](https://github.com/joke0071/foliolab-open/pull/339) offen, konfliktfrei/clean, Auto-Merge aus. Review und reguläre PR-Prüfungen erfolgreich. **Kein Merge/Deployment ausgeführt oder freigegeben**; Entscheidung bei Jochen. Main/v315 LIVE_ACCEPTED unverändert.

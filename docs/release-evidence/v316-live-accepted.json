@@ -1,0 +1,528 @@
+{
+  "schema": 1,
+  "release": "v316",
+  "merge": {
+    "sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+    "tree": "11429de9e06d9d014875af624cb80bafafb38f20",
+    "parents": [
+      "ff60c73e53c973ecb86393be5b4e31b55f352601",
+      "8b239f1ec021b23fba82a13b39cf0e666e483566"
+    ],
+    "approvedHead": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+    "approvedTree": "11429de9e06d9d014875af624cb80bafafb38f20",
+    "approvedBase": "ff60c73e53c973ecb86393be5b4e31b55f352601"
+  },
+  "executedJobs": [
+    132739032167,
+    132739085346,
+    132739085361,
+    132739085405,
+    132739085434,
+    132744696889,
+    132744756831
+  ],
+  "artifacts": [
+    {
+      "id": 14153304955,
+      "name": "production-live-acceptance-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "folder": "live",
+      "bytes": 140621141,
+      "sha256": "f26327dbee02cd116f5d1a5a5fadf9a4142b624fc294602d0016a9970af5eee4",
+      "created_at": "2026-11-15T08:32:21Z",
+      "expires_at": "2026-11-22T08:32:16Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 1651,
+        "jsonCount": 181,
+        "pngCount": 1431,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14152497450,
+      "name": "github-pages",
+      "folder": "pages",
+      "bytes": 574259,
+      "sha256": "0b3ab88230271c4a1a50f8352fb87f50b06891e541709035faa68892a4adbcdb",
+      "created_at": "2026-11-15T07:55:29Z",
+      "expires_at": "2026-11-16T07:55:29Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 1,
+        "jsonCount": 0,
+        "pngCount": 0,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14152480295,
+      "name": "ci-stage-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "folder": "ci-stage",
+      "bytes": 354,
+      "sha256": "c3615e5998022a8c79436d2d4a3a4f33de102ad257f9a5debbb5c5bf28015ad0",
+      "created_at": "2026-11-15T07:30:01Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 1,
+        "jsonCount": 1,
+        "pngCount": 0,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14152227396,
+      "name": "cross-engine-gates-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69-1",
+      "folder": "cross1",
+      "bytes": 60073134,
+      "sha256": "31671a3290910bbd470b0addb4cf15f7657de8e916d08dca135500b581c56cda",
+      "created_at": "2026-11-15T07:41:43Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 508,
+        "jsonCount": 15,
+        "pngCount": 492,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14152113613,
+      "name": "dialog-visual-reference",
+      "folder": "dialog",
+      "bytes": 934834,
+      "sha256": "a97a3a9f3ad768be27a9ce93863671f75c1a1dbdd9d55ab62c7648151505ad40",
+      "created_at": "2026-11-15T07:50:48Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 20,
+        "jsonCount": 0,
+        "pngCount": 20,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14152062560,
+      "name": "cross-engine-gates-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69-2",
+      "folder": "cross2",
+      "bytes": 12593301,
+      "sha256": "8960e8e90889aa5edc2cfaadf913fbe8c1197f1cf9943ea0614aa1343ce4f7f3",
+      "created_at": "2026-11-15T07:39:03Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 123,
+        "jsonCount": 22,
+        "pngCount": 100,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14151989058,
+      "name": "release-gates-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "folder": "chromium",
+      "bytes": 66366095,
+      "sha256": "23b6464de5ee7f79eb8faa3d9d7c79a1f7afa89659aa65544b3ee05164bfc412",
+      "created_at": "2026-11-15T07:50:46Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 816,
+        "jsonCount": 98,
+        "pngCount": 715,
+        "crc": "PASS"
+      }
+    },
+    {
+      "id": 14151974507,
+      "name": "cross-engine-gates-82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69-3",
+      "folder": "cross3",
+      "bytes": 70282571,
+      "sha256": "b28f77f809da5fd7544855c00d4fde121999f021f51b91f1499a2e379b981933",
+      "created_at": "2026-11-15T07:55:17Z",
+      "expires_at": "2027-02-13T07:29:51Z",
+      "head": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+      "verified": {
+        "members": 868,
+        "jsonCount": 105,
+        "pngCount": 762,
+        "crc": "PASS"
+      }
+    }
+  ],
+  "expected": {
+    "driveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+    "swSHA256": "8ca227bc89169429c3e188719d11c647566829bf3e53a4d9c604b6f19af259ed",
+    "indexSHA256": "0e549cef5c1215bf76b82eb14be773a4fe89afab11ded18a1a988b3854ccf4a5"
+  },
+  "artifactTotals": {
+    "members": 3988,
+    "jsonCount": 422,
+    "pngCount": 3520
+  },
+  "liveQualified": {
+    "result": "PASS",
+    "sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+    "base": "https://foliolab.unperfekt.at/",
+    "coreReportMember": "live/report.json",
+    "coreReportSHA256": "a7eb34574777e3977e7fb825482168c47957a6164e7c3296e6bc9185ad4e820b",
+    "ordinaryTLS": true,
+    "assetMatches": 155,
+    "driveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+    "swSHA256": "8ca227bc89169429c3e188719d11c647566829bf3e53a4d9c604b6f19af259ed",
+    "indexSHA256": "0e549cef5c1215bf76b82eb14be773a4fe89afab11ded18a1a988b3854ccf4a5",
+    "loadedAssets": 142,
+    "cache": "foliolab-open-v316",
+    "cacheEvidence": "Executed source assertions require active SW control, current cache present and exactly one FolioLab cache; report.cache itself is checkout-derived.",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "axeScans": 18,
+    "errors": [],
+    "selectedScreenshots": [
+      {
+        "member": "live/320.png",
+        "sha256": "a9e1437ed28a7e7012b61a9dc276913e0b1a3d58b980e1362e744674c8920381"
+      },
+      {
+        "member": "live/390.png",
+        "sha256": "4724125872b493ddea12fcba5d71656cc5e02c9ffd20679f6192c641fe4f40db"
+      },
+      {
+        "member": "live/1440.png",
+        "sha256": "b91a5d1697352b5c2993618b0feb85b40d9cd5026ad69e9c265f631cbd2f71a8"
+      },
+      {
+        "member": "ui-positions-390.png",
+        "sha256": "7e6674ebcfdce98a959809579994d98123079aeaf4ec8acc8dccbb7f577eb247"
+      },
+      {
+        "member": "c5-bookings-390.png",
+        "sha256": "ac1ce7084b705e086eaaa3ad92f0fc2767a1c73d392d8bff414afd1ac993ace0"
+      }
+    ],
+    "rawProductionCacheObservations": [
+      {
+        "engine": "chromium",
+        "member": "storage-fixture/chromium-1794729496656.json",
+        "stage": "after-reload",
+        "state": {
+          "url": "https://foliolab.unperfekt.at/?page=bookings",
+          "timeOrigin": 1794729496925.3,
+          "documentState": "complete",
+          "controller": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "active": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "installing": null,
+          "waiting": null,
+          "controlled": true,
+          "caches": [
+            "foliolab-open-v316"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv",
+          "fixture": {
+            "ready": true,
+            "error": null
+          }
+        },
+        "reportSHA256": "d52b8fe769c895f7048fca51f292fe6d32be4f769305c68c4995ed3052abcaf4"
+      },
+      {
+        "engine": "firefox",
+        "member": "storage-fixture/firefox-1794730022442.json",
+        "stage": "after-reload",
+        "state": {
+          "url": "https://foliolab.unperfekt.at/?page=bookings",
+          "timeOrigin": 1794730022722,
+          "documentState": "complete",
+          "controller": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "active": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "installing": null,
+          "waiting": null,
+          "controlled": true,
+          "caches": [
+            "foliolab-open-v316"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv",
+          "fixture": {
+            "ready": true,
+            "error": null
+          }
+        },
+        "reportSHA256": "83d361e76d0a74e0cf769a5f2861407eb85e19420f2d59915a28f8f42a06de76"
+      },
+      {
+        "engine": "webkit",
+        "member": "storage-fixture/webkit-1794730033100.json",
+        "stage": "after-reload",
+        "state": {
+          "url": "https://foliolab.unperfekt.at/?page=bookings",
+          "timeOrigin": 1794730033370,
+          "documentState": "complete",
+          "controller": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "active": {
+            "script": "https://foliolab.unperfekt.at/sw.js",
+            "state": "activated"
+          },
+          "installing": null,
+          "waiting": null,
+          "controlled": true,
+          "caches": [
+            "foliolab-open-v316"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv",
+          "fixture": {
+            "ready": true,
+            "error": null
+          }
+        },
+        "reportSHA256": "0cde88eb67c5f4ea9924da4f13f2377207f3cba67e353fd790c132ba51f0e9bb"
+      }
+    ],
+    "productionUIReports": [
+      {
+        "member": "production-ui-chromium.json",
+        "sha256": "9bf99ce82df2059cb047114fb058e09026d16e1720fa8dc1a68130c876c16300",
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "scans": 66
+          }
+        ]
+      },
+      {
+        "member": "production-ui-cross.json",
+        "sha256": "b7e9e0bb0ce797c4ea24f85e7eb68d4926490772738ab68d046bab36d71de846",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": 66
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": 66
+          }
+        ]
+      },
+      {
+        "member": "production-transfers-chromium.json",
+        "sha256": "a88f412aba083368451d566fdd1e137eb73e5296a1c51004e83f19a4fce43d9f",
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "scans": 10
+          }
+        ]
+      },
+      {
+        "member": "production-transfers-cross.json",
+        "sha256": "ba44a1a298be1e134f8853a3e13dd0855152449a9538ae00c5a0648ddc4ec84d",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": 10
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": 10
+          }
+        ]
+      }
+    ],
+    "visualReview": {
+      "result": "PASS_BOUNDED",
+      "reviewedMembers": [
+        "live/320.png",
+        "live/390.png",
+        "live/1440.png",
+        "ui-positions-390.png",
+        "c5-bookings-390.png"
+      ],
+      "scope": "Manual review of the five selected original production screenshots; existing targeted Drive-error UI proof reused unchanged. No general audit of all artifact images claimed."
+    }
+  },
+  "priorProofs": {
+    "qualification": "https://github.com/joke0071/foliolab-open/blob/2da2c1f83d7049a41975b97d53c8be22fc513e86/docs/K6_TRUST_PR339_QUALIFICATION_2026-11-15.md",
+    "prIntegration": 43686231550,
+    "wallet": 43686231632,
+    "targeted": {
+      "run": 43685258218,
+      "head": "352cb441127446f31e0f367b242a9d7ef9eb7223",
+      "productHead": "2a773073f2887e8701ee893eee2e8619ab980be8",
+      "tests": 57,
+      "scope": "Actual crypto/IDB, UI error after one confirmed portfolio commit, existing target vault/password and reopen; synthetic Drive/OAuth, SW blocked. Existing immutable proof reused."
+    }
+  },
+  "scope": {
+    "driveRestoreHint": "DONE",
+    "K6_TRUST": "VERIFY",
+    "K4": "PARTIAL",
+    "A09": "OPERATOR_INPUT_PENDING",
+    "WebKitEviction": "unchanged, outside this release"
+  },
+  "run": {
+    "id": 43690187392,
+    "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "html_url": "https://github.com/joke0071/foliolab-open/actions/runs/43690187392",
+    "event": "push",
+    "created_at": "2026-11-15T07:29:51Z",
+    "updated_at": "2026-11-15T08:32:23Z"
+  },
+  "checks": [
+    {
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    },
+    {
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69"
+    }
+  ],
+  "status": "LIVE_ACCEPTED",
+  "acceptedAt": "2026-11-15T08:38:20.647Z",
+  "production": "https://foliolab.unperfekt.at/",
+  "unitTests": {
+    "node": "22.23.4",
+    "tests": 1481,
+    "pass": 1481,
+    "fail": 0,
+    "skip": 0,
+    "original": "originals/chromium.zip:unit.log"
+  },
+  "backup": {
+    "result": "PASS",
+    "strategy": "New independent archive, existing backups/versions untouched; immutable backing file_id and exact SHA256 pinned, never resolved through latest for readback.",
+    "file_name": "FolioLab_v316_release_43690187392.tar.gz",
+    "library_file_id": "libfile_fde3_f-f18e20f242588191abd00708ed25937e_54e45e8130348191808d9aaa710cf372",
+    "file_id": "file_000000003d4c81f5913613d9e33a49fa",
+    "version": 0,
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-f18e20f242588191abd00708ed25937e_54e45e8130348191808d9aaa710cf372&account_id=personal",
+    "build": {
+      "archive": "/workspace/scratch/e4b79f541e28/release316/FolioLab_v316_release_43690187392.tar.gz",
+      "bytes": 352459927,
+      "sha256": "5b991d0d7f469733e7d9d249d3a9fd8a1f8b31882d881ca6e83a7419be41cbb1",
+      "outerFiles": 29,
+      "originalZips": 8,
+      "zipMembers": 3988,
+      "siteFiles": 154
+    },
+    "readback": {
+      "result": "PASS",
+      "independentPath": "/workspace/scratch/e4b79f541e28/release316/readback-v0/FolioLab_v316_release_43690187392.tar.gz",
+      "bytes": 352459927,
+      "sha256": "5b991d0d7f469733e7d9d249d3a9fd8a1f8b31882d881ca6e83a7419be41cbb1",
+      "sourcePath": "/workspace/scratch/e4b79f541e28/release316/FolioLab_v316_release_43690187392.tar.gz",
+      "distinctInode": true,
+      "pinned": {
+        "file_id": "file_000000003d4c81f5913613d9e33a49fa",
+        "file_name": "FolioLab_v316_release_43690187392.tar.gz",
+        "library_file_id": "libfile_fde3_f-f18e20f242588191abd00708ed25937e_54e45e8130348191808d9aaa710cf372",
+        "version": 0
+      }
+    },
+    "restore": {
+      "result": "PASS",
+      "archive": "/workspace/scratch/e4b79f541e28/release316/readback-v0/FolioLab_v316_release_43690187392.tar.gz",
+      "archiveBytes": 352459927,
+      "archiveSHA256": "5b991d0d7f469733e7d9d249d3a9fd8a1f8b31882d881ca6e83a7419be41cbb1",
+      "destination": "/workspace/scratch/e4b79f541e28/release316/restored-v0",
+      "outerFiles": 29,
+      "originalZips": 8,
+      "restoredOriginalFiles": 3988,
+      "restoredJSON": 422,
+      "restoredPNG": 3520,
+      "restoredSiteFiles": 154,
+      "restoredCache": "foliolab-open-v316",
+      "restoredDriveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+      "merge": {
+        "sha": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+        "tree": "11429de9e06d9d014875af624cb80bafafb38f20",
+        "parents": [
+          "ff60c73e53c973ecb86393be5b4e31b55f352601",
+          "8b239f1ec021b23fba82a13b39cf0e666e483566"
+        ],
+        "approvedHead": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+        "approvedTree": "11429de9e06d9d014875af624cb80bafafb38f20",
+        "approvedBase": "ff60c73e53c973ecb86393be5b4e31b55f352601"
+      }
+    },
+    "scope": "Physical restore of original evidence and deployed site into a fresh directory from independent version-pinned readback. Actual encrypted portfolio UI FreshRestore/reopen is separately evidenced by production live/report.json. Archive metadata captures pre-backup state; this external receipt closes backup/readback/restore without circular archive self-hash."
+  },
+  "hnd": {
+    "owner": "release316-e4b79f541e28",
+    "claim": "fb87ba237a7a25d5863da0183e4ccf1a10029d46",
+    "claimExpected": "2da2c1f83d7049a41975b97d53c8be22fc513e86",
+    "previous": "05420528b5a08c701c09baf1677de2140dc5f3dd",
+    "handoff": "STOPPED / HANDOVER_READY",
+    "writerReleased": true
+  }
+}
