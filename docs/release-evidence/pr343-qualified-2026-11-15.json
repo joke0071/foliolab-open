@@ -1,0 +1,60 @@
+{
+  "status": "QUALIFIED_WAITING_USER_MERGE_DECISION",
+  "pr": 343,
+  "head": "109813179bad4da7990688361dcbc2ed20a3ca0a",
+  "base": "127019cf71304981c0c7f1a446f4dee8bc27404d",
+  "tree": "359e369dd4de3095e27f21cd5de2b0fa5d359950",
+  "testedMerge": "84d2c4fe5aaf88d10d76fe82764683643b6ac644",
+  "testedMergeTreeMatches": true,
+  "regularCI": 43754583225,
+  "walletCI": 43754583215,
+  "attempt": 1,
+  "unitTests": 1492,
+  "fail": 0,
+  "skip": 0,
+  "reports": 261,
+  "explicitAssertions": 646,
+  "manualSchemas": 8,
+  "heightMeasurements44px": 15,
+  "lifecycleAndNegativeControlsEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "runtimeFilesUnchanged": 154,
+  "workflowsUnchanged": true,
+  "swUnchanged": true,
+  "ownReview": "No findings in the complete two-file diff. Synchronous selection/measurement closes the observed stale-node race. Positive and negative cases retain the44px contract and actual native IDB equality. No polling, retry or timeout relaxation. No product feature change.",
+  "limits": "No physical Windows/Android or real installation acceptance; local synthetic fixtures and headless native engines. No independent reviewer used. Historical503/SW causes UNKNOWN. PR deployment/live correctly skipped; no authorization to merge this PR.",
+  "preservation": {
+    "file_id": "file_00000000191081f581e34bd8d7c23165",
+    "library_file_id": "libfile_fde3_f-b5b304aa895c81919d1a896f2b09bb20_54e45e8130348191808d9aaa710cf372",
+    "file_name": "FolioLab_PR343_CSV_Messung_Originalbelege_2026-11-15.tar",
+    "version": 0,
+    "bytes": 212572160,
+    "sha256": "593f5ccd2f2eba8135bafe577270b3bec65fa7746b0641fc04f0b46b24182509",
+    "result": "PINNED_BYTE_EQUAL_PHYSICAL_RESTORE_PASS",
+    "archive": "FolioLab_PR343_CSV_Messung_Originalbelege_2026-11-15.tar",
+    "distinctInode": true,
+    "manifestFiles": 39,
+    "originalZips": 6,
+    "originalFiles": 2362,
+    "fullManifestBytes": 494872,
+    "fullManifestSHA256": "c0dd300ebe820c60bb5fe60fc58b6fda41a80c0e01ad324c1907fd7855f5118a"
+  },
+  "review": {
+    "ownCompleteDiff": "NO_FINDINGS",
+    "independentReviewer": false,
+    "submittedReviews": 0,
+    "openReviewThreads": 0
+  },
+  "openIssuesCount": 31,
+  "mergeAuthorized": false,
+  "previousRelease": {
+    "version": "v318",
+    "status": "LIVE_ACCEPTED",
+    "main": "127019cf71304981c0c7f1a446f4dee8bc27404d",
+    "run": 43744866312,
+    "attempt": 2
+  }
+}

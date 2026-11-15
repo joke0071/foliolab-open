@@ -1,3 +1,9 @@
+## Fortschreibung · 15.11.2026 · PR343 QUALIFIED, separate Mergeentscheidung offen
+
+[PR343](PR343_CSV_CURRENT_DOM_REVIEW_2026-11-15.md), Head `109813179bad4da7990688361dcbc2ed20a3ca0a`, Basis Main127019cf, Tree359e369d: aktuelles CSV-Ziel synchron auswählen/messen, echte Detailerneuerung und alle Negativkontrollen in Chromium/Firefox/WebKit bestanden; 44px unverändert. Reguläre CI43754583225/1 und Wallet43754583215/1 SUCCESS,1492Tests,261JSON/646Assertions,15Zielhöhen44px. Originale unabhängig bytegleich gelesen und2362Dateien aus sechsZIPs tatsächlich restauriert. Genau Test+Taskkarte, alle154Produktdateien unverändert. **QUALIFIED, bis separatem Merge und Release nicht globalDONE.** v318 bleibt LIVE_ACCEPTED; nächster interner Pflichtrest ist der konkret reproduzierte K2-Frankfurter-Kursaltersfehler. [Restpflichten und Geräte-/Entscheidungsbedarf](FOLIOLAB_1_0_REMAINING_2026-11-15.md),31offeneIssues erneut abgeglichen; keine Scopeerweiterung oder pauschale Schließung.
+
+---
+
 ## Fortschreibung · 15.11.2026 · v318 LIVE_ACCEPTED / konkrete1.0-Restübersicht
 
 [PR342/v318 vollständig abgenommen](V318_RELEASE_ACCEPTANCE_2026-11-15.md): ausschließlich freigegebenera9ac99f7, Main127019cf/Tree1d5a1f2d.43744866312/2 Main/Deploy/Produktion3EnginesSUCCESS;1492Units/0Fehler/Skips,154Pages-/155Live-Hashvergleiche,UIFreshRestore/Offline/IDB. Genau ein kausal begründeter Main-Rerun nach erfasstem disconnected0px-/current44px-Befund; Erstfehler und alleOriginale erhalten. NeuesVersion0-Paket unabhängigbytegleich und4237Originaldateien+154Pages-Dateien tatsächlich restauriert. EinSonic-Diagnoseflag erstnachClosing, historische503-/SW-UrsachenUNKNOWN.

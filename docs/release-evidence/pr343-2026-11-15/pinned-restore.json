@@ -1,0 +1,12 @@
+{
+  "result": "PINNED_BYTE_EQUAL_PHYSICAL_RESTORE_PASS",
+  "archive": "FolioLab_PR343_CSV_Messung_Originalbelege_2026-11-15.tar",
+  "bytes": 212572160,
+  "sha256": "593f5ccd2f2eba8135bafe577270b3bec65fa7746b0641fc04f0b46b24182509",
+  "distinctInode": true,
+  "manifestFiles": 39,
+  "originalZips": 6,
+  "originalFiles": 2362,
+  "fullManifestBytes": 494872,
+  "fullManifestSHA256": "c0dd300ebe820c60bb5fe60fc58b6fda41a80c0e01ad324c1907fd7855f5118a"
+}
