@@ -1,17 +1,17 @@
-# HND01 · ACTIVE · PR #341 RELEASE_AUTHORIZED
+# HND01 · ACTIVE · PR #341 MERGED / MAIN_CI_RUNNING
 
 Writer: `v317-release-ab4d8e6f6672`, alleiniger HND01-Writer. Jochen autorisierte am 15.11.2026 die geordnete Übernahme von `v317-hash-contract-e14f2dfb9b8b` sowie Merge ausschließlich PR #341 Head `61b56ac50a2e87796db0aad0027675ae3fd5c142`, entstehenden Main-Head, reguläres Deployment und vollständige Live-Abnahme. Einstieg/expectedSHA: `3dac897b1de6ec40a7225dc4538f691d0b9c2f6e`; letzte Checkpointaktivität 16:03:54Z. Refs, vier offene PRs, Reviews/Kommentare und letzte Actions abgeglichen: keine laufenden Jobs und keine konkurrierende Schreibaktivität beobachtet. Spätere PRs bleiben separat freigabepflichtig.
 
 ## Entscheidung und Produktstand
 
-**Merge empfohlen ausschließlich für Head `61b56ac50a2e87796db0aad0027675ae3fd5c142` von PR #341.**
+**PR #341 am freigegebenen Head gemergt; reguläre Releaseabnahme läuft.**
 
 - Branch: `fix/v317-live-worker-diagnostics`; Tree: `2644817dfb558da9668ec0a55bd7e6092cd80324`.
-- PR offen und mergeable; keine Reviews, Kommentare oder offenen Review-Threads.
+- Unmittelbar vor Merge: Head/Basis unverändert, mergeable clean, keine Reviews/Kommentare/Threads; sämtliche PR-Pflichtchecks SUCCESS.
 - GitHubs Ausführungsmerge `80ebfeb1119ed2ba2bc2779a2888dadce1c16cd6` hat exakt denselben Tree.
-- Main und deployed bleiben `a53856e385ef1d9fd65d8710618244e80b8341e7`.
+- Tatsächlicher Main `0d1638cb2034805dace789e3072fbb7bcda8d52c`, Tree exakt `2644817dfb558da9668ec0a55bd7e6092cd80324`; vorherige Basis `a53856e385ef1d9fd65d8710618244e80b8341e7` unverändert. Regulärer Mainlauf [43734167356](https://github.com/joke0071/foliolab-open/actions/runs/43734167356), Versuch 1, läuft. Deployment/Live für neuen Main PENDING.
 - v317 DEPLOYED / LIVE_BLOCKED; letzter vollständig akzeptierter Release v316.
-- Merge, neuer Main-Head und Deployment ausdrücklich freigegeben; noch nicht ausgeführt.
+- Merge headgebunden ausgeführt; neuer Main, reguläres Deployment und vollständige Live-Abnahme ausdrücklich freigegeben. Keine spätere PR-Freigabe.
 
 [Abschlussbericht](PR341_HASH_CONTRACT_REVIEW_2026-11-15.md) · [Maschinenentscheidung](release-evidence/pr341-hash-contract-2026-11-15/decision.json)
 
@@ -38,6 +38,6 @@ Vor Push: 22 gerichtete Tests bestanden, 0 Fehler/Skips; Syntax und Diffprüfung
 
 Die historischen Ursachen des HTTP 503 bei `wallet-visibility.js` und der fehlgeschlagenen SW-Installation im Kraken-Fixture bleiben **UNKNOWN**. Kein Ursachenfix belegt. Chromium-CDP beeinflusst das Timing; Firefox/WebKit liefern Kontext- und Dokumentbeobachtung ohne vollständigen direkten Worker-CDP-Nachweis.
 
-**Nächste Aktion:** Unmittelbar vor Merge Head, Basis, Merge-Tree, Pflichtchecks und Reviews frisch bestätigen; Merge an freigegebenen Head binden. Tatsächlichen Main-SHA und regulären Main-/Deployment-/Live-Lauf verfolgen. Erst vollständiger Produktionsnachweis erlaubt LIVE_ACCEPTED. Bei Fehlern zuerst Originale sichern und gezielt unterscheiden; historische Ursachen bleiben UNKNOWN. Anschließend K3-Archivhinweis abschließen, verbleibenden K3-Rest separat abgleichen und kleinsten autorisierten Roadmapschnitt bis zum qualifizierten PR bearbeiten. 5.000 Positionen für 1.0 sind entschieden; Nachweise für 10.000 Buchungen und 10.000 Stichtage gelten weiter. K3-Großmengen, 44-px-Diagnose, A09 und Grafikherkunft lagen außerhalb dieses PR-Auftrags. Der Abschluss des K3-Archivhinweises bleibt an die vollständige Produktionsabnahme gebunden.
+**Nächste Aktion:** Lauf 43734167356 bis Main-/Deployment-/Live-Ergebnis verfolgen. Neue Originale vollständig sichern und prüfen. Erst vollständiger Produktionsnachweis erlaubt LIVE_ACCEPTED. Bei Fehlern zuerst Originale sichern und gezielt unterscheiden; historische Ursachen bleiben UNKNOWN. Anschließend K3-Archivhinweis abschließen, verbleibenden K3-Rest separat abgleichen und kleinsten autorisierten Roadmapschnitt bis zum qualifizierten PR bearbeiten. 5.000 Positionen für 1.0 sind entschieden; Nachweise für 10.000 Buchungen und 10.000 Stichtage gelten weiter. K3-Großmengen, 44-px-Diagnose, A09 und Grafikherkunft lagen außerhalb dieses PR-Auftrags. Der Abschluss des K3-Archivhinweises bleibt an die vollständige Produktionsabnahme gebunden.
 
 Vollständige Vorgängerstände mit unveränderten Originalketten und Schutzverträgen: [gepinntes Vorgängercheckpoint](https://github.com/joke0071/foliolab-open/blob/06723631b2ed6035e3531f61743acfbf27f2b4b8/docs/WORK_RESTPAKETE_CHECKPOINT.md). Historischer Einstieg: `678d9fa304bde2864d03d47c8db78e56169201da`; lokaler Repro-/Negativbelegpin: `24e0f2ff9856de48ac20279eedcc93ac6ec0f09e`.
