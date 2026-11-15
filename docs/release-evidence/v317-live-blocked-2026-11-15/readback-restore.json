@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "package": {
+    "file_name": "FolioLab_v317_Release_Blocker_Originalbelege_2026-11-15.tar",
+    "bytes": 230522880,
+    "sha256": "96516a7a8ff526bfc63c07c7762fecc6627a9da22a6758c6ee1b4b78dddcf609",
+    "manifestFiles": 70,
+    "originalZipCount": 13,
+    "status": "DEPLOYED_LIVE_BLOCKED"
+  },
+  "pinnedReadbackByteEqual": true,
+  "manifestFilesVerified": 70,
+  "originalZipCount": 13,
+  "zipRestores": [
+    {
+      "original": "artifacts/v317-14161449227.zip",
+      "files": 20
+    },
+    {
+      "original": "artifacts/v317-14161875496.zip",
+      "files": 1
+    },
+    {
+      "original": "artifacts/v317-14161949855.zip",
+      "files": 132
+    },
+    {
+      "original": "artifacts/v317-14161949855.zip!storage-fixture/chromium-1794748239878-trace.zip",
+      "files": 10
+    },
+    {
+      "original": "artifacts/v317-14161957193.zip",
+      "files": 515
+    },
+    {
+      "original": "artifacts/v317-14162160595.zip",
+      "files": 123
+    },
+    {
+      "original": "artifacts/v317-14162378959.zip",
+      "files": 878
+    },
+    {
+      "original": "artifacts/v317-14162535504.zip",
+      "files": 825
+    },
+    {
+      "original": "artifacts/v317-14162951333.zip",
+      "files": 1
+    },
+    {
+      "original": "artifacts/v317-14162991942.zip",
+      "files": 9
+    },
+    {
+      "original": "http503-diagnosis-original.zip",
+      "files": 2
+    },
+    {
+      "original": "kraken-worker-diagnosis-original.zip",
+      "files": 35
+    },
+    {
+      "original": "kraken-worker-harness-failure-original.zip",
+      "files": 7
+    },
+    {
+      "original": "sw-install-diagnosis-original.zip",
+      "files": 9
+    }
+  ],
+  "restoredOriginalAndNestedFiles": 2721,
+  "fullRestoreManifest": {
+    "bytes": 688642,
+    "sha256": "d65aea29b52a9714d219c909962a9691f6d745b2c44abe088abff0b758c7ead5",
+    "gzipBytes": 135145,
+    "gzipSha256": "36acb0033a9abab5a96e2e3af806c1061c58d0e71561aba0be394d9f8b06835a"
+  },
+  "productionAcceptance": false,
+  "pinnedVersion": 1,
+  "pinnedFileReferenceRecordedPrivately": true
+}

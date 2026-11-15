@@ -1,0 +1,10 @@
+{
+  "scope": "Eight reports without a generic PASS field; reviewed as original structures, not automatic approval",
+  "metadataOnly": ["alpha-vantage/idb-chromium.json", "alpha-vantage/idb-firefox.json", "alpha-vantage/idb-webkit.json"],
+  "metadataDisposition": "IDB observational traces accompany successful source-bound alpha-vantage assertions and canonical jobs; no independent financial PASS claimed",
+  "providerRetirement": "Both reports: physicalCleanup, financialBytesUnchanged, quotaRollback, oldRevisionRejected, idempotentStartup, legacyEncryptedUIRestore, actualEncryptedUIReexport, offlineSave true; widths 7, axeViolations 0, providerRequests 0 for all declared engines",
+  "longPress": "Cross report lists positions/bookings/references PASS for Firefox and WebKit",
+  "touch": "Chromium pan has open=[] and selected=[]; subsequent press has selected=[pos-2], open=[]; trusted touch events captured. Physical Android not implied",
+  "releaseApproval": false,
+  "production": "Live remains blocked by separate original failure, despite successful Main jobs"
+}

@@ -1,0 +1,81 @@
+[
+  {
+    "context": "chromium",
+    "path": "alpha-vantage/idb-chromium.json",
+    "keys": [
+      "engine",
+      "synthetic",
+      "metadataOnly",
+      "snapshots"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "chromium",
+    "path": "provider-retirement.json",
+    "keys": [
+      "base",
+      "results"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "chromium",
+    "path": "ui-alltag10/chromium-real-touch-pan.json",
+    "keys": [
+      "events",
+      "open",
+      "selected"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "chromium",
+    "path": "ui-alltag10/chromium-real-touch-press.json",
+    "keys": [
+      "events",
+      "open",
+      "selected"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "cross1",
+    "path": "ui-alltag10/long-press.json",
+    "keys": [
+      "engines"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "cross2",
+    "path": "alpha-vantage/idb-firefox.json",
+    "keys": [
+      "engine",
+      "synthetic",
+      "metadataOnly",
+      "snapshots"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "cross2",
+    "path": "alpha-vantage/idb-webkit.json",
+    "keys": [
+      "engine",
+      "synthetic",
+      "metadataOnly",
+      "snapshots"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  },
+  {
+    "context": "cross2",
+    "path": "provider-retirement.json",
+    "keys": [
+      "base",
+      "results"
+    ],
+    "review": "Original parse/integrity and successful canonical job retained; no invented outcome field."
+  }
+]

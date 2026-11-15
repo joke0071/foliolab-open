@@ -1,0 +1,97 @@
+{
+  "status": "DEPLOYED_LIVE_BLOCKED",
+  "decision": "konkreter Blocker",
+  "version": 317,
+  "pr": "https://github.com/joke0071/foliolab-open/pull/340",
+  "approvedHead": "f03cc26182d40fa3f10fd88a133c725be925cef0",
+  "approvedBase": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "merge": "a53856e385ef1d9fd65d8710618244e80b8341e7",
+  "tree": "b70a02558a89158f80420b2c895bbcb2c18ab7c7",
+  "mainRun": 43713836553,
+  "attempt": 2,
+  "mainTests": "SUCCESS",
+  "deployment": "SUCCESS",
+  "pagesFiles": 154,
+  "pagesGitBlobsExact": true,
+  "unitTests": 1481,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "height": {
+    "requirement": ">=44",
+    "mainSamples": 15,
+    "allExactly44": true,
+    "recurrence": false,
+    "oldCause": "UNKNOWN; explicitly accepted by Jochen as open diagnosis; threshold and measurement diagnostics unchanged"
+  },
+  "liveAttempts": [
+    {
+      "attempt": 1,
+      "job": 132819643122,
+      "result": "FAILURE",
+      "failure": "HTTP503 wallet-visibility.js during published-byte check",
+      "exactServerCause": "UNKNOWN",
+      "artifact": 14162991942
+    },
+    {
+      "attempt": 2,
+      "job": 132821674164,
+      "result": "FAILURE",
+      "core": "PASS; all155 source hashes, normal TLS, 6 checks and18 axe scans",
+      "failure": "Service-worker installation vanished without activation/controller; unchanged20s predicate times out in controlledStorageFixture, Kraken test:132",
+      "workerNetworkOriginal": "not recorded; trace network empty",
+      "exactCause": "UNKNOWN",
+      "artifact": 14161949855
+    }
+  ],
+  "diagnoses": [
+    {
+      "run": 43717059117,
+      "result": "PASS",
+      "proof": "155 assets+3controls all200/exact hashes under8parallel normalTLS; normal module/startup succeeds",
+      "limitation": "does not establish historical503 cause"
+    },
+    {
+      "run": 43718173048,
+      "result": "PASS",
+      "proof": "8fresh worker installs meet unchanged20s predicate",
+      "limitation": "context observers captured no worker network; no causal network conclusion"
+    },
+    {
+      "run": 43718612109,
+      "result": "FAILURE",
+      "kind": "diagnostic harness protocol error before test; corrected browser-level flatten transport",
+      "artifact": 14163208238
+    },
+    {
+      "run": 43718697865,
+      "result": "PASS",
+      "head": "5c81298deeff9f5a2a6f93fdd399f5a99a2fdbeb",
+      "proof": "Unchanged complete Kraken test7scenarios; direct workerCDP1233requests,1109responses all200,0instrumentationErrors",
+      "limitation": "Additional remote-debugging/worker observation changes timing; no original failure reproduced. Context-teardown targetCrashed events retained; not attributed as historical cause."
+    }
+  ],
+  "rerunDecision": "No further unchanged regular retry after second failure; bounded diagnostics complete. No claim LIVE_ACCEPTED, no timeout/gate/TLS loosening or product change. New regular failure diagnostics or reliability correction would change approved head and require a new merge decision.",
+  "k3": {
+    "status": "PARTIAL",
+    "archiveHint": "IMPLEMENTED_AND_MERGED; Main23checks perenginePASS; closure awaits complete production acceptance",
+    "reused": "v316 selection18cases507checks, volume9cases120checks25restoredfiles, amount3cases99checks13restoredfiles, previous pinned original bundle unchanged",
+    "scopeDecision": "Historical10000positions versus supported5000-format limit",
+    "parked": [
+      "A09",
+      "graphic provenance"
+    ]
+  },
+  "nextDecision": "First restore a source-bound complete production acceptance with sufficient worker failure capture; any new Main diagnostic/reliability patch needs its own reviewed head. After acceptance, decide historical10000-position scope separately.",
+  "productionAcceptance": false,
+  "backup": {
+    "file_name": "FolioLab_v317_Release_Blocker_Originalbelege_2026-11-15.tar",
+    "bytes": 230522880,
+    "sha256": "96516a7a8ff526bfc63c07c7762fecc6627a9da22a6758c6ee1b4b78dddcf609",
+    "manifestFiles": 70,
+    "originalZipCount": 13,
+    "status": "DEPLOYED_LIVE_BLOCKED",
+    "pinnedVersion": 1,
+    "pinnedByteEqual": true,
+    "restoredFiles": 2721
+  }
+}

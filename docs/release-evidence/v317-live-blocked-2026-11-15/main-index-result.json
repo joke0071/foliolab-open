@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "identity": {
+    "head": "a53856e385ef1d9fd65d8710618244e80b8341e7",
+    "tree": "b70a02558a89158f80420b2c895bbcb2c18ab7c7",
+    "run": 43713836553,
+    "attempt": 1
+  },
+  "disposition": "UNKNOWN",
+  "releaseApproval": false,
+  "findings": [],
+  "unknowns": [
+    {
+      "artifact": 14162535504,
+      "member": "alpha-vantage/idb-chromium.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162535504,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162535504,
+      "member": "ui-alltag10/chromium-real-touch-pan.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162535504,
+      "member": "ui-alltag10/chromium-real-touch-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161957193,
+      "member": "ui-alltag10/long-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162160595,
+      "member": "alpha-vantage/idb-firefox.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162160595,
+      "member": "alpha-vantage/idb-webkit.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14162160595,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    }
+  ],
+  "counts": {
+    "artifacts": 6,
+    "reports": 261,
+    "png": 2095,
+    "assertions": 644
+  },
+  "artifacts": [
+    {
+      "id": 14161875496,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 355,
+      "sha256": "4deba384c96d6d11376e5aa364dd75b6b3173ec20796a218c1a38a93ee75b59b",
+      "reports": 1,
+      "png": 0
+    },
+    {
+      "id": 14162535504,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 66677305,
+      "sha256": "2cf4ecfacdaa1614949ef7f16daec56b189d98654aab07ebe2ccfa517595a793",
+      "reports": 105,
+      "png": 717
+    },
+    {
+      "id": 14161957193,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 60699221,
+      "sha256": "0c5c0fc6baf8ba81939f4a0e2c6dad5b21e26098b5b92f6607519b643f790927",
+      "reports": 18,
+      "png": 496
+    },
+    {
+      "id": 14162160595,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 12593111,
+      "sha256": "712740096c201905313905d3925f8821ff9de4cb418e69e6839e456f9e782f73",
+      "reports": 22,
+      "png": 100
+    },
+    {
+      "id": 14162378959,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 70301835,
+      "sha256": "f00ca103f7ff2f60570c37522fc5dcaa717ae72c45e429b5a2167df388ae713d",
+      "reports": 115,
+      "png": 762
+    },
+    {
+      "id": 14161449227,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 934732,
+      "sha256": "27a1f58d869e067af7aa19e8eaefbbd0faa8db45a181fdfad41c4ec12f232af0",
+      "reports": 0,
+      "png": 20
+    }
+  ],
+  "seconds": 1.406,
+  "limits": [
+    "Only explicit reviewed JSON pointers are evaluated; other fields remain unassessed.",
+    "Hashes bind originals; they do not establish semantic correctness.",
+    "PNG files CRC-checked, not decoded or visually reviewed.",
+    "Human/financial/physical-device/CI/release gates remain required."
+  ],
+  "reportIndex": "Use the input manifest for paths/digests/assertions, or --details."
+}
