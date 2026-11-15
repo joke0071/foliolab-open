@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "main": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "issue": 298,
+  "section": "C",
+  "status": "VERIFY",
+  "result": "PROJECT_LINEAGE_RESOLVED_ORIGINAL_CREATION_AND_PNG_EXPORT_RECORDS_PENDING",
+  "groups": [
+    {
+      "id": "function-symbols",
+      "paths": [
+        "src/format.js"
+      ],
+      "coverage": "23 named functional symbols;7 position symbols supplied separately",
+      "strongestEvidence": "Uploaded foliolab-open-v1.zip at33eaf296, exact published format.js atb2488907;14 current same-named fragments unchanged. Later symbols/styles mapped to immutable source snapshots and linked PRs57/170/185/289/322.",
+      "proves": "Concrete earliest uploaded project source and later implementation contexts, exact fragment identity.",
+      "open": "Who created/imported the original v1 icon paths; original creation task/drawing or actual upstream source/version. Same question for the later altered/added nine shapes if not covered by one shared creation record.",
+      "upstreamLicense": null
+    },
+    {
+      "id": "inline-svg",
+      "paths": [
+        "index.html"
+      ],
+      "coverage": "All20 current SVG blocks mapped by original raw hash and normalized geometry to checked project snapshots",
+      "strongestEvidence": "PR320/#300 loader and device+plus;PR331/sidebar dismiss and placement;PR244/header;PR322/review;PR72/calendar;PR77/actions; original v1 shapes reused for plus/wallet/settings.",
+      "proves": "Current graphics assigned to actual project source/requirements. Calendar ordinal10 matches the explicitly named private FolioLab template at2ddf598f.",
+      "open": "Original drawing/import provenance behind those project implementations; private calendar source needs its original creation/import record. Geometry equality does not establish independent authorship.",
+      "upstreamLicense": null
+    },
+    {
+      "id": "position-symbols",
+      "paths": [
+        "src/position-icons.js"
+      ],
+      "coverage": "asset-etf,asset-stock,asset-fund,asset-crypto,asset-cash,asset-fixed,asset-other",
+      "strongestEvidence": "Commit550837c342002277e2669bc52d682f25b09e89ff and PR134 create seven matching stroke icons; entire file/blob3630fee430d88897294f3f9b81e3473dc4c703cc identical to v316.",
+      "proves": "One shared implementation context covers all seven shipped definitions.",
+      "open": "Original creator/import declaration for these paths, or original design task explicitly covering their creation; no drawing/import file or upstream reference found in PR/body/comments/reviews.",
+      "upstreamLicense": null
+    },
+    {
+      "id": "flask-drawing-and-historical-hero",
+      "paths": [
+        "icons/flask.svg"
+      ],
+      "historicalOnly": [
+        "index.html hero-emblem (not present in shipped v316 HTML)"
+      ],
+      "strongestEvidence": "v1 ZIP includes initial flask SVG matchingb2488907; edits211aa77f/a2554cc1/4557f190, final SVG blob823323630cb3fe1b9a6342e9d6e5421554c1194d. 4557f190 changes icon and hero together; three path strings shared, arrow18-12 versus16-12.",
+      "proves": "Icon/hero internal template relationship and exact final icon lineage. Historical hero is not a current shipped graphic.",
+      "open": "The 'approved slimmer flask design' creation/approval source named in4557f190: original sketch/SVG/image/creation chat and creator/source declaration. No attached draft or associated PR found.",
+      "upstreamLicense": null
+    },
+    {
+      "id": "png-exports",
+      "paths": [
+        "icons/flask-192.png",
+        "icons/flask-512.png",
+        "icons/flask-maskable-512.png"
+      ],
+      "strongestEvidence": "PR279 and introducing040853ca describe faithful PNGs and maskable variant; the three introduced Gitblobs are still shipped unchanged. All three originals visually inspected.",
+      "proves": "Which project assignment and source motif the PNGs belong to, exact continuity of the committed exports.",
+      "open": "Export script/command or original production log linking the flask drawing, dimensions, maskable scaling/background and PNG output. v267 browser tests prove dimensions, not generation. Drawing authorship is a separate unresolved question.",
+      "upstreamLicense": null
+    }
+  ],
+  "noticeCorrection": {
+    "provenObligation": null,
+    "provenMissingNotice": null,
+    "branch": null,
+    "patchRequired": "NOT_ESTABLISHED",
+    "action": "No speculative notice patch prepared."
+  },
+  "questionForJochen": "Kannst du für v1-Symbole samt privatem Kalender, die sieben PR-134-Zeichen und den Kolben die ursprünglichen Entwürfe/Erstellungs-Chats oder eine Herkunftsauskunft sowie für PR #279 das PNG-Exportskript/-kommando bereitstellen?",
+  "scope": {
+    "inventoryReused": true,
+    "newReleaseCI": false,
+    "productChanged": false,
+    "mergeDeploy": false,
+    "K6_TRUST": "VERIFY",
+    "K4": "PARTIAL",
+    "A09": "OPERATOR_INPUT_PENDING",
+    "WebKitEviction": "unchanged",
+    "PR339": "DONE in v316"
+  }
+}

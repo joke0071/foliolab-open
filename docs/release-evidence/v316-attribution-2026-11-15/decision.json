@@ -80,14 +80,16 @@
         "icons/flask.svg",
         "icons/flask-192.png",
         "icons/flask-512.png",
-        "icons/flask-maskable-512.png",
-        "index.html:hero emblem"
+        "icons/flask-maskable-512.png"
       ],
       "origin": "SVG revisions b2488907→211aa77f→a2554cc1→4557f190; PNGs introduced040853ca948554fb6a1e985ca5e5bc69836d421e. All4asset blobs unchanged from previous audited main. Naming, visuals and commit history are not proof of original rights/export lineage.",
       "license": null,
       "existingNotice": "No asset provenance/license declaration in asset bytes; initial own-brand classification retained as project context, not ownership certification.",
       "status": "PROVENANCE_UNRESOLVED",
-      "decidingEvidence": "Original source drawing/creation declaration for flask SVG/hero plus export/build record binding3PNGs to that source, or upstream asset/version and license."
+      "decidingEvidence": "Original approved flask drawing/creation/import record (shared evidence may cover historical hero); PNG generation command/script/log is a separate question. See graphic-provenance report.",
+      "historicalOnly": [
+        "index.html:hero emblem, absent from shipped v316 HTML; internal logo derivative documented"
+      ]
     },
     {
       "id": "charts-and-loader",
@@ -116,5 +118,11 @@
     "A09": "OPERATOR_INPUT_PENDING",
     "driveRestoreHint": "DONE in v316",
     "N_CSP": "optional NACH_1.0, not promoted"
+  },
+  "followup": {
+    "report": "docs/K6_TRUST_GRAPHIC_PROVENANCE_V316_2026-11-15.md",
+    "decisions": "docs/release-evidence/v316-graphic-provenance-2026-11-15/decision.json",
+    "result": "Project lineage/contexts mapped; original creation and PNG export records remain unresolved. Historical hero removed from current scope; calendar's immediate private template identified.",
+    "question": "Kannst du für v1-Symbole samt privatem Kalender, die sieben PR-134-Zeichen und den Kolben die ursprünglichen Entwürfe/Erstellungs-Chats oder eine Herkunftsauskunft sowie für PR #279 das PNG-Exportskript/-kommando bereitstellen?"
   }
 }

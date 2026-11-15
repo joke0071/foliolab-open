@@ -1,0 +1,652 @@
+{
+  "schema": 1,
+  "retrievedAt": "2026-11-15T10:01:42.411Z",
+  "main": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "commits": [
+    {
+      "sha": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+      "url": "https://github.com/joke0071/foliolab-open/commit/b248890792ca56987d16a5bc7884d9c84970e9a3",
+      "message": "feat: publish FolioLab Open standalone app",
+      "created": "2026-10-21T13:28:03Z",
+      "parents": [
+        "33eaf2966d591642d567e590bb5769703d58982d"
+      ],
+      "changedPaths": [
+        ".gitignore",
+        "README.md",
+        "foliolab-open-v1.zip",
+        "icons/flask.svg",
+        "index.html",
+        "manifest.webmanifest",
+        "package.json",
+        "src/app.js",
+        "src/format.js",
+        "src/market.js",
+        "src/model.js",
+        "styles.css",
+        "sw.js",
+        "tests/market.test.mjs",
+        "tests/model.test.mjs"
+      ],
+      "graphicPatches": [
+        {
+          "path": "icons/flask.svg",
+          "patch": "@@ -0,0 +1 @@\n+<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 11-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>"
+        }
+      ]
+    },
+    {
+      "sha": "33eaf2966d591642d567e590bb5769703d58982d",
+      "url": "https://github.com/joke0071/foliolab-open/commit/33eaf2966d591642d567e590bb5769703d58982d",
+      "message": "Add files via upload",
+      "created": "2026-10-21T13:27:48Z",
+      "parents": [
+        "aace7809b59ca189051fb4e7603bddb10d634718"
+      ],
+      "changedPaths": [
+        "foliolab-open-v1.zip"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "550837c342002277e2669bc52d682f25b09e89ff",
+      "url": "https://github.com/joke0071/foliolab-open/commit/550837c342002277e2669bc52d682f25b09e89ff",
+      "message": "feat(ui): add position icon mapping and matching stroke artwork",
+      "created": "2026-10-25T07:22:33Z",
+      "parents": [
+        "01a681960c0823010efe7e3599eb1d8512383673"
+      ],
+      "changedPaths": [
+        "src/position-icons.js"
+      ],
+      "graphicPatches": [
+        {
+          "path": "src/position-icons.js",
+          "patch": "@@ -0,0 +1,26 @@\n+/** Presentation-only position symbols. Do not infer an asset class from its name or ticker. */\n+export const POSITION_ICON_PATHS=Object.freeze({\n+  'asset-etf':'<path d=\"m12 2.5-9 5 9 5 9-5-9-5z\"/><path d=\"m3 12 9 5 9-5M3 17l9 5 9-5\"/>',\n+  'asset-stock':'<path d=\"M7 2v20M17 2v20\"/><rect x=\"4\" y=\"7\" width=\"6\" height=\"8\" rx=\"1.2\"/><rect x=\"14\" y=\"4.5\" width=\"6\" height=\"10\" rx=\"1.2\"/>',\n+  'asset-fund':'<path d=\"M11 3.2a8.8 8.8 0 1 0 9.8 9.8H11z\"/><path d=\"M14 3.2v6.8h6.8A8.5 8.5 0 0 0 14 3.2z\"/>',\n+  'asset-crypto':'<circle cx=\"9\" cy=\"14\" r=\"6.5\"/><path d=\"M11.5 3.9A7.2 7.2 0 0 1 20.1 13\"/><path d=\"M7 11.6h3.2a2.4 2.4 0 0 1 0 4.8H7M8.6 10v8\"/>',\n+  'asset-cash':'<path d=\"m3 9 9-5 9 5M3 10h18M5 19v-8m5 8v-8m4 8v-8m5 8v-8M3 21h18\"/>',\n+  'asset-fixed':'<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M7 3v4M17 3v4M3 10h18\"/><circle cx=\"12\" cy=\"15.5\" r=\"3.3\"/><path d=\"M12 13.7v1.8l1.2.8\"/>',\n+  'asset-other':'<rect x=\"3\" y=\"3.5\" width=\"8\" height=\"8\" rx=\"2\"/><circle cx=\"17.5\" cy=\"7.5\" r=\"3.5\"/><path d=\"m8 14.5 5 7H3zM16 15h5v6h-5z\"/>'\n+});\n+const ICON_BY_KIND=Object.freeze({\n+  etf:'asset-etf',\n+  stock:'asset-stock',\n+  fund:'asset-fund',\n+  crypto:'asset-crypto',\n+  cash:'asset-cash',\n+  other:'asset-other'\n+});\n+/**\n+ * Pure UI mapping. A connected wallet does not change an asset's class.\n+ * Only explicit fixed-term account metadata qualifies cash as Festgeld.\n+ */\n+export function positionIconName(position,account){\n+  if(position?.kind==='cash'&&account?.cashTerms?.fixedTerm===true)return 'asset-fixed';\n+  return ICON_BY_KIND[position?.kind]||'asset-other';\n+}"
+        }
+      ]
+    },
+    {
+      "sha": "4557f190e2569edf943e76a0f5c91e2e0337ea4d",
+      "url": "https://github.com/joke0071/foliolab-open/commit/4557f190e2569edf943e76a0f5c91e2e0337ea4d",
+      "message": "Apply approved slimmer flask design to hero and icons",
+      "created": "2026-10-23T12:31:59Z",
+      "parents": [
+        "a2554cc10abbf7c9b5da4e1e569a3e0cc44e8aa1"
+      ],
+      "changedPaths": [
+        "icons/flask.svg",
+        "index.html",
+        "sw.js"
+      ],
+      "graphicPatches": [
+        {
+          "path": "icons/flask.svg",
+          "patch": "@@ -1 +1 @@\n-<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 17-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>\n+<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><defs><clipPath id=\"flask-liquid-clip\"><path d=\"M27 10v16c0 4-2.1 7.2-5.5 12.5L18 44c-6.5 10 3 13 14 13s20.5-3 14-13l-3.5-5.5C39.1 33.2 37 30 37 26V10\"/></clipPath></defs><path d=\"M12 45c9-6 16 8 28 3 5-2 8-5 12-4v18H12Z\" fill=\"#9fd0ac\" opacity=\".46\" clip-path=\"url(#flask-liquid-clip)\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-width=\"3.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M24 10h16\"/><path d=\"M27 10v16c0 4-2.1 7.2-5.5 12.5L18 44c-6.5 10 3 13 14 13s20.5-3 14-13l-3.5-5.5C39.1 33.2 37 30 37 26V10\"/><path d=\"m20 42 8-6 6 4 18-12m-8 0h8v8\"/></g></svg>"
+        }
+      ]
+    },
+    {
+      "sha": "040853ca948554fb6a1e985ca5e5bc69836d421e",
+      "url": "https://github.com/joke0071/foliolab-open/commit/040853ca948554fb6a1e985ca5e5bc69836d421e",
+      "message": "feat(UI-LOAD01/PWA-FULL01): Originalkolben, sichere Startzustände und FolioLab-PWA (v267)",
+      "created": "2026-11-02T09:57:58Z",
+      "parents": [
+        "aa67a3f94f63b93d1764ef672eb009dc31c35305"
+      ],
+      "changedPaths": [
+        ".github/workflows/import.yml",
+        "docs/release-evidence/v267-loading-pwa-preflight.json",
+        "icons/flask-192.png",
+        "icons/flask-512.png",
+        "icons/flask-maskable-512.png",
+        "index.html",
+        "manifest.webmanifest",
+        "src/app.js",
+        "src/loading-ui.js",
+        "src/startup.js",
+        "src/unified-bitcoin-ui.js",
+        "src/wallet-history-ui.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-loading-pwa.mjs",
+        "tests/browser-ui-small-rests.mjs",
+        "tests/ci-cross-engine-manifest.test.mjs",
+        "tests/ci-stage-workflow.test.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "211aa77f2a4ca7b5e72915ad8f6c14a037d36727",
+      "url": "https://github.com/joke0071/foliolab-open/commit/211aa77f2a4ca7b5e72915ad8f6c14a037d36727",
+      "message": "Refine flask arrow clearance and hero liquid opacity",
+      "created": "2026-10-23T10:17:47Z",
+      "parents": [
+        "7072430980e24b32f9c47acbaa0e81a830ee83d9"
+      ],
+      "changedPaths": [
+        "icons/flask.svg",
+        "index.html",
+        "sw.js"
+      ],
+      "graphicPatches": [
+        {
+          "path": "icons/flask.svg",
+          "patch": "@@ -1 +1 @@\n-<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 11-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>\n+<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 15-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>"
+        }
+      ]
+    },
+    {
+      "sha": "a2554cc10abbf7c9b5da4e1e569a3e0cc44e8aa1",
+      "url": "https://github.com/joke0071/foliolab-open/commit/a2554cc10abbf7c9b5da4e1e569a3e0cc44e8aa1",
+      "message": "Increase icon arrowhead clearance without changing hero emblem",
+      "created": "2026-10-23T11:17:52Z",
+      "parents": [
+        "dc3082fc7591a99cf5173a41fd8d12b5e26374ef"
+      ],
+      "changedPaths": [
+        "icons/flask.svg",
+        "sw.js"
+      ],
+      "graphicPatches": [
+        {
+          "path": "icons/flask.svg",
+          "patch": "@@ -1 +1 @@\n-<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 15-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>\n+<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" height=\"64\" rx=\"17\" fill=\"#214d38\"/><g fill=\"none\" stroke=\"#f0f9f2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3.1\"><path d=\"M23 10h19m-16 0v13c0 3-1.8 6.1-5.9 11.4C7.1 51 19 57 31.6 57c12.9 0 24.8-6 11.5-22.6C39 29.2 37 26 37 23V10\"/><path d=\"m18 42 10-8 7 5 17-12m-8 0h8v8\"/></g><path d=\"M16 46c8-7 21 10 32-1-2 11-10 14-18 13-8-1-12-3-14-12z\" fill=\"#9fd0ac\" opacity=\".46\"/></svg>"
+        }
+      ]
+    },
+    {
+      "sha": "21e465183ba2c2b46ae09e33e9dbbfc5a2fa00bc",
+      "url": "https://github.com/joke0071/foliolab-open/commit/21e465183ba2c2b46ae09e33e9dbbfc5a2fa00bc",
+      "message": "WIP: group dashboard overview and labeled More installation entry\n\nIsolated followup B; not frozen, no PR/final CI or release approval. Preserve every existing portfolio action, reuse PWA prompt/help and add fault-tolerant hint dismissal. Five targeted preference tests pass; browser QA pending existing CI after v309 production closure.",
+      "created": "2026-11-11T17:44:16Z",
+      "parents": [
+        "0b8c6de007fff4d16ee930aa852354e4d52d513f"
+      ],
+      "changedPaths": [
+        "index.html",
+        "src/app.js",
+        "src/install-hint-preference.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-loading-pwa.mjs",
+        "tests/browser-navigation-installation.mjs",
+        "tests/browser-ui-quality.mjs",
+        "tests/install-hint-preference.test.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "74fd8bc0f11d30b5fa05628117acf26e9ae870b4",
+      "url": "https://github.com/joke0071/foliolab-open/commit/74fd8bc0f11d30b5fa05628117acf26e9ae870b4",
+      "message": "UI-R1: animate portfolio donut and clarify app installation glyphs (v300)\n\nReplace only existing startup/inline SVG and two install glyph paths; preserve boot, error/late success, prompt/help, standalone, storage and data identity. Static reduced-motion/error state, no added delay or JS animation loop. Extend existing loading/PWA gate with multi-frame motion, 320–1440px/200% text, exact record preservation and ID-free inline parity. Cache revision v300; no schema or manifest change.",
+      "created": "2026-11-08T21:50:23Z",
+      "parents": [
+        "1f051a7059d24751f961fcf2af7fa226b319079e"
+      ],
+      "changedPaths": [
+        "index.html",
+        "src/loading-ui.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-loading-pwa.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "url": "https://github.com/joke0071/foliolab-open/commit/258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "message": "UI-R3: integrate wealth review entry and quiet period/icon presentation (v302)\n\nReuse existing grouped review and navigation, hide zero without a container, retain financial/storage semantics. Shared mandatory UI contract covers 0/1/5, seven widths, 200% text, keyboard/Axe and exact bytes/revision.",
+      "created": "2026-11-09T21:16:06Z",
+      "parents": [
+        "1708d4e947061f353187727ccae54daa1727db7e"
+      ],
+      "changedPaths": [
+        "index.html",
+        "src/app.js",
+        "src/format.js",
+        "styles.css",
+        "sw.js",
+        "tests/structured-quality-browser-contract.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "d259b0b45fb1f5362bbed1990bee9dd969e93178",
+      "url": "https://github.com/joke0071/foliolab-open/commit/d259b0b45fb1f5362bbed1990bee9dd969e93178",
+      "message": "P1 header: separate truthful local storage and Google Drive status actions",
+      "created": "2026-10-31T09:00:51Z",
+      "parents": [
+        "272deb98405cd7fb9013fa7a533d329b5ffb6007"
+      ],
+      "changedPaths": [
+        "docs/DRIVE_HEADER_STATUS_2026-10-31.md",
+        "index.html",
+        "src/app.js",
+        "src/drive-backup.js",
+        "src/header-status.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-header-status.mjs",
+        "tests/browser-ui-quality.mjs",
+        "tests/drive-backup.test.mjs",
+        "tests/header-status.test.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "060b4ca0edfa0afe55bd54e27e90518b494e12cb",
+      "url": "https://github.com/joke0071/foliolab-open/commit/060b4ca0edfa0afe55bd54e27e90518b494e12cb",
+      "message": "Improve history UX: compact calendar and collapsed snapshots\n\n* Unify history labels and compact calendar controls\n\n* Style compact history filters and snapshot disclosure\n\n* Implement two-date snapshot calendar filtering\n\n* Refresh PWA shell cache for history UX\n\n* Test compact history controls and calendar date ranges\n\n* Update responsive browser regression for compact history calendar and closed manager\n\n* Keep calendar open after selecting first date during grid re-render\n\n* Expand default-closed snapshot manager in position editing browser regression",
+      "created": "2026-10-23T19:42:02Z",
+      "parents": [
+        "3ef97921faa43b3f4e4f97d484d809d8a30baf3e"
+      ],
+      "changedPaths": [
+        "index.html",
+        "src/app.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-dashboard-polish.mjs",
+        "tests/browser-position-details.mjs",
+        "tests/history-calendar.test.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "46783f38ec486ca03418c3fb41c22b4323da245d",
+      "url": "https://github.com/joke0071/foliolab-open/commit/46783f38ec486ca03418c3fb41c22b4323da245d",
+      "message": "ui: unify action icons and compact portfolio page layouts\n\n* ui: shorten desktop actions and add subtitle slot\n\n* style: unify action strokes and compact section whitespace\n\n* ui: explain actions contextually on key pages\n\n* test: verify descriptive actions, robust strokes and breakpoints\n\n* chore: refresh cache v95\n\n* test: allow compact desktop Stichtag label width\n\n* a11y: increase page helper text contrast to WCAG AA\n\n* chore: update offline cache after contrast fix",
+      "created": "2026-10-23T21:00:56Z",
+      "parents": [
+        "674f6ae3893554e641da575beb4a5bb17a663199"
+      ],
+      "changedPaths": [
+        "index.html",
+        "src/app.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-responsive-actions.mjs"
+      ],
+      "graphicPatches": []
+    },
+    {
+      "sha": "53d0c04f5bc8010051183d1ec2ab6cdf3afd701a",
+      "url": "https://github.com/joke0071/foliolab-open/commit/53d0c04f5bc8010051183d1ec2ab6cdf3afd701a",
+      "message": "refactor(settings): group market data, optional Worker, blockchain and privacy",
+      "created": "2026-10-23T08:38:52Z",
+      "parents": [
+        "22866b6d8142800a8f32d945d7e5da5660a9c469"
+      ],
+      "changedPaths": [
+        "index.html"
+      ],
+      "graphicPatches": []
+    }
+  ],
+  "linkedPRs": [
+    {
+      "number": 134,
+      "url": "https://github.com/joke0071/foliolab-open/pull/134",
+      "title": "feat(ui): Anlageklassensymbole für Positionen im FolioLab-Stil",
+      "body": "## Release-Gate: BLOCKIERT durch noch nicht integrierten PR #133\n\nStand25.10.2026: main01a6819/v150; #133 weiterhin offen/Draft (ef80f1b). #134 unverändert48b28c700941fd52843b767cf5edec852c50aeae. Aktueller Auftrag autorisiert Veröffentlichung von #134 **erst nach Integration von #133 und kombinierter Abnahme**. Kein Merge/Deploy/Branchupdate durchgeführt.\n\nVorprüfung:559Tests/vollständiges Chromium/Firefox/WebKit/Mobile/Axe in CI40173091204 und Wallet40173091202 grün. Lokal exakten HEAD isoliert mit Syntax+4Symboltests geprüft;89Cacheassets vorhanden. Kombinierte CI/Live-Abnahme stehen aus.\n\n[Gesicherter Prüfbericht und exakt ausführbarer Wiedereinstieg](https://github.com/joke0071/foliolab-open/pull/134#issuecomment-6395280766). Gemeinsame Dateien app.js/styles.css/sw.js/browser-cash-terms.mjs nach #133 vereinigen, dessen Zinsmodule/Workflow erhalten; Cacheversion höher als dann main wählen. #133-Branch bleibt unangetastet.\n\n---\n\n## Umfang\n- Einheitliche, feine 1,8px-Outline-SVGs im vorhandenen Symbolsystem für ETF, Aktie, Fonds, Krypto, Guthaben, Festgeld und Sonstiges.\n- Anzeige aus `position.kind`, Festgeld nur bei `account.cashTerms.fixedTerm === true` (keine Namenheuristiken).\n- Wallet-/Stakingstatus verändert Anlageklasse nicht; bestehende Wallet-Kennzeichnung bleibt bestehen.\n- Kompakte, klar sichtbare Positionssymbole auf 320–390px, ohne Anbieter- oder Navigationssymbole zu verändern.\n- `tests/position-icons.test.mjs`: Zuordnung, Fall-Back, explizite Festgeldmetadaten, konsistente SVG-Strokes und dekorative Accessibility.\n\n## Sicherheit / Konfliktschutz\nPräsentationslogik, SVGs und CSS; keine Änderungen an Modell, Speicher, Geldberechnungen, Wallet, Backup oder API. SW-Cache v151 mit neuem position-icons.js-Precache sowie notwendige Versions-/Navigationsanpassungen der bestehenden Worker-Testhilfe sind enthalten.\n**Draft, bitte nicht mergen während PR #133 (AT02-B) parallel läuft.** Nach Integration des laufenden Work-Auftrags auf aktuellem `main` rebasen bzw. Konflikte prüfen, dann CI und gegebenenfalls Browser-Abnahme vor Merge/Deploy.\n\n## Validierung\nCI-Läufe und Cross-Engine-Checks auf diesem PR abwarten; keine Tests oder Deployments als bestanden behaupten, bevor GitHub sie bestätigt.",
+      "head": "95ef5be25fd099297bb314481467cd3e7912920f",
+      "base": "2f1a82f686ebe89f27c991610812b75fe4195d6a",
+      "created_at": "2026-10-25T07:23:22Z",
+      "updated_at": "2026-10-25T10:19:28Z"
+    },
+    {
+      "number": 279,
+      "url": "https://github.com/joke0071/foliolab-open/pull/279",
+      "title": "v267: Originalkolben beim Laden und eigenständige FolioLab-PWA",
+      "body": "Der Kaltstart zeigt vor der IndexedDB-Initialisierung nach 300 ms den animierten Originalkolben. Solange die App nicht bereit ist, bleibt die Oberfläche gesperrt. Bei langem Start oder Modulfehler endet die Animation mit sicherer Hilfe; die bestehende Speicher-Recovery bleibt erhalten. Derselbe kleine Kolben begleitet Kurse/Wallet-Historie/Importdateien/Restore. Auch ein äußerer Aktualisierungs-/Speicherfehler beendet jetzt den wartenden Text mit einem tatsächlichen Fehlerstatus; eine Quota-Regression schützt die unveränderte Speicherung.\n\nPWA und Browser heißen FolioLab. Originalgetreue 192-/512-PNGs und ein eigenes maskable Icon ergänzen das SVG. Eine kompakte Hilfe unterscheidet Browseransicht und Standalone-Start ohne Deinstallations-/Datenlöschaufforderung. Origin, effektive App-Identität, start_url/scope/standalone, IndexedDB/Backup und Datenformat v5 bleiben erhalten.\n\nValidierung: 1.087 Units/0 Fehler/Skips, Syntax/Diffcheck; neue Lade-/PWA-Negativprüfungen lokal Chromium/WebKit; bestehender Chromium-PWA-Update-/Offline-/exakter-IDB-Test, UI-Small-Rests und vollständige UI-Quality mit mobilen Breiten/Axe/Nullschreibwirkung PASS. Der Disclosure-Testhelfer wartet nach Reload auf das tatsächlich angehängte Ziel, bevor er native Details über deren Summary öffnet. Damit kann eine noch ausstehende asynchrone Initialisierung nicht als bereits erreichbare Aktion gelten; keine Force-Klicks oder verlängerten Fristen. Deterministische Negativkontrolle alter Helfer FAIL/Korrektur PASS, bestehender kompletter WebKit-Historienablauf PASS.\n\nNeue Pflichtprüfungen ergänzen Chromium/Firefox/WebKit und echte Liveabnahme; historische CI-Hashes und Befehle erhalten, nur exakter erwarteter Deploy-Titel angepasst. Vorprüfbeleg: docs/release-evidence/v267-loading-pwa-preflight.json.\n\nEchte Android-WebAPK-/Launcherprüfung weiterhin offen; keine Hardwarefreigabe oder rechtliche Namensfreigabe behauptet. Letzte akzeptierte Produktion bleibt v266 bis vollständiger neuer Abnahme. Referenz #149, UI-LOAD01/PWA-FULL01.",
+      "head": "2033b2fb6aeefc6d110e261d1db289b0aafe5795",
+      "base": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
+      "created_at": "2026-11-02T09:58:51Z",
+      "updated_at": "2026-11-02T12:04:37Z"
+    },
+    {
+      "number": 331,
+      "url": "https://github.com/joke0071/foliolab-open/pull/331",
+      "title": "v310: Übersicht und Navigation bündeln, Installation unter Mehr integrieren",
+      "body": "Die Übersicht ordnet Vermögensverlauf, Anlageklassen und Konten/Depots in natürlichen Kartenhöhen an. Kompakte Details behalten Kennzahlen, Kursverlauf, Vorgänge und CSV-Aktionen. Installation auf Desktop/Mobil unter **Mehr → App installieren**, mit schließbarem Desktopangebot. Aktive Desktopseite unterstrichen; kurze Sidebar und mobile Perioden halten Tastaturfokus sichtbar.\n\nFROZEN_HEAD: 9bd5d951f53bf2b5e6084c21362f71f0529059d5\nFROZEN_TREE: b57812513269c1c62918709c323e976bb75be9f7\nBASE_MAIN: 0b8c6de007fff4d16ee930aa852354e4d52d513f\nOwner: main-b0e9dc91640e-20261111, eigene QA, keine automatische Übergabe.\n\nPrüfvertrag: docs/release-evidence/v310-expected-contract.json. Erwartet1392Units/0Fehler/0Skips; reguläre vollständige INTEGRATION-PR mit6Originalarchiven/241JSON/2089PNG. Alle alten Engines/Assertions/Fristen/Finanz-/Decimal-/UNKNOWN-/Journal-/CAS-/IDB-/PWA-/Offline-/Manifest-/Installationsidentitätsverträge erhalten. Workflow unverändert. Neuer Anzeigepräferenzschlüssel separat; fünf lokale Präferenztests bestanden. Syntax der neuen Gegenprobe PASS; lokale Browserfähigkeit blockiert, daraus kein PASS.\n\nFünfter Vorgänger6e485ec8/Run43091474262 vollständigCI_SUCCESS einschließlich3Cross-Gruppen;1392Units/0Fehler/0Skips. Trotzdem fachlich VERWORFEN: direkte320px-Sichtprüfung des Missing-Value-Originals zeigt unnötig schmalen Kontonamen neben Wert/Positionslink. Neuer Kandidat trennt bis540px Anbietername/Wert und gibt dem Kontonamen die volle Zeile oberhalb von Wert/Aktion. Gezielte native Namensbreitenassertions bei320/390/430px ergänzen sämtliche bisherigen Sicht-/44px-/Axe-/Überlauf-/echtenIDB-Nichtmutationsprüfungen. Keine Finanz-/Speichermutation, kein Textausblenden/-abschneiden/-verkleinern. Fachdoku enthält alle verworfenen Vorläufer und Befunde; Originalketten bleiben unverändert erhalten.\n\nNative Gesamtqualifikation des aktuellen SHA OFFEN. Vor Integration: vollständige Original-/Sicht-/Fachprüfung, unveränderliche gebündelte PR-Sicherung, gepinnter Readback und echter Restore. Danach Main/Deployment/echte drei Produktionsengines und Abschlussbackup separat. Installationssignale ausdrücklich synthetisch; realesAndroid/echteInstallation/SafariHardware/TalkBack/OAuth/Zweigeräte/Sync weiterhinOFFEN.\n\nMain0b8c6de0 bleibt v309 LIVE_ACCEPTED/V147; frischer gepinnter Readback/echterRestore223Dateien/0Fehler. Kein Merge aus Teilprüfungen, keine zweite parallele finaleCI, keine identische Wiederholung und kein Checkpoint-Gesamtmerge. CI-B466be00 erst nach Nutzerpaket gemäß#229. Öffentliche Belege ausschließlich synthetisch.",
+      "head": "9bd5d951f53bf2b5e6084c21362f71f0529059d5",
+      "base": "0b8c6de007fff4d16ee930aa852354e4d52d513f",
+      "created_at": "2026-11-11T18:46:00Z",
+      "updated_at": "2026-11-12T07:44:18Z"
+    },
+    {
+      "number": 320,
+      "url": "https://github.com/joke0071/foliolab-open/pull/320",
+      "title": "UI-R1: Portfolio-Donut und klarere Installationssymbole (v300)",
+      "body": "Die bestehende Ladeanzeige zeigt einen ruhigen Portfolio-Donut; beide Installationsaktionen verwenden ein Gerät-plus-Symbol. Start, verzögerter Start, Fehler/Späterfolg, Installationshilfe, nativer Prompt und Standalone-Verhalten bleiben erhalten. Bei Reduced Motion und im Fehlerzustand steht der Donut still. Keine zusätzliche Wartezeit; unveränderte Daten- und Installationsidentität. Normaler Cachebump v300 für die geänderten ausgelieferten Assets.\n\nLokale Vorprüfung: 1.345 Unit-Tests ohne Fehler/Skips, Syntax und vollständiger vorhandener Loader-/PWA-Test in Chromium, Firefox und WebKit PASS. Erweiterte Gegenproben: Bewegung an drei Frames, 320–1440 px/200%-Schrift, identischer ID-freier Start-/Inline-Donut, Deduplizierung/Entfernung, beide Installationsglyphen mit Touch-/Fokus- und Prompt-/Help-/Standalone-Zuständen sowie exakt unveränderte Portfolio-Bytes/Revision. Synthetische Ansichten visuell geprüft. Lokale Hostkonfiguration für Firefox/WebKit dokumentiert; reale Android-Hardware bleibt separat offen.\n\nEingefrorener HEAD 74fd8bc0f11d30b5fa05628117acf26e9ae870b4, Tree 34c90e0ec5597db2047b404a2f814fe1bfd1c770. Alleiniger Owner 20d9afddc0ae, Übernahme im zentralen Checkpoint dokumentiert. Private Sicherung V123 unter gleicher Identität gespeichert, alle vorherigen Payloads erhalten. Reguläre unveränderte Integrations-/Main-/Deployment-/Produktionsgates bleiben Voraussetzung; noch kein LIVE_ACCEPTED.\n\nBezug: #300, #149 und bestehende UI-R1-Taskkarte der kanonischen EFF02-Roadmap. Nur fünf Dateien; keine Workflow-/Finanz-/Storage-/App-/Manifeständerung. Keine zusätzliche CI duplizieren oder abbrechen.",
+      "head": "74fd8bc0f11d30b5fa05628117acf26e9ae870b4",
+      "base": "1f051a7059d24751f961fcf2af7fa226b319079e",
+      "created_at": "2026-11-08T21:52:02Z",
+      "updated_at": "2026-11-09T06:35:03Z"
+    },
+    {
+      "number": 322,
+      "url": "https://github.com/joke0071/foliolab-open/pull/322",
+      "title": "UI-R3: Prüfhinweis in Vermögensverlauf integrieren, Zeitraum und Icons beruhigen (v302)",
+      "body": "**v302 LIVE_ACCEPTED – 10.11.2026.** Main `179d424aef1f6f35c3f6f72600e4bbe885ef329c`, Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`; regulärer Main-/Deployment-/Live-Lauf [42770050654](https://github.com/joke0071/foliolab-open/actions/runs/42770050654) vollständig SUCCESS, Versuch1. [Abnahmeindex](https://github.com/joke0071/foliolab-open/blob/feature/flh05-import-foundation/docs/release-evidence/v302-live-accepted.json). Produktion:153HTTPS-Assetmatches ohne Zertifikatsausnahme;165JSON/1.401PNG vollständig qualifiziert und tatsächliche0/1/5-Ansichten angesehen.\n\nDer Prüfhinweis steht jetzt direkt unter dem Gesamtvermögen innerhalb der Vermögensverlauf-Karte. Die flache, sehr helle Salbeizeile enthält Warnsymbol, dynamische Anzahl und Navigationspfeil; die gesamte Zeile öffnet den vorhandenen Prüfbereich. Bei null Prüfpositionen entfällt sie vollständig ohne Leerraum.\n\nUI-R3 umfasst außerdem die zugesagten ruhigen Grau-/Salbei-Zeitraumflächen und gezielte Outline-/Grundfarben-Korrekturen bestehender Funktionsicons. Bestehende Zeitraumsteuerung, Finanzberechnungen, Quellidentitäten und IndexedDB-Verträge bleiben erhalten. Exakt sieben Dateien einschließlich SWv302 und Erweiterungen zweier vorhandener Browserverträge.\n\nValidierung des eingefrorenen HEAD `96522496e399752c26bfb0661f75f2b3f1878b5c` / Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`:\n\n- Integration [42709224108](https://github.com/joke0071/foliolab-open/actions/runs/42709224108), Versuch1, vollständig SUCCESS; Testmerge `090e653ca969265b440de34b41bd8e0cd92f450d` mit identischem Kandidatentree.\n- Wallet [42709224472](https://github.com/joke0071/foliolab-open/actions/runs/42709224472) SUCCESS. 1.345 Unit-Tests,0 Fehler,0 Skips; Syntax und Chromium141/Firefox157/WebKit27.2 PASS.\n- 0/1/5 Prüfpositionen, sieben Breiten320–1440px,200%-Text,44px-Ziele, Tastatur/Enter/Space/Fokus/SR-Name/Axe, direkte Navigation, Review-Filterreset, unabhängige normale Filter und exakte IDB-Bytes/Revision geprüft.\n- Bestehende Perioden-/Mehr-/3J-/5J-/Max-, Auswahl-/Long-Press-, Lade-/Offline-/PWA- und Finanz-/Backup-Gates bestanden. Normales Mehr-Label bleibt einzeilig; negative Kontrolle des Vorläufers reproduziert den Fehler.\n- Alle sechs Original-ZIPs mit API-/Upload-/lokalen SHA256/Größe/CRC qualifiziert,224JSON und2.059PNG vollständig ausgewertet,0Fehlerflags. Aktuelle Chromium-/Firefox-/WebKit-Bilder mit0/1/5/Mobil/Desktop tatsächlich angesehen.\n\nDie beiden regulär beendeten Vorläufer bleiben erhalten:42701185716 FAILURE (veraltete Onboarding-Vorgängerannahme),5ZIPs/156JSON/1.417PNG qualifiziert;42705095823 SUCCESS,6ZIPs/224JSON/2.059PNG qualifiziert und anschließend wegen sichtbarer Mehr-Fragmentierung korrigiert. Jede Korrektur erst nach Ende sämtlicher Vorgängerjobs gepusht. Keine identischen Retries oder Action-Abbrüche.\n\n**Audit-Sperre aufgehoben (ausdrückliche Nutzerentscheidung10.11.2026):** Der allgemeine historische Datenschutz-Audit ist optional und kein Entwicklungs-/Integrations-/Release-Gate mehr. Konkrete bestätigte Vorfälle sind vor einer betroffenen Veröffentlichung angemessen zu behandeln. Alle technischen, finanziellen, Datenintegritäts-, CI-, Backup- und Owner-Gates gelten unverändert.\n\nv302 ist regulär integriert, deployt und nach allen vorgeschriebenen Produktionsgates LIVE_ACCEPTED. Eigenständiger offener technischer Punkt: dauerhaft weiterhin V129 bestätigt; die zuvor nur lokal geprüfte V130-Datei ist nach einem Umgebungswechsel nicht mehr vorhanden. Quellen und alle17Artefakte der drei UI-R3-Fassungen sind remote verfügbar und nicht abgelaufen; V129 ist erneut vollständig geprüft; alle17Original-ZIPs,16Joblogs und7exakte Kandidat-Gitblobs wurden wiederhergestellt. Das geprüfte lokale Wiederherstellungsarchiv umfasst28.411Pfade; Abschlussarchiv mit Main-/Live-Belegen ist lokal vollständig verifiziert:28.448Pfade/0Fehler,860.691.540Bytes,SHA256`89fd412fae5b564741760141e2d8cec532a23d4e0f85ebb293d48ac9e1e2074e`. Noch kein neuer privater Speicherauftrag durchgeführt. Dauerhaft bestätigt bleibt V129. Kein neuer Speicherlauf als abgeschlossen behauptet. Reale Android-/TalkBack-/Safari-/OAuth-Prüfungen bleiben separat extern; bekannter v301-200%-Chartleertext-Überlapp bleibt K6-Rest.\n\n[Geänderte Nutzerentscheidung und tatsächlicher Audit-Kurzstand](https://github.com/joke0071/foliolab-open/blob/feature/flh05-import-foundation/docs/PRIVACY_REVIEW_POLICY_2026-11-10.md)\n\n[Zentraler Checkpoint](https://github.com/joke0071/foliolab-open/blob/feature/flh05-import-foundation/docs/WORK_RESTPAKETE_CHECKPOINT.md) · [Kandidatenbeleg](https://github.com/joke0071/foliolab-open/blob/feature/flh05-import-foundation/docs/release-evidence/v302-ui-r3-candidate.json)\n\nAlleiniger Produktowner `c43b5e91f20a`; unabhängiger Datenschutz-Auditor ausschließlich lesend. K1-Belegzuordnung PARTIAL und K2-Frequenzauswahl lesend vorbereitet; kein zweiter produktiver Branch.",
+      "head": "96522496e399752c26bfb0661f75f2b3f1878b5c",
+      "base": "1708d4e947061f353187727ccae54daa1727db7e",
+      "created_at": "2026-11-09T21:18:02Z",
+      "updated_at": "2026-11-10T08:02:45Z"
+    },
+    {
+      "number": 244,
+      "url": "https://github.com/joke0071/foliolab-open/pull/244",
+      "title": "P1: getrennte Speicher-/Drive-Statussymbole und sichtbare Archivansicht (v236)",
+      "body": "Der Header zeigt lokalen Speicher und Google Drive als zwei getrennte, dezente Statusaktionen mit mindestens 44 × 44 px. Logo und Beta bleiben erhalten; mobil entfällt die sichtbare Speicher-Textzeile. Desktop verwendet dieselben Aktionen in der Kopfzeile.\n\nLokaler Pending-, Erfolgs-, Fehler- und CAS-Zustand stammt aus tatsächlicher Speicherung. Fehlgeschlagene Writes bleiben Fehler bis zum bestätigten Erfolg. Statusabruf und Vordergrund prüfen die vorhandene Revision lesend, ohne Polling. Der native Statusdialog bietet Speicherhilfe beziehungsweise Reload. Normales Schließen erhält die Scrollposition; nach einem Formatwechsel wird die verfügbare äquivalente Aktion tatsächlich sichtbar fokussiert.\n\nDRIVE-HEADER01, UI-HEADER-STATUS02 und DRIVE-AUTH-PERSIST01 Phase A verwenden den vorhandenen OAuth-/Verschlüsselungs-/Due-Backupfluss. Header-Reautorisierung startet direkt aus der Nutzergeste; konkurrierende Aktionen sind gesperrt. Das bestehende fällige Backup folgt nach Autorisierung. Tatsächlicher Abschluss oder Abbruch/Fehler wird auch außerhalb „Mehr“ sichtbar erklärt. Ein gültiger Zugang öffnet nur Status, letzte Sicherung und Aktionen. Keine Tokens in DOM, Status-Events oder persistentem Speicher; keine neue OAuth-/Sync-Engine.\n\nBeim Backup verhindert eine verpflichtende lesende Guard-Prüfung einen veralteten kanonischen Stand oder einen während der Verschlüsselung geänderten Schnappschuss vor dem Upload. Ändert sich der Stand während eines bestätigten Uploads, werden neuere Änderungen nicht als gesichert markiert und ältere Sicherungen nicht bereinigt. Auch Aufbewahrungsbereinigung prüft den Stand. Ein bestätigter Upload wird bei fehlgeschlagener lokaler Bestätigung im selben Lauf nicht automatisch wiederholt; die Rückmeldung unterscheidet Upload und Abschlussprüfung. Finanzrechnung, kanonische Schreiblogik, Speicherformat und Kryptografie bleiben unverändert.\n\nEnthält den geprüften Archivteil #243: dauerhaft sichtbare Ansicht Aktiv/Archiviert/Alle mit Suche, Sortierung und Auswahl vor Paginierung. Keine Änderung von Bewertung oder Löschberechtigung. Gemeinsamer SW236-Release, kein separates SW235-Deployment.\n\nLokal: 1.008/1.008 Unit-Tests, Syntax sowie Chromium-Header- und Archivregression bestanden. Sechs neue Sicherheitstests lehnen den ungeschützten Originalcode im Negativkontrolllauf ab; der frische Positivfall erhält reguläres Backup und konfigurierte Aufbewahrung. Browserfälle prüfen sieben Breiten und 740 × 360, 125 % Text, 44-px-Ziele, Logoabstand, echte Geometrie/Hit-Tests, Axe, natives close-Ereignis, Fokus und Scrollposition. Ausdrücklich synthetisches OAuth nutzt echte lokale Verschlüsselung und tatsächliche IndexedDB-/CAS-Zustände, einschließlich unbekannter konkurrierender Revision: null veraltete Uploads, exakter Gewinner-Datensatz unverändert. Reale App-Service-Worker bleiben aktiviert und kontrollierend. Nur der deklarierte Google-Testtransport ist isoliert. Keine Erfolgsfallbacks, Axe-Ausnahmen oder geänderten Bildreferenzen/Toleranzen.\n\nDie vollständige aktuelle Chromium-/Firefox-/WebKit-CI und anschließende Produktionsabnahme bleiben erforderlich. Reale Google-Freigabe und Android/PWA/TalkBack sind EXTERNAL. DRIVE-AUTH-PERSIST01 bleibt für weitergehende Identitäts-/Remote-CAS-/Idempotenzfragen PARTIAL; FLH04-Sync ist separat OPEN/ACTIVE. UI-POS02 Detail-/Dialogaktionen und UI-BOOK03 bleiben offen.\n\nDetails: docs/DRIVE_HEADER_STATUS_2026-10-31.md, docs/release-evidence/drive-snapshot-guard-local.json und docs/UI_POS02_ARCHIVE_VIEW_2026-10-31.md. Integration gemäß autonomer Nutzerfreigabe erst nach vollständigen aktuellen Gates und frischem Main-/HEAD-/Konfliktcheck; anschließend volle Produktionsabnahme und Checkpoint. Rückfallbasis bis dahin v234 LIVE_ACCEPTED.",
+      "head": "db53a64901ec39b1813802868bfeb20b44ef8223",
+      "base": "d28f535e7dc36ec0e2ac4aec8158dbefc3a1f41b",
+      "created_at": "2026-10-31T09:01:16Z",
+      "updated_at": "2026-10-31T10:30:52Z"
+    },
+    {
+      "number": 72,
+      "url": "https://github.com/joke0071/foliolab-open/pull/72",
+      "title": "Mobile Verlauf: kompakte Stichtagsteuerung und Kalender",
+      "body": "## Änderungen\n- Verlaufsseite im Haupttitel als **Vermögensentwicklung**, Menüpunkt weiterhin **Verlauf**.\n- Diagrammüberschrift **Entwicklung nach Stichtagen**.\n- Kompakte mobile Zeitfilter 1 M / 3 M / 1 J / Alles plus Kalender-Icon und Plus-Button nach Vorlage aus dem privaten FolioLab (nur UI, keine private Datenlogik).\n- Kalender mit Stichtagmarkierungen, Monatspaginierung, zweistufiger Start-/Enddatumswahl, Zurücksetzen, Escape und Klick-außerhalb.\n- **Stichtage verwalten** standardmäßig eingeklappt und im Diagramm-Panel integriert.\n- Inklusive Regressionstest und PWA-Cache-Refresh v90.\n\n## Testhinweise\n- `npm test` und `npm run check` in CI, mobile Viewports 320/390/430 px bei Bedarf prüfen.\n- Keine Änderung der Speicherung/Bewertungslogik oder API-Schlüssel.",
+      "head": "5e270c6e2df847b5951ef096fe5849cfb7a7c3c2",
+      "base": "3ef97921faa43b3f4e4f97d484d809d8a30baf3e",
+      "created_at": "2026-10-23T19:32:42Z",
+      "updated_at": "2026-10-23T19:42:02Z"
+    },
+    {
+      "number": 77,
+      "url": "https://github.com/joke0071/foliolab-open/pull/77",
+      "title": "UI: kräftigere Aktionsicons, klare Beschriftungen und weniger Leerraum",
+      "body": "## Umsetzung\n- Aktion-SVGs in Positionen, Buchungen und Kalender auf die kräftigere 2,2er-Strichstärke des Verlaufs vereinheitlicht; Plus ebenfalls etwas präsenter.\n- Kurze Desktop-Aktionslabels: Anlage, Aktualisieren, Wallet, CSV-Import, Buchung sowie + Stichtag. Mobile Ansicht bleibt icon-only.\n- Zugängliche `aria-label`-/`title`-Texte bleiben vollständig erhalten; Kalender in beiden Ansichten ohne Text.\n- Kurze Orientierungssätze unter den Seitentiteln von Verlauf, Positionen und Buchungen; geringere vertikale Abstände ohne zusätzliche Kacheln.\n- HTML/JS und CSS in bestehender Vanilla-JS-Architektur angepasst; Service-Worker-Version v95.\n- Browserregressionen prüfen 320–1440 px, Labels, Icon-Strichstärken, Kontexttexte und unveränderte Aktionen.\n\n## Test\nGitHub Actions vor Veröffentlichung prüfen.",
+      "head": "7adef16547e7693e5efa5d706866239c3146b6cf",
+      "base": "674f6ae3893554e641da575beb4a5bb17a663199",
+      "created_at": "2026-10-23T20:54:42Z",
+      "updated_at": "2026-10-23T21:00:57Z"
+    },
+    {
+      "number": 57,
+      "url": "https://github.com/joke0071/foliolab-open/pull/57",
+      "title": "Fix EODHD network failures, add password eyes, remove provider links (v76)",
+      "body": "## Changes\n- Use a second **official EODHD HTTPS API host** on browser transport errors only. Retain strict EODHD symbol/date validation and never retry auth, plan or quota HTTP errors. No generic proxy or third-party credential forwarding. Better network/CORS messages, same existing last-known-price fallback.\n- Apply accessible, local-only show/hide controls to all six configured API-key fields and the Solana RPC URL (can embed an API token). Default and reload state always masked.\n- Remove external Binplorer and Helius provider links from the More settings, retain neutral explanatory provider names and project-owned Worker instructions.\n- Add unit tests for official failover, no second requests after provider HTTP errors and absence of key leakage; browser test for credential masking, EODHD update from mocked alternate host, responsive widths.\n- PWA cache revision v76 and required first-party precache entries.\n\nNo real user API key accessed or published; EODHD browser behaviour with the user's live subscription cannot be fully verified in CI. Publish only after full unit/Chromium/Firefox/WebKit and Pages verification.",
+      "head": "01a7f5e440d143a0322becc2ae1e3691f71bd6bb",
+      "base": "f5c207db804b826117ac4221e882eef7e8a5d160",
+      "created_at": "2026-10-23T13:16:12Z",
+      "updated_at": "2026-10-23T13:27:13Z"
+    },
+    {
+      "number": 170,
+      "url": "https://github.com/joke0071/foliolab-open/pull/170",
+      "title": "UI C5: sekundäre Positionsaktionen einklappen und Verbindungen vereinheitlichen",
+      "body": "Sekundäre Aktionen erzeugten dauerhaft große Aktionsflächen. Historie, Rekonstruktion, Kontoprüfung und vorhandene Prüffilteraktionen stehen jetzt im bestehenden „Bestand und Kursdetails“-Akkordeon. Bearbeiten/Löschen bleiben direkt; Archiv/Wieder-Einblenden nutzt ein beschriftetes 44px-Icon und die unveränderte Bestätigung/Archivengine.\n\n„Interne Transfers“ ist ein eigenes geschlossenes Akkordeon neben „Erträge und Abzüge“, mit dem vereinbarten Untertitel und einer belegbaren kurzen Erklärung. Vorhandene Matching-/Undo-/Recovery-Funktionen bleiben erhalten. Optionale Verbindungen und verschachtelte Experteneinstellungen verwenden die vorhandene Settings-Hierarchie, Pfeile, Fontgrößen und Saveausrichtung; vier konkrete Kontrastziele sind gezielt korrigiert. Alle Konfigurationsfelder und Finanz-/Storage-Module bleiben unverändert.\n\nValidierung am finalen HEAD `a6fff68c5a37976c3bc47a24663f5aeec125906c`, Tree `7d114be5827f9b0050fcdc73d8f58c1f235d3391`:\n- Lokal Syntax und712/712Unit-Tests ohne Skip PASS; vollständiger C5-Chromium-Lauf und Cash-Terms-/Lösch-Regression PASS. Tatsächliche Bildprüfung Mobile320/390 und Desktop1440; fünf Breiten, kurze Höhe,150%-Textstress/Axe/exakte Nullmutationen im automatisierten UI-Lauf.\n- [Finale CI40471894438](https://github.com/joke0071/foliolab-open/actions/runs/40471894438): vollständiger Firefox-/WebKit-Job SUCCESS. Chromium erster Versuch unveränderter SW-Controller-Bootstrap-Timeout vor C5; lokal nicht reproduziert und volle Regression bestanden. Ein gezielter Wiederholungsversuch dieses Jobs läuft, keine Assertions/Timeouts geändert. Noch kein finales Grün oder Release behauptet.\n- Alte Fehlläufe40469111778 (neuer Test las geschlossene Details),40470251924 (vorhandene falsche Variablenreferenz im Cash-Terms-Test) unverändert dokumentiert. Testabläufe korrigiert, ursprüngliche fachliche Assertions erhalten.\n- Separater Source-Review-Pass: Archiv-/Löschhandler, komplette Settings-/Events-/Storage-/Recovery-Tail und alle ursprünglichen Form-Control-Tags bytegleich zur Basis. Kein behauptetes externes/menschliches Review.\n\nRelease ausschließlich nach vollständigem finalen Grün, PR-Bildprüfung und Konfliktprüfung unter bestehender UI-Freigabe. Danach separate Main/Pages/Live-Abnahme mit105Assethashes, SW186, Kernfunktionen und drei Engines. Produktiv aktuell weiterhin vollständig akzeptiertes v185. Physische Android-Systemschrift/Hardware und echte Google-OAuth-Interaktion separat ungetestet. Buchungsfinanzmutationen165 und FLH04 sind nicht enthalten und nicht produktiv freigegeben.\n\nCheckpoint: docs/FLH03_WORK_CHECKPOINT.md; docs/UI_QUALITAET_C5_SEKUNDAERAKTIONEN.md. Begrenzter unabhängiger Abschlusscheck erst nach produktiver Stabilisierung.",
+      "head": "a6fff68c5a37976c3bc47a24663f5aeec125906c",
+      "base": "3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5",
+      "created_at": "2026-10-27T07:46:06Z",
+      "updated_at": "2026-10-27T08:27:34Z"
+    },
+    {
+      "number": 185,
+      "url": "https://github.com/joke0071/foliolab-open/pull/185",
+      "title": "Verlauf kompakter gestalten und historische Referenzwerte benennen",
+      "body": "Der konsolidierte UI-Nachtrag beginnt mit dem reinen Darstellungsschnitt: drei einheitliche dekorative Linienicons, kompakte Datenbasis bei unveränderten Optionen/Zeiträumen, „Historische Referenzwerte“ und Entfernung der zusätzlichen letzten Anbieterlinie. Liquidität ist bei identischen Daten auf 320/390/768/1024/1440 bedienbar; kein Responsive-Fix nötig. Ein im geöffneten Renditebereich nachgewiesener Hilfetext-Kontrastfehler nutzt jetzt die bestehende Formular-Hilfsfarbe.\n\nKeine Finanz-/Modell-/Storage-/Backupmutation. Referenzverwaltung/Archiv/Edit/Delete bleiben als nächster getrennter Fachschnitt an Herkunfts-, Persistenz-, CAS- und Restorevertrag gebunden; FLH-PROJ01 bleibt ausschließlich dokumentiert.\n\nLokal: 799/799 Units, 0 Fehler/Skip, Syntax; neue Chromium-Regression über fünf Breiten mit Keyboard/Axe/geöffneten Bereichen/Provenienz/Basisoptionen/Anbieter offen-geschlossen-leer/Liquidität/exakter kanonischer Nullmutation. Bestehende vollständige UI-Quality- und Chart-Perioden-Suites PASS; ausgewählte tatsächliche 320/390/1440-Bilder geprüft. Die neue Suite läuft über den bestehenden UI-Quality-Einstieg in beiden unveränderten Firefox/WebKit-Pflichtshards und dem tatsächlichen Drei-Engine-Produktionspfad.\n\nBasis main 4671382a36f274346c95b545ac18d288a3faff9f; lokaler/remote Tree c7a28cc05d9ad815d2921409d1d92bc1df64a13b exakt gleich. Vollständige finale CI, Mergebaum, Deployment und tatsächliche Live-Abnahme sind noch offen. Details: docs/HISTORY_UI_FOLLOWUP_CHECKPOINT.md. Letzte vollständige Produktion v195; SW196 ist Kandidat.",
+      "head": "a486c826c20f24b98f17cc10444f8035ff9ef416",
+      "base": "4671382a36f274346c95b545ac18d288a3faff9f",
+      "created_at": "2026-10-28T10:45:57Z",
+      "updated_at": "2026-10-28T10:54:49Z"
+    },
+    {
+      "number": 289,
+      "url": "https://github.com/joke0071/foliolab-open/pull/289",
+      "title": "UI-ALLTAG10: konsistente Listenverwaltung, Installation und zentrale Kurs-CSV-Werkzeuge",
+      "body": "Positions- und Buchungsdetails erscheinen unter „Verwalten“. Long-Press aktiviert die Verwaltung und wählt genau den gedrückten Eintrag; der Abschluss derselben Geste bleibt auch nach Zeilen-Reflow gesperrt. Neue bewusste Aktionen, Fertig und Tastaturbedienung funktionieren unabhängig. Transferaktionen bleiben mit Vorschau, Belegen, Zustimmung, CAS und Undo erreichbar.\n\nDas Paket enthält ein kompaktes Installationssymbol mit Prompt beziehungsweise Hilfe, den sichtbar bewegten Loader, mobile Leisten, aktualisierte Hilfetexte und den 768-px-Header. Unter Mehr → Automatische Kurse → Kursverläufe per CSV führt eine ausdrückliche Positionswahl zu den bestehenden Import-/Ersetzen-/Entfernen-Funktionen. Quelle, Kennung und Währung bleiben sichtbar; keine neue Providererkennung oder Importlogik.\n\nDie unabhängige 200%-Textsichtung fand überlappende Detail-/Bearbeitenflächen bei 320px. Schriftabhängiger Platz und ein Umbruch bei Platzmangel korrigieren dies; neue Geometrieassertions reproduzieren den Fehler mit altem CSS. Alte Schlüssel- und Positionsdetail-Testeinstiege wurden auf den eindeutigen Sicherheitsaufklapper beziehungsweise Verwalten umgestellt, sämtliche fachlichen und Sicherheitsassertions bleiben erhalten.\n\n128 versehentliche Ergänzungen (_cap.mjs und 127 neue Gateartefakte) sind aus dem Diff entfernt; bestehende synthetische Nachweise bleiben erhalten. v274-Bitpandaänderungen, v5, Identitäten sowie Finanz-, Parser-, Speicher- und Backupverträge bleiben erhalten. Neue UI-Gates sind in allen vier Integrations-/Livepfaden additiv verpflichtend.\n\nValidierung: Syntax; 1.150 serielle Units, keine Fehler/Skips. Eigene Chromium-Prüfungen für drei Listen mit trusted CDP-Touch, Reflow/Ghost/Fertig/Teardown, Loading/PWA/Reload, tatsächliche 200%-Schrift, zentralen CSV-Weg, vollständige UI-/Transferkette sowie Positionsentfernung mit Wirtschafts-/CAS-/Undo-/Restore-/Offline-Schutz. Textgeometrie zusätzlich lokal in WebKit bestanden. Originale Fehlerversuche und Hash-/ZIP-/Bildbelege auf dem Checkpointbranch dokumentiert; keine blinden Retries.\n\nEingefrorener HEAD: caa18efb26da86d55df4d1068475141160890a35; Tree: 14853689d9d48adad2a67a39ed30b80b6a0a390c. Pflicht-CI 41681836593 / Wallet 41681836866 läuft. Noch kein Merge, UI-Release oder LIVE_ACCEPTED. Android-/iOS-Hardware, TalkBack und IME ungeprüft.\n\nDetails: docs/ui-copilot-2026-11-03/REPORT.md. #257-B und L07 gemäß Nutzerentscheidung. Closes #288.",
+      "head": "caa18efb26da86d55df4d1068475141160890a35",
+      "base": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+      "created_at": "2026-11-03T12:50:47Z",
+      "updated_at": "2026-11-03T17:29:19Z"
+    }
+  ],
+  "snapshotIdentities": [
+    {
+      "ref": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+      "path": "index.html",
+      "blob": "56d9ee3286189ee7cb6eeb047243b6bd22b9d9f9",
+      "url": "https://github.com/joke0071/foliolab-open/blob/b248890792ca56987d16a5bc7884d9c84970e9a3/index.html"
+    },
+    {
+      "ref": "4557f190e2569edf943e76a0f5c91e2e0337ea4d",
+      "path": "index.html",
+      "blob": "d2f9ad0cd0fee42a5d57dd0e8992b8d3c17b3e2d",
+      "url": "https://github.com/joke0071/foliolab-open/blob/4557f190e2569edf943e76a0f5c91e2e0337ea4d/index.html"
+    },
+    {
+      "ref": "21e465183ba2c2b46ae09e33e9dbbfc5a2fa00bc",
+      "path": "index.html",
+      "blob": "a37c9fdfbf108b7880bfab29f8c78f418fdf7d83",
+      "url": "https://github.com/joke0071/foliolab-open/blob/21e465183ba2c2b46ae09e33e9dbbfc5a2fa00bc/index.html"
+    },
+    {
+      "ref": "74fd8bc0f11d30b5fa05628117acf26e9ae870b4",
+      "path": "index.html",
+      "blob": "d1e12dc9b6183d215d26d54007a0c1c81a0bfbe4",
+      "url": "https://github.com/joke0071/foliolab-open/blob/74fd8bc0f11d30b5fa05628117acf26e9ae870b4/index.html"
+    },
+    {
+      "ref": "c9c283cde54540778ddaed27a5856b86441192b0",
+      "path": "index.html",
+      "blob": "207739f9c37dcd191d398922fb5e1410d321b6c7",
+      "url": "https://github.com/joke0071/foliolab-open/blob/c9c283cde54540778ddaed27a5856b86441192b0/index.html"
+    },
+    {
+      "ref": "d259b0b45fb1f5362bbed1990bee9dd969e93178",
+      "path": "index.html",
+      "blob": "8fc910fb96367e53298f182c1a440c95d0df2ceb",
+      "url": "https://github.com/joke0071/foliolab-open/blob/d259b0b45fb1f5362bbed1990bee9dd969e93178/index.html"
+    },
+    {
+      "ref": "e0c4462a70eb4bb949f8833f938838233c8290db",
+      "path": "index.html",
+      "blob": "d497ff123f42212e863773119a2b941ab47a8221",
+      "url": "https://github.com/joke0071/foliolab-open/blob/e0c4462a70eb4bb949f8833f938838233c8290db/index.html"
+    },
+    {
+      "ref": "46783f38ec486ca03418c3fb41c22b4323da245d",
+      "path": "index.html",
+      "blob": "f96db282f949159aead4598bd1fa3bbda0072f71",
+      "url": "https://github.com/joke0071/foliolab-open/blob/46783f38ec486ca03418c3fb41c22b4323da245d/index.html"
+    },
+    {
+      "ref": "060b4ca0edfa0afe55bd54e27e90518b494e12cb",
+      "path": "index.html",
+      "blob": "e463405917afe5888cd6bae08b25262e5338fdfa",
+      "url": "https://github.com/joke0071/foliolab-open/blob/060b4ca0edfa0afe55bd54e27e90518b494e12cb/index.html"
+    },
+    {
+      "ref": "53d0c04f5bc8010051183d1ec2ab6cdf3afd701a",
+      "path": "index.html",
+      "blob": "a2d6b1b1c066f930dc2f0c6be6e9825b50ae4ca7",
+      "url": "https://github.com/joke0071/foliolab-open/blob/53d0c04f5bc8010051183d1ec2ab6cdf3afd701a/index.html"
+    },
+    {
+      "ref": "f400134816937032dadd83adba23a0771b20a9d8",
+      "path": "index.html",
+      "blob": "d40d56a17849229983c8b1b2ea4282af8b443bcd",
+      "url": "https://github.com/joke0071/foliolab-open/blob/f400134816937032dadd83adba23a0771b20a9d8/index.html"
+    },
+    {
+      "ref": "99bbbb163c4fa071b1564bc9e00ba79241e9072d",
+      "path": "index.html",
+      "blob": "1a1819200032ceb41053d9a6185b0f1cc2315134",
+      "url": "https://github.com/joke0071/foliolab-open/blob/99bbbb163c4fa071b1564bc9e00ba79241e9072d/index.html"
+    },
+    {
+      "ref": "550837c342002277e2669bc52d682f25b09e89ff",
+      "path": "src/position-icons.js",
+      "blob": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+      "url": "https://github.com/joke0071/foliolab-open/blob/550837c342002277e2669bc52d682f25b09e89ff/src/position-icons.js"
+    },
+    {
+      "ref": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "path": "index.html",
+      "blob": "58a43d21d023a5eb93422d809041e162b5d5867a",
+      "url": "https://github.com/joke0071/foliolab-open/blob/258fb2370ae7558b5678b48035b43c0ae74d4dc0/index.html"
+    },
+    {
+      "ref": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "path": "src/format.js",
+      "blob": "251c4e369b3b47aa56e5efb8e65f7106a987f9b7",
+      "url": "https://github.com/joke0071/foliolab-open/blob/258fb2370ae7558b5678b48035b43c0ae74d4dc0/src/format.js"
+    },
+    {
+      "ref": "4def94b43008b8b36c243e586696d0a152010d32",
+      "path": "src/format.js",
+      "blob": "8857db66fc5a02b5db753de3e77e49a88be9c977",
+      "url": "https://github.com/joke0071/foliolab-open/blob/4def94b43008b8b36c243e586696d0a152010d32/src/format.js"
+    },
+    {
+      "ref": "4a10aefaf065b8840b14a78d93a3e8e61330d84b",
+      "path": "src/format.js",
+      "blob": "171e06b4c88d13d98ee5980d363477fe639a14a2",
+      "url": "https://github.com/joke0071/foliolab-open/blob/4a10aefaf065b8840b14a78d93a3e8e61330d84b/src/format.js"
+    },
+    {
+      "ref": "7fa5575f0e629f097a5b0c3aa23a8eff29d4c549",
+      "path": "src/format.js",
+      "blob": "50c14ec4c9151fe276e8a3cfe6e9d755db1c9186",
+      "url": "https://github.com/joke0071/foliolab-open/blob/7fa5575f0e629f097a5b0c3aa23a8eff29d4c549/src/format.js"
+    },
+    {
+      "ref": "a486c826c20f24b98f17cc10444f8035ff9ef416",
+      "path": "src/format.js",
+      "blob": "9273a066c291426a1d497c9bf34de4a72d9ee125",
+      "url": "https://github.com/joke0071/foliolab-open/blob/a486c826c20f24b98f17cc10444f8035ff9ef416/src/format.js"
+    },
+    {
+      "ref": "d6b45110c5fcef0b21ddf7511e6e9c0f1d7d354c",
+      "path": "src/format.js",
+      "blob": "5c9a7f13e66a8f0f2b38388d5d8349c85a460652",
+      "url": "https://github.com/joke0071/foliolab-open/blob/d6b45110c5fcef0b21ddf7511e6e9c0f1d7d354c/src/format.js"
+    },
+    {
+      "ref": "bf8d10e8be9f1ba9d4003d908d337d4d30f29e90",
+      "path": "src/format.js",
+      "blob": "7a294c0f4e96012b0eb7053d64a654a4a346ea41",
+      "url": "https://github.com/joke0071/foliolab-open/blob/bf8d10e8be9f1ba9d4003d908d337d4d30f29e90/src/format.js"
+    },
+    {
+      "ref": "ea931ac696d50101a6ac37caa84eeb2647300b05",
+      "path": "src/format.js",
+      "blob": "bb80ca51d088899d83b02eab4510d6397fff264a",
+      "url": "https://github.com/joke0071/foliolab-open/blob/ea931ac696d50101a6ac37caa84eeb2647300b05/src/format.js"
+    },
+    {
+      "ref": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+      "path": "src/format.js",
+      "blob": "fdd59c02d9c54d8ca875b00664af7a172e7aba33",
+      "url": "https://github.com/joke0071/foliolab-open/blob/b248890792ca56987d16a5bc7884d9c84970e9a3/src/format.js"
+    },
+    {
+      "ref": "b248890792ca56987d16a5bc7884d9c84970e9a3",
+      "path": "icons/flask.svg",
+      "blob": "835dc8af7e62227070fd22f93f2c87c7bfb59871",
+      "url": "https://github.com/joke0071/foliolab-open/blob/b248890792ca56987d16a5bc7884d9c84970e9a3/icons/flask.svg"
+    }
+  ],
+  "scopeSearch": {
+    "commitAssociatedPRs": true,
+    "commitComments": {
+      "b2488907": [],
+      "550837c3": [],
+      "4557f190": [],
+      "040853ca": []
+    },
+    "pr134Comments": [
+      {
+        "id": 6395248639,
+        "url": "https://github.com/joke0071/foliolab-open/pull/134#issuecomment-6395248639",
+        "body": "Release-Gate gestartet (25.10.2026). main erneut 01a681960c0823010efe7e3599eb1d8512383673 / v150. #134 HEAD 48b28c700941fd52843b767cf5edec852c50aeae, weiterhin Draft/offen. #133 HEAD ef80f1b2bde1a07d9bcc31fd571f6cab7ea40051 ist trotz erfolgreicher Endabnahme weiterhin offen/Draft und **nicht integriert**. Daher verbindliche Integrationsblockade gemäß aktuellem Nutzerauftrag: kein Merge/Deploy oder konfliktgefährdendes Aktualisieren vor Integration von #133; dessen Branch bleibt unverändert. Bereits vorhandene #134-CI 40173091204 und Wallet 40173091202 am exakten HEAD grün. Jetzt ausschließlich lesende Diff-/CI-Vorprüfung; Ergebnisse und genauer Wiedereinstieg folgen hier und im Master #124.",
+        "updated_at": "2026-10-25T08:11:02Z"
+      },
+      {
+        "id": 6395280766,
+        "url": "https://github.com/joke0071/foliolab-open/pull/134#issuecomment-6395280766",
+        "body": "## Release #134 – Vorprüfung abgeschlossen, Integration BLOCKIERT · 25.10.2026\n\n**Blocker ist die vom Nutzer vorgegebene Reihenfolge:** #133 ist weiter offen/Draft, nicht integriert. Code von AT02-B ist zwar abgenommen, aber dessen Merge wurde in diesem Auftrag nicht autorisiert. #134 darf erst auf main nach Integration von #133 aktualisiert und veröffentlicht werden. Deshalb kein Branchupdate/Force/Merge/Deployment und keine Live-Abnahme der neuen Symbole.\n\n### Exakte Ausgangsstände\n- main **01a681960c0823010efe7e3599eb1d8512383673**, SW v150.\n- #133 **ef80f1b2bde1a07d9bcc31fd571f6cab7ea40051**, Draft/offen; [Abnahmecheckpoint](https://github.com/joke0071/foliolab-open/issues/126#issuecomment-6395125462). CI40174349510 und Wallet40174349494 erfolgreich,589Tests. Branch unverändert.\n- #134 **48b28c700941fd52843b767cf5edec852c50aeae**, Draft/offen, Basis01a6819. Getesteter synthetischer PR-Merge **2e49d9245bb1ce0fafcb21fdc2c96602fc517def**, Tree **de1e244d51e9154b2e7a9971e71106e79d11139c**. Vorgeschlagener Branchcache v151 ist noch kein Produktionsrelease.\n\n### Tatsächlich geprüfte Diffs\nSieben Dateien,90hinzugefügte/9entfernte Zeilen: app.js,format.js,position-icons.js,styles.css,sw.js,browser-cash-terms.mjs,position-icons.test.mjs.\n- Statische SVG-Pfade im vorhandenen Renderer,1,8px/currentColor/dekoratives aria-hidden; Mapping aus position.kind. Festgeld ausschließlich explizites cashTerms.fixedTerm, keine Namensheuristik.\n- Wallet-/Stakingstatus ersetzt die Anlageklasse nicht; Wallet-Tag bleibt. CSS nur Positionssymbole bei schmalen Viewports; Anbieter-/Navigationssymbole unangetastet.\n- Keine Modell-/Geld-/Journal-/Speicher-/Wallet-/API-/Backupänderung.\n- Tatsächlich **SW-Änderung vorhanden**: v151 und position-icons.js im Precache. Ursprüngliche PR-Beschreibung „kein Service Worker“ wird entsprechend korrigiert.\n- Bestehende Worker-Testhilfe auf aktuelle Version und außerhalb evaluate ausgelöstes Update angepasst, um Navigationsrennen zu vermeiden; Daten-/Offline-/Cacheassertions bleiben erhalten.\nKein konkretes kritisches/hohes Produktfinding in diesem begrenzten Review. Keine neue Funktion oder Codekorrektur durchgeführt.\n\n### Tatsächliche Testnachweise am #134-HEAD\n- [CI40173091204](https://github.com/joke0071/foliolab-open/actions/runs/40173091204): test+cross-engine erfolgreich, Deploy übersprungen. Log geprüft: **559/559 Tests,0Fail/Skip**, npm run check, komplette Chromium-Suite.\n- Firefox und WebKit: Mobile/Desktop, Dialog/Anlage/Persistenz/Backup sowie Cashvergleich/Festgeld/Workerupdate/Offline erfolgreich.\n- Allgemeiner Axe-Lauf **11Scans/0Verstöße**;20Pixelreferenzen grün. Offline-Mobile320–430px mit CPU-Drosselung sowie bestehende PWA-Update-/Entwurfsschutz-/Datenintegritätsprüfungen grün.\n- [Wallet40173091202](https://github.com/joke0071/foliolab-open/actions/runs/40173091202) erfolgreich.\n- In isoliertem **detached**, sauberem Worktree exakt48b28c7 zusätzlich selbst ausgeführt: npm run check und4/4Symbolreferenzen erfolgreich, diff-check sauber. Mapping/Fallback, explizites Festgeld, Wallet-/Staking-Unabhängigkeit, konsistente SVG-Striche und dekorative Accessibility.\n- Precacheprüfung:89eindeutige vorhandene Assets einschließlich position-icons.js.\n**Noch nicht geprüft:** kombinierter Stand #133+#134 und neue Symbole produktiv. Separate grüne CI ersetzt diese Gates nicht.\n\n### Exakter Wiedereinstieg nach Integration von #133\n1. Dieses Releasecheckpoint/#133-Abnahme lesen; aktuellen main, tatsächlichen #133-Merge, #134-HEAD und neue fremde Änderungen feststellen. #133-Branch nicht verändern.\n2. Nur #134-Branch von aktuellem main aktualisieren. Gemeinsame Dateien gezielt vereinigen: **src/app.js,styles.css,sw.js,tests/browser-cash-terms.mjs**.\n3. AT02-B-Imports/Kontodialog/asyncGeneration/Storage-Lesegate und alle Symboländerungen erhalten. Beide CSS-Blöcke übernehmen. Im Worker eine **höhere Version als dann aktuelles main** verwenden (bei main v155 mindestens v156), gemeinsame Assetliste inklusive **interest-scenario.js,interest-account.js,interest-ui.js,position-icons.js**. Bei ausschließlich diesen beiden Features92Assets; tatsächliche Liste erneut prüfen.\n4. Worker-Testhilfe zusammenführen: dynamische Zielversion, tatsächlicher alter149-Worker, Ausschluss der neuen Zinsmodule im Altfixture und verzögertes Update zur Vermeidung des Navigationsrennens. Keine Assertions schwächen.\n5. Von #133 übernommene Workflowaufrufe für interest-scenario unter Chromium/Firefox/WebKit erhalten; keine Rücknahme seines Workflows/Fixtures/visuellen Referenzen.\n6. Integrationsänderungen lokal prüfen/testen, einzeln committen/pushen; #134/#124 mit SHA/Restgates aktualisieren. Vollständige kombinierte CI: npm run check/npm test, Chromium/Firefox/WebKit, Mobile/Axe, Kontostandsvergleich, Festgeld/Zinsprognose, Backup/Restore, Storage/Mehrtab, PWA/Offline. Aktuelle erwartete589+4Tests sind nur Planwert, kein bestandener Testnachweis.\n7. Erst bei grünen Gates und unverändertem getesteten HEAD SHA-gebunden #134 mergen (Nutzerautorisierung für #134 liegt bedingt vor), vorhandenen Produktionsworkflow abwarten. Tatsächlich ausgelieferten Commit/Version/SW-Cache/Icons auf Mobil/Desktop und bestehende PWA-/Finanz-/Backupfunktionen mit synthetischen Daten live abnehmen.\n8. Merge-SHA/CI/Deploy/Live-Version in #134/#124 sichern. Bei neuen Blockern erneut eindeutigen Checkpoint schreiben.\n\nKeine Codeänderung und damit kein neuer Commit erforderlich. Beide Worktrees sauber, #133/#134-Branches unangetastet. **Merge-SHA #134: nicht vorhanden. Neues Deployment/Live-Abnahme: nicht durchgeführt.**\n\n### Letzter sicherer Abschlussstand / produktive Versionskontrolle\nÖffentliches `https://joke0071.github.io/foliolab-open/sw.js` tatsächlich per HTTPS abgerufen: **foliolab-open-v150**, byteidentisch zu aktuellem main-SW; SHA256 `5e5e8b871abe7e6b946f549378ee80abe788b867948b724a35faea5c0b20dfb4`. Dies ist eine HTTP-Versionskontrolle, keine Live-Abnahme der noch unveröffentlichten Symbole. Unmittelbar vor Abschluss erneut API-verifiziert: main01a6819, #133 offen/unmerged HEADef80f1b, #134 offen/unmerged HEAD48b28c7. Beide lokalen Worktrees sauber, #133-Branch weiterhin unverändert. Der oben beschriebene Reihenfolgeblocker besteht fort.",
+        "updated_at": "2026-10-25T08:15:36Z"
+      },
+      {
+        "id": 6396350781,
+        "url": "https://github.com/joke0071/foliolab-open/pull/134#issuecomment-6396350781",
+        "body": "## Integration nach #133 – konfliktfreier Checkpoint (25.10.2026)\n\n- #133 wurde auf main gemergt: `2f1a82f686ebe89f27c991610812b75fe4195d6a`. Produktions-CI `40183318899` erfolgreich.\n- #134 separat aktualisiert: neuer HEAD **`95ef5be25fd099297bb314481467cd3e7912920f`** (echter Zwei-Eltern-Merge-Commit, Eltern #134-alt `48b28c7` und main `2f1a82f`).\n- Additive Integration in `src/app.js`, `styles.css`, `sw.js` und `tests/browser-cash-terms.mjs`. Beide Featuregruppen erhalten, kein Modell-/Finanz-/Storage-Umbau.\n- PWA-Cache `foliolab-open-v156` mit vollständiger Asset-Union inklusive der drei Zinsmodule und `src/position-icons.js`. Mehrtab-/Backup-/Finanz- und Browser-Regressionen bleiben unverändert.\n- Der vollständige PR-Testlauf **40183696317** und Wallet-Tests **40183696273** laufen auf exakt diesem neuen HEAD. Noch **kein Merge/Deployment** von #134, bevor beide erfolgreich sind.\n- PR #135 `319d2c6` bleibt vollständig unangetastet.\n\n**Nächster Schritt:** Exakte CI-Ergebnisse beider Läufe auswerten. Bei Erfolg PR #134 auf Ready setzen, SHA-gebunden mergen, Produktions-CI und Pages-Verifikation prüfen. Bei Fehler konkreten Befund beheben und neu testen; keine ungeprüfte Freigabe.",
+        "updated_at": "2026-10-25T10:11:31Z"
+      },
+      {
+        "id": 6396424690,
+        "url": "https://github.com/joke0071/foliolab-open/pull/134#issuecomment-6396424690",
+        "body": "## Releaseabschluss #133 + #134 · Produktion v156 · 25.10.2026\n\n**Erfolgreich gemergt und produktiv veröffentlicht.**\n\n- PR #133 (AT02-B): Merge `2f1a82f686ebe89f27c991610812b75fe4195d6a`, vollständiger Produktionslauf [40183318899](https://github.com/joke0071/foliolab-open/actions/runs/40183318899) erfolgreich.\n- PR #134 (Positionssymbole): additives Integrations-HEAD `95ef5be25fd099297bb314481467cd3e7912920f`; Merge **`9356c1689dad4e2099a2454ade55186eb1020bc8`**.\n- Gemeinsame PR-CI [40183696317](https://github.com/joke0071/foliolab-open/actions/runs/40183696317): **593/593 Tests**, 0 Fail/Skip, gesamte Chromium-/Firefox-/WebKit-Gates erfolgreich. Wallet-CI [40183696273](https://github.com/joke0071/foliolab-open/actions/runs/40183696273) erfolgreich.\n- Finale Produktions-CI **[40183961338](https://github.com/joke0071/foliolab-open/actions/runs/40183961338)** auf exakt main `9356c1689dad4e2099a2454ade55186eb1020bc8`: 593/593 Tests, Chromium, Firefox, WebKit, vollständiger Pages-Deploy erfolgreich.\n- **Publikationsprüfung erfolgreich:** Workflow-Job `121141390279` meldet `Published homepage and service worker verified: https://joke0071.github.io/foliolab-open (attempt 1)`.\n- Live-URL: https://joke0071.github.io/foliolab-open/ · SW-Cache **`foliolab-open-v156`** · 92 eindeutige Precache-Assets inklusive Interest- und Symbolmodule.\n- Die vier gemeinsamen Dateien `src/app.js`, `styles.css`, `sw.js`, `tests/browser-cash-terms.mjs` wurden additiv vereinigt; keine Finanz-/Storage-Neuentwicklung.\n- **#135 (IndexedDB-only Phase A) blieb unverändert**: offen/Draft, HEAD `319d2c6a6b17fdb07cfc0521fbb592cc67ec420e`. Kein Merge oder Deployment dieser Speicheränderung.\n\n**Abnahmegrenze:** Produktions-Workflow hat Homepage und Cache live per HTTP bestätigt sowie Features vor Deployment browsergetestet; eigenständiger interaktiver Live-Browserdurchlauf und reale Android/Drive/Recovery-Hardware-Gates wurden hier nicht durchgeführt.\n\n**Nächster unabhängiger Schritt:** #135 gemäß Abschluss-Checkpoint in #44 additiv auf aktuellen main `9356c16` integrieren, neue kombinierte CI abwarten; erst danach IndexedDB Phase B. AT03-B separat starten. Kein erneuter #133/#134-Featurebau.",
+        "updated_at": "2026-10-25T10:19:28Z"
+      }
+    ],
+    "pr134Reviews": [],
+    "pr279Comments": [],
+    "pr279Reviews": [],
+    "generatorSearch": {
+      "commit": "040853ca948554fb6a1e985ca5e5bc69836d421e",
+      "changedPaths": [
+        ".github/workflows/import.yml",
+        "docs/release-evidence/v267-loading-pwa-preflight.json",
+        "icons/flask-192.png",
+        "icons/flask-512.png",
+        "icons/flask-maskable-512.png",
+        "index.html",
+        "manifest.webmanifest",
+        "src/app.js",
+        "src/loading-ui.js",
+        "src/startup.js",
+        "src/unified-bitcoin-ui.js",
+        "src/wallet-history-ui.js",
+        "styles.css",
+        "sw.js",
+        "tests/browser-loading-pwa.mjs",
+        "tests/browser-ui-small-rests.mjs",
+        "tests/ci-cross-engine-manifest.test.mjs",
+        "tests/ci-stage-workflow.test.mjs"
+      ],
+      "pngWorkflowBlob": "46ba58c5062a1d8539c336116dcf44e35cdaacfc",
+      "workflowRasterExportMatches": [],
+      "treeGeneratorCandidates": [
+        {
+          "path": "icons/flask.svg",
+          "sha": "823323630cb3fe1b9a6342e9d6e5421554c1194d"
+        },
+        {
+          "path": "tests/reference/interest_reference.py",
+          "sha": "9aa34e29783e9b7281b7b6b5e06841e9c567394b"
+        }
+      ]
+    },
+    "initialZipFound": true,
+    "externalSourceFollowed": "Private FolioLab template only, because PR72 names it. No new speculative Feather/Lucide comparison or unrelated external icon search.",
+    "personalContextSearch": "Only later audit/task summaries returned; no original creation record. Not used as a primary creation source.",
+    "separateOriginalAuthoringDraftsOrExportScriptsFound": []
+  },
+  "privateSource": {
+    "reason": "Explicit PR72 template reference",
+    "commit": "2ddf598f1e767780814cc47582193bef494b878e",
+    "selectedFiles": [
+      {
+        "path": "app/index.html",
+        "blob": "f4c75ffc3be5dd2e5c12049637758a2f16d1783f"
+      },
+      {
+        "path": "app/icons/icon-outline.svg",
+        "blob": "38105bbbf000e7615e9615f04a2a0811e2f13348"
+      },
+      {
+        "path": "app/icons/favicon-browser.svg",
+        "blob": "b24f1c9f3b75e2d8455c1860be71a148cf7c68dc"
+      }
+    ],
+    "licenseNoticePathsInCheckedTree": [],
+    "rawPrivateContentIncluded": false
+  }
+}
