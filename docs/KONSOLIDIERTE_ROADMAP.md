@@ -1,3 +1,9 @@
+## Fortschreibung · 15.11.2026 · PR342 qualifiziert, separate Freigabe offen
+
+[PR342-Prüfbericht](PR342_REQUEST_CREDENTIAL_BOUNDARY_REVIEW_2026-11-15.md): K2-KURSE/#266/SEC-03, konkrete Diagnose-/Header-/Cachegrenze für Zugangsdaten. Head `a9ac99f710571df04884f571cb557a8b52d0828c`, Tree `1d5a1f2db0d6e7d7fa39590deea44954868611b9`, Basis akzeptierter Main0d1638cb. Genau vier Dateien; 38 gerichtete Tests, reguläre PR-/Wallet-CI mit jeweils1492Tests und alle drei Engines bestanden. 15 Zielhöhen44px, PWA-Vertragv318. Originale gepinnt bytegleich rückgelesen und2362Dateien tatsächlich restauriert. **Nur qualifizierter PR, kein neuer Main/Deployment und kein K2-Gesamtabschluss.** Jochen entscheidet separat über Merge/Release. v317 bleibt LIVE_ACCEPTED; K3-Archivhinweis DONE, K3-Gesamtstatus wegen geparktem A09 PARTIAL. Historische503-/SW-UrsachenUNKNOWN, Grafikherkunft geparkt.
+
+---
+
 ## Fortschreibung · 15.11.2026 · v317 LIVE_ACCEPTED / K3-Archivhinweis abgeschlossen
 
 **[v317 vollständig abgenommen](V317_RELEASE_ACCEPTANCE_2026-11-15.md)**: PR341 ausschließlich am freigegebenen61b56ac5 headgebunden gemergt; tatsächlicher Main0d1638cb2034805dace789e3072fbb7bcda8d52c/Tree2644817d exakt qualifiziert. Regulärer43734167356/1 einschließlich Main,Deployment und vollständiger HTTPS-Produktion3Engines SUCCESS;1483Units/0Fehler/Skips,154Pages-/155Live-Assetvergleiche,FreshRestore/Offline/IDB. NeueOriginale gepinnt bytegleich und tatsächlich4237Dateien plus154Pages-Dateien restauriert. Zwei CDP-Abschlussflags erst nach browserClosing ausdrücklich erhalten; historische503-/SW-UrsachenUNKNOWN. Alle15Main-Zielhöhen44px,Anforderung/Messdiagnostik unverändert.
