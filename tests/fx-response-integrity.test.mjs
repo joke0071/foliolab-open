@@ -1,4 +1,4 @@
-import test from 'node:test';
+import test,{beforeEach} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
@@ -7,6 +7,7 @@ import {blankModel,createProvider,createAccount,createPosition,totalExactEUR} fr
 import {refreshHeadline,refreshFailures} from '../src/refresh-ui.js';
 
 const date='2026-11-13';
+beforeEach(t=>t.mock.timers.enable({apis:['Date'],now:Date.parse('2026-11-15T18:00:00Z')}));
 const ok=data=>({ok:true,status:200,headers:{get:()=>null},json:async()=>data});
 const payload=(rate,extra={})=>({date,base:'USD',rates:{EUR:rate},...extra});
 test('Current and legacy FX readers reject nonnumeric, nonfinite and wrong-currency rates',async()=>{
@@ -19,6 +20,10 @@ test('Dated FX readers reject nonexistent and future publication days',async()=>
  for(const d of ['2026-02-31','2026-13-01','2099-01-01'])await assert.rejects(()=>exchangeRateQuote('USD','',async()=>ok(payload(0.85,{date:d}))));
  // March 1 is fewer than seven parsed days from the nonexistent Feb 29 in 2026.
  await assert.rejects(()=>historicalExchangeRate('USD','2026-03-01',async()=>ok(payload(0.85,{date:'2026-02-29'}))));
+});
+test('Latest reference rejects old publication days; the seven-day UTC boundary and weekend remain valid',async()=>{
+ for(const d of ['2000-01-03','2026-11-07'])await assert.rejects(()=>exchangeRateQuote('USD','',async()=>ok(payload(.1,{date:d}))),/älter als 7 Tage/);
+ for(const d of ['2026-11-08','2026-11-13','2026-11-15'])assert.equal((await exchangeRateQuote('USD','',async()=>ok(payload(.85,{date:d})))).date,d);
 });
 test('Valid numeric/string rates and explicit weekend publication dates retain their existing contract',async()=>{
  for(const rate of [0.85,'0.85']){
@@ -47,7 +52,7 @@ async function refresh(data){
  await vm.runInContext(refreshSource+'\nrefreshSources()',context);return {model,before,stored,saves,requests,messages,nodes};
 }
 test('Actual refresh handler preserves UNKNOWN FX and stored bytes on invalid provider responses',async()=>{
- for(const data of [payload(true),payload('Infinity'),payload(0.85,{base:'GBP'}),payload(0.85,{date:'2026-02-31'})]){
+ for(const data of [payload(true),payload('Infinity'),payload(0.85,{base:'GBP'}),payload(0.85,{date:'2026-02-31'}),payload(.1,{date:'2000-01-03'})]){
   const r=await refresh(data);assert.equal(r.requests,1);assert.equal(r.saves,0);assert.equal(r.stored,r.before);assert.equal(JSON.stringify(r.model),r.before);
   assert.equal(r.model.positions[0].fxRate,null);assert.equal(r.model.positions[0].fxRateExact,'UNKNOWN');assert.equal(r.messages.at(-1).error,true);
  }
