@@ -1,0 +1,105 @@
+name: PR340 exact CSV rectangle diagnosis
+on:
+  push:
+    branches: [diagnostic/pr340-csv-height-9142fbd8]
+permissions:
+  contents: read
+concurrency:
+  group: pr340-csv-height-diagnosis
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require a service-worker cache revision for shipped asset changes
+        run: |
+          set -euo pipefail
+          if git diff --quiet HEAD^ HEAD -- index.html styles.css manifest.webmanifest src icons; then
+            echo 'No shipped application assets changed; cache revision unchanged is allowed.'
+            exit 0
+          fi
+          previous="$(git show HEAD^:sw.js | grep '^const CACHE=' || true)"
+          current="$(grep '^const CACHE=' sw.js || true)"
+          if [[ -z "$previous" || -z "$current" || "$previous" == "$current" ]]; then
+            echo 'Shipped app assets changed without a new PWA cache revision.' >&2
+            exit 1
+          fi
+          echo "PWA cache revision changed: $previous -> $current"
+      - name: Verify standalone application
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          git rev-parse HEAD > artifacts/gates/tested-sha.txt
+          npm test 2>&1 | tee artifacts/gates/unit.log
+          npm run check 2>&1 | tee artifacts/gates/syntax.log
+      - name: Restore pinned Chromium shell cache (integration)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
+      - name: Install browser test tools
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - name: Browser smoke tests (320–1440 px)
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-cash-account-ux.mjs
+          node tests/browser-etf-source-recovery.mjs
+          node tests/browser-smoke.mjs
+          node tests/browser-loading-pwa.mjs
+          node tests/browser-ui-alltag10.mjs
+          node tests/browser-ui-textscale.mjs
+          node tests/browser-price-csv-tools.mjs
+          node tests/browser-pwa-update.mjs
+          node tests/browser-extended.mjs
+          node tests/browser-ledger.mjs
+          node tests/browser-phase2.mjs
+          node tests/browser-phase3.mjs
+          node tests/browser-wallet-history-core.mjs
+          node tests/browser-pchain-evidence.mjs
+          node tests/browser-sonic-staking-evidence.mjs
+          node tests/browser-bitcoin-history.mjs
+          node tests/browser-ethereum-history.mjs
+          node tests/browser-history-storage.mjs
+          node tests/browser-history-ui.mjs
+          node tests/browser-purchase-evidence.mjs
+          node tests/browser-unified-bitcoin.mjs
+          node tests/browser-kraken-import.mjs
+          node tests/browser-bitpanda-import.mjs
+          node tests/browser-historical-position-value.mjs
+          node tests/browser-flh02-release.mjs
+          node tests/browser-history-worker.mjs
+          node tests/browser-p0-import.mjs
+          node tests/browser-csv-review-a11y.mjs
+          node tests/browser-csv-batch.mjs
+          node tests/browser-flh03-abce.mjs
+          node tests/browser-position-selection.mjs
+          node tests/browser-position-removal.mjs
+          node tests/browser-position-archive.mjs
+          node tests/browser-booking-management.mjs
+          UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
+      - name: Preserve test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gates-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+      - name: Preserve representative dialog screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dialog-visual-reference
+          path: |
+            artifacts/dialog-visual/
+            artifacts/dialog-visual-diff/
+          if-no-files-found: ignore
