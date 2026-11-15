@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "source": "127019cf71304981c0c7f1a446f4dee8bc27404d",
+  "browser": "141.0.7390.37",
+  "environment": "Linux Chromium; isolated native IDB; synthetic fixture; SW blocked for match with canonical navigation test",
+  "mechanism": "Real app toggle handler rerenders the position detail between retained element resolution and measurement",
+  "stale": {
+    "connected": false,
+    "height": 0,
+    "ancestorClasses": [
+      "position-csv-actions",
+      "position-native-quote-actions"
+    ]
+  },
+  "fresh": {
+    "connected": true,
+    "height": 44
+  },
+  "fullIDBRecordUnchanged": true,
+  "limits": "Controlled lifecycle reproduction explains this observed disconnected-element failure. Historical failures without equivalent capture remain UNKNOWN. No product geometry fix or production/hardware claim."
+}
