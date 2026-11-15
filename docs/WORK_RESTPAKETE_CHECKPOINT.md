@@ -1,4 +1,4 @@
-# HND01 · ACTIVE · v317 LIVE_ACCEPTED / K2-FOLGEKANDIDAT
+# HND01 · ACTIVE · v317 LIVE_ACCEPTED / PR342 FROZEN_CI_RUNNING
 
 Writer: `v317-release-ab4d8e6f6672`, alleiniger HND01-Writer. Autorisierte geordnete Übernahme von `v317-hash-contract-e14f2dfb9b8b`: expectedSHA `3dac897b1de6ec40a7225dc4538f691d0b9c2f6e`, Übernahme `a9d3c937563029d7df1bc98e1ef0459683cd7925`. Vor dieser Fortschreibung Ref `1fb1b1eaf215f7f4fff826980b979b98cabaf8b2` unverändert; keine laufenden Jobs, Main unverändert, nur historische PR332/161/157 offen.
 
@@ -16,4 +16,6 @@ Neue365.086.720Byte-Originalsicherung, SHA256 `471f9f2f26b0a6b02a1ba56078e906d4f
 
 Gewählter kleinster Folgeschnitt **K2-KURSE/#266/SEC-03**: reproduzierte API-/Bearer-Schlüsselspiegelung bei Diagnosekürzung und Headerformen sowie Cachevermischung nativer Headers. Erwartung: Schlüssel vor Kürzung erkennen, Header-/Anfrageidentität zusammenhalten, harmlose Diagnosen/Retry-After/Quellfallback erhalten. Abnahme:9neueRegressionen am unverändertenMainFAIL,38gezielteTests amKandidatenPASS,Chromium-Gegencheck mit exakt unverändertem vollständigem IDBRecordPASS; danach reguläre PR-/Walletgates und Originalsicherung.
 
-Isolierte Vorbereitung abgeschlossen:1Runtime-Modul,9Regressionen,Taskbeleg; notwendige SW-Revisionv318 vorbereitet. Noch kein veröffentlichter/eingefrorener PR. **Nächste Aktion:** gegen akzeptierten Main exakt4Dateien als eigenen Kandidaten veröffentlichen und bis zum qualifizierten PR begleiten. Kein weiterer Main-Head/Merge/Deployment freigegeben; Jochen entscheidet für diesen späteren PR separat. Bestehende EFF03-/Finanz-/UNKNOWN-/CAS-/IDB-/Backup-/Restore-/PWA-/TLS-/Reviewgates unverändert.
+**PR342 eingefroren:** [Kandidat](https://github.com/joke0071/foliolab-open/pull/342), Branch `fix/request-credential-boundary-ab4d8e6f6672`, Head `a9ac99f710571df04884f571cb557a8b52d0828c`, Tree `1d5a1f2db0d6e7d7fa39590deea44954868611b9`, Basis akzeptierterMain0d1638cb. Genau4Dateien; kein Workflowdiff. GitHub-Ausführungsmerge `3e8ba55eb315b0f53e4f7681238c4bba6c49ee0d`. Reguläre PR-CI43740825503 und Wallet43740825516 laufen. Noch NICHT QUALIFIED.
+
+**Nächste Aktion:** diese beiden regulären Läufe bis Ergebnis begleiten, Originale identitätsgebunden sichern/prüfen/gepinnt rücklesen und tatsächlich restaurieren, dann nur bei vollständigen Pflichtnachweisen Mergeentscheidung am exaktenHead vorbereiten. Bei Fehlern zuerstOriginale und trennendenBefund; kein blinderRetry. Jochen entscheidet für PR342 separat über Merge/Main/Deployment; keine Freigabe ausPR341 übertragen. Bestehende EFF03-/Finanz-/UNKNOWN-/CAS-/IDB-/Backup-/Restore-/PWA-/TLS-/Reviewgates unverändert. Checkpointfortschreibung ist kein Produktrelease.
