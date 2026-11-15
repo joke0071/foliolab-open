@@ -1,3 +1,13 @@
+# HND01 · ACTIVE · freigegebener v317-Release
+
+Writer k3-emergency-9142fbd8f0d0. Jochen akzeptiert am15.11.2026 den dokumentierten, nicht reproduzierten44px-Befund ausdrücklich als offenen Diagnosepunkt und genehmigt Merge von PR340 ausschließlich am Head f03cc26182d40fa3f10fd88a133c725be925cef0, geprüfter Produkt-Tree b70a02558a89158f80420b2c895bbcb2c18ab7c7, Main-Basis82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69, Checkpointb9be8f607b4af35c672b5eadfa09a9da43388afd, sowie reguläres Deploymentv317. Aktueller frischer Abgleich: Owner/Main/PR-Head/Tree/Reviews/Kommentare/Actions unverändert; vollständige PR-/Walletchecks SUCCESS. Keine konkurrierende Schreibaktivität erkennbar. Die bisherige Ursachenklärungssperre ist durch diese konkrete Nutzerentscheidung als Mergeblocker aufgehoben, nicht als Diagnose geschlossen. >=44 und Messdiagnostik bleiben aktiv.
+
+Nächste Aktion: SHA-gebundener Merge, tatsächlichen Merge-Tree prüfen, vorhandenen Main-/Deploy-/Live-Lauf bis Ergebnis begleiten. Bei erneutem44px-Fail Originalgeometrie sichern und vor weiterem Versuch untersuchen. Neue Releaseoriginale dauerhaft/gepinnt/Restore sichern; erst danach Archivhinweis-K3-Teilpunkt schließen, Roadmap/Checkpoint aktualisieren und Writer geordnet abgeben. A09/Grafikherkunft und historische10000Positionsforderung bleiben getrennt.
+
+---
+
+## Historischer Prüfstand vor Freigabe
+
 # HND01 · TEST_BLOCKED · K3 / PR340 · 15.11.2026
 
 Alleiniger Writer: k3-emergency-9142fbd8f0d0. Autorisierte Notfallübernahme von k3-decision-e4b79f541e28 mit expected115d0f939147a9422ff568cdec7ec25dba3aa5dd; Vorgänger SUPERSEDED, kein technischer Prozessstopp behauptet. Übergang bf39962907c561d95398746d46c65f027a8c7f67. [Vorheriger ausführlicher Stand](https://github.com/joke0071/foliolab-open/blob/45d49f54bc5ba73f207061d0e205d9d17bee78d2/docs/WORK_RESTPAKETE_CHECKPOINT.md) bleibt unverändert erhalten. Keine konkurrierenden Writes/Reviews/Kommentare im abschließenden Abgleich.
