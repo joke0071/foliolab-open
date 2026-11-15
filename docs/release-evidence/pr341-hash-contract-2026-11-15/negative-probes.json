@@ -1,0 +1,18 @@
+[
+  {
+    "name": "HTTP status gate",
+    "from": "assert.equal(r.status(),200,path);",
+    "to": "assert.equal(r.status(),503,path);",
+    "result": "REJECTED_BY_HISTORICAL_HASH",
+    "actual": "c17125e296e661689066a178fe539a1f76f8fdda1cd478b2ab56c871679941e7",
+    "expected": "f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3"
+  },
+  {
+    "name": "Published byte equality",
+    "from": "assert.equal(actual,expected,'published bytes '+path);",
+    "to": "assert.equal(actual,actual,'published bytes '+path);",
+    "result": "REJECTED_BY_HISTORICAL_HASH",
+    "actual": "d477043cbaee911faa378c8a03cf145a1506f0567ed99bfb9dc88b9bbae720ca",
+    "expected": "f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3"
+  }
+]

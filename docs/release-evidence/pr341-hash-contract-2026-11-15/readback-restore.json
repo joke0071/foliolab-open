@@ -1,0 +1,29 @@
+{
+  "head": "61b56ac50a2e87796db0aad0027675ae3fd5c142",
+  "status": "PINNED_READBACK_AND_ACTUAL_RESTORE_PASS",
+  "package": {
+    "file_name": "FolioLab_PR341_Originalbelege_2026-11-15.tar",
+    "bytes": 219985920,
+    "sha256": "e0a60ec6227a62998ff32659c15b86aa4c99c47017a1c9100cb777884781e18e",
+    "manifestFiles": 33,
+    "originalArchives": 8,
+    "originalContentFiles": 2447
+  },
+  "libraryIdentity": {
+    "file_id": "file_00000000009881f5abe2749e77723438",
+    "library_file_id": "libfile_fde3_f-71ae80e82ed08191bed1ebf118239d5c_54e45e8130348191808d9aaa710cf372",
+    "current_version_number": 0
+  },
+  "pinnedBy": "Exact file_id and filename from successful create, not latest reference",
+  "tarReadbackByteIdentical": true,
+  "tarManifestFilesVerified": 33,
+  "originalArchivesRestored": 8,
+  "originalFilesActuallyRestored": 2447,
+  "nestedTraceIncluded": true,
+  "restoredManifestMatchesOriginalContentIndexExactly": true,
+  "actualRestoreManifestSHA256": "c6e89d64579330661061ceb01ba5b998bfa4454966400aaafca41b2612822676",
+  "originalIndexSHA256": "d327cce579b9ed1235208a4bb3240d6a5a04236cee6bcf896c84911aa07d279d",
+  "CIReportExplicitFailures": 0,
+  "controlledQA503FixtureFailure": "EXPECTED; diagnostic QA PASS; trace restored",
+  "historicalFailuresNotReclassified": true
+}
