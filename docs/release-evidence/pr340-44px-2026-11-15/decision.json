@@ -1,0 +1,178 @@
+{
+  "decision": "konkreter Blocker",
+  "pr": "https://github.com/joke0071/foliolab-open/pull/340",
+  "head": "f03cc26182d40fa3f10fd88a133c725be925cef0",
+  "tree": "b70a02558a89158f80420b2c895bbcb2c18ab7c7",
+  "base": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "checkout": "d3aca28984845920cbaa12761272c51cf3ee6bbc",
+  "run": 43710456361,
+  "attempt": 1,
+  "regularCI": "SUCCESS",
+  "walletRun": 43710456329,
+  "wallet": "SUCCESS",
+  "unitTests": 1481,
+  "unitFailed": 0,
+  "unitSkipped": 0,
+  "geometry": {
+    "originalRun": 43706353644,
+    "originalResult": "FAILURE",
+    "originalPixelValue": null,
+    "cause": "UNKNOWN; not reproduced by matched precursor, paired100 observations, or final15 observations",
+    "matchedPrecursor": 43709327470,
+    "pairRun": 43710297660,
+    "pairTargetObservations": 100,
+    "pairAllHeight": 44,
+    "regularTargetObservations": 15,
+    "regularAllHeight": 44,
+    "thresholdUnchanged": ">=44",
+    "productGeometryChanged": false,
+    "testChange": "bounded observation only; no wait, timeout, retry or tolerance change"
+  },
+  "scopeReview": "Archive-limit explanation and accessible disabled reason correct; new regression23checks per engine PASS, selection/financial/storage logic unchanged. Product asset delta remains original app copy plus v317 cache; additional revision changes navigation test diagnostics only. No proven fix for original assertion failure.",
+  "evidenceSummary": {
+    "archives": 6,
+    "json": 261,
+    "png": 2095,
+    "explicitDigestAssertions": 601,
+    "digestFindings": 0,
+    "digestUnknowns": 53,
+    "manualSchemaReview": "manual-schema-review.json"
+  },
+  "k3": {
+    "selectionCases": 18,
+    "selectionChecks": 507,
+    "volumeCases": 9,
+    "volumeChecks": 120,
+    "amountCases": 3,
+    "amountChecks": 99,
+    "volumePinnedCommit": "40c410b21a82cd8383d7eab9eff1804a39507d7f",
+    "volumeRestoredFiles": 25,
+    "amountPinnedCommit": "032856dad03657625a1f3492e7d2c8c1a4d9f471",
+    "amountRestoredFiles": 13,
+    "overall": "PARTIAL",
+    "remaining": [
+      "original44px assertion cause",
+      "5000-position supported format boundary vs historical10000-position demand",
+      "A09 real target-platform evidence parked; no new request",
+      "special financial mutations remain protected by existing scopes"
+    ],
+    "graphicsProvenance": "parked"
+  },
+  "mergePerformed": false,
+  "deploymentPerformed": false,
+  "production": "v316 LIVE_ACCEPTED unchanged",
+  "nextAction": "No further unchanged rerun. Resume causal correction when a failed exact rectangle/visibility/ancestor capture is available, or a new evidence-backed causal hypothesis changes the experiment. Current regular checks are successful but do not establish the required original cause.",
+  "preservation": {
+    "fileName": "FolioLab_K3_PR340_Originalbelege_2026-11-15.tar",
+    "status": "PASS",
+    "current_version_number": 0,
+    "archiveBytes": 443176960,
+    "archiveSha256": "0e49fbbd66cd596829277296e5c2df1576c05d84f2ff3cd4296dba9a35247098",
+    "pinnedIndependentReadbackByteEqual": true,
+    "outerArchivesRestored": 2,
+    "zipArchivesActuallyRestored": 15,
+    "zipMembersActuallyRestored": 4911,
+    "manifestFilesVerified": 4970,
+    "zipRestores": [
+      {
+        "p": "originals/amount-original.zip",
+        "membersRestored": 13,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-diagnosis.zip",
+        "membersRestored": 618,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-failed-chromium.zip",
+        "membersRestored": 259,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-original-14157823672.zip",
+        "membersRestored": 1,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-original-14158069084.zip",
+        "membersRestored": 123,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-original-14158861901.zip",
+        "membersRestored": 515,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-original-14159432530.zip",
+        "membersRestored": 868,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/pr340-paired-geometry.zip",
+        "membersRestored": 127,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "originals/volume-readback.zip",
+        "membersRestored": 25,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14159974736.zip",
+        "membersRestored": 123,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14160023135.zip",
+        "membersRestored": 1,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14160224554.zip",
+        "membersRestored": 515,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14160891498.zip",
+        "membersRestored": 825,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14160991096.zip",
+        "membersRestored": 20,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      },
+      {
+        "p": "final/final/final-14161590827.zip",
+        "membersRestored": 878,
+        "crc": "PASS",
+        "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+      }
+    ],
+    "privateIdentityRetained": true,
+    "fullManifest": {
+      "path": "readback-restore-manifest.json.gz.b64",
+      "encoding": "base64 of gzip UTF8 JSON",
+      "uncompressedBytes": 1027775,
+      "uncompressedSHA256": "da7623bd3604b7395c6f0284f193427b676cc8c2d5cf610827174161e4673f9e",
+      "gzipBytes": 244751,
+      "gzipSHA256": "204f3933786ac76f1cae9f3ffdb82ca7ca471f5ea0686e61bb7b1e0f470baee7"
+    }
+  }
+}

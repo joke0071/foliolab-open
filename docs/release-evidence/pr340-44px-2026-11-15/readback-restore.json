@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "current_version_number": 0,
+  "archiveBytes": 443176960,
+  "archiveSha256": "0e49fbbd66cd596829277296e5c2df1576c05d84f2ff3cd4296dba9a35247098",
+  "pinnedIndependentReadbackByteEqual": true,
+  "outerArchivesRestored": 2,
+  "zipArchivesActuallyRestored": 15,
+  "zipMembersActuallyRestored": 4911,
+  "manifestFilesVerified": 4970,
+  "zipRestores": [
+    {
+      "p": "originals/amount-original.zip",
+      "membersRestored": 13,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-diagnosis.zip",
+      "membersRestored": 618,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-failed-chromium.zip",
+      "membersRestored": 259,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-original-14157823672.zip",
+      "membersRestored": 1,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-original-14158069084.zip",
+      "membersRestored": 123,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-original-14158861901.zip",
+      "membersRestored": 515,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-original-14159432530.zip",
+      "membersRestored": 868,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/pr340-paired-geometry.zip",
+      "membersRestored": 127,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "originals/volume-readback.zip",
+      "membersRestored": 25,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14159974736.zip",
+      "membersRestored": 123,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14160023135.zip",
+      "membersRestored": 1,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14160224554.zip",
+      "membersRestored": 515,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14160891498.zip",
+      "membersRestored": 825,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14160991096.zip",
+      "membersRestored": 20,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    },
+    {
+      "p": "final/final/final-14161590827.zip",
+      "membersRestored": 878,
+      "crc": "PASS",
+      "allExtractedBytes": "SHA256_EQUAL_TO_READBACK_ORIGINAL"
+    }
+  ],
+  "privateIdentityRetained": true,
+  "fullManifest": {
+    "path": "readback-restore-manifest.json.gz.b64",
+    "encoding": "base64 of gzip UTF8 JSON",
+    "uncompressedBytes": 1027775,
+    "uncompressedSHA256": "da7623bd3604b7395c6f0284f193427b676cc8c2d5cf610827174161e4673f9e",
+    "gzipBytes": 244751,
+    "gzipSHA256": "204f3933786ac76f1cae9f3ffdb82ca7ca471f5ea0686e61bb7b1e0f470baee7"
+  }
+}

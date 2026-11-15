@@ -1,0 +1,272 @@
+{
+  "digestDisposition": "UNKNOWN",
+  "unknownAdapters": 53,
+  "manualItems": [
+    {
+      "artifact": 14159974736,
+      "path": "alpha-vantage/idb-webkit.json",
+      "review": "Synthetic IDB event metadata; no scalar outcome. Retained as trace, not a standalone PASS; corresponding native test job SUCCESS"
+    },
+    {
+      "artifact": 14159974736,
+      "path": "alpha-vantage/idb-firefox.json",
+      "review": "Synthetic IDB event metadata; no scalar outcome. Retained as trace, not a standalone PASS; corresponding native test job SUCCESS"
+    },
+    {
+      "artifact": 14159974736,
+      "path": "provider-retirement.json",
+      "review": "Expected explicit cleanup/unchanged-finance/quota/CAS/restore/offline fields true, axe/provider requests0"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/firefox-1794743564516.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/firefox-1794743853824.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/firefox-1794743899006.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/firefox-1794743909528.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/webkit-1794743568081.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/webkit-1794743867951.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/webkit-1794743915260.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "storage-fixture/webkit-1794743921840.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160224554,
+      "path": "ui-alltag10/long-press.json",
+      "review": "Both engine objects positions/bookings/references explicitly PASS"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "alpha-vantage/idb-chromium.json",
+      "review": "Synthetic IDB event metadata; no scalar outcome. Retained as trace, not a standalone PASS; corresponding native test job SUCCESS"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "provider-retirement.json",
+      "review": "Expected explicit cleanup/unchanged-finance/quota/CAS/restore/offline fields true, axe/provider requests0"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743311836.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743306882.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743316748.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743321476.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743330561.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743335005.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743326110.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743339187.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743364610.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743343054.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743485575.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743507124.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794743511007.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794744068651.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "storage-fixture/chromium-1794744073584.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "ui-alltag10/chromium-real-touch-pan.json",
+      "review": "Pan observation: no open row or selection, trusted touch event present; synthetic browser, no hardware claim"
+    },
+    {
+      "artifact": 14160891498,
+      "path": "ui-alltag10/chromium-real-touch-press.json",
+      "review": "Press observation selects only pos-2 and opens no row; synthetic browser, no hardware claim"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794743277704.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794743295456.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744094058.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744070121.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744113527.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744132587.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744169952.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744188066.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744151306.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744205973.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/firefox-1794744214573.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794743286841.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794743311288.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744083264.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744122333.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744102959.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744140868.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744159474.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744178132.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744196338.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744222294.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    },
+    {
+      "artifact": 14161590827,
+      "path": "storage-fixture/webkit-1794744228418.json",
+      "review": "PASS: real active controller, fixture ready, no fixture error, current cache317; initial installation phases are intentionally not treated as failures"
+    }
+  ],
+  "scope": "53 explicit records reviewed as grouped known structures; no generic boolean scanner, no invented outcome for IDB event metadata"
+}

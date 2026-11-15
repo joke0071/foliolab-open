@@ -1,0 +1,343 @@
+{
+  "schema": 1,
+  "identity": {
+    "head": "f03cc26182d40fa3f10fd88a133c725be925cef0",
+    "tree": "b70a02558a89158f80420b2c895bbcb2c18ab7c7",
+    "run": 43710456361,
+    "attempt": 1
+  },
+  "disposition": "UNKNOWN",
+  "releaseApproval": false,
+  "findings": [],
+  "unknowns": [
+    {
+      "artifact": 14159974736,
+      "member": "alpha-vantage/idb-webkit.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14159974736,
+      "member": "alpha-vantage/idb-firefox.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14159974736,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/firefox-1794743564516.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/firefox-1794743853824.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/firefox-1794743899006.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/firefox-1794743909528.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/webkit-1794743568081.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/webkit-1794743867951.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/webkit-1794743915260.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "storage-fixture/webkit-1794743921840.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160224554,
+      "member": "ui-alltag10/long-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "alpha-vantage/idb-chromium.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743311836.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743306882.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743316748.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743321476.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743330561.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743335005.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743326110.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743339187.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743364610.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743343054.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743485575.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743507124.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794743511007.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794744068651.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "storage-fixture/chromium-1794744073584.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "ui-alltag10/chromium-real-touch-pan.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14160891498,
+      "member": "ui-alltag10/chromium-real-touch-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794743277704.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794743295456.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744094058.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744070121.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744113527.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744132587.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744169952.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744188066.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744151306.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744205973.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/firefox-1794744214573.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794743286841.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794743311288.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744083264.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744122333.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744102959.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744140868.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744159474.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744178132.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744196338.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744222294.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 14161590827,
+      "member": "storage-fixture/webkit-1794744228418.json",
+      "reason": "no reviewed outcome adapter"
+    }
+  ],
+  "counts": {
+    "artifacts": 6,
+    "reports": 261,
+    "png": 2095,
+    "assertions": 601
+  },
+  "artifacts": [
+    {
+      "id": 14159974736,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 12592632,
+      "sha256": "05b192545dff63f6b48ce80a3219482589a016f099187f1b63e21d941c023c90",
+      "reports": 22,
+      "png": 100
+    },
+    {
+      "id": 14160224554,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 60699245,
+      "sha256": "cfada94e780234f81ae4aa0881898a9ae15a8c7dbc65b3ee63a6ae0a2fb80bce",
+      "reports": 18,
+      "png": 496
+    },
+    {
+      "id": 14160023135,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 537,
+      "sha256": "fa0043606da06b6767f3cd6a5b5cad911828a083474f82ccc565b767d9b65d5c",
+      "reports": 1,
+      "png": 0
+    },
+    {
+      "id": 14160991096,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 934735,
+      "sha256": "5160370ad79b45dff8e4d232453ce67f83cdc3ee6b1664926dda576fd8a38632",
+      "reports": 0,
+      "png": 20
+    },
+    {
+      "id": 14160891498,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 66670879,
+      "sha256": "ded6be9bcd6ac64d61984f5e0bd883b4689510b8520343f9073fbfeec21e0af5",
+      "reports": 105,
+      "png": 717
+    },
+    {
+      "id": 14161590827,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 70295487,
+      "sha256": "feca6168e9947be39ebf364e567a6c5aca0eb68dd9c3e91066634b04b3b3147f",
+      "reports": 115,
+      "png": 762
+    }
+  ],
+  "seconds": 1.935,
+  "limits": [
+    "Only explicit reviewed JSON pointers are evaluated; other fields remain unassessed.",
+    "Hashes bind originals; they do not establish semantic correctness.",
+    "PNG files CRC-checked, not decoded or visually reviewed.",
+    "Human/financial/physical-device/CI/release gates remain required."
+  ],
+  "reportIndex": "Use the input manifest for paths/digests/assertions, or --details."
+}
