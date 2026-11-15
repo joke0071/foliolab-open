@@ -1,0 +1,1190 @@
+{
+  "schema": 1,
+  "product": "82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69",
+  "qaHead": "0dd0f76d6791cc91924a28222d9c92b3f6c58c3e",
+  "base": "http://127.0.0.1:4173",
+  "profile": "5ade02ed-4dff-4669-a5da-8a203250d1e7",
+  "startedAt": "2026-11-15T10:25:45.544Z",
+  "result": "PASS",
+  "cleanup": "PASS",
+  "stages": [
+    {
+      "name": "runtime-identity",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:45.544Z"
+    },
+    {
+      "name": "browser-launch",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:45.576Z"
+    },
+    {
+      "name": "controlled-storage",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:46.208Z"
+    },
+    {
+      "name": "fixture",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:46.876Z"
+    },
+    {
+      "name": "cancel-preview",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:47.151Z"
+    },
+    {
+      "name": "note-commit",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:47.606Z"
+    },
+    {
+      "name": "independent-reopen",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:47.795Z"
+    },
+    {
+      "name": "in-session-undo",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:48.541Z"
+    },
+    {
+      "name": "reopen-after-undo",
+      "status": "BEGIN",
+      "at": "2026-11-15T10:25:48.657Z"
+    },
+    {
+      "name": "case-complete",
+      "status": "PASS",
+      "at": "2026-11-15T10:25:49.021Z"
+    },
+    {
+      "name": "complete",
+      "status": "PASS",
+      "at": "2026-11-15T10:25:49.059Z"
+    }
+  ],
+  "checks": [
+    {
+      "label": "independent starting cash oracle",
+      "actual": "120",
+      "expected": "120"
+    },
+    {
+      "label": "independent deposit oracle",
+      "actual": "20",
+      "expected": "20"
+    },
+    {
+      "label": "initial unknown fee",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "label": "initial unknown tax",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "label": "initial archive identity",
+      "actual": [
+        "booking-a"
+      ],
+      "expected": [
+        "booking-a"
+      ]
+    },
+    {
+      "label": "observed DB version",
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "label": "observed mode marker",
+      "actual": "idb-v1",
+      "expected": "idb-v1"
+    },
+    {
+      "label": "active versioned cache",
+      "actual": [
+        "foliolab-open-v316"
+      ],
+      "expected": [
+        "foliolab-open-v316"
+      ]
+    },
+    {
+      "label": "quantity protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "date protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "economic deletion protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "note remains editable",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "cancel raw/settings/revision unchanged",
+      "actual": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:46.891Z"
+      },
+      "expected": {
+        "schemaVersion": 1,
+        "revision": 2,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:46.891Z"
+      }
+    },
+    {
+      "label": "cancel no native put or commit",
+      "actual": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      },
+      "expected": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      }
+    },
+    {
+      "label": "quantity protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "date protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "economic deletion protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "note remains editable",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "one CAS revision",
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "label": "one native portfolio commit",
+      "actual": {
+        "puts": 1,
+        "commits": 1,
+        "aborts": 0
+      },
+      "expected": {
+        "puts": 1,
+        "commits": 1,
+        "aborts": 0
+      }
+    },
+    {
+      "label": "same settings after note",
+      "actual": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "daily",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "expected": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "daily",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      }
+    },
+    {
+      "label": "archive view retained",
+      "actual": "archived",
+      "expected": "archived"
+    },
+    {
+      "label": "one documentation audit",
+      "actual": "booking-management-audit",
+      "expected": "booking-management-audit"
+    },
+    {
+      "label": "audit action",
+      "actual": "notes",
+      "expected": "notes"
+    },
+    {
+      "label": "audit original unknown fee",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "label": "audit original unknown tax",
+      "actual": null,
+      "expected": null
+    },
+    {
+      "label": "new note",
+      "actual": "SYNTHETIC receipt checked",
+      "expected": "SYNTHETIC receipt checked"
+    },
+    {
+      "label": "all other business, archive, source and history fields unchanged",
+      "actual": {
+        "version": 4,
+        "providers": [
+          {
+            "id": "p",
+            "name": "SYNTHETIC K3 broker",
+            "type": "other"
+          }
+        ],
+        "accounts": [
+          {
+            "id": "a",
+            "providerId": "p",
+            "name": "SYNTHETIC K3 cash",
+            "type": "other",
+            "currency": "EUR"
+          }
+        ],
+        "assets": [
+          {
+            "id": "asset:fiat%3Aeur",
+            "key": "fiat:eur",
+            "kind": "cash",
+            "name": "SYNTHETIC K3 cash",
+            "isin": "",
+            "coinId": "",
+            "listings": []
+          }
+        ],
+        "positions": [
+          {
+            "id": "cash",
+            "providerId": "p",
+            "accountId": "a",
+            "managementSource": "transactions",
+            "costBasisEUR": null,
+            "costBasisExact": null,
+            "realizedPnLEUR": null,
+            "realizedPnLExact": null,
+            "priceExact": "1",
+            "priceStatus": null,
+            "fxUpdatedAt": null,
+            "assetId": "asset:fiat%3Aeur",
+            "kind": "cash",
+            "name": "SYNTHETIC K3 cash",
+            "mic": "",
+            "listingId": null,
+            "economicRole": "standard",
+            "valuationMode": "included",
+            "representedByPositionId": null,
+            "quoteSource": null,
+            "quoteAsOf": null,
+            "quoteFetchedAt": null,
+            "quoteQuality": null,
+            "fxSource": null,
+            "fxRateDate": null,
+            "fxRateExact": "1",
+            "eodhdSymbol": "",
+            "fmpSymbol": "",
+            "tradingViewSymbol": "",
+            "exchange": "",
+            "symbol": "",
+            "isin": "",
+            "coinId": "",
+            "coinIdMigration": null,
+            "quantity": 120,
+            "quantityExact": "120",
+            "price": 1,
+            "currency": "EUR",
+            "fxRate": 1,
+            "wallet": null,
+            "updatedAt": null,
+            "notes": ""
+          }
+        ],
+        "bookings": [
+          {
+            "id": "booking-a",
+            "type": "deposit",
+            "date": "2026-01-02",
+            "positionId": "cash",
+            "accountId": "a",
+            "positionName": "SYNTHETIC K3 cash",
+            "quantity": 20,
+            "quantityExact": "20",
+            "unitPrice": 1,
+            "feeEUR": null,
+            "taxEUR": null,
+            "fxRate": 1,
+            "fxRateDate": null,
+            "fxSource": null,
+            "amountEUR": 20,
+            "amountExactEUR": "20",
+            "targetPositionId": null,
+            "external": true,
+            "notes": "SYNTHETIC original note",
+            "journalEntryId": "booking-a",
+            "cashPositionId": null,
+            "reconciliationStatus": "recorded"
+          }
+        ],
+        "journalEntries": [
+          {
+            "id": "booking-a",
+            "type": "deposit",
+            "date": "2026-01-02",
+            "recordedAt": "2026-11-15T10:25:46.884Z",
+            "sequence": 1,
+            "postings": [
+              {
+                "id": "138f2d74-f6c7-444c-8c80-6bae90e97306",
+                "role": "cash",
+                "positionId": "cash",
+                "accountId": "a",
+                "quantityDeltaExact": "20",
+                "amountBookEURExact": "20"
+              },
+              {
+                "id": "b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28",
+                "role": "external-clearing",
+                "positionId": null,
+                "accountId": null,
+                "quantityDeltaExact": null,
+                "amountBookEURExact": "-20"
+              }
+            ],
+            "cashPositionId": null,
+            "status": "recorded",
+            "source": "manual"
+          }
+        ],
+        "openingPositions": [
+          {
+            "positionId": "cash",
+            "quantityExact": "100",
+            "costBasisExact": null,
+            "realizedPnLExact": null,
+            "source": "observed-opening",
+            "asOf": "2026-01-01"
+          }
+        ],
+        "externalCashFlows": [
+          {
+            "id": "booking-a",
+            "date": "2026-01-02",
+            "amountEUR": 20,
+            "amountExactEUR": "20"
+          }
+        ],
+        "snapshots": [],
+        "priceHistories": {},
+        "performanceFlowTrackingSince": null,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "bookingPresentation": {
+          "version": 1,
+          "archivedIds": [
+            "booking-a"
+          ]
+        }
+      },
+      "expected": {
+        "version": 4,
+        "providers": [
+          {
+            "id": "p",
+            "name": "SYNTHETIC K3 broker",
+            "type": "other"
+          }
+        ],
+        "accounts": [
+          {
+            "id": "a",
+            "providerId": "p",
+            "name": "SYNTHETIC K3 cash",
+            "type": "other",
+            "currency": "EUR"
+          }
+        ],
+        "assets": [
+          {
+            "id": "asset:fiat%3Aeur",
+            "key": "fiat:eur",
+            "kind": "cash",
+            "name": "SYNTHETIC K3 cash",
+            "isin": "",
+            "coinId": "",
+            "listings": []
+          }
+        ],
+        "positions": [
+          {
+            "id": "cash",
+            "providerId": "p",
+            "accountId": "a",
+            "managementSource": "transactions",
+            "costBasisEUR": null,
+            "costBasisExact": null,
+            "realizedPnLEUR": null,
+            "realizedPnLExact": null,
+            "priceExact": "1",
+            "priceStatus": null,
+            "fxUpdatedAt": null,
+            "assetId": "asset:fiat%3Aeur",
+            "kind": "cash",
+            "name": "SYNTHETIC K3 cash",
+            "mic": "",
+            "listingId": null,
+            "economicRole": "standard",
+            "valuationMode": "included",
+            "representedByPositionId": null,
+            "quoteSource": null,
+            "quoteAsOf": null,
+            "quoteFetchedAt": null,
+            "quoteQuality": null,
+            "fxSource": null,
+            "fxRateDate": null,
+            "fxRateExact": "1",
+            "eodhdSymbol": "",
+            "fmpSymbol": "",
+            "tradingViewSymbol": "",
+            "exchange": "",
+            "symbol": "",
+            "isin": "",
+            "coinId": "",
+            "coinIdMigration": null,
+            "quantity": 120,
+            "quantityExact": "120",
+            "price": 1,
+            "currency": "EUR",
+            "fxRate": 1,
+            "wallet": null,
+            "updatedAt": null,
+            "notes": ""
+          }
+        ],
+        "bookings": [
+          {
+            "id": "booking-a",
+            "type": "deposit",
+            "date": "2026-01-02",
+            "positionId": "cash",
+            "accountId": "a",
+            "positionName": "SYNTHETIC K3 cash",
+            "quantity": 20,
+            "quantityExact": "20",
+            "unitPrice": 1,
+            "feeEUR": null,
+            "taxEUR": null,
+            "fxRate": 1,
+            "fxRateDate": null,
+            "fxSource": null,
+            "amountEUR": 20,
+            "amountExactEUR": "20",
+            "targetPositionId": null,
+            "external": true,
+            "notes": "SYNTHETIC original note",
+            "journalEntryId": "booking-a",
+            "cashPositionId": null,
+            "reconciliationStatus": "recorded"
+          }
+        ],
+        "journalEntries": [
+          {
+            "id": "booking-a",
+            "type": "deposit",
+            "date": "2026-01-02",
+            "recordedAt": "2026-11-15T10:25:46.884Z",
+            "sequence": 1,
+            "postings": [
+              {
+                "id": "138f2d74-f6c7-444c-8c80-6bae90e97306",
+                "role": "cash",
+                "positionId": "cash",
+                "accountId": "a",
+                "quantityDeltaExact": "20",
+                "amountBookEURExact": "20"
+              },
+              {
+                "id": "b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28",
+                "role": "external-clearing",
+                "positionId": null,
+                "accountId": null,
+                "quantityDeltaExact": null,
+                "amountBookEURExact": "-20"
+              }
+            ],
+            "cashPositionId": null,
+            "status": "recorded",
+            "source": "manual"
+          }
+        ],
+        "openingPositions": [
+          {
+            "positionId": "cash",
+            "quantityExact": "100",
+            "costBasisExact": null,
+            "realizedPnLExact": null,
+            "source": "observed-opening",
+            "asOf": "2026-01-01"
+          }
+        ],
+        "externalCashFlows": [
+          {
+            "id": "booking-a",
+            "date": "2026-01-02",
+            "amountEUR": 20,
+            "amountExactEUR": "20"
+          }
+        ],
+        "snapshots": [],
+        "priceHistories": {},
+        "performanceFlowTrackingSince": null,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "bookingPresentation": {
+          "version": 1,
+          "archivedIds": [
+            "booking-a"
+          ]
+        }
+      }
+    },
+    {
+      "label": "independent page exact record",
+      "actual": {
+        "schemaVersion": 1,
+        "revision": 3,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC receipt checked\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    },\n    {\n      \"id\": \"b5d88cc2-e261-4b0c-9767-f255f533497e\",\n      \"type\": \"booking-management-audit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:47.771Z\",\n      \"sequence\": 2,\n      \"source\": \"management-audit\",\n      \"postings\": [\n        {\n          \"id\": \"e6987782-2afe-4919-9d39-4f938f86b8e8\",\n          \"role\": \"documentation\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"0\"\n        }\n      ],\n      \"managementAudit\": {\n        \"version\": 1,\n        \"action\": \"notes\",\n        \"reason\": \"SYNTHETIC K3 independent receipt\",\n        \"originals\": [\n          {\n            \"booking\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"positionId\": \"cash\",\n              \"accountId\": \"a\",\n              \"positionName\": \"SYNTHETIC K3 cash\",\n              \"quantity\": 20,\n              \"quantityExact\": \"20\",\n              \"unitPrice\": 1,\n              \"feeEUR\": null,\n              \"taxEUR\": null,\n              \"fxRate\": 1,\n              \"fxRateDate\": null,\n              \"fxSource\": null,\n              \"amountEUR\": 20,\n              \"amountExactEUR\": \"20\",\n              \"targetPositionId\": null,\n              \"external\": true,\n              \"notes\": \"SYNTHETIC original note\",\n              \"journalEntryId\": \"booking-a\",\n              \"cashPositionId\": null,\n              \"reconciliationStatus\": \"recorded\"\n            },\n            \"journal\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n              \"sequence\": 1,\n              \"postings\": [\n                {\n                  \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n                  \"role\": \"cash\",\n                  \"positionId\": \"cash\",\n                  \"accountId\": \"a\",\n                  \"quantityDeltaExact\": \"20\",\n                  \"amountBookEURExact\": \"20\"\n                },\n                {\n                  \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n                  \"role\": \"external-clearing\",\n                  \"positionId\": null,\n                  \"accountId\": null,\n                  \"quantityDeltaExact\": null,\n                  \"amountBookEURExact\": \"-20\"\n                }\n              ],\n              \"cashPositionId\": null,\n              \"status\": \"recorded\",\n              \"source\": \"manual\"\n            },\n            \"flows\": [\n              {\n                \"id\": \"booking-a\",\n                \"date\": \"2026-01-02\",\n                \"amountEUR\": 20,\n                \"amountExactEUR\": \"20\"\n              }\n            ]\n          }\n        ],\n        \"afterBookings\": [\n          {\n            \"id\": \"booking-a\",\n            \"type\": \"deposit\",\n            \"date\": \"2026-01-02\",\n            \"positionId\": \"cash\",\n            \"accountId\": \"a\",\n            \"positionName\": \"SYNTHETIC K3 cash\",\n            \"quantity\": 20,\n            \"quantityExact\": \"20\",\n            \"unitPrice\": 1,\n            \"feeEUR\": null,\n            \"taxEUR\": null,\n            \"fxRate\": 1,\n            \"fxRateDate\": null,\n            \"fxSource\": null,\n            \"amountEUR\": 20,\n            \"amountExactEUR\": \"20\",\n            \"targetPositionId\": null,\n            \"external\": true,\n            \"notes\": \"SYNTHETIC receipt checked\",\n            \"journalEntryId\": \"booking-a\",\n            \"cashPositionId\": null,\n            \"reconciliationStatus\": \"recorded\"\n          }\n        ]\n      }\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:47.776Z"
+      },
+      "expected": {
+        "schemaVersion": 1,
+        "revision": 3,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC receipt checked\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    },\n    {\n      \"id\": \"b5d88cc2-e261-4b0c-9767-f255f533497e\",\n      \"type\": \"booking-management-audit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:47.771Z\",\n      \"sequence\": 2,\n      \"source\": \"management-audit\",\n      \"postings\": [\n        {\n          \"id\": \"e6987782-2afe-4919-9d39-4f938f86b8e8\",\n          \"role\": \"documentation\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"0\"\n        }\n      ],\n      \"managementAudit\": {\n        \"version\": 1,\n        \"action\": \"notes\",\n        \"reason\": \"SYNTHETIC K3 independent receipt\",\n        \"originals\": [\n          {\n            \"booking\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"positionId\": \"cash\",\n              \"accountId\": \"a\",\n              \"positionName\": \"SYNTHETIC K3 cash\",\n              \"quantity\": 20,\n              \"quantityExact\": \"20\",\n              \"unitPrice\": 1,\n              \"feeEUR\": null,\n              \"taxEUR\": null,\n              \"fxRate\": 1,\n              \"fxRateDate\": null,\n              \"fxSource\": null,\n              \"amountEUR\": 20,\n              \"amountExactEUR\": \"20\",\n              \"targetPositionId\": null,\n              \"external\": true,\n              \"notes\": \"SYNTHETIC original note\",\n              \"journalEntryId\": \"booking-a\",\n              \"cashPositionId\": null,\n              \"reconciliationStatus\": \"recorded\"\n            },\n            \"journal\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n              \"sequence\": 1,\n              \"postings\": [\n                {\n                  \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n                  \"role\": \"cash\",\n                  \"positionId\": \"cash\",\n                  \"accountId\": \"a\",\n                  \"quantityDeltaExact\": \"20\",\n                  \"amountBookEURExact\": \"20\"\n                },\n                {\n                  \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n                  \"role\": \"external-clearing\",\n                  \"positionId\": null,\n                  \"accountId\": null,\n                  \"quantityDeltaExact\": null,\n                  \"amountBookEURExact\": \"-20\"\n                }\n              ],\n              \"cashPositionId\": null,\n              \"status\": \"recorded\",\n              \"source\": \"manual\"\n            },\n            \"flows\": [\n              {\n                \"id\": \"booking-a\",\n                \"date\": \"2026-01-02\",\n                \"amountEUR\": 20,\n                \"amountExactEUR\": \"20\"\n              }\n            ]\n          }\n        ],\n        \"afterBookings\": [\n          {\n            \"id\": \"booking-a\",\n            \"type\": \"deposit\",\n            \"date\": \"2026-01-02\",\n            \"positionId\": \"cash\",\n            \"accountId\": \"a\",\n            \"positionName\": \"SYNTHETIC K3 cash\",\n            \"quantity\": 20,\n            \"quantityExact\": \"20\",\n            \"unitPrice\": 1,\n            \"feeEUR\": null,\n            \"taxEUR\": null,\n            \"fxRate\": 1,\n            \"fxRateDate\": null,\n            \"fxSource\": null,\n            \"amountEUR\": 20,\n            \"amountExactEUR\": \"20\",\n            \"targetPositionId\": null,\n            \"external\": true,\n            \"notes\": \"SYNTHETIC receipt checked\",\n            \"journalEntryId\": \"booking-a\",\n            \"cashPositionId\": null,\n            \"reconciliationStatus\": \"recorded\"\n          }\n        ]\n      }\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:47.776Z"
+      }
+    },
+    {
+      "label": "reopened editable note",
+      "actual": "SYNTHETIC receipt checked",
+      "expected": "SYNTHETIC receipt checked"
+    },
+    {
+      "label": "reopened amount remains protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "reopened deletion remains protected",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "label": "reopen itself has zero native writes",
+      "actual": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      },
+      "expected": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      }
+    },
+    {
+      "label": "undo exact original raw",
+      "actual": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+      "expected": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}"
+    },
+    {
+      "label": "undo exact settings",
+      "actual": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "daily",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "expected": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "daily",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      }
+    },
+    {
+      "label": "undo exactly second CAS revision",
+      "actual": 4,
+      "expected": 4
+    },
+    {
+      "label": "exactly one additional native undo commit",
+      "actual": {
+        "puts": 2,
+        "commits": 2,
+        "aborts": 0
+      },
+      "expected": {
+        "puts": 2,
+        "commits": 2,
+        "aborts": 0
+      }
+    },
+    {
+      "label": "undo persists exact record after reload",
+      "actual": {
+        "schemaVersion": 1,
+        "revision": 4,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:48.639Z"
+      },
+      "expected": {
+        "schemaVersion": 1,
+        "revision": 4,
+        "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+        "confirmedActive": true,
+        "settings": {
+          "currency": "EUR",
+          "alphaVantageKey": "",
+          "marketstackKey": "",
+          "securitySource": "auto",
+          "coinGeckoKey": "",
+          "etherscanKey": "",
+          "binplorerKey": "",
+          "solanaRpc": "https://solana-rpc.publicnode.com",
+          "showSmall": true,
+          "autoRefresh": "daily",
+          "lastAccountId": "",
+          "publicInstrumentEndpoint": "",
+          "eodhdWorkerEndpoint": "",
+          "eodhdWorkerAccessToken": ""
+        },
+        "deleted": false,
+        "updatedAt": "2026-11-15T10:25:48.639Z"
+      }
+    },
+    {
+      "label": "original note after undo/reload",
+      "actual": "SYNTHETIC original note",
+      "expected": "SYNTHETIC original note"
+    },
+    {
+      "label": "no implicit reload writes",
+      "actual": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      },
+      "expected": {
+        "puts": 0,
+        "commits": 0,
+        "aborts": 0
+      }
+    },
+    {
+      "label": "no page errors",
+      "actual": [],
+      "expected": []
+    }
+  ],
+  "scans": [
+    {
+      "label": "unknown-fee-tax-preview",
+      "violations": []
+    },
+    {
+      "label": "reopened-archived-editor",
+      "violations": []
+    }
+  ],
+  "pageErrors": [],
+  "requestsBlocked": [],
+  "limits": [
+    "Linux Chromium with isolated synthetic context; no Windows/Edge/Android hardware acceptance",
+    "Existing v316 app runtime and active SW, no runtime patch",
+    "Archive status is prepared with the existing product archive API as fixture setup; the new proof concerns the normal note edit/reopen/undo UI",
+    "Transparent native IDB put/complete observers only; no save/CAS/handler replacement",
+    "Undo is exercised in the original live session; reopen reads from a second page in the same context, not a promise of undo after session loss"
+  ],
+  "assets": [
+    {
+      "path": "src/app.js",
+      "sha256": "6bca585366f62f182859152f26738f8c3dfb558273a03c28ce4c3cb8ac262063"
+    },
+    {
+      "path": "src/booking-management.js",
+      "sha256": "0421e39b04fc2cdd72ef78dd435b4e0c350c9aa78397e73b50170679eb57f6d0"
+    },
+    {
+      "path": "src/booking-history.js",
+      "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93"
+    },
+    {
+      "path": "src/model.js",
+      "sha256": "d352a0d8e1a63acc74cc671c28c222898b5cb0d70b766ec2c31969a4458c460c"
+    },
+    {
+      "path": "src/browser-portfolio-storage.js",
+      "sha256": "80cd53679140c775946fe1899b15484f977f8ace40663d4f27f84a33f555bb80"
+    },
+    {
+      "path": "sw.js",
+      "sha256": "8ca227bc89169429c3e188719d11c647566829bf3e53a4d9c604b6f19af259ed"
+    }
+  ],
+  "browserVersion": "141.0.7390.37",
+  "node": "v22.23.4",
+  "os": "linux",
+  "fixture": {
+    "model": {
+      "version": 4,
+      "providers": [
+        {
+          "id": "p",
+          "name": "SYNTHETIC K3 broker",
+          "type": "other"
+        }
+      ],
+      "accounts": [
+        {
+          "id": "a",
+          "providerId": "p",
+          "name": "SYNTHETIC K3 cash",
+          "type": "other",
+          "currency": "EUR"
+        }
+      ],
+      "assets": [
+        {
+          "id": "asset:fiat%3Aeur",
+          "key": "fiat:eur",
+          "kind": "cash",
+          "name": "SYNTHETIC K3 cash",
+          "isin": "",
+          "coinId": "",
+          "listings": []
+        }
+      ],
+      "positions": [
+        {
+          "id": "cash",
+          "providerId": "p",
+          "accountId": "a",
+          "managementSource": "transactions",
+          "costBasisEUR": null,
+          "costBasisExact": null,
+          "realizedPnLEUR": null,
+          "realizedPnLExact": null,
+          "priceExact": "1",
+          "priceStatus": null,
+          "fxUpdatedAt": null,
+          "assetId": "asset:fiat%3Aeur",
+          "kind": "cash",
+          "name": "SYNTHETIC K3 cash",
+          "mic": "",
+          "listingId": null,
+          "economicRole": "standard",
+          "valuationMode": "included",
+          "representedByPositionId": null,
+          "quoteSource": null,
+          "quoteAsOf": null,
+          "quoteFetchedAt": null,
+          "quoteQuality": null,
+          "fxSource": null,
+          "fxRateDate": null,
+          "fxRateExact": "1",
+          "eodhdSymbol": "",
+          "fmpSymbol": "",
+          "tradingViewSymbol": "",
+          "exchange": "",
+          "symbol": "",
+          "isin": "",
+          "coinId": "",
+          "coinIdMigration": null,
+          "quantity": 120,
+          "quantityExact": "120",
+          "price": 1,
+          "currency": "EUR",
+          "fxRate": 1,
+          "wallet": null,
+          "updatedAt": null,
+          "notes": ""
+        }
+      ],
+      "bookings": [
+        {
+          "id": "booking-a",
+          "type": "deposit",
+          "date": "2026-01-02",
+          "positionId": "cash",
+          "accountId": "a",
+          "positionName": "SYNTHETIC K3 cash",
+          "quantity": 20,
+          "quantityExact": "20",
+          "unitPrice": 1,
+          "feeEUR": null,
+          "taxEUR": null,
+          "fxRate": 1,
+          "fxRateDate": null,
+          "fxSource": null,
+          "amountEUR": 20,
+          "amountExactEUR": "20",
+          "targetPositionId": null,
+          "external": true,
+          "notes": "SYNTHETIC original note",
+          "journalEntryId": "booking-a",
+          "cashPositionId": null,
+          "reconciliationStatus": "recorded"
+        }
+      ],
+      "journalEntries": [
+        {
+          "id": "booking-a",
+          "type": "deposit",
+          "date": "2026-01-02",
+          "recordedAt": "2026-11-15T10:25:46.884Z",
+          "sequence": 1,
+          "postings": [
+            {
+              "id": "138f2d74-f6c7-444c-8c80-6bae90e97306",
+              "role": "cash",
+              "positionId": "cash",
+              "accountId": "a",
+              "quantityDeltaExact": "20",
+              "amountBookEURExact": "20"
+            },
+            {
+              "id": "b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28",
+              "role": "external-clearing",
+              "positionId": null,
+              "accountId": null,
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-20"
+            }
+          ],
+          "cashPositionId": null,
+          "status": "recorded",
+          "source": "manual"
+        }
+      ],
+      "openingPositions": [
+        {
+          "positionId": "cash",
+          "quantityExact": "100",
+          "costBasisExact": null,
+          "realizedPnLExact": null,
+          "source": "observed-opening",
+          "asOf": "2026-01-01"
+        }
+      ],
+      "externalCashFlows": [
+        {
+          "id": "booking-a",
+          "date": "2026-01-02",
+          "amountEUR": 20,
+          "amountExactEUR": "20"
+        }
+      ],
+      "snapshots": [],
+      "priceHistories": {},
+      "performanceFlowTrackingSince": null,
+      "settings": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "daily",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "bookingPresentation": {
+        "version": 1,
+        "archivedIds": [
+          "booking-a"
+        ]
+      }
+    },
+    "expected": {
+      "bookingId": "booking-a",
+      "positionId": "cash",
+      "quantityExact": "120",
+      "totalEURExact": "120",
+      "externalFlowExact": "20",
+      "feeEUR": null,
+      "taxEUR": null,
+      "archivedIds": [
+        "booking-a"
+      ],
+      "originalNote": "SYNTHETIC original note",
+      "newNote": "SYNTHETIC receipt checked"
+    }
+  },
+  "before": {
+    "schemaVersion": 1,
+    "revision": 2,
+    "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+    "confirmedActive": true,
+    "settings": {
+      "currency": "EUR",
+      "alphaVantageKey": "",
+      "marketstackKey": "",
+      "securitySource": "auto",
+      "coinGeckoKey": "",
+      "etherscanKey": "",
+      "binplorerKey": "",
+      "solanaRpc": "https://solana-rpc.publicnode.com",
+      "showSmall": true,
+      "autoRefresh": "daily",
+      "lastAccountId": "",
+      "publicInstrumentEndpoint": "",
+      "eodhdWorkerEndpoint": "",
+      "eodhdWorkerAccessToken": ""
+    },
+    "deleted": false,
+    "updatedAt": "2026-11-15T10:25:46.891Z"
+  },
+  "storage": {
+    "url": "http://127.0.0.1:4173/?page=bookings",
+    "dbVersion": 1,
+    "mode": "idb-v1",
+    "controller": "http://127.0.0.1:4173/sw.js",
+    "caches": [
+      "foliolab-open-v316"
+    ]
+  },
+  "preview": "1 ausgewählt · 0 außerhalb des aktuellen Filters.\n\nBeleg: SYNTHETIC K3 independent receipt\n\nGesamtvermögen: 120 → 120 EUR. Historische Renditen werden aus den vorhandenen Belegen neu berechnet; fehlende Werte bleiben unbekannt.\n\nSYNTHETIC K3 cash · SYNTHETIC K3 cash · 120 → 120 EUR\nÄnderung: 0 · Einstand: unbekannt → unbekannt\nGebühren: unbekannt → unbekannt EUR · Steuern: unbekannt → unbekannt EUR\nExterne Geldflüsse: 20 → 20\nNur Notiz; finanzielle Historie unverändert.\nEinzelne Buchungsänderungen (1)\n\nOriginalbelege bleiben im Änderungsnachweis erhalten. Gelöschte Importreferenzen bleiben für den automatischen Wiederimport gesperrt. Ihre Sicherungen benötigen eine aktuelle FolioLab-Version. Undo ist in dieser Sitzung bis zur nächsten Portfolioänderung möglich; danach Backup verwenden.\n\nIch bestätige genau diese Änderungen.",
+  "after": {
+    "schemaVersion": 1,
+    "revision": 3,
+    "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC receipt checked\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    },\n    {\n      \"id\": \"b5d88cc2-e261-4b0c-9767-f255f533497e\",\n      \"type\": \"booking-management-audit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:47.771Z\",\n      \"sequence\": 2,\n      \"source\": \"management-audit\",\n      \"postings\": [\n        {\n          \"id\": \"e6987782-2afe-4919-9d39-4f938f86b8e8\",\n          \"role\": \"documentation\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"0\"\n        }\n      ],\n      \"managementAudit\": {\n        \"version\": 1,\n        \"action\": \"notes\",\n        \"reason\": \"SYNTHETIC K3 independent receipt\",\n        \"originals\": [\n          {\n            \"booking\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"positionId\": \"cash\",\n              \"accountId\": \"a\",\n              \"positionName\": \"SYNTHETIC K3 cash\",\n              \"quantity\": 20,\n              \"quantityExact\": \"20\",\n              \"unitPrice\": 1,\n              \"feeEUR\": null,\n              \"taxEUR\": null,\n              \"fxRate\": 1,\n              \"fxRateDate\": null,\n              \"fxSource\": null,\n              \"amountEUR\": 20,\n              \"amountExactEUR\": \"20\",\n              \"targetPositionId\": null,\n              \"external\": true,\n              \"notes\": \"SYNTHETIC original note\",\n              \"journalEntryId\": \"booking-a\",\n              \"cashPositionId\": null,\n              \"reconciliationStatus\": \"recorded\"\n            },\n            \"journal\": {\n              \"id\": \"booking-a\",\n              \"type\": \"deposit\",\n              \"date\": \"2026-01-02\",\n              \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n              \"sequence\": 1,\n              \"postings\": [\n                {\n                  \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n                  \"role\": \"cash\",\n                  \"positionId\": \"cash\",\n                  \"accountId\": \"a\",\n                  \"quantityDeltaExact\": \"20\",\n                  \"amountBookEURExact\": \"20\"\n                },\n                {\n                  \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n                  \"role\": \"external-clearing\",\n                  \"positionId\": null,\n                  \"accountId\": null,\n                  \"quantityDeltaExact\": null,\n                  \"amountBookEURExact\": \"-20\"\n                }\n              ],\n              \"cashPositionId\": null,\n              \"status\": \"recorded\",\n              \"source\": \"manual\"\n            },\n            \"flows\": [\n              {\n                \"id\": \"booking-a\",\n                \"date\": \"2026-01-02\",\n                \"amountEUR\": 20,\n                \"amountExactEUR\": \"20\"\n              }\n            ]\n          }\n        ],\n        \"afterBookings\": [\n          {\n            \"id\": \"booking-a\",\n            \"type\": \"deposit\",\n            \"date\": \"2026-01-02\",\n            \"positionId\": \"cash\",\n            \"accountId\": \"a\",\n            \"positionName\": \"SYNTHETIC K3 cash\",\n            \"quantity\": 20,\n            \"quantityExact\": \"20\",\n            \"unitPrice\": 1,\n            \"feeEUR\": null,\n            \"taxEUR\": null,\n            \"fxRate\": 1,\n            \"fxRateDate\": null,\n            \"fxSource\": null,\n            \"amountEUR\": 20,\n            \"amountExactEUR\": \"20\",\n            \"targetPositionId\": null,\n            \"external\": true,\n            \"notes\": \"SYNTHETIC receipt checked\",\n            \"journalEntryId\": \"booking-a\",\n            \"cashPositionId\": null,\n            \"reconciliationStatus\": \"recorded\"\n          }\n        ]\n      }\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+    "confirmedActive": true,
+    "settings": {
+      "currency": "EUR",
+      "alphaVantageKey": "",
+      "marketstackKey": "",
+      "securitySource": "auto",
+      "coinGeckoKey": "",
+      "etherscanKey": "",
+      "binplorerKey": "",
+      "solanaRpc": "https://solana-rpc.publicnode.com",
+      "showSmall": true,
+      "autoRefresh": "daily",
+      "lastAccountId": "",
+      "publicInstrumentEndpoint": "",
+      "eodhdWorkerEndpoint": "",
+      "eodhdWorkerAccessToken": ""
+    },
+    "deleted": false,
+    "updatedAt": "2026-11-15T10:25:47.776Z"
+  },
+  "undone": {
+    "schemaVersion": 1,
+    "revision": 4,
+    "raw": "{\n  \"version\": 4,\n  \"providers\": [\n    {\n      \"id\": \"p\",\n      \"name\": \"SYNTHETIC K3 broker\",\n      \"type\": \"other\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"id\": \"a\",\n      \"providerId\": \"p\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"type\": \"other\",\n      \"currency\": \"EUR\"\n    }\n  ],\n  \"assets\": [\n    {\n      \"id\": \"asset:fiat%3Aeur\",\n      \"key\": \"fiat:eur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"listings\": []\n    }\n  ],\n  \"positions\": [\n    {\n      \"id\": \"cash\",\n      \"providerId\": \"p\",\n      \"accountId\": \"a\",\n      \"managementSource\": \"transactions\",\n      \"costBasisEUR\": null,\n      \"costBasisExact\": null,\n      \"realizedPnLEUR\": null,\n      \"realizedPnLExact\": null,\n      \"priceExact\": \"1\",\n      \"priceStatus\": null,\n      \"fxUpdatedAt\": null,\n      \"assetId\": \"asset:fiat%3Aeur\",\n      \"kind\": \"cash\",\n      \"name\": \"SYNTHETIC K3 cash\",\n      \"mic\": \"\",\n      \"listingId\": null,\n      \"economicRole\": \"standard\",\n      \"valuationMode\": \"included\",\n      \"representedByPositionId\": null,\n      \"quoteSource\": null,\n      \"quoteAsOf\": null,\n      \"quoteFetchedAt\": null,\n      \"quoteQuality\": null,\n      \"fxSource\": null,\n      \"fxRateDate\": null,\n      \"fxRateExact\": \"1\",\n      \"eodhdSymbol\": \"\",\n      \"fmpSymbol\": \"\",\n      \"tradingViewSymbol\": \"\",\n      \"exchange\": \"\",\n      \"symbol\": \"\",\n      \"isin\": \"\",\n      \"coinId\": \"\",\n      \"coinIdMigration\": null,\n      \"quantity\": 120,\n      \"quantityExact\": \"120\",\n      \"price\": 1,\n      \"currency\": \"EUR\",\n      \"fxRate\": 1,\n      \"wallet\": null,\n      \"updatedAt\": null,\n      \"notes\": \"\"\n    }\n  ],\n  \"bookings\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"positionId\": \"cash\",\n      \"accountId\": \"a\",\n      \"positionName\": \"SYNTHETIC K3 cash\",\n      \"quantity\": 20,\n      \"quantityExact\": \"20\",\n      \"unitPrice\": 1,\n      \"feeEUR\": null,\n      \"taxEUR\": null,\n      \"fxRate\": 1,\n      \"fxRateDate\": null,\n      \"fxSource\": null,\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\",\n      \"targetPositionId\": null,\n      \"external\": true,\n      \"notes\": \"SYNTHETIC original note\",\n      \"journalEntryId\": \"booking-a\",\n      \"cashPositionId\": null,\n      \"reconciliationStatus\": \"recorded\"\n    }\n  ],\n  \"journalEntries\": [\n    {\n      \"id\": \"booking-a\",\n      \"type\": \"deposit\",\n      \"date\": \"2026-01-02\",\n      \"recordedAt\": \"2026-11-15T10:25:46.884Z\",\n      \"sequence\": 1,\n      \"postings\": [\n        {\n          \"id\": \"138f2d74-f6c7-444c-8c80-6bae90e97306\",\n          \"role\": \"cash\",\n          \"positionId\": \"cash\",\n          \"accountId\": \"a\",\n          \"quantityDeltaExact\": \"20\",\n          \"amountBookEURExact\": \"20\"\n        },\n        {\n          \"id\": \"b34ef1ff-0e6d-4d6e-aacc-9e3df8dd5e28\",\n          \"role\": \"external-clearing\",\n          \"positionId\": null,\n          \"accountId\": null,\n          \"quantityDeltaExact\": null,\n          \"amountBookEURExact\": \"-20\"\n        }\n      ],\n      \"cashPositionId\": null,\n      \"status\": \"recorded\",\n      \"source\": \"manual\"\n    }\n  ],\n  \"openingPositions\": [\n    {\n      \"positionId\": \"cash\",\n      \"quantityExact\": \"100\",\n      \"costBasisExact\": null,\n      \"realizedPnLExact\": null,\n      \"source\": \"observed-opening\",\n      \"asOf\": \"2026-01-01\"\n    }\n  ],\n  \"externalCashFlows\": [\n    {\n      \"id\": \"booking-a\",\n      \"date\": \"2026-01-02\",\n      \"amountEUR\": 20,\n      \"amountExactEUR\": \"20\"\n    }\n  ],\n  \"snapshots\": [],\n  \"priceHistories\": {},\n  \"performanceFlowTrackingSince\": null,\n  \"settings\": {\n    \"currency\": \"EUR\",\n    \"alphaVantageKey\": \"\",\n    \"marketstackKey\": \"\",\n    \"securitySource\": \"auto\",\n    \"coinGeckoKey\": \"\",\n    \"etherscanKey\": \"\",\n    \"binplorerKey\": \"\",\n    \"solanaRpc\": \"https://solana-rpc.publicnode.com\",\n    \"showSmall\": true,\n    \"autoRefresh\": \"daily\",\n    \"lastAccountId\": \"\",\n    \"publicInstrumentEndpoint\": \"\",\n    \"eodhdWorkerEndpoint\": \"\",\n    \"eodhdWorkerAccessToken\": \"\"\n  },\n  \"bookingPresentation\": {\n    \"version\": 1,\n    \"archivedIds\": [\n      \"booking-a\"\n    ]\n  }\n}",
+    "confirmedActive": true,
+    "settings": {
+      "currency": "EUR",
+      "alphaVantageKey": "",
+      "marketstackKey": "",
+      "securitySource": "auto",
+      "coinGeckoKey": "",
+      "etherscanKey": "",
+      "binplorerKey": "",
+      "solanaRpc": "https://solana-rpc.publicnode.com",
+      "showSmall": true,
+      "autoRefresh": "daily",
+      "lastAccountId": "",
+      "publicInstrumentEndpoint": "",
+      "eodhdWorkerEndpoint": "",
+      "eodhdWorkerAccessToken": ""
+    },
+    "deleted": false,
+    "updatedAt": "2026-11-15T10:25:48.639Z"
+  },
+  "finishedAt": "2026-11-15T10:25:49.059Z"
+}
