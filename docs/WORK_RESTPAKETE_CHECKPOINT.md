@@ -1,6 +1,6 @@
-# HND01 · STOPPED / HANDOVER_READY · v317 LIVE_BLOCKED
+# HND01 · ACTIVE · v317 LIVE_BLOCKED
 
-Writer: NONE. Vorheriger alleiniger Writer: k3-emergency-9142fbd8f0d0. Geordnete Abgabe nach gesichertem konkretem Blocker. Keine laufenden oder wartenden GitHub-Jobs beim abschließenden Abgleich. Keine weitere Schreib- oder Ausführungslease reserviert.
+Writer: v317-worker-diagnostics-38043b27f933 (alleiniger HND01-Writer). Übernahme am 15.11.2026 nach frischem Abgleich: Main a53856e385ef1d9fd65d8710618244e80b8341e7; Übergabe 793a6317a2c13c73f896b04bd4abd556db6f70f2, Writer NONE; jüngste Jobs abgeschlossen. Autorisiert: Diagnose, gezielte QA, separater Korrekturbranch, PR und PR-Checks. Neuer Main-Head, Merge und Deployment benötigen Jochens Freigabe. Arbeitsziel: Worker-Netzwerk- und Zustandsdiagnostik im regulären Live-Pfad, Erfolg und kontrollierter Installationsfehler auf isolierter QA-Ref vor finaler CI. Keine unveränderten Live-Retries.
 
 ## Verbindlicher Produktstand
 
