@@ -1,0 +1,30 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic real dashboard/history and shared native component tooltip geometry; no physical Android claim",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "real dashboard/history actual elapsed-time ratio1/27 and nearest observed touch point",
+        "sparse native main/position/wallet coordinates and nearest mouse/touch/chronological keyboard at7widths",
+        "real dashboard/history exact values and readable axes",
+        "observed explanation once in coverage",
+        "native main/position/wallet component edge bounds",
+        "mouse/synthetic touch/keyboard",
+        "full long details keyboard scroll",
+        "7widths/Axe/short height/synthetic200percent text",
+        "exact canonical record unchanged"
+      ]
+    }
+  ]
+}

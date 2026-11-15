@@ -1,0 +1,22 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native Kraken read-only CSV preview",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "checks": [
+        "native auto/explicit recognition",
+        "schema/mixed/mode quarantine",
+        "all legs and exact declared fees",
+        "hostile source escaping",
+        "50/100 paging and focus",
+        "5 widths/Axe/44px",
+        "forced submit/Escape/cancel/reopen",
+        "actual offline reload",
+        "exact IDB/revision/settings zero mutation",
+        "no external preview requests"
+      ]
+    }
+  ]
+}

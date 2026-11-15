@@ -1,0 +1,315 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "startedAt": "2026-11-15T06:42:34.925Z",
+  "scope": "Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": {
+        "decoded": {
+          "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+          "outputIndex": 3,
+          "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+          "amountAtomic": "9007199254740993",
+          "locktime": "100",
+          "stakeableLocktime": null,
+          "threshold": 1,
+          "ownerIds": [
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          ]
+        },
+        "inspected": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": null,
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            ]
+          },
+          "ownerCoverage": "declared-all",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "unlocked",
+          "atTimeSeconds": "100"
+        },
+        "locked": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": "101",
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            ]
+          },
+          "ownerCoverage": "declared-all",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "locked-stakeable",
+          "atTimeSeconds": "100"
+        },
+        "shared": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": null,
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ]
+          },
+          "ownerCoverage": "shared",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "unlocked",
+          "atTimeSeconds": "100"
+        },
+        "rejected": [
+          {
+            "label": "corrupt checksum",
+            "rejected": true
+          },
+          {
+            "label": "unsupported codec",
+            "rejected": true
+          },
+          {
+            "label": "trailing byte",
+            "rejected": true
+          },
+          {
+            "label": "missing explicit encoding",
+            "rejected": true
+          }
+        ],
+        "owner": {
+          "address": "P-avax142424242424242424242424242424242gukazp",
+          "networkID": "1",
+          "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+        },
+        "fuji": {
+          "address": "P-fuji142424242424242424242424242424242ywjzw7",
+          "networkID": "5",
+          "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+        },
+        "identity": {
+          "networkID": "1",
+          "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "native",
+          "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+          "outputIndex": 3,
+          "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+        },
+        "sameKey": true,
+        "contextSeparated": true,
+        "identityRejected": [
+          {
+            "label": "network mismatch",
+            "rejected": true
+          },
+          {
+            "label": "bad checksum",
+            "rejected": true
+          },
+          {
+            "label": "EVM is not P address",
+            "rejected": true
+          },
+          {
+            "label": "wrong chain",
+            "rejected": true
+          },
+          {
+            "label": "Bech32m",
+            "rejected": true
+          },
+          {
+            "label": "missing chain context",
+            "rejected": true
+          },
+          {
+            "label": "unsafe output index",
+            "rejected": true
+          }
+        ],
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "immutable": true
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": {
+        "decoded": {
+          "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+          "outputIndex": 3,
+          "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+          "amountAtomic": "9007199254740993",
+          "locktime": "100",
+          "stakeableLocktime": null,
+          "threshold": 1,
+          "ownerIds": [
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          ]
+        },
+        "inspected": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": null,
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            ]
+          },
+          "ownerCoverage": "declared-all",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "unlocked",
+          "atTimeSeconds": "100"
+        },
+        "locked": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": "101",
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            ]
+          },
+          "ownerCoverage": "declared-all",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "locked-stakeable",
+          "atTimeSeconds": "100"
+        },
+        "shared": {
+          "utxo": {
+            "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+            "outputIndex": 3,
+            "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+            "amountAtomic": "9007199254740993",
+            "locktime": "100",
+            "stakeableLocktime": null,
+            "threshold": 1,
+            "ownerIds": [
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ]
+          },
+          "ownerCoverage": "shared",
+          "matchedOwners": 1,
+          "thresholdCovered": true,
+          "lockState": "unlocked",
+          "atTimeSeconds": "100"
+        },
+        "rejected": [
+          {
+            "label": "corrupt checksum",
+            "rejected": true
+          },
+          {
+            "label": "unsupported codec",
+            "rejected": true
+          },
+          {
+            "label": "trailing byte",
+            "rejected": true
+          },
+          {
+            "label": "missing explicit encoding",
+            "rejected": true
+          }
+        ],
+        "owner": {
+          "address": "P-avax142424242424242424242424242424242gukazp",
+          "networkID": "1",
+          "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+        },
+        "fuji": {
+          "address": "P-fuji142424242424242424242424242424242ywjzw7",
+          "networkID": "5",
+          "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+        },
+        "identity": {
+          "networkID": "1",
+          "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "native",
+          "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+          "outputIndex": 3,
+          "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+        },
+        "sameKey": true,
+        "contextSeparated": true,
+        "identityRejected": [
+          {
+            "label": "network mismatch",
+            "rejected": true
+          },
+          {
+            "label": "bad checksum",
+            "rejected": true
+          },
+          {
+            "label": "EVM is not P address",
+            "rejected": true
+          },
+          {
+            "label": "wrong chain",
+            "rejected": true
+          },
+          {
+            "label": "Bech32m",
+            "rejected": true
+          },
+          {
+            "label": "missing chain context",
+            "rejected": true
+          },
+          {
+            "label": "unsafe output index",
+            "rejected": true
+          }
+        ],
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "immutable": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-15T06:42:38.348Z",
+  "result": "PASS"
+}

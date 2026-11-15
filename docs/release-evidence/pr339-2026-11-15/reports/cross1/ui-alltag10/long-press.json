@@ -1,0 +1,20 @@
+{
+  "engines": [
+    {
+      "engine": "firefox",
+      "result": {
+        "positions": "PASS",
+        "bookings": "PASS",
+        "references": "PASS"
+      }
+    },
+    {
+      "engine": "webkit",
+      "result": {
+        "positions": "PASS",
+        "bookings": "PASS",
+        "references": "PASS"
+      }
+    }
+  ]
+}

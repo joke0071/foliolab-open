@@ -1,0 +1,137 @@
+{
+  "engine": "webkit",
+  "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-extended-chart-periods.mjs:13:8\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processImmediate (node:internal/timers:452:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)",
+  "events": [
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/",
+      "time": 1794725337209
+    },
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/",
+      "time": 1794725337545
+    },
+    {
+      "event": "load",
+      "url": "http://127.0.0.1:4173/",
+      "time": 1794725337696
+    },
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/",
+      "time": 1794725337697
+    }
+  ],
+  "stages": [
+    {
+      "stage": "initial-ready",
+      "state": {
+        "url": "http://127.0.0.1:4173/",
+        "timeOrigin": 1794725336852,
+        "documentState": "complete",
+        "controller": null,
+        "active": null,
+        "installing": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "installing"
+        },
+        "waiting": null,
+        "controlled": false,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv"
+      }
+    },
+    {
+      "stage": "before-reload",
+      "waitResult": true,
+      "state": {
+        "url": "http://127.0.0.1:4173/",
+        "timeOrigin": 1794725336852,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      }
+    },
+    {
+      "stage": "after-reload",
+      "waitResult": true,
+      "state": {
+        "url": "http://127.0.0.1:4173/",
+        "timeOrigin": 1794725337538,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      }
+    },
+    {
+      "stage": "assertions",
+      "state": {
+        "url": "http://127.0.0.1:4173/",
+        "timeOrigin": 1794725337538,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      },
+      "verified": {
+        "controller": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "controlled": true
+      }
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,23 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "inputBytes": 19999833,
+  "prettyBytes": 20000167,
+  "engines": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "canonicalHash": "8d444694bacb89417fd023978332763e57ff890c8caf90081d1b67cef122ded4",
+      "oversizedCanonicalHash": "e582ac9c09beac89d60b73df9daf79335de61829e979df48d258bfeaad4af359",
+      "downloadBytes": 19999833,
+      "downloadSha256": "dd7781f5d7db8689d4f850a275f3c3d3d0cc7e2bb05d5eae5e3dabb4ee7888e6",
+      "checks": [
+        "accepted legacy compact input",
+        "readable plain UI export preserves all revision bytes",
+        "fresh UI restore",
+        "UTF8 too large rejected before URL/download/backup acknowledgement",
+        "canonical record/revision/reload unchanged",
+        "failed mandatory safety export cannot unlock reference deletion"
+      ]
+    }
+  ]
+}

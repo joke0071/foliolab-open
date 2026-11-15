@@ -1,0 +1,577 @@
+2026-11-15T06:37:22.0211380Z ok 1350 - K02: long remote crypto requests remain blocked without a provider call or a mandatory new key
+2026-11-15T06:37:22.0211805Z   ---
+2026-11-15T06:37:22.0212021Z   duration_ms: 1.161836
+2026-11-15T06:37:22.0212214Z   ...
+2026-11-15T06:37:22.0212773Z # Subtest: 490 documentary income rows retain400 unknowns,90EUR evidence and exact model identity in compact display
+2026-11-15T06:37:22.0213899Z ok 1351 - 490 documentary income rows retain400 unknowns,90EUR evidence and exact model identity in compact display
+2026-11-15T06:37:22.0214654Z   ---
+2026-11-15T06:37:22.0214856Z   duration_ms: 9.113608
+2026-11-15T06:37:22.0215254Z   ...
+2026-11-15T06:37:22.0215847Z # Subtest: Historical display rounds only for reading, preserves nonzero tiny values and locale grouping
+2026-11-15T06:37:22.0216862Z ok 1352 - Historical display rounds only for reading, preserves nonzero tiny values and locale grouping
+2026-11-15T06:37:22.0217417Z   ---
+2026-11-15T06:37:22.0217606Z   duration_ms: 0.473732
+2026-11-15T06:37:22.0217787Z   ...
+2026-11-15T06:37:22.0218191Z # Subtest: UI300 period difference uses exact selected endpoints and changes no evidence
+2026-11-15T06:37:22.0218757Z ok 1353 - UI300 period difference uses exact selected endpoints and changes no evidence
+2026-11-15T06:37:22.0219144Z   ---
+2026-11-15T06:37:22.0219321Z   duration_ms: 2.056221
+2026-11-15T06:37:22.0219502Z   ...
+2026-11-15T06:37:22.0219874Z # Subtest: UI300 incomplete periods never invent a zero or bridge reconstructed gaps
+2026-11-15T06:37:22.0220423Z ok 1354 - UI300 incomplete periods never invent a zero or bridge reconstructed gaps
+2026-11-15T06:37:22.0220765Z   ---
+2026-11-15T06:37:22.0220936Z   duration_ms: 0.261383
+2026-11-15T06:37:22.0221118Z   ...
+2026-11-15T06:37:22.0221542Z # Subtest: UI300 partial automatic observations never become comparable period endpoints or bridges
+2026-11-15T06:37:22.0222227Z ok 1355 - UI300 partial automatic observations never become comparable period endpoints or bridges
+2026-11-15T06:37:22.0222626Z   ---
+2026-11-15T06:37:22.0222790Z   duration_ms: 0.26597
+2026-11-15T06:37:22.0223104Z   ...
+2026-11-15T06:37:22.0223617Z # Subtest: UH02 economic N:1 purchase backfill: independent amounts, zero quantity change, pure preview, idempotent sources
+2026-11-15T06:37:22.0224207Z ok 1356 - UH02 economic N:1 purchase backfill: independent amounts, zero quantity change, pure preview, idempotent sources
+2026-11-15T06:37:22.0224747Z   ---
+2026-11-15T06:37:22.0224924Z   duration_ms: 65.853476
+2026-11-15T06:37:22.0225121Z   ...
+2026-11-15T06:37:22.0225734Z # Subtest: UH02 scope, partial history, missing vout, one satoshi, changed revision/funding and unrelated books fail closed
+2026-11-15T06:37:22.0226503Z ok 1357 - UH02 scope, partial history, missing vout, one satoshi, changed revision/funding and unrelated books fail closed
+2026-11-15T06:37:22.0226948Z   ---
+2026-11-15T06:37:22.0227121Z   duration_ms: 10.950539
+2026-11-15T06:37:22.0227307Z   ...
+2026-11-15T06:37:22.0227857Z # Subtest: UH02 matching N:M never assigns batch mining fee or Ledger countervalues to cost; other scopes require explicit exclusion
+2026-11-15T06:37:22.0228755Z ok 1358 - UH02 matching N:M never assigns batch mining fee or Ledger countervalues to cost; other scopes require explicit exclusion
+2026-11-15T06:37:22.0229238Z   ---
+2026-11-15T06:37:22.0229402Z   duration_ms: 21.960308
+2026-11-15T06:37:22.0229601Z   ...
+2026-11-15T06:37:22.0230092Z # Subtest: UH02 safe economic undo retains independent sources and tombstone; manual edits/dependencies block undo
+2026-11-15T06:37:22.0230840Z ok 1359 - UH02 safe economic undo retains independent sources and tombstone; manual edits/dependencies block undo
+2026-11-15T06:37:22.0231264Z   ---
+2026-11-15T06:37:22.0231434Z   duration_ms: 20.914446
+2026-11-15T06:37:22.0231619Z   ...
+2026-11-15T06:37:22.0232068Z # Subtest: UH02 encrypted backup/restore reimport retains financial effect once, without history opt-in
+2026-11-15T06:37:22.0232738Z ok 1360 - UH02 encrypted backup/restore reimport retains financial effect once, without history opt-in
+2026-11-15T06:37:22.0233130Z   ---
+2026-11-15T06:37:22.0233306Z   duration_ms: 141.477438
+2026-11-15T06:37:22.0233503Z   ...
+2026-11-15T06:37:22.0233935Z # Subtest: UH02 source order Ledger first / Bittr first / all together has identical economics and links
+2026-11-15T06:37:22.0234593Z ok 1361 - UH02 source order Ledger first / Bittr first / all together has identical economics and links
+2026-11-15T06:37:22.0234995Z   ---
+2026-11-15T06:37:22.0235269Z   duration_ms: 20.098339
+2026-11-15T06:37:22.0235460Z   ...
+2026-11-15T06:37:22.0235994Z # Subtest: UH02 observed scan opening remains current through rescan; economic facts stay fixed
+2026-11-15T06:37:22.0236605Z ok 1362 - UH02 observed scan opening remains current through rescan; economic facts stay fixed
+2026-11-15T06:37:22.0236972Z   ---
+2026-11-15T06:37:22.0237148Z   duration_ms: 9.331535
+2026-11-15T06:37:22.0237335Z   ...
+2026-11-15T06:37:22.0237747Z # Subtest: UH02 restore rejects missing/changed source, fees, cashflow and orphan economic records
+2026-11-15T06:37:22.0238374Z ok 1363 - UH02 restore rejects missing/changed source, fees, cashflow and orphan economic records
+2026-11-15T06:37:22.0238756Z   ---
+2026-11-15T06:37:22.0238932Z   duration_ms: 17.457476
+2026-11-15T06:37:22.0239125Z   ...
+2026-11-15T06:37:22.0239574Z # Subtest: UH02 rejects stale/unbound wallet ownership even with identical position, account and quantity
+2026-11-15T06:37:22.0240262Z ok 1364 - UH02 rejects stale/unbound wallet ownership even with identical position, account and quantity
+2026-11-15T06:37:22.0240702Z   ---
+2026-11-15T06:37:22.0240879Z   duration_ms: 7.610569
+2026-11-15T06:37:22.0241070Z   ...
+2026-11-15T06:37:22.0241531Z # Subtest: UH02 opts into v5 and cannot be silently downgraded by backup, archive, undo or a later wizard operation
+2026-11-15T06:37:22.0242272Z ok 1365 - UH02 opts into v5 and cannot be silently downgraded by backup, archive, undo or a later wizard operation
+2026-11-15T06:37:22.0242677Z   ---
+2026-11-15T06:37:22.0242843Z   duration_ms: 23.674158
+2026-11-15T06:37:22.0243032Z   ...
+2026-11-15T06:37:22.0243505Z # Subtest: Local name, ISIN and ticker references require neither key nor request
+2026-11-15T06:37:22.0244029Z ok 1366 - Local name, ISIN and ticker references require neither key nor request
+2026-11-15T06:37:22.0244362Z   ---
+2026-11-15T06:37:22.0244526Z   duration_ms: 1.418112
+2026-11-15T06:37:22.0244713Z   ...
+2026-11-15T06:37:22.0245044Z # Subtest: Removed search adapters cannot use credentials from old callers
+2026-11-15T06:37:22.0245663Z ok 1367 - Removed search adapters cannot use credentials from old callers
+2026-11-15T06:37:22.0245977Z   ---
+2026-11-15T06:37:22.0246153Z   duration_ms: 0.655305
+2026-11-15T06:37:22.0246339Z   ...
+2026-11-15T06:37:22.0246729Z # Subtest: Alpha search needs explicit XETRA, DEX suffix, type and currency; no inferred ISIN
+2026-11-15T06:37:22.0247342Z ok 1368 - Alpha search needs explicit XETRA, DEX suffix, type and currency; no inferred ISIN
+2026-11-15T06:37:22.0247715Z   ---
+2026-11-15T06:37:22.0247887Z   duration_ms: 0.806923
+2026-11-15T06:37:22.0248084Z   ...
+2026-11-15T06:37:22.0248497Z # Subtest: Search and daily requests share atomic free budget, completion pacing, cache and secrecy
+2026-11-15T06:37:22.0249089Z ok 1369 - Search and daily requests share atomic free budget, completion pacing, cache and secrecy
+2026-11-15T06:37:22.0249329Z   ---
+2026-11-15T06:37:22.0249439Z   duration_ms: 16.482865
+2026-11-15T06:37:22.0249563Z   ...
+2026-11-15T06:37:22.0249888Z # Subtest: Listing confirmation changes metadata only, preserves exact financial fields and rejects currency/ISIN conflicts
+2026-11-15T06:37:22.0250448Z ok 1370 - Listing confirmation changes metadata only, preserves exact financial fields and rejects currency/ISIN conflicts
+2026-11-15T06:37:22.0250893Z   ---
+2026-11-15T06:37:22.0251053Z   duration_ms: 0.677228
+2026-11-15T06:37:22.0251235Z   ...
+2026-11-15T06:37:22.0251628Z # Subtest: missing/null/empty FX remains explicit UNKNOWN at the first constructor boundary
+2026-11-15T06:37:22.0252207Z ok 1371 - missing/null/empty FX remains explicit UNKNOWN at the first constructor boundary
+2026-11-15T06:37:22.0252567Z   ---
+2026-11-15T06:37:22.0252735Z   duration_ms: 3.358318
+2026-11-15T06:37:22.0252940Z   ...
+2026-11-15T06:37:22.0253338Z # Subtest: known identity FX and nonidentity rates retain independent exact Decimal100 outcomes
+2026-11-15T06:37:22.0253941Z ok 1372 - known identity FX and nonidentity rates retain independent exact Decimal100 outcomes
+2026-11-15T06:37:22.0254320Z   ---
+2026-11-15T06:37:22.0254711Z   duration_ms: 3.564828
+2026-11-15T06:37:22.0254918Z   ...
+2026-11-15T06:37:22.0255485Z # Subtest: invalid rates and unknown/numeric contradictions reject without source mutation
+2026-11-15T06:37:22.0256098Z ok 1373 - invalid rates and unknown/numeric contradictions reject without source mutation
+2026-11-15T06:37:22.0256464Z   ---
+2026-11-15T06:37:22.0256634Z   duration_ms: 0.673813
+2026-11-15T06:37:22.0256821Z   ...
+2026-11-15T06:37:22.0257303Z # Subtest: canonical backup and encrypted fresh object restore preserve UNKNOWN and exact native quantities
+2026-11-15T06:37:22.0258069Z ok 1374 - canonical backup and encrypted fresh object restore preserve UNKNOWN and exact native quantities
+2026-11-15T06:37:22.0258511Z   ---
+2026-11-15T06:37:22.0258700Z   duration_ms: 111.135612
+2026-11-15T06:37:22.0258911Z   ...
+2026-11-15T06:37:22.0259270Z # Subtest: legacy stored numeric1 is not inferred to be UNKNOWN or repaired
+2026-11-15T06:37:22.0259797Z ok 1375 - legacy stored numeric1 is not inferred to be UNKNOWN or repaired
+2026-11-15T06:37:22.0260129Z   ---
+2026-11-15T06:37:22.0260309Z   duration_ms: 0.996378
+2026-11-15T06:37:22.0260508Z   ...
+2026-11-15T06:37:22.0260924Z # Subtest: raw nullable legacy FX is canonicalized fail-closed without mutating raw source
+2026-11-15T06:37:22.0261549Z ok 1376 - raw nullable legacy FX is canonicalized fail-closed without mutating raw source
+2026-11-15T06:37:22.0261945Z   ---
+2026-11-15T06:37:22.0262127Z   duration_ms: 0.5057
+2026-11-15T06:37:22.0262322Z   ...
+2026-11-15T06:37:22.0262734Z # Subtest: known partial sum is explicit and no cost basis or performance is inferred from UNKNOWN
+2026-11-15T06:37:22.0263528Z ok 1377 - known partial sum is explicit and no cost basis or performance is inferred from UNKNOWN
+2026-11-15T06:37:22.0263906Z   ---
+2026-11-15T06:37:22.0264078Z   duration_ms: 0.998821
+2026-11-15T06:37:22.0264269Z   ...
+2026-11-15T06:37:22.0264657Z # Subtest: current FX never grants historical valuation or historical transaction FX
+2026-11-15T06:37:22.0265428Z ok 1378 - current FX never grants historical valuation or historical transaction FX
+2026-11-15T06:37:22.0265799Z   ---
+2026-11-15T06:37:22.0265979Z   duration_ms: 1.171501
+2026-11-15T06:37:22.0266190Z   ...
+2026-11-15T06:37:22.0266613Z # Subtest: zero holdings and excluded contributions are mathematical zeros without proving FX
+2026-11-15T06:37:22.0267273Z ok 1379 - zero holdings and excluded contributions are mathematical zeros without proving FX
+2026-11-15T06:37:22.0267669Z   ---
+2026-11-15T06:37:22.0267851Z   duration_ms: 0.350918
+2026-11-15T06:37:22.0268048Z   ...
+2026-11-15T06:37:22.0268458Z # Subtest: legacy storage serialization and reload remain fail-closed for nullable FX
+2026-11-15T06:37:22.0269058Z ok 1380 - legacy storage serialization and reload remain fail-closed for nullable FX
+2026-11-15T06:37:22.0269439Z   ---
+2026-11-15T06:37:22.0269616Z   duration_ms: 0.66523
+2026-11-15T06:37:22.0269811Z   ...
+2026-11-15T06:37:22.0270234Z # Subtest: UNKNOWN never rewrites existing independently recorded historical observations
+2026-11-15T06:37:22.0270881Z ok 1381 - UNKNOWN never rewrites existing independently recorded historical observations
+2026-11-15T06:37:22.0271270Z   ---
+2026-11-15T06:37:22.0271448Z   duration_ms: 1.980777
+2026-11-15T06:37:22.0271644Z   ...
+2026-11-15T06:37:22.0271969Z # Subtest: Derived snapshot price is not a stale market quote
+2026-11-15T06:37:22.0272406Z ok 1382 - Derived snapshot price is not a stale market quote
+2026-11-15T06:37:22.0272703Z   ---
+2026-11-15T06:37:22.0272882Z   duration_ms: 1.766085
+2026-11-15T06:37:22.0273028Z   ...
+2026-11-15T06:37:22.0273256Z # Subtest: Provider quote ages only by quoteAsOf, not manual update timestamp
+2026-11-15T06:37:22.0273858Z ok 1383 - Provider quote ages only by quoteAsOf, not manual update timestamp
+2026-11-15T06:37:22.0274222Z   ---
+2026-11-15T06:37:22.0274392Z   duration_ms: 0.248724
+2026-11-15T06:37:22.0274628Z   ...
+2026-11-15T06:37:22.0275067Z # Subtest: Missing prices, review and derived statuses have separate counts
+2026-11-15T06:37:22.0275853Z ok 1384 - Missing prices, review and derived statuses have separate counts
+2026-11-15T06:37:22.0276175Z   ---
+2026-11-15T06:37:22.0276344Z   duration_ms: 0.302705
+2026-11-15T06:37:22.0276537Z   ...
+2026-11-15T06:37:22.0276847Z # Subtest: Warning drill-down identifies only affected position IDs
+2026-11-15T06:37:22.0277291Z ok 1385 - Warning drill-down identifies only affected position IDs
+2026-11-15T06:37:22.0277584Z   ---
+2026-11-15T06:37:22.0277749Z   duration_ms: 0.288063
+2026-11-15T06:37:22.0277937Z   ...
+2026-11-15T06:37:22.0278312Z # Subtest: Ethereum-Scan entdeckt Native Coin und verschiedene ERC20 ohne User Key
+2026-11-15T06:37:22.0278876Z ok 1386 - Ethereum-Scan entdeckt Native Coin und verschiedene ERC20 ohne User Key
+2026-11-15T06:37:22.0279243Z   ---
+2026-11-15T06:37:22.0279420Z   duration_ms: 2.66099
+2026-11-15T06:37:22.0279611Z   ...
+2026-11-15T06:37:22.0280243Z # Subtest: Bitcoin-Import nutzt ausschließlich eine gültige öffentliche Adresse
+2026-11-15T06:37:22.0280872Z ok 1387 - Bitcoin-Import nutzt ausschließlich eine gültige öffentliche Adresse
+2026-11-15T06:37:22.0281209Z   ---
+2026-11-15T06:37:22.0281383Z   duration_ms: 0.862616
+2026-11-15T06:37:22.0281571Z   ...
+2026-11-15T06:37:22.0281939Z # Subtest: Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert
+2026-11-15T06:37:22.0282496Z ok 1388 - Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert
+2026-11-15T06:37:22.0282853Z   ---
+2026-11-15T06:37:22.0283020Z   duration_ms: 0.91772
+2026-11-15T06:37:22.0283210Z   ...
+2026-11-15T06:37:22.0283555Z # Subtest: Wallet-Abfrage für EVM-Token ohne Etherscan Key
+2026-11-15T06:37:22.0283959Z ok 1389 - Wallet-Abfrage für EVM-Token ohne Etherscan Key
+2026-11-15T06:37:22.0284140Z   ---
+2026-11-15T06:37:22.0284258Z   duration_ms: 0.344908
+2026-11-15T06:37:22.0284381Z   ...
+2026-11-15T06:37:22.0284614Z # Subtest: ERC20-Kursabruf über CoinGecko contract ohne Schlüssel
+2026-11-15T06:37:22.0284927Z ok 1390 - ERC20-Kursabruf über CoinGecko contract ohne Schlüssel
+2026-11-15T06:37:22.0285121Z   ---
+2026-11-15T06:37:22.0285425Z   duration_ms: 0.738751
+2026-11-15T06:37:22.0285556Z   ...
+2026-11-15T06:37:22.0285716Z # Subtest: Solana-Teilfehler bleibt erkennbar
+2026-11-15T06:37:22.0285992Z ok 1391 - Solana-Teilfehler bleibt erkennbar
+2026-11-15T06:37:22.0286151Z   ---
+2026-11-15T06:37:22.0286265Z   duration_ms: 0.919342
+2026-11-15T06:37:22.0286388Z   ...
+2026-11-15T06:37:22.0286614Z # Subtest: Fehlender Blockscout-Native-Saldo wird nie als Null gespeichert
+2026-11-15T06:37:22.0286937Z ok 1392 - Fehlender Blockscout-Native-Saldo wird nie als Null gespeichert
+2026-11-15T06:37:22.0287155Z   ---
+2026-11-15T06:37:22.0287271Z   duration_ms: 0.399761
+2026-11-15T06:37:22.0287399Z   ...
+2026-11-15T06:37:22.0287652Z # Subtest: Solana-SOL bleibt importierbar, auch wenn beide Token-Programme blockiert sind
+2026-11-15T06:37:22.0288041Z ok 1393 - Solana-SOL bleibt importierbar, auch wenn beide Token-Programme blockiert sind
+2026-11-15T06:37:22.0288281Z   ---
+2026-11-15T06:37:22.0288394Z   duration_ms: 1.535267
+2026-11-15T06:37:22.0288522Z   ...
+2026-11-15T06:37:22.0288795Z # Subtest: EVM: Native Coin bleibt bei ausgefallenem Token-Explorer erhalten, aber nur als Teilerfolg
+2026-11-15T06:37:22.0289220Z ok 1394 - EVM: Native Coin bleibt bei ausgefallenem Token-Explorer erhalten, aber nur als Teilerfolg
+2026-11-15T06:37:22.0289479Z   ---
+2026-11-15T06:37:22.0289592Z   duration_ms: 0.642666
+2026-11-15T06:37:22.0289717Z   ...
+2026-11-15T06:37:22.0290041Z # Subtest: EVM: kein Native Coin und ausgefallener Token-Explorer dürfen nicht als leeres Wallet gelten
+2026-11-15T06:37:22.0290508Z ok 1395 - EVM: kein Native Coin und ausgefallener Token-Explorer dürfen nicht als leeres Wallet gelten
+2026-11-15T06:37:22.0290792Z   ---
+2026-11-15T06:37:22.0290902Z   duration_ms: 0.511378
+2026-11-15T06:37:22.0291025Z   ...
+2026-11-15T06:37:22.0291229Z # Subtest: Solana sums SPL raw balances exactly beyond JS safe integer
+2026-11-15T06:37:22.0291525Z ok 1396 - Solana sums SPL raw balances exactly beyond JS safe integer
+2026-11-15T06:37:22.0291825Z   ---
+2026-11-15T06:37:22.0291944Z   duration_ms: 0.512971
+2026-11-15T06:37:22.0292069Z   ...
+2026-11-15T06:37:22.0292337Z # Subtest: EVM discovery preserves exact large atomic balances and identifies incomplete scans
+2026-11-15T06:37:22.0292741Z ok 1397 - EVM discovery preserves exact large atomic balances and identifies incomplete scans
+2026-11-15T06:37:22.0292981Z   ---
+2026-11-15T06:37:22.0293095Z   duration_ms: 5.913869
+2026-11-15T06:37:22.0293226Z   ...
+2026-11-15T06:37:22.0293428Z # Subtest: Missing Solana raw account value never means verified zero
+2026-11-15T06:37:22.0293729Z ok 1398 - Missing Solana raw account value never means verified zero
+2026-11-15T06:37:22.0293930Z   ---
+2026-11-15T06:37:22.0294043Z   duration_ms: 0.428494
+2026-11-15T06:37:22.0294193Z   ...
+2026-11-15T06:37:22.0294595Z # Subtest: Malformed Solana token-account responses never certify complete empty lists
+2026-11-15T06:37:22.0295265Z ok 1399 - Malformed Solana token-account responses never certify complete empty lists
+2026-11-15T06:37:22.0295624Z   ---
+2026-11-15T06:37:22.0295791Z   duration_ms: 0.621083
+2026-11-15T06:37:22.0295974Z   ...
+2026-11-15T06:37:22.0296357Z # Subtest: Avalanche null explorer balance uses official public RPC with exact wei balance
+2026-11-15T06:37:22.0296940Z ok 1400 - Avalanche null explorer balance uses official public RPC with exact wei balance
+2026-11-15T06:37:22.0297297Z   ---
+2026-11-15T06:37:22.0297463Z   duration_ms: 0.530137
+2026-11-15T06:37:22.0297659Z   ...
+2026-11-15T06:37:22.0298051Z # Subtest: Avalanche valid explorer balance is retained without unnecessary RPC fallback
+2026-11-15T06:37:22.0298777Z ok 1401 - Avalanche valid explorer balance is retained without unnecessary RPC fallback
+2026-11-15T06:37:22.0299155Z   ---
+2026-11-15T06:37:22.0299329Z   duration_ms: 0.417427
+2026-11-15T06:37:22.0299523Z   ...
+2026-11-15T06:37:22.0299872Z # Subtest: Avalanche RPC failures must not produce artificial zero balances
+2026-11-15T06:37:22.0300386Z ok 1402 - Avalanche RPC failures must not produce artificial zero balances
+2026-11-15T06:37:22.0300718Z   ---
+2026-11-15T06:37:22.0300897Z   duration_ms: 1.359083
+2026-11-15T06:37:22.0301088Z   ...
+2026-11-15T06:37:22.0301420Z # Subtest: Avalanche discovery recovers native balance from public RPC
+2026-11-15T06:37:22.0301908Z ok 1403 - Avalanche discovery recovers native balance from public RPC
+2026-11-15T06:37:22.0302230Z   ---
+2026-11-15T06:37:22.0302402Z   duration_ms: 1.073463
+2026-11-15T06:37:22.0302600Z   ...
+2026-11-15T06:37:22.0303031Z # Subtest: Other EVM networks still reject missing explorer balance instead of fabricating one
+2026-11-15T06:37:22.0303664Z ok 1404 - Other EVM networks still reject missing explorer balance instead of fabricating one
+2026-11-15T06:37:22.0304031Z   ---
+2026-11-15T06:37:22.0304201Z   duration_ms: 0.89778
+2026-11-15T06:37:22.0304388Z   ...
+2026-11-15T06:37:22.0304757Z # Subtest: WH01 exact signed 24-decimal quantities, huge integers and JSON roundtrip
+2026-11-15T06:37:22.0305408Z ok 1405 - WH01 exact signed 24-decimal quantities, huge integers and JSON roundtrip
+2026-11-15T06:37:22.0305756Z   ---
+2026-11-15T06:37:22.0305928Z   duration_ms: 3.731518
+2026-11-15T06:37:22.0306117Z   ...
+2026-11-15T06:37:22.0306454Z # Subtest: WH01 same tx two indices; stable IDs and order with same timestamp
+2026-11-15T06:37:22.0306958Z ok 1406 - WH01 same tx two indices; stable IDs and order with same timestamp
+2026-11-15T06:37:22.0307349Z   ---
+2026-11-15T06:37:22.0307527Z   duration_ms: 0.990299
+2026-11-15T06:37:22.0307716Z   ...
+2026-11-15T06:37:22.0308099Z # Subtest: WH01 repeated imports and explicit same-account wallet/HD overlap deduplicate
+2026-11-15T06:37:22.0308668Z ok 1407 - WH01 repeated imports and explicit same-account wallet/HD overlap deduplicate
+2026-11-15T06:37:22.0308908Z   ---
+2026-11-15T06:37:22.0309020Z   duration_ms: 1.722058
+2026-11-15T06:37:22.0309146Z   ...
+2026-11-15T06:37:22.0309344Z # Subtest: WH01 BTC input/change and fee contract applies fee once
+2026-11-15T06:37:22.0309737Z ok 1408 - WH01 BTC input/change and fee contract applies fee once
+2026-11-15T06:37:22.0309931Z   ---
+2026-11-15T06:37:22.0310041Z   duration_ms: 0.650738
+2026-11-15T06:37:22.0310170Z   ...
+2026-11-15T06:37:22.0310390Z # Subtest: WH01 >2 own wallets: transfer legs net neutral, fee once in aggregate
+2026-11-15T06:37:22.0310717Z ok 1409 - WH01 >2 own wallets: transfer legs net neutral, fee once in aggregate
+2026-11-15T06:37:22.0310932Z   ---
+2026-11-15T06:37:22.0311044Z   duration_ms: 0.748776
+2026-11-15T06:37:22.0311170Z   ...
+2026-11-15T06:37:22.0311413Z # Subtest: WH01 missing opening/genesis, provenance and provider gaps never become zero
+2026-11-15T06:37:22.0311778Z ok 1410 - WH01 missing opening/genesis, provenance and provider gaps never become zero
+2026-11-15T06:37:22.0312006Z   ---
+2026-11-15T06:37:22.0312119Z   duration_ms: 1.451501
+2026-11-15T06:37:22.0312242Z   ...
+2026-11-15T06:37:22.0312517Z # Subtest: WH01 conflicting duplicate, reorg and orphaned events withhold balances deterministically
+2026-11-15T06:37:22.0312936Z ok 1411 - WH01 conflicting duplicate, reorg and orphaned events withhold balances deterministically
+2026-11-15T06:37:22.0313191Z   ---
+2026-11-15T06:37:22.0313301Z   duration_ms: 1.425763
+2026-11-15T06:37:22.0313430Z   ...
+2026-11-15T06:37:22.0313658Z # Subtest: WH01 failed transaction is fee-only; unconfirmed is not final balance
+2026-11-15T06:37:22.0313991Z ok 1412 - WH01 failed transaction is fee-only; unconfirmed is not final balance
+2026-11-15T06:37:22.0314205Z   ---
+2026-11-15T06:37:22.0314320Z   duration_ms: 0.523427
+2026-11-15T06:37:22.0314446Z   ...
+2026-11-15T06:37:22.0314731Z # Subtest: WH01 unknown rebase and decimals mismatch withhold amounts
+2026-11-15T06:37:22.0315017Z ok 1413 - WH01 unknown rebase and decimals mismatch withhold amounts
+2026-11-15T06:37:22.0315425Z   ---
+2026-11-15T06:37:22.0315543Z   duration_ms: 0.547473
+2026-11-15T06:37:22.0315667Z   ...
+2026-11-15T06:37:22.0315887Z # Subtest: WH01 block cutoff, source range and distinct chain/contract identity
+2026-11-15T06:37:22.0316218Z ok 1414 - WH01 block cutoff, source range and distinct chain/contract identity
+2026-11-15T06:37:22.0316430Z   ---
+2026-11-15T06:37:22.0316543Z   duration_ms: 0.787874
+2026-11-15T06:37:22.0316667Z   ...
+2026-11-15T06:37:22.0316898Z # Subtest: WH01 exact same-block reconciliation, mismatch and unknown are explicit
+2026-11-15T06:37:22.0317241Z ok 1415 - WH01 exact same-block reconciliation, mismatch and unknown are explicit
+2026-11-15T06:37:22.0317463Z   ---
+2026-11-15T06:37:22.0317576Z   duration_ms: 1.027755
+2026-11-15T06:37:22.0317700Z   ...
+2026-11-15T06:37:22.0317912Z # Subtest: WH01 validators reject impossible signs, metadata and UTC dates
+2026-11-15T06:37:22.0318223Z ok 1416 - WH01 validators reject impossible signs, metadata and UTC dates
+2026-11-15T06:37:22.0318429Z   ---
+2026-11-15T06:37:22.0318541Z   duration_ms: 0.367803
+2026-11-15T06:37:22.0318666Z   ...
+2026-11-15T06:37:22.0318902Z # Subtest: WH01 provider request/page: bounded cursor, AbortSignal, windows, no calls
+2026-11-15T06:37:22.0319259Z ok 1417 - WH01 provider request/page: bounded cursor, AbortSignal, windows, no calls
+2026-11-15T06:37:22.0319486Z   ---
+2026-11-15T06:37:22.0319598Z   duration_ms: 1.282288
+2026-11-15T06:37:22.0319725Z   ...
+2026-11-15T06:37:22.0319889Z # Subtest: WH01 pure APIs leave caller data untouched
+2026-11-15T06:37:22.0320122Z ok 1418 - WH01 pure APIs leave caller data untouched
+2026-11-15T06:37:22.0320287Z   ---
+2026-11-15T06:37:22.0320397Z   duration_ms: 0.49931
+2026-11-15T06:37:22.0320524Z   ...
+2026-11-15T06:37:22.0320766Z # Subtest: WH01 ownership ambiguity, negative holdings and inconsistent tips are errors
+2026-11-15T06:37:22.0321129Z ok 1419 - WH01 ownership ambiguity, negative holdings and inconsistent tips are errors
+2026-11-15T06:37:22.0321355Z   ---
+2026-11-15T06:37:22.0321465Z   duration_ms: 1.127014
+2026-11-15T06:37:22.0321592Z   ...
+2026-11-15T06:37:22.0321827Z # Subtest: WH01 numeric ordering and block hashes take priority over equal timestamps
+2026-11-15T06:37:22.0322279Z ok 1420 - WH01 numeric ordering and block hashes take priority over equal timestamps
+2026-11-15T06:37:22.0322503Z   ---
+2026-11-15T06:37:22.0322615Z   duration_ms: 0.675285
+2026-11-15T06:37:22.0322739Z   ...
+2026-11-15T06:37:22.0322990Z # Subtest: WH01 raw BTC inputs retain exact prevout amounts; included fee is not charged again
+2026-11-15T06:37:22.0323373Z ok 1421 - WH01 raw BTC inputs retain exact prevout amounts; included fee is not charged again
+2026-11-15T06:37:22.0323612Z   ---
+2026-11-15T06:37:22.0323723Z   duration_ms: 2.048068
+2026-11-15T06:37:22.0323844Z   ...
+2026-11-15T06:37:22.0324138Z # Subtest: WH01 fee inclusion cannot cross tx/account/block or mask failed fee-only transactions
+2026-11-15T06:37:22.0324536Z ok 1422 - WH01 fee inclusion cannot cross tx/account/block or mask failed fee-only transactions
+2026-11-15T06:37:22.0324787Z   ---
+2026-11-15T06:37:22.0324899Z   duration_ms: 1.042948
+2026-11-15T06:37:22.0325021Z   ...
+2026-11-15T06:37:22.0325437Z # Subtest: WH05 day checkpoints retain exact amounts, unknown coverage and UTC boundary
+2026-11-15T06:37:22.0325858Z ok 1423 - WH05 day checkpoints retain exact amounts, unknown coverage and UTC boundary
+2026-11-15T06:37:22.0326085Z   ---
+2026-11-15T06:37:22.0326200Z   duration_ms: 5.479701
+2026-11-15T06:37:22.0326323Z   ...
+2026-11-15T06:37:22.0326600Z # Subtest: WH07 unchanged quantities between fully covered events are proven, never price-interpolated
+2026-11-15T06:37:22.0327027Z ok 1424 - WH07 unchanged quantities between fully covered events are proven, never price-interpolated
+2026-11-15T06:37:22.0327286Z   ---
+2026-11-15T06:37:22.0327489Z   duration_ms: 0.946282
+2026-11-15T06:37:22.0327619Z   ...
+2026-11-15T06:37:22.0327893Z # Subtest: Clearing a broken resume marker keeps accepted sessions and every financial field unchanged
+2026-11-15T06:37:22.0328319Z ok 1425 - Clearing a broken resume marker keeps accepted sessions and every financial field unchanged
+2026-11-15T06:37:22.0328574Z   ---
+2026-11-15T06:37:22.0328685Z   duration_ms: 6.416164
+2026-11-15T06:37:22.0328809Z   ...
+2026-11-15T06:37:22.0329038Z # Subtest: WH04 accepted projection is idempotent, isolated and credential-free
+2026-11-15T06:37:22.0329372Z ok 1426 - WH04 accepted projection is idempotent, isolated and credential-free
+2026-11-15T06:37:22.0329588Z   ---
+2026-11-15T06:37:22.0329706Z   duration_ms: 13.474894
+2026-11-15T06:37:22.0329834Z   ...
+2026-11-15T06:37:22.0330071Z # Subtest: WH04 partial coverage cannot acquire a zero opening; provider cache excluded
+2026-11-15T06:37:22.0330443Z ok 1427 - WH04 partial coverage cannot acquire a zero opening; provider cache excluded
+2026-11-15T06:37:22.0330669Z   ---
+2026-11-15T06:37:22.0330779Z   duration_ms: 3.006358
+2026-11-15T06:37:22.0330901Z   ...
+2026-11-15T06:37:22.0331171Z # Subtest: WH04 encrypted full history roundtrip, old complete backup and corrupted history reject
+2026-11-15T06:37:22.0331581Z ok 1428 - WH04 encrypted full history roundtrip, old complete backup and corrupted history reject
+2026-11-15T06:37:22.0331835Z   ---
+2026-11-15T06:37:22.0331948Z   duration_ms: 99.394716
+2026-11-15T06:37:22.0332076Z   ...
+2026-11-15T06:37:22.0332328Z # Subtest: WH04 reorg invalidation retains accepted facts but cannot retain verified claims
+2026-11-15T06:37:22.0332710Z ok 1429 - WH04 reorg invalidation retains accepted facts but cannot retain verified claims
+2026-11-15T06:37:22.0332950Z   ---
+2026-11-15T06:37:22.0333060Z   duration_ms: 3.172869
+2026-11-15T06:37:22.0333184Z   ...
+2026-11-15T06:37:22.0333428Z # Subtest: WH04/07 duplicate accepted facts normalize and contradictory revisions reject
+2026-11-15T06:37:22.0333789Z ok 1430 - WH04/07 duplicate accepted facts normalize and contradictory revisions reject
+2026-11-15T06:37:22.0334021Z   ---
+2026-11-15T06:37:22.0334138Z   duration_ms: 1.844122
+2026-11-15T06:37:22.0334264Z   ...
+2026-11-15T06:37:22.0334521Z # Subtest: WH07 exact 24-decimal quantity and dated EUR arithmetic; missing/partial never zero
+2026-11-15T06:37:22.0334908Z ok 1431 - WH07 exact 24-decimal quantity and dated EUR arithmetic; missing/partial never zero
+2026-11-15T06:37:22.0335373Z   ---
+2026-11-15T06:37:22.0335553Z   duration_ms: 1.1508
+2026-11-15T06:37:22.0335683Z   ...
+2026-11-15T06:37:22.0335933Z # Subtest: WH07 contract/mint/currency/date conflicts rejected and no chart bridging gaps
+2026-11-15T06:37:22.0336303Z ok 1432 - WH07 contract/mint/currency/date conflicts rejected and no chart bridging gaps
+2026-11-15T06:37:22.0336531Z   ---
+2026-11-15T06:37:22.0336641Z   duration_ms: 7.23264
+2026-11-15T06:37:22.0336764Z   ...
+2026-11-15T06:37:22.0336990Z # Subtest: WH07 local CSV needs explicit asset binding; no token ticker guessing
+2026-11-15T06:37:22.0337320Z ok 1433 - WH07 local CSV needs explicit asset binding; no token ticker guessing
+2026-11-15T06:37:22.0337532Z   ---
+2026-11-15T06:37:22.0337643Z   duration_ms: 0.559441
+2026-11-15T06:37:22.0337768Z   ...
+2026-11-15T06:37:22.0338062Z # Subtest: WH07 cancelled quote lookup cannot replace a preview; existing provider coordinator remains intact
+2026-11-15T06:37:22.0338523Z ok 1434 - WH07 cancelled quote lookup cannot replace a preview; existing provider coordinator remains intact
+2026-11-15T06:37:22.0338789Z   ---
+2026-11-15T06:37:22.0338902Z   duration_ms: 30.627004
+2026-11-15T06:37:22.0339033Z   ...
+2026-11-15T06:37:22.0339319Z # Subtest: handled worker load failures prevent the browser default without turning real failures into success
+2026-11-15T06:37:22.0339764Z ok 1435 - handled worker load failures prevent the browser default without turning real failures into success
+2026-11-15T06:37:22.0340036Z   ---
+2026-11-15T06:37:22.0340144Z   duration_ms: 9.963415
+2026-11-15T06:37:22.0340400Z   ...
+2026-11-15T06:37:22.0340712Z # Subtest: explicit worker dependency-load failures reuse the existing online rejection and exact offline replay
+2026-11-15T06:37:22.0341176Z ok 1436 - explicit worker dependency-load failures reuse the existing online rejection and exact offline replay
+2026-11-15T06:37:22.0341458Z   ---
+2026-11-15T06:37:22.0341570Z   duration_ms: 10.55823
+2026-11-15T06:37:22.0341697Z   ...
+2026-11-15T06:37:22.0348668Z # Subtest: Rescan synchronizes exact and display prices instead of retaining stale exact valuation
+2026-11-15T06:37:22.0349094Z ok 1437 - Rescan synchronizes exact and display prices instead of retaining stale exact valuation
+2026-11-15T06:37:22.0349349Z   ---
+2026-11-15T06:37:22.0349466Z   duration_ms: 6.570677
+2026-11-15T06:37:22.0349595Z   ...
+2026-11-15T06:37:22.0349830Z # Subtest: Wallet rescan resets previous non-EUR FX metadata with a new EUR price
+2026-11-15T06:37:22.0350174Z ok 1438 - Wallet rescan resets previous non-EUR FX metadata with a new EUR price
+2026-11-15T06:37:22.0350393Z   ---
+2026-11-15T06:37:22.0350506Z   duration_ms: 0.367152
+2026-11-15T06:37:22.0350630Z   ...
+2026-11-15T06:37:22.0350899Z # Subtest: Missing or zero quotes retain the last confirmed exact price, changing quantities only
+2026-11-15T06:37:22.0351295Z ok 1439 - Missing or zero quotes retain the last confirmed exact price, changing quantities only
+2026-11-15T06:37:22.0351541Z   ---
+2026-11-15T06:37:22.0351650Z   duration_ms: 0.242274
+2026-11-15T06:37:22.0351776Z   ...
+2026-11-15T06:37:22.0352011Z # Subtest: Rescan retains 18-decimal balances and updates legacy BTC HD address type
+2026-11-15T06:37:22.0352366Z ok 1440 - Rescan retains 18-decimal balances and updates legacy BTC HD address type
+2026-11-15T06:37:22.0352592Z   ---
+2026-11-15T06:37:22.0352701Z   duration_ms: 0.211899
+2026-11-15T06:37:22.0352824Z   ...
+2026-11-15T06:37:22.0353049Z # Subtest: Invalid wallet balances cannot partially alter a persisted position
+2026-11-15T06:37:22.0353381Z ok 1441 - Invalid wallet balances cannot partially alter a persisted position
+2026-11-15T06:37:22.0353598Z   ---
+2026-11-15T06:37:22.0353710Z   duration_ms: 0.803868
+2026-11-15T06:37:22.0353832Z   ...
+2026-11-15T06:37:22.0354043Z # Subtest: native assets are not hidden for missing quotes or tiny balances
+2026-11-15T06:37:22.0354353Z ok 1442 - native assets are not hidden for missing quotes or tiny balances
+2026-11-15T06:37:22.0354560Z   ---
+2026-11-15T06:37:22.0354670Z   duration_ms: 1.20421
+2026-11-15T06:37:22.0354916Z   ...
+2026-11-15T06:37:22.0355522Z # Subtest: canonical stETH and LINK appear without available prices, but ticker clones do not
+2026-11-15T06:37:22.0355912Z ok 1443 - canonical stETH and LINK appear without available prices, but ticker clones do not
+2026-11-15T06:37:22.0356154Z   ---
+2026-11-15T06:37:22.0356267Z   duration_ms: 1.040834
+2026-11-15T06:37:22.0356398Z   ...
+2026-11-15T06:37:22.0356626Z # Subtest: confirmed contract quote allows unknown token, not scam-marked tokens
+2026-11-15T06:37:22.0356960Z ok 1444 - confirmed contract quote allows unknown token, not scam-marked tokens
+2026-11-15T06:37:22.0357180Z   ---
+2026-11-15T06:37:22.0357298Z   duration_ms: 0.162785
+2026-11-15T06:37:22.0357432Z   ...
+2026-11-15T06:37:22.0357663Z # Subtest: promotional URLs, airdrops, and hidden unicode controls are suppressed
+2026-11-15T06:37:22.0358002Z ok 1445 - promotional URLs, airdrops, and hidden unicode controls are suppressed
+2026-11-15T06:37:22.0358219Z   ---
+2026-11-15T06:37:22.0358331Z   duration_ms: 0.414793
+2026-11-15T06:37:22.0358456Z   ...
+2026-11-15T06:37:22.0358726Z # Subtest: unknown no-quote tokens are hidden; Dust WETH is hidden; meaningful WETH remains visible
+2026-11-15T06:37:22.0359140Z ok 1446 - unknown no-quote tokens are hidden; Dust WETH is hidden; meaningful WETH remains visible
+2026-11-15T06:37:22.0359390Z   ---
+2026-11-15T06:37:22.0359504Z   duration_ms: 1.401546
+2026-11-15T06:37:22.0359628Z   ...
+2026-11-15T06:37:22.0359875Z # Subtest: classification preserves identity and order; hidden assets remain recoverable
+2026-11-15T06:37:22.0360349Z ok 1447 - classification preserves identity and order; hidden assets remain recoverable
+2026-11-15T06:37:22.0360583Z   ---
+2026-11-15T06:37:22.0360695Z   duration_ms: 0.695265
+2026-11-15T06:37:22.0360822Z   ...
+2026-11-15T06:37:22.0361005Z # Subtest: rETH canonical contract trusted only on Ethereum
+2026-11-15T06:37:22.0361259Z ok 1448 - rETH canonical contract trusted only on Ethereum
+2026-11-15T06:37:22.0361436Z   ---
+2026-11-15T06:37:22.0361549Z   duration_ms: 0.170106
+2026-11-15T06:37:22.0361673Z   ...
+2026-11-15T06:37:22.0361882Z # Subtest: Search uses documented POST /v3/search with sanitized metadata
+2026-11-15T06:37:22.0362185Z ok 1449 - Search uses documented POST /v3/search with sanitized metadata
+2026-11-15T06:37:22.0362388Z   ---
+2026-11-15T06:37:22.0362503Z   duration_ms: 25.90778
+2026-11-15T06:37:22.0362625Z   ...
+2026-11-15T06:37:22.0362843Z # Subtest: ISIN lookup uses /v3/mapping and keeps exchange-specific candidates
+2026-11-15T06:37:22.0363172Z ok 1450 - ISIN lookup uses /v3/mapping and keeps exchange-specific candidates
+2026-11-15T06:37:22.0363382Z   ---
+2026-11-15T06:37:22.0363489Z   duration_ms: 1.318262
+2026-11-15T06:37:22.0363620Z   ...
+2026-11-15T06:37:22.0363819Z # Subtest: No permissive CORS, no invalid identifier, no open proxy
+2026-11-15T06:37:22.0364106Z ok 1451 - No permissive CORS, no invalid identifier, no open proxy
+2026-11-15T06:37:22.0364297Z   ---
+2026-11-15T06:37:22.0364411Z   duration_ms: 1.302638
+2026-11-15T06:37:22.0364535Z   ...
+2026-11-15T06:37:22.0364733Z # Subtest: 429 is returned, never retried or disguised as no results
+2026-11-15T06:37:22.0365017Z ok 1452 - 429 is returned, never retried or disguised as no results
+2026-11-15T06:37:22.0365358Z   ---
+2026-11-15T06:37:22.0365469Z   duration_ms: 0.870058
+2026-11-15T06:37:22.0365593Z   ...
+2026-11-15T06:37:22.0365789Z # Subtest: OpenFIGI does not become a price source; dedup by FIGI
+2026-11-15T06:37:22.0366067Z ok 1453 - OpenFIGI does not become a price source; dedup by FIGI
+2026-11-15T06:37:22.0366268Z   ---
+2026-11-15T06:37:22.0366378Z   duration_ms: 0.181382
+2026-11-15T06:37:22.0366503Z   ...
+2026-11-15T06:37:22.0366765Z # Subtest: Verified EODHD bars are delivered by a fixed-origin, authenticated, no-store proxy
+2026-11-15T06:37:22.0367156Z ok 1454 - Verified EODHD bars are delivered by a fixed-origin, authenticated, no-store proxy
+2026-11-15T06:37:22.0367397Z   ---
+2026-11-15T06:37:22.0367509Z   duration_ms: 23.700082
+2026-11-15T06:37:22.0367733Z   ...
+2026-11-15T06:37:22.0367978Z # Subtest: Token is mandatory and no call is made on bad, missing or mismatched credentials
+2026-11-15T06:37:22.0368348Z ok 1455 - Token is mandatory and no call is made on bad, missing or mismatched credentials
+2026-11-15T06:37:22.0368573Z   ---
+2026-11-15T06:37:22.0368689Z   duration_ms: 1.602389
+2026-11-15T06:37:22.0368813Z   ...
+2026-11-15T06:37:22.0369012Z # Subtest: Browser origins, preflights and no open proxy are enforced
+2026-11-15T06:37:22.0369305Z ok 1456 - Browser origins, preflights and no open proxy are enforced
+2026-11-15T06:37:22.0369503Z   ---
+2026-11-15T06:37:22.0369616Z   duration_ms: 1.441737
+2026-11-15T06:37:22.0369743Z   ...
+2026-11-15T06:37:22.0370019Z # Subtest: Rejects arbitrary hosts, invalid dates, excessive ranges and malformed payloads before EODHD
+2026-11-15T06:37:22.0370444Z ok 1457 - Rejects arbitrary hosts, invalid dates, excessive ranges and malformed payloads before EODHD
+2026-11-15T06:37:22.0370700Z   ---
+2026-11-15T06:37:22.0370814Z   duration_ms: 2.217102
+2026-11-15T06:37:22.0370936Z   ...
+2026-11-15T06:37:22.0371152Z # Subtest: Upstream denial and limits are sanitized, secrets never echoed
+2026-11-15T06:37:22.0371461Z ok 1458 - Upstream denial and limits are sanitized, secrets never echoed
+2026-11-15T06:37:22.0371665Z   ---
+2026-11-15T06:37:22.0371774Z   duration_ms: 2.74786
+2026-11-15T06:37:22.0371897Z   ...
+2026-11-15T06:37:22.0372125Z # Subtest: A valid five-year read is allowed but excessive history is still rejected
+2026-11-15T06:37:22.0372474Z ok 1459 - A valid five-year read is allowed but excessive history is still rejected
+2026-11-15T06:37:22.0372773Z   ---
+2026-11-15T06:37:22.0372884Z   duration_ms: 2.207718
+2026-11-15T06:37:22.0373009Z   ...
+2026-11-15T06:37:22.0373115Z 1..1459
+2026-11-15T06:37:22.0373227Z # tests 1481
+2026-11-15T06:37:22.0373347Z # suites 0
+2026-11-15T06:37:22.0373470Z # pass 1481
+2026-11-15T06:37:22.0373583Z # fail 0
+2026-11-15T06:37:22.0373694Z # cancelled 0
+2026-11-15T06:37:22.0373814Z # skipped 0
+2026-11-15T06:37:22.0373926Z # todo 0
+2026-11-15T06:37:22.0374050Z # duration_ms 25392.049001
+2026-11-15T06:37:22.1513961Z Post job cleanup.
+2026-11-15T06:37:22.2295874Z (node:5740) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:37:22.2296392Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:37:22.2819627Z Post job cleanup.
+2026-11-15T06:37:22.3370740Z [command]/usr/bin/git version
+2026-11-15T06:37:22.3404729Z git version 2.56.1
+2026-11-15T06:37:22.3427527Z Temporarily overriding HOME='/home/runner/work/_temp/93f99d02-082a-43e2-8d8e-f12e4e32afab' before making global git config changes
+2026-11-15T06:37:22.3428513Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T06:37:22.3430418Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:37:22.4021131Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T06:37:22.4055038Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T06:37:22.4282672Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T06:37:22.4302163Z http.https://github.com/.extraheader
+2026-11-15T06:37:22.4310238Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-15T06:37:22.4417470Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T06:37:22.4673619Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T06:37:22.4710131Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T06:37:22.5106565Z Cleaning up orphan processes
+2026-11-15T06:37:22.5373922Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

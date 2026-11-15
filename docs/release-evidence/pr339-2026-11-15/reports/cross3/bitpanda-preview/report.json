@@ -1,0 +1,38 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native Bitpanda read-only CSV preview",
+  "engines": [
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "checks": [
+        "native preamble/18-17 auto/explicit recognition",
+        "schema/mixed/mode quarantine",
+        "exact quantities and declared fee assets/unknown tax",
+        "hostile source escaping",
+        "50/100 paging and focus",
+        "5 widths/Axe/44px",
+        "forced submit/Escape/cancel/reopen",
+        "actual offline reload",
+        "exact IDB/revision/settings zero mutation",
+        "no external preview requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "checks": [
+        "native preamble/18-17 auto/explicit recognition",
+        "schema/mixed/mode quarantine",
+        "exact quantities and declared fee assets/unknown tax",
+        "hostile source escaping",
+        "50/100 paging and focus",
+        "5 widths/Axe/44px",
+        "forced submit/Escape/cancel/reopen",
+        "actual offline reload",
+        "exact IDB/revision/settings zero mutation",
+        "no external preview requests"
+      ]
+    }
+  ]
+}

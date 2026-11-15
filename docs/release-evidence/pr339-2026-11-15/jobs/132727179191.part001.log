@@ -1,0 +1,566 @@
+﻿2026-11-15T06:36:46.6891134Z Current runner version: '2.338.2'
+2026-11-15T06:36:46.6909659Z ##[group]Runner Image Provisioner
+2026-11-15T06:36:46.6910428Z Hosted Compute Agent
+2026-11-15T06:36:46.6910901Z Version: 20261103.629
+2026-11-15T06:36:46.6911279Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-15T06:36:46.6911725Z Build Date: 2026-11-03T17:26:59Z
+2026-11-15T06:36:46.6912132Z Worker ID: {972c8ec8-6529-4772-b8aa-0165668c1071}
+2026-11-15T06:36:46.6912547Z Region: eastus2
+2026-11-15T06:36:46.6912948Z Cloud: Azure
+2026-11-15T06:36:46.6913274Z ##[endgroup]
+2026-11-15T06:36:46.6914286Z ##[group]Operating System
+2026-11-15T06:36:46.6914741Z Ubuntu
+2026-11-15T06:36:46.6915088Z 24.04.5
+2026-11-15T06:36:46.6915434Z LTS
+2026-11-15T06:36:46.6915740Z ##[endgroup]
+2026-11-15T06:36:46.6916055Z ##[group]Runner Image
+2026-11-15T06:36:46.6916702Z Image: ubuntu-24.04
+2026-11-15T06:36:46.6917131Z Version: 20261111.370.1
+2026-11-15T06:36:46.6917989Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-15T06:36:46.6918902Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-15T06:36:46.6919560Z ##[endgroup]
+2026-11-15T06:36:46.6920277Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T06:36:46.6922314Z Contents: read
+2026-11-15T06:36:46.6922665Z Metadata: read
+2026-11-15T06:36:46.6923045Z ##[endgroup]
+2026-11-15T06:36:46.6924861Z Secret source: Actions
+2026-11-15T06:36:46.6925569Z Cache mode: write
+2026-11-15T06:36:46.6926468Z Prepare workflow directory
+2026-11-15T06:36:46.7144268Z Prepare all required actions
+2026-11-15T06:36:46.7180492Z Getting action download info
+2026-11-15T06:36:46.8947818Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-15T06:36:46.9929101Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-15T06:36:47.1221495Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-15T06:36:47.3203791Z Complete job name: Determine FAST / INTEGRATION / RELEASE
+2026-11-15T06:36:47.3794839Z ##[group]Run actions/checkout@v4
+2026-11-15T06:36:47.3795264Z with:
+2026-11-15T06:36:47.3795501Z   fetch-depth: 0
+2026-11-15T06:36:47.3795756Z   repository: joke0071/foliolab-open
+2026-11-15T06:36:47.3798205Z   token: ***
+2026-11-15T06:36:47.3798434Z   ssh-strict: true
+2026-11-15T06:36:47.3798672Z   ssh-user: git
+2026-11-15T06:36:47.3798913Z   persist-credentials: true
+2026-11-15T06:36:47.3799178Z   clean: true
+2026-11-15T06:36:47.3799422Z   sparse-checkout-cone-mode: true
+2026-11-15T06:36:47.3799710Z   fetch-tags: false
+2026-11-15T06:36:47.3799956Z   show-progress: true
+2026-11-15T06:36:47.3800200Z   lfs: false
+2026-11-15T06:36:47.3800423Z   submodules: false
+2026-11-15T06:36:47.3800670Z   set-safe-directory: true
+2026-11-15T06:36:47.3800947Z   allow-unsafe-pr-checkout: false
+2026-11-15T06:36:47.3801318Z ##[endgroup]
+2026-11-15T06:36:47.5598210Z Syncing repository: joke0071/foliolab-open
+2026-11-15T06:36:47.5599950Z ##[group]Getting Git version info
+2026-11-15T06:36:47.5600429Z Working directory is '/home/runner/work/foliolab-open/foliolab-open'
+2026-11-15T06:36:47.5601027Z [command]/usr/bin/git version
+2026-11-15T06:36:47.5666454Z git version 2.56.1
+2026-11-15T06:36:47.5679644Z ##[endgroup]
+2026-11-15T06:36:47.5690294Z Temporarily overriding HOME='/home/runner/work/_temp/df36e86c-8c02-42df-910a-952c08f7cedf' before making global git config changes
+2026-11-15T06:36:47.5691556Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T06:36:47.5694707Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:36:47.5743263Z Deleting the contents of '/home/runner/work/foliolab-open/foliolab-open'
+2026-11-15T06:36:47.5749761Z ##[group]Initializing the repository
+2026-11-15T06:36:47.5750539Z [command]/usr/bin/git init /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:36:47.5839320Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T06:36:47.5840282Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T06:36:47.5840837Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T06:36:47.5841248Z hint: call:
+2026-11-15T06:36:47.5841465Z hint:
+2026-11-15T06:36:47.5841767Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T06:36:47.5842265Z hint:
+2026-11-15T06:36:47.5842582Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T06:36:47.5843085Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T06:36:47.5843478Z hint:
+2026-11-15T06:36:47.5843709Z hint: 	git branch -m <name>
+2026-11-15T06:36:47.5844035Z hint:
+2026-11-15T06:36:47.5844563Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T06:36:47.5846067Z Initialized empty Git repository in /home/runner/work/foliolab-open/foliolab-open/.git/
+2026-11-15T06:36:47.5858243Z [command]/usr/bin/git remote add origin https://github.com/joke0071/foliolab-open
+2026-11-15T06:36:47.5907737Z ##[endgroup]
+2026-11-15T06:36:47.5908204Z ##[group]Disabling automatic garbage collection
+2026-11-15T06:36:47.5911822Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-15T06:36:47.5943288Z ##[endgroup]
+2026-11-15T06:36:47.5943814Z ##[group]Setting up auth
+2026-11-15T06:36:47.5950610Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T06:36:47.5993381Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T06:36:47.6309322Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T06:36:47.6346278Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T06:36:47.6535016Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T06:36:47.6573302Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T06:36:47.6773893Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T06:36:47.6818028Z ##[endgroup]
+2026-11-15T06:36:47.6818560Z ##[group]Fetching the repository
+2026-11-15T06:36:47.6827083Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a:refs/remotes/pull/339/merge
+2026-11-15T06:36:49.6394568Z From https://github.com/joke0071/foliolab-open
+2026-11-15T06:36:49.6396297Z  * [new branch]        audit/2026-10-22-request-resilience      -> origin/audit/2026-10-22-request-resilience
+2026-11-15T06:36:49.6398031Z  * [new branch]        audit/2026-10-23-backup-referential-integrity -> origin/audit/2026-10-23-backup-referential-integrity
+2026-11-15T06:36:49.6399565Z  * [new branch]        audit/2026-10-23-backup-restore-release  -> origin/audit/2026-10-23-backup-restore-release
+2026-11-15T06:36:49.6401043Z  * [new branch]        audit/2026-10-23-browser-performance     -> origin/audit/2026-10-23-browser-performance
+2026-11-15T06:36:49.6402486Z  * [new branch]        audit/2026-10-23-crossbrowser-accessibility -> origin/audit/2026-10-23-crossbrowser-accessibility
+2026-11-15T06:36:49.6403815Z  * [new branch]        audit/2026-10-23-final-legacy-quotes-chevrons -> origin/audit/2026-10-23-final-legacy-quotes-chevrons
+2026-11-15T06:36:49.6405156Z  * [new branch]        audit/2026-10-23-fx-corporate-actions    -> origin/audit/2026-10-23-fx-corporate-actions
+2026-11-15T06:36:49.6406534Z  * [new branch]        audit/2026-10-23-fx-corporate-release    -> origin/audit/2026-10-23-fx-corporate-release
+2026-11-15T06:36:49.6408341Z  * [new branch]        audit/2026-10-23-integrity-stability     -> origin/audit/2026-10-23-integrity-stability
+2026-11-15T06:36:49.6409517Z  * [new branch]        audit/2026-10-23-key-storage-dataflow    -> origin/audit/2026-10-23-key-storage-dataflow
+2026-11-15T06:36:49.6410677Z  * [new branch]        audit/2026-10-23-ledger-reference        -> origin/audit/2026-10-23-ledger-reference
+2026-11-15T06:36:49.6411846Z  * [new branch]        audit/2026-10-23-live-deployment-smoke   -> origin/audit/2026-10-23-live-deployment-smoke
+2026-11-15T06:36:49.6413026Z  * [new branch]        audit/2026-10-23-multitab-release        -> origin/audit/2026-10-23-multitab-release
+2026-11-15T06:36:49.6414176Z  * [new branch]        audit/2026-10-23-multitab-sync           -> origin/audit/2026-10-23-multitab-sync
+2026-11-15T06:36:49.6415480Z  * [new branch]        audit/2026-10-23-pwa-cache-release-gate  -> origin/audit/2026-10-23-pwa-cache-release-gate
+2026-11-15T06:36:49.6427111Z  * [new branch]        audit/2026-10-23-security-privacy        -> origin/audit/2026-10-23-security-privacy
+2026-11-15T06:36:49.6428224Z  * [new branch]        audit/2026-10-23-wallet-valuation-consistency -> origin/audit/2026-10-23-wallet-valuation-consistency
+2026-11-15T06:36:49.6429360Z  * [new branch]        audit/2026-10-23-wallet-valuation-release -> origin/audit/2026-10-23-wallet-valuation-release
+2026-11-15T06:36:49.6430503Z  * [new branch]        audit/avalanche-rpc-valuation-labels-20261022 -> origin/audit/avalanche-rpc-valuation-labels-20261022
+2026-11-15T06:36:49.6431760Z  * [new branch]        audit/csv-focus-programmatic-drafts-2026-10-24 -> origin/audit/csv-focus-programmatic-drafts-2026-10-24
+2026-11-15T06:36:49.6432905Z  * [new branch]        audit/csv-parser-hardening-20261021      -> origin/audit/csv-parser-hardening-20261021
+2026-11-15T06:36:49.6433910Z  * [new branch]        audit/data-integrity-20261021            -> origin/audit/data-integrity-20261021
+2026-11-15T06:36:49.6435172Z  * [new branch]        audit/defi-dialog-context-2026-10-24     -> origin/audit/defi-dialog-context-2026-10-24
+2026-11-15T06:36:49.6436396Z  * [new branch]        audit/dialog-accessibility-mobile-2026-10-24 -> origin/audit/dialog-accessibility-mobile-2026-10-24
+2026-11-15T06:36:49.6437504Z  * [new branch]        audit/dialog-final-signoff-2026-10-24    -> origin/audit/dialog-final-signoff-2026-10-24
+2026-11-15T06:36:49.6438586Z  * [new branch]        audit/dialog-final-signoff-v123-2026-10-24 -> origin/audit/dialog-final-signoff-v123-2026-10-24
+2026-11-15T06:36:49.6439814Z  * [new branch]        audit/dialog-form-consistency-2026-10-24 -> origin/audit/dialog-form-consistency-2026-10-24
+2026-11-15T06:36:49.6440559Z  * [new branch]        audit/dialog-guard-wording-2026-10-24    -> origin/audit/dialog-guard-wording-2026-10-24
+2026-11-15T06:36:49.6441647Z  * [new branch]        audit/dialog-wallet-account-choice-2026-10-24 -> origin/audit/dialog-wallet-account-choice-2026-10-24
+2026-11-15T06:36:49.6442605Z  * [new branch]        audit/financial-wallet-quality-20261021  -> origin/audit/financial-wallet-quality-20261021
+2026-11-15T06:36:49.6443366Z  * [new branch]        audit/staking-dialog-disclosure-2026-10-24 -> origin/audit/staking-dialog-disclosure-2026-10-24
+2026-11-15T06:36:49.6444095Z  * [new branch]        audit/ui07-final-usability               -> origin/audit/ui07-final-usability
+2026-11-15T06:36:49.6444757Z  * [new branch]        audit/valuation-completeness-20261021    -> origin/audit/valuation-completeness-20261021
+2026-11-15T06:36:49.6445463Z  * [new branch]        audit/wallet-realworld-reliability-20261022 -> origin/audit/wallet-realworld-reliability-20261022
+2026-11-15T06:36:49.6446333Z  * [new branch]        audit/xrpl-ledger-consistency-20261021   -> origin/audit/xrpl-ledger-consistency-20261021
+2026-11-15T06:36:49.6447435Z  * [new branch]        candidate/k4-restore-57ba5fd0-20261114   -> origin/candidate/k4-restore-57ba5fd0-20261114
+2026-11-15T06:36:49.6448499Z  * [new branch]        chore/ci-b-balance-0981e24cc507          -> origin/chore/ci-b-balance-0981e24cc507
+2026-11-15T06:36:49.6449869Z  * [new branch]        chore/k6-private-file-guard-74f8b54eb065 -> origin/chore/k6-private-file-guard-74f8b54eb065
+2026-11-15T06:36:49.6451121Z  * [new branch]        chore/preflight-v2-02f19cd404ef          -> origin/chore/preflight-v2-02f19cd404ef
+2026-11-15T06:36:49.6452160Z  * [new branch]        chore/prepare-unperfekt-custom-domain    -> origin/chore/prepare-unperfekt-custom-domain
+2026-11-15T06:36:49.6453254Z  * [new branch]        ci/ci-opt01-cross-balance-v1             -> origin/ci/ci-opt01-cross-balance-v1
+2026-11-15T06:36:49.6454235Z  * [new branch]        ci/ci-opt01-draft-stages-v1              -> origin/ci/ci-opt01-draft-stages-v1
+2026-11-15T06:36:49.6455176Z  * [new branch]        ci/cross-engine-shards                   -> origin/ci/cross-engine-shards
+2026-11-15T06:36:49.6456315Z  * [new branch]        ci/cross2-ui-balance-4f3aff7885f4        -> origin/ci/cross2-ui-balance-4f3aff7885f4
+2026-11-15T06:36:49.6457397Z  * [new branch]        ci/opt01-playwright-browser-cache        -> origin/ci/opt01-playwright-browser-cache
+2026-11-15T06:36:49.6458484Z  * [new branch]        copilot/draft-pr-ui-visual01             -> origin/copilot/draft-pr-ui-visual01
+2026-11-15T06:36:49.6459610Z  * [new branch]        copilot/ui-alltag10-drei-listen-bedienung -> origin/copilot/ui-alltag10-drei-listen-bedienung
+2026-11-15T06:36:49.6460812Z  * [new branch]        diagnostic/pr332-csv-height-4f3aff7885f4 -> origin/diagnostic/pr332-csv-height-4f3aff7885f4
+2026-11-15T06:36:49.6461916Z  * [new branch]        docs/benchmark-restarbeiten-2026-10      -> origin/docs/benchmark-restarbeiten-2026-10
+2026-11-15T06:36:49.6531996Z  * [new branch]        docs/flh02-v175-acceptance               -> origin/docs/flh02-v175-acceptance
+2026-11-15T06:36:49.6533014Z  * [new branch]        docs/flh02-v175-release                  -> origin/docs/flh02-v175-release
+2026-11-15T06:36:49.6534012Z  * [new branch]        docs/flh02-v176-acceptance               -> origin/docs/flh02-v176-acceptance
+2026-11-15T06:36:49.6535038Z  * [new branch]        docs/k2-source-help-e595fcc6d453         -> origin/docs/k2-source-help-e595fcc6d453
+2026-11-15T06:36:49.6535678Z  * [new branch]        feat/catalog-crypto-oekb-2026-10-22      -> origin/feat/catalog-crypto-oekb-2026-10-22
+2026-11-15T06:36:49.6536558Z  * [new branch]        feat/compact-responsive-action-bars-v92  -> origin/feat/compact-responsive-action-bars-v92
+2026-11-15T06:36:49.6537294Z  * [new branch]        feat/extended-price-chart-periods-20261024 -> origin/feat/extended-price-chart-periods-20261024
+2026-11-15T06:36:49.6538008Z  * [new branch]        feat/history-calendar-compact-v90        -> origin/feat/history-calendar-compact-v90
+2026-11-15T06:36:49.6538699Z  * [new branch]        feat/issue-44-idb-transaction-foundation -> origin/feat/issue-44-idb-transaction-foundation
+2026-11-15T06:36:49.6539399Z  * [new branch]        feat/issue-44-transactional-idb-cutover  -> origin/feat/issue-44-transactional-idb-cutover
+2026-11-15T06:36:49.6540143Z  * [new branch]        feat/mvp-reth-bep20-solana-fallback-20261022 -> origin/feat/mvp-reth-bep20-solana-fallback-20261022
+2026-11-15T06:36:49.6540886Z  * [new branch]        feat/optional-eodhd-worker-perf-ui-v81   -> origin/feat/optional-eodhd-worker-perf-ui-v81
+2026-11-15T06:36:49.6541606Z  * [new branch]        feat/security-catalog-sources-2026-10-22 -> origin/feat/security-catalog-sources-2026-10-22
+2026-11-15T06:36:49.6542461Z  * [new branch]        feat/staking-coverage-catalog-native-networks-20261022 -> origin/feat/staking-coverage-catalog-native-networks-20261022
+2026-11-15T06:36:49.6543679Z  * [new branch]        feat/ui-integrity-2026-10-22             -> origin/feat/ui-integrity-2026-10-22
+2026-11-15T06:36:49.6544771Z  * [new branch]        feat/v82-market-diagnostics-quote-quality -> origin/feat/v82-market-diagnostics-quote-quality
+2026-11-15T06:36:49.6545859Z  * [new branch]        feature/at01-quality-actions             -> origin/feature/at01-quality-actions
+2026-11-15T06:36:49.6547217Z  * [new branch]        feature/at02-a-deposit-maturity          -> origin/feature/at02-a-deposit-maturity
+2026-11-15T06:36:49.6548310Z  * [new branch]        feature/at02-b-interest-scenarios        -> origin/feature/at02-b-interest-scenarios
+2026-11-15T06:36:49.6549313Z  * [new branch]        feature/at03-b-transfer-matching         -> origin/feature/at03-b-transfer-matching
+2026-11-15T06:36:49.6550386Z  * [new branch]        feature/at03-current-cash-reconciliation -> origin/feature/at03-current-cash-reconciliation
+2026-11-15T06:36:49.6551432Z  * [new branch]        feature/at05-a-annual-overview           -> origin/feature/at05-a-annual-overview
+2026-11-15T06:36:49.6552468Z  * [new branch]        feature/booking-management-foundation    -> origin/feature/booking-management-foundation
+2026-11-15T06:36:49.6553500Z  * [new branch]        feature/booking-management-ui            -> origin/feature/booking-management-ui
+2026-11-15T06:36:49.6554527Z  * [new branch]        feature/complete-password-backups        -> origin/feature/complete-password-backups
+2026-11-15T06:36:49.6555581Z  * [new branch]        feature/consolidated-rest-audit-v179     -> origin/feature/consolidated-rest-audit-v179
+2026-11-15T06:36:49.6556790Z  * [new branch]        feature/etf-crypto-data-fallbacks-20261022 -> origin/feature/etf-crypto-data-fallbacks-20261022
+2026-11-15T06:36:49.6558000Z  * [new branch]        feature/flatex-broker-import             -> origin/feature/flatex-broker-import
+2026-11-15T06:36:49.6558996Z  * [new branch]        feature/flatex-broker-import-main        -> origin/feature/flatex-broker-import-main
+2026-11-15T06:36:49.6560003Z  * [new branch]        feature/flatex-on-current-main           -> origin/feature/flatex-on-current-main
+2026-11-15T06:36:49.6560967Z  * [new branch]        feature/flh01-unified-history            -> origin/feature/flh01-unified-history
+2026-11-15T06:36:49.6561952Z  * [new branch]        feature/flh02-bittr-wallet-evidence      -> origin/feature/flh02-bittr-wallet-evidence
+2026-11-15T06:36:49.6563185Z  * [new branch]        feature/flh02-position-value-foundation  -> origin/feature/flh02-position-value-foundation
+2026-11-15T06:36:49.6564270Z  * [new branch]        feature/flh03-00-01-import-foundation    -> origin/feature/flh03-00-01-import-foundation
+2026-11-15T06:36:49.6565314Z  * [new branch]        feature/flh03-08-selection-preview       -> origin/feature/flh03-08-selection-preview
+2026-11-15T06:36:49.6566429Z  * [new branch]        feature/flh03-08-sw-ready                -> origin/feature/flh03-08-sw-ready
+2026-11-15T06:36:49.6567404Z  * [new branch]        feature/flh03-14-position-archive        -> origin/feature/flh03-14-position-archive
+2026-11-15T06:36:49.6568598Z  * [new branch]        feature/flh03-account-completeness       -> origin/feature/flh03-account-completeness
+2026-11-15T06:36:49.6569601Z  * [new branch]        feature/flh03-bitpanda-preview           -> origin/feature/flh03-bitpanda-preview
+2026-11-15T06:36:49.6570562Z  * [new branch]        feature/flh03-d-native-guard             -> origin/feature/flh03-d-native-guard
+2026-11-15T06:36:49.6571466Z  * [new branch]        feature/flh03-flatex-native-amounts      -> origin/feature/flh03-flatex-native-amounts
+2026-11-15T06:36:49.6572107Z  * [new branch]        feature/flh03-flatex-native-format       -> origin/feature/flh03-flatex-native-format
+2026-11-15T06:36:49.6572747Z  * [new branch]        feature/flh03-flatex-native-identity     -> origin/feature/flh03-flatex-native-identity
+2026-11-15T06:36:49.6573677Z  * [new branch]        feature/flh03-flatex-native-projection   -> origin/feature/flh03-flatex-native-projection
+2026-11-15T06:36:49.6574763Z  * [new branch]        feature/flh03-flatex-order-links         -> origin/feature/flh03-flatex-order-links
+2026-11-15T06:36:49.6575813Z  * [new branch]        feature/flh03-kraken-ledger-preview      -> origin/feature/flh03-kraken-ledger-preview
+2026-11-15T06:36:49.6577018Z  * [new branch]        feature/flh03-pchain-evidence            -> origin/feature/flh03-pchain-evidence
+2026-11-15T06:36:49.6578168Z  * [new branch]        feature/flh03-pchain-identity            -> origin/feature/flh03-pchain-identity
+2026-11-15T06:36:49.6579153Z  * [new branch]        feature/flh03-sonic-evidence             -> origin/feature/flh03-sonic-evidence
+2026-11-15T06:36:49.6580068Z  * [new branch]        feature/flh03-ui-a-e                     -> origin/feature/flh03-ui-a-e
+2026-11-15T06:36:49.6580993Z  * [new branch]        feature/flh03-ui-abce-release            -> origin/feature/flh03-ui-abce-release
+2026-11-15T06:36:49.6581965Z  * [new branch]        feature/flh03-v180-live-checkpoint       -> origin/feature/flh03-v180-live-checkpoint
+2026-11-15T06:36:49.6583025Z  * [new branch]        feature/flh04-revisions-20261113-b5ddfe1c -> origin/feature/flh04-revisions-20261113-b5ddfe1c
+2026-11-15T06:36:49.6584291Z  * [new branch]        feature/flh04-snapshot-allowlist-0910b01a-20261113 -> origin/feature/flh04-snapshot-allowlist-0910b01a-20261113
+2026-11-15T06:36:49.6585623Z  * [new branch]        feature/flh04-snapshot-allowlist-once-20261113 -> origin/feature/flh04-snapshot-allowlist-once-20261113
+2026-11-15T06:36:49.6586859Z  * [new branch]        feature/flh04-sync-design                -> origin/feature/flh04-sync-design
+2026-11-15T06:36:49.6587826Z  * [new branch]        feature/flh05-import-foundation          -> origin/feature/flh05-import-foundation
+2026-11-15T06:36:49.6588891Z  * [new branch]        feature/folio-open-completion-20261021   -> origin/feature/folio-open-completion-20261021
+2026-11-15T06:36:49.6589964Z  * [new branch]        feature/google-drive-own-oauth           -> origin/feature/google-drive-own-oauth
+2026-11-15T06:36:49.6591097Z  * [new branch]        feature/history-calendar-under-more-20261112 -> origin/feature/history-calendar-under-more-20261112
+2026-11-15T06:36:49.6592188Z  * [new branch]        feature/history-ui-followup              -> origin/feature/history-ui-followup
+2026-11-15T06:36:49.6593074Z  * [new branch]        feature/idb-phase-b                      -> origin/feature/idb-phase-b
+2026-11-15T06:36:49.6594119Z  * [new branch]        feature/indexeddb-only-phase-a           -> origin/feature/indexeddb-only-phase-a
+2026-11-15T06:36:49.6595176Z  * [new branch]        feature/integrated-booking-transfers     -> origin/feature/integrated-booking-transfers
+2026-11-15T06:36:49.6596480Z  * [new branch]        feature/k2-refresh-frequency-v303-7b9e47799d13 -> origin/feature/k2-refresh-frequency-v303-7b9e47799d13
+2026-11-15T06:36:49.6597609Z  * [new branch]        feature/ledger-live-preview              -> origin/feature/ledger-live-preview
+2026-11-15T06:36:49.6598580Z  * [new branch]        feature/loading-pwa-foliolab             -> origin/feature/loading-pwa-foliolab
+2026-11-15T06:36:49.6599642Z  * [new branch]        feature/local-etf-history-csv-20261022   -> origin/feature/local-etf-history-csv-20261022
+2026-11-15T06:36:49.6600779Z  * [new branch]        feature/marketstack-secret-inputs-266    -> origin/feature/marketstack-secret-inputs-266
+2026-11-15T06:36:49.6601951Z  * [new branch]        feature/navigation-overview-518556806b3b -> origin/feature/navigation-overview-518556806b3b
+2026-11-15T06:36:49.6603117Z  * [new branch]        feature/open-2-modernisierung-20261021   -> origin/feature/open-2-modernisierung-20261021
+2026-11-15T06:36:49.6604288Z  * [new branch]        feature/perf-calendar-projection-lookup  -> origin/feature/perf-calendar-projection-lookup
+2026-11-15T06:36:49.6605453Z  * [new branch]        feature/perf01-date-validation-cache     -> origin/feature/perf01-date-validation-cache
+2026-11-15T06:36:49.6606722Z  * [new branch]        feature/phase1-ledger-v3-20261021        -> origin/feature/phase1-ledger-v3-20261021
+2026-11-15T06:36:49.6607901Z  * [new branch]        feature/phase2-market-fx-performance-20261021 -> origin/feature/phase2-market-fx-performance-20261021
+2026-11-15T06:36:49.6609116Z  * [new branch]        feature/phase3-csv-wallet-defi-20261021  -> origin/feature/phase3-csv-wallet-defi-20261021
+2026-11-15T06:36:49.6610342Z  * [new branch]        feature/proven-import-cash-removal       -> origin/feature/proven-import-cash-removal
+2026-11-15T06:36:49.6611460Z  * [new branch]        feature/recovery-backup-size-preflight   -> origin/feature/recovery-backup-size-preflight
+2026-11-15T06:36:49.6612580Z  * [new branch]        feature/recovery-envelope-utf8-size      -> origin/feature/recovery-envelope-utf8-size
+2026-11-15T06:36:49.6613616Z  * [new branch]        feature/reference-management             -> origin/feature/reference-management
+2026-11-15T06:36:49.6614670Z  * [new branch]        feature/reference-removal-safe-subset    -> origin/feature/reference-removal-safe-subset
+2026-11-15T06:36:49.6615767Z  * [new branch]        feature/retired-provider-cleanup-266     -> origin/feature/retired-provider-cleanup-266
+2026-11-15T06:36:49.6617111Z  * [new branch]        feature/smart-onboarding-provider-account-20261022 -> origin/feature/smart-onboarding-provider-account-20261022
+2026-11-15T06:36:49.6618327Z  * [new branch]        feature/sol-wh01-history-core            -> origin/feature/sol-wh01-history-core
+2026-11-15T06:36:49.6619322Z  * [new branch]        feature/sol-wh02-bitcoin-history         -> origin/feature/sol-wh02-bitcoin-history
+2026-11-15T06:36:49.6620350Z  * [new branch]        feature/sol-wh03-ethereum-history        -> origin/feature/sol-wh03-ethereum-history
+2026-11-15T06:36:49.6621357Z  * [new branch]        feature/sol-wh04-07-integrated           -> origin/feature/sol-wh04-07-integrated
+2026-11-15T06:36:49.6622368Z  * [new branch]        feature/structured-quality-review        -> origin/feature/structured-quality-review
+2026-11-15T06:36:49.6623379Z  * [new branch]        feature/uh02-unified-bitcoin             -> origin/feature/uh02-unified-bitcoin
+2026-11-15T06:36:49.6624362Z  * [new branch]        feature/uh03-bitpanda-economic           -> origin/feature/uh03-bitpanda-economic
+2026-11-15T06:36:49.6625458Z  * [new branch]        feature/uh03-bitpanda-terminal-withdrawal -> origin/feature/uh03-bitpanda-terminal-withdrawal
+2026-11-15T06:36:49.6626832Z  * [new branch]        feature/uh03-kraken-bitcoin-bridge       -> origin/feature/uh03-kraken-bitcoin-bridge
+2026-11-15T06:36:49.6627866Z  * [new branch]        feature/uh03-link-local-finality         -> origin/feature/uh03-link-local-finality
+2026-11-15T06:36:49.6628854Z  * [new branch]        feature/uh03-native-eth-bridge           -> origin/feature/uh03-native-eth-bridge
+2026-11-15T06:36:49.6629817Z  * [new branch]        feature/uh03-native-exchange             -> origin/feature/uh03-native-exchange
+2026-11-15T06:36:49.6630783Z  * [new branch]        feature/uh03-native-sol-bridge           -> origin/feature/uh03-native-sol-bridge
+2026-11-15T06:36:49.6631823Z  * [new branch]        feature/uh04-depot13-account8-context    -> origin/feature/uh04-depot13-account8-context
+2026-11-15T06:36:49.6632848Z  * [new branch]        feature/uh04-flatex-depot13              -> origin/feature/uh04-flatex-depot13
+2026-11-15T06:36:49.6633858Z  * [new branch]        feature/uh04-flatex-net-settlement       -> origin/feature/uh04-flatex-net-settlement
+2026-11-15T06:36:49.6634930Z  * [new branch]        feature/uh04-incremental-eur-pairs       -> origin/feature/uh04-incremental-eur-pairs
+2026-11-15T06:36:49.6636014Z  * [new branch]        feature/uh04-native-cash-augmentation    -> origin/feature/uh04-native-cash-augmentation
+2026-11-15T06:36:49.6637170Z  * [new branch]        feature/uh04-native-cash-batch           -> origin/feature/uh04-native-cash-batch
+2026-11-15T06:36:49.6638256Z  * [new branch]        feature/uh05-dated-journal-reconciliation -> origin/feature/uh05-dated-journal-reconciliation
+2026-11-15T06:36:49.6639395Z  * [new branch]        feature/uh05-earlier-sparplan-funding    -> origin/feature/uh05-earlier-sparplan-funding
+2026-11-15T06:36:49.6640538Z  * [new branch]        feature/uh05-external-funding-0a8644a36676 -> origin/feature/uh05-external-funding-0a8644a36676
+2026-11-15T06:36:49.6641757Z  * [new branch]        feature/uh05-kraken-allocation-382a573e6a17 -> origin/feature/uh05-kraken-allocation-382a573e6a17
+2026-11-15T06:36:49.6643120Z  * [new branch]        feature/uh05-native-fiat-binding-b510a73fed43 -> origin/feature/uh05-native-fiat-binding-b510a73fed43
+2026-11-15T06:36:49.6644282Z  * [new branch]        feature/uh05-net-closing-backfill        -> origin/feature/uh05-net-closing-backfill
+2026-11-15T06:36:49.6645296Z  * [new branch]        feature/uh05-net-group-selection         -> origin/feature/uh05-net-group-selection
+2026-11-15T06:36:49.6646389Z  * [new branch]        feature/uh05-shared-import               -> origin/feature/uh05-shared-import
+2026-11-15T06:36:49.6647426Z  * [new branch]        feature/uh05-three-fill-eur-b1b383f4f228 -> origin/feature/uh05-three-fill-eur-b1b383f4f228
+2026-11-15T06:36:49.6648447Z  * [new branch]        feature/uh05-two-fill-eur                -> origin/feature/uh05-two-fill-eur
+2026-11-15T06:36:49.6649539Z  * [new branch]        feature/uh05-unknown-fx-usd-principal-v299 -> origin/feature/uh05-unknown-fx-usd-principal-v299
+2026-11-15T06:36:49.6650698Z  * [new branch]        feature/uh05-value-date-706dbcb4272b     -> origin/feature/uh05-value-date-706dbcb4272b
+2026-11-15T06:36:49.6651819Z  * [new branch]        feature/ui-audit-precision-touch-v212    -> origin/feature/ui-audit-precision-touch-v212
+2026-11-15T06:36:49.6652930Z  * [new branch]        feature/ui-c5-live-disclosure-gate       -> origin/feature/ui-c5-live-disclosure-gate
+2026-11-15T06:36:49.6653987Z  * [new branch]        feature/ui-known-valuation-totals        -> origin/feature/ui-known-valuation-totals
+2026-11-15T06:36:49.6655049Z  * [new branch]        feature/ui-m28-k01-remove-tradingview    -> origin/feature/ui-m28-k01-remove-tradingview
+2026-11-15T06:36:49.6656044Z  * [new branch]        feature/ui-quality-b1                    -> origin/feature/ui-quality-b1
+2026-11-15T06:36:49.6657179Z  * [new branch]        feature/ui-quality-c1-transfer-state     -> origin/feature/ui-quality-c1-transfer-state
+2026-11-15T06:36:49.6658367Z  * [new branch]        feature/ui-quality-c2-history-display    -> origin/feature/ui-quality-c2-history-display
+2026-11-15T06:36:49.6659445Z  * [new branch]        feature/ui-quality-c3-chart-metric       -> origin/feature/ui-quality-c3-chart-metric
+2026-11-15T06:36:49.6660487Z  * [new branch]        feature/ui-quality-c4-chart-units        -> origin/feature/ui-quality-c4-chart-units
+2026-11-15T06:36:49.6661596Z  * [new branch]        feature/ui-quality-c5-secondary-actions  -> origin/feature/ui-quality-c5-secondary-actions
+2026-11-15T06:36:49.6662749Z  * [new branch]        feature/ui-r4-display-filter-02f19cd404ef -> origin/feature/ui-r4-display-filter-02f19cd404ef
+2026-11-15T06:36:49.6663812Z  * [new branch]        feature/ui-selection-header              -> origin/feature/ui-selection-header
+2026-11-15T06:36:49.6664815Z  * [new branch]        feature/ui-selection-reasons-v214        -> origin/feature/ui-selection-reasons-v214
+2026-11-15T06:36:49.6665781Z  * [new branch]        feature/ui-small-rests                   -> origin/feature/ui-small-rests
+2026-11-15T06:36:49.6666876Z  * [new branch]        feature/ui-visual01-compact-periods      -> origin/feature/ui-visual01-compact-periods
+2026-11-15T06:36:49.6667904Z  * [new branch]        feature/ui-visual02-mehr                 -> origin/feature/ui-visual02-mehr
+2026-11-15T06:36:49.6668877Z  * [new branch]        feature/ui-visual03-bookings             -> origin/feature/ui-visual03-bookings
+2026-11-15T06:36:49.6669887Z  * [new branch]        feature/ui-visual04-navigation           -> origin/feature/ui-visual04-navigation
+2026-11-15T06:36:49.6670935Z  * [new branch]        feature/ui-visual05-dialogs              -> origin/feature/ui-visual05-dialogs
+2026-11-15T06:36:49.6672197Z  * [new branch]        feature/ui-visual06-compact-empty-states -> origin/feature/ui-visual06-compact-empty-states
+2026-11-15T06:36:49.6673506Z  * [new branch]        feature/ui-visual07-overview-stats       -> origin/feature/ui-visual07-overview-stats
+2026-11-15T06:36:49.6674946Z  * [new branch]        feature/ui-visual08-history-details      -> origin/feature/ui-visual08-history-details
+2026-11-15T06:36:49.6676852Z  * [new branch]        feature/ui-visual09-positions-bookings-filters -> origin/feature/ui-visual09-positions-bookings-filters
+2026-11-15T06:36:49.6677939Z  * [new branch]        feature/unified-backup-password          -> origin/feature/unified-backup-password
+2026-11-15T06:36:49.6678700Z  * [new branch]        feature/unified-list-management          -> origin/feature/unified-list-management
+2026-11-15T06:36:49.6679707Z  * [new branch]        feature/universal-security-listing-discovery-20261022 -> origin/feature/universal-security-listing-discovery-20261022
+2026-11-15T06:36:49.6680838Z  * [new branch]        feature/verified-security-prices-multisource-20261022 -> origin/feature/verified-security-prices-multisource-20261022
+2026-11-15T06:36:49.6681637Z  * [new branch]        fix/alpha-vantage-direct-266             -> origin/fix/alpha-vantage-direct-266
+2026-11-15T06:36:49.6682370Z  * [new branch]        fix/booking-mobile-readability-v231-20261031 -> origin/fix/booking-mobile-readability-v231-20261031
+2026-11-15T06:36:49.6683167Z  * [new branch]        fix/cash-account-ux-267-264              -> origin/fix/cash-account-ux-267-264
+2026-11-15T06:36:49.6683850Z  * [new branch]        fix/catalog-source-accuracy-2026-10-22   -> origin/fix/catalog-source-accuracy-2026-10-22
+2026-11-15T06:36:49.6684685Z  * [new branch]        fix/chart-failure-collapse-eye-hover-20261023 -> origin/fix/chart-failure-collapse-eye-hover-20261023
+2026-11-15T06:36:49.6685439Z  * [new branch]        fix/chart-time-spacing-v220              -> origin/fix/chart-time-spacing-v220
+2026-11-15T06:36:49.6686136Z  * [new branch]        fix/compact-catalog-import-2026-10-22    -> origin/fix/compact-catalog-import-2026-10-22
+2026-11-15T06:36:49.6687040Z  * [new branch]        fix/crypto-history-resilience-20261022   -> origin/fix/crypto-history-resilience-20261022
+2026-11-15T06:36:49.6687953Z  * [new branch]        fix/csv-review-test-race-2026-10-24      -> origin/fix/csv-review-test-race-2026-10-24
+2026-11-15T06:36:49.6688587Z  * [new branch]        fix/de-at-displays                       -> origin/fix/de-at-displays
+2026-11-15T06:36:49.6689331Z  * [new branch]        fix/eodhd-transport-credential-visibility-v76 -> origin/fix/eodhd-transport-credential-visibility-v76
+2026-11-15T06:36:49.6690117Z  * [new branch]        fix/etf-browser-sources-266              -> origin/fix/etf-browser-sources-266
+2026-11-15T06:36:49.6690788Z  * [new branch]        fix/eth-history-cursor-268               -> origin/fix/eth-history-cursor-268
+2026-11-15T06:36:49.6691502Z  * [new branch]        fix/history-offline-worker-lifecycle     -> origin/fix/history-offline-worker-lifecycle
+2026-11-15T06:36:49.6692246Z  * [new branch]        fix/history-worker-error-handling        -> origin/fix/history-worker-error-handling
+2026-11-15T06:36:49.6693006Z  * [new branch]        fix/issue-44-crash-safe-revert-v87       -> origin/fix/issue-44-crash-safe-revert-v87
+2026-11-15T06:36:49.6693822Z  * [new branch]        fix/issue-44-stale-source-migration-v86  -> origin/fix/issue-44-stale-source-migration-v86
+2026-11-15T06:36:49.6694688Z  * [new branch]        fix/k3-settings-replacement-v308-b180b1102417 -> origin/fix/k3-settings-replacement-v308-b180b1102417
+2026-11-15T06:36:49.6695550Z  * [new branch]        fix/k3-wallet-editor-v304-e595fcc6d453   -> origin/fix/k3-wallet-editor-v304-e595fcc6d453
+2026-11-15T06:36:49.6696393Z  * [new branch]        fix/k4-confirmed-idb-reopen              -> origin/fix/k4-confirmed-idb-reopen
+2026-11-15T06:36:49.6697071Z  * [new branch]        fix/k4-restore-dcdb094a-20261114         -> origin/fix/k4-restore-dcdb094a-20261114
+2026-11-15T06:36:49.6697837Z  * [new branch]        fix/k4-update-drafts-v307-75ea9fa46556   -> origin/fix/k4-update-drafts-v307-75ea9fa46556
+2026-11-15T06:36:49.6698575Z  * [new branch]        fix/k6-backup-copy-v305-93890745b277     -> origin/fix/k6-backup-copy-v305-93890745b277
+2026-11-15T06:36:49.6699529Z  * [new branch]        fix/k6-navigation-focus-v306-40aba94dd4bd -> origin/fix/k6-navigation-focus-v306-40aba94dd4bd
+2026-11-15T06:36:49.6700332Z  * [new branch]        fix/k6-trust-backup-copy-2026-11-15      -> origin/fix/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:36:49.6701120Z  * [new branch]        fix/ledger-xpub-hd-address-types-20261022 -> origin/fix/ledger-xpub-hd-address-types-20261022
+2026-11-15T06:36:49.6702135Z  * [new branch]        fix/marketstack-history-gaps-266         -> origin/fix/marketstack-history-gaps-266
+2026-11-15T06:36:49.6703183Z  * [new branch]        fix/missing-position-value               -> origin/fix/missing-position-value
+2026-11-15T06:36:49.6703815Z  * [new branch]        fix/native-chart-axis-tooltip-v216       -> origin/fix/native-chart-axis-tooltip-v216
+2026-11-15T06:36:49.6704611Z  * [new branch]        fix/native-market-history-ui-20261023    -> origin/fix/native-market-history-ui-20261023
+2026-11-15T06:36:49.6705331Z  * [new branch]        fix/plain-json-backup-reader-limits      -> origin/fix/plain-json-backup-reader-limits
+2026-11-15T06:36:49.6706292Z  * [new branch]        fix/portfolio-integrity-restore-77bcb76dd357-20261114 -> origin/fix/portfolio-integrity-restore-77bcb76dd357-20261114
+2026-11-15T06:36:49.6707030Z  * [new branch]        fix/position-archive-view                -> origin/fix/position-archive-view
+2026-11-15T06:36:49.6707674Z  * [new branch]        fix/provider-allocation-scope-20261023   -> origin/fix/provider-allocation-scope-20261023
+2026-11-15T06:36:49.6708375Z  * [new branch]        fix/pwa-document-identity-02f19cd404ef   -> origin/fix/pwa-document-identity-02f19cd404ef
+2026-11-15T06:36:49.6709236Z  * [new branch]        fix/pwa-update-fresh-assets-v215         -> origin/fix/pwa-update-fresh-assets-v215
+2026-11-15T06:36:49.6709841Z  * [new branch]        fix/pwa-update-reload-v91                -> origin/fix/pwa-update-reload-v91
+2026-11-15T06:36:49.6710417Z  * [new branch]        fix/qa01-a11y-label-in-name              -> origin/fix/qa01-a11y-label-in-name
+2026-11-15T06:36:49.6711144Z  * [new branch]        fix/reference-offline-test-baseline      -> origin/fix/reference-offline-test-baseline
+2026-11-15T06:36:49.6711838Z  * [new branch]        fix/references-startup-v309-a845c64598ab -> origin/fix/references-startup-v309-a845c64598ab
+2026-11-15T06:36:49.6712577Z  * [new branch]        fix/remove-curated-etf-suggestions-20261022 -> origin/fix/remove-curated-etf-suggestions-20261022
+2026-11-15T06:36:49.6713440Z  * [new branch]        fix/returns-chevron-mobile-v82           -> origin/fix/returns-chevron-mobile-v82
+2026-11-15T06:36:49.6714375Z  * [new branch]        fix/returns-chevron-mobile-v83           -> origin/fix/returns-chevron-mobile-v83
+2026-11-15T06:36:49.6715263Z  * [new branch]        fix/snapshot-position-crud-v79           -> origin/fix/snapshot-position-crud-v79
+2026-11-15T06:36:49.6716488Z  * [new branch]        fix/solana-rpc-onboarding-clarity-20261023 -> origin/fix/solana-rpc-onboarding-clarity-20261023
+2026-11-15T06:36:49.6717691Z  * [new branch]        fix/sonic-benqi-solana-staking-wallet-scan -> origin/fix/sonic-benqi-solana-staking-wallet-scan
+2026-11-15T06:36:49.6718759Z  * [new branch]        fix/uh03-kraken-cross-reference-chronology -> origin/fix/uh03-kraken-cross-reference-chronology
+2026-11-15T06:36:49.6719750Z  * [new branch]        fix/uh03-kraken-exact-trail              -> origin/fix/uh03-kraken-exact-trail
+2026-11-15T06:36:49.6720753Z  * [new branch]        fix/uh03-kraken-group-withdrawal         -> origin/fix/uh03-kraken-group-withdrawal
+2026-11-15T06:36:49.6721876Z  * [new branch]        fix/ui-master28-management-v222          -> origin/fix/ui-master28-management-v222
+2026-11-15T06:36:49.6722989Z  * [new branch]        fix/ui-text01-position-facts-v218        -> origin/fix/ui-text01-position-facts-v218
+2026-11-15T06:36:49.6724117Z  * [new branch]        fix/ui-text01-quote-display-v217         -> origin/fix/ui-text01-quote-display-v217
+2026-11-15T06:36:49.6725091Z  * [new branch]        fix/ui-text02-three-year-v219            -> origin/fix/ui-text02-three-year-v219
+2026-11-15T06:36:49.6725953Z  * [new branch]        fix/unified-detail-actions               -> origin/fix/unified-detail-actions
+2026-11-15T06:36:49.6726697Z  * [new branch]        fix/unified-header-status                -> origin/fix/unified-header-status
+2026-11-15T06:36:49.6727287Z  * [new branch]        fix/v231-mobile-readability              -> origin/fix/v231-mobile-readability
+2026-11-15T06:36:49.6727912Z  * [new branch]        fix/v269-chart-controlled-fixture        -> origin/fix/v269-chart-controlled-fixture
+2026-11-15T06:36:49.6728531Z  * [new branch]        fix/v269-live-job-budget                 -> origin/fix/v269-live-job-budget
+2026-11-15T06:36:49.6729151Z  * [new branch]        fix/v289-review-integrity-414503ed33c6   -> origin/fix/v289-review-integrity-414503ed33c6
+2026-11-15T06:36:49.6729834Z  * [new branch]        fix/v292-live-job-budget-e8b533803735    -> origin/fix/v292-live-job-budget-e8b533803735
+2026-11-15T06:36:49.6730516Z  * [new branch]        fix/xetra-import-pwa-refresh-2026-10-22  -> origin/fix/xetra-import-pwa-refresh-2026-10-22
+2026-11-15T06:36:49.6731151Z  * [new branch]        fix/xetra-real-csv-2026-10-22            -> origin/fix/xetra-real-csv-2026-10-22
+2026-11-15T06:36:49.6731840Z  * [new branch]        integration/p0-storage-current-main-20261024 -> origin/integration/p0-storage-current-main-20261024
+2026-11-15T06:36:49.6732580Z  * [new branch]        integration/plus01-current-main-20261024 -> origin/integration/plus01-current-main-20261024
+2026-11-15T06:36:49.6733189Z  * [new branch]        main                                     -> origin/main
+2026-11-15T06:36:49.6733799Z  * [new branch]        ops/cloudflare-worker-manual-deploy-20261025 -> origin/ops/cloudflare-worker-manual-deploy-20261025
+2026-11-15T06:36:49.6734468Z  * [new branch]        p0/wp01-release-gates                    -> origin/p0/wp01-release-gates
+2026-11-15T06:36:49.6735045Z  * [new branch]        p0/wp02-financial-invariants             -> origin/p0/wp02-financial-invariants
+2026-11-15T06:36:49.6735745Z  * [new branch]        p0/wp03-storage-integrity                -> origin/p0/wp03-storage-integrity
+2026-11-15T06:36:49.6736406Z  * [new branch]        p0/wp04-import-identity                  -> origin/p0/wp04-import-identity
+2026-11-15T06:36:49.6736960Z  * [new branch]        perf/booking-row-index                   -> origin/perf/booking-row-index
+2026-11-15T06:36:49.6737546Z  * [new branch]        perf/bounded-decimal-parsing             -> origin/perf/bounded-decimal-parsing
+2026-11-15T06:36:49.6738156Z  * [new branch]        perf/measured-render-startup             -> origin/perf/measured-render-startup
+2026-11-15T06:36:49.6738791Z  * [new branch]        perf/perf01-v222-benchmark-runner        -> origin/perf/perf01-v222-benchmark-runner
+2026-11-15T06:36:49.6739461Z  * [new branch]        perf/perf01-v222-reconciliation-index    -> origin/perf/perf01-v222-reconciliation-index
+2026-11-15T06:36:49.6740112Z  * [new branch]        plus01/financial-import-delta            -> origin/plus01/financial-import-delta
+2026-11-15T06:36:49.6740722Z  * [new branch]        qa/k4-confirmed-idb-reopen               -> origin/qa/k4-confirmed-idb-reopen
+2026-11-15T06:36:49.6741316Z  * [new branch]        qa/k4-eight-dcdb094a-20261114            -> origin/qa/k4-eight-dcdb094a-20261114
+2026-11-15T06:36:49.6741908Z  * [new branch]        qa/k4-eviction-e4b79f541e28              -> origin/qa/k4-eviction-e4b79f541e28
+2026-11-15T06:36:49.6742519Z  * [new branch]        qa/k4-filesystem-e4b79f541e28            -> origin/qa/k4-filesystem-e4b79f541e28
+2026-11-15T06:36:49.6743139Z  * [new branch]        qa/k4-native-5db38035-20261114           -> origin/qa/k4-native-5db38035-20261114
+2026-11-15T06:36:49.6743863Z  * [new branch]        qa/k4-sigkill-48125a26-20261114          -> origin/qa/k4-sigkill-48125a26-20261114
+2026-11-15T06:36:49.6744663Z  * [new branch]        qa/k4-sigkill-cleanup-48125a26-20261114  -> origin/qa/k4-sigkill-cleanup-48125a26-20261114
+2026-11-15T06:36:49.6745600Z  * [new branch]        qa/k4-sigkill-display-48125a26-20261114  -> origin/qa/k4-sigkill-display-48125a26-20261114
+2026-11-15T06:36:49.6746389Z  * [new branch]        qa/k4-whole-origin-e4b79f541e28          -> origin/qa/k4-whole-origin-e4b79f541e28
+2026-11-15T06:36:49.6747074Z  * [new branch]        qa/k6-trust-backup-copy-2026-11-15       -> origin/qa/k6-trust-backup-copy-2026-11-15
+2026-11-15T06:36:49.6747698Z  * [new branch]        qa/v188-live-targeted                    -> origin/qa/v188-live-targeted
+2026-11-15T06:36:49.6748272Z  * [new branch]        qa/v189-account-live                     -> origin/qa/v189-account-live
+2026-11-15T06:36:49.6748850Z  * [new branch]        qa/v190-ledger-live                      -> origin/qa/v190-ledger-live
+2026-11-15T06:36:49.6749452Z  * [new branch]        qa/v191-booking-live                     -> origin/qa/v191-booking-live
+2026-11-15T06:36:49.6750072Z  * [new branch]        qa/v192-booking-live                     -> origin/qa/v192-booking-live
+2026-11-15T06:36:49.6750762Z  * [new branch]        test/bounded-cross-engine-readiness      -> origin/test/bounded-cross-engine-readiness
+2026-11-15T06:36:49.6751444Z  * [new branch]        test/fin-e2e01-cash-chain                -> origin/test/fin-e2e01-cash-chain
+2026-11-15T06:36:49.6752111Z  * [new branch]        test/fin-e2e01-fx-partial-fills          -> origin/test/fin-e2e01-fx-partial-fills
+2026-11-15T06:36:49.6752950Z  * [new branch]        test/flh04-c1-correction-bfed8172-366da675bef5 -> origin/test/flh04-c1-correction-bfed8172-366da675bef5
+2026-11-15T06:36:49.6753793Z  * [new branch]        test/flh04-c1-native-b18c6fcb-366da675bef5 -> origin/test/flh04-c1-native-b18c6fcb-366da675bef5
+2026-11-15T06:36:49.6754726Z  * [new branch]        test/flh04-renderer-termination-4cd697ef5bd2-20261113 -> origin/test/flh04-renderer-termination-4cd697ef5bd2-20261113
+2026-11-15T06:36:49.6755729Z  * [new branch]        test/flh04-source-lifecycle-781cbfc52ec6-20261113 -> origin/test/flh04-source-lifecycle-781cbfc52ec6-20261113
+2026-11-15T06:36:49.6756858Z  * [new branch]        test/generic-provider-allocation-fixtures-20261023 -> origin/test/generic-provider-allocation-fixtures-20261023
+2026-11-15T06:36:49.6757813Z  * [new branch]        test/issue-44-idb-cross-engine-corruption-v83 -> origin/test/issue-44-idb-cross-engine-corruption-v83
+2026-11-15T06:36:49.6758619Z  * [new branch]        test/issue-44-migration-matrix-doc-v75   -> origin/test/issue-44-migration-matrix-doc-v75
+2026-11-15T06:36:49.6759449Z  * [new branch]        test/latest-display-boundary-77bcb76dd357-20261114 -> origin/test/latest-display-boundary-77bcb76dd357-20261114
+2026-11-15T06:36:49.6760319Z  * [new branch]        test/latest-save-restore-77bcb76dd357-20261114 -> origin/test/latest-save-restore-77bcb76dd357-20261114
+2026-11-15T06:36:49.6761162Z  * [new branch]        test/offline-throttled-mobile-stress     -> origin/test/offline-throttled-mobile-stress
+2026-11-15T06:36:49.6761971Z  * [new branch]        test/pr335-full-kraken-d62125b28794      -> origin/test/pr335-full-kraken-d62125b28794
+2026-11-15T06:36:49.6762970Z  * [new branch]        test/restore-outcome-b7bbb8ab7737-correction-20261113 -> origin/test/restore-outcome-b7bbb8ab7737-correction-20261113
+2026-11-15T06:36:49.6763946Z  * [new branch]        test/restore-outcome-b7bbb8ab7737-initial-20261113 -> origin/test/restore-outcome-b7bbb8ab7737-initial-20261113
+2026-11-15T06:36:49.6764787Z  * [new branch]        test/restore-toast-77bcb76dd357-20261113 -> origin/test/restore-toast-77bcb76dd357-20261113
+2026-11-15T06:36:49.6765594Z  * [new branch]        test/seven-native-77bcb76dd357-correction-20261114 -> origin/test/seven-native-77bcb76dd357-correction-20261114
+2026-11-15T06:36:49.6766517Z  * [new branch]        test/seven-native-77bcb76dd357-initial-20261114 -> origin/test/seven-native-77bcb76dd357-initial-20261114
+2026-11-15T06:36:49.6767379Z  * [new branch]        test/ui-alloc01-b7bbb8ab7737-correction-20261113 -> origin/test/ui-alloc01-b7bbb8ab7737-correction-20261113
+2026-11-15T06:36:49.6768296Z  * [new branch]        test/ui-alloc01-b7bbb8ab7737-initial-20261113 -> origin/test/ui-alloc01-b7bbb8ab7737-initial-20261113
+2026-11-15T06:36:49.6769053Z  * [new branch]        test/ui-m28-k02-crypto-coverage          -> origin/test/ui-m28-k02-crypto-coverage
+2026-11-15T06:36:49.6769765Z  * [new branch]        test/v220-live-initialization-diagnostics -> origin/test/v220-live-initialization-diagnostics
+2026-11-15T06:36:49.6770585Z  * [new branch]        test/v221-live-pchain-initialization-diagnostics -> origin/test/v221-live-pchain-initialization-diagnostics
+2026-11-15T06:36:49.6771406Z  * [new branch]        test/v292-live-startup-evidence-0bfa85b5b416 -> origin/test/v292-live-startup-evidence-0bfa85b5b416
+2026-11-15T06:36:49.6772181Z  * [new branch]        test/v294-alpha-idb-lifecycle-96c2624a1e89 -> origin/test/v294-alpha-idb-lifecycle-96c2624a1e89
+2026-11-15T06:36:49.6772950Z  * [new branch]        test/v310-storage-module-503-codex       -> origin/test/v310-storage-module-503-codex
+2026-11-15T06:36:49.6773728Z  * [new branch]        test/v310-work-startup-observability-0df17fb9958a -> origin/test/v310-work-startup-observability-0df17fb9958a
+2026-11-15T06:36:49.6774434Z  * [new branch]        ui/beta-badge-2026-10-26                 -> origin/ui/beta-badge-2026-10-26
+2026-11-15T06:36:49.6775043Z  * [new branch]        ui/compact-panel-status-v297             -> origin/ui/compact-panel-status-v297
+2026-11-15T06:36:49.6775709Z  * [new branch]        ui/compact-valuation-drilldown-20261023  -> origin/ui/compact-valuation-drilldown-20261023
+2026-11-15T06:36:49.6776687Z  * [new branch]        ui/consistent-actions-and-density-20261023 -> origin/ui/consistent-actions-and-density-20261023
+2026-11-15T06:36:49.6777468Z  * [new branch]        ui/history-flat-disclosures-20261023     -> origin/ui/history-flat-disclosures-20261023
+2026-11-15T06:36:49.6778185Z  * [new branch]        ui/history-insights-header-20261023      -> origin/ui/history-insights-header-20261023
+2026-11-15T06:36:49.6778956Z  * [new branch]        ui/history-save-action-align-20261023    -> origin/ui/history-save-action-align-20261023
+2026-11-15T06:36:49.6779696Z  * [new branch]        ui/interactive-allocation-donut-20261022 -> origin/ui/interactive-allocation-donut-20261022
+2026-11-15T06:36:49.6780399Z  * [new branch]        ui/mobile-dashboard-polish-20261022      -> origin/ui/mobile-dashboard-polish-20261022
+2026-11-15T06:36:49.6781095Z  * [new branch]        ui/position-asset-class-icons-20261025   -> origin/ui/position-asset-class-icons-20261025
+2026-11-15T06:36:49.6781798Z  * [new branch]        ui/position-drilldown-charts-20261022    -> origin/ui/position-drilldown-charts-20261022
+2026-11-15T06:36:49.6782480Z  * [new branch]        ui/shared-plus-icon-20261023             -> origin/ui/shared-plus-icon-20261023
+2026-11-15T06:36:49.6783210Z  * [new branch]        ui/ui-r1-loader-install-v300-20d9afddc0ae -> origin/ui/ui-r1-loader-install-v300-20d9afddc0ae
+2026-11-15T06:36:49.6783980Z  * [new branch]        ui/ui-r2-selection-v301-39ca9a8217a6     -> origin/ui/ui-r2-selection-v301-39ca9a8217a6
+2026-11-15T06:36:49.6784778Z  * [new branch]        ui/ui-r3-review-periods-v302-c43b5e91f20a -> origin/ui/ui-r3-review-periods-v302-c43b5e91f20a
+2026-11-15T06:36:49.6785484Z  * [new branch]        ui/ui300-bounded-414503ed33c6            -> origin/ui/ui300-bounded-414503ed33c6
+2026-11-15T06:36:49.6786251Z  * [new branch]        ui/unified-mobile-history-actions-20261023 -> origin/ui/unified-mobile-history-actions-20261023
+2026-11-15T06:36:49.6786987Z  * [new branch]        ux/booking-wallet-simplify-20261023      -> origin/ux/booking-wallet-simplify-20261023
+2026-11-15T06:36:49.6787750Z  * [new branch]        ux/clarify-security-listing-review-2026-10-24 -> origin/ux/clarify-security-listing-review-2026-10-24
+2026-11-15T06:36:49.6788473Z  * [new branch]        ux/compact-google-drive-backup           -> origin/ux/compact-google-drive-backup
+2026-11-15T06:36:49.6789172Z  * [new branch]        ux/compact-password-and-return-details   -> origin/ux/compact-password-and-return-details
+2026-11-15T06:36:49.6789975Z  * [new branch]        ux/inline-advanced-position-20261024     -> origin/ux/inline-advanced-position-20261024
+2026-11-15T06:36:49.6790737Z  * [new branch]        ux/mehr-hilfe-verlauf-entschlacken-20261024 -> origin/ux/mehr-hilfe-verlauf-entschlacken-20261024
+2026-11-15T06:36:49.6791532Z  * [new branch]        ux/more-settings-progressive-disclosure  -> origin/ux/more-settings-progressive-disclosure
+2026-11-15T06:36:49.6792283Z  * [new branch]        ux/position-editor-streamline-2026-10-24 -> origin/ux/position-editor-streamline-2026-10-24
+2026-11-15T06:36:49.6793082Z  * [new branch]        ux/simplify-add-position-csv-20261023    -> origin/ux/simplify-add-position-csv-20261023
+2026-11-15T06:36:49.6793857Z  * [new branch]        ux/unified-chart-period-controls-20261024 -> origin/ux/unified-chart-period-controls-20261024
+2026-11-15T06:36:49.6794605Z  * [new branch]        wip/pr330-kernel-mirror-518556806b3b     -> origin/wip/pr330-kernel-mirror-518556806b3b
+2026-11-15T06:36:49.6795361Z  * [new branch]        wip/pr330-legacy-contract-a845c64598ab   -> origin/wip/pr330-legacy-contract-a845c64598ab
+2026-11-15T06:36:49.6796123Z  * [new branch]        wip/pr330-ubuntu-setup-518556806b3b      -> origin/wip/pr330-ubuntu-setup-518556806b3b
+2026-11-15T06:36:49.6796860Z  * [new branch]        work/continuation-20261027               -> origin/work/continuation-20261027
+2026-11-15T06:36:49.6797491Z  * [new ref]           e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a -> pull/339/merge
+2026-11-15T06:36:49.6798743Z ##[endgroup]
+2026-11-15T06:36:49.6799152Z ##[group]Determining the checkout info
+2026-11-15T06:36:49.6799611Z ##[endgroup]
+2026-11-15T06:36:49.6799877Z [command]/usr/bin/git sparse-checkout disable
+2026-11-15T06:36:49.6800700Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T06:36:49.6801625Z ##[group]Checking out the ref
+2026-11-15T06:36:49.6802025Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/339/merge
+2026-11-15T06:36:49.7911902Z Note: switching to 'refs/remotes/pull/339/merge'.
+2026-11-15T06:36:49.7912410Z 
+2026-11-15T06:36:49.7912739Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-15T06:36:49.7913508Z changes and commit them, and you can discard any commits you make in this
+2026-11-15T06:36:49.7914241Z state without impacting any branches by switching back to a branch.
+2026-11-15T06:36:49.7914684Z 
+2026-11-15T06:36:49.7914977Z If you want to create a new branch to retain commits you create, you may
+2026-11-15T06:36:49.7915683Z do so (now or later) by using -c with the switch command. Example:
+2026-11-15T06:36:49.7916106Z 
+2026-11-15T06:36:49.7916475Z   git switch -c <new-branch-name>
+2026-11-15T06:36:49.7916781Z 
+2026-11-15T06:36:49.7916964Z Or undo this operation with:
+2026-11-15T06:36:49.7917222Z 
+2026-11-15T06:36:49.7917406Z   git switch -
+2026-11-15T06:36:49.7917608Z 
+2026-11-15T06:36:49.7917947Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-15T06:36:49.7918466Z 
+2026-11-15T06:36:49.7919039Z HEAD is now at e6ccb4d5 Merge 8b239f1ec021b23fba82a13b39cf0e666e483566 into ff60c73e53c973ecb86393be5b4e31b55f352601
+2026-11-15T06:36:49.7974845Z ##[endgroup]
+2026-11-15T06:36:49.7976888Z [command]/usr/bin/git log -1 --format=%H
+2026-11-15T06:36:49.8010832Z e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a
+2026-11-15T06:36:49.8240104Z ##[group]Run actions/setup-node@v4
+2026-11-15T06:36:49.8240456Z with:
+2026-11-15T06:36:49.8240690Z   node-version: 22
+2026-11-15T06:36:49.8240936Z   always-auth: false
+2026-11-15T06:36:49.8241183Z   check-latest: false
+2026-11-15T06:36:49.8243410Z   token: ***
+2026-11-15T06:36:49.8243638Z ##[endgroup]
+2026-11-15T06:36:49.9282546Z (node:2112) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:36:49.9284270Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-11-15T06:36:49.9285264Z ##[group]Environment details
+2026-11-15T06:36:49.9286578Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:36:50.2210112Z node: v22.23.4
+2026-11-15T06:36:50.2210740Z npm: 10.9.9
+2026-11-15T06:36:50.2211241Z yarn: 1.22.22
+2026-11-15T06:36:50.2212630Z ##[endgroup]
+2026-11-15T06:36:50.2379629Z ##[group]Run node tests/ci-stage-plan.mjs
+2026-11-15T06:36:50.2380704Z [36;1mnode tests/ci-stage-plan.mjs[0m
+2026-11-15T06:36:50.2405695Z shell: /usr/bin/bash -e {0}
+2026-11-15T06:36:50.2406604Z ##[endgroup]
+2026-11-15T06:36:50.2754573Z {
+2026-11-15T06:36:50.2755500Z   "stage": "INTEGRATION",
+2026-11-15T06:36:50.2756501Z   "full": true,
+2026-11-15T06:36:50.2757147Z   "css": false,
+2026-11-15T06:36:50.2758088Z   "reason": "Only explicit main-targeted drafts may use FAST",
+2026-11-15T06:36:50.2759166Z   "ciContract": false,
+2026-11-15T06:36:50.2760016Z   "base": "ff60c73e53c973ecb86393be5b4e31b55f352601",
+2026-11-15T06:36:50.2761208Z   "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+2026-11-15T06:36:50.2762202Z   "changes": [
+2026-11-15T06:36:50.2762835Z     {
+2026-11-15T06:36:50.2763499Z       "path": "src/drive-backup.js",
+2026-11-15T06:36:50.2764614Z       "oldMode": "100644",
+2026-11-15T06:36:50.2765365Z       "newMode": "100644",
+2026-11-15T06:36:50.2766090Z       "status": "M"
+2026-11-15T06:36:50.2767024Z     },
+2026-11-15T06:36:50.2767561Z     {
+2026-11-15T06:36:50.2768108Z       "path": "sw.js",
+2026-11-15T06:36:50.2768745Z       "oldMode": "100644",
+2026-11-15T06:36:50.2769430Z       "newMode": "100644",
+2026-11-15T06:36:50.2770099Z       "status": "M"
+2026-11-15T06:36:50.2770685Z     },
+2026-11-15T06:36:50.2771236Z     {
+2026-11-15T06:36:50.2771980Z       "path": "tests/browser-trust-backup-copy.mjs",
+2026-11-15T06:36:50.2772840Z       "oldMode": "000000",
+2026-11-15T06:36:50.2773469Z       "newMode": "100644",
+2026-11-15T06:36:50.2774087Z       "status": "A"
+2026-11-15T06:36:50.2774742Z     },
+2026-11-15T06:36:50.2775235Z     {
+2026-11-15T06:36:50.2775822Z       "path": "tests/drive-backup.test.mjs",
+2026-11-15T06:36:50.2777735Z       "oldMode": "100644",
+2026-11-15T06:36:50.2778367Z       "newMode": "100644",
+2026-11-15T06:36:50.2778981Z       "status": "M"
+2026-11-15T06:36:50.2779518Z     }
+2026-11-15T06:36:50.2780006Z   ],
+2026-11-15T06:36:50.2780553Z   "baseIsAncestor": true,
+2026-11-15T06:36:50.2781491Z   "warning": "Complete existing integration/release gates required."
+2026-11-15T06:36:50.2782427Z }
+2026-11-15T06:36:50.2968134Z ##[group]Run actions/upload-artifact@v4
+2026-11-15T06:36:50.2968831Z with:
+2026-11-15T06:36:50.2969471Z   name: ci-stage-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a
+2026-11-15T06:36:50.2970327Z   path: artifacts/ci-stage/
+2026-11-15T06:36:50.2970954Z   if-no-files-found: error
+2026-11-15T06:36:50.2971561Z   compression-level: 6
+2026-11-15T06:36:50.2972120Z   overwrite: false
+2026-11-15T06:36:50.2972674Z   include-hidden-files: false
+2026-11-15T06:36:50.2973295Z ##[endgroup]
+2026-11-15T06:36:50.4115696Z (node:2154) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:36:50.4118254Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:36:50.4159682Z With the provided path, there will be 1 file uploaded
+2026-11-15T06:36:50.4163044Z Artifact name is valid!
+2026-11-15T06:36:50.4164541Z Root directory input is valid!
+2026-11-15T06:36:50.6265028Z Beginning upload of artifact content to blob storage
+2026-11-15T06:36:50.6432201Z (node:2154) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T06:36:50.6659729Z Uploaded bytes 509
+2026-11-15T06:36:50.6812844Z Finished uploading artifact content to blob storage!
+2026-11-15T06:36:50.6815629Z SHA256 digest of uploaded artifact zip is 0fe6c79c30415da8718e397a0a5e904ed7827fc43e153e26b913022cce860b69
+2026-11-15T06:36:50.6817914Z Finalizing artifact upload
+2026-11-15T06:36:51.0011812Z Artifact ci-stage-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a.zip successfully finalized. Artifact ID 14150327691
+2026-11-15T06:36:51.0018467Z Artifact ci-stage-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a has been successfully uploaded! Final size is 509 bytes. Artifact ID is 14150327691
+2026-11-15T06:36:51.0020764Z Artifact download URL: https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14150327691
+2026-11-15T06:36:51.0259797Z Post job cleanup.
+2026-11-15T06:36:51.1162199Z (node:2167) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T06:36:51.1164815Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T06:36:51.1463813Z Post job cleanup.
+2026-11-15T06:36:51.2106848Z [command]/usr/bin/git version
+2026-11-15T06:36:51.2143201Z git version 2.56.1
+2026-11-15T06:36:51.2171251Z Temporarily overriding HOME='/home/runner/work/_temp/f0b7caca-194e-4f2a-8742-b70a5ed88130' before making global git config changes
+2026-11-15T06:36:51.2174129Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T06:36:51.2177071Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T06:36:51.2220803Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T06:36:51.2267020Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T06:36:51.2500915Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T06:36:51.2529974Z http.https://github.com/.extraheader
+2026-11-15T06:36:51.2540177Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-15T06:36:51.2588090Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T06:36:51.2812858Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T06:36:51.2863416Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T06:36:51.3219691Z Evaluate and set job outputs
+2026-11-15T06:36:51.3226399Z Set output 'stage'
+2026-11-15T06:36:51.3227640Z Set output 'full'
+2026-11-15T06:36:51.3228105Z Set output 'css'
+2026-11-15T06:36:51.3228324Z Set output 'ci_contract'
+2026-11-15T06:36:51.3228738Z Cleaning up orphan processes
+2026-11-15T06:36:51.3502995Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

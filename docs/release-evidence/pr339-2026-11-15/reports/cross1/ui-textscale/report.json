@@ -1,0 +1,201 @@
+{
+  "scope": "Synthetic computed font-size doubling, not OS/physical hardware or browser zoom",
+  "results": [
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "positions",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "positions",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "bookings",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "bookings",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "history",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "history",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "tab": "more",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "positions",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "positions",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "bookings",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "bookings",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "history",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "history",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "tab": "more",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "positions",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "positions",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "bookings",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "bookings",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "history",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "history",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "tab": "more",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "positions",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "positions",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "bookings",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "bookings",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "history",
+      "mode": "normal",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "history",
+      "mode": "management",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "tab": "more",
+      "mode": "normal",
+      "result": "PASS"
+    }
+  ]
+}

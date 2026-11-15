@@ -1,0 +1,85 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "targetSizes": [
+        {
+          "width": 320,
+          "id": "flatexSimulationMode",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 320,
+          "id": "flatexSimulationRun",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 390,
+          "id": "flatexSimulationMode",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 390,
+          "id": "flatexSimulationRun",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 430,
+          "id": "flatexSimulationMode",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 430,
+          "id": "flatexSimulationRun",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 768,
+          "id": "flatexSimulationMode",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 768,
+          "id": "flatexSimulationRun",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 1440,
+          "id": "flatexSimulationMode",
+          "height": 45,
+          "minHeight": "45px"
+        },
+        {
+          "width": 1440,
+          "id": "flatexSimulationRun",
+          "height": 45,
+          "minHeight": "45px"
+        }
+      ],
+      "checks": [
+        "explicit mode/current account confirmation",
+        "append empty and protected-balance blocking/backfill exact ending quantity",
+        "unknown costs/no external flows/no submit",
+        "mode/account/confirmation/file/lifetime delayed-generation resets",
+        "whole-batch special/cash protection",
+        "5 widths/Axe/44px/focus/escaped names",
+        "actual competing IDB writer between freshness checks/stale lock",
+        "actual offline reload/storage notification invalidation",
+        "exact IDB/revision/settings zero dialog writes/no external requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,19 @@
+{
+  "engine": "chromium",
+  "version": "141.0.7390.37",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "checks": [
+    "manual UNKNOWN submission rejects with exact bytes/revision preserved",
+    "actual shared UI, exact complete USD reference and overlap",
+    "one CAS revision, exact Decimal100 native balances, UNKNOWN EUR journal and tax/basis",
+    "approval revocation and quota/post-put full rollback",
+    "actual Undo/recommit/offline/replay",
+    "encrypted v5 source-stripped restore rejects without canonical write; valid actual UI FreshRestore passes",
+    "real second-tab conflict at canonical save",
+    "documentary native rollback persisted",
+    "incomplete reference, liability and represented roles reject scripted submit with exact IDB bytes/revision",
+    "four widths/full Axe tags"
+  ],
+  "actualUserOpeningPermission": false
+}

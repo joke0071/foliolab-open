@@ -1,0 +1,41 @@
+{
+  "scope": "Controlled independent openings/closing balances, actual provider UI; no real historic balance acceptance",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "results": [
+        {
+          "dialect": "native",
+          "result": "PASS",
+          "checks": [
+            "actual Bitpanda/Flatex UI in both orders",
+            "exact independent openings/end balances; no doubled holdings/cash",
+            "undo/recommit/repeat/zero cost invention",
+            "control edit invalidates consent; quota/post-put rollback",
+            "offline reload/encrypted v5 restore in fresh context",
+            "persistent group withdrawal/tombstone",
+            "real second-tab CAS",
+            "seven widths/Axe"
+          ]
+        },
+        {
+          "dialect": "context",
+          "result": "PASS",
+          "checks": [
+            "actual Bitpanda/Flatex UI in both orders",
+            "exact independent openings/end balances; no doubled holdings/cash",
+            "undo/recommit/repeat/zero cost invention",
+            "control edit invalidates consent; quota/post-put rollback",
+            "offline reload/encrypted v5 restore in fresh context",
+            "persistent group withdrawal/tombstone",
+            "real second-tab CAS",
+            "seven widths/Axe"
+          ]
+        }
+      ]
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "engine": "firefox",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS"
+    }
+  ]
+}

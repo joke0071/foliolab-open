@@ -1,0 +1,75 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Guarded native share takeover in isolated synthetic profiles only",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "mode": "append",
+      "result": "PASS",
+      "checks": [
+        "actual native append/backfill UI commit; one CAS revision",
+        "backup content/separate confirmation/reset/forced-submit guards",
+        "quota and post-put abort exact record/revision/settings unchanged",
+        "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+        "plain/encrypted stored native provenance roundtrip/replay",
+        "duplicate replay no write/revision; exact UI undo including snapshot",
+        "real competing writer after freshness rejected by actual CAS",
+        "offline actual UI commit",
+        "5 widths/Axe/44px/focus"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "mode": "backfill",
+      "result": "PASS",
+      "checks": [
+        "actual native append/backfill UI commit; one CAS revision",
+        "backup content/separate confirmation/reset/forced-submit guards",
+        "quota and post-put abort exact record/revision/settings unchanged",
+        "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+        "plain/encrypted stored native provenance roundtrip/replay",
+        "duplicate replay no write/revision; exact UI undo including snapshot",
+        "real competing writer after freshness rejected by actual CAS",
+        "offline actual UI commit",
+        "5 widths/Axe/44px/focus"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "mode": "append",
+      "result": "PASS",
+      "checks": [
+        "actual native append/backfill UI commit; one CAS revision",
+        "backup content/separate confirmation/reset/forced-submit guards",
+        "quota and post-put abort exact record/revision/settings unchanged",
+        "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+        "plain/encrypted stored native provenance roundtrip/replay",
+        "duplicate replay no write/revision; exact UI undo including snapshot",
+        "real competing writer after freshness rejected by actual CAS",
+        "offline actual UI commit",
+        "5 widths/Axe/44px/focus"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "mode": "backfill",
+      "result": "PASS",
+      "checks": [
+        "actual native append/backfill UI commit; one CAS revision",
+        "backup content/separate confirmation/reset/forced-submit guards",
+        "quota and post-put abort exact record/revision/settings unchanged",
+        "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+        "plain/encrypted stored native provenance roundtrip/replay",
+        "duplicate replay no write/revision; exact UI undo including snapshot",
+        "real competing writer after freshness rejected by actual CAS",
+        "offline actual UI commit",
+        "5 widths/Axe/44px/focus"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

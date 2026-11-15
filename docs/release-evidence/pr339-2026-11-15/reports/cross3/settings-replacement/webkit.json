@@ -1,0 +1,21 @@
+{
+  "engine": "webkit",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "actualIndexedDB": true,
+  "actualEncryptedUIFileRestore": true,
+  "actualPostCommitVaultFailure": true,
+  "actualPostCommitPreferencesFailure": true,
+  "driveOAuthClaim": false,
+  "providerRequests": 0,
+  "checks": [
+    "reset cancel/failed actual IDB put preserve exact record and draft",
+    "reset success creates one revisioned tombstone and clears/masks every key",
+    "password cancel/wrong password/restore cancel preserve bytes and draft",
+    "missing/declined configuration preserve draft",
+    "accepted configuration with failed actual IDB put preserves exact record and draft",
+    "post-commit vault/preferences failures preserve visible draft while committed settings remain canonical",
+    "accepted encrypted file restore aligns canonical settings/form/masking in one revision",
+    "ordinary navigation/render preserve draft; reload returns canonical values; 320px reflow"
+  ]
+}

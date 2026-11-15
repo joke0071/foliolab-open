@@ -1,0 +1,28 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "references": 210,
+      "widths": [
+        320,
+        390,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "normal/manage/visible page/partial/filter/no hidden selection",
+        "existing management editor/protected note-only original/cancelled correction retains draft/invalid/quota/start/impact correction/add/duplicate",
+        "exact original and non-null TWR/XIRR invariance",
+        "quota/post-put/cancel/retry/CAS",
+        "combined booking/reference archive/restore",
+        "plain and fresh password V2 UI restore",
+        "actual offline commit/reload",
+        "keyboard/focus/axe/44px"
+      ]
+    }
+  ]
+}

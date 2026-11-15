@@ -1,0 +1,26 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic H1/H2/H3/M1/M2/M3; no original or hardware acceptance",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "H1 changed local account/real upload/forced submit exact no mutation",
+        "H2 global refresh after cash booking/one CAS/exact journal",
+        "quota/post-put abort keep bytes and revision",
+        "dated opening protected",
+        "real competing tab wins at canonical CAS boundary",
+        "H3 real wallet discovery under second account rejected",
+        "H3 unused native contract field blocked before canonical IDB commit",
+        "five widths/Axe and actual error screenshot",
+        "M2 undated price remains partial",
+        "M3 tampered date rejected without writes",
+        "encrypted fresh-profile UI restore and offline reload",
+        "deterministic provider fetch fixture; no live provider calls"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,37 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native projection/shared simulation only; no UI or private import",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "native direct parser/shared preview/backfill/no fictional costs or external flows",
+        "explicit binding/stale/source/manual/baseline guards",
+        "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+        "synthetic commit/backup/replay/exact undo in memory",
+        "actual SW offline reload/module import",
+        "primary profile exact IDB/revision/settings zero mutation",
+        "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+        "no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "native direct parser/shared preview/backfill/no fictional costs or external flows",
+        "explicit binding/stale/source/manual/baseline guards",
+        "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+        "synthetic commit/backup/replay/exact undo in memory",
+        "actual SW offline reload/module import",
+        "primary profile exact IDB/revision/settings zero mutation",
+        "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+        "no external requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

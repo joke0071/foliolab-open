@@ -1,0 +1,17 @@
+{
+  "engine": "webkit",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "checks": [
+    "exact USD native quantity and UNKNOWN on save/reload",
+    "honest UI partial subtotal and no numeric full EUR total/snapshot",
+    "explicit UNKNOWN reference submission rejects without canonical bytes/revision change",
+    "historical transaction missing FX rejected without canonical write",
+    "quota and post-put preserve exact bytes/revision",
+    "real second-tab CAS rejects stale writer",
+    "offline reload stable",
+    "encrypted v5 actual UI restore in fresh browser context",
+    "four widths and full Axe tags"
+  ],
+  "newUSDPrincipalAdmission": false
+}

@@ -1,0 +1,56 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "synthetic manual reference inverse; no private data",
+  "engines": [
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "widths": [
+        320,
+        390,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "editor 7 widths/44px/axe/protected start/new entry without deletion",
+        "dirty draft decline/accept and original row focus",
+        "actual single editor deletion via same backup/consent/inverse/CAS path",
+        "mixed/start blocks",
+        "actual original backup and separate consent/forged submit",
+        "actual endpoint unknown metrics and selected identities",
+        "quota/post-put exact record/settings/revision",
+        "offline one-revision removal/reload",
+        "session exact undo",
+        "fresh plain/encrypted original recovery",
+        "stale writer and actual CAS race after freshness",
+        "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "widths": [
+        320,
+        390,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "editor 7 widths/44px/axe/protected start/new entry without deletion",
+        "dirty draft decline/accept and original row focus",
+        "actual single editor deletion via same backup/consent/inverse/CAS path",
+        "mixed/start blocks",
+        "actual original backup and separate consent/forged submit",
+        "actual endpoint unknown metrics and selected identities",
+        "quota/post-put exact record/settings/revision",
+        "offline one-revision removal/reload",
+        "session exact undo",
+        "fresh plain/encrypted original recovery",
+        "stale writer and actual CAS race after freshness",
+        "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+      ]
+    }
+  ]
+}

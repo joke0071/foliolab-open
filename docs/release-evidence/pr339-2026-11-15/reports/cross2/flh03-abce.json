@@ -1,0 +1,235 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": [
+    "A",
+    "B",
+    "C",
+    "E"
+  ],
+  "engines": [
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "checks": [
+        "A startup/runtime rescue+restore",
+        "B proven/partial history",
+        "C expanded contrast",
+        "E empty history",
+        "baseline local discard+saved navigation"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "checks": [
+        "A startup/runtime rescue+restore",
+        "B proven/partial history",
+        "C expanded contrast",
+        "E empty history",
+        "baseline local discard+saved navigation"
+      ]
+    }
+  ],
+  "scans": [
+    {
+      "engine": "firefox",
+      "label": "recovery 320x360",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 390x844",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 430x740",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 667x320",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 768x500",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 1024x768",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "recovery 1440x900",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "expanded settings 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "expanded settings 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "expanded settings 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "expanded settings 1440",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "C6 empty UI 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "C6 empty UI 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "C6 empty UI 430",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "C6 empty UI 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "C6 empty UI 1440",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "empty history 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "empty history 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "empty history 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "label": "empty history 1440",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 320x360",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 390x844",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 430x740",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 667x320",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 768x500",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 1024x768",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "recovery 1440x900",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "expanded settings 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "expanded settings 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "expanded settings 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "expanded settings 1440",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "C6 empty UI 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "C6 empty UI 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "C6 empty UI 430",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "C6 empty UI 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "C6 empty UI 1440",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "empty history 320",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "empty history 390",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "empty history 768",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "label": "empty history 1440",
+      "status": "PASS"
+    }
+  ]
+}

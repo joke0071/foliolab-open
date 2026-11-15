@@ -1,0 +1,74 @@
+{
+  "scope": "Synthetic explicit native purchase cash augmentation; original audit and no second share effect",
+  "engines": [
+    {
+      "engine": "firefox",
+      "scenario": "single-purchase",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "full actual UI net commit/one CAS revision",
+        "exact original purchase and journal retained; original asset posting unchanged; no second share effect",
+        "exact gross/net/unresolved posting; unknown costs/no external flows",
+        "seven widths/Axe",
+        "backup/confirmation reset/forced submit",
+        "quota/post-put abort exact no mutation",
+        "offline reload/actual fresh-profile v2-encrypted v5 UI restore/replay",
+        "persistent full-group withdrawal reverses shares and cash; retains original audit and reimport tombstone",
+        "real second writer CAS at storage boundary"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "scenario": "complete-buy-sell-batch",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "full actual UI net commit/one CAS revision",
+        "exact original purchase and journal retained; original asset posting unchanged; no second share effect",
+        "exact gross/net/unresolved posting; unknown costs/no external flows",
+        "seven widths/Axe",
+        "backup/confirmation reset/forced submit",
+        "quota/post-put abort exact no mutation",
+        "offline reload/actual fresh-profile v2-encrypted v5 UI restore/replay",
+        "persistent full-group withdrawal reverses shares and cash; retains original audit and reimport tombstone",
+        "real second writer CAS at storage boundary"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "scenario": "single-purchase",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "full actual UI net commit/one CAS revision",
+        "exact original purchase and journal retained; original asset posting unchanged; no second share effect",
+        "exact gross/net/unresolved posting; unknown costs/no external flows",
+        "seven widths/Axe",
+        "backup/confirmation reset/forced submit",
+        "quota/post-put abort exact no mutation",
+        "offline reload/actual fresh-profile v2-encrypted v5 UI restore/replay",
+        "persistent full-group withdrawal reverses shares and cash; retains original audit and reimport tombstone",
+        "real second writer CAS at storage boundary"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "scenario": "complete-buy-sell-batch",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "full actual UI net commit/one CAS revision",
+        "exact original purchase and journal retained; original asset posting unchanged; no second share effect",
+        "exact gross/net/unresolved posting; unknown costs/no external flows",
+        "seven widths/Axe",
+        "backup/confirmation reset/forced submit",
+        "quota/post-put abort exact no mutation",
+        "offline reload/actual fresh-profile v2-encrypted v5 UI restore/replay",
+        "persistent full-group withdrawal reverses shares and cash; retains original audit and reimport tombstone",
+        "real second writer CAS at storage boundary"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

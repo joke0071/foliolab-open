@@ -1,0 +1,26 @@
+{
+  "engine": "webkit",
+  "result": "PASS",
+  "widths": [
+    320,
+    390,
+    430,
+    768,
+    1440
+  ],
+  "breakpoints": [
+    980,
+    1180
+  ],
+  "checks": [
+    "late prompt; manual help; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; delivered appinstalled handler with synthetic event; exact IDB record unchanged",
+    "local preference storage failure/session fallback and both stores failing/memory; portfolio bytes unchanged",
+    "synthetic initial standalone and media change hide all offers and restore visible focus; exact IDB record unchanged; no hardware claim",
+    "five widths; long provider/account/position names and large amounts; graph/allocation/accounts arrangement; compact disclosures/CSV retained; axe/overflow; exact IDB record unchanged",
+    "980/1180 grid breakpoint edges; natural card alignment; no overflow or portfolio writes",
+    "12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged"
+  ],
+  "syntheticInstallEvents": true,
+  "physicalAndroid": false,
+  "realInstallation": false
+}

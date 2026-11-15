@@ -1,0 +1,12 @@
+{
+  "engines": [
+    {
+      "engine": "firefox",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS"
+    }
+  ]
+}

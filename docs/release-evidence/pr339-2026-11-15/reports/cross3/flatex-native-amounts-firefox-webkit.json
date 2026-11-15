@@ -1,0 +1,35 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic documentary native 1:1 amounts only; no economic import or UI integration",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "exact buy/sell/large/tiny/foreign-currency reference values",
+        "product precision/units/direction/source/currency guards",
+        "multi-leg/overlap/conflict/storno/missing guards",
+        "all locators/immutability/no financial DTO or writes",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "exact buy/sell/large/tiny/foreign-currency reference values",
+        "product precision/units/direction/source/currency guards",
+        "multi-leg/overlap/conflict/storno/missing guards",
+        "all locators/immutability/no financial DTO or writes",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

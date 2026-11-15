@@ -1,0 +1,36 @@
+{
+  "scope": "DRIVE-HEADER01 / UI-HEADER-STATUS02",
+  "oauth": "SYNTHETIC ONLY; real Google/Android EXTERNAL",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "44x44/separate logo/no mobile status line",
+        "native modal Axe/Escape/focus",
+        "scrolled status close preserves position",
+        "landscape restores a truly visible focus target",
+        "125% text",
+        "setup navigation",
+        "synthetic OAuth cancellation is visibly explained",
+        "automatic result dialog after explicit reconnect",
+        "synthetic direct OAuth + real encryption + one due upload",
+        "no token in DOM/storage",
+        "exact portfolio/revision unchanged",
+        "failed IndexedDB put pending/error without false success; conditional sidebar saving/error/conflict visible while healthy/offline success hidden",
+        "offline local versus remote status",
+        "stale canonical backup blocked before upload",
+        "real peer CAS conflict"
+      ]
+    }
+  ]
+}

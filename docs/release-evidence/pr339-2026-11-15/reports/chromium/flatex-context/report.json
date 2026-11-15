@@ -1,0 +1,23 @@
+{
+  "scope": "Synthetic full native EUR pair economics; no private data",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "full actual UI net commit/one CAS revision",
+        "per-file explicit scopes/edit invalidation/actual UI Undo/recommit/cp1252 automatic upload",
+        "later pair commit without replacing existing opening or booking/journal; exact 3 shares/cash66",
+        "exact gross/net/unresolved posting; unknown costs/no external flows",
+        "seven widths/Axe",
+        "backup/confirmation reset/forced submit",
+        "quota/post-put abort exact no mutation",
+        "offline reload/actual fresh-profile v2-encrypted v5 UI restore/replay",
+        "persistent later-group withdrawal preserves first group/reimport tombstone",
+        "real second writer CAS at storage boundary"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

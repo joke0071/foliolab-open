@@ -1,0 +1,17 @@
+{
+  "engine": "chromium",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "syntheticControllerChange": true,
+  "nativeWorkerOrHardwareClaim": false,
+  "documentIdentityMethod": "per-Document nonpersisted marker",
+  "wallClockUsedForIdentity": false,
+  "checks": [
+    "unfocused draft retained",
+    "explicit cancel retains document and draft",
+    "explicit discard reloads without canonical writes",
+    "fresh, saved normalized endpoint and saved empty credential reload cleanly",
+    "failed actual IDB put preserves exact record/revision and unsaved draft"
+  ],
+  "providerRequests": 0
+}

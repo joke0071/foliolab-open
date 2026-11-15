@@ -1,0 +1,39 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native source identity/evidence and existing preview guards only; no dialog/economic integration",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "direct native parser/exact independent SHA256",
+        "side/scope/bank/order identity separation",
+        "ordinal-independent evidence/overlap/conflict/all locators kept",
+        "existing preview replay/source conflict/manual protection/legacy guard",
+        "pure backup restore/replay/stale preview guard",
+        "immutable input/output/no write API",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external identity requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "direct native parser/exact independent SHA256",
+        "side/scope/bank/order identity separation",
+        "ordinal-independent evidence/overlap/conflict/all locators kept",
+        "existing preview replay/source conflict/manual protection/legacy guard",
+        "pure backup restore/replay/stale preview guard",
+        "immutable input/output/no write API",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external identity requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

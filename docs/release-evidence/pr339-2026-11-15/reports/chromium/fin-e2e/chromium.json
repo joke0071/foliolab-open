@@ -1,0 +1,39 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "FIN-E2E01 cash + FX/partial-fill continuation: production APIs + actual IDB + UI encrypted export/fresh restore; no hardware claim",
+  "engines": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "steps": [
+        "import",
+        "correct",
+        "match",
+        "remove",
+        "undo",
+        "reimport",
+        "archive",
+        "restore-archive",
+        "trade",
+        "remove-again",
+        "history",
+        "fx-import",
+        "fx-sell",
+        "fx-archive",
+        "fx-restore",
+        "fx-reimport"
+      ],
+      "checks": [
+        "exact oracle after every CAS commit",
+        "cancel/stale/quota/post-put abort preserve bytes+revision",
+        "delete/reimport/undo",
+        "distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle",
+        "FX source conflicts/guards/archival + quota/post-put abort",
+        "actual second tab CAS",
+        "7 widths/Axe",
+        "offline reload",
+        "UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates"
+      ]
+    }
+  ]
+}

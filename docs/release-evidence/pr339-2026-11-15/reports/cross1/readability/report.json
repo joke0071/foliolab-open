@@ -1,0 +1,13 @@
+{
+  "engines": [
+    {
+      "engine": "firefox",
+      "result": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS"
+    }
+  ],
+  "failures": []
+}

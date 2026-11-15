@@ -1,0 +1,43 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+  "engines": [
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "checks": [
+        "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+        "existing source/manual/conflicting proof stays read-only",
+        "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+        "withdrawal and delayed account check immediately remove computed values",
+        "account/file/mode/Escape/cancel/reopen resets",
+        "20-context paging/focus and independent source/order paging",
+        "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+        "forced submit blocked",
+        "delayed freshness generation guard",
+        "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+        "actual offline reload and confirmation",
+        "exact IDB/revision/settings unchanged by staging/no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "checks": [
+        "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+        "existing source/manual/conflicting proof stays read-only",
+        "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+        "withdrawal and delayed account check immediately remove computed values",
+        "account/file/mode/Escape/cancel/reopen resets",
+        "20-context paging/focus and independent source/order paging",
+        "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+        "forced submit blocked",
+        "delayed freshness generation guard",
+        "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+        "actual offline reload and confirmation",
+        "exact IDB/revision/settings unchanged by staging/no external requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

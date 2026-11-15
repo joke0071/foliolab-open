@@ -1,0 +1,37 @@
+{
+  "stage": "INTEGRATION",
+  "full": true,
+  "css": false,
+  "reason": "Only explicit main-targeted drafts may use FAST",
+  "ciContract": false,
+  "base": "ff60c73e53c973ecb86393be5b4e31b55f352601",
+  "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+  "changes": [
+    {
+      "path": "src/drive-backup.js",
+      "oldMode": "100644",
+      "newMode": "100644",
+      "status": "M"
+    },
+    {
+      "path": "sw.js",
+      "oldMode": "100644",
+      "newMode": "100644",
+      "status": "M"
+    },
+    {
+      "path": "tests/browser-trust-backup-copy.mjs",
+      "oldMode": "000000",
+      "newMode": "100644",
+      "status": "A"
+    },
+    {
+      "path": "tests/drive-backup.test.mjs",
+      "oldMode": "100644",
+      "newMode": "100644",
+      "status": "M"
+    }
+  ],
+  "baseIsAncestor": true,
+  "warning": "Complete existing integration/release gates required."
+}

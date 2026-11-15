@@ -1,0 +1,53 @@
+{
+  "engines": [
+    {
+      "engine": "chromium",
+      "timing": "after",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "timing": "before",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "timing": "next-day",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

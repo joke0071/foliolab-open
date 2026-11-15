@@ -1,0 +1,19 @@
+{
+  "scope": "41 synthetic pairs plus one unmatched depot row; explicit selection only, existing financial core",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "41 pairs selected including offscreen rows; unmatched source not selected",
+        "clear all including hidden rows; explicit single selection retained",
+        "no mutation before commit; selection revokes backup and consent",
+        "one existing CAS commit; independent 82 shares and EUR9108.25; costs unknown",
+        "actual Undo/recommit/reload/full-group withdrawal,41 tombstones",
+        "five widths/Axe/focus"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

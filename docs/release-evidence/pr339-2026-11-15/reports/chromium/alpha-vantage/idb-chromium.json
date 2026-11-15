@@ -1,0 +1,2292 @@
+{
+  "engine": "chromium",
+  "synthetic": true,
+  "metadataOnly": true,
+  "snapshots": [
+    {
+      "phase": "before-reload",
+      "nodeWall": 1794724677017,
+      "state": {
+        "events": [
+          {
+            "type": "probe-installed",
+            "at": 12.60000000000582,
+            "wall": 1794724676316
+          }
+        ],
+        "dropped": 0,
+        "pending": [],
+        "timing": {
+          "now": 712.8999999999942,
+          "wall": 1794724677016,
+          "ticks": 2,
+          "maxGap": 250.60000000000582,
+          "last": 512.7000000000116
+        },
+        "page": {
+          "visibility": "visible",
+          "readyState": "complete"
+        }
+      }
+    },
+    {
+      "phase": "before-reload",
+      "nodeWall": 1794724688234,
+      "state": {
+        "events": [
+          {
+            "type": "probe-installed",
+            "at": 9.199999999982538,
+            "wall": 1794724677027
+          },
+          {
+            "type": "open",
+            "at": 666.1999999999825,
+            "wall": 1794724677684,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "upgradeneeded",
+            "at": 666.3999999999942,
+            "wall": 1794724677685,
+            "id": 1,
+            "readyState": "done",
+            "oldVersion": 0,
+            "newVersion": 1
+          },
+          {
+            "type": "success",
+            "at": 666.6000000000058,
+            "wall": 1794724677685,
+            "id": 1,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 666.7999999999884,
+            "wall": 1794724677685,
+            "id": 1,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 666.8999999999942,
+            "wall": 1794724677685,
+            "id": 1,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 666.8999999999942,
+            "wall": 1794724677685,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 667.1000000000058,
+            "wall": 1794724677685,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 667.2999999999884,
+            "wall": 1794724677686,
+            "id": 2,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 667.3999999999942,
+            "wall": 1794724677686,
+            "id": 2,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 667.6999999999825,
+            "wall": 1794724677686,
+            "id": 2,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 667.6999999999825,
+            "wall": 1794724677686,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 667.7999999999884,
+            "wall": 1794724677686,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 667.8999999999942,
+            "wall": 1794724677686,
+            "id": 3,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 668,
+            "wall": 1794724677686,
+            "id": 3,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 668.5,
+            "wall": 1794724677687,
+            "id": 3,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 668.5,
+            "wall": 1794724677687,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 3675,
+            "wall": 1794724680693,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 3675.399999999994,
+            "wall": 1794724680694,
+            "id": 4,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 3675.399999999994,
+            "wall": 1794724680694,
+            "id": 4,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 3675.7999999999884,
+            "wall": 1794724680694,
+            "id": 4,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 3675.7999999999884,
+            "wall": 1794724680694,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 3675.899999999994,
+            "wall": 1794724680694,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 3676.1999999999825,
+            "wall": 1794724680694,
+            "id": 5,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 3676.1999999999825,
+            "wall": 1794724680694,
+            "id": 5,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 3676.600000000006,
+            "wall": 1794724680695,
+            "id": 5,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 3676.600000000006,
+            "wall": 1794724680695,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 3677.100000000006,
+            "wall": 1794724680695,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 3677.2999999999884,
+            "wall": 1794724680696,
+            "id": 6,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 3677.399999999994,
+            "wall": 1794724680696,
+            "id": 6,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 3677.5,
+            "wall": 1794724680696,
+            "id": 6,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 3677.5,
+            "wall": 1794724680696,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 3677.6999999999825,
+            "wall": 1794724680696,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 3677.7999999999884,
+            "wall": 1794724680696,
+            "id": 7,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 3677.899999999994,
+            "wall": 1794724680696,
+            "id": 7,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 3678,
+            "wall": 1794724680696,
+            "id": 7,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 3678.100000000006,
+            "wall": 1794724680696,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 3678.100000000006,
+            "wall": 1794724680696,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 3678.2999999999884,
+            "wall": 1794724680696,
+            "id": 8,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 3678.2999999999884,
+            "wall": 1794724680696,
+            "id": 8,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 3678.6999999999825,
+            "wall": 1794724680697,
+            "id": 8,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 3678.6999999999825,
+            "wall": 1794724680697,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 6180,
+            "wall": 1794724683198,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 6180.1999999999825,
+            "wall": 1794724683198,
+            "id": 9,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 6180.299999999988,
+            "wall": 1794724683199,
+            "id": 9,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 6180.6999999999825,
+            "wall": 1794724683199,
+            "id": 9,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 6180.6999999999825,
+            "wall": 1794724683199,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 6180.899999999994,
+            "wall": 1794724683199,
+            "id": 10,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 6181.100000000006,
+            "wall": 1794724683199,
+            "id": 10,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 6181.100000000006,
+            "wall": 1794724683199,
+            "id": 10,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 6181.5,
+            "wall": 1794724683200,
+            "id": 10,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 6181.5,
+            "wall": 1794724683200,
+            "id": 10,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 6181.899999999994,
+            "wall": 1794724683200,
+            "id": 11,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 6182,
+            "wall": 1794724683200,
+            "id": 11,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 6182,
+            "wall": 1794724683200,
+            "id": 11,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 6182.1999999999825,
+            "wall": 1794724683200,
+            "id": 11,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 6182.1999999999825,
+            "wall": 1794724683200,
+            "id": 11,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 6182.299999999988,
+            "wall": 1794724683201,
+            "id": 12,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 6182.600000000006,
+            "wall": 1794724683201,
+            "id": 12,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 6182.600000000006,
+            "wall": 1794724683201,
+            "id": 12,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 6182.799999999988,
+            "wall": 1794724683201,
+            "id": 12,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 6182.799999999988,
+            "wall": 1794724683201,
+            "id": 12,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 6182.799999999988,
+            "wall": 1794724683201,
+            "id": 13,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 6183,
+            "wall": 1794724683201,
+            "id": 13,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 6183.100000000006,
+            "wall": 1794724683201,
+            "id": 13,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 6183.399999999994,
+            "wall": 1794724683202,
+            "id": 13,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 6183.5,
+            "wall": 1794724683202,
+            "id": 13,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 8684.100000000006,
+            "wall": 1794724685702,
+            "id": 14,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 8684.399999999994,
+            "wall": 1794724685703,
+            "id": 14,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 8684.399999999994,
+            "wall": 1794724685703,
+            "id": 14,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 8684.799999999988,
+            "wall": 1794724685703,
+            "id": 14,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 8684.799999999988,
+            "wall": 1794724685703,
+            "id": 14,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 8684.899999999994,
+            "wall": 1794724685703,
+            "id": 15,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 8685,
+            "wall": 1794724685703,
+            "id": 15,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 8685.100000000006,
+            "wall": 1794724685703,
+            "id": 15,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 8685.399999999994,
+            "wall": 1794724685704,
+            "id": 15,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 8685.399999999994,
+            "wall": 1794724685704,
+            "id": 15,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 8685.600000000006,
+            "wall": 1794724685704,
+            "id": 16,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 8685.799999999988,
+            "wall": 1794724685704,
+            "id": 16,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 8685.899999999994,
+            "wall": 1794724685704,
+            "id": 16,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 8686,
+            "wall": 1794724685704,
+            "id": 16,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 8686,
+            "wall": 1794724685704,
+            "id": 16,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 8686,
+            "wall": 1794724685704,
+            "id": 17,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 8686.199999999983,
+            "wall": 1794724685704,
+            "id": 17,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 8686.199999999983,
+            "wall": 1794724685704,
+            "id": 17,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 8686.5,
+            "wall": 1794724685705,
+            "id": 17,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 8686.5,
+            "wall": 1794724685705,
+            "id": 17,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 8686.5,
+            "wall": 1794724685705,
+            "id": 18,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 8686.699999999983,
+            "wall": 1794724685705,
+            "id": 18,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 8686.699999999983,
+            "wall": 1794724685705,
+            "id": 18,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 8687.100000000006,
+            "wall": 1794724685705,
+            "id": 18,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 8687.100000000006,
+            "wall": 1794724685705,
+            "id": 18,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 11189.199999999983,
+            "wall": 1794724688207,
+            "id": 19,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 11189.5,
+            "wall": 1794724688208,
+            "id": 19,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 11189.600000000006,
+            "wall": 1794724688208,
+            "id": 19,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 11190.100000000006,
+            "wall": 1794724688208,
+            "id": 19,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 11190.100000000006,
+            "wall": 1794724688208,
+            "id": 19,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 11190.100000000006,
+            "wall": 1794724688208,
+            "id": 20,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 11190.299999999988,
+            "wall": 1794724688208,
+            "id": 20,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 11190.299999999988,
+            "wall": 1794724688208,
+            "id": 20,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 11190.699999999983,
+            "wall": 1794724688209,
+            "id": 20,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 11190.699999999983,
+            "wall": 1794724688209,
+            "id": 20,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 11207.100000000006,
+            "wall": 1794724688225,
+            "id": 21,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 11207.399999999994,
+            "wall": 1794724688226,
+            "id": 21,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 11207.5,
+            "wall": 1794724688226,
+            "id": 21,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 11207.699999999983,
+            "wall": 1794724688226,
+            "id": 21,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 11207.699999999983,
+            "wall": 1794724688226,
+            "id": 21,
+            "version": 1
+          }
+        ],
+        "dropped": 0,
+        "pending": [],
+        "timing": {
+          "now": 11209.399999999994,
+          "wall": 1794724688228,
+          "ticks": 44,
+          "maxGap": 251.10000000000582,
+          "last": 11009.199999999983
+        },
+        "page": {
+          "visibility": "visible",
+          "readyState": "complete"
+        }
+      }
+    },
+    {
+      "phase": "before-budget-exhaustion-fixture",
+      "nodeWall": 1794724689849,
+      "state": {
+        "events": [
+          {
+            "type": "probe-installed",
+            "at": 10.10000000000582,
+            "wall": 1794724688245
+          },
+          {
+            "type": "open",
+            "at": 364.70000000001164,
+            "wall": 1794724688599,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 365,
+            "wall": 1794724688600,
+            "id": 1,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 365,
+            "wall": 1794724688600,
+            "id": 1,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 365.29999999998836,
+            "wall": 1794724688600,
+            "id": 1,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 365.29999999998836,
+            "wall": 1794724688600,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 365.5,
+            "wall": 1794724688600,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 365.70000000001164,
+            "wall": 1794724688600,
+            "id": 2,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 365.70000000001164,
+            "wall": 1794724688600,
+            "id": 2,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 366,
+            "wall": 1794724688601,
+            "id": 2,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 366,
+            "wall": 1794724688601,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 366.20000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 366.5,
+            "wall": 1794724688601,
+            "id": 3,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 366.5,
+            "wall": 1794724688601,
+            "id": 3,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 366.70000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 366.70000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 366.8999999999942,
+            "wall": 1794724688601,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 367.1000000000058,
+            "wall": 1794724688602,
+            "id": 4,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 367.1000000000058,
+            "wall": 1794724688602,
+            "id": 4,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 367.29999999998836,
+            "wall": 1794724688602,
+            "id": 4,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 367.29999999998836,
+            "wall": 1794724688602,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 382.8999999999942,
+            "wall": 1794724688617,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 383.20000000001164,
+            "wall": 1794724688618,
+            "id": 5,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 383.29999999998836,
+            "wall": 1794724688618,
+            "id": 5,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 5,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 383.79999999998836,
+            "wall": 1794724688618,
+            "id": 6,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 383.79999999998836,
+            "wall": 1794724688618,
+            "id": 6,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 384.1000000000058,
+            "wall": 1794724688619,
+            "id": 6,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 384.20000000001164,
+            "wall": 1794724688619,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 467.8999999999942,
+            "wall": 1794724688702,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 480.5,
+            "wall": 1794724688715,
+            "id": 7,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 480.5,
+            "wall": 1794724688715,
+            "id": 7,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 480.8999999999942,
+            "wall": 1794724688716,
+            "id": 7,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 480.8999999999942,
+            "wall": 1794724688716,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 481.20000000001164,
+            "wall": 1794724688716,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 481.5,
+            "wall": 1794724688716,
+            "id": 8,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 481.6000000000058,
+            "wall": 1794724688716,
+            "id": 8,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 482,
+            "wall": 1794724688717,
+            "id": 8,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 482,
+            "wall": 1794724688717,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 482.20000000001164,
+            "wall": 1794724688717,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 482.3999999999942,
+            "wall": 1794724688717,
+            "id": 9,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 482.5,
+            "wall": 1794724688717,
+            "id": 9,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 482.79999999998836,
+            "wall": 1794724688717,
+            "id": 9,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 482.79999999998836,
+            "wall": 1794724688717,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 483.1000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 483.20000000001164,
+            "wall": 1794724688718,
+            "id": 10,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 483.29999999998836,
+            "wall": 1794724688718,
+            "id": 10,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 483.6000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 483.6000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "version": 1
+          }
+        ],
+        "dropped": 0,
+        "pending": [],
+        "timing": {
+          "now": 1611.2000000000116,
+          "wall": 1794724689846,
+          "ticks": 6,
+          "maxGap": 350.3999999999942,
+          "last": 1571.7999999999884
+        },
+        "page": {
+          "visibility": "visible",
+          "readyState": "complete"
+        }
+      }
+    },
+    {
+      "phase": "before-reload",
+      "nodeWall": 1794724690013,
+      "state": {
+        "events": [
+          {
+            "type": "probe-installed",
+            "at": 10.10000000000582,
+            "wall": 1794724688245
+          },
+          {
+            "type": "open",
+            "at": 364.70000000001164,
+            "wall": 1794724688599,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 365,
+            "wall": 1794724688600,
+            "id": 1,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 365,
+            "wall": 1794724688600,
+            "id": 1,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 365.29999999998836,
+            "wall": 1794724688600,
+            "id": 1,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 365.29999999998836,
+            "wall": 1794724688600,
+            "id": 1,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 365.5,
+            "wall": 1794724688600,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 365.70000000001164,
+            "wall": 1794724688600,
+            "id": 2,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 365.70000000001164,
+            "wall": 1794724688600,
+            "id": 2,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 366,
+            "wall": 1794724688601,
+            "id": 2,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 366,
+            "wall": 1794724688601,
+            "id": 2,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 366.20000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 366.5,
+            "wall": 1794724688601,
+            "id": 3,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 366.5,
+            "wall": 1794724688601,
+            "id": 3,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 366.70000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 366.70000000001164,
+            "wall": 1794724688601,
+            "id": 3,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 366.8999999999942,
+            "wall": 1794724688601,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 367.1000000000058,
+            "wall": 1794724688602,
+            "id": 4,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 367.1000000000058,
+            "wall": 1794724688602,
+            "id": 4,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 367.29999999998836,
+            "wall": 1794724688602,
+            "id": 4,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 367.29999999998836,
+            "wall": 1794724688602,
+            "id": 4,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 382.8999999999942,
+            "wall": 1794724688617,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 383.20000000001164,
+            "wall": 1794724688618,
+            "id": 5,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 383.29999999998836,
+            "wall": 1794724688618,
+            "id": 5,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 5,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 5,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 383.6000000000058,
+            "wall": 1794724688618,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 383.79999999998836,
+            "wall": 1794724688618,
+            "id": 6,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 383.79999999998836,
+            "wall": 1794724688618,
+            "id": 6,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 384.1000000000058,
+            "wall": 1794724688619,
+            "id": 6,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 384.20000000001164,
+            "wall": 1794724688619,
+            "id": 6,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 467.8999999999942,
+            "wall": 1794724688702,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 480.5,
+            "wall": 1794724688715,
+            "id": 7,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 480.5,
+            "wall": 1794724688715,
+            "id": 7,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 480.8999999999942,
+            "wall": 1794724688716,
+            "id": 7,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 480.8999999999942,
+            "wall": 1794724688716,
+            "id": 7,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 481.20000000001164,
+            "wall": 1794724688716,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 481.5,
+            "wall": 1794724688716,
+            "id": 8,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 481.6000000000058,
+            "wall": 1794724688716,
+            "id": 8,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 482,
+            "wall": 1794724688717,
+            "id": 8,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 482,
+            "wall": 1794724688717,
+            "id": 8,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 482.20000000001164,
+            "wall": 1794724688717,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 482.3999999999942,
+            "wall": 1794724688717,
+            "id": 9,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 482.5,
+            "wall": 1794724688717,
+            "id": 9,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 482.79999999998836,
+            "wall": 1794724688717,
+            "id": 9,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 482.79999999998836,
+            "wall": 1794724688717,
+            "id": 9,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 483.1000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 483.20000000001164,
+            "wall": 1794724688718,
+            "id": 10,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 483.29999999998836,
+            "wall": 1794724688718,
+            "id": 10,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 483.6000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 483.6000000000058,
+            "wall": 1794724688718,
+            "id": 10,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1616.1000000000058,
+            "wall": 1794724689851,
+            "id": 11,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1616.3999999999942,
+            "wall": 1794724689851,
+            "id": 11,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1616.3999999999942,
+            "wall": 1794724689851,
+            "id": 11,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1616.7999999999884,
+            "wall": 1794724689851,
+            "id": 11,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1616.7999999999884,
+            "wall": 1794724689851,
+            "id": 11,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1616.7999999999884,
+            "wall": 1794724689851,
+            "id": 12,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1617,
+            "wall": 1794724689852,
+            "id": 12,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1617.1000000000058,
+            "wall": 1794724689852,
+            "id": 12,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1617.5,
+            "wall": 1794724689852,
+            "id": 12,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1617.5,
+            "wall": 1794724689852,
+            "id": 12,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1617.5,
+            "wall": 1794724689852,
+            "id": 13,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1617.7000000000116,
+            "wall": 1794724689852,
+            "id": 13,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1617.7999999999884,
+            "wall": 1794724689852,
+            "id": 13,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1618.2000000000116,
+            "wall": 1794724689853,
+            "id": 13,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1618.2000000000116,
+            "wall": 1794724689853,
+            "id": 13,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1618.2999999999884,
+            "wall": 1794724689853,
+            "id": 14,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1618.3999999999942,
+            "wall": 1794724689853,
+            "id": 14,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1618.3999999999942,
+            "wall": 1794724689853,
+            "id": 14,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1618.7999999999884,
+            "wall": 1794724689853,
+            "id": 14,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1618.7999999999884,
+            "wall": 1794724689853,
+            "id": 14,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1618.8999999999942,
+            "wall": 1794724689853,
+            "id": 15,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1619.1000000000058,
+            "wall": 1794724689854,
+            "id": 15,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1619.1000000000058,
+            "wall": 1794724689854,
+            "id": 15,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1619.3999999999942,
+            "wall": 1794724689854,
+            "id": 15,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1619.3999999999942,
+            "wall": 1794724689854,
+            "id": 15,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1698.1000000000058,
+            "wall": 1794724689933,
+            "id": 16,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1698.2999999999884,
+            "wall": 1794724689933,
+            "id": 16,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1698.3999999999942,
+            "wall": 1794724689933,
+            "id": 16,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1698.6000000000058,
+            "wall": 1794724689933,
+            "id": 16,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1698.6000000000058,
+            "wall": 1794724689933,
+            "id": 16,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1698.7000000000116,
+            "wall": 1794724689933,
+            "id": 17,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1698.8999999999942,
+            "wall": 1794724689933,
+            "id": 17,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1698.8999999999942,
+            "wall": 1794724689934,
+            "id": 17,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1699.2000000000116,
+            "wall": 1794724689934,
+            "id": 17,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1699.2000000000116,
+            "wall": 1794724689934,
+            "id": 17,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1699.2000000000116,
+            "wall": 1794724689934,
+            "id": 18,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1699.3999999999942,
+            "wall": 1794724689934,
+            "id": 18,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1699.3999999999942,
+            "wall": 1794724689934,
+            "id": 18,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-abort",
+            "at": 1699.7999999999884,
+            "wall": 1794724689934,
+            "id": 18,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1699.7999999999884,
+            "wall": 1794724689934,
+            "id": 18,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1700.2000000000116,
+            "wall": 1794724689935,
+            "id": 19,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1700.3999999999942,
+            "wall": 1794724689935,
+            "id": 19,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1700.3999999999942,
+            "wall": 1794724689935,
+            "id": 19,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1700.7000000000116,
+            "wall": 1794724689935,
+            "id": 19,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1700.7000000000116,
+            "wall": 1794724689935,
+            "id": 19,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1700.7000000000116,
+            "wall": 1794724689935,
+            "id": 20,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1701,
+            "wall": 1794724689936,
+            "id": 20,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1701,
+            "wall": 1794724689936,
+            "id": 20,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1701.1000000000058,
+            "wall": 1794724689936,
+            "id": 20,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1701.1000000000058,
+            "wall": 1794724689936,
+            "id": 20,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1701.1000000000058,
+            "wall": 1794724689936,
+            "id": 21,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1701.2999999999884,
+            "wall": 1794724689936,
+            "id": 21,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1701.2999999999884,
+            "wall": 1794724689936,
+            "id": 21,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-abort",
+            "at": 1701.7000000000116,
+            "wall": 1794724689936,
+            "id": 21,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1701.7000000000116,
+            "wall": 1794724689936,
+            "id": 21,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1701.8999999999942,
+            "wall": 1794724689936,
+            "id": 22,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1702.1000000000058,
+            "wall": 1794724689937,
+            "id": 22,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1702.1000000000058,
+            "wall": 1794724689937,
+            "id": 22,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1702.2999999999884,
+            "wall": 1794724689937,
+            "id": 22,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1702.2999999999884,
+            "wall": 1794724689937,
+            "id": 22,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1702.3999999999942,
+            "wall": 1794724689937,
+            "id": 23,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1702.5,
+            "wall": 1794724689937,
+            "id": 23,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1702.5,
+            "wall": 1794724689937,
+            "id": 23,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1702.7999999999884,
+            "wall": 1794724689937,
+            "id": 23,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1702.7999999999884,
+            "wall": 1794724689937,
+            "id": 23,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1702.7999999999884,
+            "wall": 1794724689937,
+            "id": 24,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1702.8999999999942,
+            "wall": 1794724689938,
+            "id": 24,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1702.8999999999942,
+            "wall": 1794724689938,
+            "id": 24,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-abort",
+            "at": 1703.2999999999884,
+            "wall": 1794724689938,
+            "id": 24,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1703.2999999999884,
+            "wall": 1794724689938,
+            "id": 24,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1703.3999999999942,
+            "wall": 1794724689938,
+            "id": 25,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1703.5,
+            "wall": 1794724689938,
+            "id": 25,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1703.6000000000058,
+            "wall": 1794724689938,
+            "id": 25,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1703.7999999999884,
+            "wall": 1794724689938,
+            "id": 25,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1703.7999999999884,
+            "wall": 1794724689938,
+            "id": 25,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1703.7999999999884,
+            "wall": 1794724689938,
+            "id": 26,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1704,
+            "wall": 1794724689939,
+            "id": 26,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1704,
+            "wall": 1794724689939,
+            "id": 26,
+            "mode": "readonly"
+          },
+          {
+            "type": "transaction-complete",
+            "at": 1704.2000000000116,
+            "wall": 1794724689939,
+            "id": 26,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1704.2000000000116,
+            "wall": 1794724689939,
+            "id": 26,
+            "version": 1
+          },
+          {
+            "type": "open",
+            "at": 1704.2999999999884,
+            "wall": 1794724689939,
+            "id": 27,
+            "version": 1
+          },
+          {
+            "type": "success",
+            "at": 1704.3999999999942,
+            "wall": 1794724689939,
+            "id": 27,
+            "readyState": "done",
+            "version": 1,
+            "hasCacheStore": true
+          },
+          {
+            "type": "transaction",
+            "at": 1704.5,
+            "wall": 1794724689939,
+            "id": 27,
+            "mode": "readwrite"
+          },
+          {
+            "type": "transaction-abort",
+            "at": 1704.6000000000058,
+            "wall": 1794724689939,
+            "id": 27,
+            "errorName": null
+          },
+          {
+            "type": "close-call",
+            "at": 1704.6000000000058,
+            "wall": 1794724689939,
+            "id": 27,
+            "version": 1
+          }
+        ],
+        "dropped": 0,
+        "pending": [],
+        "timing": {
+          "now": 1772.7999999999884,
+          "wall": 1794724690007,
+          "ticks": 7,
+          "maxGap": 350.3999999999942,
+          "last": 1763.2000000000116
+        },
+        "page": {
+          "visibility": "visible",
+          "readyState": "complete"
+        }
+      }
+    },
+    {
+      "phase": "final",
+      "nodeWall": 1794724690327,
+      "state": {
+        "events": [
+          {
+            "type": "probe-installed",
+            "at": 10.10000000000582,
+            "wall": 1794724690024
+          }
+        ],
+        "dropped": 0,
+        "pending": [],
+        "timing": {
+          "now": 311.6000000000058,
+          "wall": 1794724690326,
+          "ticks": 1,
+          "maxGap": 251.10000000000582,
+          "last": 261.1000000000058
+        },
+        "page": {
+          "visibility": "visible",
+          "readyState": "complete"
+        }
+      }
+    }
+  ]
+}

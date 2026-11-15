@@ -1,0 +1,30 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "P1A presentation contract; synthetic canonical IDB fixtures",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "counts": [
+        0,
+        1,
+        100,
+        101
+      ],
+      "views": [
+        "active",
+        "archived",
+        "all"
+      ],
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ]
+    }
+  ]
+}

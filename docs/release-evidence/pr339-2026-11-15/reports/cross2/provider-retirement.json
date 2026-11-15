@@ -1,0 +1,33 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "results": [
+    {
+      "engine": "firefox",
+      "physicalCleanup": true,
+      "financialBytesUnchanged": true,
+      "quotaRollback": true,
+      "oldRevisionRejected": true,
+      "idempotentStartup": true,
+      "legacyEncryptedUIRestore": true,
+      "actualEncryptedUIReexport": true,
+      "offlineSave": true,
+      "widths": 7,
+      "axeViolations": 0,
+      "providerRequests": 0
+    },
+    {
+      "engine": "webkit",
+      "physicalCleanup": true,
+      "financialBytesUnchanged": true,
+      "quotaRollback": true,
+      "oldRevisionRejected": true,
+      "idempotentStartup": true,
+      "legacyEncryptedUIRestore": true,
+      "actualEncryptedUIReexport": true,
+      "offlineSave": true,
+      "widths": 7,
+      "axeViolations": 0,
+      "providerRequests": 0
+    }
+  ]
+}

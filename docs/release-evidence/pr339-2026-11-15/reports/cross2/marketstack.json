@@ -1,0 +1,35 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "synthetic": true,
+  "realProviderProof": false,
+  "engines": [
+    {
+      "engine": "firefox",
+      "pass": true,
+      "secretFields": 11,
+      "secretTogglesPreserveValuesEventsFormDataAndIDB": true,
+      "keyboard": true,
+      "fourQuotes": true,
+      "sharedHistory": true,
+      "persistentCache": true,
+      "monthlyBudget": true,
+      "historicalGapsBlocked": true,
+      "widths": 7,
+      "axeScans": 7
+    },
+    {
+      "engine": "webkit",
+      "pass": true,
+      "secretFields": 11,
+      "secretTogglesPreserveValuesEventsFormDataAndIDB": true,
+      "keyboard": true,
+      "fourQuotes": true,
+      "sharedHistory": true,
+      "persistentCache": true,
+      "monthlyBudget": true,
+      "historicalGapsBlocked": true,
+      "widths": 7,
+      "axeScans": 7
+    }
+  ]
+}

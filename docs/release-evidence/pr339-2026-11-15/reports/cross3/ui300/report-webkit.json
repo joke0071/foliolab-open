@@ -1,0 +1,15 @@
+{
+  "engine": "webkit",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "checks": [
+    "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+    "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+    "no hero or tiles; brand and five semantic destinations retained",
+    "zero group chip hidden",
+    "exact selected-period endpoints; explicit cashflow scope",
+    "200% text stress/short viewport (not physical zoom or hardware)",
+    "offline actual reload; exact canonical bytes/revision",
+    "partial automatic snapshot remains unavailable without writes"
+  ]
+}

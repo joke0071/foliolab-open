@@ -1,0 +1,47 @@
+{
+  "events": [
+    {
+      "type": "pointerdown",
+      "pointerId": 1,
+      "pointerType": "mouse",
+      "detail": 0,
+      "x": 194.99000549316406,
+      "y": 870.75,
+      "target": {},
+      "trusted": true
+    },
+    {
+      "type": "pointerup",
+      "pointerId": 1,
+      "pointerType": "mouse",
+      "detail": 0,
+      "x": 194.99000549316406,
+      "y": 870.75,
+      "target": {},
+      "trusted": true
+    },
+    {
+      "type": "click",
+      "pointerId": 1,
+      "pointerType": "mouse",
+      "detail": 1,
+      "x": 194,
+      "y": 870,
+      "target": {},
+      "trusted": true
+    },
+    {
+      "type": "pointerdown",
+      "pointerId": 2,
+      "pointerType": "touch",
+      "detail": 0,
+      "x": 195,
+      "y": 450.1484375,
+      "target": "holding-note",
+      "row": "pos-2",
+      "trusted": true
+    }
+  ],
+  "open": [],
+  "selected": []
+}

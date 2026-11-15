@@ -1,0 +1,19 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "engines": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "viewports": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "unchangedPortfolio": true
+    }
+  ]
+}

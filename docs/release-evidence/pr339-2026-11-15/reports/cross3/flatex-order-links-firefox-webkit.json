@@ -1,0 +1,41 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "independent bank/order references",
+        "possible 1:1 reuses legacy matcher",
+        "multiple cash/depot legs stay review",
+        "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+        "tiny exact decimal direction",
+        "all source rows retained/immutable/no writes",
+        "legacy and input/horizon bounds",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external relationship requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "independent bank/order references",
+        "possible 1:1 reuses legacy matcher",
+        "multiple cash/depot legs stay review",
+        "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+        "tiny exact decimal direction",
+        "all source rows retained/immutable/no writes",
+        "legacy and input/horizon bounds",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external relationship requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

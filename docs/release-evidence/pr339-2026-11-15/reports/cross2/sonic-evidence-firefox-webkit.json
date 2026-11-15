@@ -1,0 +1,363 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "startedAt": "2026-11-15T06:42:38.775Z",
+  "scope": "Synthetic declared withdrawal observations only; no real wallet, RPC, financial integration or payment inference",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": {
+        "waiting": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": false
+          }
+        },
+        "timeOnly": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "110"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": true,
+            "epochSatisfied": false
+          }
+        },
+        "epochOnly": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": true
+          }
+        },
+        "mature": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "110"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "mature-pending",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": true,
+            "epochSatisfied": true
+          }
+        },
+        "deactivated": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "mature-pending",
+          "maturity": {
+            "base": "earlier-validator-deactivation",
+            "releaseTime": "100",
+            "releaseEpoch": "10",
+            "timeSatisfied": true,
+            "epochSatisfied": true
+          }
+        },
+        "empty": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "0",
+          "paymentEvidence": "not-assessed",
+          "status": "no-current-request",
+          "maturity": null
+        },
+        "huge": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": false
+          }
+        },
+        "rejected": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "inputUnchanged": true,
+        "immutable": true
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": {
+        "waiting": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": false
+          }
+        },
+        "timeOnly": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "110"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": true,
+            "epochSatisfied": false
+          }
+        },
+        "epochOnly": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": true
+          }
+        },
+        "mature": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "110"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "mature-pending",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": true,
+            "epochSatisfied": true
+          }
+        },
+        "deactivated": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "9007199254740993",
+          "paymentEvidence": "not-assessed",
+          "status": "mature-pending",
+          "maturity": {
+            "base": "earlier-validator-deactivation",
+            "releaseTime": "100",
+            "releaseEpoch": "10",
+            "timeSatisfied": true,
+            "epochSatisfied": true
+          }
+        },
+        "empty": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "0",
+          "paymentEvidence": "not-assessed",
+          "status": "no-current-request",
+          "maturity": null
+        },
+        "huge": {
+          "sourceVersion": "4.0.5",
+          "atBlock": {
+            "number": "123",
+            "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+            "timestamp": "109"
+          },
+          "locator": {
+            "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "validatorId": "1",
+            "requestId": "0"
+          },
+          "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "paymentEvidence": "not-assessed",
+          "status": "waiting",
+          "maturity": {
+            "base": "request",
+            "releaseTime": "110",
+            "releaseEpoch": "12",
+            "timeSatisfied": false,
+            "epochSatisfied": false
+          }
+        },
+        "rejected": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "inputUnchanged": true,
+        "immutable": true
+      }
+    }
+  ],
+  "finishedAt": "2026-11-15T06:42:42.152Z",
+  "result": "PASS"
+}

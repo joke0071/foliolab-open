@@ -1,0 +1,1949 @@
+{
+  "date": "2026-11-15",
+  "result": "MERGE_RECOMMENDED_AWAITING_JOCHEN",
+  "pr": {
+    "number": 339,
+    "url": "https://github.com/joke0071/foliolab-open/pull/339",
+    "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+    "base": "ff60c73e53c973ecb86393be5b4e31b55f352601",
+    "tree": "11429de9e06d9d014875af624cb80bafafb38f20",
+    "testMerge": "e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a",
+    "testMergeTree": "11429de9e06d9d014875af624cb80bafafb38f20",
+    "mergeable": true,
+    "mergeableState": "clean",
+    "merged": false,
+    "autoMerge": null
+  },
+  "authorization": "Review, required PWA cache increment, PR creation and regular checks only; Jochen decides merge and deployment",
+  "previousEvidence": {
+    "product": "2a773073f2887e8701ee893eee2e8619ab980be8",
+    "qaHead": "352cb441127446f31e0f367b242a9d7ef9eb7223",
+    "run": 43685258218,
+    "attempt": 1,
+    "tests": 57,
+    "result": "PASS",
+    "scope": "Actual UI with real crypto/IDB, one portfolio commit, existing device vault/password and exact record after reopen; synthetic Drive/OAuth and controlled display fault; SW blocked",
+    "reusedBlobs": {
+      "src/drive-backup.js": "c2abf1e2639f6af8df55d15a14da4319de034588",
+      "tests/drive-backup.test.mjs": "3a65400a41f22b811ec32a0c2d22a916a276f94e",
+      "tests/browser-trust-backup-copy.mjs": "e095ca0fcf7f9c79452d22c42b73a7ad676d8348"
+    }
+  },
+  "deltaAfterQA": {
+    "only": "sw.js CACHE foliolab-open-v315→v316",
+    "filesAgainstMain": [
+      {
+        "path": "src/drive-backup.js",
+        "added": 1,
+        "deleted": 1
+      },
+      {
+        "path": "sw.js",
+        "added": 1,
+        "deleted": 1
+      },
+      {
+        "path": "tests/browser-trust-backup-copy.mjs",
+        "added": 169,
+        "deleted": 0
+      },
+      {
+        "path": "tests/drive-backup.test.mjs",
+        "added": 28,
+        "deleted": 2
+      }
+    ],
+    "sourceWorkflowUnchanged": true
+  },
+  "review": [
+    {
+      "area": "Commit boundary",
+      "finding": "PASS",
+      "evidence": "src/drive-backup.js awaits backend.restoreData before portfolioRestored=true. src/app.js returns only after confirmed save/recoverFromBackup; post-commit errors are marked restoreCommitted. Cancellation and CAS rejection throw before this success branch."
+    },
+    {
+      "area": "Password statement",
+      "finding": "PASS",
+      "evidence": "Changed branch now confirms only the portfolio, never adoption. Existing-vault adoptBackupPassword(false) remains a legitimate no-op; no credential behavior was changed."
+    },
+    {
+      "area": "Regression",
+      "finding": "PASS_WITH_ORIGINAL_HEAD_BINDING",
+      "evidence": "57 targeted Node cases and actual UI crypto/IDB/one-commit/vault/reopen proof remain on QA352cb441 / product2a773073. Relevant production/test blobs c2abf1e2/3a65400a/e095ca0f unchanged at final8b239f1e."
+    },
+    {
+      "area": "PWA cache",
+      "finding": "PASS",
+      "evidence": "Only CACHE315→316 differs after original product head; install/activate/fetch and ASSETS unchanged. Regular Chromium/Firefox/WebKit real SW tests PASS; 154 asset hashes each, including exact corrected drive module. Actual failed installation, offline reload and draft protection PASS."
+    },
+    {
+      "area": "Diff",
+      "finding": "PASS",
+      "evidence": "Exactly4 files against main: one error message, one cache constant, targeted Node regression, standalone UI regression. No workflow, storage, crypto, model or app restore mutation."
+    },
+    {
+      "area": "Scope",
+      "finding": "PASS",
+      "evidence": "PR only, merge/deployment withheld. A09 and WebKit eviction untouched."
+    }
+  ],
+  "checks": [
+    {
+      "id": 132733265517,
+      "name": "live-acceptance",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132733265517"
+    },
+    {
+      "id": 132733265239,
+      "name": "deploy",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132733265239"
+    },
+    {
+      "id": 132727210109,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727210109"
+    },
+    {
+      "id": 132727209124,
+      "name": "cross-engine (1)",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727209124"
+    },
+    {
+      "id": 132727209103,
+      "name": "test",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727209103"
+    },
+    {
+      "id": 132727209100,
+      "name": "cross-engine (3)",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727209100"
+    },
+    {
+      "id": 132727209088,
+      "name": "cross-engine (2)",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727209088"
+    },
+    {
+      "id": 132727179357,
+      "name": "tests",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231632/job/132727179357"
+    },
+    {
+      "id": 132727179191,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/job/132727179191"
+    }
+  ],
+  "runs": [
+    {
+      "id": 43686231550,
+      "attempt": 1,
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550"
+    },
+    {
+      "id": 43686231632,
+      "attempt": 1,
+      "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231632"
+    }
+  ],
+  "units": [
+    {
+      "job": 132727209103,
+      "node": "22.23.4",
+      "tests": 1481,
+      "pass": 1481,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "job": 132727179357,
+      "node": "20.20.2",
+      "tests": 1481,
+      "pass": 1481,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "stage": {
+    "stage": "INTEGRATION",
+    "full": true,
+    "css": false,
+    "reason": "Only explicit main-targeted drafts may use FAST",
+    "ciContract": false,
+    "base": "ff60c73e53c973ecb86393be5b4e31b55f352601",
+    "head": "8b239f1ec021b23fba82a13b39cf0e666e483566",
+    "changes": [
+      {
+        "path": "src/drive-backup.js",
+        "oldMode": "100644",
+        "newMode": "100644",
+        "status": "M"
+      },
+      {
+        "path": "sw.js",
+        "oldMode": "100644",
+        "newMode": "100644",
+        "status": "M"
+      },
+      {
+        "path": "tests/browser-trust-backup-copy.mjs",
+        "oldMode": "000000",
+        "newMode": "100644",
+        "status": "A"
+      },
+      {
+        "path": "tests/drive-backup.test.mjs",
+        "oldMode": "100644",
+        "newMode": "100644",
+        "status": "M"
+      }
+    ],
+    "baseIsAncestor": true,
+    "warning": "Complete existing integration/release gates required."
+  },
+  "pwa": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "cache": "foliolab-open-v316",
+      "assets": 154,
+      "driveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+      "checks": [
+        "previous worker controls actual synthetic IndexedDB portfolio with warm HTTP app/CSS cache",
+        "actual 503 aborts new installation; previous app and offline portfolio survive unchanged",
+        "new active controller, old cache removed, every cached asset hash and active app/CSS bytes match new release",
+        "updated offline reload and historical reference remain accessible; exact record preserved; no page errors"
+      ],
+      "draftUpdate": {
+        "result": "PASS",
+        "nativeControllerChange": true,
+        "focusLost": true,
+        "cancelPreservesDocumentAndDraft": true,
+        "explicitDiscardReloads": true,
+        "canonicalBytesAndRevisionUnchanged": true
+      }
+    },
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "cache": "foliolab-open-v316",
+      "assets": 154,
+      "driveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+      "checks": [
+        "previous worker controls actual synthetic IndexedDB portfolio with warm HTTP app/CSS cache",
+        "actual 503 aborts new installation; previous app and offline portfolio survive unchanged",
+        "new active controller, old cache removed, every cached asset hash and active app/CSS bytes match new release",
+        "updated offline reload and historical reference remain accessible; exact record preserved; no page errors"
+      ],
+      "draftUpdate": {
+        "result": "PASS",
+        "nativeControllerChange": true,
+        "focusLost": true,
+        "cancelPreservesDocumentAndDraft": true,
+        "explicitDiscardReloads": true,
+        "canonicalBytesAndRevisionUnchanged": true
+      }
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "cache": "foliolab-open-v316",
+      "assets": 154,
+      "driveSHA256": "4a0a11f9aff6ac79e9760c32e1e0a2d28d471bdf56c44dd3f53a1187c47bdb96",
+      "checks": [
+        "previous worker controls actual synthetic IndexedDB portfolio with warm HTTP app/CSS cache",
+        "actual 503 aborts new installation; previous app and offline portfolio survive unchanged",
+        "new active controller, old cache removed, every cached asset hash and active app/CSS bytes match new release",
+        "updated offline reload and historical reference remain accessible; exact record preserved; no page errors"
+      ],
+      "draftUpdate": {
+        "result": "PASS",
+        "nativeControllerChange": true,
+        "focusLost": true,
+        "cancelPreservesDocumentAndDraft": true,
+        "explicitDiscardReloads": true,
+        "canonicalBytesAndRevisionUnchanged": true
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14151421248,
+      "name": "cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-3",
+      "bytes": 70282703,
+      "digest": "sha256:96c0992384fc5a6ff366815feb7fc5741d48319b2eb07878834ecf69f1848ae3",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14151421248",
+      "verification": {
+        "artifact": 14151421248,
+        "bytes": 70282703,
+        "sha256": "96c0992384fc5a6ff366815feb7fc5741d48319b2eb07878834ecf69f1848ae3",
+        "crc": "PASS",
+        "files": [
+          {
+            "name": "bitpanda-evidence-firefox-webkit.json",
+            "bytes": 1365,
+            "sha256": "6d24c53e5e29b91a0e43fdfa97abd40695cf40c8e8ce832360c40e6a620b0a0e"
+          },
+          {
+            "name": "bitpanda-preview/report.json",
+            "bytes": 1164,
+            "sha256": "a234d4db3e0d1b198a5465292cf67b8f17d2cb3cdaf7e1d4679a59c2d1c977cc"
+          },
+          {
+            "name": "blocked-reasons/report.json",
+            "bytes": 1209,
+            "sha256": "87bf2460a3d20a12354f83a55f2af4b5f6b31d6408b4e227b57f16474c6bf9df"
+          },
+          {
+            "name": "chart-tooltip/report.json",
+            "bytes": 1747,
+            "sha256": "3bbb7b3857ab8a116754f2c14e4d6f57fddcc6a97869396093e710bf40548d50"
+          },
+          {
+            "name": "flatex-context/report.json",
+            "bytes": 1723,
+            "sha256": "d16ebafffc958655f2202735adbee77bd4e45d28f53312d28837dd209d8d9bf9"
+          },
+          {
+            "name": "flatex-funding/report-firefox-12-before.json",
+            "bytes": 640,
+            "sha256": "e9accaf1f5352a930c3190c85b2767f85c6a87d9c8efa8e05cd9e88ee246b0af"
+          },
+          {
+            "name": "flatex-funding/report-firefox-12-next-day.json",
+            "bytes": 642,
+            "sha256": "1515002a9b0af64f8d5a8f2252fb249e111910709cbd6b9d84189b3b4952560c"
+          },
+          {
+            "name": "flatex-funding/report-firefox-12.json",
+            "bytes": 639,
+            "sha256": "d954d56fa61ba0ecb4bb054bc1dbf10f6082dadc18b8e8f085821d84d1ecbc4a"
+          },
+          {
+            "name": "flatex-funding/report-webkit-12-before.json",
+            "bytes": 638,
+            "sha256": "938cbd20f927406764c70b4c49f441d32773f355ac38acec9fb48cd1bc3df9f9"
+          },
+          {
+            "name": "flatex-funding/report-webkit-12-next-day.json",
+            "bytes": 640,
+            "sha256": "3b3d75c110d918ea18c247d1a07bbef7715913cd01a181b101198cc0224bbc4c"
+          },
+          {
+            "name": "flatex-funding/report-webkit-12.json",
+            "bytes": 637,
+            "sha256": "f1dbac9aafef470bfbd3232167b11f7acb0eb8b59f781385f1e0a2014903435f"
+          },
+          {
+            "name": "flatex-funding/report.json",
+            "bytes": 4273,
+            "sha256": "63045d993152fc63886b5319550680921136ee4c2479a3c9c3861be29a1fd3e6"
+          },
+          {
+            "name": "flatex-native-amounts-firefox-webkit.json",
+            "bytes": 1199,
+            "sha256": "ba8e7174e86ea120726fb300b5ceb6f9f59ce6dcba9b8f2a549f142020aee755"
+          },
+          {
+            "name": "flatex-native-binding/report.json",
+            "bytes": 2106,
+            "sha256": "3ed63e166a8936c43247e782d8d41166a6831df4d2a325649c711fc04b23dc18"
+          },
+          {
+            "name": "flatex-native-commit/report.json",
+            "bytes": 3165,
+            "sha256": "343b43fa6cb6419d38ce0041e0b21bd5cceaf839a9e4eaeb1aa4be05d85e1270"
+          },
+          {
+            "name": "flatex-native-firefox-webkit.json",
+            "bytes": 1472,
+            "sha256": "826d95e07da882581fa39908d90f0cd0a35558362d59aa22e87e4c4ddc2ba9ed"
+          },
+          {
+            "name": "flatex-native-identity-firefox-webkit.json",
+            "bytes": 1458,
+            "sha256": "64a633af9b1bd1525c4e6c70de722371aca2bd5d52fd1f53add3396096ad2840"
+          },
+          {
+            "name": "flatex-native-projection-firefox-webkit.json",
+            "bytes": 1517,
+            "sha256": "bdb7179febc263b6a9fc9ff42ee2a6a92d112b79fde511497efe32712aded41c"
+          },
+          {
+            "name": "flatex-native-simulation-ui/report.json",
+            "bytes": 4424,
+            "sha256": "5d90d466b9026259c79c8915a74215b0509f8348331f8451c0054d5b8090f4bc"
+          },
+          {
+            "name": "flatex-native-ui/report.json",
+            "bytes": 1799,
+            "sha256": "ce619463ae857e8068e1d51941b8c30589dad5f2192ce7b28f647bd62c9f29c8"
+          },
+          {
+            "name": "flatex-net-augmentation/report.json",
+            "bytes": 3279,
+            "sha256": "6de6461631d388dfa2ba4fe93d0abee3a08e8d8d68377f881449cffae5132ed8"
+          },
+          {
+            "name": "flatex-net-backfill/report.json",
+            "bytes": 2661,
+            "sha256": "2bd95bed35f469d2f3e0714ed8fb899204ce0f475df92c403e744d2a6af07461"
+          },
+          {
+            "name": "flatex-net-selection/report.json",
+            "bytes": 1251,
+            "sha256": "41ed1557108248ef97348dfd70c587c6379f0edb90acb36c9c8c06a2a71650ab"
+          },
+          {
+            "name": "flatex-net-settlement/report.json",
+            "bytes": 1519,
+            "sha256": "611b53e4f87e35b3046890be9bf2731f82d3d11bbe8df2668eb143fee3a7b1c7"
+          },
+          {
+            "name": "flatex-order-links-firefox-webkit.json",
+            "bytes": 1399,
+            "sha256": "e935cb423127619acda839595d26d9314d48a9724a36d7121fa4c4962bbe98bb"
+          },
+          {
+            "name": "flatex-reconciliation/report-firefox.json",
+            "bytes": 432,
+            "sha256": "4e1b5f997c5d6ddaeca8fc5c9a8368beb03e467e59a26f6d2299af2fc5046622"
+          },
+          {
+            "name": "flatex-reconciliation/report-webkit.json",
+            "bytes": 430,
+            "sha256": "bbb692f208315ea51dbe127181d1ffe2d8959bf97ca43ba0b656729c21b1d5f2"
+          },
+          {
+            "name": "flatex-reconciliation/report.json",
+            "bytes": 1039,
+            "sha256": "14918c9fbb608a9e097b908168bf400793b789ba291990dfb92c0186d3b39789"
+          },
+          {
+            "name": "header-status/report.json",
+            "bytes": 2177,
+            "sha256": "53b1db3d8653fa90f88877159bfade256c187abd8e5b88feb199d61fda98e0ef"
+          },
+          {
+            "name": "history-worker/firefox-controller.json",
+            "bytes": 1301,
+            "sha256": "53a7af8cc12bc867fda0176272fb99b95ba7ed4f80114d70ab56b441789053a8"
+          },
+          {
+            "name": "history-worker/webkit-controller.json",
+            "bytes": 1300,
+            "sha256": "57fae05a73107dba7b419c98bbc05d2f60d0576cb3da235c17178724e2b50cf3"
+          },
+          {
+            "name": "kraken-allocation/report-firefox.json",
+            "bytes": 571,
+            "sha256": "233ba546f0f8216bf5950df1adc2e2cf4f3f265bf794e7ab6ab7a82f39fcc645"
+          },
+          {
+            "name": "kraken-allocation/report-webkit.json",
+            "bytes": 569,
+            "sha256": "37602a3fba4a251470d80564a7d8c32e08b31e12cbc13729009747eb87805bab"
+          },
+          {
+            "name": "kraken-allocation/report.json",
+            "bytes": 1297,
+            "sha256": "176dca0db498fdae1e4269988ca37234a7ccf14b55af40ba4636a8db0b99be70"
+          },
+          {
+            "name": "kraken-fiat-binding/report-firefox.json",
+            "bytes": 1895,
+            "sha256": "8a5c7494ea4a5f85a978620d80fe2454f6e56d9572b15f4b02541ce29ca6a9f9"
+          },
+          {
+            "name": "kraken-fiat-binding/report-webkit.json",
+            "bytes": 1894,
+            "sha256": "e96659d671f3ede0a7c7e6a73a0cb6b735bd37a28ff4333309bc56e397832a55"
+          },
+          {
+            "name": "kraken-ledger/report.json",
+            "bytes": 1092,
+            "sha256": "02e4e4a0ef98714c2e5295b32c262df50fefe238ecc71cbbb0dd39f2385ea010"
+          },
+          {
+            "name": "kraken-link/firefox.json",
+            "bytes": 822,
+            "sha256": "b90658f8842ab8e0aad60d2bdded7d8f1b2b6b5cb29b7be30465661dee695bc3"
+          },
+          {
+            "name": "kraken-link/webkit.json",
+            "bytes": 820,
+            "sha256": "609314001832d2c3252a202d9131d4aa87d648802b1f3e727becadee60b16cf1"
+          },
+          {
+            "name": "kraken-usd-principal/report-firefox.json",
+            "bytes": 855,
+            "sha256": "69b5309947704c39821ecae2dea6b44cded669de4a4b3dc379e50d94b36ddad0"
+          },
+          {
+            "name": "kraken-usd-principal/report-webkit.json",
+            "bytes": 853,
+            "sha256": "850b925fd33c600cb2f6c1d157256cfdc980f89237df3603bf54430261a7b45a"
+          },
+          {
+            "name": "management-parity/report.json",
+            "bytes": 796,
+            "sha256": "fcabf76f07a6e95683134d186c90de973c2cd7790c8f68076df247aee3293a98"
+          },
+          {
+            "name": "missing-position-value/report.json",
+            "bytes": 146,
+            "sha256": "23160b153a7b6c3bd845ece105ef36cc15d0a7c7c8551f4dcf495279eb4fe343"
+          },
+          {
+            "name": "navigation-focus/firefox.json",
+            "bytes": 994,
+            "sha256": "0009eec5ebafac9c0c1028acfdf43508d270eaa366cf215b170b022a25529b2e"
+          },
+          {
+            "name": "navigation-focus/webkit.json",
+            "bytes": 993,
+            "sha256": "ebdab53abd14193d536568863441a6003d985f22629f724d89822e78055dedb8"
+          },
+          {
+            "name": "navigation-installation/firefox.json",
+            "bytes": 1152,
+            "sha256": "3abdf2d6e7663ef97507140426aecc580279b4cd845c3f1e1e904e44f71c6ecd"
+          },
+          {
+            "name": "navigation-installation/webkit.json",
+            "bytes": 1151,
+            "sha256": "32942314123401357a1c3ee7800931ce32726e6763acb1be4ff56ea83a722034"
+          },
+          {
+            "name": "reference-management/firefox-sw-baseline.json",
+            "bytes": 682,
+            "sha256": "739624aeccecd91325db84fc4c7845f821c98cd7f2d315f80bf68b70350e64b7"
+          },
+          {
+            "name": "reference-management/report.json",
+            "bytes": 1573,
+            "sha256": "cf47f56af33a7459ad794c7dfd7813cb53656e61dcc59e0c9076cad340501c83"
+          },
+          {
+            "name": "reference-management/webkit-sw-baseline.json",
+            "bytes": 674,
+            "sha256": "c0f8db2900e0e9735b27e2d0ffe3d07a899be6caf740f0965b87cb3e90682c4d"
+          },
+          {
+            "name": "reference-removal/report.json",
+            "bytes": 2010,
+            "sha256": "a61a4fa6f36b328bb3dfe783e4a88ab8b868f68a859c1da382b069b4079035b1"
+          },
+          {
+            "name": "settings-replacement/firefox.json",
+            "bytes": 982,
+            "sha256": "19c29227cf01fc2d145cc57fede16eb4cc56b6225316966a9f144ab86739991d"
+          },
+          {
+            "name": "settings-replacement/webkit.json",
+            "bytes": 981,
+            "sha256": "b11aca119619853a695fddd3a61a7acd30434850691fdac8505668f0ecadfa48"
+          },
+          {
+            "name": "shared-import/report.json",
+            "bytes": 1219,
+            "sha256": "273a7ad0d6f62292f8945ffb04e776925b98a536b51e9f0198d61597b81f5e05"
+          },
+          {
+            "name": "storage-fixture/firefox-1794724724463.json",
+            "bytes": 3570,
+            "sha256": "c236a9b3d8bfbdd436f897013d639366fdb31218a01bc3a72a1a7ac0d32c8acb"
+          },
+          {
+            "name": "storage-fixture/firefox-1794724740881.json",
+            "bytes": 3572,
+            "sha256": "b07b9a533cde7bcec20417f35ab6a95bb5f62c77b9e808bef090b610484b8b7d"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725479077.json",
+            "bytes": 3682,
+            "sha256": "23aaee4125f371c0c45bc7e84b602d45349d567112e26e087dda920eefee7506"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725501795.json",
+            "bytes": 3682,
+            "sha256": "c8904c39f1c874c36f036308623f70aa10bf1ff7dbc0d0cd7b2fd11f24624187"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725538309.json",
+            "bytes": 3682,
+            "sha256": "2243fe7f04c40ce04946cfd63725b057b929ece018bca97f5822cc5220e5a713"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725520213.json",
+            "bytes": 3682,
+            "sha256": "0549e1c3b1b96518e6bbc56ec50af1326ea5364acf8cc0812368d429ecdcfabf"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725556156.json",
+            "bytes": 3682,
+            "sha256": "6f38f30f2a4a8c3c4b969db226868d47b33db91f1bff6d520ffe93e1cafc35ce"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725573905.json",
+            "bytes": 3682,
+            "sha256": "9bc2ad4e4b03686fbb0da3f5f74ff8b70345d05d0a91e32a629e55c1edda4b65"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725591562.json",
+            "bytes": 3682,
+            "sha256": "dced16b90f3f3dd5c59ef5e456b017362b70809b69a85de80aa1d4f5ce7b94b5"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725608803.json",
+            "bytes": 3683,
+            "sha256": "bedda6ea0ae721c33c5741f23babd154226ba9f89fd93e2467c1666169bcb081"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725616780.json",
+            "bytes": 3838,
+            "sha256": "852080de9e58e547067b329e9037dbb106a62a01290d087193f0aca6c8201585"
+          },
+          {
+            "name": "storage-fixture/webkit-1794724732989.json",
+            "bytes": 3569,
+            "sha256": "2f201cc4d319eede9cb8e764cf8347f174c2c45c3da4d3c32973cd7746b706e9"
+          },
+          {
+            "name": "storage-fixture/webkit-1794724756118.json",
+            "bytes": 3571,
+            "sha256": "8a23af3e54be0be7acfbe58447f0110122d289d5f82fed6f6fe72adff8f84840"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725491618.json",
+            "bytes": 3681,
+            "sha256": "2588ca32baaef8c7b744694e30ed8cbac47417862947124a076c8cd9b8e1fb3d"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725510109.json",
+            "bytes": 3681,
+            "sha256": "87e55b598f353d0305d3ed91fd7e664e5e1b9a569c23d1dace1e5ee1531349dd"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725528317.json",
+            "bytes": 3875,
+            "sha256": "29f98d01ba3c62ccb5a82379f2d9c928336fca4a572b49a3d51039960e9e5dda"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725546428.json",
+            "bytes": 3681,
+            "sha256": "491fea393beb1c2608f534e5f08edf88121f06774b60f3154b50395b03927ba1"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725563983.json",
+            "bytes": 3875,
+            "sha256": "8328e4cb0bf1961e33f0191ee289deb9fea340b3fc9101b0730cc09f7b3f9cda"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725581826.json",
+            "bytes": 3681,
+            "sha256": "85e5350f0fd13445521e981fbe2f82e34534b0261948fe2b376f2ac2a7bd7752"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725599443.json",
+            "bytes": 3681,
+            "sha256": "9839807a0ce6ecd8af4e01c6f1f57225b544d67b1298a29ff61155f9824713fb"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725624055.json",
+            "bytes": 3876,
+            "sha256": "a917e1e2821929d05bb3c425970c955c93b2d294160d85ac969baf5f638a4ec4"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725630140.json",
+            "bytes": 3837,
+            "sha256": "48631ce245108ad6803adba1255f960aabb937d91c16c94d76e93b852b0269cd"
+          },
+          {
+            "name": "three-fill/report-firefox-12.json",
+            "bytes": 620,
+            "sha256": "cff224bc7706e4c040eb762a56cf27c6d9b486c9ecb983dbb268a90ec7fa923e"
+          },
+          {
+            "name": "three-fill/report-firefox-13.json",
+            "bytes": 619,
+            "sha256": "984be81caaa21d70b32e1905fc63bb47f23faa9d2b1206590daea8304c8042fe"
+          },
+          {
+            "name": "three-fill/report-webkit-12.json",
+            "bytes": 618,
+            "sha256": "b14e4940a0cf201128be7b5a776c617236fa76759832ad50ea056f3ebd800884"
+          },
+          {
+            "name": "three-fill/report-webkit-13.json",
+            "bytes": 617,
+            "sha256": "167e1871e96ba2957fe563c3f3ea685f4eb2991a667d5581af7197ad14f9f41f"
+          },
+          {
+            "name": "three-fill/report.json",
+            "bytes": 2763,
+            "sha256": "386e9b35e86e5bdb0b683e3a2da6d3888d447a830bf0e39c87f970fca86cf1ef"
+          },
+          {
+            "name": "two-fill/report-firefox.json",
+            "bytes": 510,
+            "sha256": "f84770accae31a47ab79a35603832fb024ff0dda87350e3945e4f7d98ecbabed"
+          },
+          {
+            "name": "two-fill/report-webkit.json",
+            "bytes": 508,
+            "sha256": "a41a1f954215a0404729acd0ad78eef0b67bb3e23f635c06a4c41aae927b413e"
+          },
+          {
+            "name": "two-fill/report.json",
+            "bytes": 1175,
+            "sha256": "8480f017a3dab0e241d2b2788f4810d6f3443ac6045fd3fa74bbf2028f1d16c1"
+          },
+          {
+            "name": "ui-audit-controls/report.json",
+            "bytes": 4459,
+            "sha256": "eceeaabab689973a23cd7da2bf0f7790f153e81dc7edf7733e75fd6e784f1013"
+          },
+          {
+            "name": "ui-quality.json",
+            "bytes": 15898,
+            "sha256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+          },
+          {
+            "name": "ui300/report-firefox.json",
+            "bytes": 639,
+            "sha256": "836453526999d11fa41bf723d9853359112bd48292b4ad15a3e4ff8301a67089"
+          },
+          {
+            "name": "ui300/report-webkit.json",
+            "bytes": 638,
+            "sha256": "eb835f641750671df7c28a5a2e7f2cf5cb686e67955f3f84d95a61a9e4bc3fc9"
+          },
+          {
+            "name": "unknown-fx/report-firefox.json",
+            "bytes": 669,
+            "sha256": "57375eadabedf7d2e9c7c5c2e3d951cd59ccfa2ae1cedc9825fc743a1ba99ee1"
+          },
+          {
+            "name": "unknown-fx/report-webkit.json",
+            "bytes": 668,
+            "sha256": "ef20f916d934799f32459340c6424e5b0cff1512cf35295179ea24fad308fe1a"
+          },
+          {
+            "name": "update-drafts/firefox.json",
+            "bytes": 602,
+            "sha256": "51a3e1fff9d05471a173c28b14b7c7de6c55e596789324053156ae0f002cee32"
+          },
+          {
+            "name": "update-drafts/webkit.json",
+            "bytes": 601,
+            "sha256": "67b6318e08214c736c05745b090f0ae08d20d37656755ea36f0633ce220f1a8a"
+          },
+          {
+            "name": "v289-review-integrity/firefox-320-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/firefox-360-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/firefox-390-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/firefox-412-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/firefox-430-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/report-firefox.json",
+            "bytes": 772,
+            "sha256": "76f6c1baeaccc470072a0fdaf8451a60259a0f6ccc59f768d7306f19ddd0386f"
+          },
+          {
+            "name": "v289-review-integrity/report-webkit.json",
+            "bytes": 770,
+            "sha256": "0e625d63c03b4bc4c9c8e0f3a8ff0fdce61ed69e517da0774aa85218278be023"
+          },
+          {
+            "name": "v289-review-integrity/report.json",
+            "bytes": 1853,
+            "sha256": "81ca2fcc255eb597607485e0aa0b20941fd1a9ba3f0cddda440427ec8e4a50e1"
+          },
+          {
+            "name": "v289-review-integrity/webkit-320-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/webkit-360-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/webkit-390-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/webkit-412-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/webkit-430-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        ],
+        "members": 868,
+        "jsonCount": 105,
+        "pngCount": 762
+      }
+    },
+    {
+      "id": 14151375472,
+      "name": "release-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a",
+      "bytes": 66358004,
+      "digest": "sha256:2594465f182d57d7152eb259f5bc0dfd7ab1811d2fa682b1cf4b61592ec5e8ec",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14151375472",
+      "verification": {
+        "artifact": 14151375472,
+        "bytes": 66358004,
+        "sha256": "2594465f182d57d7152eb259f5bc0dfd7ab1811d2fa682b1cf4b61592ec5e8ec",
+        "crc": "PASS",
+        "files": [
+          {
+            "name": "alpha-vantage.json",
+            "bytes": 630,
+            "sha256": "71331270414ab7790bccf9e8de353964fe9accf0ebf04eef3a0d855c4d40e755"
+          },
+          {
+            "name": "alpha-vantage/idb-chromium.json",
+            "bytes": 59039,
+            "sha256": "0db214ed3ea7da7ec7f724266ef29ee5502e8fefb86439a8940926de00e73c57"
+          },
+          {
+            "name": "bitpanda-evidence-chromium.json",
+            "bytes": 774,
+            "sha256": "e4cd9be8f6c63ff3ab3ceb09d80a4339003647575b7629c2bfb0ca55c5089382"
+          },
+          {
+            "name": "bitpanda-preview/report.json",
+            "bytes": 643,
+            "sha256": "1b91415487b6d3d83281713f715ae9b57011d11a371911785d5ec14f7b832b7f"
+          },
+          {
+            "name": "blocked-reasons/report.json",
+            "bytes": 689,
+            "sha256": "53d80ecd4eb441df15f8533a8879eaa29a9d04e044ca5165b7c3c20f3586b29f"
+          },
+          {
+            "name": "booking-management.json",
+            "bytes": 534,
+            "sha256": "48af3715bb4b32ad306c0a73ecc553b28f06fc53cf99c3ffce14a3f40102cc65"
+          },
+          {
+            "name": "cash-account-ux.json",
+            "bytes": 620,
+            "sha256": "e8d09d828f2faa61fa04039995eeef9b357e1810081674cbab3d72ec36468f62"
+          },
+          {
+            "name": "chromium-position-removal-sw-baseline.json",
+            "bytes": 642,
+            "sha256": "5c8ea7f9128cafda6760dcda8b92d35bf63540e4c093fad99ad57b9de99c92fb"
+          },
+          {
+            "name": "chart-tooltip/report.json",
+            "bytes": 963,
+            "sha256": "27261c1983d7dc9fcdbe2829cccef4cebd1ec91867a88fe8768861a1bf41ac9b"
+          },
+          {
+            "name": "fin-e2e/chromium.json",
+            "bytes": 1145,
+            "sha256": "8f4b5cb67b90b6938dd2a010199d749e668dce9177b8bc8f7a2f34a431239f72"
+          },
+          {
+            "name": "flatex-context/report.json",
+            "bytes": 928,
+            "sha256": "301b4fdd79d9a07de51bfa02cb0d0ab1fc21cdb56b8a88f22d81254d4c8af260"
+          },
+          {
+            "name": "flatex-funding/report-chromium-12-before.json",
+            "bytes": 649,
+            "sha256": "8eaca90069026247314ebf16f648711c35042d5029bed3c9663f100856a85043"
+          },
+          {
+            "name": "flatex-funding/report-chromium-12-next-day.json",
+            "bytes": 651,
+            "sha256": "9f1a2b05a73eaf28638e798362583750cca788ee51843f2afaf005dfe22f4756"
+          },
+          {
+            "name": "flatex-funding/report-chromium-12.json",
+            "bytes": 648,
+            "sha256": "109f7071850c3964edeb3aee95dc773247463feffd5da790e9cf938aaacab304"
+          },
+          {
+            "name": "flatex-funding/report.json",
+            "bytes": 2187,
+            "sha256": "feaeaa86784c987b5c08075b762c6c0132c36334bd79b0fa8bae8e014851dbae"
+          },
+          {
+            "name": "flatex-native-amounts-chromium.json",
+            "bytes": 697,
+            "sha256": "e0203043821899935872ab28f6ac608738e64686bc9208ba3ffdd915ace9331e"
+          },
+          {
+            "name": "flatex-native-binding/report.json",
+            "bytes": 1141,
+            "sha256": "d52fcf6689111c223c4442c8098514d0453da418f174202cf7c2b3bd560f060b"
+          },
+          {
+            "name": "flatex-native-chromium.json",
+            "bytes": 835,
+            "sha256": "80b35a4d9451549f601c01fd5906b3ae2011916fa0545b577017d878bc57092d"
+          },
+          {
+            "name": "flatex-native-commit/report.json",
+            "bytes": 1681,
+            "sha256": "28152fbe43733c82503376e7202ac34ec82c33bf5c942729bf892d5fe34eb4e4"
+          },
+          {
+            "name": "flatex-native-identity-chromium.json",
+            "bytes": 838,
+            "sha256": "c75e114f38d2f525ef8a5df5faf1dff6440fc5c2bafd791ff42b4948dcf8f24c"
+          },
+          {
+            "name": "flatex-native-projection-chromium.json",
+            "bytes": 852,
+            "sha256": "e15f7f71d97a10b293b45c21c507c14d1c83a3d394f10119067c268eee21b3de"
+          },
+          {
+            "name": "flatex-native-simulation-ui/report.json",
+            "bytes": 2300,
+            "sha256": "1d0be9605a0c7f8cceb47c1f70b0d64c7fc8f3d8c03290a36b04d1bb56804c0a"
+          },
+          {
+            "name": "flatex-native-ui/report.json",
+            "bytes": 967,
+            "sha256": "d382cd9e50b8ea90ffbc7726902a728e66bcf01143b7f07a2227f06a4ec3557e"
+          },
+          {
+            "name": "flatex-net-augmentation/report.json",
+            "bytes": 1735,
+            "sha256": "9f2f1309653beadf1b731993c9c3c6fac954876d61abd47b557d3bda9f462ee5"
+          },
+          {
+            "name": "flatex-net-backfill/report.json",
+            "bytes": 1421,
+            "sha256": "eec2f0c28af0d14d72d33196a0f116bc08bfcedf253e57fc6b18f4187202b334"
+          },
+          {
+            "name": "flatex-net-selection/report.json",
+            "bytes": 712,
+            "sha256": "8236be095b6a205ebefe40f8f6ba774bca0f807d085c00fd221046dfb5ae11ef"
+          },
+          {
+            "name": "flatex-net-settlement/report.json",
+            "bytes": 826,
+            "sha256": "c56447146f8b3f5158ca6ec032b1d4dc28d1b0f1aafa724084e90bdbdd5befb6"
+          },
+          {
+            "name": "flatex-order-links-chromium.json",
+            "bytes": 793,
+            "sha256": "b4b5962693b9ef1d98abb1224ce5a569ff1168636612a5991b40d8d4799b4a0e"
+          },
+          {
+            "name": "flatex-reconciliation/report-chromium.json",
+            "bytes": 441,
+            "sha256": "cde6835c77ea05c34e0e3e01c006b71bafab1aa321229a3bb84d9bebf6be21e3"
+          },
+          {
+            "name": "flatex-reconciliation/report.json",
+            "bytes": 568,
+            "sha256": "53b9ffe24c97a47b4aa4ee52b9ee2d71e51ccae2f016751e0ee96c5c0157dc04"
+          },
+          {
+            "name": "flh03-abce.json",
+            "bytes": 2411,
+            "sha256": "61fa40fc78de05dffa59102e6d5ada2f08603530d6b0f7ec9d3799cc322cf3d5"
+          },
+          {
+            "name": "header-status/report.json",
+            "bytes": 1155,
+            "sha256": "28fdf7ed2044e3c4c88ce7436c9c6cea32dc0f5c2c6e88d4237d03bb636eabf2"
+          },
+          {
+            "name": "history-worker/chromium-controller.json",
+            "bytes": 1310,
+            "sha256": "bac1086d323836089a36b687d15c622aa1d6a5bb818531d462392ffe6b741c38"
+          },
+          {
+            "name": "kraken-allocation/report-chromium.json",
+            "bytes": 580,
+            "sha256": "36fec64980255c0e12a0691dd7407c582fede7bca2a4c2ffda5d702444d593e8"
+          },
+          {
+            "name": "kraken-allocation/report.json",
+            "bytes": 679,
+            "sha256": "1d65bfb4cffa2220af0a2ec437158c047543bd699409fb46817b4a18718da259"
+          },
+          {
+            "name": "kraken-fiat-binding/report-chromium.json",
+            "bytes": 1896,
+            "sha256": "15af7f8e2391e053a361da062288b8947ca392334a4eeae8809ec59f7c8fd9bf"
+          },
+          {
+            "name": "kraken-ledger/report.json",
+            "bytes": 606,
+            "sha256": "bfb86e7a9adda7eae7158d5109cefd37a7f33e93adc7f6077211a2cd9b967a8f"
+          },
+          {
+            "name": "kraken-link/chromium.json",
+            "bytes": 831,
+            "sha256": "0c2c459e750fa22800512c23e473856906416ac5c617c420561b72b59272fe93"
+          },
+          {
+            "name": "kraken-usd-principal/report-chromium.json",
+            "bytes": 864,
+            "sha256": "5499fd2832d104a104b0d61ecd241572ba6729defff5e2b2074fa96f3bb0006c"
+          },
+          {
+            "name": "loading-pwa/chromium.json",
+            "bytes": 705,
+            "sha256": "3be7bb3e3382a7ea731855ebc09e4acd8b1f92559042fee85f568172608b687b"
+          },
+          {
+            "name": "management-parity/report.json",
+            "bytes": 465,
+            "sha256": "cb4f1ba9e2f0b1f37cff8e2f85987b8c998472a448e85588c6c08bbd2ed4bb73"
+          },
+          {
+            "name": "marketstack.json",
+            "bytes": 473,
+            "sha256": "dce288261fbced79a2bebcb59656c23ebabccb2abb0980df17456e375a3819a5"
+          },
+          {
+            "name": "missing-position-value/report.json",
+            "bytes": 85,
+            "sha256": "8d5c2ef3088b2604350bc194449bfe7dce60c6d0370bcf738e194f07329394fa"
+          },
+          {
+            "name": "navigation-focus/chromium.json",
+            "bytes": 995,
+            "sha256": "49e7f970eef4f45593672476409259a6040637edf2164e68bfc05a7337cc756c"
+          },
+          {
+            "name": "navigation-installation/chromium.json",
+            "bytes": 1153,
+            "sha256": "f37ec349ba679445f81f05643848196abb3e333899fd2092a041eb7b42dcd2b0"
+          },
+          {
+            "name": "pchain-evidence-chromium.json",
+            "bytes": 5875,
+            "sha256": "4ec165ee95f7e83467fd04eabb9ab6a87f64c4a7c9a88741fad7d4f2cfa9e9a1"
+          },
+          {
+            "name": "plain-backup-limits/chromium.json",
+            "bytes": 857,
+            "sha256": "aee2ade2ef343c3a2f041d026cf983a61384c124ea0bf9abf37fb1d20a247a40"
+          },
+          {
+            "name": "position-archive.json",
+            "bytes": 1704,
+            "sha256": "404f9face14b7526ba34c4658e0ab298f1ac1dae9b77a63ec91327b27b6b510d"
+          },
+          {
+            "name": "price-csv-tools/report.json",
+            "bytes": 85,
+            "sha256": "bc6f7eee3d2f0c38a6281796b597e70bfca53e9b31df480265bbe0c366d34408"
+          },
+          {
+            "name": "provider-retirement.json",
+            "bytes": 446,
+            "sha256": "302f867485b9e1fa8ca47d638fe75cc47825c093191bdea2e63c547a5ca29020"
+          },
+          {
+            "name": "pwa-update/report.json",
+            "bytes": 31842,
+            "sha256": "d21c076f1e0bd03966899b4931d84166d8faecdafe07a5aaeb37d27392ea8bc8"
+          },
+          {
+            "name": "readability/report.json",
+            "bytes": 103,
+            "sha256": "06d8f76f9871693e7e2ba36166f07ec33ac37e35e55be1601f4ed8a52fade0df"
+          },
+          {
+            "name": "recovery-limits/report-chromium.json",
+            "bytes": 274,
+            "sha256": "5ac55cf380b29cad71e412fe21888872e55a714842646eeb0448d1e0d682fe8b"
+          },
+          {
+            "name": "reference-management/chromium-sw-baseline.json",
+            "bytes": 682,
+            "sha256": "739624aeccecd91325db84fc4c7845f821c98cd7f2d315f80bf68b70350e64b7"
+          },
+          {
+            "name": "reference-management/report.json",
+            "bytes": 861,
+            "sha256": "21bb57c6db188d6d30c5fc1ed1663ca7e7a193e9c8ca6e031d8f9e998079c04b"
+          },
+          {
+            "name": "reference-removal/report.json",
+            "bytes": 1068,
+            "sha256": "170e9078fd1fa8356a333d5622c440b9d17af4a22eb761e5cdaed614e3db53e7"
+          },
+          {
+            "name": "refresh-frequency/chromium.json",
+            "bytes": 395,
+            "sha256": "805f0f297a2453452ad0d90fe032c48561ee57a92efa480e36ea6bf71c782633"
+          },
+          {
+            "name": "refresh-frequency/report.json",
+            "bytes": 567,
+            "sha256": "3b9762c8d3fcb6bafcb42f93c6a0c86b2c1ff39dac5606117bd0f2d9dbe41a8b"
+          },
+          {
+            "name": "settings-replacement/chromium.json",
+            "bytes": 983,
+            "sha256": "46c8d593a9f2fe43855af5df2ae2f1999c2b8af66b5188c3c7121ddc896fb788"
+          },
+          {
+            "name": "shared-import/report.json",
+            "bytes": 640,
+            "sha256": "c6f5eed0f08edaced0a8d6ac29025c5e26b78fe72dc48251239d5a1172767fc8"
+          },
+          {
+            "name": "sonic-evidence-chromium.json",
+            "bytes": 5900,
+            "sha256": "09b2a7c4fde003d0f6ebc01a1f7e9142a8385d9d6676ecaf3502de3959a1e7c2"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724811493.json",
+            "bytes": 3687,
+            "sha256": "bca354c9b688e5ad0b4112e56f910b5c7726365cbdfdc09535cab791175e8f49"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724817925.json",
+            "bytes": 3885,
+            "sha256": "d3a2da4e22aa2a79e51f7445372d3aafbbb33202fd16db9a237a40fd37fd7efc"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724824230.json",
+            "bytes": 3687,
+            "sha256": "769cec0694137cc949624623ddcec33d27a57c2409008e891efbc7b0504d6e1c"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724830416.json",
+            "bytes": 3691,
+            "sha256": "6289bcc71b5193b6007cdaaabfd63fd649d78ab38ca153b31a3c8d7e0a0d7ea9"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724836406.json",
+            "bytes": 3691,
+            "sha256": "a341c05bfdbbc7558b6d1fbba9130f7ae25e899259c46d2b28227c366358d570"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724842430.json",
+            "bytes": 3691,
+            "sha256": "b27eaac055f848d5a9b2eb7648751e5068a2118c9e87f12d42ff6095db5c63eb"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724854174.json",
+            "bytes": 3886,
+            "sha256": "073ae9f0de010a753031adb807a837f87c2925e39559c6ed8732a913b0d8e47f"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724859257.json",
+            "bytes": 3847,
+            "sha256": "7d11dc81d03a73c2538a64b7baa87db17b6042f6f2027523a5daafe4bee5a02f"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724848527.json",
+            "bytes": 3691,
+            "sha256": "acaf1eebb1a4ee407b280b72db6b0f1bbff95d76c439fdcc1e224e6269b64580"
+          },
+          {
+            "name": "storage-fixture/chromium-1794724887984.json",
+            "bytes": 3474,
+            "sha256": "7ecbf6b1be3da24f5eace269db527c91e80db96838acd972c36945acc940916a"
+          },
+          {
+            "name": "storage-fixture/chromium-1794725069102.json",
+            "bytes": 3579,
+            "sha256": "3f9d8ee07ef64bc3d35592b3f00ee60ee26e027b14667d297ed9efe0f9f3d7b7"
+          },
+          {
+            "name": "storage-fixture/chromium-1794725775544.json",
+            "bytes": 3783,
+            "sha256": "135d3a2a881094587d3cfaf545620cc3e5c324d0e988958befffea838003ddc7"
+          },
+          {
+            "name": "storage-fixture/chromium-1794725781311.json",
+            "bytes": 3781,
+            "sha256": "7a1da8212f32380cbe27c9d0b9c358e1b2c3e6745809fcd5c50f279e6189370e"
+          },
+          {
+            "name": "storage-fixture/chromium-1794725074095.json",
+            "bytes": 3581,
+            "sha256": "10f6a7d831273500373c01088d283529f707479aa4a741f5843f25e1ae64d5f4"
+          },
+          {
+            "name": "syntax.log",
+            "bytes": 104,
+            "sha256": "a806b299e067da1c6a0d86a35c853b1eefb2642c2e19449635d87e2e941e2bc2"
+          },
+          {
+            "name": "tested-sha.txt",
+            "bytes": 41,
+            "sha256": "59a39e85e479695f6e93ad365fe8aae0bfcb90a4bf20b913dfd70543263bcae0"
+          },
+          {
+            "name": "three-fill/report-chromium-12.json",
+            "bytes": 629,
+            "sha256": "ad023333abdd00973a1ceb38df124bbe4b69386167ff30e46dd6db8d4fef008e"
+          },
+          {
+            "name": "three-fill/report-chromium-13.json",
+            "bytes": 628,
+            "sha256": "86bd31c05486ca3a11d5ff63b31654195a54db40f0865c1d61e8a5833b30658a"
+          },
+          {
+            "name": "three-fill/report.json",
+            "bytes": 1422,
+            "sha256": "1e773653710d99e74198e0b5e7367e4c013bdb2fe25ba661ac247279bfce5450"
+          },
+          {
+            "name": "transfer-states.json",
+            "bytes": 1894,
+            "sha256": "154b55e8eb88871e212ecf19d6dd4f9ae53c50abcdee127844899d078370ece7"
+          },
+          {
+            "name": "two-fill/report-chromium.json",
+            "bytes": 519,
+            "sha256": "c04f1ef0f7e00810464102ca7d685693186d24691e60dc6459ee23dc05cb34c8"
+          },
+          {
+            "name": "two-fill/report.json",
+            "bytes": 618,
+            "sha256": "a3a44e0c1e85f455d45d5a06a9fe14d01ff8f61c52432d9e061b920ac46222f3"
+          },
+          {
+            "name": "ui-alltag10/chromium-real-touch-pan.json",
+            "bytes": 870,
+            "sha256": "8e9e9494459854b7ca3bce3d3c69f70b0f3f3d0ac512ee934465149f6f2f4418"
+          },
+          {
+            "name": "ui-alltag10/chromium-real-touch-press.json",
+            "bytes": 1532,
+            "sha256": "7dd23a59d78a0c428ff9a5b47976394f20e9f25a7fa717f0bb9da958c02724d4"
+          },
+          {
+            "name": "ui-alltag10/long-press.json",
+            "bytes": 203,
+            "sha256": "c2e0594e18f31aa24a61f9a2c71ac8a64681c3dd73ffedb9373b1b48896ac1e3"
+          },
+          {
+            "name": "ui-audit-controls/report.json",
+            "bytes": 2297,
+            "sha256": "50c18ee5e0a7d2813baacb9eca31287f70f42daa15908781f2a261686321cde0"
+          },
+          {
+            "name": "ui-quality.json",
+            "bytes": 8021,
+            "sha256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+          },
+          {
+            "name": "ui-textscale/report.json",
+            "bytes": 1993,
+            "sha256": "2d367cd2515976dfeb9860b434cd992f392b41bd6c2bae783423af6f382b5f9f"
+          },
+          {
+            "name": "ui07/chromium-report.json",
+            "bytes": 6078,
+            "sha256": "60a93aa4644f44266a73a468adb3f7eb11fd67a141d05fde065d6946da814fc6"
+          },
+          {
+            "name": "ui300/report-chromium.json",
+            "bytes": 640,
+            "sha256": "904470b8e5bca21d4f217d3d11ade78a7a6de226bfac028dc9d24327791174cc"
+          },
+          {
+            "name": "unit.log",
+            "bytes": 345555,
+            "sha256": "c0d44d9ea447863815d311b335ffc94e7ad8c7750b40b3bde9ea6585be57d3a4"
+          },
+          {
+            "name": "unknown-fx/report-chromium.json",
+            "bytes": 670,
+            "sha256": "29190f134737d5eac58a8761a6891e8d7d0d795ad4b90fd5172de2c9c8f512ea"
+          },
+          {
+            "name": "update-drafts/chromium.json",
+            "bytes": 603,
+            "sha256": "581d577109f8a0677177b0b46ed62eb248e77f62a29cc69ba9d94d4a2e7cc00e"
+          },
+          {
+            "name": "v289-review-integrity/chromium-320-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/chromium-360-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/chromium-390-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/chromium-412-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/chromium-430-axe.json",
+            "bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "v289-review-integrity/report-chromium.json",
+            "bytes": 781,
+            "sha256": "ad91a494891bd9627494e9dfd16735668f952b70203cb253df43d23d4b987b27"
+          },
+          {
+            "name": "v289-review-integrity/report.json",
+            "bytes": 1014,
+            "sha256": "aadcc1b82dad98e729ef9fa2ab22ac2dfa7b9554fda7fdbb868670927a135a3e"
+          }
+        ],
+        "members": 816,
+        "jsonCount": 98,
+        "pngCount": 715
+      }
+    },
+    {
+      "id": 14151022603,
+      "name": "cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-1",
+      "bytes": 60079997,
+      "digest": "sha256:d8933a1a10803cc40c826c80bee343f1042838db77e95218ab055217cee40c5b",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14151022603",
+      "verification": {
+        "artifact": 14151022603,
+        "bytes": 60079997,
+        "sha256": "d8933a1a10803cc40c826c80bee343f1042838db77e95218ab055217cee40c5b",
+        "crc": "PASS",
+        "files": [
+          {
+            "name": "booking-management.json",
+            "bytes": 1044,
+            "sha256": "586c2f1f256a071a87a061fd9050d9bc8fe5fee48b11462695daa2c98042b266"
+          },
+          {
+            "name": "position-archive.json",
+            "bytes": 3296,
+            "sha256": "6508bc610dbb656abb4fb0666ee1652665ca168c7de1c1750ed01c15a2eaccaa"
+          },
+          {
+            "name": "price-csv-tools/report.json",
+            "bytes": 146,
+            "sha256": "dcfdc644d3a0de5bc5eb6b70cad73750613d670ccfe9f1ebaee48f7ebf24211f"
+          },
+          {
+            "name": "readability/report.json",
+            "bytes": 164,
+            "sha256": "9ea574aeff97fb8f15e1c86085caf314902d63a333040941057264a2c830e042"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725010818.json",
+            "bytes": 3465,
+            "sha256": "24d8983571e84552f27134f6371ede3857dfcbd73b5b997d81801a19c0ba7871"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725314846.json",
+            "bytes": 3667,
+            "sha256": "75e3ef48166c9a082f1cdc892071cfb2b66655f979dc2c47c2b7ef702cf05d33"
+          },
+          {
+            "name": "storage-fixture/firefox-1794725325035.json",
+            "bytes": 3578,
+            "sha256": "6948de59361d123196bad5a818296a677c751db5ca2111227a4f3039332f8e2e"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725014417.json",
+            "bytes": 3658,
+            "sha256": "235aff0437646547cab8b25e73ebf880f8b1560a0456fe5e4339a0b47a8f621b"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725330791.json",
+            "bytes": 3773,
+            "sha256": "ae1c9c644275312387fedc691d4b41afec6c522a2b2a14ad1916f8dd325066db"
+          },
+          {
+            "name": "storage-fixture/webkit-1794725337185.json",
+            "bytes": 3771,
+            "sha256": "10c9855cdfd97f4b79cc4e27459e2b3bbc3c2555e078d0847c1043013857485d"
+          },
+          {
+            "name": "transfer-states.json",
+            "bytes": 3647,
+            "sha256": "4ca058d57d4326d55a15245be94f952a6118127ba13db253f1da407db0fe5470"
+          },
+          {
+            "name": "ui-alltag10/long-press.json",
+            "bytes": 324,
+            "sha256": "d0375c633dec7cecc9bb6eae9e230ef395ca685ab92d2afab2ae2f66bc6899e5"
+          },
+          {
+            "name": "ui-textscale/report.json",
+            "bytes": 3829,
+            "sha256": "62421dfa01682b1062958a586c60f5ff82aecc130a89ca7c0ec2b7d293eba046"
+          },
+          {
+            "name": "ui07/firefox-report.json",
+            "bytes": 6077,
+            "sha256": "275257190d752d6824ba4d82321f7a3a6fd561755c69e0185cde52f8d98f8881"
+          },
+          {
+            "name": "ui07/webkit-report.json",
+            "bytes": 6076,
+            "sha256": "b668370b2a34e1c56b15932f9accb888bcfd490a72012fd5e7bc204c58b89651"
+          }
+        ],
+        "members": 508,
+        "jsonCount": 15,
+        "pngCount": 492
+      }
+    },
+    {
+      "id": 14150869399,
+      "name": "dialog-visual-reference",
+      "bytes": 934785,
+      "digest": "sha256:bc61dd0397a9cc59bfeecb97c9b292f5fbc032da24ef0de6b6796ed4cd3a53c0",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14150869399",
+      "verification": {
+        "artifact": 14150869399,
+        "bytes": 934785,
+        "sha256": "bc61dd0397a9cc59bfeecb97c9b292f5fbc032da24ef0de6b6796ed4cd3a53c0",
+        "crc": "PASS",
+        "files": [],
+        "members": 20,
+        "jsonCount": 0,
+        "pngCount": 20
+      }
+    },
+    {
+      "id": 14150327691,
+      "name": "ci-stage-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a",
+      "bytes": 509,
+      "digest": "sha256:0fe6c79c30415da8718e397a0a5e904ed7827fc43e153e26b913022cce860b69",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14150327691",
+      "verification": {
+        "artifact": 14150327691,
+        "bytes": 509,
+        "sha256": "0fe6c79c30415da8718e397a0a5e904ed7827fc43e153e26b913022cce860b69",
+        "crc": "PASS",
+        "files": [
+          {
+            "name": "plan.json",
+            "bytes": 876,
+            "sha256": "bda79310c81ec1aa197df18f5a4f8d9f6eb0d1dd1867ebf9f5e0fa58f2e31cf1"
+          }
+        ],
+        "members": 1,
+        "jsonCount": 1,
+        "pngCount": 0
+      }
+    },
+    {
+      "id": 14150308926,
+      "name": "cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-2",
+      "bytes": 12593086,
+      "digest": "sha256:d451c756c4601297bf2548add37fcb64599dd7b05ba36bef6b50aac122212af2",
+      "expires": "2027-02-13T06:36:44Z",
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14150308926",
+      "verification": {
+        "artifact": 14150308926,
+        "bytes": 12593086,
+        "sha256": "d451c756c4601297bf2548add37fcb64599dd7b05ba36bef6b50aac122212af2",
+        "crc": "PASS",
+        "files": [
+          {
+            "name": "alpha-vantage/idb-firefox.json",
+            "bytes": 55479,
+            "sha256": "027623bd6b3aca992072d8d6b2a0b8ab82edd807d154f9e071a10979217805d2"
+          },
+          {
+            "name": "alpha-vantage/idb-webkit.json",
+            "bytes": 55473,
+            "sha256": "a31bb32750e32306fbcc02504177ed55e5f737ef3e3acaeb7e504896fa7cb9a7"
+          },
+          {
+            "name": "alpha-vantage.json",
+            "bytes": 1142,
+            "sha256": "58df4e9aea46dd7b7d7f1195d0ff92513252c345da0057baad0c2785fdd293b7"
+          },
+          {
+            "name": "cash-account-ux.json",
+            "bytes": 1134,
+            "sha256": "14875a5689eb549df5800570fb7dd5775183a083cd716ec33df9a4fe9e60dfea"
+          },
+          {
+            "name": "fin-e2e/firefox.json",
+            "bytes": 1144,
+            "sha256": "41e5a4591dc46dfa06ffdc18af7f4a2d35e90af6f24000a61e3a8137c7b25175"
+          },
+          {
+            "name": "fin-e2e/webkit.json",
+            "bytes": 2085,
+            "sha256": "e729e6f47776283f82843d99fcf07758894dc9a74db1b5d9bbe1656f4e16dd73"
+          },
+          {
+            "name": "firefox-position-removal-sw-baseline.json",
+            "bytes": 634,
+            "sha256": "a2d3569ad63d82ae787b17c7c25291d5e115bbb3fc8694524db33af4db8d752e"
+          },
+          {
+            "name": "flh03-abce.json",
+            "bytes": 4631,
+            "sha256": "e52427a1424842f20f51869ab764c71359e28cdab4004c7e64bb56d4605d2c21"
+          },
+          {
+            "name": "loading-pwa/firefox.json",
+            "bytes": 675,
+            "sha256": "64c706abf00c6e786c998b666db1d10b7469ba02fbb971be9b757ccdd8aa7069"
+          },
+          {
+            "name": "loading-pwa/webkit.json",
+            "bytes": 674,
+            "sha256": "b9f5e28734343bf5661cc59ad437108057cda6c9927ea7378a2375477c808f73"
+          },
+          {
+            "name": "marketstack.json",
+            "bytes": 835,
+            "sha256": "995495a7aa7557448ee632d801d66e30053f31322b1f5db91e064509a42e0cf0"
+          },
+          {
+            "name": "pchain-evidence-firefox-webkit.json",
+            "bytes": 11466,
+            "sha256": "69b800d65f0a6625f93539ff5e5b61e96f41152b720633e9665f6f738f75690c"
+          },
+          {
+            "name": "plain-backup-limits/firefox.json",
+            "bytes": 856,
+            "sha256": "65913df0212e465710233ea2071e7d3c53d17858e4b7aa64ac13f916f898105c"
+          },
+          {
+            "name": "plain-backup-limits/webkit.json",
+            "bytes": 1601,
+            "sha256": "23201588f78f89ecfbe23156378fb63bd8a94a7aa90472b99c34d8ded0f4f9dc"
+          },
+          {
+            "name": "provider-retirement.json",
+            "bytes": 832,
+            "sha256": "fee8278b8046e8d8e56e14476037c0859c1cf0ffba087e63194e3d0991b123f9"
+          },
+          {
+            "name": "pwa-update/report.json",
+            "bytes": 63668,
+            "sha256": "f35389e119229bf0629df60a7d397987358215368fe751e37a09f107375e7f30"
+          },
+          {
+            "name": "recovery-limits/report-firefox-webkit.json",
+            "bytes": 488,
+            "sha256": "c0bede2326afa92b35c6d07b7ab7d7ef5a9644080a51ac8307370f19ee2f760b"
+          },
+          {
+            "name": "refresh-frequency/firefox.json",
+            "bytes": 394,
+            "sha256": "004e9115111085f04a68590648e8ab476542a37e50b809dac42e5654c43a813e"
+          },
+          {
+            "name": "refresh-frequency/report.json",
+            "bytes": 1053,
+            "sha256": "bb27ae0abf7714486f00c48051d1c0694c9057fc5ea1d005d9d4e33de269db25"
+          },
+          {
+            "name": "refresh-frequency/webkit.json",
+            "bytes": 393,
+            "sha256": "7b71bc02887edbd39f060d82991450cdc3ad3ae9a89b83cad7d9840764659a36"
+          },
+          {
+            "name": "sonic-evidence-firefox-webkit.json",
+            "bytes": 11489,
+            "sha256": "2c614d304bd8fa425c1231985793630e500c2022575faf98c5812be11fb82cb3"
+          },
+          {
+            "name": "webkit-position-removal-sw-baseline.json",
+            "bytes": 642,
+            "sha256": "5c8ea7f9128cafda6760dcda8b92d35bf63540e4c093fad99ad57b9de99c92fb"
+          }
+        ],
+        "members": 123,
+        "jsonCount": 22,
+        "pngCount": 100
+      }
+    }
+  ],
+  "machineReportFiles": [
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/booking-management.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/position-archive.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/price-csv-tools/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/readability/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/firefox-1794725010818.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/firefox-1794725314846.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/firefox-1794725325035.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/webkit-1794725014417.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/webkit-1794725330791.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/storage-fixture/webkit-1794725337185.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/transfer-states.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/ui-alltag10/long-press.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/ui-textscale/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/ui07/firefox-report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross1/ui07/webkit-report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/alpha-vantage/idb-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/alpha-vantage/idb-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/alpha-vantage.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/cash-account-ux.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/fin-e2e/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/fin-e2e/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/firefox-position-removal-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/flh03-abce.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/loading-pwa/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/loading-pwa/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/marketstack.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/pchain-evidence-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/plain-backup-limits/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/plain-backup-limits/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/provider-retirement.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/pwa-update/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/recovery-limits/report-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/refresh-frequency/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/refresh-frequency/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/refresh-frequency/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/sonic-evidence-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross2/webkit-position-removal-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/alpha-vantage/idb-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/alpha-vantage.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/bitpanda-evidence-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/bitpanda-preview/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/blocked-reasons/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/booking-management.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/cash-account-ux.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/chart-tooltip/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/chromium-position-removal-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/fin-e2e/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-context/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-funding/report-chromium-12-before.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-funding/report-chromium-12-next-day.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-funding/report-chromium-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-funding/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-amounts-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-binding/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-commit/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-identity-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-projection-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-simulation-ui/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-native-ui/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-net-augmentation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-net-backfill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-net-selection/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-net-settlement/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-order-links-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-reconciliation/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flatex-reconciliation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/flh03-abce.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/header-status/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/history-worker/chromium-controller.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-allocation/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-allocation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-fiat-binding/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-ledger/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-link/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/kraken-usd-principal/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/loading-pwa/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/management-parity/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/marketstack.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/missing-position-value/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/navigation-focus/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/navigation-installation/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/pchain-evidence-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/plain-backup-limits/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/position-archive.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/price-csv-tools/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/provider-retirement.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/pwa-update/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/readability/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/recovery-limits/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/reference-management/chromium-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/reference-management/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/reference-removal/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/refresh-frequency/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/refresh-frequency/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/settings-replacement/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/shared-import/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/sonic-evidence-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724811493.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724817925.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724824230.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724830416.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724836406.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724842430.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724848527.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724854174.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724859257.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794724887984.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794725069102.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794725074095.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794725775544.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/storage-fixture/chromium-1794725781311.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/syntax.log",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/tested-sha.txt",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/three-fill/report-chromium-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/three-fill/report-chromium-13.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/three-fill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/transfer-states.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/two-fill/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/two-fill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-alltag10/chromium-real-touch-pan.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-alltag10/chromium-real-touch-press.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-alltag10/long-press.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-audit-controls/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-quality.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui-textscale/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui07/chromium-report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/ui300/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/unknown-fx/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/update-drafts/chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/chromium-320-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/chromium-360-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/chromium-390-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/chromium-412-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/chromium-430-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/report-chromium.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/v289-review-integrity/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/chromium/unit.log",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/bitpanda-evidence-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/bitpanda-preview/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/blocked-reasons/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/chart-tooltip/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-context/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-firefox-12-before.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-firefox-12-next-day.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-firefox-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-webkit-12-before.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-webkit-12-next-day.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report-webkit-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-funding/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-amounts-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-binding/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-commit/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-identity-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-projection-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-simulation-ui/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-native-ui/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-net-augmentation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-net-backfill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-net-selection/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-net-settlement/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-order-links-firefox-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-reconciliation/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-reconciliation/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/flatex-reconciliation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/header-status/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/history-worker/firefox-controller.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/history-worker/webkit-controller.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-allocation/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-allocation/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-allocation/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-fiat-binding/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-fiat-binding/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-ledger/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-link/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-link/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-usd-principal/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/kraken-usd-principal/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/management-parity/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/missing-position-value/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/navigation-focus/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/navigation-focus/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/navigation-installation/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/navigation-installation/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/reference-management/firefox-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/reference-management/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/reference-management/webkit-sw-baseline.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/reference-removal/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/settings-replacement/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/settings-replacement/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/shared-import/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794724724463.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794724740881.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725479077.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725501795.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725520213.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725538309.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725556156.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725573905.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725591562.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725608803.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/firefox-1794725616780.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794724732989.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794724756118.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725491618.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725510109.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725528317.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725546428.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725563983.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725581826.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725599443.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725624055.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/storage-fixture/webkit-1794725630140.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/three-fill/report-firefox-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/three-fill/report-firefox-13.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/three-fill/report-webkit-12.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/three-fill/report-webkit-13.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/three-fill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/two-fill/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/two-fill/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/two-fill/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/ui-audit-controls/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/ui-quality.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/ui300/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/ui300/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/unknown-fx/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/unknown-fx/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/update-drafts/firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/update-drafts/webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/firefox-320-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/firefox-360-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/firefox-390-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/firefox-412-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/firefox-430-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/report-firefox.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/report-webkit.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/report.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/webkit-320-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/webkit-360-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/webkit-390-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/webkit-412-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/cross3/v289-review-integrity/webkit-430-axe.json",
+    "docs/release-evidence/pr339-2026-11-15/reports/ci-stage/plan.json"
+  ],
+  "explicitReportFailValues": [],
+  "decodedJobLogs": [
+    {
+      "job": 132727179191,
+      "decodedCharacters": 64571,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727179191.part001.log"
+      ]
+    },
+    {
+      "job": 132727179357,
+      "decodedCharacters": 551837,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727179357.part001.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727179357.part002.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727179357.part003.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727179357.part004.log"
+      ]
+    },
+    {
+      "job": 132727209103,
+      "decodedCharacters": 1119492,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part001.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part002.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part003.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part004.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part005.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part006.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209103.part007.log"
+      ]
+    },
+    {
+      "job": 132727209124,
+      "decodedCharacters": 158619,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209124.part001.log"
+      ]
+    },
+    {
+      "job": 132727209088,
+      "decodedCharacters": 144813,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209088.part001.log"
+      ]
+    },
+    {
+      "job": 132727209100,
+      "decodedCharacters": 215024,
+      "parts": [
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209100.part001.log",
+        "docs/release-evidence/pr339-2026-11-15/jobs/132727209100.part002.log"
+      ]
+    }
+  ],
+  "preservation": "All6 original ZIPs downloaded and matched size/SHA256/CRC. All241JSON reports, unit/syntax logs and tested-sha preserved unchanged in repository, plus complete decoded logs of all6 executed jobs in ordered parts. Original2089PNG files remain in immutable run artifacts; changed copy was visually qualified in the preserved original targeted QA evidence.",
+  "scopeBoundary": "No merge/deployment or v316 live acceptance. Existing v315 LIVE_ACCEPTED remains. A09 and WebKit eviction outside scope.",
+  "hnd": {
+    "claim": "186b2e78b62ecb30bedf4d0769cfbe36a6de7880",
+    "previous": "0a796aee6897fa8e22cdccda8778c1dd2f773ed5",
+    "progress": "4a778f514f68b5eee73df349eb1f64db0e07344d",
+    "writer": "trust-pr-e4b79f541e28",
+    "end": "STOPPED / HANDOVER_READY"
+  }
+}

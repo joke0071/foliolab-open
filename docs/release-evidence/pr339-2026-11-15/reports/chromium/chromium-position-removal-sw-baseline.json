@@ -1,0 +1,31 @@
+{
+  "initial": {
+    "controller": false,
+    "script": null,
+    "active": null,
+    "installing": "installing",
+    "waiting": null
+  },
+  "activated": {
+    "controller": true,
+    "script": "http://127.0.0.1:4173/sw.js",
+    "active": "activated",
+    "installing": null,
+    "waiting": null
+  },
+  "controlled": {
+    "controller": true,
+    "script": "http://127.0.0.1:4173/sw.js",
+    "active": "activated",
+    "installing": null,
+    "waiting": null
+  },
+  "result": "PASS",
+  "final": {
+    "controller": true,
+    "script": "http://127.0.0.1:4173/sw.js",
+    "active": "activated",
+    "installing": null,
+    "waiting": null
+  }
+}

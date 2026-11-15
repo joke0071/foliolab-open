@@ -1,0 +1,24 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic pure native Flatex source projection only; no dialog or economic integration",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "native 12/10 positional blank headers",
+        "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+        "exact signed 18-digit quantities/unknown versus zero",
+        "separate bank/order/account references",
+        "documentary cancellation/unknown/date guards",
+        "no generic header relaxation",
+        "deep immutable result/no import API",
+        "actual SW offline reload/module import",
+        "exact IDB/revision/settings zero mutation",
+        "no external projection requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

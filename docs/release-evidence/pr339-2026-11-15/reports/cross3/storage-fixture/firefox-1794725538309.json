@@ -1,0 +1,137 @@
+{
+  "engine": "firefox",
+  "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-kraken-import.mjs:132:9",
+  "events": [
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/?page=bookings",
+      "time": 1794725538352
+    },
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/?page=bookings",
+      "time": 1794725538716
+    },
+    {
+      "event": "load",
+      "url": "http://127.0.0.1:4173/?page=bookings",
+      "time": 1794725539015
+    },
+    {
+      "event": "navigation",
+      "url": "http://127.0.0.1:4173/?page=bookings",
+      "time": 1794725539037
+    }
+  ],
+  "stages": [
+    {
+      "stage": "initial-ready",
+      "state": {
+        "url": "http://127.0.0.1:4173/?page=bookings",
+        "timeOrigin": 1794725537994,
+        "documentState": "complete",
+        "controller": null,
+        "active": null,
+        "installing": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "installing"
+        },
+        "waiting": null,
+        "controlled": false,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv"
+      }
+    },
+    {
+      "stage": "before-reload",
+      "waitResult": true,
+      "state": {
+        "url": "http://127.0.0.1:4173/?page=bookings",
+        "timeOrigin": 1794725537994,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      }
+    },
+    {
+      "stage": "after-reload",
+      "waitResult": true,
+      "state": {
+        "url": "http://127.0.0.1:4173/?page=bookings",
+        "timeOrigin": 1794725538697,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      }
+    },
+    {
+      "stage": "assertions",
+      "state": {
+        "url": "http://127.0.0.1:4173/?page=bookings",
+        "timeOrigin": 1794725538697,
+        "documentState": "complete",
+        "controller": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "active": {
+          "script": "http://127.0.0.1:4173/sw.js",
+          "state": "activated"
+        },
+        "installing": null,
+        "waiting": null,
+        "controlled": true,
+        "caches": [
+          "foliolab-open-v316"
+        ],
+        "storage": "Transaktionale IndexedDB aktiv",
+        "fixture": {
+          "ready": true,
+          "error": null
+        }
+      },
+      "verified": {
+        "controller": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "controlled": true
+      }
+    }
+  ],
+  "result": "PASS"
+}

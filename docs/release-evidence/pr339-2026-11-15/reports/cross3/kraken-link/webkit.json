@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "engine": "webkit",
+  "version": "27.2",
+  "scope": "synthetic local LINK explorer/Beacon evidence; no live provider or private originals",
+  "checks": [
+    "explicit actual partial history acceptance; no opening/whole coverage/position write",
+    "explicit local evidence consent; zero external lookups",
+    "actual shared CSV preview/commit and one CAS revision",
+    "exact principal and separate source fee; sender gas documentary; recipient/history unchanged",
+    "320-430 history/preview layout and Axe; seven preview widths",
+    "reload/replay/undo; persistent whole-group rollback/tombstone",
+    "quota/postput abort exact no mutation; stale second writer",
+    "fresh context encrypted v5 actual UI restore with history",
+    "actual offline PWA reload and tombstone replay"
+  ]
+}

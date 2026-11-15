@@ -1,0 +1,30 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "both dialects, later and earlier dated reconciliation",
+        "unchanged old bookings/journals/openings/references; independent integer balances",
+        "consent reset, one CAS, quota/post-put, actual peer tab",
+        "exact full Undo, offline repeat, encrypted fresh-profile restore",
+        "five mobile widths/Axe, no financial-provider requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "both dialects, later and earlier dated reconciliation",
+        "unchanged old bookings/journals/openings/references; independent integer balances",
+        "consent reset, one CAS, quota/post-put, actual peer tab",
+        "exact full Undo, offline repeat, encrypted fresh-profile restore",
+        "five mobile widths/Axe, no financial-provider requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

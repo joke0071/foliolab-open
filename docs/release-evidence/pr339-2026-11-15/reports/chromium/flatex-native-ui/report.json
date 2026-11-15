@@ -1,0 +1,25 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "checks": [
+        "native CP1252/blank-header auto/explicit recognition",
+        "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+        "exact quantities/currencies/separate references",
+        "hostile source escaping",
+        "50/100 source paging and focus",
+        "order statuses/reasons/all legs/duplicate filenames/separate references",
+        "independent group/leg paging/focus/disclosure preservation/reset",
+        "expanded order groups at 5 widths/Axe/44px",
+        "5 widths/Axe/44px",
+        "forced submit/Escape/cancel/reopen",
+        "actual offline reload with order display",
+        "exact IDB/revision/settings zero mutation",
+        "no external preview requests"
+      ]
+    }
+  ]
+}

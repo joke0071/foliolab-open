@@ -1,0 +1,25 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic grouped blocker presentation; original eligibility and exact stored record unchanged",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "widths": [
+        320,
+        390,
+        430,
+        768,
+        1440
+      ],
+      "checks": [
+        "8 identical legacy reasons once",
+        "100 imported booking blockers compact",
+        "205 check cap and Gmail reset intact",
+        "mixed categories count unique identities",
+        "position preview closed and nondeletable",
+        "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+      ]
+    }
+  ]
+}

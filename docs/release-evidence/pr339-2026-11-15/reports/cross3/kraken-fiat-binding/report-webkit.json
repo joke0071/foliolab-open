@@ -1,0 +1,43 @@
+{
+  "engine": "webkit",
+  "result": "PASS",
+  "base": "http://127.0.0.1:4173/",
+  "checks": [
+    {
+      "scenario": "fiat-exchange-with-internal-fee",
+      "result": "PASS",
+      "visibleReason": " 1999-01-02 12:00:00 · Handel\n\n13 EUR (spot) · -17 USD (spot) · -0.2 FEE (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; USD ist ausschließlich als vollständiger Spot-/Earn-Hauptbetrag zulässig.",
+      "disabledApprovals": true,
+      "scriptedSubmitRejected": true,
+      "canonicalBytesAndRevisionUnchanged": true,
+      "offlineReloadUnchanged": true
+    },
+    {
+      "scenario": "fiat-reward",
+      "result": "PASS",
+      "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; USD ist ausschließlich als vollständiger Spot-/Earn-Hauptbetrag zulässig.",
+      "disabledApprovals": true,
+      "scriptedSubmitRejected": true,
+      "canonicalBytesAndRevisionUnchanged": true,
+      "offlineReloadUnchanged": true
+    },
+    {
+      "scenario": "mixed-no-partial-commit",
+      "result": "PASS",
+      "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nGeprüft – neue Buchungsgruppe\n\n 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; USD ist ausschließlich als vollständiger Spot-/Earn-Hauptbetrag zulässig.",
+      "disabledApprovals": true,
+      "scriptedSubmitRejected": true,
+      "canonicalBytesAndRevisionUnchanged": true,
+      "offlineReloadUnchanged": true
+    },
+    {
+      "scenario": "cash-without-fiat-role",
+      "result": "PASS",
+      "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nFiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.",
+      "disabledApprovals": true,
+      "scriptedSubmitRejected": true,
+      "canonicalBytesAndRevisionUnchanged": true,
+      "offlineReloadUnchanged": true
+    }
+  ]
+}

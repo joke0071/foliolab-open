@@ -1,0 +1,2494 @@
+2026-11-15T06:37:24.9032174Z # Subtest: staking principal is an internal transfer, reward a separate event and fee a separate debit
+2026-11-15T06:37:24.9032819Z ok 783 - staking principal is an internal transfer, reward a separate event and fee a separate debit
+2026-11-15T06:37:24.9033161Z   ---
+2026-11-15T06:37:24.9033359Z   duration_ms: 6.10389
+2026-11-15T06:37:24.9033557Z   type: 'test'
+2026-11-15T06:37:24.9033744Z   ...
+2026-11-15T06:37:24.9034402Z # Subtest: trusted cost basis remains protected and reordered source rows do not change import identity
+2026-11-15T06:37:24.9035038Z ok 784 - trusted cost basis remains protected and reordered source rows do not change import identity
+2026-11-15T06:37:24.9035226Z   ---
+2026-11-15T06:37:24.9035422Z   duration_ms: 5.909757
+2026-11-15T06:37:24.9035618Z   type: 'test'
+2026-11-15T06:37:24.9035801Z   ...
+2026-11-15T06:37:24.9036416Z # Subtest: confirmed native schema reuses CSV parser, BOM/quotes and explicit exact source values
+2026-11-15T06:37:24.9037099Z ok 785 - confirmed native schema reuses CSV parser, BOM/quotes and explicit exact source values
+2026-11-15T06:37:24.9037334Z   ---
+2026-11-15T06:37:24.9037540Z   duration_ms: 5.127981
+2026-11-15T06:37:24.9037744Z   type: 'test'
+2026-11-15T06:37:24.9037939Z   ...
+2026-11-15T06:37:24.9038550Z # Subtest: recognizable partial ledgers quarantine native fields before generic EUR-fee mapping
+2026-11-15T06:37:24.9039158Z ok 786 - recognizable partial ledgers quarantine native fields before generic EUR-fee mapping
+2026-11-15T06:37:24.9039348Z   ---
+2026-11-15T06:37:24.9039547Z   duration_ms: 4.063738
+2026-11-15T06:37:24.9039750Z   type: 'test'
+2026-11-15T06:37:24.9039940Z   ...
+2026-11-15T06:37:24.9040535Z # Subtest: unknown or invalid rows remain visible with precise issues, never become zero values
+2026-11-15T06:37:24.9041206Z ok 787 - unknown or invalid rows remain visible with precise issues, never become zero values
+2026-11-15T06:37:24.9041441Z   ---
+2026-11-15T06:37:24.9041641Z   duration_ms: 0.940826
+2026-11-15T06:37:24.9041839Z   type: 'test'
+2026-11-15T06:37:24.9042021Z   ...
+2026-11-15T06:37:24.9042573Z # Subtest: calendar and clock checks preserve raw time without local-zone conversion
+2026-11-15T06:37:24.9043114Z ok 788 - calendar and clock checks preserve raw time without local-zone conversion
+2026-11-15T06:37:24.9043302Z   ---
+2026-11-15T06:37:24.9043511Z   duration_ms: 1.361214
+2026-11-15T06:37:24.9043705Z   type: 'test'
+2026-11-15T06:37:24.9043884Z   ...
+2026-11-15T06:37:24.9044486Z # Subtest: refid grouping retains every leg, while missing references never merge unrelated rows
+2026-11-15T06:37:24.9045143Z ok 789 - refid grouping retains every leg, while missing references never merge unrelated rows
+2026-11-15T06:37:24.9045350Z   ---
+2026-11-15T06:37:24.9045559Z   duration_ms: 0.777952
+2026-11-15T06:37:24.9045750Z   type: 'test'
+2026-11-15T06:37:24.9045933Z   ...
+2026-11-15T06:37:24.9046539Z # Subtest: duplicate and conflicting txids flag all originals without dropping or netting rows
+2026-11-15T06:37:24.9047115Z ok 790 - duplicate and conflicting txids flag all originals without dropping or netting rows
+2026-11-15T06:37:24.9047300Z   ---
+2026-11-15T06:37:24.9047511Z   duration_ms: 0.670915
+2026-11-15T06:37:24.9047701Z   type: 'test'
+2026-11-15T06:37:24.9048069Z   ...
+2026-11-15T06:37:24.9048703Z # Subtest: fee currency and USD observations remain documentary without asset/EUR/price inference
+2026-11-15T06:37:24.9049292Z ok 791 - fee currency and USD observations remain documentary without asset/EUR/price inference
+2026-11-15T06:37:24.9049480Z   ---
+2026-11-15T06:37:24.9049691Z   duration_ms: 0.48004
+2026-11-15T06:37:24.9049879Z   type: 'test'
+2026-11-15T06:37:24.9050064Z   ...
+2026-11-15T06:37:24.9050725Z # Subtest: preview output is deeply immutable and cannot mutate original text or manufacture write APIs
+2026-11-15T06:37:24.9051451Z ok 792 - preview output is deeply immutable and cannot mutate original text or manufacture write APIs
+2026-11-15T06:37:24.9051656Z   ---
+2026-11-15T06:37:24.9051863Z   duration_ms: 0.60298
+2026-11-15T06:37:24.9052051Z   type: 'test'
+2026-11-15T06:37:24.9052235Z   ...
+2026-11-15T06:37:24.9052903Z # Subtest: all declared event types remain observations, with unsupported subtype combinations visible
+2026-11-15T06:37:24.9053635Z ok 793 - all declared event types remain observations, with unsupported subtype combinations visible
+2026-11-15T06:37:24.9053821Z   ---
+2026-11-15T06:37:24.9054028Z   duration_ms: 1.103761
+2026-11-15T06:37:24.9054215Z   type: 'test'
+2026-11-15T06:37:24.9054401Z   ...
+2026-11-15T06:37:24.9055004Z # Subtest: existing disclosure markup escapes hostile source strings and bounds visible rows
+2026-11-15T06:37:24.9055575Z ok 794 - existing disclosure markup escapes hostile source strings and bounds visible rows
+2026-11-15T06:37:24.9055760Z   ---
+2026-11-15T06:37:24.9055967Z   duration_ms: 8.927469
+2026-11-15T06:37:24.9056152Z   type: 'test'
+2026-11-15T06:37:24.9056335Z   ...
+2026-11-15T06:37:24.9057192Z # Subtest: tagged LINK source debit and exchange fee once, sender ETH gas documentary, accepted partial history and recipient unchanged
+2026-11-15T06:37:24.9058013Z ok 795 - tagged LINK source debit and exchange fee once, sender ETH gas documentary, accepted partial history and recipient unchanged
+2026-11-15T06:37:24.9058206Z   ---
+2026-11-15T06:37:24.9058425Z   duration_ms: 91.48187
+2026-11-15T06:37:24.9058610Z   type: 'test'
+2026-11-15T06:37:24.9058797Z   ...
+2026-11-15T06:37:24.9059600Z # Subtest: missing history requires an explicit separate partial acceptance; no opening, balance mutation or whole coverage
+2026-11-15T06:37:24.9060379Z ok 796 - missing history requires an explicit separate partial acceptance; no opening, balance mutation or whole coverage
+2026-11-15T06:37:24.9060557Z   ---
+2026-11-15T06:37:24.9060766Z   duration_ms: 11.269427
+2026-11-15T06:37:24.9060961Z   type: 'test'
+2026-11-15T06:37:24.9061235Z   ...
+2026-11-15T06:37:24.9062102Z # Subtest: raw hash plus source URLs/finality/slot/execution/contract/log/input/gas/chain/decimals/flags reject altered packages
+2026-11-15T06:37:24.9062930Z ok 797 - raw hash plus source URLs/finality/slot/execution/contract/log/input/gas/chain/decimals/flags reject altered packages
+2026-11-15T06:37:24.9063115Z   ---
+2026-11-15T06:37:24.9063336Z   duration_ms: 113.937681
+2026-11-15T06:37:24.9063536Z   type: 'test'
+2026-11-15T06:37:24.9063712Z   ...
+2026-11-15T06:37:24.9064648Z # Subtest: fresh LINK proof rejects changed own scope, source reference, locator, amount, decimals, history conflicts and fee currency assumptions
+2026-11-15T06:37:24.9065550Z ok 798 - fresh LINK proof rejects changed own scope, source reference, locator, amount, decimals, history conflicts and fee currency assumptions
+2026-11-15T06:37:24.9065722Z   ---
+2026-11-15T06:37:24.9065930Z   duration_ms: 48.819439
+2026-11-15T06:37:24.9066125Z   type: 'test'
+2026-11-15T06:37:24.9066301Z   ...
+2026-11-15T06:37:24.9067124Z # Subtest: portable v5 proof/optional history/replay and persistent whole-group rollback retain tagged evidence and tombstone
+2026-11-15T06:37:24.9067958Z ok 799 - portable v5 proof/optional history/replay and persistent whole-group rollback retain tagged evidence and tombstone
+2026-11-15T06:37:24.9068135Z   ---
+2026-11-15T06:37:24.9068346Z   duration_ms: 50.546406
+2026-11-15T06:37:24.9068641Z   type: 'test'
+2026-11-15T06:37:24.9068824Z   ...
+2026-11-15T06:37:24.9069510Z # Subtest: restore/source projection/version mutation and stale confirmation fail without changing input
+2026-11-15T06:37:24.9070174Z ok 800 - restore/source projection/version mutation and stale confirmation fail without changing input
+2026-11-15T06:37:24.9070351Z   ---
+2026-11-15T06:37:24.9070559Z   duration_ms: 23.023953
+2026-11-15T06:37:24.9070753Z   type: 'test'
+2026-11-15T06:37:24.9070926Z   ...
+2026-11-15T06:37:24.9071717Z # Subtest: local JSON rejects duplicate keys including escaped names, without accepting a new implicit proof
+2026-11-15T06:37:24.9072447Z ok 801 - local JSON rejects duplicate keys including escaped names, without accepting a new implicit proof
+2026-11-15T06:37:24.9072632Z   ---
+2026-11-15T06:37:24.9072833Z   duration_ms: 3.387014
+2026-11-15T06:37:24.9073030Z   type: 'test'
+2026-11-15T06:37:24.9073212Z   ...
+2026-11-15T06:37:24.9074154Z # Subtest: partial SOL history authorizes only exact finalized event; source principal+fee debit once, recipient and flows unchanged
+2026-11-15T06:37:24.9074981Z ok 802 - partial SOL history authorizes only exact finalized event; source principal+fee debit once, recipient and flows unchanged
+2026-11-15T06:37:24.9075164Z   ---
+2026-11-15T06:37:24.9075373Z   duration_ms: 77.683639
+2026-11-15T06:37:24.9075570Z   type: 'test'
+2026-11-15T06:37:24.9075751Z   ...
+2026-11-15T06:37:24.9076707Z # Subtest: source, instruction inclusion/finality, native locator, wallet address/scope, ledger exactness and failed/contract/N:M evidence fail closed
+2026-11-15T06:37:24.9077656Z ok 803 - source, instruction inclusion/finality, native locator, wallet address/scope, ledger exactness and failed/contract/N:M evidence fail closed
+2026-11-15T06:37:24.9077841Z   ---
+2026-11-15T06:37:24.9078037Z   duration_ms: 69.220551
+2026-11-15T06:37:24.9078231Z   type: 'test'
+2026-11-15T06:37:24.9078417Z   ...
+2026-11-15T06:37:24.9079287Z # Subtest: portable immutable proof permits reload and duplicate import without optional history; new bridge requires accepted history
+2026-11-15T06:37:24.9080134Z ok 804 - portable immutable proof permits reload and duplicate import without optional history; new bridge requires accepted history
+2026-11-15T06:37:24.9080317Z   ---
+2026-11-15T06:37:24.9080513Z   duration_ms: 36.457492
+2026-11-15T06:37:24.9080711Z   type: 'test'
+2026-11-15T06:37:24.9080895Z   ...
+2026-11-15T06:37:24.9081796Z # Subtest: restore rejects changed source proof, lost proof, new scope, journal or exchange fee and version downgrade
+2026-11-15T06:37:24.9082542Z ok 805 - restore rejects changed source proof, lost proof, new scope, journal or exchange fee and version downgrade
+2026-11-15T06:37:24.9082730Z   ---
+2026-11-15T06:37:24.9082928Z   duration_ms: 26.238036
+2026-11-15T06:37:24.9083127Z   type: 'test'
+2026-11-15T06:37:24.9083311Z   ...
+2026-11-15T06:37:24.9084137Z # Subtest: economic withdrawal retains SOL proof, source and fee; restores source only and blocks reimport after portable restore
+2026-11-15T06:37:24.9084950Z ok 806 - economic withdrawal retains SOL proof, source and fee; restores source only and blocks reimport after portable restore
+2026-11-15T06:37:24.9085140Z   ---
+2026-11-15T06:37:24.9085347Z   duration_ms: 39.181609
+2026-11-15T06:37:24.9085535Z   type: 'test'
+2026-11-15T06:37:24.9085722Z   ...
+2026-11-15T06:37:24.9086544Z # Subtest: Ledger-first / Kraken-first documentary previews have same quantities and event reference, no wallet quantity replay
+2026-11-15T06:37:24.9087340Z ok 807 - Ledger-first / Kraken-first documentary previews have same quantities and event reference, no wallet quantity replay
+2026-11-15T06:37:24.9087530Z   ---
+2026-11-15T06:37:24.9087735Z   duration_ms: 15.564094
+2026-11-15T06:37:24.9087920Z   type: 'test'
+2026-11-15T06:37:24.9088104Z   ...
+2026-11-15T06:37:24.9088674Z # Subtest: stale confirmation and changed exact source opening reject without mutation
+2026-11-15T06:37:24.9089200Z ok 808 - stale confirmation and changed exact source opening reject without mutation
+2026-11-15T06:37:24.9089493Z   ---
+2026-11-15T06:37:24.9089705Z   duration_ms: 7.873948
+2026-11-15T06:37:24.9089892Z   type: 'test'
+2026-11-15T06:37:24.9090077Z   ...
+2026-11-15T06:37:24.9090752Z # Subtest: SOL lookup pins configured endpoint, enforces genesis/error/abort and never sends source data
+2026-11-15T06:37:24.9091491Z ok 809 - SOL lookup pins configured endpoint, enforces genesis/error/abort and never sends source data
+2026-11-15T06:37:24.9091704Z   ---
+2026-11-15T06:37:24.9091921Z   duration_ms: 3.934933
+2026-11-15T06:37:24.9092111Z   type: 'test'
+2026-11-15T06:37:24.9092300Z   ...
+2026-11-15T06:37:24.9092765Z # Subtest: exchange remainder retains greater-than-lamport precision
+2026-11-15T06:37:24.9093192Z ok 810 - exchange remainder retains greater-than-lamport precision
+2026-11-15T06:37:24.9093439Z   ---
+2026-11-15T06:37:24.9093645Z   duration_ms: 16.196061
+2026-11-15T06:37:24.9093833Z   type: 'test'
+2026-11-15T06:37:24.9094179Z   ...
+2026-11-15T06:37:24.9095004Z # Subtest: sender owned by another own SOL wallet, instruction/account locator confusion and conflicting provider facts reject
+2026-11-15T06:37:24.9095792Z ok 811 - sender owned by another own SOL wallet, instruction/account locator confusion and conflicting provider facts reject
+2026-11-15T06:37:24.9095976Z   ---
+2026-11-15T06:37:24.9096182Z   duration_ms: 8.508614
+2026-11-15T06:37:24.9096372Z   type: 'test'
+2026-11-15T06:37:24.9096559Z   ...
+2026-11-15T06:37:24.9097145Z # Subtest: three-leg trade retains zero-amount crypto fee as an independent exact movement
+2026-11-15T06:37:24.9097697Z ok 812 - three-leg trade retains zero-amount crypto fee as an independent exact movement
+2026-11-15T06:37:24.9097880Z   ---
+2026-11-15T06:37:24.9098087Z   duration_ms: 9.311664
+2026-11-15T06:37:24.9098275Z   type: 'test'
+2026-11-15T06:37:24.9098503Z   ...
+2026-11-15T06:37:24.9099156Z # Subtest: overlap deduplicates only identical Ledger IDs, and changed fields conflict across files
+2026-11-15T06:37:24.9099797Z ok 813 - overlap deduplicates only identical Ledger IDs, and changed fields conflict across files
+2026-11-15T06:37:24.9099974Z   ---
+2026-11-15T06:37:24.9100181Z   duration_ms: 7.970045
+2026-11-15T06:37:24.9100379Z   type: 'test'
+2026-11-15T06:37:24.9100554Z   ...
+2026-11-15T06:37:24.9101286Z # Subtest: same refid across distinct ledger IDs keeps all fills and refuses guessed two-leg execution
+2026-11-15T06:37:24.9101959Z ok 814 - same refid across distinct ledger IDs keeps all fills and refuses guessed two-leg execution
+2026-11-15T06:37:24.9102139Z   ---
+2026-11-15T06:37:24.9102345Z   duration_ms: 2.498267
+2026-11-15T06:37:24.9102543Z   type: 'test'
+2026-11-15T06:37:24.9102716Z   ...
+2026-11-15T06:37:24.9103270Z # Subtest: reordered identical source legs retain stable group payload and identities
+2026-11-15T06:37:24.9103806Z ok 815 - reordered identical source legs retain stable group payload and identities
+2026-11-15T06:37:24.9103979Z   ---
+2026-11-15T06:37:24.9104182Z   duration_ms: 4.277066
+2026-11-15T06:37:24.9104383Z   type: 'test'
+2026-11-15T06:37:24.9104561Z   ...
+2026-11-15T06:37:24.9105207Z # Subtest: allocation is principal transfer, reward is distinct, mismatched amounts remain unresolved
+2026-11-15T06:37:24.9105831Z ok 816 - allocation is principal transfer, reward is distinct, mismatched amounts remain unresolved
+2026-11-15T06:37:24.9106006Z   ---
+2026-11-15T06:37:24.9106209Z   duration_ms: 3.427522
+2026-11-15T06:37:24.9106407Z   type: 'test'
+2026-11-15T06:37:24.9106581Z   ...
+2026-11-15T06:37:24.9107149Z # Subtest: unknown or contradictory fee asset cannot acquire an invented zero or EUR fee
+2026-11-15T06:37:24.9107702Z ok 817 - unknown or contradictory fee asset cannot acquire an invented zero or EUR fee
+2026-11-15T06:37:24.9107878Z   ---
+2026-11-15T06:37:24.9108082Z   duration_ms: 2.4642
+2026-11-15T06:37:24.9108282Z   type: 'test'
+2026-11-15T06:37:24.9108458Z   ...
+2026-11-15T06:37:24.9109067Z # Subtest: a declared zero fee needs no invented denomination, while an absent fee stays unknown
+2026-11-15T06:37:24.9109754Z ok 818 - a declared zero fee needs no invented denomination, while an absent fee stays unknown
+2026-11-15T06:37:24.9109932Z   ---
+2026-11-15T06:37:24.9110143Z   duration_ms: 2.74874
+2026-11-15T06:37:24.9110342Z   type: 'test'
+2026-11-15T06:37:24.9110516Z   ...
+2026-11-15T06:37:24.9111316Z # Subtest: one complete native USD principal preserves amounts and UNKNOWN gross EUR without external effects
+2026-11-15T06:37:24.9112021Z ok 819 - one complete native USD principal preserves amounts and UNKNOWN gross EUR without external effects
+2026-11-15T06:37:24.9112197Z   ---
+2026-11-15T06:37:24.9112410Z   duration_ms: 33.682051
+2026-11-15T06:37:24.9112611Z   type: 'test'
+2026-11-15T06:37:24.9112786Z   ...
+2026-11-15T06:37:24.9113353Z # Subtest: shared core commit, exact replay and existing Undo preserve the whole baseline
+2026-11-15T06:37:24.9113893Z ok 820 - shared core commit, exact replay and existing Undo preserve the whole baseline
+2026-11-15T06:37:24.9114068Z   ---
+2026-11-15T06:37:24.9114376Z   duration_ms: 30.546763
+2026-11-15T06:37:24.9114582Z   type: 'test'
+2026-11-15T06:37:24.9114758Z   ...
+2026-11-15T06:37:24.9115415Z # Subtest: documentary withdrawal restores native principal and durably blocks resurrection
+2026-11-15T06:37:24.9115992Z ok 821 - documentary withdrawal restores native principal and durably blocks resurrection
+2026-11-15T06:37:24.9116168Z   ---
+2026-11-15T06:37:24.9116377Z   duration_ms: 34.44207
+2026-11-15T06:37:24.9116576Z   type: 'test'
+2026-11-15T06:37:24.9116752Z   ...
+2026-11-15T06:37:24.9117465Z # Subtest: incomplete, overlapping, changed, fee-unknown and wrong-role native groups never partially commit
+2026-11-15T06:37:24.9118131Z ok 822 - incomplete, overlapping, changed, fee-unknown and wrong-role native groups never partially commit
+2026-11-15T06:37:24.9118320Z   ---
+2026-11-15T06:37:24.9118517Z   duration_ms: 16.650054
+2026-11-15T06:37:24.9118712Z   type: 'test'
+2026-11-15T06:37:24.9118890Z   ...
+2026-11-15T06:37:24.9119485Z # Subtest: openings, separate own native USD accounts and unknown costs remain mandatory
+2026-11-15T06:37:24.9120025Z ok 823 - openings, separate own native USD accounts and unknown costs remain mandatory
+2026-11-15T06:37:24.9120210Z   ---
+2026-11-15T06:37:24.9120407Z   duration_ms: 17.860517
+2026-11-15T06:37:24.9120603Z   type: 'test'
+2026-11-15T06:37:24.9120786Z   ...
+2026-11-15T06:37:24.9121581Z # Subtest: journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities
+2026-11-15T06:37:24.9122293Z ok 824 - journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities
+2026-11-15T06:37:24.9122479Z   ---
+2026-11-15T06:37:24.9122676Z   duration_ms: 11.62488
+2026-11-15T06:37:24.9122871Z   type: 'test'
+2026-11-15T06:37:24.9123054Z   ...
+2026-11-15T06:37:24.9123651Z # Subtest: current FX updates cannot rewrite UNKNOWN journal or grant historical EUR valuation
+2026-11-15T06:37:24.9124291Z ok 825 - current FX updates cannot rewrite UNKNOWN journal or grant historical EUR valuation
+2026-11-15T06:37:24.9124565Z   ---
+2026-11-15T06:37:24.9124773Z   duration_ms: 8.071413
+2026-11-15T06:37:24.9124972Z   type: 'test'
+2026-11-15T06:37:24.9125159Z   ...
+2026-11-15T06:37:24.9125709Z # Subtest: UNKNOWN journal path rejects unqualified callers and other transaction types
+2026-11-15T06:37:24.9126257Z ok 826 - UNKNOWN journal path rejects unqualified callers and other transaction types
+2026-11-15T06:37:24.9126440Z   ---
+2026-11-15T06:37:24.9126638Z   duration_ms: 0.915312
+2026-11-15T06:37:24.9126838Z   type: 'test'
+2026-11-15T06:37:24.9127020Z   ...
+2026-11-15T06:37:24.9128019Z # Subtest: independent inverse amounts: cash/trade/distinct and same-asset fees; evidence survives restore and blocks reordered/remapped overlapping reimport
+2026-11-15T06:37:24.9129023Z ok 827 - independent inverse amounts: cash/trade/distinct and same-asset fees; evidence survives restore and blocks reordered/remapped overlapping reimport
+2026-11-15T06:37:24.9129208Z   ---
+2026-11-15T06:37:24.9129418Z   duration_ms: 125.932582
+2026-11-15T06:37:24.9129619Z   type: 'test'
+2026-11-15T06:37:24.9129919Z   ...
+2026-11-15T06:37:24.9130556Z # Subtest: terminal reference withdrawal retains prefix and blocks removal of consumed predecessor
+2026-11-15T06:37:24.9131453Z ok 828 - terminal reference withdrawal retains prefix and blocks removal of consumed predecessor
+2026-11-15T06:37:24.9151736Z   ---
+2026-11-15T06:37:24.9181805Z   duration_ms: 16.357868
+2026-11-15T06:37:24.9191633Z   type: 'test'
+2026-11-15T06:37:24.9221540Z   ...
+2026-11-15T06:37:24.9240926Z # Subtest: external cash classification, rewards, principal transfer and fees reverse all legs and flows
+2026-11-15T06:37:24.9241834Z ok 829 - external cash classification, rewards, principal transfer and fees reverse all legs and flows
+2026-11-15T06:37:24.9242046Z   ---
+2026-11-15T06:37:24.9242260Z   duration_ms: 31.801606
+2026-11-15T06:37:24.9242477Z   type: 'test'
+2026-11-15T06:37:24.9242663Z   ...
+2026-11-15T06:37:24.9243159Z # Subtest: archive cleanup preserves v5 and independent reference archive
+2026-11-15T06:37:24.9243978Z ok 830 - archive cleanup preserves v5 and independent reference archive
+2026-11-15T06:37:24.9244168Z   ---
+2026-11-15T06:37:24.9244456Z   duration_ms: 59.292085
+2026-11-15T06:37:24.9244690Z   type: 'test'
+2026-11-15T06:37:24.9244880Z   ...
+2026-11-15T06:37:24.9245820Z # Subtest: stale approval, missing or partial group, changed payload, manual edits, unknown fields, dependencies and protected basis never mutate
+2026-11-15T06:37:24.9246723Z ok 831 - stale approval, missing or partial group, changed payload, manual edits, unknown fields, dependencies and protected basis never mutate
+2026-11-15T06:37:24.9246908Z   ---
+2026-11-15T06:37:24.9247112Z   duration_ms: 22.046499
+2026-11-15T06:37:24.9247313Z   type: 'test'
+2026-11-15T06:37:24.9247498Z   ...
+2026-11-15T06:37:24.9248145Z # Subtest: tampered persistent withdrawal is rejected on backup and restore; no orphan resurrection
+2026-11-15T06:37:24.9248785Z ok 832 - tampered persistent withdrawal is rejected on backup and restore; no orphan resurrection
+2026-11-15T06:37:24.9248982Z   ---
+2026-11-15T06:37:24.9249181Z   duration_ms: 14.140743
+2026-11-15T06:37:24.9249382Z   type: 'test'
+2026-11-15T06:37:24.9249568Z   ...
+2026-11-15T06:37:24.9250230Z # Subtest: changed opening quantity and later dated opening cannot authorize a source-anchored inverse
+2026-11-15T06:37:24.9250867Z ok 833 - changed opening quantity and later dated opening cannot authorize a source-anchored inverse
+2026-11-15T06:37:24.9251158Z   ---
+2026-11-15T06:37:24.9251413Z   duration_ms: 8.652546
+2026-11-15T06:37:24.9251617Z   type: 'test'
+2026-11-15T06:37:24.9251808Z   ...
+2026-11-15T06:37:24.9252427Z # Subtest: Native twelve-column dialect reuses parser, UTF8 BOM, quoted commas and exact decimals
+2026-11-15T06:37:24.9253035Z ok 834 - Native twelve-column dialect reuses parser, UTF8 BOM, quoted commas and exact decimals
+2026-11-15T06:37:24.9253221Z   ---
+2026-11-15T06:37:24.9253416Z   duration_ms: 5.942498
+2026-11-15T06:37:24.9253622Z   type: 'test'
+2026-11-15T06:37:24.9253800Z   ...
+2026-11-15T06:37:24.9254378Z # Subtest: Incomplete or future schemas stay quarantined instead of generic trade mapping
+2026-11-15T06:37:24.9254925Z ok 835 - Incomplete or future schemas stay quarantined instead of generic trade mapping
+2026-11-15T06:37:24.9255086Z   ---
+2026-11-15T06:37:24.9255257Z   duration_ms: 1.181759
+2026-11-15T06:37:24.9255432Z   type: 'test'
+2026-11-15T06:37:24.9255591Z   ...
+2026-11-15T06:37:24.9256097Z # Subtest: All native statuses/types preserve observations and never become economic movements
+2026-11-15T06:37:24.9256583Z ok 836 - All native statuses/types preserve observations and never become economic movements
+2026-11-15T06:37:24.9256755Z   ---
+2026-11-15T06:37:24.9257018Z   duration_ms: 6.331569
+2026-11-15T06:37:24.9257201Z   type: 'test'
+2026-11-15T06:37:24.9257293Z   ...
+2026-11-15T06:37:24.9257757Z # Subtest: Blank fees/countervalues stay unknown; no inferred EUR price or zero
+2026-11-15T06:37:24.9258188Z ok 837 - Blank fees/countervalues stay unknown; no inferred EUR price or zero
+2026-11-15T06:37:24.9258567Z   ---
+2026-11-15T06:37:24.9258723Z   duration_ms: 1.956431
+2026-11-15T06:37:24.9258865Z   type: 'test'
+2026-11-15T06:37:24.9258985Z   ...
+2026-11-15T06:37:24.9259657Z # Subtest: Stable observation identity excludes export countervalues/account names; same hash does not collapse operations
+2026-11-15T06:37:24.9260329Z ok 838 - Stable observation identity excludes export countervalues/account names; same hash does not collapse operations
+2026-11-15T06:37:24.9260445Z   ---
+2026-11-15T06:37:24.9260590Z   duration_ms: 3.72453
+2026-11-15T06:37:24.9260725Z   type: 'test'
+2026-11-15T06:37:24.9260837Z   ...
+2026-11-15T06:37:24.9261483Z # Subtest: Identical rows are retained and explicitly ambiguous, not arbitrarily deduplicated
+2026-11-15T06:37:24.9261932Z ok 839 - Identical rows are retained and explicitly ambiguous, not arbitrarily deduplicated
+2026-11-15T06:37:24.9262043Z   ---
+2026-11-15T06:37:24.9262200Z   duration_ms: 0.873088
+2026-11-15T06:37:24.9262451Z   type: 'test'
+2026-11-15T06:37:24.9262548Z   ...
+2026-11-15T06:37:24.9263002Z # Subtest: Invalid dates, missing identity, unknown status, negative/overprecise/localized numbers remain visible blockers
+2026-11-15T06:37:24.9263429Z ok 840 - Invalid dates, missing identity, unknown status, negative/overprecise/localized numbers remain visible blockers
+2026-11-15T06:37:24.9263517Z   ---
+2026-11-15T06:37:24.9263618Z   duration_ms: 5.247527
+2026-11-15T06:37:24.9263701Z   type: 'test'
+2026-11-15T06:37:24.9263788Z   ...
+2026-11-15T06:37:24.9264378Z # Subtest: Explicit mapping never infers from ticker; missing/foreign/stale mappings cannot enable writes
+2026-11-15T06:37:24.9264748Z ok 841 - Explicit mapping never infers from ticker; missing/foreign/stale mappings cannot enable writes
+2026-11-15T06:37:24.9264834Z   ---
+2026-11-15T06:37:24.9264921Z   duration_ms: 1.064932
+2026-11-15T06:37:24.9265013Z   type: 'test'
+2026-11-15T06:37:24.9265098Z   ...
+2026-11-15T06:37:24.9265491Z # Subtest: Existing wallet event IDs and N:1 Bittr grouping are reused; no double posting or cost-basis import
+2026-11-15T06:37:24.9265963Z ok 842 - Existing wallet event IDs and N:1 Bittr grouping are reused; no double posting or cost-basis import
+2026-11-15T06:37:24.9266082Z   ---
+2026-11-15T06:37:24.9266215Z   duration_ms: 7.060124
+2026-11-15T06:37:24.9266338Z   type: 'test'
+2026-11-15T06:37:24.9266449Z   ...
+2026-11-15T06:37:24.9266961Z # Subtest: Preview HTML escapes imported account/hash/type fields and bounds visible rows
+2026-11-15T06:37:24.9267453Z ok 843 - Preview HTML escapes imported account/hash/type fields and bounds visible rows
+2026-11-15T06:37:24.9267564Z   ---
+2026-11-15T06:37:24.9267704Z   duration_ms: 27.294327
+2026-11-15T06:37:24.9267833Z   type: 'test'
+2026-11-15T06:37:24.9267946Z   ...
+2026-11-15T06:37:24.9268390Z # Subtest: Source/parser/resource limits fail without touching portfolio data
+2026-11-15T06:37:24.9268827Z ok 844 - Source/parser/resource limits fail without touching portfolio data
+2026-11-15T06:37:24.9268949Z   ---
+2026-11-15T06:37:24.9269102Z   duration_ms: 2.826757
+2026-11-15T06:37:24.9269228Z   type: 'test'
+2026-11-15T06:37:24.9269350Z   ...
+2026-11-15T06:37:24.9269972Z # Subtest: Foreign ownership or contradictory asset cannot borrow existing wallet or purchase references
+2026-11-15T06:37:24.9270553Z ok 845 - Foreign ownership or contradictory asset cannot borrow existing wallet or purchase references
+2026-11-15T06:37:24.9270669Z   ---
+2026-11-15T06:37:24.9270819Z   duration_ms: 4.48889
+2026-11-15T06:37:24.9270944Z   type: 'test'
+2026-11-15T06:37:24.9271198Z   ...
+2026-11-15T06:37:24.9271775Z # Subtest: Unsupported token identity stays unresolved even when ticker, account and hash agree
+2026-11-15T06:37:24.9272310Z ok 846 - Unsupported token identity stays unresolved even when ticker, account and hash agree
+2026-11-15T06:37:24.9272437Z   ---
+2026-11-15T06:37:24.9272577Z   duration_ms: 1.783821
+2026-11-15T06:37:24.9272714Z   type: 'test'
+2026-11-15T06:37:24.9272836Z   ...
+2026-11-15T06:37:24.9273555Z # Subtest: Imported control characters are blocked, while hostile labels remain inert text
+2026-11-15T06:37:24.9274067Z ok 847 - Imported control characters are blocked, while hostile labels remain inert text
+2026-11-15T06:37:24.9274190Z   ---
+2026-11-15T06:37:24.9274326Z   duration_ms: 1.304463
+2026-11-15T06:37:24.9274459Z   type: 'test'
+2026-11-15T06:37:24.9274579Z   ...
+2026-11-15T06:37:24.9275189Z # Subtest: Independent EUR reference: 3 trades produce EUR 389.2 basis, 42.2 realized profit and 3353 cash
+2026-11-15T06:37:24.9275801Z ok 848 - Independent EUR reference: 3 trades produce EUR 389.2 basis, 42.2 realized profit and 3353 cash
+2026-11-15T06:37:24.9275915Z   ---
+2026-11-15T06:37:24.9276068Z   duration_ms: 13.059831
+2026-11-15T06:37:24.9276199Z   type: 'test'
+2026-11-15T06:37:24.9276313Z   ...
+2026-11-15T06:37:24.9276863Z # Subtest: Independent USD reference: successive historical 0.8/0.9/0.95 EUR-per-USD with EUR fees
+2026-11-15T06:37:24.9277308Z ok 849 - Independent USD reference: successive historical 0.8/0.9/0.95 EUR-per-USD with EUR fees
+2026-11-15T06:37:24.9277532Z   ---
+2026-11-15T06:37:24.9277669Z   duration_ms: 3.70091
+2026-11-15T06:37:24.9277796Z   type: 'test'
+2026-11-15T06:37:24.9277896Z   ...
+2026-11-15T06:37:24.9278373Z # Subtest: Cash-bearing swaps and mergers are rejected rather than silently adding cash
+2026-11-15T06:37:24.9278786Z ok 850 - Cash-bearing swaps and mergers are rejected rather than silently adding cash
+2026-11-15T06:37:24.9278901Z   ---
+2026-11-15T06:37:24.9279026Z   duration_ms: 1.344479
+2026-11-15T06:37:24.9279141Z   type: 'test'
+2026-11-15T06:37:24.9279258Z   ...
+2026-11-15T06:37:24.9279655Z # Subtest: Cash-in-lieu field is not silently ignored in a split, swap or merger
+2026-11-15T06:37:24.9280009Z ok 851 - Cash-in-lieu field is not silently ignored in a split, swap or merger
+2026-11-15T06:37:24.9280114Z   ---
+2026-11-15T06:37:24.9280223Z   duration_ms: 0.551011
+2026-11-15T06:37:24.9280324Z   type: 'test'
+2026-11-15T06:37:24.9280420Z   ...
+2026-11-15T06:37:24.9280855Z # Subtest: Unrepresentable reverse split must not silently erase an 18-decimal holding
+2026-11-15T06:37:24.9281754Z ok 852 - Unrepresentable reverse split must not silently erase an 18-decimal holding
+2026-11-15T06:37:24.9281890Z   ---
+2026-11-15T06:37:24.9282009Z   duration_ms: 0.435391
+2026-11-15T06:37:24.9282134Z   type: 'test'
+2026-11-15T06:37:24.9282254Z   ...
+2026-11-15T06:37:24.9282762Z # Subtest: Three identical lots: selling two realizes exactly zero profit and leaves exactly one lot
+2026-11-15T06:37:24.9283302Z ok 853 - Three identical lots: selling two realizes exactly zero profit and leaves exactly one lot
+2026-11-15T06:37:24.9283411Z   ---
+2026-11-15T06:37:24.9283554Z   duration_ms: 15.674705
+2026-11-15T06:37:24.9283679Z   type: 'test'
+2026-11-15T06:37:24.9283785Z   ...
+2026-11-15T06:37:24.9284268Z # Subtest: Reference cost-basis allocation: transfer 2/3 moves exactly EUR 200 of EUR 300
+2026-11-15T06:37:24.9284740Z ok 854 - Reference cost-basis allocation: transfer 2/3 moves exactly EUR 200 of EUR 300
+2026-11-15T06:37:24.9284863Z   ---
+2026-11-15T06:37:24.9285004Z   duration_ms: 1.457315
+2026-11-15T06:37:24.9285132Z   type: 'test'
+2026-11-15T06:37:24.9285239Z   ...
+2026-11-15T06:37:24.9285672Z # Subtest: Token swap 2/3 of 3 tokens transfers exactly 200 basis into 7 output tokens
+2026-11-15T06:37:24.9286063Z ok 855 - Token swap 2/3 of 3 tokens transfers exactly 200 basis into 7 output tokens
+2026-11-15T06:37:24.9286178Z   ---
+2026-11-15T06:37:24.9286312Z   duration_ms: 0.993237
+2026-11-15T06:37:24.9286427Z   type: 'test'
+2026-11-15T06:37:24.9286543Z   ...
+2026-11-15T06:37:24.9286991Z # Subtest: 3-for-2 split and 2-for-3 reverse split roundtrip exact shares and price
+2026-11-15T06:37:24.9287389Z ok 856 - 3-for-2 split and 2-for-3 reverse split roundtrip exact shares and price
+2026-11-15T06:37:24.9287507Z   ---
+2026-11-15T06:37:24.9287641Z   duration_ms: 2.303508
+2026-11-15T06:37:24.9287758Z   type: 'test'
+2026-11-15T06:37:24.9287868Z   ...
+2026-11-15T06:37:24.9288213Z # Subtest: Reverse split 1-for-3 calculates exact 4 shares from 12
+2026-11-15T06:37:24.9288758Z ok 857 - Reverse split 1-for-3 calculates exact 4 shares from 12
+2026-11-15T06:37:24.9288877Z   ---
+2026-11-15T06:37:24.9288997Z   duration_ms: 0.724262
+2026-11-15T06:37:24.9289128Z   type: 'test'
+2026-11-15T06:37:24.9289246Z   ...
+2026-11-15T06:37:24.9289680Z # Subtest: Monetary cash account cannot undergo a share split and failed edit is atomic
+2026-11-15T06:37:24.9290115Z ok 858 - Monetary cash account cannot undergo a share split and failed edit is atomic
+2026-11-15T06:37:24.9290222Z   ---
+2026-11-15T06:37:24.9290355Z   duration_ms: 0.991494
+2026-11-15T06:37:24.9290477Z   type: 'test'
+2026-11-15T06:37:24.9290584Z   ...
+2026-11-15T06:37:24.9291238Z # Subtest: Repeated sales preserve an exact 1-wei historical profit even if its UI number rounds
+2026-11-15T06:37:24.9291755Z ok 859 - Repeated sales preserve an exact 1-wei historical profit even if its UI number rounds
+2026-11-15T06:37:24.9291867Z   ---
+2026-11-15T06:37:24.9292010Z   duration_ms: 1.281295
+2026-11-15T06:37:24.9292248Z   type: 'test'
+2026-11-15T06:37:24.9292348Z   ...
+2026-11-15T06:37:24.9292859Z # Subtest: USD cash settlement with fees uses exact historical FX and never invents external flows
+2026-11-15T06:37:24.9293335Z ok 860 - USD cash settlement with fees uses exact historical FX and never invents external flows
+2026-11-15T06:37:24.9293441Z   ---
+2026-11-15T06:37:24.9293573Z   duration_ms: 2.038327
+2026-11-15T06:37:24.9293686Z   type: 'test'
+2026-11-15T06:37:24.9293806Z   ...
+2026-11-15T06:37:24.9294139Z # Subtest: Buy journals asset, cash and fee in one balanced unit
+2026-11-15T06:37:24.9294438Z ok 861 - Buy journals asset, cash and fee in one balanced unit
+2026-11-15T06:37:24.9294548Z   ---
+2026-11-15T06:37:24.9294685Z   duration_ms: 6.9933
+2026-11-15T06:37:24.9294797Z   type: 'test'
+2026-11-15T06:37:24.9294912Z   ...
+2026-11-15T06:37:24.9295360Z # Subtest: Sell journals security exit, cash proceeds, fee and tax with realized P&L
+2026-11-15T06:37:24.9295805Z ok 862 - Sell journals security exit, cash proceeds, fee and tax with realized P&L
+2026-11-15T06:37:24.9295921Z   ---
+2026-11-15T06:37:24.9296045Z   duration_ms: 0.817868
+2026-11-15T06:37:24.9296172Z   type: 'test'
+2026-11-15T06:37:24.9296286Z   ...
+2026-11-15T06:37:24.9296716Z # Subtest: Unlinked trades use unresolved clearing and do not fabricate deposits
+2026-11-15T06:37:24.9297115Z ok 863 - Unlinked trades use unresolved clearing and do not fabricate deposits
+2026-11-15T06:37:24.9297225Z   ---
+2026-11-15T06:37:24.9297353Z   duration_ms: 0.576923
+2026-11-15T06:37:24.9297472Z   type: 'test'
+2026-11-15T06:37:24.9297577Z   ...
+2026-11-15T06:37:24.9298150Z # Subtest: Insufficient cash, wallet cash, unrelated currency and impossible timestamps are atomic errors
+2026-11-15T06:37:24.9298683Z ok 864 - Insufficient cash, wallet cash, unrelated currency and impossible timestamps are atomic errors
+2026-11-15T06:37:24.9298790Z   ---
+2026-11-15T06:37:24.9298930Z   duration_ms: 0.971962
+2026-11-15T06:37:24.9299055Z   type: 'test'
+2026-11-15T06:37:24.9299167Z   ...
+2026-11-15T06:37:24.9299610Z # Subtest: USD trade settles against USD cash with exact EUR fees and FX conversion
+2026-11-15T06:37:24.9299999Z ok 865 - USD trade settles against USD cash with exact EUR fees and FX conversion
+2026-11-15T06:37:24.9300117Z   ---
+2026-11-15T06:37:24.9300248Z   duration_ms: 0.989098
+2026-11-15T06:37:24.9300363Z   type: 'test'
+2026-11-15T06:37:24.9300596Z   ...
+2026-11-15T06:37:24.9300989Z # Subtest: Cash deposits are external, internal asset transfers are not
+2026-11-15T06:37:24.9301467Z ok 866 - Cash deposits are external, internal asset transfers are not
+2026-11-15T06:37:24.9301586Z   ---
+2026-11-15T06:37:24.9301719Z   duration_ms: 0.589774
+2026-11-15T06:37:24.9301835Z   type: 'test'
+2026-11-15T06:37:24.9301950Z   ...
+2026-11-15T06:37:24.9302406Z # Subtest: Backdated inserts before existing ledger events reject without modification
+2026-11-15T06:37:24.9302838Z ok 867 - Backdated inserts before existing ledger events reject without modification
+2026-11-15T06:37:24.9302964Z   ---
+2026-11-15T06:37:24.9303225Z   duration_ms: 0.702663
+2026-11-15T06:37:24.9303347Z   type: 'test'
+2026-11-15T06:37:24.9303463Z   ...
+2026-11-15T06:37:24.9303841Z # Subtest: Exact fractional quantity survives execution, import and export
+2026-11-15T06:37:24.9304209Z ok 868 - Exact fractional quantity survives execution, import and export
+2026-11-15T06:37:24.9304330Z   ---
+2026-11-15T06:37:24.9304453Z   duration_ms: 4.307099
+2026-11-15T06:37:24.9304581Z   type: 'test'
+2026-11-15T06:37:24.9304683Z   ...
+2026-11-15T06:37:24.9305062Z # Subtest: Import preserves full financial metadata and repeated backups
+2026-11-15T06:37:24.9305439Z ok 869 - Import preserves full financial metadata and repeated backups
+2026-11-15T06:37:24.9305547Z   ---
+2026-11-15T06:37:24.9305684Z   duration_ms: 1.665958
+2026-11-15T06:37:24.9305814Z   type: 'test'
+2026-11-15T06:37:24.9305924Z   ...
+2026-11-15T06:37:24.9306510Z # Subtest: V2 migration retains original booked events, creates undated opening state, never replays them
+2026-11-15T06:37:24.9307165Z ok 870 - V2 migration retains original booked events, creates undated opening state, never replays them
+2026-11-15T06:37:24.9307286Z   ---
+2026-11-15T06:37:24.9307421Z   duration_ms: 1.728013
+2026-11-15T06:37:24.9307570Z   type: 'test'
+2026-11-15T06:37:24.9307684Z   ...
+2026-11-15T06:37:24.9308120Z # Subtest: Historic dates cannot silently reuse current portfolio market prices
+2026-11-15T06:37:24.9308509Z ok 871 - Historic dates cannot silently reuse current portfolio market prices
+2026-11-15T06:37:24.9308620Z   ---
+2026-11-15T06:37:24.9308750Z   duration_ms: 0.376737
+2026-11-15T06:37:24.9308846Z   type: 'test'
+2026-11-15T06:37:24.9308946Z   ...
+2026-11-15T06:37:24.9309210Z # Subtest: Snapshot same-date revisions are retained
+2026-11-15T06:37:24.9309453Z ok 872 - Snapshot same-date revisions are retained
+2026-11-15T06:37:24.9309555Z   ---
+2026-11-15T06:37:24.9309677Z   duration_ms: 0.546542
+2026-11-15T06:37:24.9309800Z   type: 'test'
+2026-11-15T06:37:24.9309913Z   ...
+2026-11-15T06:37:24.9310348Z # Subtest: Unverified migrated performance history must not be represented as XIRR
+2026-11-15T06:37:24.9310751Z ok 873 - Unverified migrated performance history must not be represented as XIRR
+2026-11-15T06:37:24.9310859Z   ---
+2026-11-15T06:37:24.9310995Z   duration_ms: 1.967715
+2026-11-15T06:37:24.9311249Z   type: 'test'
+2026-11-15T06:37:24.9311354Z   ...
+2026-11-15T06:37:24.9311772Z # Subtest: Import rejects unbalanced financial journal and duplicate posting identities
+2026-11-15T06:37:24.9312136Z ok 874 - Import rejects unbalanced financial journal and duplicate posting identities
+2026-11-15T06:37:24.9312226Z   ---
+2026-11-15T06:37:24.9312345Z   duration_ms: 2.329323
+2026-11-15T06:37:24.9312458Z   type: 'test'
+2026-11-15T06:37:24.9312557Z   ...
+2026-11-15T06:37:24.9312963Z # Subtest: An unresolved buy blocks portfolio XIRR rather than reporting fictitious gains
+2026-11-15T06:37:24.9313415Z ok 875 - An unresolved buy blocks portfolio XIRR rather than reporting fictitious gains
+2026-11-15T06:37:24.9313535Z   ---
+2026-11-15T06:37:24.9313681Z   duration_ms: 0.657797
+2026-11-15T06:37:24.9313786Z   type: 'test'
+2026-11-15T06:37:24.9313889Z   ...
+2026-11-15T06:37:24.9314260Z # Subtest: External in-kind deliveries without verified valuation block XIRR
+2026-11-15T06:37:24.9314614Z ok 876 - External in-kind deliveries without verified valuation block XIRR
+2026-11-15T06:37:24.9314729Z   ---
+2026-11-15T06:37:24.9314867Z   duration_ms: 0.426083
+2026-11-15T06:37:24.9314980Z   type: 'test'
+2026-11-15T06:37:24.9315119Z   ...
+2026-11-15T06:37:24.9315597Z # Subtest: Opening quantities plus journal movements reconstruct every current position exactly
+2026-11-15T06:37:24.9316035Z ok 877 - Opening quantities plus journal movements reconstruct every current position exactly
+2026-11-15T06:37:24.9316155Z   ---
+2026-11-15T06:37:24.9316271Z   duration_ms: 2.312589
+2026-11-15T06:37:24.9316391Z   type: 'test'
+2026-11-15T06:37:24.9316501Z   ...
+2026-11-15T06:37:24.9316925Z # Subtest: Rewards, in-kind deliveries and corrections retain exact quantity deltas
+2026-11-15T06:37:24.9317517Z ok 878 - Rewards, in-kind deliveries and corrections retain exact quantity deltas
+2026-11-15T06:37:24.9317630Z   ---
+2026-11-15T06:37:24.9317754Z   duration_ms: 0.841392
+2026-11-15T06:37:24.9317868Z   type: 'test'
+2026-11-15T06:37:24.9317967Z   ...
+2026-11-15T06:37:24.9318287Z # Subtest: Stale browser state cannot overwrite newer storage
+2026-11-15T06:37:24.9318608Z ok 879 - Stale browser state cannot overwrite newer storage
+2026-11-15T06:37:24.9318720Z   ---
+2026-11-15T06:37:24.9318861Z   duration_ms: 0.580915
+2026-11-15T06:37:24.9318992Z   type: 'test'
+2026-11-15T06:37:24.9319100Z   ...
+2026-11-15T06:37:24.9319513Z # Subtest: Quota error does not mark portfolio as successfully persisted
+2026-11-15T06:37:24.9319877Z ok 880 - Quota error does not mark portfolio as successfully persisted
+2026-11-15T06:37:24.9319999Z   ---
+2026-11-15T06:37:24.9320132Z   duration_ms: 0.676676
+2026-11-15T06:37:24.9320244Z   type: 'test'
+2026-11-15T06:37:24.9320842Z   ...
+2026-11-15T06:37:24.9321421Z # Subtest: V3 backup rejects positions inconsistent with its balanced journal
+2026-11-15T06:37:24.9321797Z ok 881 - V3 backup rejects positions inconsistent with its balanced journal
+2026-11-15T06:37:24.9321922Z   ---
+2026-11-15T06:37:24.9322063Z   duration_ms: 0.732957
+2026-11-15T06:37:24.9322185Z   type: 'test'
+2026-11-15T06:37:24.9322306Z   ...
+2026-11-15T06:37:24.9322766Z # Subtest: Observed snapshot keeps amounts above JS safe integer precision exact
+2026-11-15T06:37:24.9323202Z ok 882 - Observed snapshot keeps amounts above JS safe integer precision exact
+2026-11-15T06:37:24.9323317Z   ---
+2026-11-15T06:37:24.9323452Z   duration_ms: 0.378205
+2026-11-15T06:37:24.9323583Z   type: 'test'
+2026-11-15T06:37:24.9323699Z   ...
+2026-11-15T06:37:24.9324295Z # Subtest: Local audit flags mismatched displayed/precise quotes and non-EUR FX without mutating bytes
+2026-11-15T06:37:24.9324865Z ok 883 - Local audit flags mismatched displayed/precise quotes and non-EUR FX without mutating bytes
+2026-11-15T06:37:24.9324980Z   ---
+2026-11-15T06:37:24.9325124Z   duration_ms: 7.085505
+2026-11-15T06:37:24.9325263Z   type: 'test'
+2026-11-15T06:37:24.9325372Z   ...
+2026-11-15T06:37:24.9326011Z # Subtest: Legitimate 18-decimal dust rounding, zero quotes and EUR identity FX are not false positives
+2026-11-15T06:37:24.9326578Z ok 884 - Legitimate 18-decimal dust rounding, zero quotes and EUR identity FX are not false positives
+2026-11-15T06:37:24.9326688Z   ---
+2026-11-15T06:37:24.9326827Z   duration_ms: 0.631168
+2026-11-15T06:37:24.9326955Z   type: 'test'
+2026-11-15T06:37:24.9327069Z   ...
+2026-11-15T06:37:24.9327599Z # Subtest: Old v3 backup remains read-only under audit and preserves original economic history
+2026-11-15T06:37:24.9328104Z ok 885 - Old v3 backup remains read-only under audit and preserves original economic history
+2026-11-15T06:37:24.9328224Z   ---
+2026-11-15T06:37:24.9328363Z   duration_ms: 6.151597
+2026-11-15T06:37:24.9328483Z   type: 'test'
+2026-11-15T06:37:24.9328607Z   ...
+2026-11-15T06:37:24.9329112Z # Subtest: Provider evidence must be dated, positive, non-future and sufficiently recent
+2026-11-15T06:37:24.9329577Z ok 886 - Provider evidence must be dated, positive, non-future and sufficiently recent
+2026-11-15T06:37:24.9329694Z   ---
+2026-11-15T06:37:24.9329832Z   duration_ms: 0.790332
+2026-11-15T06:37:24.9329952Z   type: 'test'
+2026-11-15T06:37:24.9330068Z   ...
+2026-11-15T06:37:24.9330750Z # Subtest: Only explicit confirmed provider repair changes the current quote; journals and snapshots remain unchanged
+2026-11-15T06:37:24.9331610Z ok 887 - Only explicit confirmed provider repair changes the current quote; journals and snapshots remain unchanged
+2026-11-15T06:37:24.9331742Z   ---
+2026-11-15T06:37:24.9331875Z   duration_ms: 1.663398
+2026-11-15T06:37:24.9332007Z   type: 'test'
+2026-11-15T06:37:24.9332125Z   ...
+2026-11-15T06:37:24.9332696Z # Subtest: FX repair corrects only current USD/EUR quote; any remaining price discrepancy stays visible
+2026-11-15T06:37:24.9333390Z ok 888 - FX repair corrects only current USD/EUR quote; any remaining price discrepancy stays visible
+2026-11-15T06:37:24.9333515Z   ---
+2026-11-15T06:37:24.9333646Z   duration_ms: 0.565527
+2026-11-15T06:37:24.9333778Z   type: 'test'
+2026-11-15T06:37:24.9333887Z   ...
+2026-11-15T06:37:24.9334476Z # Subtest: failure request evidence removes credentials, query and fragment and rejects other origins
+2026-11-15T06:37:24.9335046Z ok 889 - failure request evidence removes credentials, query and fragment and rejects other origins
+2026-11-15T06:37:24.9335157Z   ---
+2026-11-15T06:37:24.9335299Z   duration_ms: 0.775343
+2026-11-15T06:37:24.9335428Z   type: 'test'
+2026-11-15T06:37:24.9335538Z   ...
+2026-11-15T06:37:24.9336216Z # Subtest: pending, failed and HTTP errors are distinguished without retaining request objects or query secrets
+2026-11-15T06:37:24.9336834Z ok 890 - pending, failed and HTTP errors are distinguished without retaining request objects or query secrets
+2026-11-15T06:37:24.9336943Z   ---
+2026-11-15T06:37:24.9337173Z   duration_ms: 1.321389
+2026-11-15T06:37:24.9337294Z   type: 'test'
+2026-11-15T06:37:24.9337415Z   ...
+2026-11-15T06:37:24.9337927Z # Subtest: failed-request evidence is bounded even when the browser produces many errors
+2026-11-15T06:37:24.9338410Z ok 891 - failed-request evidence is bounded even when the browser produces many errors
+2026-11-15T06:37:24.9338531Z   ---
+2026-11-15T06:37:24.9338675Z   duration_ms: 0.802214
+2026-11-15T06:37:24.9338795Z   type: 'test'
+2026-11-15T06:37:24.9338916Z   ...
+2026-11-15T06:37:24.9339453Z # Subtest: the full 152-asset startup graph is retained so a late pending module is not hidden
+2026-11-15T06:37:24.9339957Z ok 892 - the full 152-asset startup graph is retained so a late pending module is not hidden
+2026-11-15T06:37:24.9340077Z   ---
+2026-11-15T06:37:24.9340212Z   duration_ms: 2.057538
+2026-11-15T06:37:24.9340344Z   type: 'test'
+2026-11-15T06:37:24.9340464Z   ...
+2026-11-15T06:37:24.9341186Z # Subtest: closed or unresponsive page cannot replace the original gate result with a successful snapshot
+2026-11-15T06:37:24.9341800Z ok 893 - closed or unresponsive page cannot replace the original gate result with a successful snapshot
+2026-11-15T06:37:24.9341921Z   ---
+2026-11-15T06:37:24.9342065Z   duration_ms: 10.669845
+2026-11-15T06:37:24.9342204Z   type: 'test'
+2026-11-15T06:37:24.9342328Z   ...
+2026-11-15T06:37:24.9343032Z # Subtest: pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport
+2026-11-15T06:37:24.9343731Z ok 894 - pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport
+2026-11-15T06:37:24.9343856Z   ---
+2026-11-15T06:37:24.9343997Z   duration_ms: 1.036982
+2026-11-15T06:37:24.9344132Z   type: 'test'
+2026-11-15T06:37:24.9344324Z   ...
+2026-11-15T06:37:24.9344846Z # Subtest: calendar days are Austrian display labels without normalizing invalid evidence
+2026-11-15T06:37:24.9345332Z ok 895 - calendar days are Austrian display labels without normalizing invalid evidence
+2026-11-15T06:37:24.9345451Z   ---
+2026-11-15T06:37:24.9345597Z   duration_ms: 1.066726
+2026-11-15T06:37:24.9345724Z   type: 'test'
+2026-11-15T06:37:24.9345832Z   ...
+2026-11-15T06:37:24.9346307Z # Subtest: calendar labels retain the original day across timezone and DST boundaries
+2026-11-15T06:37:24.9346765Z ok 896 - calendar labels retain the original day across timezone and DST boundaries
+2026-11-15T06:37:24.9346883Z   ---
+2026-11-15T06:37:24.9347031Z   duration_ms: 344.572734
+2026-11-15T06:37:24.9347158Z   type: 'test'
+2026-11-15T06:37:24.9347279Z   ...
+2026-11-15T06:37:24.9347800Z # Subtest: exact localized quantity notation roundtrips without a binary-number conversion
+2026-11-15T06:37:24.9348283Z ok 897 - exact localized quantity notation roundtrips without a binary-number conversion
+2026-11-15T06:37:24.9348402Z   ---
+2026-11-15T06:37:24.9348540Z   duration_ms: 1.504128
+2026-11-15T06:37:24.9348661Z   type: 'test'
+2026-11-15T06:37:24.9348779Z   ...
+2026-11-15T06:37:24.9349362Z # Subtest: unknown quantities stay unknown and tiny display values never round to zero
+2026-11-15T06:37:24.9349832Z ok 898 - unknown quantities stay unknown and tiny display values never round to zero
+2026-11-15T06:37:24.9349951Z   ---
+2026-11-15T06:37:24.9350079Z   duration_ms: 0.448759
+2026-11-15T06:37:24.9350207Z   type: 'test'
+2026-11-15T06:37:24.9350325Z   ...
+2026-11-15T06:37:24.9350737Z # Subtest: EODHD diagnostics do not probe without credentials or positions
+2026-11-15T06:37:24.9351242Z ok 899 - EODHD diagnostics do not probe without credentials or positions
+2026-11-15T06:37:24.9351373Z   ---
+2026-11-15T06:37:24.9351507Z   duration_ms: 2.31625
+2026-11-15T06:37:24.9351641Z   type: 'test'
+2026-11-15T06:37:24.9351750Z   ...
+2026-11-15T06:37:24.9352227Z # Subtest: Diagnostic limits calls to four existing securities and never mutates them
+2026-11-15T06:37:24.9352684Z ok 900 - Diagnostic limits calls to four existing securities and never mutates them
+2026-11-15T06:37:24.9352791Z   ---
+2026-11-15T06:37:24.9353027Z   duration_ms: 7.329464
+2026-11-15T06:37:24.9353160Z   type: 'test'
+2026-11-15T06:37:24.9353270Z   ...
+2026-11-15T06:37:24.9353691Z # Subtest: Rate and auth failures stop global probes, never expose user keys
+2026-11-15T06:37:24.9354082Z ok 901 - Rate and auth failures stop global probes, never expose user keys
+2026-11-15T06:37:24.9354202Z   ---
+2026-11-15T06:37:24.9354342Z   duration_ms: 3.004113
+2026-11-15T06:37:24.9354465Z   type: 'test'
+2026-11-15T06:37:24.9354582Z   ...
+2026-11-15T06:37:24.9355007Z # Subtest: Quote evidence remains distinct from staleness and manual values
+2026-11-15T06:37:24.9355400Z ok 902 - Quote evidence remains distinct from staleness and manual values
+2026-11-15T06:37:24.9355517Z   ---
+2026-11-15T06:37:24.9355652Z   duration_ms: 0.769294
+2026-11-15T06:37:24.9355770Z   type: 'test'
+2026-11-15T06:37:24.9355889Z   ...
+2026-11-15T06:37:24.9356704Z # Subtest: BTC-Guthaben berücksichtigt Ein- und Ausgänge inklusive Mempool
+2026-11-15T06:37:24.9357213Z ok 903 - BTC-Guthaben berücksichtigt Ein- und Ausgänge inklusive Mempool
+2026-11-15T06:37:24.9357355Z   ---
+2026-11-15T06:37:24.9357486Z   duration_ms: 2.088269
+2026-11-15T06:37:24.9357616Z   type: 'test'
+2026-11-15T06:37:24.9357732Z   ...
+2026-11-15T06:37:24.9358001Z # Subtest: CoinGecko nutzt Coin-ID und EUR Preise
+2026-11-15T06:37:24.9358269Z ok 904 - CoinGecko nutzt Coin-ID und EUR Preise
+2026-11-15T06:37:24.9358380Z   ---
+2026-11-15T06:37:24.9358521Z   duration_ms: 1.289769
+2026-11-15T06:37:24.9358652Z   type: 'test'
+2026-11-15T06:37:24.9358761Z   ...
+2026-11-15T06:37:24.9359212Z # Subtest: Etherscan V2 zeigt Adresssaldo, nur eigener Schlüssel
+2026-11-15T06:37:24.9359640Z ok 905 - Etherscan V2 zeigt Adresssaldo, nur eigener Schlüssel
+2026-11-15T06:37:24.9359751Z   ---
+2026-11-15T06:37:24.9359891Z   duration_ms: 0.790891
+2026-11-15T06:37:24.9360012Z   type: 'test'
+2026-11-15T06:37:24.9360133Z   ...
+2026-11-15T06:37:24.9360372Z # Subtest: Solana native und Token-Salden
+2026-11-15T06:37:24.9360593Z ok 906 - Solana native und Token-Salden
+2026-11-15T06:37:24.9360726Z   ---
+2026-11-15T06:37:24.9360875Z   duration_ms: 0.659068
+2026-11-15T06:37:24.9360993Z   type: 'test'
+2026-11-15T06:37:24.9361217Z   ...
+2026-11-15T06:37:24.9361454Z # Subtest: ETF Kurs, FX und Suchfilter
+2026-11-15T06:37:24.9361662Z ok 907 - ETF Kurs, FX und Suchfilter
+2026-11-15T06:37:24.9361784Z   ---
+2026-11-15T06:37:24.9361914Z   duration_ms: 0.905784
+2026-11-15T06:37:24.9362046Z   type: 'test'
+2026-11-15T06:37:24.9362165Z   ...
+2026-11-15T06:37:24.9362520Z # Subtest: Täglicher EUR-Wechselkurs ohne API-Key
+2026-11-15T06:37:24.9362862Z ok 908 - Täglicher EUR-Wechselkurs ohne API-Key
+2026-11-15T06:37:24.9362986Z   ---
+2026-11-15T06:37:24.9363113Z   duration_ms: 0.487949
+2026-11-15T06:37:24.9363244Z   type: 'test'
+2026-11-15T06:37:24.9363352Z   ...
+2026-11-15T06:37:24.9364072Z # Subtest: Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden
+2026-11-15T06:37:24.9364701Z ok 909 - Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden
+2026-11-15T06:37:24.9364822Z   ---
+2026-11-15T06:37:24.9365139Z   duration_ms: 1.329603
+2026-11-15T06:37:24.9365272Z   type: 'test'
+2026-11-15T06:37:24.9365385Z   ...
+2026-11-15T06:37:24.9365978Z # Subtest: Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten
+2026-11-15T06:37:24.9366545Z ok 910 - Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten
+2026-11-15T06:37:24.9366655Z   ---
+2026-11-15T06:37:24.9366796Z   duration_ms: 2.640325
+2026-11-15T06:37:24.9366918Z   type: 'test'
+2026-11-15T06:37:24.9367036Z   ...
+2026-11-15T06:37:24.9367562Z # Subtest: Marketstack uses only the four proven exact ISIN/EUR/XETR listings and raw closes
+2026-11-15T06:37:24.9368049Z ok 911 - Marketstack uses only the four proven exact ISIN/EUR/XETR listings and raw closes
+2026-11-15T06:37:24.9368167Z   ---
+2026-11-15T06:37:24.9368312Z   duration_ms: 5.062802
+2026-11-15T06:37:24.9368429Z   type: 'test'
+2026-11-15T06:37:24.9368550Z   ...
+2026-11-15T06:37:24.9369339Z # Subtest: Marketstack rejects wrong instruments, currency, MIC, names, dates, malformed prices, partial pages and conflicting bars
+2026-11-15T06:37:24.9370186Z ok 912 - Marketstack rejects wrong instruments, currency, MIC, names, dates, malformed prices, partial pages and conflicting bars
+2026-11-15T06:37:24.9370304Z   ---
+2026-11-15T06:37:24.9370434Z   duration_ms: 1.150842
+2026-11-15T06:37:24.9370567Z   type: 'test'
+2026-11-15T06:37:24.9370684Z   ...
+2026-11-15T06:37:24.9371380Z # Subtest: 100 monthly reservations count attempts, preserve spacing and reset only in a new UTC month
+2026-11-15T06:37:24.9371969Z ok 913 - 100 monthly reservations count attempts, preserve spacing and reset only in a new UTC month
+2026-11-15T06:37:24.9372097Z   ---
+2026-11-15T06:37:24.9372235Z   duration_ms: 0.845191
+2026-11-15T06:37:24.9372368Z   type: 'test'
+2026-11-15T06:37:24.9372481Z   ...
+2026-11-15T06:37:24.9373142Z # Subtest: Quote/history coalesce and a new client reuses public daily cache without retaining echoed credentials
+2026-11-15T06:37:24.9373806Z ok 914 - Quote/history coalesce and a new client reuses public daily cache without retaining echoed credentials
+2026-11-15T06:37:24.9373919Z   ---
+2026-11-15T06:37:24.9374067Z   duration_ms: 9.127719
+2026-11-15T06:37:24.9374201Z   type: 'test'
+2026-11-15T06:37:24.9374313Z   ...
+2026-11-15T06:37:24.9375017Z # Subtest: Four symbols consume four units rather than one; Friday closes are reused over weekend and before Monday close
+2026-11-15T06:37:24.9375695Z ok 915 - Four symbols consume four units rather than one; Friday closes are reused over weekend and before Monday close
+2026-11-15T06:37:24.9375810Z   ---
+2026-11-15T06:37:24.9375956Z   duration_ms: 5.244473
+2026-11-15T06:37:24.9376090Z   type: 'test'
+2026-11-15T06:37:24.9376203Z   ...
+2026-11-15T06:37:24.9376974Z # Subtest: Rate limits, upstream credential echoes and unavailable IDB cannot cause uncontrolled retries or cached false prices
+2026-11-15T06:37:24.9377695Z ok 916 - Rate limits, upstream credential echoes and unavailable IDB cannot cause uncontrolled retries or cached false prices
+2026-11-15T06:37:24.9377830Z   ---
+2026-11-15T06:37:24.9378013Z   duration_ms: 2.08179
+2026-11-15T06:37:24.9378140Z   type: 'test'
+2026-11-15T06:37:24.9378266Z   ...
+2026-11-15T06:37:24.9378802Z # Subtest: An initial morning read does not hide the new close after the same-day EOD boundary
+2026-11-15T06:37:24.9379300Z ok 917 - An initial morning read does not hide the new close after the same-day EOD boundary
+2026-11-15T06:37:24.9379427Z   ---
+2026-11-15T06:37:24.9379574Z   duration_ms: 4.212454
+2026-11-15T06:37:24.9379699Z   type: 'test'
+2026-11-15T06:37:24.9379822Z   ...
+2026-11-15T06:37:24.9380343Z # Subtest: Marketstack key is opt-in encrypted configuration, never canonical financial JSON
+2026-11-15T06:37:24.9380857Z ok 918 - Marketstack key is opt-in encrypted configuration, never canonical financial JSON
+2026-11-15T06:37:24.9380980Z   ---
+2026-11-15T06:37:24.9381217Z   duration_ms: 101.887276
+2026-11-15T06:37:24.9381361Z   type: 'test'
+2026-11-15T06:37:24.9381486Z   ...
+2026-11-15T06:37:24.9382469Z # Subtest: Historical zero/null observations never become prices: latest quote works, history remains blocked across reload and either request order
+2026-11-15T06:37:24.9383333Z ok 919 - Historical zero/null observations never become prices: latest quote works, history remains blocked across reload and either request order
+2026-11-15T06:37:24.9383455Z   ---
+2026-11-15T06:37:24.9383587Z   duration_ms: 6.638824
+2026-11-15T06:37:24.9383719Z   type: 'test'
+2026-11-15T06:37:24.9383830Z   ...
+2026-11-15T06:37:24.9384436Z # Subtest: A missing or zero latest close cannot fall back to an older observation, even for quote-only use
+2026-11-15T06:37:24.9385019Z ok 920 - A missing or zero latest close cannot fall back to an older observation, even for quote-only use
+2026-11-15T06:37:24.9385127Z   ---
+2026-11-15T06:37:24.9385269Z   duration_ms: 2.909441
+2026-11-15T06:37:24.9385404Z   type: 'test'
+2026-11-15T06:37:24.9385513Z   ...
+2026-11-15T06:37:24.9386312Z # Subtest: Quote-only mode still rejects wrong identity, invalid dates, malformed prices and contradictory missing/valid observations
+2026-11-15T06:37:24.9387167Z ok 921 - Quote-only mode still rejects wrong identity, invalid dates, malformed prices and contradictory missing/valid observations
+2026-11-15T06:37:24.9387276Z   ---
+2026-11-15T06:37:24.9387416Z   duration_ms: 6.802805
+2026-11-15T06:37:24.9387545Z   type: 'test'
+2026-11-15T06:37:24.9387654Z   ...
+2026-11-15T06:37:24.9388138Z # Subtest: missing ETF/crypto quote is not presented as zero, without mutating input
+2026-11-15T06:37:24.9388586Z ok 922 - missing ETF/crypto quote is not presented as zero, without mutating input
+2026-11-15T06:37:24.9388707Z   ---
+2026-11-15T06:37:24.9388849Z   duration_ms: 1.282092
+2026-11-15T06:37:24.9389003Z   type: 'test'
+2026-11-15T06:37:24.9389124Z   ...
+2026-11-15T06:37:24.9389670Z # Subtest: real zero holdings and sourced zero quotes remain numeric; stored prices stay visible
+2026-11-15T06:37:24.9390182Z ok 923 - real zero holdings and sourced zero quotes remain numeric; stored prices stay visible
+2026-11-15T06:37:24.9390308Z   ---
+2026-11-15T06:37:24.9390446Z   duration_ms: 0.762114
+2026-11-15T06:37:24.9390570Z   type: 'test'
+2026-11-15T06:37:24.9390693Z   ...
+2026-11-15T06:37:24.9391412Z # Subtest: dashboard individual holding repeats the unknown label without changing aggregate calculations
+2026-11-15T06:37:24.9392026Z ok 924 - dashboard individual holding repeats the unknown label without changing aggregate calculations
+2026-11-15T06:37:24.9392145Z   ---
+2026-11-15T06:37:24.9392276Z   duration_ms: 9.193232
+2026-11-15T06:37:24.9392405Z   type: 'test'
+2026-11-15T06:37:24.9392522Z   ...
+2026-11-15T06:37:24.9393183Z # Subtest: aggregate missing-value evidence preserves real zeros, excluded aliases, stale values and liabilities
+2026-11-15T06:37:24.9393825Z ok 925 - aggregate missing-value evidence preserves real zeros, excluded aliases, stale values and liabilities
+2026-11-15T06:37:24.9393945Z   ---
+2026-11-15T06:37:24.9394075Z   duration_ms: 1.261368
+2026-11-15T06:37:24.9394211Z   type: 'test'
+2026-11-15T06:37:24.9394324Z   ...
+2026-11-15T06:37:24.9394952Z # Subtest: provider, account and category aggregates expose unknown totals without altering financial sums
+2026-11-15T06:37:24.9395552Z ok 926 - provider, account and category aggregates expose unknown totals without altering financial sums
+2026-11-15T06:37:24.9395724Z   ---
+2026-11-15T06:37:24.9395870Z   duration_ms: 3.959852
+2026-11-15T06:37:24.9396010Z   type: 'test'
+2026-11-15T06:37:24.9396119Z   ...
+2026-11-15T06:37:24.9396638Z # Subtest: unabhängige freie Anbieter und beliebige ETFs
+2026-11-15T06:37:24.9397019Z ok 927 - unabhängige freie Anbieter und beliebige ETFs
+2026-11-15T06:37:24.9397132Z   ---
+2026-11-15T06:37:24.9397270Z   duration_ms: 4.761485
+2026-11-15T06:37:24.9397393Z   type: 'test'
+2026-11-15T06:37:24.9397516Z   ...
+2026-11-15T06:37:24.9397886Z # Subtest: Buchungen ändern Bestand, erstellen Verlauf
+2026-11-15T06:37:24.9398234Z ok 928 - Buchungen ändern Bestand, erstellen Verlauf
+2026-11-15T06:37:24.9398399Z   ---
+2026-11-15T06:37:24.9398635Z   duration_ms: 3.910258
+2026-11-15T06:37:24.9398756Z   type: 'test'
+2026-11-15T06:37:24.9398871Z   ...
+2026-11-15T06:37:24.9399289Z # Subtest: Fremdwährungen werden explizit in EUR umgerechnet
+2026-11-15T06:37:24.9399695Z ok 929 - Fremdwährungen werden explizit in EUR umgerechnet
+2026-11-15T06:37:24.9399816Z   ---
+2026-11-15T06:37:24.9399946Z   duration_ms: 0.336466
+2026-11-15T06:37:24.9400076Z   type: 'test'
+2026-11-15T06:37:24.9400191Z   ...
+2026-11-15T06:37:24.9400499Z # Subtest: Sicherheitsregel: Keine geheimen Wallet-Keys
+2026-11-15T06:37:24.9400797Z ok 930 - Sicherheitsregel: Keine geheimen Wallet-Keys
+2026-11-15T06:37:24.9400909Z   ---
+2026-11-15T06:37:24.9401144Z   duration_ms: 0.684828
+2026-11-15T06:37:24.9401290Z   type: 'test'
+2026-11-15T06:37:24.9401401Z   ...
+2026-11-15T06:37:24.9401818Z # Subtest: Backup verwirft API Keys, Wiederherstellung rein datenbasiert
+2026-11-15T06:37:24.9402211Z ok 931 - Backup verwirft API Keys, Wiederherstellung rein datenbasiert
+2026-11-15T06:37:24.9402428Z   ---
+2026-11-15T06:37:24.9402567Z   duration_ms: 3.762433
+2026-11-15T06:37:24.9402696Z   type: 'test'
+2026-11-15T06:37:24.9402807Z   ...
+2026-11-15T06:37:24.9403195Z # Subtest: Ungültiger Portfolioimport wird abgelehnt
+2026-11-15T06:37:24.9403538Z ok 932 - Ungültiger Portfolioimport wird abgelehnt
+2026-11-15T06:37:24.9403660Z   ---
+2026-11-15T06:37:24.9403800Z   duration_ms: 0.144312
+2026-11-15T06:37:24.9403920Z   type: 'test'
+2026-11-15T06:37:24.9404041Z   ...
+2026-11-15T06:37:24.9404527Z # Subtest: Einstandswerte bleiben unbekannt statt Verluste oder Gewinne zu erfinden
+2026-11-15T06:37:24.9404982Z ok 933 - Einstandswerte bleiben unbekannt statt Verluste oder Gewinne zu erfinden
+2026-11-15T06:37:24.9405102Z   ---
+2026-11-15T06:37:24.9405232Z   duration_ms: 0.590426
+2026-11-15T06:37:24.9405367Z   type: 'test'
+2026-11-15T06:37:24.9405485Z   ...
+2026-11-15T06:37:24.9406026Z # Subtest: Gewichteter EUR-Einstand und Teilverkauf berücksichtigen Gebühren
+2026-11-15T06:37:24.9406559Z ok 934 - Gewichteter EUR-Einstand und Teilverkauf berücksichtigen Gebühren
+2026-11-15T06:37:24.9406681Z   ---
+2026-11-15T06:37:24.9406814Z   duration_ms: 1.827583
+2026-11-15T06:37:24.9406946Z   type: 'test'
+2026-11-15T06:37:24.9407056Z   ...
+2026-11-15T06:37:24.9407578Z # Subtest: Historische Fremdwährungsbuchungen benötigen expliziten EUR-FX
+2026-11-15T06:37:24.9408080Z ok 935 - Historische Fremdwährungsbuchungen benötigen expliziten EUR-FX
+2026-11-15T06:37:24.9408191Z   ---
+2026-11-15T06:37:24.9408341Z   duration_ms: 0.78754
+2026-11-15T06:37:24.9408475Z   type: 'test'
+2026-11-15T06:37:24.9408585Z   ...
+2026-11-15T06:37:24.9409123Z # Subtest: Rocket Pool rETH is contract-trusted even without price, but a symbol spoof is not
+2026-11-15T06:37:24.9409640Z ok 936 - Rocket Pool rETH is contract-trusted even without price, but a symbol spoof is not
+2026-11-15T06:37:24.9409751Z   ---
+2026-11-15T06:37:24.9409891Z   duration_ms: 1.903501
+2026-11-15T06:37:24.9410013Z   type: 'test'
+2026-11-15T06:37:24.9410143Z   ...
+2026-11-15T06:37:24.9410824Z # Subtest: BNB BEP-20 indexer discovers an arbitrary contract, verifies on chain and does not trust indexer amount
+2026-11-15T06:37:24.9411552Z ok 937 - BNB BEP-20 indexer discovers an arbitrary contract, verifies on chain and does not trust indexer amount
+2026-11-15T06:37:24.9411682Z   ---
+2026-11-15T06:37:24.9411823Z   duration_ms: 4.696301
+2026-11-15T06:37:24.9411946Z   type: 'test'
+2026-11-15T06:37:24.9412063Z   ...
+2026-11-15T06:37:24.9412634Z # Subtest: BNB personal indexer key honored and missing indexer produces truthful limited coverage
+2026-11-15T06:37:24.9413165Z ok 938 - BNB personal indexer key honored and missing indexer produces truthful limited coverage
+2026-11-15T06:37:24.9413286Z   ---
+2026-11-15T06:37:24.9413414Z   duration_ms: 3.836411
+2026-11-15T06:37:24.9413543Z   type: 'test'
+2026-11-15T06:37:24.9413660Z   ...
+2026-11-15T06:37:24.9414183Z # Subtest: BNB malformed token metadata and decimals mismatch never create an invented holding
+2026-11-15T06:37:24.9414818Z ok 939 - BNB malformed token metadata and decimals mismatch never create an invented holding
+2026-11-15T06:37:24.9414937Z   ---
+2026-11-15T06:37:24.9415068Z   duration_ms: 1.394314
+2026-11-15T06:37:24.9415199Z   type: 'test'
+2026-11-15T06:37:24.9415321Z   ...
+2026-11-15T06:37:24.9415802Z # Subtest: Binplorer does not get to redirect address identity or silently certify zero
+2026-11-15T06:37:24.9416264Z ok 940 - Binplorer does not get to redirect address identity or silently certify zero
+2026-11-15T06:37:24.9416373Z   ---
+2026-11-15T06:37:24.9416513Z   duration_ms: 0.847065
+2026-11-15T06:37:24.9416642Z   type: 'test'
+2026-11-15T06:37:24.9416750Z   ...
+2026-11-15T06:37:24.9417272Z # Subtest: CoinGecko contract quotes for BNB use its chain platform, not an Ethereum ticker
+2026-11-15T06:37:24.9417769Z ok 941 - CoinGecko contract quotes for BNB use its chain platform, not an Ethereum ticker
+2026-11-15T06:37:24.9417880Z   ---
+2026-11-15T06:37:24.9418022Z   duration_ms: 0.765806
+2026-11-15T06:37:24.9418323Z   type: 'test'
+2026-11-15T06:37:24.9418435Z   ...
+2026-11-15T06:37:24.9419017Z # Subtest: Solana default RPC transparently falls back on an error but custom RPC does not leak
+2026-11-15T06:37:24.9419529Z ok 942 - Solana default RPC transparently falls back on an error but custom RPC does not leak
+2026-11-15T06:37:24.9419649Z   ---
+2026-11-15T06:37:24.9419792Z   duration_ms: 1.505395
+2026-11-15T06:37:24.9419914Z   type: 'test'
+2026-11-15T06:37:24.9420031Z   ...
+2026-11-15T06:37:24.9420525Z # Subtest: Solana malformed first provider is retried; both malformed never become zero
+2026-11-15T06:37:24.9420995Z ok 943 - Solana malformed first provider is retried; both malformed never become zero
+2026-11-15T06:37:24.9421214Z   ---
+2026-11-15T06:37:24.9421366Z   duration_ms: 0.705006
+2026-11-15T06:37:24.9421490Z   type: 'test'
+2026-11-15T06:37:24.9421612Z   ...
+2026-11-15T06:37:24.9422131Z # Subtest: Solana staking query also uses safe fallback (no false completed empty delegation)
+2026-11-15T06:37:24.9422649Z ok 944 - Solana staking query also uses safe fallback (no false completed empty delegation)
+2026-11-15T06:37:24.9422767Z   ---
+2026-11-15T06:37:24.9422897Z   duration_ms: 1.308802
+2026-11-15T06:37:24.9423026Z   type: 'test'
+2026-11-15T06:37:24.9423144Z   ...
+2026-11-15T06:37:24.9423769Z # Subtest: catalog covers all 50 supplied instruments without claiming automatic staking for token holdings
+2026-11-15T06:37:24.9424372Z ok 945 - catalog covers all 50 supplied instruments without claiming automatic staking for token holdings
+2026-11-15T06:37:24.9424490Z   ---
+2026-11-15T06:37:24.9424622Z   duration_ms: 1.52939
+2026-11-15T06:37:24.9424753Z   type: 'test'
+2026-11-15T06:37:24.9424865Z   ...
+2026-11-15T06:37:24.9425443Z # Subtest: Cosmos liquid/delegation/unbonding are disjoint, exact amounts and validators persisted
+2026-11-15T06:37:24.9425999Z ok 946 - Cosmos liquid/delegation/unbonding are disjoint, exact amounts and validators persisted
+2026-11-15T06:37:24.9426111Z   ---
+2026-11-15T06:37:24.9426257Z   duration_ms: 5.660878
+2026-11-15T06:37:24.9426394Z   type: 'test'
+2026-11-15T06:37:24.9426505Z   ...
+2026-11-15T06:37:24.9427082Z # Subtest: Cosmos pagination follows next_key and refuses missing verification instead of using zero
+2026-11-15T06:37:24.9427631Z ok 947 - Cosmos pagination follows next_key and refuses missing verification instead of using zero
+2026-11-15T06:37:24.9427741Z   ---
+2026-11-15T06:37:24.9427856Z   duration_ms: 2.500294
+2026-11-15T06:37:24.9427978Z   type: 'test'
+2026-11-15T06:37:24.9428098Z   ...
+2026-11-15T06:37:24.9428562Z # Subtest: Hedera Staking never doubles the account balance or adds pending rewards
+2026-11-15T06:37:24.9428996Z ok 948 - Hedera Staking never doubles the account balance or adds pending rewards
+2026-11-15T06:37:24.9429115Z   ---
+2026-11-15T06:37:24.9429255Z   duration_ms: 0.781966
+2026-11-15T06:37:24.9429377Z   type: 'test'
+2026-11-15T06:37:24.9429494Z   ...
+2026-11-15T06:37:24.9430005Z # Subtest: NEAR separate liquid and locked amounts but no fictitious external pool delegation
+2026-11-15T06:37:24.9430609Z ok 949 - NEAR separate liquid and locked amounts but no fictitious external pool delegation
+2026-11-15T06:37:24.9430731Z   ---
+2026-11-15T06:37:24.9430864Z   duration_ms: 1.090329
+2026-11-15T06:37:24.9431000Z   type: 'test'
+2026-11-15T06:37:24.9431222Z   ...
+2026-11-15T06:37:24.9431693Z # Subtest: BNB native coin read correctly; no BEP20 or staking positions fabricated
+2026-11-15T06:37:24.9432134Z ok 950 - BNB native coin read correctly; no BEP20 or staking positions fabricated
+2026-11-15T06:37:24.9432254Z   ---
+2026-11-15T06:37:24.9432387Z   duration_ms: 3.562559
+2026-11-15T06:37:24.9432520Z   type: 'test'
+2026-11-15T06:37:24.9432629Z   ...
+2026-11-15T06:37:24.9433086Z # Subtest: New staking positions survive backup without losing exact identifiers
+2026-11-15T06:37:24.9433517Z ok 951 - New staking positions survive backup without losing exact identifiers
+2026-11-15T06:37:24.9433626Z   ---
+2026-11-15T06:37:24.9433767Z   duration_ms: 9.674021
+2026-11-15T06:37:24.9433988Z   type: 'test'
+2026-11-15T06:37:24.9434103Z   ...
+2026-11-15T06:37:24.9434597Z # Subtest: Network validation rejects another chain or secret and malformed account IDs
+2026-11-15T06:37:24.9435079Z ok 952 - Network validation rejects another chain or secret and malformed account IDs
+2026-11-15T06:37:24.9435189Z   ---
+2026-11-15T06:37:24.9435330Z   duration_ms: 0.578761
+2026-11-15T06:37:24.9435452Z   type: 'test'
+2026-11-15T06:37:24.9435571Z   ...
+2026-11-15T06:37:24.9436053Z # Subtest: leaving a page through its own action puts keyboard focus at the new heading
+2026-11-15T06:37:24.9436505Z ok 953 - leaving a page through its own action puts keyboard focus at the new heading
+2026-11-15T06:37:24.9436626Z   ---
+2026-11-15T06:37:24.9436769Z   duration_ms: 3.18161
+2026-11-15T06:37:24.9436887Z   type: 'test'
+2026-11-15T06:37:24.9437007Z   ...
+2026-11-15T06:37:24.9437598Z # Subtest: persistent navigation keeps its focused control; same-page rendering does not steal focus
+2026-11-15T06:37:24.9438162Z ok 954 - persistent navigation keeps its focused control; same-page rendering does not steal focus
+2026-11-15T06:37:24.9438280Z   ---
+2026-11-15T06:37:24.9438412Z   duration_ms: 2.492786
+2026-11-15T06:37:24.9438540Z   type: 'test'
+2026-11-15T06:37:24.9438657Z   ...
+2026-11-15T06:37:24.9439194Z # Subtest: a page-local action to an invalid route uses the safe dashboard destination and heading
+2026-11-15T06:37:24.9439715Z ok 955 - a page-local action to an invalid route uses the safe dashboard destination and heading
+2026-11-15T06:37:24.9439834Z   ---
+2026-11-15T06:37:24.9439964Z   duration_ms: 1.011657
+2026-11-15T06:37:24.9440091Z   type: 'test'
+2026-11-15T06:37:24.9440206Z   ...
+2026-11-15T06:37:24.9440620Z # Subtest: Typing one letter f suggests Flatex with a broker classification
+2026-11-15T06:37:24.9441016Z ok 956 - Typing one letter f suggests Flatex with a broker classification
+2026-11-15T06:37:24.9441223Z   ---
+2026-11-15T06:37:24.9441370Z   duration_ms: 1.963714
+2026-11-15T06:37:24.9441502Z   type: 'test'
+2026-11-15T06:37:24.9441621Z   ...
+2026-11-15T06:37:24.9442158Z # Subtest: Search matches aliases and name fragments without using network or guessing types
+2026-11-15T06:37:24.9442661Z ok 957 - Search matches aliases and name fragments without using network or guessing types
+2026-11-15T06:37:24.9442772Z   ---
+2026-11-15T06:37:24.9442912Z   duration_ms: 2.195423
+2026-11-15T06:37:24.9443034Z   type: 'test'
+2026-11-15T06:37:24.9443150Z   ...
+2026-11-15T06:37:24.9443760Z # Subtest: Contextual broker/bank/wallet account names suggest appropriate types but permit custom names
+2026-11-15T06:37:24.9444401Z ok 958 - Contextual broker/bank/wallet account names suggest appropriate types but permit custom names
+2026-11-15T06:37:24.9444528Z   ---
+2026-11-15T06:37:24.9444667Z   duration_ms: 1.302261
+2026-11-15T06:37:24.9444787Z   type: 'test'
+2026-11-15T06:37:24.9444909Z   ...
+2026-11-15T06:37:24.9445569Z # Subtest: Existing provider ID resolves only from exact owned name rather than global public provider suggestions
+2026-11-15T06:37:24.9446322Z ok 959 - Existing provider ID resolves only from exact owned name rather than global public provider suggestions
+2026-11-15T06:37:24.9446445Z   ---
+2026-11-15T06:37:24.9446587Z   duration_ms: 0.319616
+2026-11-15T06:37:24.9446710Z   type: 'test'
+2026-11-15T06:37:24.9446831Z   ...
+2026-11-15T06:37:24.9447397Z # Subtest: Source digest agrees with independent Node SHA-256 for padding, Unicode and large inputs
+2026-11-15T06:37:24.9447957Z ok 960 - Source digest agrees with independent Node SHA-256 for padding, Unicode and large inputs
+2026-11-15T06:37:24.9448083Z   ---
+2026-11-15T06:37:24.9448220Z   duration_ms: 27.261481
+2026-11-15T06:37:24.9448353Z   type: 'test'
+2026-11-15T06:37:24.9448473Z   ...
+2026-11-15T06:37:24.9449120Z # Subtest: Same file with two indistinguishable rows retains both and repeats with zero additions after restore
+2026-11-15T06:37:24.9449748Z ok 961 - Same file with two indistinguishable rows retains both and repeats with zero additions after restore
+2026-11-15T06:37:24.9449947Z   ---
+2026-11-15T06:37:24.9450089Z   duration_ms: 18.318976
+2026-11-15T06:37:24.9450221Z   type: 'test'
+2026-11-15T06:37:24.9450335Z   ...
+2026-11-15T06:37:24.9450888Z # Subtest: An equal row in another file without an external ID is a conflict, not a silent duplicate
+2026-11-15T06:37:24.9451532Z ok 962 - An equal row in another file without an external ID is a conflict, not a silent duplicate
+2026-11-15T06:37:24.9451647Z   ---
+2026-11-15T06:37:24.9451791Z   duration_ms: 3.523323
+2026-11-15T06:37:24.9451917Z   type: 'test'
+2026-11-15T06:37:24.9452025Z   ...
+2026-11-15T06:37:24.9452502Z # Subtest: Legacy fingerprint alone cannot silently discard an independent booking
+2026-11-15T06:37:24.9452919Z ok 963 - Legacy fingerprint alone cannot silently discard an independent booking
+2026-11-15T06:37:24.9453033Z   ---
+2026-11-15T06:37:24.9453180Z   duration_ms: 2.311104
+2026-11-15T06:37:24.9453286Z   type: 'test'
+2026-11-15T06:37:24.9453398Z   ...
+2026-11-15T06:37:24.9453704Z # Subtest: Manual no-ID correction survives an identical-file reimport
+2026-11-15T06:37:24.9454067Z ok 964 - Manual no-ID correction survives an identical-file reimport
+2026-11-15T06:37:24.9454193Z   ---
+2026-11-15T06:37:24.9454336Z   duration_ms: 1.645495
+2026-11-15T06:37:24.9454456Z   type: 'test'
+2026-11-15T06:37:24.9454561Z   ...
+2026-11-15T06:37:24.9455073Z # Subtest: Invalid simulated quantities cannot bypass final journal reconciliation or partially commit
+2026-11-15T06:37:24.9455590Z ok 965 - Invalid simulated quantities cannot bypass final journal reconciliation or partially commit
+2026-11-15T06:37:24.9455701Z   ---
+2026-11-15T06:37:24.9455824Z   duration_ms: 1.196791
+2026-11-15T06:37:24.9455944Z   type: 'test'
+2026-11-15T06:37:24.9456052Z   ...
+2026-11-15T06:37:24.9456368Z # Subtest: Stale preview and one bad row retain the whole original model
+2026-11-15T06:37:24.9456735Z ok 966 - Stale preview and one bad row retain the whole original model
+2026-11-15T06:37:24.9456853Z   ---
+2026-11-15T06:37:24.9456983Z   duration_ms: 1.429304
+2026-11-15T06:37:24.9457118Z   type: 'test'
+2026-11-15T06:37:24.9457230Z   ...
+2026-11-15T06:37:24.9457702Z # Subtest: Missing historical trade price is never substituted by the current quote
+2026-11-15T06:37:24.9458147Z ok 967 - Missing historical trade price is never substituted by the current quote
+2026-11-15T06:37:24.9458258Z   ---
+2026-11-15T06:37:24.9458401Z   duration_ms: 0.520762
+2026-11-15T06:37:24.9458529Z   type: 'test'
+2026-11-15T06:37:24.9458637Z   ...
+2026-11-15T06:37:24.9459072Z # Subtest: Unknown CSV costs stay null, cannot fabricate basis or debit real cash
+2026-11-15T06:37:24.9459499Z ok 968 - Unknown CSV costs stay null, cannot fabricate basis or debit real cash
+2026-11-15T06:37:24.9459605Z   ---
+2026-11-15T06:37:24.9459744Z   duration_ms: 2.053543
+2026-11-15T06:37:24.9459862Z   type: 'test'
+2026-11-15T06:37:24.9459977Z   ...
+2026-11-15T06:37:24.9460422Z # Subtest: Identical contents in differently named no-ID files require review
+2026-11-15T06:37:24.9460832Z ok 969 - Identical contents in differently named no-ID files require review
+2026-11-15T06:37:24.9461216Z   ---
+2026-11-15T06:37:24.9461378Z   duration_ms: 1.469989
+2026-11-15T06:37:24.9461499Z   type: 'test'
+2026-11-15T06:37:24.9461615Z   ...
+2026-11-15T06:37:24.9462073Z # Subtest: Source/account/external ID isolates accounts and preserves distinct IDs
+2026-11-15T06:37:24.9462527Z ok 970 - Source/account/external ID isolates accounts and preserves distinct IDs
+2026-11-15T06:37:24.9462649Z   ---
+2026-11-15T06:37:24.9462788Z   duration_ms: 25.790246
+2026-11-15T06:37:24.9462920Z   type: 'test'
+2026-11-15T06:37:24.9463036Z   ...
+2026-11-15T06:37:24.9463537Z # Subtest: Changed payload for an existing source ID conflicts, never inserts or overwrites
+2026-11-15T06:37:24.9464026Z ok 971 - Changed payload for an existing source ID conflicts, never inserts or overwrites
+2026-11-15T06:37:24.9464147Z   ---
+2026-11-15T06:37:24.9464278Z   duration_ms: 3.166252
+2026-11-15T06:37:24.9464411Z   type: 'test'
+2026-11-15T06:37:24.9464523Z   ...
+2026-11-15T06:37:24.9465161Z # Subtest: Manual corrections to an imported booking are protected even on an identical reimport
+2026-11-15T06:37:24.9465690Z ok 972 - Manual corrections to an imported booking are protected even on an identical reimport
+2026-11-15T06:37:24.9465799Z   ---
+2026-11-15T06:37:24.9465941Z   duration_ms: 3.671647
+2026-11-15T06:37:24.9466073Z   type: 'test'
+2026-11-15T06:37:24.9466182Z   ...
+2026-11-15T06:37:24.9466786Z # Subtest: Provenance survives validated backup and repeat import; malformed account scope is rejected
+2026-11-15T06:37:24.9467465Z ok 973 - Provenance survives validated backup and repeat import; malformed account scope is rejected
+2026-11-15T06:37:24.9467585Z   ---
+2026-11-15T06:37:24.9467730Z   duration_ms: 3.995732
+2026-11-15T06:37:24.9467851Z   type: 'test'
+2026-11-15T06:37:24.9467968Z   ...
+2026-11-15T06:37:24.9468296Z # Subtest: Legacy backups do not gain invented provenance
+2026-11-15T06:37:24.9468594Z ok 974 - Legacy backups do not gain invented provenance
+2026-11-15T06:37:24.9468716Z   ---
+2026-11-15T06:37:24.9468861Z   duration_ms: 1.706078
+2026-11-15T06:37:24.9469008Z   type: 'test'
+2026-11-15T06:37:24.9469124Z   ...
+2026-11-15T06:37:24.9469619Z # Subtest: Stale local writer cannot overwrite a confirmed save; reload renews comparison
+2026-11-15T06:37:24.9470098Z ok 975 - Stale local writer cannot overwrite a confirmed save; reload renews comparison
+2026-11-15T06:37:24.9470219Z   ---
+2026-11-15T06:37:24.9470350Z   duration_ms: 8.646201
+2026-11-15T06:37:24.9470479Z   type: 'test'
+2026-11-15T06:37:24.9470599Z   ...
+2026-11-15T06:37:24.9471107Z # Subtest: Stale local mode cannot write after another tab migrates to IndexedDB
+2026-11-15T06:37:24.9471547Z ok 976 - Stale local mode cannot write after another tab migrates to IndexedDB
+2026-11-15T06:37:24.9471670Z   ---
+2026-11-15T06:37:24.9471800Z   duration_ms: 0.418686
+2026-11-15T06:37:24.9471931Z   type: 'test'
+2026-11-15T06:37:24.9472038Z   ...
+2026-11-15T06:37:24.9472433Z # Subtest: Quota failure preserves old bytes and leaves retry possible
+2026-11-15T06:37:24.9472783Z ok 977 - Quota failure preserves old bytes and leaves retry possible
+2026-11-15T06:37:24.9472875Z   ---
+2026-11-15T06:37:24.9473000Z   duration_ms: 2.098684
+2026-11-15T06:37:24.9473110Z   type: 'test'
+2026-11-15T06:37:24.9473202Z   ...
+2026-11-15T06:37:24.9473556Z # Subtest: Deletion updates controller state and blocks stale resurrection
+2026-11-15T06:37:24.9473900Z ok 978 - Deletion updates controller state and blocks stale resurrection
+2026-11-15T06:37:24.9474011Z   ---
+2026-11-15T06:37:24.9474148Z   duration_ms: 0.772977
+2026-11-15T06:37:24.9474268Z   type: 'test'
+2026-11-15T06:37:24.9474383Z   ...
+2026-11-15T06:37:24.9474846Z # Subtest: XIRR does not choose one of three roots (-50%, 0%, 100% approximately)
+2026-11-15T06:37:24.9475251Z ok 979 - XIRR does not choose one of three roots (-50%, 0%, 100% approximately)
+2026-11-15T06:37:24.9475372Z   ---
+2026-11-15T06:37:24.9475511Z   duration_ms: 2.654641
+2026-11-15T06:37:24.9475627Z   type: 'test'
+2026-11-15T06:37:24.9475751Z   ...
+2026-11-15T06:37:24.9476218Z # Subtest: Same-day offsetting flows have no defined annual return
+2026-11-15T06:37:24.9476567Z ok 980 - Same-day offsetting flows have no defined annual return
+2026-11-15T06:37:24.9476687Z   ---
+2026-11-15T06:37:24.9476819Z   duration_ms: 0.260605
+2026-11-15T06:37:24.9476951Z   type: 'test'
+2026-11-15T06:37:24.9477067Z   ...
+2026-11-15T06:37:24.9477585Z # Subtest: XIRR rejects missing amounts and invalid calendar dates rather than coercing them
+2026-11-15T06:37:24.9478089Z ok 981 - XIRR rejects missing amounts and invalid calendar dates rather than coercing them
+2026-11-15T06:37:24.9478208Z   ---
+2026-11-15T06:37:24.9478338Z   duration_ms: 0.424793
+2026-11-15T06:37:24.9478467Z   type: 'test'
+2026-11-15T06:37:24.9478577Z   ...
+2026-11-15T06:37:24.9479052Z # Subtest: Negative returns and same-day netting use independent endpoint arithmetic
+2026-11-15T06:37:24.9479748Z ok 982 - Negative returns and same-day netting use independent endpoint arithmetic
+2026-11-15T06:37:24.9479973Z   ---
+2026-11-15T06:37:24.9480120Z   duration_ms: 0.452779
+2026-11-15T06:37:24.9480252Z   type: 'test'
+2026-11-15T06:37:24.9480364Z   ...
+2026-11-15T06:37:24.9480817Z # Subtest: Unspecified cashflows and arithmetic overflow never become a return
+2026-11-15T06:37:24.9481351Z ok 983 - Unspecified cashflows and arithmetic overflow never become a return
+2026-11-15T06:37:24.9481478Z   ---
+2026-11-15T06:37:24.9481619Z   duration_ms: 0.318984
+2026-11-15T06:37:24.9481739Z   type: 'test'
+2026-11-15T06:37:24.9481861Z   ...
+2026-11-15T06:37:24.9482411Z # Subtest: Portfolio returns do not coerce an unknown external flow or boundary valuation to zero
+2026-11-15T06:37:24.9482920Z ok 984 - Portfolio returns do not coerce an unknown external flow or boundary valuation to zero
+2026-11-15T06:37:24.9483038Z   ---
+2026-11-15T06:37:24.9483179Z   duration_ms: 0.939562
+2026-11-15T06:37:24.9483301Z   type: 'test'
+2026-11-15T06:37:24.9483420Z   ...
+2026-11-15T06:37:24.9484017Z # Subtest: independent fixed RPC hex vector preserves outpoint, asset, amount beyond safe Number and time
+2026-11-15T06:37:24.9484610Z ok 985 - independent fixed RPC hex vector preserves outpoint, asset, amount beyond safe Number and time
+2026-11-15T06:37:24.9484728Z   ---
+2026-11-15T06:37:24.9484867Z   duration_ms: 10.760543
+2026-11-15T06:37:24.9484995Z   type: 'test'
+2026-11-15T06:37:24.9485112Z   ...
+2026-11-15T06:37:24.9485678Z # Subtest: encoding is explicit: hex/hexc checksummed, hexnc deliberately raw, no checksum fallback
+2026-11-15T06:37:24.9486225Z ok 986 - encoding is explicit: hex/hexc checksummed, hexnc deliberately raw, no checksum fallback
+2026-11-15T06:37:24.9486345Z   ---
+2026-11-15T06:37:24.9486476Z   duration_ms: 1.617669
+2026-11-15T06:37:24.9486605Z   type: 'test'
+2026-11-15T06:37:24.9486714Z   ...
+2026-11-15T06:37:24.9487205Z # Subtest: every altered byte including checksum is rejected without an unchecked retry
+2026-11-15T06:37:24.9487679Z ok 987 - every altered byte including checksum is rejected without an unchecked retry
+2026-11-15T06:37:24.9487793Z   ---
+2026-11-15T06:37:24.9487941Z   duration_ms: 25.692333
+2026-11-15T06:37:24.9488075Z   type: 'test'
+2026-11-15T06:37:24.9488186Z   ...
+2026-11-15T06:37:24.9488669Z # Subtest: every truncated raw boundary and extra validly checksummed bytes fail closed
+2026-11-15T06:37:24.9489135Z ok 988 - every truncated raw boundary and extra validly checksummed bytes fail closed
+2026-11-15T06:37:24.9489246Z   ---
+2026-11-15T06:37:24.9489392Z   duration_ms: 25.237866
+2026-11-15T06:37:24.9489512Z   type: 'test'
+2026-11-15T06:37:24.9489634Z   ...
+2026-11-15T06:37:24.9490121Z # Subtest: reject malformed hex and bounded resource exhaustion before allocation/hash
+2026-11-15T06:37:24.9490572Z ok 989 - reject malformed hex and bounded resource exhaustion before allocation/hash
+2026-11-15T06:37:24.9490688Z   ---
+2026-11-15T06:37:24.9490826Z   duration_ms: 1.518057
+2026-11-15T06:37:24.9490945Z   type: 'test'
+2026-11-15T06:37:24.9491151Z   ...
+2026-11-15T06:37:24.9491696Z # Subtest: codec and output-type boundaries reject unknown types and nested stakeable locks
+2026-11-15T06:37:24.9492294Z ok 990 - codec and output-type boundaries reject unknown types and nested stakeable locks
+2026-11-15T06:37:24.9492414Z   ---
+2026-11-15T06:37:24.9492547Z   duration_ms: 2.335851
+2026-11-15T06:37:24.9492676Z   type: 'test'
+2026-11-15T06:37:24.9492793Z   ...
+2026-11-15T06:37:24.9493329Z # Subtest: zero amount and invalid threshold/owner ordering are not accepted financial evidence
+2026-11-15T06:37:24.9493853Z ok 991 - zero amount and invalid threshold/owner ordering are not accepted financial evidence
+2026-11-15T06:37:24.9493973Z   ---
+2026-11-15T06:37:24.9494105Z   duration_ms: 1.582638
+2026-11-15T06:37:24.9494234Z   type: 'test'
+2026-11-15T06:37:24.9494345Z   ...
+2026-11-15T06:37:24.9494866Z # Subtest: full uint64 values and maximum output index remain exact without Number conversion
+2026-11-15T06:37:24.9495362Z ok 992 - full uint64 values and maximum output index remain exact without Number conversion
+2026-11-15T06:37:24.9495558Z   ---
+2026-11-15T06:37:24.9495698Z   duration_ms: 0.929715
+2026-11-15T06:37:24.9495835Z   type: 'test'
+2026-11-15T06:37:24.9495942Z   ...
+2026-11-15T06:37:24.9496498Z # Subtest: the documented 1024-owner support boundary retains every owner and the full threshold
+2026-11-15T06:37:24.9497023Z ok 993 - the documented 1024-owner support boundary retains every owner and the full threshold
+2026-11-15T06:37:24.9497134Z   ---
+2026-11-15T06:37:24.9497279Z   duration_ms: 25.884504
+2026-11-15T06:37:24.9497399Z   type: 'test'
+2026-11-15T06:37:24.9497516Z   ...
+2026-11-15T06:37:24.9497993Z # Subtest: local UTXO amount is never called active stake, a reward or an AVAX quantity
+2026-11-15T06:37:24.9498441Z ok 994 - local UTXO amount is never called active stake, a reward or an AVAX quantity
+2026-11-15T06:37:24.9498558Z   ---
+2026-11-15T06:37:24.9498700Z   duration_ms: 1.217349
+2026-11-15T06:37:24.9498819Z   type: 'test'
+2026-11-15T06:37:24.9498937Z   ...
+2026-11-15T06:37:24.9499442Z # Subtest: equal amounts with distinct source transaction/index remain distinct outpoints
+2026-11-15T06:37:24.9499925Z ok 995 - equal amounts with distinct source transaction/index remain distinct outpoints
+2026-11-15T06:37:24.9500042Z   ---
+2026-11-15T06:37:24.9500171Z   duration_ms: 1.278021
+2026-11-15T06:37:24.9500297Z   type: 'test'
+2026-11-15T06:37:24.9500416Z   ...
+2026-11-15T06:37:24.9500997Z # Subtest: inner lock controls platform lock; outer lock controls stakeability; exact maturity boundary
+2026-11-15T06:37:24.9501581Z ok 996 - inner lock controls platform lock; outer lock controls stakeability; exact maturity boundary
+2026-11-15T06:37:24.9501697Z   ---
+2026-11-15T06:37:24.9501815Z   duration_ms: 3.476799
+2026-11-15T06:37:24.9501969Z   type: 'test'
+2026-11-15T06:37:24.9502089Z   ...
+2026-11-15T06:37:24.9502572Z # Subtest: address intersection, signature threshold and complete declared owner-set coverage differ
+2026-11-15T06:37:24.9503049Z ok 997 - address intersection, signature threshold and complete declared owner-set coverage differ
+2026-11-15T06:37:24.9503150Z   ---
+2026-11-15T06:37:24.9503270Z   duration_ms: 1.938961
+2026-11-15T06:37:24.9503376Z   type: 'test'
+2026-11-15T06:37:24.9503466Z   ...
+2026-11-15T06:37:24.9503865Z # Subtest: inspection requires explicit canonical P-Chain owner IDs and bounded exact chain time
+2026-11-15T06:37:24.9504273Z ok 998 - inspection requires explicit canonical P-Chain owner IDs and bounded exact chain time
+2026-11-15T06:37:24.9504361Z   ---
+2026-11-15T06:37:24.9504805Z   duration_ms: 1.344504
+2026-11-15T06:37:24.9504928Z   type: 'test'
+2026-11-15T06:37:24.9505019Z   ...
+2026-11-15T06:37:24.9505438Z # Subtest: pure inspection preserves input owner set and does not call network/storage or invent totals
+2026-11-15T06:37:24.9506074Z ok 999 - pure inspection preserves input owner set and does not call network/storage or invent totals
+2026-11-15T06:37:24.9506403Z   ---
+2026-11-15T06:37:24.9506536Z   duration_ms: 0.611146
+2026-11-15T06:37:24.9506640Z   type: 'test'
+2026-11-15T06:37:24.9506744Z   ...
+2026-11-15T06:37:24.9507397Z # Subtest: fixed independent synthetic addresses decode to exact 20-byte owners on both networks
+2026-11-15T06:37:24.9507872Z ok 1000 - fixed independent synthetic addresses decode to exact 20-byte owners on both networks
+2026-11-15T06:37:24.9507982Z   ---
+2026-11-15T06:37:24.9508097Z   duration_ms: 2.891507
+2026-11-15T06:37:24.9508201Z   type: 'test'
+2026-11-15T06:37:24.9508305Z   ...
+2026-11-15T06:37:24.9508695Z # Subtest: every single-character Bech32 payload/checksum corruption is rejected
+2026-11-15T06:37:24.9509112Z ok 1001 - every single-character Bech32 payload/checksum corruption is rejected
+2026-11-15T06:37:24.9509222Z   ---
+2026-11-15T06:37:24.9509348Z   duration_ms: 4.983497
+2026-11-15T06:37:24.9509476Z   type: 'test'
+2026-11-15T06:37:24.9509589Z   ...
+2026-11-15T06:37:24.9510045Z # Subtest: network, chain and canonical representation cannot be silently inferred or normalized
+2026-11-15T06:37:24.9510518Z ok 1002 - network, chain and canonical representation cannot be silently inferred or normalized
+2026-11-15T06:37:24.9510752Z   ---
+2026-11-15T06:37:24.9510873Z   duration_ms: 0.557209
+2026-11-15T06:37:24.9510998Z   type: 'test'
+2026-11-15T06:37:24.9511336Z   ...
+2026-11-15T06:37:24.9511791Z # Subtest: short/long payloads, SegWit-sized extra words and Bech32m never become owners
+2026-11-15T06:37:24.9512232Z ok 1003 - short/long payloads, SegWit-sized extra words and Bech32m never become owners
+2026-11-15T06:37:24.9512335Z   ---
+2026-11-15T06:37:24.9512469Z   duration_ms: 0.388998
+2026-11-15T06:37:24.9512593Z   type: 'test'
+2026-11-15T06:37:24.9512697Z   ...
+2026-11-15T06:37:24.9513322Z # Subtest: identity uses explicit network, source, destination and exact outpoint, with no financial payload
+2026-11-15T06:37:24.9513945Z ok 1004 - identity uses explicit network, source, destination and exact outpoint, with no financial payload
+2026-11-15T06:37:24.9514042Z   ---
+2026-11-15T06:37:24.9514163Z   duration_ms: 0.689598
+2026-11-15T06:37:24.9514271Z   type: 'test'
+2026-11-15T06:37:24.9514392Z   ...
+2026-11-15T06:37:24.9514875Z # Subtest: uint32 limits are exact and cannot collide through coercion or unsafe integers
+2026-11-15T06:37:24.9515312Z ok 1005 - uint32 limits are exact and cannot collide through coercion or unsafe integers
+2026-11-15T06:37:24.9515430Z   ---
+2026-11-15T06:37:24.9515557Z   duration_ms: 0.494325
+2026-11-15T06:37:24.9515675Z   type: 'test'
+2026-11-15T06:37:24.9515785Z   ...
+2026-11-15T06:37:24.9516257Z # Subtest: missing or malformed context and IDs fail instead of defaulting to local/mainnet
+2026-11-15T06:37:24.9516731Z ok 1006 - missing or malformed context and IDs fail instead of defaulting to local/mainnet
+2026-11-15T06:37:24.9516858Z   ---
+2026-11-15T06:37:24.9516989Z   duration_ms: 0.536916
+2026-11-15T06:37:24.9517121Z   type: 'test'
+2026-11-15T06:37:24.9517241Z   ...
+2026-11-15T06:37:24.9517824Z # Subtest: existing checked UTXO decoder and owner inspection compose without changing their originals
+2026-11-15T06:37:24.9518385Z ok 1007 - existing checked UTXO decoder and owner inspection compose without changing their originals
+2026-11-15T06:37:24.9518520Z   ---
+2026-11-15T06:37:24.9518660Z   duration_ms: 11.406829
+2026-11-15T06:37:24.9518792Z   type: 'test'
+2026-11-15T06:37:24.9518892Z   ...
+2026-11-15T06:37:24.9519358Z # Subtest: bounded helpers remain outside active app, wallet scanner and model imports
+2026-11-15T06:37:24.9519801Z ok 1008 - bounded helpers remain outside active app, wallet scanner and model imports
+2026-11-15T06:37:24.9519909Z   ---
+2026-11-15T06:37:24.9520052Z   duration_ms: 3.211177
+2026-11-15T06:37:24.9520184Z   type: 'test'
+2026-11-15T06:37:24.9520288Z   ...
+2026-11-15T06:37:24.9520873Z # Subtest: PERF01 snapshot reconciliation retains duplicate same-day order and exact discrepancies
+2026-11-15T06:37:24.9521689Z ok 1009 - PERF01 snapshot reconciliation retains duplicate same-day order and exact discrepancies
+2026-11-15T06:37:24.9521816Z   ---
+2026-11-15T06:37:24.9521961Z   duration_ms: 9.068907
+2026-11-15T06:37:24.9522084Z   type: 'test'
+2026-11-15T06:37:24.9522210Z   ...
+2026-11-15T06:37:24.9523160Z # Subtest: PERF01 incomplete history leaves all observations intact but creates no reconstructed comparison
+2026-11-15T06:37:24.9523773Z ok 1010 - PERF01 incomplete history leaves all observations intact but creates no reconstructed comparison
+2026-11-15T06:37:24.9523896Z   ---
+2026-11-15T06:37:24.9524046Z   duration_ms: 1.126163
+2026-11-15T06:37:24.9524164Z   type: 'test'
+2026-11-15T06:37:24.9524278Z   ...
+2026-11-15T06:37:24.9524770Z # Subtest: PERF01 no snapshots and no matched price dates do not manufacture reconciliation data
+2026-11-15T06:37:24.9525233Z ok 1011 - PERF01 no snapshots and no matched price dates do not manufacture reconciliation data
+2026-11-15T06:37:24.9525350Z   ---
+2026-11-15T06:37:24.9525484Z   duration_ms: 0.90535
+2026-11-15T06:37:24.9525620Z   type: 'test'
+2026-11-15T06:37:24.9525744Z   ...
+2026-11-15T06:37:24.9526255Z # Subtest: XIRR requires explicit cashflow completeness marker in caller and two valuations
+2026-11-15T06:37:24.9526908Z ok 1012 - XIRR requires explicit cashflow completeness marker in caller and two valuations
+2026-11-15T06:37:24.9527033Z   ---
+2026-11-15T06:37:24.9527171Z   duration_ms: 17.539928
+2026-11-15T06:37:24.9527301Z   type: 'test'
+2026-11-15T06:37:24.9527425Z   ...
+2026-11-15T06:37:24.9527853Z # Subtest: Historical transactions do not rewrite previous dated valuations
+2026-11-15T06:37:24.9528272Z ok 1013 - Historical transactions do not rewrite previous dated valuations
+2026-11-15T06:37:24.9528386Z   ---
+2026-11-15T06:37:24.9528529Z   duration_ms: 0.908063
+2026-11-15T06:37:24.9528664Z   type: 'test'
+2026-11-15T06:37:24.9528774Z   ...
+2026-11-15T06:37:24.9529310Z # Subtest: Cache deduplicates overlapping requests, isolates returned objects and respects TTL
+2026-11-15T06:37:24.9529842Z ok 1014 - Cache deduplicates overlapping requests, isolates returned objects and respects TTL
+2026-11-15T06:37:24.9529948Z   ---
+2026-11-15T06:37:24.9530091Z   duration_ms: 1.713736
+2026-11-15T06:37:24.9530218Z   type: 'test'
+2026-11-15T06:37:24.9530337Z   ...
+2026-11-15T06:37:24.9530717Z # Subtest: 429 Retry-After is respected without an unbounded retry loop
+2026-11-15T06:37:24.9531282Z ok 1015 - 429 Retry-After is respected without an unbounded retry loop
+2026-11-15T06:37:24.9531407Z   ---
+2026-11-15T06:37:24.9531532Z   duration_ms: 0.888544
+2026-11-15T06:37:24.9531646Z   type: 'test'
+2026-11-15T06:37:24.9531759Z   ...
+2026-11-15T06:37:24.9532136Z # Subtest: Long Retry-After does not cause premature repeated 429 requests
+2026-11-15T06:37:24.9532535Z ok 1016 - Long Retry-After does not cause premature repeated 429 requests
+2026-11-15T06:37:24.9532656Z   ---
+2026-11-15T06:37:24.9532821Z   duration_ms: 0.554309
+2026-11-15T06:37:24.9532955Z   type: 'test'
+2026-11-15T06:37:24.9533072Z   ...
+2026-11-15T06:37:24.9533501Z # Subtest: Long Retry-After on HTTP 503 fails safely instead of retrying early
+2026-11-15T06:37:24.9533922Z ok 1017 - Long Retry-After on HTTP 503 fails safely instead of retrying early
+2026-11-15T06:37:24.9534048Z   ---
+2026-11-15T06:37:24.9534177Z   duration_ms: 0.331096
+2026-11-15T06:37:24.9534317Z   type: 'test'
+2026-11-15T06:37:24.9534435Z   ...
+2026-11-15T06:37:24.9534955Z # Subtest: Persistent token secrecy: only memory cache, separated by key and fetch function
+2026-11-15T06:37:24.9535461Z ok 1018 - Persistent token secrecy: only memory cache, separated by key and fetch function
+2026-11-15T06:37:24.9535569Z   ---
+2026-11-15T06:37:24.9535708Z   duration_ms: 0.526062
+2026-11-15T06:37:24.9535835Z   type: 'test'
+2026-11-15T06:37:24.9535944Z   ...
+2026-11-15T06:37:24.9536448Z # Subtest: Historical reference FX uses exact request date and reports prior working day
+2026-11-15T06:37:24.9536932Z ok 1019 - Historical reference FX uses exact request date and reports prior working day
+2026-11-15T06:37:24.9537043Z   ---
+2026-11-15T06:37:24.9537183Z   duration_ms: 1.96348
+2026-11-15T06:37:24.9537310Z   type: 'test'
+2026-11-15T06:37:24.9537416Z   ...
+2026-11-15T06:37:24.9537806Z # Subtest: Daily reference quote records publication date and source
+2026-11-15T06:37:24.9538398Z ok 1020 - Daily reference quote records publication date and source
+2026-11-15T06:37:24.9538523Z   ---
+2026-11-15T06:37:24.9538656Z   duration_ms: 0.543102
+2026-11-15T06:37:24.9538778Z   type: 'test'
+2026-11-15T06:37:24.9538898Z   ...
+2026-11-15T06:37:24.9539413Z # Subtest: Security ISIN is stable while listings at different exchanges have distinct IDs
+2026-11-15T06:37:24.9539894Z ok 1021 - Security ISIN is stable while listings at different exchanges have distinct IDs
+2026-11-15T06:37:24.9540015Z   ---
+2026-11-15T06:37:24.9540146Z   duration_ms: 3.034007
+2026-11-15T06:37:24.9540277Z   type: 'test'
+2026-11-15T06:37:24.9540397Z   ...
+2026-11-15T06:37:24.9540929Z # Subtest: Position quote source, exact conversion, listing identity survives backup roundtrip
+2026-11-15T06:37:24.9541598Z ok 1022 - Position quote source, exact conversion, listing identity survives backup roundtrip
+2026-11-15T06:37:24.9541729Z   ---
+2026-11-15T06:37:24.9541863Z   duration_ms: 4.115756
+2026-11-15T06:37:24.9542102Z   type: 'test'
+2026-11-15T06:37:24.9542228Z   ...
+2026-11-15T06:37:24.9542717Z # Subtest: TWR is exact on verified cashflow-free endpoints and refuses any unvalued flow
+2026-11-15T06:37:24.9543235Z ok 1023 - TWR is exact on verified cashflow-free endpoints and refuses any unvalued flow
+2026-11-15T06:37:24.9543350Z   ---
+2026-11-15T06:37:24.9543496Z   duration_ms: 2.654412
+2026-11-15T06:37:24.9543628Z   type: 'test'
+2026-11-15T06:37:24.9543736Z   ...
+2026-11-15T06:37:25.2143682Z # Subtest: RFC4180-style CSV, quoted fields, BOM, semicolon and European decimal
+2026-11-15T06:37:25.2144673Z ok 1024 - RFC4180-style CSV, quoted fields, BOM, semicolon and European decimal
+2026-11-15T06:37:25.2145257Z   ---
+2026-11-15T06:37:25.2145586Z   duration_ms: 2.889726
+2026-11-15T06:37:25.2145944Z   type: 'test'
+2026-11-15T06:37:25.2146244Z   ...
+2026-11-15T06:37:25.2146939Z # Subtest: CSV previews and commits balanced journal only after confirmation; reimport dedupes
+2026-11-15T06:37:25.2148062Z ok 1025 - CSV previews and commits balanced journal only after confirmation; reimport dedupes
+2026-11-15T06:37:25.2148694Z   ---
+2026-11-15T06:37:25.2149003Z   duration_ms: 16.347271
+2026-11-15T06:37:25.2149347Z   type: 'test'
+2026-11-15T06:37:25.2149643Z   ...
+2026-11-15T06:37:25.2150138Z # Subtest: CSV invalid input does not partly modify portfolio
+2026-11-15T06:37:25.2150837Z ok 1026 - CSV invalid input does not partly modify portfolio
+2026-11-15T06:37:25.2151439Z   ---
+2026-11-15T06:37:25.2151744Z   duration_ms: 3.537721
+2026-11-15T06:37:25.2152077Z   type: 'test'
+2026-11-15T06:37:25.2152442Z   ...
+2026-11-15T06:37:25.2153073Z # Subtest: CSV duplicate column identifiers and malformed quoted rows are rejected
+2026-11-15T06:37:25.2153992Z ok 1027 - CSV duplicate column identifiers and malformed quoted rows are rejected
+2026-11-15T06:37:25.2154556Z   ---
+2026-11-15T06:37:25.2154850Z   duration_ms: 0.283187
+2026-11-15T06:37:25.2155181Z   type: 'test'
+2026-11-15T06:37:25.2155472Z   ...
+2026-11-15T06:37:25.2156087Z # Subtest: BIP84 official vector: first receive, second receive and change chain
+2026-11-15T06:37:25.2157001Z ok 1028 - BIP84 official vector: first receive, second receive and change chain
+2026-11-15T06:37:25.2161290Z   ---
+2026-11-15T06:37:25.2162009Z   duration_ms: 465.195827
+2026-11-15T06:37:25.2163014Z   type: 'test'
+2026-11-15T06:37:25.2163640Z   ...
+2026-11-15T06:37:25.2164649Z # Subtest: Extended private keys and corrupted account xpub are rejected
+2026-11-15T06:37:25.2166717Z ok 1029 - Extended private keys and corrupted account xpub are rejected
+2026-11-15T06:37:25.2167496Z   ---
+2026-11-15T06:37:25.2168248Z   duration_ms: 1.388294
+2026-11-15T06:37:25.2169943Z   type: 'test'
+2026-11-15T06:37:25.2170489Z   ...
+2026-11-15T06:37:25.2171565Z # Subtest: BIP44 watch-only gap scan checks both branches and does not invent balances
+2026-11-15T06:37:25.2172742Z ok 1030 - BIP44 watch-only gap scan checks both branches and does not invent balances
+2026-11-15T06:37:25.2173793Z   ---
+2026-11-15T06:37:25.2174158Z   duration_ms: 344.511481
+2026-11-15T06:37:25.2174847Z   type: 'test'
+2026-11-15T06:37:25.2175149Z   ...
+2026-11-15T06:37:25.2175754Z # Subtest: Failed Bitcoin address read never becomes a verified empty wallet
+2026-11-15T06:37:25.2176615Z ok 1031 - Failed Bitcoin address read never becomes a verified empty wallet
+2026-11-15T06:37:25.2177171Z   ---
+2026-11-15T06:37:25.2177463Z   duration_ms: 116.871811
+2026-11-15T06:37:25.2177801Z   type: 'test'
+2026-11-15T06:37:25.2178090Z   ...
+2026-11-15T06:37:25.2178834Z # Subtest: Trust-lines paginate and preserve identical symbols from different issuers
+2026-11-15T06:37:25.2179946Z ok 1032 - Trust-lines paginate and preserve identical symbols from different issuers
+2026-11-15T06:37:25.2180611Z   ---
+2026-11-15T06:37:25.2180955Z   duration_ms: 1.287975
+2026-11-15T06:37:25.2181658Z   type: 'test'
+2026-11-15T06:37:25.2182014Z   ...
+2026-11-15T06:37:25.2182763Z # Subtest: Unverified XRPL reads and marker loops cannot silently claim completeness
+2026-11-15T06:37:25.2184206Z ok 1033 - Unverified XRPL reads and marker loops cannot silently claim completeness
+2026-11-15T06:37:25.2184935Z   ---
+2026-11-15T06:37:25.2185243Z   duration_ms: 0.953894
+2026-11-15T06:37:25.2185664Z   type: 'test'
+2026-11-15T06:37:25.2186065Z   ...
+2026-11-15T06:37:25.2186867Z # Subtest: Economic links explicitly exclude representation and count liabilities once
+2026-11-15T06:37:25.2188015Z ok 1034 - Economic links explicitly exclude representation and count liabilities once
+2026-11-15T06:37:25.2188785Z   ---
+2026-11-15T06:37:25.2189200Z   duration_ms: 1.595684
+2026-11-15T06:37:25.2189623Z   type: 'test'
+2026-11-15T06:37:25.2189980Z   ...
+2026-11-15T06:37:25.2190620Z # Subtest: Cycles and unlinked excluded DeFi assets are rejected
+2026-11-15T06:37:25.2191528Z ok 1035 - Cycles and unlinked excluded DeFi assets are rejected
+2026-11-15T06:37:25.2192036Z   ---
+2026-11-15T06:37:25.2192414Z   duration_ms: 0.217764
+2026-11-15T06:37:25.2192759Z   type: 'test'
+2026-11-15T06:37:25.2193090Z   ...
+2026-11-15T06:37:25.2193743Z # Subtest: CSV rejects malformed quote placement instead of silently changing data
+2026-11-15T06:37:25.2194593Z ok 1036 - CSV rejects malformed quote placement instead of silently changing data
+2026-11-15T06:37:25.2195177Z   ---
+2026-11-15T06:37:25.2195462Z   duration_ms: 0.165131
+2026-11-15T06:37:25.2195785Z   type: 'test'
+2026-11-15T06:37:25.2196076Z   ...
+2026-11-15T06:37:25.2196714Z # Subtest: CSV preserves escaped quotes, embedded line breaks and trailing empty fields
+2026-11-15T06:37:25.2197683Z ok 1037 - CSV preserves escaped quotes, embedded line breaks and trailing empty fields
+2026-11-15T06:37:25.2198327Z   ---
+2026-11-15T06:37:25.2198612Z   duration_ms: 0.10324
+2026-11-15T06:37:25.2198947Z   type: 'test'
+2026-11-15T06:37:25.2199246Z   ...
+2026-11-15T06:37:25.2199737Z # Subtest: CSV preview rejects stale portfolio modifications
+2026-11-15T06:37:25.2200447Z ok 1038 - CSV preview rejects stale portfolio modifications
+2026-11-15T06:37:25.2200924Z   ---
+2026-11-15T06:37:25.2201340Z   duration_ms: 0.722162
+2026-11-15T06:37:25.2201670Z   type: 'test'
+2026-11-15T06:37:25.2201970Z   ...
+2026-11-15T06:37:25.2202607Z # Subtest: XRP trust-line pagination rejects inconsistent or unverified ledger pages
+2026-11-15T06:37:25.2203562Z ok 1039 - XRP trust-line pagination rejects inconsistent or unverified ledger pages
+2026-11-15T06:37:25.2204154Z   ---
+2026-11-15T06:37:25.2204438Z   duration_ms: 0.629576
+2026-11-15T06:37:25.2204769Z   type: 'test'
+2026-11-15T06:37:25.2205055Z   ...
+2026-11-15T06:37:25.2205802Z # Subtest: All supported extended public key versions derive legacy, nested and native SegWit addresses
+2026-11-15T06:37:25.2206947Z ok 1040 - All supported extended public key versions derive legacy, nested and native SegWit addresses
+2026-11-15T06:37:25.2207634Z   ---
+2026-11-15T06:37:25.2207924Z   duration_ms: 343.844467
+2026-11-15T06:37:25.2208260Z   type: 'test'
+2026-11-15T06:37:25.2208551Z   ...
+2026-11-15T06:37:25.2209207Z # Subtest: A checksummed extended key with out-of-range secp256k1 X coordinate is rejected
+2026-11-15T06:37:25.2210411Z ok 1041 - A checksummed extended key with out-of-range secp256k1 X coordinate is rejected
+2026-11-15T06:37:25.2211215Z   ---
+2026-11-15T06:37:25.2211515Z   duration_ms: 1.16052
+2026-11-15T06:37:25.2211843Z   type: 'test'
+2026-11-15T06:37:25.2212131Z   ...
+2026-11-15T06:37:25.2212885Z # Subtest: Two identical broker CSV rows are distinct if both occur in one file, but repeat imports dedupe
+2026-11-15T06:37:25.2214039Z ok 1042 - Two identical broker CSV rows are distinct if both occur in one file, but repeat imports dedupe
+2026-11-15T06:37:25.2214719Z   ---
+2026-11-15T06:37:25.2215000Z   duration_ms: 2.703492
+2026-11-15T06:37:25.2215325Z   type: 'test'
+2026-11-15T06:37:25.2215660Z   ...
+2026-11-15T06:37:25.2216349Z # Subtest: Ledger Native SegWit account exported as xpub is auto-discovered using bc1q addresses
+2026-11-15T06:37:25.2217430Z ok 1043 - Ledger Native SegWit account exported as xpub is auto-discovered using bc1q addresses
+2026-11-15T06:37:25.2218204Z   ---
+2026-11-15T06:37:25.2218495Z   duration_ms: 1156.845413
+2026-11-15T06:37:25.2218849Z   type: 'test'
+2026-11-15T06:37:25.2219141Z   ...
+2026-11-15T06:37:26.5068281Z # Subtest: xpub without any address history must not erase an existing BTC amount
+2026-11-15T06:37:26.5069286Z ok 1044 - xpub without any address history must not erase an existing BTC amount
+2026-11-15T06:37:26.5069866Z   ---
+2026-11-15T06:37:26.5070192Z   duration_ms: 1293.143072
+2026-11-15T06:37:26.5070553Z   type: 'test'
+2026-11-15T06:37:26.5070856Z   ...
+2026-11-15T06:37:27.0175040Z # Subtest: A generic Ledger xpub can explicitly derive native, nested and legacy scripts
+2026-11-15T06:37:27.0182740Z ok 1045 - A generic Ledger xpub can explicitly derive native, nested and legacy scripts
+2026-11-15T06:37:27.0183663Z   ---
+2026-11-15T06:37:27.0184096Z   duration_ms: 508.128662
+2026-11-15T06:37:27.0186094Z   type: 'test'
+2026-11-15T06:37:27.0186920Z   ...
+2026-11-15T06:37:27.0187971Z # Subtest: HD script format is retained across backup and migration, existing import defaults auto
+2026-11-15T06:37:27.0189626Z ok 1046 - HD script format is retained across backup and migration, existing import defaults auto
+2026-11-15T06:37:27.0190417Z   ---
+2026-11-15T06:37:27.0190838Z   duration_ms: 2.760741
+2026-11-15T06:37:27.0191520Z   type: 'test'
+2026-11-15T06:37:27.0191935Z   ...
+2026-11-15T06:37:27.0363732Z # Subtest: normal plain portfolio JSON keeps its exact readable bytes and MIME type
+2026-11-15T06:37:27.0412416Z ok 1047 - normal plain portfolio JSON keeps its exact readable bytes and MIME type
+2026-11-15T06:37:27.0420250Z   ---
+2026-11-15T06:37:27.0452052Z   duration_ms: 1.725328
+2026-11-15T06:37:27.0477428Z   type: 'test'
+2026-11-15T06:37:27.0503374Z   ...
+2026-11-15T06:37:27.0516633Z # Subtest: accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+2026-11-15T06:37:27.0576722Z ok 1048 - accepted legacy revision metadata survives whitespace-only compaction at the actual file boundary
+2026-11-15T06:37:27.0601837Z   ---
+2026-11-15T06:37:27.0632111Z   duration_ms: 950.605763
+2026-11-15T06:37:27.0632960Z   type: 'test'
+2026-11-15T06:37:27.0633823Z   ...
+2026-11-15T06:37:27.0634696Z # Subtest: plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+2026-11-15T06:37:27.0635914Z ok 1049 - plain JSON checks UTF-8 bytes at the exact reader boundary and never cuts oversized metadata
+2026-11-15T06:37:27.0636655Z   ---
+2026-11-15T06:37:27.0637025Z   duration_ms: 640.92525
+2026-11-15T06:37:27.0637455Z   type: 'test'
+2026-11-15T06:37:27.0637811Z   ...
+2026-11-15T06:37:27.0638703Z # Subtest: Editing just the note preserves observed valuation, exact amount and per-position history
+2026-11-15T06:37:27.0639936Z ok 1050 - Editing just the note preserves observed valuation, exact amount and per-position history
+2026-11-15T06:37:27.0645342Z   ---
+2026-11-15T06:37:27.0645742Z   duration_ms: 2.459591
+2026-11-15T06:37:27.0646164Z   type: 'test'
+2026-11-15T06:37:27.0646508Z   ...
+2026-11-15T06:37:27.0647645Z # Subtest: Value correction requires consent, preserves id, records old revision and clears stale attribution
+2026-11-15T06:37:27.0649048Z ok 1051 - Value correction requires consent, preserves id, records old revision and clears stale attribution
+2026-11-15T06:37:27.0649823Z   ---
+2026-11-15T06:37:27.0650196Z   duration_ms: 1.329902
+2026-11-15T06:37:27.0650611Z   type: 'test'
+2026-11-15T06:37:27.0650975Z   ...
+2026-11-15T06:37:27.0652788Z # Subtest: Date changes validate duplicate dates, future dates and calendar validity before mutating
+2026-11-15T06:37:27.0653966Z ok 1052 - Date changes validate duplicate dates, future dates and calendar validity before mutating
+2026-11-15T06:37:27.0654650Z   ---
+2026-11-15T06:37:27.0654963Z   duration_ms: 12.012483
+2026-11-15T06:37:27.0655313Z   type: 'test'
+2026-11-15T06:37:27.0655608Z   ...
+2026-11-15T06:37:27.0656151Z # Subtest: Performance start can change note but not date or valuation
+2026-11-15T06:37:27.0656955Z ok 1053 - Performance start can change note but not date or valuation
+2026-11-15T06:37:27.0657897Z   ---
+2026-11-15T06:37:27.0658201Z   duration_ms: 0.500103
+2026-11-15T06:37:27.0658503Z   type: 'test'
+2026-11-15T06:37:27.0658779Z   ...
+2026-11-15T06:37:27.0659477Z # Subtest: Delete position rejects booked and DeFi-linked positions without mutating balances
+2026-11-15T06:37:27.0660537Z ok 1054 - Delete position rejects booked and DeFi-linked positions without mutating balances
+2026-11-15T06:37:27.0661438Z   ---
+2026-11-15T06:37:27.0661732Z   duration_ms: 0.735546
+2026-11-15T06:37:27.0662060Z   type: 'test'
+2026-11-15T06:37:27.0662328Z   ...
+2026-11-15T06:37:27.0662918Z # SCALE-PROBE {"positions":500,"bookings":5000,"ms":132,"bytes":1800770}
+2026-11-15T06:37:27.0663800Z # SCALE-PROBE {"positions":2000,"bookings":5000,"ms":233,"bytes":4532043}
+2026-11-15T06:37:27.0664773Z # SCALE-PROBE {"positions":5000,"bookings":5000,"ms":358,"bytes":10009263}
+2026-11-15T06:37:27.0665689Z # Subtest: Portfolio scale 500 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0666603Z ok 1055 - Portfolio scale 500 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0667155Z   ---
+2026-11-15T06:37:27.0667448Z   duration_ms: 137.029914
+2026-11-15T06:37:27.0667793Z   type: 'test'
+2026-11-15T06:37:27.0668091Z   ...
+2026-11-15T06:37:27.0668695Z # Subtest: Portfolio scale 2000 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0669642Z ok 1056 - Portfolio scale 2000 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0670243Z   ---
+2026-11-15T06:37:27.0670577Z   duration_ms: 234.506668
+2026-11-15T06:37:27.0670972Z   type: 'test'
+2026-11-15T06:37:27.0671780Z   ...
+2026-11-15T06:37:27.0672412Z # Subtest: Portfolio scale 5000 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0673331Z ok 1057 - Portfolio scale 5000 positions and up to 5000 historic records roundtrips
+2026-11-15T06:37:27.0673897Z   ---
+2026-11-15T06:37:27.0674165Z   duration_ms: 360.415905
+2026-11-15T06:37:27.0674536Z   type: 'test'
+2026-11-15T06:37:27.0674841Z   ...
+2026-11-15T06:37:27.0675542Z # Subtest: Unavailable active IndexedDB never silently writes an old localStorage portfolio
+2026-11-15T06:37:27.0676575Z ok 1058 - Unavailable active IndexedDB never silently writes an old localStorage portfolio
+2026-11-15T06:37:27.0677212Z   ---
+2026-11-15T06:37:27.0677521Z   duration_ms: 2.290834
+2026-11-15T06:37:27.0677868Z   type: 'test'
+2026-11-15T06:37:27.0678170Z   ...
+2026-11-15T06:37:27.0678912Z # Subtest: New installation requires IndexedDB; unavailable startup never writes a local portfolio
+2026-11-15T06:37:27.0680052Z ok 1059 - New installation requires IndexedDB; unavailable startup never writes a local portfolio
+2026-11-15T06:37:27.0680793Z   ---
+2026-11-15T06:37:27.0681273Z   duration_ms: 7.510554
+2026-11-15T06:37:27.0681627Z   type: 'test'
+2026-11-15T06:37:27.0681956Z   ...
+2026-11-15T06:37:27.0682665Z # Subtest: Unknown storage markers fail closed without normalizing or rewriting legacy bytes
+2026-11-15T06:37:27.0684059Z ok 1060 - Unknown storage markers fail closed without normalizing or rewriting legacy bytes
+2026-11-15T06:37:27.0684724Z   ---
+2026-11-15T06:37:27.0685026Z   duration_ms: 0.343878
+2026-11-15T06:37:27.0685363Z   type: 'test'
+2026-11-15T06:37:27.0685664Z   ...
+2026-11-15T06:37:27.0686613Z # Subtest: archiving a linked positive holding changes only visibility and never economics/history
+2026-11-15T06:37:27.0687835Z ok 1061 - archiving a linked positive holding changes only visibility and never economics/history
+2026-11-15T06:37:27.0688564Z   ---
+2026-11-15T06:37:27.0688860Z   duration_ms: 29.584572
+2026-11-15T06:37:27.0689205Z   type: 'test'
+2026-11-15T06:37:27.0689478Z   ...
+2026-11-15T06:37:27.0690074Z # Subtest: legacy optional archive field roundtrips and invalid types fail closed
+2026-11-15T06:37:27.0690968Z ok 1062 - legacy optional archive field roundtrips and invalid types fail closed
+2026-11-15T06:37:27.0691724Z   ---
+2026-11-15T06:37:27.0692014Z   duration_ms: 2.841224
+2026-11-15T06:37:27.0692610Z   type: 'test'
+2026-11-15T06:37:27.0692900Z   ...
+2026-11-15T06:37:27.0693566Z # Subtest: same-ISIN positions remain independent; zero and nonzero holdings can be restored
+2026-11-15T06:37:27.0694576Z ok 1063 - same-ISIN positions remain independent; zero and nonzero holdings can be restored
+2026-11-15T06:37:27.0695201Z   ---
+2026-11-15T06:37:27.0695478Z   duration_ms: 0.565433
+2026-11-15T06:37:27.0695797Z   type: 'test'
+2026-11-15T06:37:27.0696082Z   ...
+2026-11-15T06:37:27.0696707Z # Subtest: archived identity survives exact CSV replay and additional imported transactions
+2026-11-15T06:37:27.0697725Z ok 1064 - archived identity survives exact CSV replay and additional imported transactions
+2026-11-15T06:37:27.0698335Z   ---
+2026-11-15T06:37:27.0698594Z   duration_ms: 4.814134
+2026-11-15T06:37:27.0698915Z   type: 'test'
+2026-11-15T06:37:27.0699218Z   ...
+2026-11-15T06:37:27.0699916Z # Subtest: confirmed wallet refresh retains archive/identity and changes only existing scan facts
+2026-11-15T06:37:27.0701462Z ok 1065 - confirmed wallet refresh retains archive/identity and changes only existing scan facts
+2026-11-15T06:37:27.0702081Z   ---
+2026-11-15T06:37:27.0702366Z   duration_ms: 1.226616
+2026-11-15T06:37:27.0702690Z   type: 'test'
+2026-11-15T06:37:27.0702971Z   ...
+2026-11-15T06:37:27.0703748Z # Subtest: full filtered selection precedes pagination, hidden archives stay explicit and all remains total
+2026-11-15T06:37:27.0704925Z ok 1066 - full filtered selection precedes pagination, hidden archives stay explicit and all remains total
+2026-11-15T06:37:27.0705608Z   ---
+2026-11-15T06:37:27.0705894Z   duration_ms: 1.739786
+2026-11-15T06:37:27.0706271Z   type: 'test'
+2026-11-15T06:37:27.0706558Z   ...
+2026-11-15T06:37:27.0707189Z # Subtest: unknown/duplicate identities and invalid archive intent are atomic failures
+2026-11-15T06:37:27.0708157Z ok 1067 - unknown/duplicate identities and invalid archive intent are atomic failures
+2026-11-15T06:37:27.0708735Z   ---
+2026-11-15T06:37:27.0709021Z   duration_ms: 0.379606
+2026-11-15T06:37:27.0709358Z   type: 'test'
+2026-11-15T06:37:27.0709646Z   ...
+2026-11-15T06:37:27.0710236Z # Subtest: editing through the shared factory can retain the same archived economic identity
+2026-11-15T06:37:27.0711586Z ok 1068 - editing through the shared factory can retain the same archived economic identity
+2026-11-15T06:37:27.0712189Z   ---
+2026-11-15T06:37:27.0712469Z   duration_ms: 0.31433
+2026-11-15T06:37:27.0712806Z   type: 'test'
+2026-11-15T06:37:27.0713113Z   ...
+2026-11-15T06:37:27.0713862Z # Subtest: undo of a later import retains the existing archive and prior financial state
+2026-11-15T06:37:27.0714879Z ok 1069 - undo of a later import retains the existing archive and prior financial state
+2026-11-15T06:37:27.0715463Z   ---
+2026-11-15T06:37:27.0715741Z   duration_ms: 1.967641
+2026-11-15T06:37:27.0716076Z   type: 'test'
+2026-11-15T06:37:27.0716363Z   ...
+2026-11-15T06:37:27.0717086Z # Subtest: archiving preserves excluded representations and liabilities without double counting
+2026-11-15T06:37:27.0718482Z ok 1070 - archiving preserves excluded representations and liabilities without double counting
+2026-11-15T06:37:27.0719134Z   ---
+2026-11-15T06:37:27.0719430Z   duration_ms: 1.317293
+2026-11-15T06:37:27.0719774Z   type: 'test'
+2026-11-15T06:37:27.0720064Z   ...
+2026-11-15T06:37:27.0720883Z # Subtest: explicit active/archived/all views partition identities without modifying the portfolio
+2026-11-15T06:37:27.0722147Z ok 1071 - explicit active/archived/all views partition identities without modifying the portfolio
+2026-11-15T06:37:27.0722799Z   ---
+2026-11-15T06:37:27.0723043Z   duration_ms: 0.500457
+2026-11-15T06:37:27.0723318Z   type: 'test'
+2026-11-15T06:37:27.0723587Z   ...
+2026-11-15T06:37:27.0724314Z # Subtest: timeline isolates custody position IDs and does not infer a dividend based on a label
+2026-11-15T06:37:27.0725356Z ok 1072 - timeline isolates custody position IDs and does not infer a dividend based on a label
+2026-11-15T06:37:27.0726000Z   ---
+2026-11-15T06:37:27.0726550Z   duration_ms: 3.798304
+2026-11-15T06:37:27.0726910Z   type: 'test'
+2026-11-15T06:37:27.0727194Z   ...
+2026-11-15T06:37:27.0727728Z # Subtest: length limiting and missing positions do not expose other accounts
+2026-11-15T06:37:27.0728562Z ok 1073 - length limiting and missing positions do not expose other accounts
+2026-11-15T06:37:27.0729201Z   ---
+2026-11-15T06:37:27.0846783Z   duration_ms: 0.740547
+2026-11-15T06:37:27.0847182Z   type: 'test'
+2026-11-15T06:37:27.0847483Z   ...
+2026-11-15T06:37:27.0848156Z # Subtest: accessible details show only real position bookings without imaginary profits
+2026-11-15T06:37:27.0849185Z ok 1074 - accessible details show only real position bookings without imaginary profits
+2026-11-15T06:37:27.0849805Z   ---
+2026-11-15T06:37:27.0850119Z   duration_ms: 3.05661
+2026-11-15T06:37:27.0850463Z   type: 'test'
+2026-11-15T06:37:27.0850764Z   ...
+2026-11-15T06:37:27.0855509Z # Subtest: ETF shows native chart first and directly offers local CSV without third-party widget
+2026-11-15T06:37:27.0856767Z ok 1075 - ETF shows native chart first and directly offers local CSV without third-party widget
+2026-11-15T06:37:27.0857410Z   ---
+2026-11-15T06:37:27.0857728Z   duration_ms: 4.429099
+2026-11-15T06:37:27.0858079Z   type: 'test'
+2026-11-15T06:37:27.0858386Z   ...
+2026-11-15T06:37:27.0859080Z # Subtest: Without a provider, ETF never charts snapshot value as if it were a market price
+2026-11-15T06:37:27.0860128Z ok 1076 - Without a provider, ETF never charts snapshot value as if it were a market price
+2026-11-15T06:37:27.0860753Z   ---
+2026-11-15T06:37:27.0861236Z   duration_ms: 1.160342
+2026-11-15T06:37:27.0861568Z   type: 'test'
+2026-11-15T06:37:27.0861846Z   ...
+2026-11-15T06:37:27.0862450Z # Subtest: Configured worker key with missing exchange explains the listing problem
+2026-11-15T06:37:27.0863368Z ok 1077 - Configured worker key with missing exchange explains the listing problem
+2026-11-15T06:37:27.0863912Z   ---
+2026-11-15T06:37:27.0864198Z   duration_ms: 0.939788
+2026-11-15T06:37:27.0864532Z   type: 'test'
+2026-11-15T06:37:27.0864858Z   ...
+2026-11-15T06:37:27.0865524Z # Subtest: Confirmed local history precedes remote providers without unnecessary requests
+2026-11-15T06:37:27.0866541Z ok 1078 - Confirmed local history precedes remote providers without unnecessary requests
+2026-11-15T06:37:27.0867179Z   ---
+2026-11-15T06:37:27.0867478Z   duration_ms: 4.822056
+2026-11-15T06:37:27.0867818Z   type: 'test'
+2026-11-15T06:37:27.0868119Z   ...
+2026-11-15T06:37:27.0868841Z # Subtest: Failed direct worker request collapses its chart, hides periods and never exposes the key
+2026-11-15T06:37:27.0869901Z ok 1079 - Failed direct worker request collapses its chart, hides periods and never exposes the key
+2026-11-15T06:37:27.0870537Z   ---
+2026-11-15T06:37:27.0870838Z   duration_ms: 3.345721
+2026-11-15T06:37:27.0871522Z   type: 'test'
+2026-11-15T06:37:27.0871827Z   ...
+2026-11-15T06:37:27.0872381Z # Subtest: Only specific safe non-truncated failure guidance is shown
+2026-11-15T06:37:27.0873146Z ok 1080 - Only specific safe non-truncated failure guidance is shown
+2026-11-15T06:37:27.0873968Z   ---
+2026-11-15T06:37:27.0874261Z   duration_ms: 0.400975
+2026-11-15T06:37:27.0874580Z   type: 'test'
+2026-11-15T06:37:27.0874861Z   ...
+2026-11-15T06:37:27.0875449Z # Subtest: Generic provider allocation spans multiple single-position accounts
+2026-11-15T06:37:27.0876340Z ok 1081 - Generic provider allocation spans multiple single-position accounts
+2026-11-15T06:37:27.0876883Z   ---
+2026-11-15T06:37:27.0877181Z   duration_ms: 1.24637
+2026-11-15T06:37:27.0877506Z   type: 'test'
+2026-11-15T06:37:27.0877802Z   ...
+2026-11-15T06:37:27.0878551Z # Subtest: Provider allocations exclude separately configured providers and handle liabilities defensively
+2026-11-15T06:37:27.0879805Z ok 1082 - Provider allocations exclude separately configured providers and handle liabilities defensively
+2026-11-15T06:37:27.0880527Z   ---
+2026-11-15T06:37:27.0880838Z   duration_ms: 0.881623
+2026-11-15T06:37:27.0881379Z   type: 'test'
+2026-11-15T06:37:27.0881898Z   ...
+2026-11-15T06:37:27.0882550Z # Subtest: Provider share handles multiple holdings within the same account across providers
+2026-11-15T06:37:27.0883543Z ok 1083 - Provider share handles multiple holdings within the same account across providers
+2026-11-15T06:37:27.0884136Z   ---
+2026-11-15T06:37:27.0884429Z   duration_ms: 1.241609
+2026-11-15T06:37:27.0884772Z   type: 'test'
+2026-11-15T06:37:27.0885043Z   ...
+2026-11-15T06:37:27.0885684Z # Subtest: Missing canonical quote is unavailable, never a manual zero, without model changes
+2026-11-15T06:37:27.0886687Z ok 1084 - Missing canonical quote is unavailable, never a manual zero, without model changes
+2026-11-15T06:37:27.0887322Z   ---
+2026-11-15T06:37:27.0887615Z   duration_ms: 3.457877
+2026-11-15T06:37:27.0887945Z   type: 'test'
+2026-11-15T06:37:27.0888205Z   ...
+2026-11-15T06:37:27.0888854Z # Subtest: Quote display distinguishes invalid, absent, exact and evidenced zero prices
+2026-11-15T06:37:27.0889806Z ok 1085 - Quote display distinguishes invalid, absent, exact and evidenced zero prices
+2026-11-15T06:37:27.0890380Z   ---
+2026-11-15T06:37:27.0890661Z   duration_ms: 6.573116
+2026-11-15T06:37:27.0890994Z   type: 'test'
+2026-11-15T06:37:27.0891463Z   ...
+2026-11-15T06:37:27.0892211Z # Subtest: Exact per-position current snapshot values sum to ledger total including liabilities and exclusion
+2026-11-15T06:37:27.0893290Z ok 1086 - Exact per-position current snapshot values sum to ledger total including liabilities and exclusion
+2026-11-15T06:37:27.0893969Z   ---
+2026-11-15T06:37:27.0894274Z   duration_ms: 10.601636
+2026-11-15T06:37:27.0894627Z   type: 'test'
+2026-11-15T06:37:27.0894927Z   ...
+2026-11-15T06:37:27.0895522Z # Subtest: Backdated manual snapshot cannot invent position history; old backups migrate
+2026-11-15T06:37:27.0896441Z ok 1087 - Backdated manual snapshot cannot invent position history; old backups migrate
+2026-11-15T06:37:27.0897039Z   ---
+2026-11-15T06:37:27.0897329Z   duration_ms: 2.696574
+2026-11-15T06:37:27.0897667Z   type: 'test'
+2026-11-15T06:37:27.0897973Z   ...
+2026-11-15T06:37:27.0898577Z # Subtest: Historical position values remain valid after a position was removed
+2026-11-15T06:37:27.0899512Z ok 1088 - Historical position values remain valid after a position was removed
+2026-11-15T06:37:27.0900103Z   ---
+2026-11-15T06:37:27.0900396Z   duration_ms: 0.723673
+2026-11-15T06:37:27.0900811Z   type: 'test'
+2026-11-15T06:37:27.0901592Z   ...
+2026-11-15T06:37:27.0902155Z # Subtest: Malformed byPosition record rejected with no side effects
+2026-11-15T06:37:27.0902929Z ok 1089 - Malformed byPosition record rejected with no side effects
+2026-11-15T06:37:27.0903448Z   ---
+2026-11-15T06:37:27.0903757Z   duration_ms: 3.425033
+2026-11-15T06:37:27.0904099Z   type: 'test'
+2026-11-15T06:37:27.0904403Z   ...
+2026-11-15T06:37:27.0905073Z # Subtest: Rendered position drills include exact account context and escape injected names
+2026-11-15T06:37:27.0906126Z ok 1090 - Rendered position drills include exact account context and escape injected names
+2026-11-15T06:37:27.0906782Z   ---
+2026-11-15T06:37:27.0907333Z   duration_ms: 10.311667
+2026-11-15T06:37:27.0907688Z   type: 'test'
+2026-11-15T06:37:27.0907975Z   ...
+2026-11-15T06:37:27.0908651Z # Subtest: CoinGecko history only accepts finite positive real market prices and exact source
+2026-11-15T06:37:27.0909656Z ok 1091 - CoinGecko history only accepts finite positive real market prices and exact source
+2026-11-15T06:37:27.0910285Z   ---
+2026-11-15T06:37:27.0910587Z   duration_ms: 2.721327
+2026-11-15T06:37:27.0910936Z   type: 'test'
+2026-11-15T06:37:27.0911457Z   ...
+2026-11-15T06:37:27.0912039Z # Subtest: Never fabricate market chart for missing IDs or unavailable API
+2026-11-15T06:37:27.0912856Z ok 1092 - Never fabricate market chart for missing IDs or unavailable API
+2026-11-15T06:37:27.0913389Z   ---
+2026-11-15T06:37:27.0913661Z   duration_ms: 1.570545
+2026-11-15T06:37:27.0913978Z   type: 'test'
+2026-11-15T06:37:27.0914272Z   ...
+2026-11-15T06:37:27.0914967Z # Subtest: Range and data quality filters reject invalid periods
+2026-11-15T06:37:27.0915887Z ok 1093 - Range and data quality filters reject invalid periods
+2026-11-15T06:37:27.0916355Z   ---
+2026-11-15T06:37:27.0916647Z   duration_ms: 0.457399
+2026-11-15T06:37:27.0916973Z   type: 'test'
+2026-11-15T06:37:27.0917263Z   ...
+2026-11-15T06:37:27.0917773Z # Subtest: one distinctive class icon per supported position kind
+2026-11-15T06:37:27.0918486Z ok 1094 - one distinctive class icon per supported position kind
+2026-11-15T06:37:27.0918974Z   ---
+2026-11-15T06:37:27.0919253Z   duration_ms: 1.098527
+2026-11-15T06:37:27.0919576Z   type: 'test'
+2026-11-15T06:37:27.0919868Z   ...
+2026-11-15T06:37:27.0920378Z # Subtest: fixed deposits only use explicit account contract data
+2026-11-15T06:37:27.0921296Z ok 1095 - fixed deposits only use explicit account contract data
+2026-11-15T06:37:27.0921726Z   ---
+2026-11-15T06:37:27.0921991Z   duration_ms: 0.264508
+2026-11-15T06:37:27.0922297Z   type: 'test'
+2026-11-15T06:37:27.0922552Z   ...
+2026-11-15T06:37:27.0923094Z # Subtest: wallet, staking and asset display names never replace asset class
+2026-11-15T06:37:27.0923943Z ok 1096 - wallet, staking and asset display names never replace asset class
+2026-11-15T06:37:27.0924493Z   ---
+2026-11-15T06:37:27.0924798Z   duration_ms: 0.157391
+2026-11-15T06:37:27.0925144Z   type: 'test'
+2026-11-15T06:37:27.0925446Z   ...
+2026-11-15T06:37:27.0926059Z # Subtest: all asset symbols reuse accessible decorative SVG system and stroke
+2026-11-15T06:37:27.0926972Z ok 1097 - all asset symbols reuse accessible decorative SVG system and stroke
+2026-11-15T06:37:27.0927532Z   ---
+2026-11-15T06:37:27.0927837Z   duration_ms: 0.652835
+2026-11-15T06:37:27.0928184Z   type: 'test'
+2026-11-15T06:37:27.0928478Z   ...
+2026-11-15T06:37:27.0929124Z # Subtest: one affected position with stable source-bound issues and concrete actions
+2026-11-15T06:37:27.0930123Z ok 1098 - one affected position with stable source-bound issues and concrete actions
+2026-11-15T06:37:27.0930737Z   ---
+2026-11-15T06:37:27.0931194Z   duration_ms: 1.914703
+2026-11-15T06:37:27.0931559Z   type: 'test'
+2026-11-15T06:37:27.0931853Z   ...
+2026-11-15T06:37:27.0932432Z # Subtest: category and account filters compose without double-counting
+2026-11-15T06:37:27.0933389Z ok 1099 - category and account filters compose without double-counting
+2026-11-15T06:37:27.0933930Z   ---
+2026-11-15T06:37:27.0934240Z   duration_ms: 1.315737
+2026-11-15T06:37:27.0934627Z   type: 'test'
+2026-11-15T06:37:27.0934919Z   ...
+2026-11-15T06:37:27.0935469Z # Subtest: issues disappear from current evidence after repair, without dismissal state
+2026-11-15T06:37:27.0936370Z ok 1100 - issues disappear from current evidence after repair, without dismissal state
+2026-11-15T06:37:27.0936932Z   ---
+2026-11-15T06:37:27.0937205Z   duration_ms: 0.383467
+2026-11-15T06:37:27.0937505Z   type: 'test'
+2026-11-15T06:37:27.0937789Z   ...
+2026-11-15T06:37:27.0938432Z # Subtest: manual undated quotes and never-requested optional histories do not create noise
+2026-11-15T06:37:27.0939808Z ok 1101 - manual undated quotes and never-requested optional histories do not create noise
+2026-11-15T06:37:27.0940382Z   ---
+2026-11-15T06:37:27.0940662Z   duration_ms: 0.218963
+2026-11-15T06:37:27.0941222Z   type: 'test'
+2026-11-15T06:37:27.0941511Z   ...
+2026-11-15T06:37:27.0942133Z # Subtest: HTTP 429 never zeroes holdings or exports raw credential-bearing diagnostics
+2026-11-15T06:37:27.0943065Z ok 1102 - HTTP 429 never zeroes holdings or exports raw credential-bearing diagnostics
+2026-11-15T06:37:27.0943654Z   ---
+2026-11-15T06:37:27.0943934Z   duration_ms: 0.411738
+2026-11-15T06:37:27.0944259Z   type: 'test'
+2026-11-15T06:37:27.0944532Z   ...
+2026-11-15T06:37:27.0945152Z # Subtest: orphan history never attaches by guessed account, name or wallet address
+2026-11-15T06:37:27.0945950Z ok 1103 - orphan history never attaches by guessed account, name or wallet address
+2026-11-15T06:37:27.0946468Z   ---
+2026-11-15T06:37:27.0946729Z   duration_ms: 0.311178
+2026-11-15T06:37:27.0947025Z   type: 'test'
+2026-11-15T06:37:27.0947500Z   ...
+2026-11-15T06:37:27.0948044Z # Subtest: Search includes name, ticker, ISIN, provider and account
+2026-11-15T06:37:27.0948828Z ok 1104 - Search includes name, ticker, ISIN, provider and account
+2026-11-15T06:37:27.0949293Z   ---
+2026-11-15T06:37:27.0949580Z   duration_ms: 1.444214
+2026-11-15T06:37:27.0949917Z   type: 'test'
+2026-11-15T06:37:27.0950213Z   ...
+2026-11-15T06:37:27.0950714Z # Subtest: Sorting does not mutate underlying portfolio order
+2026-11-15T06:37:27.0951581Z ok 1105 - Sorting does not mutate underlying portfolio order
+2026-11-15T06:37:27.0952055Z   ---
+2026-11-15T06:37:27.0952334Z   duration_ms: 7.150633
+2026-11-15T06:37:27.0952666Z   type: 'test'
+2026-11-15T06:37:27.0952958Z   ...
+2026-11-15T06:37:27.0953644Z # Subtest: Stable IDs distinguish same ISIN across accounts; toggles are immutable and ordered
+2026-11-15T06:37:27.0954716Z ok 1106 - Stable IDs distinguish same ISIN across accounts; toggles are immutable and ordered
+2026-11-15T06:37:27.0955356Z   ---
+2026-11-15T06:37:27.0955632Z   duration_ms: 3.113797
+2026-11-15T06:37:27.0955954Z   type: 'test'
+2026-11-15T06:37:27.0956249Z   ...
+2026-11-15T06:37:27.0956916Z # Subtest: Select filtered uses the complete existing search result, including 101st+ unrendered matches
+2026-11-15T06:37:27.0958040Z ok 1107 - Select filtered uses the complete existing search result, including 101st+ unrendered matches
+2026-11-15T06:37:27.0958709Z   ---
+2026-11-15T06:37:27.0959012Z   duration_ms: 7.434978
+2026-11-15T06:37:27.0959357Z   type: 'test'
+2026-11-15T06:37:27.0959642Z   ...
+2026-11-15T06:37:27.0960282Z # Subtest: All vs filtered requires explicit all intent and never mutates the portfolio
+2026-11-15T06:37:27.0961468Z ok 1108 - All vs filtered requires explicit all intent and never mutates the portfolio
+2026-11-15T06:37:27.0962105Z   ---
+2026-11-15T06:37:27.0962411Z   duration_ms: 3.71691
+2026-11-15T06:37:27.0962745Z   type: 'test'
+2026-11-15T06:37:27.0963043Z   ...
+2026-11-15T06:37:27.0963677Z # Subtest: Filter changes retain hidden selection and do not select new matches
+2026-11-15T06:37:27.0964646Z ok 1109 - Filter changes retain hidden selection and do not select new matches
+2026-11-15T06:37:27.0965223Z   ---
+2026-11-15T06:37:27.0965523Z   duration_ms: 0.380584
+2026-11-15T06:37:27.0965869Z   type: 'test'
+2026-11-15T06:37:27.0966146Z   ...
+2026-11-15T06:37:27.0966759Z # Subtest: Stale IDs remain explicit and block preview/actions until refresh or clear
+2026-11-15T06:37:27.0967757Z ok 1110 - Stale IDs remain explicit and block preview/actions until refresh or clear
+2026-11-15T06:37:27.0968370Z   ---
+2026-11-15T06:37:27.0968665Z   duration_ms: 0.79882
+2026-11-15T06:37:27.0968997Z   type: 'test'
+2026-11-15T06:37:27.0969291Z   ...
+2026-11-15T06:37:27.0969995Z # Subtest: Duplicate selection IDs never multiply candidates; ambiguous model IDs fail closed
+2026-11-15T06:37:27.0971241Z ok 1111 - Duplicate selection IDs never multiply candidates; ambiguous model IDs fail closed
+2026-11-15T06:37:27.0971908Z   ---
+2026-11-15T06:37:27.0972229Z   duration_ms: 3.133656
+2026-11-15T06:37:27.0972571Z   type: 'test'
+2026-11-15T06:37:27.0973098Z   ...
+2026-11-15T06:37:27.0973852Z # Subtest: Invalid action, ID, matching scope and empty removal never become all-position actions
+2026-11-15T06:37:27.0974983Z ok 1112 - Invalid action, ID, matching scope and empty removal never become all-position actions
+2026-11-15T06:37:27.0975621Z   ---
+2026-11-15T06:37:27.0975897Z   duration_ms: 0.433035
+2026-11-15T06:37:27.0976233Z   type: 'test'
+2026-11-15T06:37:27.0976582Z   ...
+2026-11-15T06:37:27.0977623Z # Subtest: Unreferenced preview lists own opening/price impacts without deleting or persisting anything
+2026-11-15T06:37:27.0978771Z ok 1113 - Unreferenced preview lists own opening/price impacts without deleting or persisting anything
+2026-11-15T06:37:27.0979438Z   ---
+2026-11-15T06:37:27.0979723Z   duration_ms: 2.534273
+2026-11-15T06:37:27.0980063Z   type: 'test'
+2026-11-15T06:37:27.0980356Z   ...
+2026-11-15T06:37:27.0981312Z # Subtest: Existing booking/journal/DeFi guards are reused rather than replaced by a second delete engine
+2026-11-15T06:37:27.0982756Z ok 1114 - Existing booking/journal/DeFi guards are reused rather than replaced by a second delete engine
+2026-11-15T06:37:27.0983465Z   ---
+2026-11-15T06:37:27.0983767Z   duration_ms: 7.615615
+2026-11-15T06:37:27.0984117Z   type: 'test'
+2026-11-15T06:37:27.0984414Z   ...
+2026-11-15T06:37:27.0985126Z # Subtest: Retained snapshot keys and cash settlement references block proposed batch removal
+2026-11-15T06:37:27.0986211Z ok 1115 - Retained snapshot keys and cash settlement references block proposed batch removal
+2026-11-15T06:37:27.0986854Z   ---
+2026-11-15T06:37:27.0987150Z   duration_ms: 3.548751
+2026-11-15T06:37:27.0987485Z   type: 'test'
+2026-11-15T06:37:27.0987781Z   ...
+2026-11-15T06:37:27.0988491Z # Subtest: Wallet sessions, purchase evidence and enabled discovery cannot be silently cascaded
+2026-11-15T06:37:27.0989608Z ok 1116 - Wallet sessions, purchase evidence and enabled discovery cannot be silently cascaded
+2026-11-15T06:37:27.0990266Z   ---
+2026-11-15T06:37:27.0990571Z   duration_ms: 3.691732
+2026-11-15T06:37:27.0990911Z   type: 'test'
+2026-11-15T06:37:27.0991330Z   ...
+2026-11-15T06:37:27.0991917Z # Subtest: Serialized provenance and unknown future references are inspected conservatively
+2026-11-15T06:37:27.0992901Z ok 1117 - Serialized provenance and unknown future references are inspected conservatively
+2026-11-15T06:37:27.0993531Z   ---
+2026-11-15T06:37:27.0993810Z   duration_ms: 3.83419
+2026-11-15T06:37:27.0994149Z   type: 'test'
+2026-11-15T06:37:27.0994440Z   ...
+2026-11-15T06:37:27.0995177Z # Subtest: A reference from another selected position stays blocked; selection is not cascade consent
+2026-11-15T06:37:27.0996316Z ok 1118 - A reference from another selected position stays blocked; selection is not cascade consent
+2026-11-15T06:37:27.0996980Z   ---
+2026-11-15T06:37:27.0997274Z   duration_ms: 2.672874
+2026-11-15T06:37:27.0997609Z   type: 'test'
+2026-11-15T06:37:27.0997895Z   ...
+2026-11-15T06:37:27.0998645Z # Subtest: Malformed opaque JSON, unsupported objects, cycles and limits never yield partial clearance
+2026-11-15T06:37:27.0999834Z ok 1119 - Malformed opaque JSON, unsupported objects, cycles and limits never yield partial clearance
+2026-11-15T06:37:27.1000537Z   ---
+2026-11-15T06:37:27.1000833Z   duration_ms: 6.680563
+2026-11-15T06:37:27.1001384Z   type: 'test'
+2026-11-15T06:37:27.1001697Z   ...
+2026-11-15T06:37:27.1002435Z # Subtest: Any later model change, including an unselected quote, invalidates the preview digest
+2026-11-15T06:37:27.1003551Z ok 1120 - Any later model change, including an unselected quote, invalidates the preview digest
+2026-11-15T06:37:27.1004228Z   ---
+2026-11-15T06:37:27.1004498Z   duration_ms: 3.039158
+2026-11-15T06:37:27.1004825Z   type: 'test'
+2026-11-15T06:37:27.1005110Z   ...
+2026-11-15T06:37:27.1005974Z # Subtest: Safe-subset batch is detached, exact-preimage bound, blocks snapshot links and shares single removal engine
+2026-11-15T06:37:27.1007583Z ok 1121 - Safe-subset batch is detached, exact-preimage bound, blocks snapshot links and shares single removal engine
+2026-11-15T06:37:27.1008333Z   ---
+2026-11-15T06:37:27.1008563Z   duration_ms: 11.105769
+2026-11-15T06:37:27.1008837Z   type: 'test'
+2026-11-15T06:37:27.1009088Z   ...
+2026-11-15T06:37:27.1009746Z # Subtest: Automatically managed/disabled-address wallet positions cannot reappear through deletion
+2026-11-15T06:37:27.1010775Z ok 1122 - Automatically managed/disabled-address wallet positions cannot reappear through deletion
+2026-11-15T06:37:27.1011619Z   ---
+2026-11-15T06:37:27.1011890Z   duration_ms: 5.585591
+2026-11-15T06:37:27.1012195Z   type: 'test'
+2026-11-15T06:37:27.1012464Z   ...
+2026-11-15T06:37:27.1013175Z # Subtest: Safe-subset removal does not let CSV or automatic sources silently recreate deleted identities
+2026-11-15T06:37:27.1014285Z ok 1123 - Safe-subset removal does not let CSV or automatic sources silently recreate deleted identities
+2026-11-15T06:37:27.1014902Z   ---
+2026-11-15T06:37:27.1015481Z   duration_ms: 11.954647
+2026-11-15T06:37:27.1015818Z   type: 'test'
+2026-11-15T06:37:27.1016117Z   ...
+2026-11-15T06:37:27.1016766Z # Subtest: filtered deselection preserves explicitly selected hidden and archived identities
+2026-11-15T06:37:27.1017882Z ok 1124 - filtered deselection preserves explicitly selected hidden and archived identities
+2026-11-15T06:37:27.1018528Z   ---
+2026-11-15T06:37:27.1018839Z   duration_ms: 9.952116
+2026-11-15T06:37:27.1019150Z   type: 'test'
+2026-11-15T06:37:27.1019430Z   ...
+2026-11-15T06:37:27.1020072Z # Subtest: Shared master cycle selects page, full scope, then clears without redundant stages
+2026-11-15T06:37:27.1021247Z ok 1125 - Shared master cycle selects page, full scope, then clears without redundant stages
+2026-11-15T06:37:27.1021841Z   ---
+2026-11-15T06:37:27.1022121Z   duration_ms: 5.086783
+2026-11-15T06:37:27.1022441Z   type: 'test'
+2026-11-15T06:37:27.1022746Z   ...
+2026-11-15T06:37:27.1023336Z # Subtest: Pagination and individual deselection derive the next step from coverage
+2026-11-15T06:37:27.1024313Z ok 1126 - Pagination and individual deselection derive the next step from coverage
+2026-11-15T06:37:27.1024877Z   ---
+2026-11-15T06:37:27.1025168Z   duration_ms: 3.053506
+2026-11-15T06:37:27.1025498Z   type: 'test'
+2026-11-15T06:37:27.1025794Z   ...
+2026-11-15T06:37:27.1026453Z # Subtest: Deleting all app data purges portfolio, migration copies and refresh metadata only
+2026-11-15T06:37:27.1027468Z ok 1127 - Deleting all app data purges portfolio, migration copies and refresh metadata only
+2026-11-15T06:37:27.1028065Z   ---
+2026-11-15T06:37:27.1028317Z   duration_ms: 2.889448
+2026-11-15T06:37:27.1028621Z   type: 'test'
+2026-11-15T06:37:27.1028887Z   ...
+2026-11-15T06:37:27.1029612Z # Subtest: Credential revocation clears old pre-migration snapshots without deleting portfolio
+2026-11-15T06:37:27.1030609Z ok 1128 - Credential revocation clears old pre-migration snapshots without deleting portfolio
+2026-11-15T06:37:27.1031425Z   ---
+2026-11-15T06:37:27.1031774Z   duration_ms: 0.299682
+2026-11-15T06:37:27.1032141Z   type: 'test'
+2026-11-15T06:37:27.1032431Z   ...
+2026-11-15T06:37:27.1033035Z # Subtest: Remote API fetches prohibit cookies, referrers and redirect following
+2026-11-15T06:37:27.1033927Z ok 1129 - Remote API fetches prohibit cookies, referrers and redirect following
+2026-11-15T06:37:27.1034460Z   ---
+2026-11-15T06:37:27.1034737Z   duration_ms: 1.04585
+2026-11-15T06:37:27.1035070Z   type: 'test'
+2026-11-15T06:37:27.1035352Z   ...
+2026-11-15T06:37:27.1035978Z # Subtest: Optional public instrument search does not transmit browser credentials or referrer
+2026-11-15T06:37:27.1036843Z ok 1130 - Optional public instrument search does not transmit browser credentials or referrer
+2026-11-15T06:37:27.1037443Z   ---
+2026-11-15T06:37:27.1037712Z   duration_ms: 1.021776
+2026-11-15T06:37:27.1038060Z   type: 'test'
+2026-11-15T06:37:27.1038336Z   ...
+2026-11-15T06:37:27.1038964Z # Subtest: Unencrypted backups do not retain private RPC tokens or API credentials
+2026-11-15T06:37:27.1040192Z ok 1131 - Unencrypted backups do not retain private RPC tokens or API credentials
+2026-11-15T06:37:27.1040773Z   ---
+2026-11-15T06:37:27.1041247Z   duration_ms: 3.241078
+2026-11-15T06:37:27.1041597Z   type: 'test'
+2026-11-15T06:37:27.1041884Z   ...
+2026-11-15T06:37:27.1042509Z # Subtest: Provider FX never grants a value outside the existing portfolio FX range
+2026-11-15T06:37:27.1043367Z ok 1132 - Provider FX never grants a value outside the existing portfolio FX range
+2026-11-15T06:37:27.1043924Z   ---
+2026-11-15T06:37:27.1044213Z   duration_ms: 6.713116
+2026-11-15T06:37:27.1044556Z   type: 'test'
+2026-11-15T06:37:27.1044839Z   ...
+2026-11-15T06:37:27.1045529Z # Subtest: Token and CoinPaprika fallback prices reject non-price primitive/object coercions
+2026-11-15T06:37:27.1046553Z ok 1133 - Token and CoinPaprika fallback prices reject non-price primitive/object coercions
+2026-11-15T06:37:27.1047184Z   ---
+2026-11-15T06:37:27.1047477Z   duration_ms: 2.626429
+2026-11-15T06:37:27.1047831Z   type: 'test'
+2026-11-15T06:37:27.1048367Z   ...
+2026-11-15T06:37:27.1048997Z # Subtest: Historical CoinPaprika conversion refuses malformed USD prices and FX
+2026-11-15T06:37:27.1049928Z ok 1134 - Historical CoinPaprika conversion refuses malformed USD prices and FX
+2026-11-15T06:37:27.1050510Z   ---
+2026-11-15T06:37:27.1050816Z   duration_ms: 3.937879
+2026-11-15T06:37:27.1051375Z   type: 'test'
+2026-11-15T06:37:27.1051666Z   ...
+2026-11-15T06:37:27.1052268Z # Subtest: DefiLlama requires actual numeric price, confidence and timestamp
+2026-11-15T06:37:27.1053099Z ok 1135 - DefiLlama requires actual numeric price, confidence and timestamp
+2026-11-15T06:37:27.1053634Z   ---
+2026-11-15T06:37:27.1053908Z   duration_ms: 1.816123
+2026-11-15T06:37:27.1054204Z   type: 'test'
+2026-11-15T06:37:27.1054442Z   ...
+2026-11-15T06:37:27.1055117Z # Subtest: Actual token refresh retains the complete old record for malformed values and saves valid120 once
+2026-11-15T06:37:27.1056274Z ok 1136 - Actual token refresh retains the complete old record for malformed values and saves valid120 once
+2026-11-15T06:37:27.1057006Z   ---
+2026-11-15T06:37:27.1057303Z   duration_ms: 18.729899
+2026-11-15T06:37:27.1057659Z   type: 'test'
+2026-11-15T06:37:27.1057923Z   ...
+2026-11-15T06:37:27.1058689Z # Subtest: Actual security quote pipeline rejects prices outside canonical decimal precision before any save
+2026-11-15T06:37:27.1059914Z ok 1137 - Actual security quote pipeline rejects prices outside canonical decimal precision before any save
+2026-11-15T06:37:27.1060619Z   ---
+2026-11-15T06:37:27.1060925Z   duration_ms: 8.588708
+2026-11-15T06:37:27.1061469Z   type: 'test'
+2026-11-15T06:37:27.1061757Z   ...
+2026-11-15T06:37:27.1062332Z # Subtest: Public instrument lookup is opt-in and does not require any key
+2026-11-15T06:37:27.1063075Z ok 1138 - Public instrument lookup is opt-in and does not require any key
+2026-11-15T06:37:27.1063545Z   ---
+2026-11-15T06:37:27.1063857Z   duration_ms: 1.9776
+2026-11-15T06:37:27.1064196Z   type: 'test'
+2026-11-15T06:37:27.1064473Z   ...
+2026-11-15T06:37:27.1065009Z # Subtest: Public ISIN resolution and broken/fake servers fail without injecting data
+2026-11-15T06:37:27.1065865Z ok 1139 - Public ISIN resolution and broken/fake servers fail without injecting data
+2026-11-15T06:37:27.1066368Z   ---
+2026-11-15T06:37:27.1066617Z   duration_ms: 1.11731
+2026-11-15T06:37:27.1066922Z   type: 'test'
+2026-11-15T06:37:27.1067177Z   ...
+2026-11-15T06:37:27.1067799Z # Subtest: Bittr projection strips private fields, exact fees, duplicate rows vs reused txids
+2026-11-15T06:37:27.1068762Z ok 1140 - Bittr projection strips private fields, exact fees, duplicate rows vs reused txids
+2026-11-15T06:37:27.1069331Z   ---
+2026-11-15T06:37:27.1069602Z   duration_ms: 5.569377
+2026-11-15T06:37:27.1069908Z   type: 'test'
+2026-11-15T06:37:27.1070164Z   ...
+2026-11-15T06:37:27.1070783Z # Subtest: N:1 and N:M receipt sums use exact satoshis; split output and timestamp differences
+2026-11-15T06:37:27.1071990Z ok 1141 - N:1 and N:M receipt sums use exact satoshis; split output and timestamp differences
+2026-11-15T06:37:27.1072793Z   ---
+2026-11-15T06:37:27.1073075Z   duration_ms: 7.145084
+2026-11-15T06:37:27.1073371Z   type: 'test'
+2026-11-15T06:37:27.1073639Z   ...
+2026-11-15T06:37:27.1074293Z # Subtest: Explicit confirmation/undo changes documentary provenance only; reimport idempotent
+2026-11-15T06:37:27.1075288Z ok 1142 - Explicit confirmation/undo changes documentary provenance only; reimport idempotent
+2026-11-15T06:37:27.1075883Z   ---
+2026-11-15T06:37:27.1076159Z   duration_ms: 5.981329
+2026-11-15T06:37:27.1076446Z   type: 'test'
+2026-11-15T06:37:27.1076698Z   ...
+2026-11-15T06:37:27.1077354Z # Subtest: Unknown openings, change, outputs, unconfirmed and missing history cannot acquire a buy
+2026-11-15T06:37:27.1078344Z ok 1143 - Unknown openings, change, outputs, unconfirmed and missing history cannot acquire a buy
+2026-11-15T06:37:27.1078960Z   ---
+2026-11-15T06:37:27.1079225Z   duration_ms: 3.369412
+2026-11-15T06:37:27.1079518Z   type: 'test'
+2026-11-15T06:37:27.1079911Z   ...
+2026-11-15T06:37:27.1080480Z # Subtest: Different txid amount/time yields only proposals or ambiguity, not confirmation
+2026-11-15T06:37:27.1081526Z ok 1144 - Different txid amount/time yields only proposals or ambiguity, not confirmation
+2026-11-15T06:37:27.1082025Z   ---
+2026-11-15T06:37:27.1082260Z   duration_ms: 2.291392
+2026-11-15T06:37:27.1082495Z   type: 'test'
+2026-11-15T06:37:27.1082778Z   ...
+2026-11-15T06:37:27.1083289Z # Subtest: Full encrypted and ordinary backup roundtrip; legacy backups, corrupt identity reject
+2026-11-15T06:37:27.1083967Z ok 1145 - Full encrypted and ordinary backup roundtrip; legacy backups, corrupt identity reject
+2026-11-15T06:37:27.1084385Z   ---
+2026-11-15T06:37:27.1084619Z   duration_ms: 93.659079
+2026-11-15T06:37:27.1084862Z   type: 'test'
+2026-11-15T06:37:27.1085074Z   ...
+2026-11-15T06:37:27.1085431Z # Subtest: unfocused unsaved credentials defer an automatic update
+2026-11-15T06:37:27.1085914Z ok 1146 - unfocused unsaved credentials defer an automatic update
+2026-11-15T06:37:27.1086251Z   ---
+2026-11-15T06:37:27.1086484Z   duration_ms: 4.699207
+2026-11-15T06:37:27.1086718Z   type: 'test'
+2026-11-15T06:37:27.1086934Z   ...
+2026-11-15T06:37:27.1087308Z # Subtest: every existing form credential and source selection is protected
+2026-11-15T06:37:27.1087839Z ok 1147 - every existing form credential and source selection is protected
+2026-11-15T06:37:27.1088199Z   ---
+2026-11-15T06:37:27.1088426Z   duration_ms: 7.135546
+2026-11-15T06:37:27.1088662Z   type: 'test'
+2026-11-15T06:37:27.1088876Z   ...
+2026-11-15T06:37:27.1089288Z # Subtest: missing form, omitted fields, defaults and trimmed credentials remain clean
+2026-11-15T06:37:27.1089889Z ok 1148 - missing form, omitted fields, defaults and trimmed credentials remain clean
+2026-11-15T06:37:27.1090277Z   ---
+2026-11-15T06:37:27.1090498Z   duration_ms: 3.416583
+2026-11-15T06:37:27.1090730Z   type: 'test'
+2026-11-15T06:37:27.1090980Z   ...
+2026-11-15T06:37:27.1091605Z # Subtest: saved endpoint origin and equivalent URL spelling remain clean
+2026-11-15T06:37:27.1092335Z ok 1149 - saved endpoint origin and equivalent URL spelling remain clean
+2026-11-15T06:37:27.1092793Z   ---
+2026-11-15T06:37:27.1093031Z   duration_ms: 2.302664
+2026-11-15T06:37:27.1093310Z   type: 'test'
+2026-11-15T06:37:27.1093549Z   ...
+2026-11-15T06:37:27.1094047Z # Subtest: new, changed, removed and invalid endpoints remain protected
+2026-11-15T06:37:27.1094769Z ok 1150 - new, changed, removed and invalid endpoints remain protected
+2026-11-15T06:37:27.1095257Z   ---
+2026-11-15T06:37:27.1095495Z   duration_ms: 9.927179
+2026-11-15T06:37:27.1095803Z   type: 'test'
+2026-11-15T06:37:27.1096053Z   ...
+2026-11-15T06:37:27.1096536Z # Subtest: credential clearing is dirty until successful save, then clean
+2026-11-15T06:37:27.1097226Z ok 1151 - credential clearing is dirty until successful save, then clean
+2026-11-15T06:37:27.1097677Z   ---
+2026-11-15T06:37:27.1097918Z   duration_ms: 1.384748
+2026-11-15T06:37:27.1098206Z   type: 'test'
+2026-11-15T06:37:27.1098451Z   ...
+2026-11-15T06:37:27.1099185Z # Subtest: failed save rollback still protects the form draft
+2026-11-15T06:37:27.1099782Z ok 1152 - failed save rollback still protects the form draft
+2026-11-15T06:37:27.1100173Z   ---
+2026-11-15T06:37:27.1100422Z   duration_ms: 1.270616
+2026-11-15T06:37:27.1100705Z   type: 'test'
+2026-11-15T06:37:27.1100939Z   ...
+2026-11-15T06:37:27.1101531Z # Subtest: existing busy, editor, dialog and focused-input guards remain
+2026-11-15T06:37:27.1102197Z ok 1153 - existing busy, editor, dialog and focused-input guards remain
+2026-11-15T06:37:27.1102635Z   ---
+2026-11-15T06:37:27.1102883Z   duration_ms: 3.825697
+2026-11-15T06:37:27.1103192Z   type: 'test'
+2026-11-15T06:37:27.1103431Z   ...
+2026-11-15T06:37:27.1103939Z # Subtest: explicit update cancellation preserves draft and acceptance reloads once
+2026-11-15T06:37:27.1104725Z ok 1154 - explicit update cancellation preserves draft and acceptance reloads once
+2026-11-15T06:37:27.1105228Z   ---
+2026-11-15T06:37:27.1105676Z   duration_ms: 1.728695
+2026-11-15T06:37:27.1105969Z   type: 'test'
+2026-11-15T06:37:27.1106214Z   ...
+2026-11-15T06:37:27.1106683Z # Subtest: busy explicit updates never reach discard confirmation or reload
+2026-11-15T06:37:27.1107386Z ok 1155 - busy explicit updates never reach discard confirmation or reload
+2026-11-15T06:37:27.1107846Z   ---
+2026-11-15T06:37:27.1108083Z   duration_ms: 1.492718
+2026-11-15T06:37:27.1108370Z   type: 'test'
+2026-11-15T06:37:27.1108623Z   ...
+2026-11-15T06:37:27.1109325Z # Subtest: reference archive is visibility only, including actual non-null TWR/XIRR and every original byte
+2026-11-15T06:37:27.1110351Z ok 1156 - reference archive is visibility only, including actual non-null TWR/XIRR and every original byte
+2026-11-15T06:37:27.1110936Z   ---
+2026-11-15T06:37:27.1111310Z   duration_ms: 25.757583
+2026-11-15T06:37:27.1111600Z   type: 'test'
+2026-11-15T06:37:27.1111834Z   ...
+2026-11-15T06:37:27.1112454Z # Subtest: archive retains legacy, automatic, unknown and partial originals without promoting their quality
+2026-11-15T06:37:27.1113481Z ok 1157 - archive retains legacy, automatic, unknown and partial originals without promoting their quality
+2026-11-15T06:37:27.1114028Z   ---
+2026-11-15T06:37:27.1114287Z   duration_ms: 4.467313
+2026-11-15T06:37:27.1114606Z   type: 'test'
+2026-11-15T06:37:27.1114879Z   ...
+2026-11-15T06:37:27.1115646Z # Subtest: archive rejects mixed states, stale/duplicate/unknown IDs and missing consent without partial changes
+2026-11-15T06:37:27.1116846Z ok 1158 - archive rejects mixed states, stale/duplicate/unknown IDs and missing consent without partial changes
+2026-11-15T06:37:27.1117449Z   ---
+2026-11-15T06:37:27.1117711Z   duration_ms: 2.522136
+2026-11-15T06:37:27.1117975Z   type: 'test'
+2026-11-15T06:37:27.1118207Z   ...
+2026-11-15T06:37:27.1118795Z # Subtest: one strict archive envelope rejects malformed reference metadata in both import and backup
+2026-11-15T06:37:27.1119711Z ok 1159 - one strict archive envelope rejects malformed reference metadata in both import and backup
+2026-11-15T06:37:27.1120300Z   ---
+2026-11-15T06:37:27.1120586Z   duration_ms: 1.878642
+2026-11-15T06:37:27.1120888Z   type: 'test'
+2026-11-15T06:37:27.1121429Z   ...
+2026-11-15T06:37:27.1122059Z # Subtest: plain, complete and password encrypted roundtrips preserve reference and original data
+2026-11-15T06:37:27.1123010Z ok 1160 - plain, complete and password encrypted roundtrips preserve reference and original data
+2026-11-15T06:37:27.1123579Z   ---
+2026-11-15T06:37:27.1123845Z   duration_ms: 106.2158
+2026-11-15T06:37:27.1124135Z   type: 'test'
+2026-11-15T06:37:27.1124391Z   ...
+2026-11-15T06:37:27.1124964Z # Subtest: old v1/v2/v3 imports gain no archive flags and preserve unverified history
+2026-11-15T06:37:27.1125876Z ok 1161 - old v1/v2/v3 imports gain no archive flags and preserve unverified history
+2026-11-15T06:37:27.1126447Z   ---
+2026-11-15T06:37:27.1126743Z   duration_ms: 1.261078
+2026-11-15T06:37:27.1127071Z   type: 'test'
+2026-11-15T06:37:27.1127350Z   ...
+2026-11-15T06:37:27.1128424Z # Subtest: booking and reference archives retain each other in both directions and use the old format when possible
+2026-11-15T06:37:27.1129594Z ok 1162 - booking and reference archives retain each other in both directions and use the old format when possible
+2026-11-15T06:37:27.1130271Z   ---
+2026-11-15T06:37:27.1130631Z   duration_ms: 21.879736
+2026-11-15T06:37:27.1130961Z   type: 'test'
+2026-11-15T06:37:27.1131373Z   ...
+2026-11-15T06:37:27.1132089Z # Subtest: reference selection preserves hidden IDs, cycles page then full filter, and exposes stale IDs without writes
+2026-11-15T06:37:27.1133175Z ok 1163 - reference selection preserves hidden IDs, cycles page then full filter, and exposes stale IDs without writes
+2026-11-15T06:37:27.1133847Z   ---
+2026-11-15T06:37:27.1134079Z   duration_ms: 1.411368
+2026-11-15T06:37:27.1134345Z   type: 'test'
+2026-11-15T06:37:27.1134577Z   ...
+2026-11-15T06:37:27.1135290Z # Subtest: manual correction previews actual before/after values and preserves original revisions, archive and start
+2026-11-15T06:37:27.1136981Z ok 1164 - manual correction previews actual before/after values and preserves original revisions, archive and start
+2026-11-15T06:37:27.1137669Z   ---
+2026-11-15T06:37:27.1137921Z   duration_ms: 2.788189
+2026-11-15T06:37:27.1138226Z   type: 'test'
+2026-11-15T06:37:27.1138475Z   ...
+2026-11-15T06:37:27.1139064Z # Subtest: automatic, legacy, unknown and contradictory manual sources block correction at runtime
+2026-11-15T06:37:27.1139927Z ok 1165 - automatic, legacy, unknown and contradictory manual sources block correction at runtime
+2026-11-15T06:37:27.1140489Z   ---
+2026-11-15T06:37:27.1140724Z   duration_ms: 3.069635
+2026-11-15T06:37:27.1140997Z   type: 'test'
+2026-11-15T06:37:27.1141414Z   ...
+2026-11-15T06:37:27.1142033Z # Subtest: performance start and duplicate dates stay guarded; note edits retain all financial values
+2026-11-15T06:37:27.1143065Z ok 1166 - performance start and duplicate dates stay guarded; note edits retain all financial values
+2026-11-15T06:37:27.1143664Z   ---
+2026-11-15T06:37:27.1143946Z   duration_ms: 1.786394
+2026-11-15T06:37:27.1144260Z   type: 'test'
+2026-11-15T06:37:27.1144523Z   ...
+2026-11-15T06:37:27.1145224Z # Subtest: adding never overwrites an existing or archived original and never resets performance tracking
+2026-11-15T06:37:27.1146331Z ok 1167 - adding never overwrites an existing or archived original and never resets performance tracking
+2026-11-15T06:37:27.1147012Z   ---
+2026-11-15T06:37:27.1147296Z   duration_ms: 2.017745
+2026-11-15T06:37:27.1147607Z   type: 'test'
+2026-11-15T06:37:27.1147881Z   ...
+2026-11-15T06:37:27.1148652Z # Subtest: manual endpoint removal preserves finance and start but reports lost boundary returns as unknown
+2026-11-15T06:37:27.1149813Z ok 1168 - manual endpoint removal preserves finance and start but reports lost boundary returns as unknown
+2026-11-15T06:37:27.1150490Z   ---
+2026-11-15T06:37:27.1150761Z   duration_ms: 3.776125
+2026-11-15T06:37:27.1151216Z   type: 'test'
+2026-11-15T06:37:27.1151492Z   ...
+2026-11-15T06:37:27.1152177Z # Subtest: manual intermediate removal uses existing projections without inventing a replacement observation
+2026-11-15T06:37:27.1153288Z ok 1169 - manual intermediate removal uses existing projections without inventing a replacement observation
+2026-11-15T06:37:27.1153997Z   ---
+2026-11-15T06:37:27.1154281Z   duration_ms: 3.504617
+2026-11-15T06:37:27.1154581Z   type: 'test'
+2026-11-15T06:37:27.1154835Z   ...
+2026-11-15T06:37:27.1155567Z # Subtest: removal blocks start, original-source dependencies and unknown fields, never partially deletes
+2026-11-15T06:37:27.1156703Z ok 1170 - removal blocks start, original-source dependencies and unknown fields, never partially deletes
+2026-11-15T06:37:27.1157390Z   ---
+2026-11-15T06:37:27.1157674Z   duration_ms: 2.481402
+2026-11-15T06:37:27.1157987Z   type: 'test'
+2026-11-15T06:37:27.1158272Z   ...
+2026-11-15T06:37:27.1159038Z # Subtest: reference dependencies include opaque/serialized metadata, other originals and duplicate dates
+2026-11-15T06:37:27.1160512Z ok 1171 - reference dependencies include opaque/serialized metadata, other originals and duplicate dates
+2026-11-15T06:37:27.1161410Z   ---
+2026-11-15T06:37:27.1161717Z   duration_ms: 2.759523
+2026-11-15T06:37:27.1162043Z   type: 'test'
+2026-11-15T06:37:27.1162342Z   ...
+2026-11-15T06:37:27.1163107Z # Subtest: removal requires exact consent and rejects stale, invalid or duplicate selection without mutation
+2026-11-15T06:37:27.1164308Z ok 1172 - removal requires exact consent and rejects stale, invalid or duplicate selection without mutation
+2026-11-15T06:37:27.1165014Z   ---
+2026-11-15T06:37:27.1165310Z   duration_ms: 0.841893
+2026-11-15T06:37:27.1165643Z   type: 'test'
+2026-11-15T06:37:27.1165932Z   ...
+2026-11-15T06:37:27.1166674Z # Subtest: removal cleans only selected reference archive IDs and preserves booking archive format
+2026-11-15T06:37:27.1167779Z ok 1173 - removal cleans only selected reference archive IDs and preserves booking archive format
+2026-11-15T06:37:27.1168667Z   ---
+2026-11-15T06:37:27.1168959Z   duration_ms: 3.136217
+2026-11-15T06:37:27.1169289Z   type: 'test'
+2026-11-15T06:37:27.1169577Z   ...
+2026-11-15T06:37:27.1170252Z # Subtest: removed originals retain exact session undo and plain/encrypted backup recovery
+2026-11-15T06:37:27.1171437Z ok 1174 - removed originals retain exact session undo and plain/encrypted backup recovery
+2026-11-15T06:37:27.1172045Z   ---
+2026-11-15T06:37:27.1172318Z   duration_ms: 95.913215
+2026-11-15T06:37:27.1172650Z   type: 'test'
+2026-11-15T06:37:27.1172915Z   ...
+2026-11-15T06:37:27.1173632Z # Subtest: today observation cannot be silently regenerated by an automatic current capture after removal
+2026-11-15T06:37:27.1174731Z ok 1175 - today observation cannot be silently regenerated by an automatic current capture after removal
+2026-11-15T06:37:27.1175410Z   ---
+2026-11-15T06:37:27.1175688Z   duration_ms: 0.844957
+2026-11-15T06:37:27.1176019Z   type: 'test'
+2026-11-15T06:37:27.1176307Z   ...
+2026-11-15T06:37:27.1176988Z # Subtest: 10,000 reference IDs retain exact explicit scope across pagination and stale records
+2026-11-15T06:37:27.1178000Z ok 1176 - 10,000 reference IDs retain exact explicit scope across pagination and stale records
+2026-11-15T06:37:27.1178613Z   ---
+2026-11-15T06:37:27.1178899Z   duration_ms: 77.692469
+2026-11-15T06:37:27.1179242Z   type: 'test'
+2026-11-15T06:37:27.1179532Z   ...
+2026-11-15T06:37:27.1180367Z # Subtest: protected source notes gain an editor without changing provenance, exact observations, history or journal
+2026-11-15T06:37:27.1182157Z ok 1177 - protected source notes gain an editor without changing provenance, exact observations, history or journal
+2026-11-15T06:37:27.1182839Z   ---
+2026-11-15T06:37:27.1183127Z   duration_ms: 386.815387
+2026-11-15T06:37:27.1183485Z   type: 'test'
+2026-11-15T06:37:27.1183750Z   ...
+2026-11-15T06:37:27.1184318Z # Subtest: one validated frequency preserves legacy opt-out and daily defaults
+2026-11-15T06:37:27.1185139Z ok 1178 - one validated frequency preserves legacy opt-out and daily defaults
+2026-11-15T06:37:27.1185702Z   ---
+2026-11-15T06:37:27.1185971Z   duration_ms: 1.450624
+2026-11-15T06:37:27.1186300Z   type: 'test'
+2026-11-15T06:37:27.1186554Z   ...
+2026-11-15T06:37:27.1187056Z # Subtest: legacy read normalizes in memory without writing source bytes
+2026-11-15T06:37:27.1187816Z ok 1179 - legacy read normalizes in memory without writing source bytes
+2026-11-15T06:37:27.1188308Z   ---
+2026-11-15T06:37:27.1188596Z   duration_ms: 2.932077
+2026-11-15T06:37:27.1188908Z   type: 'test'
+2026-11-15T06:37:27.1189173Z   ...
+2026-11-15T06:37:27.1189813Z # Subtest: all four encrypted opt-in preferences roundtrip, other configuration retained
+2026-11-15T06:37:27.1190835Z ok 1180 - all four encrypted opt-in preferences roundtrip, other configuration retained
+2026-11-15T06:37:27.1191979Z   ---
+2026-11-15T06:37:27.1192286Z   duration_ms: 363.314946
+2026-11-15T06:37:27.1192637Z   type: 'test'
+2026-11-15T06:37:27.1192925Z   ...
+2026-11-15T06:37:27.1193545Z # Subtest: exact intervals use persisted complete success, never mere attempt
+2026-11-15T06:37:27.1194665Z ok 1181 - exact intervals use persisted complete success, never mere attempt
+2026-11-15T06:37:27.1195200Z   ---
+2026-11-15T06:37:27.1195464Z   duration_ms: 0.89896
+2026-11-15T06:37:27.1195769Z   type: 'test'
+2026-11-15T06:37:27.1196037Z   ...
+2026-11-15T06:37:27.1196660Z # Subtest: partial save skips paid successes but retries missing work with bounded backoff
+2026-11-15T06:37:27.1197638Z ok 1182 - partial save skips paid successes but retries missing work with bounded backoff
+2026-11-15T06:37:27.1198224Z   ---
+2026-11-15T06:37:27.1198500Z   duration_ms: 0.427287
+2026-11-15T06:37:27.1198817Z   type: 'test'
+2026-11-15T06:37:27.1199091Z   ...
+2026-11-15T06:37:27.1199644Z # Subtest: failed canonical save cannot promote either a task or full success
+2026-11-15T06:37:27.1200401Z ok 1183 - failed canonical save cannot promote either a task or full success
+2026-11-15T06:37:27.1200874Z   ---
+2026-11-15T06:37:27.1201266Z   duration_ms: 0.144276
+2026-11-15T06:37:27.1201718Z   type: 'test'
+2026-11-15T06:37:27.1201972Z   ...
+2026-11-15T06:37:27.1202518Z # Subtest: offline and opt-out issue no claim; quota and corrupt state fail closed
+2026-11-15T06:37:27.1203323Z ok 1184 - offline and opt-out issue no claim; quota and corrupt state fail closed
+2026-11-15T06:37:27.1203810Z   ---
+2026-11-15T06:37:27.1204090Z   duration_ms: 0.359045
+2026-11-15T06:37:27.1204395Z   type: 'test'
+2026-11-15T06:37:27.1204670Z   ...
+2026-11-15T06:37:27.1205251Z # Subtest: manual remains independent and a backwards clock gets bounded recovery
+2026-11-15T06:37:27.1206147Z ok 1185 - manual remains independent and a backwards clock gets bounded recovery
+2026-11-15T06:37:27.1206696Z   ---
+2026-11-15T06:37:27.1206981Z   duration_ms: 0.161793
+2026-11-15T06:37:27.1207299Z   type: 'test'
+2026-11-15T06:37:27.1207562Z   ...
+2026-11-15T06:37:27.1208156Z # Subtest: Aggregates repeated API errors without inventing success or modifying holdings
+2026-11-15T06:37:27.1209140Z ok 1186 - Aggregates repeated API errors without inventing success or modifying holdings
+2026-11-15T06:37:27.1209743Z   ---
+2026-11-15T06:37:27.1210017Z   duration_ms: 1.700599
+2026-11-15T06:37:27.1210331Z   type: 'test'
+2026-11-15T06:37:27.1210664Z   ...
+2026-11-15T06:37:27.1211504Z # Subtest: Fresh Drive restore does not manufacture a local backup creation timestamp
+2026-11-15T06:37:27.1212313Z ok 1187 - Fresh Drive restore does not manufacture a local backup creation timestamp
+2026-11-15T06:37:27.1212847Z   ---
+2026-11-15T06:37:27.1213107Z   duration_ms: 8.990253
+2026-11-15T06:37:27.1213415Z   type: 'test'
+2026-11-15T06:37:27.1213697Z   ...
+2026-11-15T06:37:27.1214384Z # Subtest: Restore preserves an existing real backup timestamp instead of refreshing it
+2026-11-15T06:37:27.1215341Z ok 1188 - Restore preserves an existing real backup timestamp instead of refreshing it
+2026-11-15T06:37:27.1215941Z   ---
+2026-11-15T06:37:27.1216235Z   duration_ms: 5.6073
+2026-11-15T06:37:27.1216557Z   type: 'test'
+2026-11-15T06:37:27.1216843Z   ...
+2026-11-15T06:37:27.1217586Z # Subtest: Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+2026-11-15T06:37:27.1218607Z ok 1189 - Meaningful old portfolio still offers a real rollback backup and preserves its creation event
+2026-11-15T06:37:27.1219194Z   ---
+2026-11-15T06:37:27.1219466Z   duration_ms: 2.663477
+2026-11-15T06:37:27.1219775Z   type: 'test'
+2026-11-15T06:37:27.1220071Z   ...
+2026-11-15T06:37:27.1220759Z # Subtest: A rejected restore does not mark an uncreated backup or reset unsaved change count
+2026-11-15T06:37:27.1274391Z ok 1190 - A rejected restore does not mark an uncreated backup or reset unsaved change count
+2026-11-15T06:37:27.1275100Z   ---
+2026-11-15T06:37:27.1275407Z   duration_ms: 1.699203
+2026-11-15T06:37:27.1275761Z   type: 'test'
+2026-11-15T06:37:27.1276059Z   ...
+2026-11-15T06:37:27.1276732Z # Subtest: Actual backup creation keeps the existing timestamp and counter behavior
+2026-11-15T06:37:27.1277737Z ok 1191 - Actual backup creation keeps the existing timestamp and counter behavior
+2026-11-15T06:37:27.1278612Z   ---
+2026-11-15T06:37:27.1278910Z   duration_ms: 0.930434
+2026-11-15T06:37:27.1279252Z   type: 'test'
+2026-11-15T06:37:27.1279546Z   ...
+2026-11-15T06:37:27.1280162Z # Subtest: Drive restore help scopes the rollback offer to existing local data
+2026-11-15T06:37:27.1281226Z ok 1192 - Drive restore help scopes the rollback offer to existing local data
+2026-11-15T06:37:27.1281813Z   ---
+2026-11-15T06:37:27.1282106Z   duration_ms: 6.609711
+2026-11-15T06:37:27.1282438Z   type: 'test'
+2026-11-15T06:37:27.1282730Z   ...
+2026-11-15T06:37:27.1283430Z # Subtest: Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+2026-11-15T06:37:27.1284509Z ok 1193 - Backup readers reject non-price JSON types in v1/v2/v3/v4 without source changes
+2026-11-15T06:37:27.1285164Z   ---
+2026-11-15T06:37:27.1285449Z   duration_ms: 7.860333
+2026-11-15T06:37:27.1285780Z   type: 'test'
+2026-11-15T06:37:27.1286066Z   ...
+2026-11-15T06:37:27.1287015Z # Subtest: Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+2026-11-15T06:37:27.1288246Z ok 1194 - Actual position constructor preserves valid numeric/localized/manual and missing-price behavior
+2026-11-15T06:37:27.1288862Z   ---
+2026-11-15T06:37:27.1289146Z   duration_ms: 2.983401
+2026-11-15T06:37:27.1289462Z   type: 'test'
+2026-11-15T06:37:27.1289706Z   ...
+2026-11-15T06:37:27.1290407Z # Subtest: Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+2026-11-15T06:37:27.1322040Z ok 1195 - Actual Drive restore callback rejects invalid price before backup offer, model replacement or save
+2026-11-15T06:37:27.1322816Z   ---
+2026-11-15T06:37:27.1323111Z   duration_ms: 6.549146
+2026-11-15T06:37:27.1323456Z   type: 'test'
+2026-11-15T06:37:27.1323741Z   ...
+2026-11-15T06:37:27.1324427Z # Subtest: Actual Drive restore callback still saves a valid independent two-unit price once
+2026-11-15T06:37:27.1325481Z ok 1196 - Actual Drive restore callback still saves a valid independent two-unit price once
+2026-11-15T06:37:27.1326117Z   ---
+2026-11-15T06:37:27.1326403Z   duration_ms: 4.077464
+2026-11-15T06:37:27.1326725Z   type: 'test'
+2026-11-15T06:37:27.1326998Z   ...
+2026-11-15T06:37:27.1327645Z # Subtest: Structured exact prices reject before restore replaces or saves the portfolio
+2026-11-15T06:37:27.1328708Z ok 1197 - Structured exact prices reject before restore replaces or saves the portfolio
+2026-11-15T06:37:27.1329314Z   ---
+2026-11-15T06:37:27.1329600Z   duration_ms: 19.465537
+2026-11-15T06:37:27.1329935Z   type: 'test'
+2026-11-15T06:37:27.1330218Z   ...
+2026-11-15T06:37:27.1330890Z # Subtest: Scalar exact prices and existing numeric display discrepancies retain their contract

@@ -1,0 +1,337 @@
+{
+  "engine": "chromium",
+  "scans": [
+    {
+      "scope": "#dashboardPage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 320,
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 390,
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 430,
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 768,
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 1024,
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#positionList",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingHistoryDialog",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#transferMatchingDialog",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#editDialog",
+      "width": 1440,
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": "1440 / 200% CSS zoom",
+      "violations": 0
+    },
+    {
+      "scope": "#dashboardPage",
+      "width": "390 empty new IDB installation",
+      "violations": 0
+    },
+    {
+      "scope": "#historyPage",
+      "width": "390 empty new IDB installation",
+      "violations": 0
+    },
+    {
+      "scope": "#positionsPage",
+      "width": "390 empty new IDB installation",
+      "violations": 0
+    },
+    {
+      "scope": "#bookingsPage",
+      "width": "390 empty new IDB installation",
+      "violations": 0
+    },
+    {
+      "scope": "#morePage",
+      "width": "390 empty new IDB installation",
+      "violations": 0
+    }
+  ],
+  "findings": [],
+  "errors": []
+}

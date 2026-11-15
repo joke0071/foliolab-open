@@ -1,0 +1,41 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "scope": "Synthetic pure Bitpanda parser only; no dialog or financial integration",
+  "engines": [
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "native preamble/18-17 schema",
+        "exact 18-digit amounts and declared fee asset",
+        "absent tax stays unknown",
+        "all duplicate/conflicting/unknown rows retained",
+        "hostile strings are data/preamble not exposed",
+        "negative schemas/generic strictness",
+        "deep immutability/no write API",
+        "actual SW offline reload/module import",
+        "exact IDB record/revision/settings zero mutation",
+        "no external parser requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "native preamble/18-17 schema",
+        "exact 18-digit amounts and declared fee asset",
+        "absent tax stays unknown",
+        "all duplicate/conflicting/unknown rows retained",
+        "hostile strings are data/preamble not exposed",
+        "negative schemas/generic strictness",
+        "deep immutability/no write API",
+        "actual SW offline reload/module import",
+        "exact IDB record/revision/settings zero mutation",
+        "no external parser requests"
+      ]
+    }
+  ],
+  "result": "PASS"
+}

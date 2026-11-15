@@ -1,0 +1,37 @@
+{
+  "engine": "firefox",
+  "result": "PASS",
+  "checks": [
+    {
+      "width": 320,
+      "pageActionFocus": "pageTitle",
+      "nextTabVisibleOutsidePreviousPage": true,
+      "navigationFocusRetained": true,
+      "canonicalBytesAndRevisionUnchanged": true
+    },
+    {
+      "width": 390,
+      "pageActionFocus": "pageTitle",
+      "nextTabVisibleOutsidePreviousPage": true,
+      "navigationFocusRetained": true,
+      "canonicalBytesAndRevisionUnchanged": true
+    },
+    {
+      "width": 768,
+      "pageActionFocus": "pageTitle",
+      "nextTabVisibleOutsidePreviousPage": true,
+      "navigationFocusRetained": true,
+      "canonicalBytesAndRevisionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "pageActionFocus": "pageTitle",
+      "nextTabVisibleOutsidePreviousPage": true,
+      "navigationFocusRetained": true,
+      "canonicalBytesAndRevisionUnchanged": true
+    }
+  ],
+  "limits": [
+    "Automated browser keyboard test, not native TalkBack or physical Android"
+  ]
+}

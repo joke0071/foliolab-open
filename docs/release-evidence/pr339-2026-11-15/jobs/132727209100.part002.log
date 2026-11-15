@@ -1,0 +1,261 @@
+2026-11-15T06:52:19.1608750Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725537994,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725537994,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725538697,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725538697,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:52:20.2154247Z UH03 Kraken firefox bitcoin-bridge: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:52:26.9784421Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725546127,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725546127,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725546754,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725546754,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:52:27.5593394Z UH03 Kraken webkit bitcoin-bridge: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:52:37.0053300Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725555827,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725555827,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725556529,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725556529,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:52:38.0163116Z UH03 Kraken firefox distinct-fee: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:52:44.5795541Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725563673,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725563673,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725564318,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725564318,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:52:45.1969539Z UH03 Kraken webkit distinct-fee: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:52:54.7881246Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725573584,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725573584,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725574316,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725574316,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:52:55.7916522Z UH03 Kraken firefox cross-reference: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:02.3915139Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725581516,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725581516,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725582152,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725582152,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:02.9909475Z UH03 Kraken webkit cross-reference: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:12.4753513Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725591247,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725591247,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725591967,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725591967,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:13.4873904Z UH03 Kraken firefox same-asset-fee: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:20.0266281Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725599148,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725599148,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725599770,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725599770,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:20.6432479Z UH03 Kraken webkit same-asset-fee: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:29.6516802Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725608476,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725608476,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725609184,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725609184,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:37.6926818Z STORAGE FIXTURE firefox PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725616408,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725616408,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725617225,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725617225,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:38.8000162Z UH03 Bitpanda firefox: persistent terminal withdrawal through real shared UI, exact independent before/after controls, seven widths/Axe, approval race, quota/one CAS revision, retained original/reimport block/reload/encrypted restore/offline PWA PASS
+2026-11-15T06:53:38.8003071Z UH03 Bitpanda firefox: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:44.6036474Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725623755,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725623755,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725624375,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725624375,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:50.6930554Z STORAGE FIXTURE webkit PASS [{"stage":"initial-ready","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725629836,"documentState":"complete","controller":null,"active":null,"installing":{"script":"http://127.0.0.1:4173/sw.js","state":"installing"},"waiting":null,"controlled":false,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv"}},{"stage":"before-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725629836,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"after-reload","waitResult":true,"state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725630464,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}}},{"stage":"assertions","state":{"url":"http://127.0.0.1:4173/?page=bookings","timeOrigin":1794725630464,"documentState":"complete","controller":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"active":{"script":"http://127.0.0.1:4173/sw.js","state":"activated"},"installing":null,"waiting":null,"controlled":true,"caches":["foliolab-open-v316"],"storage":"Transaktionale IndexedDB aktiv","fixture":{"ready":true,"error":null}},"verified":{"controller":"http://127.0.0.1:4173/sw.js","active":"activated","controlled":true}}]
+2026-11-15T06:53:51.3480056Z UH03 Bitpanda webkit: persistent terminal withdrawal through real shared UI, exact independent before/after controls, seven widths/Axe, approval race, quota/one CAS revision, retained original/reimport block/reload/encrypted restore/offline PWA PASS
+2026-11-15T06:53:51.3482332Z UH03 Bitpanda webkit: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS
+2026-11-15T06:53:53.9288492Z firefox: historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS
+2026-11-15T06:53:54.2972880Z HISTORICAL POSITION firefox: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS
+2026-11-15T06:53:55.5719967Z webkit: historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS
+2026-11-15T06:53:55.9821053Z HISTORICAL POSITION webkit: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS
+2026-11-15T06:54:05.1821193Z FLH02 firefox: real total 999/1059 without snapshots, partial/observed separation, six-width axe, optional controls, retained services, canonical USD CSV FX persistence/reload and zero financial writes PASS
+2026-11-15T06:54:11.5187387Z FLH02 webkit: real total 999/1059 without snapshots, partial/observed separation, six-width axe, optional controls, retained services, canonical USD CSV FX persistence/reload and zero financial writes PASS
+2026-11-15T06:54:11.9727268Z BROWSER_GATE_START history-worker firefox
+2026-11-15T06:54:13.2334300Z HISTORY_WORKER_PHASE firefox responsive-replay
+2026-11-15T06:54:13.4737867Z HISTORY_WORKER_PHASE firefox service-worker-activation
+2026-11-15T06:54:14.7379836Z HISTORY_WORKER_PHASE firefox offline-replay
+2026-11-15T06:54:15.0755609Z HISTORY WORKER firefox: forced wallet-history-days-worker.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:15.4036857Z HISTORY WORKER firefox: forced wallet-history-days.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:15.7174292Z HISTORY WORKER firefox: forced wallet-history-core.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:15.7176566Z HISTORY WORKER firefox: 1000-event computation leaves UI responsive, cancellation, exact worker replay and real Service Worker offline computation PASS 32ms heartbeat
+2026-11-15T06:54:16.1130151Z BROWSER_GATE_START history-worker webkit
+2026-11-15T06:54:16.4027998Z HISTORY_WORKER_PHASE webkit responsive-replay
+2026-11-15T06:54:16.4741435Z HISTORY_WORKER_PHASE webkit service-worker-activation
+2026-11-15T06:54:17.2468798Z HISTORY_WORKER_PHASE webkit offline-replay
+2026-11-15T06:54:17.5005631Z HISTORY WORKER webkit: forced wallet-history-days-worker.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:17.7814149Z HISTORY WORKER webkit: forced wallet-history-days.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:18.0625654Z HISTORY WORKER webkit: forced wallet-history-core.js failure remains an online error, exact offline fallback, no uncaught page error PASS
+2026-11-15T06:54:18.0657522Z HISTORY WORKER webkit: 1000-event computation leaves UI responsive, cancellation, exact worker replay and real Service Worker offline computation PASS 34ms heartbeat
+2026-11-15T06:54:21.5868724Z firefox: native preview controlled baseline {"controller":"http://127.0.0.1:4173/sw.js","active":"activated","caches":["foliolab-open-v316"]}
+2026-11-15T06:54:34.0654088Z firefox: FLATEX NATIVE UI native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-11-15T06:54:35.7030077Z webkit: native preview controlled baseline {"controller":"http://127.0.0.1:4173/sw.js","active":"activated","caches":["foliolab-open-v316"]}
+2026-11-15T06:54:46.2023003Z webkit: FLATEX NATIVE UI native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-11-15T06:54:55.9477886Z firefox: NATIVE FLATEX COMMIT append backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-11-15T06:55:03.9220386Z firefox: NATIVE FLATEX COMMIT backfill backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-11-15T06:55:10.7559258Z webkit: NATIVE FLATEX COMMIT append backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-11-15T06:55:17.0858940Z webkit: NATIVE FLATEX COMMIT backfill backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-11-15T06:55:17.6287480Z BROWSER_GATE_START flatex-net-settlement
+2026-11-15T06:55:34.9694813Z firefox: NATIVE FLATEX NET ECONOMICS PASS
+2026-11-15T06:55:48.7661840Z webkit: NATIVE FLATEX NET ECONOMICS PASS
+2026-11-15T06:55:48.8471801Z BROWSER_GATE_START flatex-funding
+2026-11-15T06:55:50.0109909Z firefox: initial navigation
+2026-11-15T06:55:50.6474004Z firefox: app ready
+2026-11-15T06:55:50.9653673Z firefox: SW ready
+2026-11-15T06:55:51.5694663Z firefox: opening shared UI
+2026-11-15T06:55:52.3497852Z firefox: shared simulation ready
+2026-11-15T06:56:03.8695138Z firefox: initial navigation
+2026-11-15T06:56:04.5098499Z firefox: app ready
+2026-11-15T06:56:04.8154210Z firefox: SW ready
+2026-11-15T06:56:05.4157002Z firefox: opening shared UI
+2026-11-15T06:56:06.2006967Z firefox: shared simulation ready
+2026-11-15T06:56:18.0455011Z firefox: initial navigation
+2026-11-15T06:56:18.7055363Z firefox: app ready
+2026-11-15T06:56:18.9883426Z firefox: SW ready
+2026-11-15T06:56:21.1887598Z firefox: opening shared UI
+2026-11-15T06:56:21.9299045Z firefox: shared simulation ready
+2026-11-15T06:56:32.5917569Z webkit: initial navigation
+2026-11-15T06:56:33.0833539Z webkit: app ready
+2026-11-15T06:56:33.2369517Z webkit: SW ready
+2026-11-15T06:56:33.4661513Z webkit: opening shared UI
+2026-11-15T06:56:34.1289849Z webkit: shared simulation ready
+2026-11-15T06:56:42.0342294Z webkit: initial navigation
+2026-11-15T06:56:42.5942653Z webkit: app ready
+2026-11-15T06:56:42.7440035Z webkit: SW ready
+2026-11-15T06:56:42.9453535Z webkit: opening shared UI
+2026-11-15T06:56:43.6424984Z webkit: shared simulation ready
+2026-11-15T06:56:51.9117690Z webkit: initial navigation
+2026-11-15T06:56:52.3949493Z webkit: app ready
+2026-11-15T06:56:52.5473285Z webkit: SW ready
+2026-11-15T06:56:53.8080165Z webkit: opening shared UI
+2026-11-15T06:56:54.3640259Z webkit: shared simulation ready
+2026-11-15T06:57:01.7353856Z BROWSER_GATE_START two-fill
+2026-11-15T06:57:02.8246584Z firefox: initial navigation
+2026-11-15T06:57:03.5036704Z firefox: app ready
+2026-11-15T06:57:03.8090588Z firefox: SW ready
+2026-11-15T06:57:04.2879471Z firefox: opening shared UI
+2026-11-15T06:57:04.9310971Z firefox: shared simulation ready
+2026-11-15T06:57:12.9667279Z webkit: initial navigation
+2026-11-15T06:57:13.4545683Z webkit: app ready
+2026-11-15T06:57:13.6132676Z webkit: SW ready
+2026-11-15T06:57:13.8556481Z webkit: opening shared UI
+2026-11-15T06:57:14.4327893Z webkit: shared simulation ready
+2026-11-15T06:57:20.0696127Z BROWSER_GATE_START three-fill
+2026-11-15T06:57:21.1952492Z firefox: initial navigation
+2026-11-15T06:57:21.8165440Z firefox: app ready
+2026-11-15T06:57:22.1113451Z firefox: SW ready
+2026-11-15T06:57:22.1114162Z firefox: checking ten Decimal cases against actual IDB
+2026-11-15T06:57:23.1412595Z firefox: opening shared UI
+2026-11-15T06:57:23.8444133Z firefox: shared simulation ready
+2026-11-15T06:57:32.8827436Z firefox: initial navigation
+2026-11-15T06:57:33.5627544Z firefox: app ready
+2026-11-15T06:57:33.8696461Z firefox: SW ready
+2026-11-15T06:57:33.8697255Z firefox: checking ten Decimal cases against actual IDB
+2026-11-15T06:57:34.8999156Z firefox: opening shared UI
+2026-11-15T06:57:35.8415414Z firefox: shared simulation ready
+2026-11-15T06:57:44.9851304Z webkit: initial navigation
+2026-11-15T06:57:45.4622953Z webkit: app ready
+2026-11-15T06:57:45.6163794Z webkit: SW ready
+2026-11-15T06:57:45.6164322Z webkit: checking ten Decimal cases against actual IDB
+2026-11-15T06:57:46.4000371Z webkit: opening shared UI
+2026-11-15T06:57:46.9792609Z webkit: shared simulation ready
+2026-11-15T06:57:53.5592916Z webkit: initial navigation
+2026-11-15T06:57:54.0422850Z webkit: app ready
+2026-11-15T06:57:54.1854702Z webkit: SW ready
+2026-11-15T06:57:54.9897232Z webkit: checking ten Decimal cases against actual IDB
+2026-11-15T06:57:54.9897821Z webkit: opening shared UI
+2026-11-15T06:57:55.7294190Z webkit: shared simulation ready
+2026-11-15T06:58:02.5313141Z BROWSER_GATE_START flatex-net-augmentation
+2026-11-15T06:58:17.9810821Z firefox single: NATIVE FLATEX CASH AUGMENTATION PASS
+2026-11-15T06:58:34.5519752Z firefox batch: NATIVE FLATEX CASH AUGMENTATION PASS
+2026-11-15T06:58:47.4862367Z webkit single: NATIVE FLATEX CASH AUGMENTATION PASS
+2026-11-15T06:59:00.5996621Z webkit batch: NATIVE FLATEX CASH AUGMENTATION PASS
+2026-11-15T06:59:00.6716816Z BROWSER_GATE_START flatex-context
+2026-11-15T06:59:21.8904987Z firefox: NATIVE FLATEX NET ECONOMICS PASS
+2026-11-15T06:59:38.5980431Z webkit: NATIVE FLATEX NET ECONOMICS PASS
+2026-11-15T06:59:38.6795387Z BROWSER_GATE_START flatex-net-backfill
+2026-11-15T07:00:37.8117376Z firefox: NET BACKFILL SOURCE ORDER UI PASS
+2026-11-15T07:01:20.9734245Z webkit: NET BACKFILL SOURCE ORDER UI PASS
+2026-11-15T07:01:21.0343695Z BROWSER_GATE_START flatex-net-selection
+2026-11-15T07:01:34.1730169Z firefox: LARGE NET SELECTION PASS
+2026-11-15T07:01:46.3266879Z webkit: LARGE NET SELECTION PASS
+2026-11-15T07:01:46.3921959Z BROWSER_GATE_START shared-import
+2026-11-15T07:01:47.5088825Z firefox: initial navigation
+2026-11-15T07:01:48.1841692Z firefox: app ready
+2026-11-15T07:01:48.4567256Z firefox: SW ready
+2026-11-15T07:01:49.0687341Z firefox: opening shared UI
+2026-11-15T07:01:50.5934900Z firefox: shared simulation ready
+2026-11-15T07:02:02.3722735Z webkit: initial navigation
+2026-11-15T07:02:02.8464863Z webkit: app ready
+2026-11-15T07:02:03.0095176Z webkit: SW ready
+2026-11-15T07:02:03.2687017Z webkit: opening shared UI
+2026-11-15T07:02:04.4093863Z webkit: shared simulation ready
+2026-11-15T07:02:12.5623477Z BROWSER_GATE_START kraken-allocation
+2026-11-15T07:02:13.7025958Z firefox: initial navigation
+2026-11-15T07:02:14.3746112Z firefox: app ready
+2026-11-15T07:02:14.6518608Z firefox: SW ready
+2026-11-15T07:02:15.6604441Z firefox: opening shared UI
+2026-11-15T07:02:16.1120472Z firefox: shared simulation ready
+2026-11-15T07:02:25.6944696Z webkit: initial navigation
+2026-11-15T07:02:26.1908112Z webkit: app ready
+2026-11-15T07:02:26.3498183Z webkit: SW ready
+2026-11-15T07:02:26.9373327Z webkit: opening shared UI
+2026-11-15T07:02:27.2677330Z webkit: shared simulation ready
+2026-11-15T07:02:34.0908900Z BROWSER_GATE_START kraken-fiat-binding
+2026-11-15T07:02:48.3590952Z KRAKEN_FIAT_BINDING_PASS firefox
+2026-11-15T07:02:58.4140980Z KRAKEN_FIAT_BINDING_PASS webkit
+2026-11-15T07:02:58.4157186Z BROWSER_GATE_START unknown-fx
+2026-11-15T07:02:59.5707455Z FX_STAGE firefox initial
+2026-11-15T07:03:00.4927405Z FX_STAGE firefox reload
+2026-11-15T07:03:01.1149069Z FX_STAGE firefox unknown-reference
+2026-11-15T07:03:01.4992935Z FX_STAGE firefox rollback
+2026-11-15T07:03:01.4993484Z FX_STAGE firefox quota
+2026-11-15T07:03:01.5126187Z FX_STAGE firefox post-put
+2026-11-15T07:03:01.5236683Z FX_STAGE firefox cas
+2026-11-15T07:03:02.1991727Z FX_STAGE firefox offline
+2026-11-15T07:03:03.0092639Z FX_STAGE firefox axe
+2026-11-15T07:03:03.9409058Z FX_STAGE firefox encrypt
+2026-11-15T07:03:04.0144633Z FX_STAGE firefox fresh-restore
+2026-11-15T07:03:05.1355544Z UNKNOWN_FX_PASS firefox
+2026-11-15T07:03:05.7811118Z FX_STAGE webkit initial
+2026-11-15T07:03:06.4175332Z FX_STAGE webkit reload
+2026-11-15T07:03:06.6864444Z FX_STAGE webkit unknown-reference
+2026-11-15T07:03:06.9851530Z FX_STAGE webkit rollback
+2026-11-15T07:03:06.9987745Z FX_STAGE webkit quota
+2026-11-15T07:03:06.9988221Z FX_STAGE webkit post-put
+2026-11-15T07:03:07.0074680Z FX_STAGE webkit cas
+2026-11-15T07:03:07.6424545Z FX_STAGE webkit offline
+2026-11-15T07:03:07.9568785Z FX_STAGE webkit axe
+2026-11-15T07:03:08.9530272Z FX_STAGE webkit encrypt
+2026-11-15T07:03:09.0125227Z FX_STAGE webkit fresh-restore
+2026-11-15T07:03:10.0297879Z UNKNOWN_FX_PASS webkit
+2026-11-15T07:03:10.0814174Z BROWSER_GATE_START kraken-usd-principal
+2026-11-15T07:03:11.2156002Z USD_STAGE firefox initial
+2026-11-15T07:03:14.7310711Z USD_STAGE firefox rollback
+2026-11-15T07:03:16.6151730Z USD_STAGE firefox offline-replay
+2026-11-15T07:03:17.6554312Z USD_STAGE firefox encrypted-restore
+2026-11-15T07:03:18.8718534Z USD_STAGE firefox real-second-tab-CAS
+2026-11-15T07:03:21.1867632Z USD_STAGE firefox documentary-withdrawal
+2026-11-15T07:03:25.4897285Z KRAKEN_USD_PRINCIPAL_PASS firefox
+2026-11-15T07:03:26.0974424Z USD_STAGE webkit initial
+2026-11-15T07:03:28.6803345Z USD_STAGE webkit rollback
+2026-11-15T07:03:29.8585689Z USD_STAGE webkit offline-replay
+2026-11-15T07:03:30.3951338Z USD_STAGE webkit encrypted-restore
+2026-11-15T07:03:31.5937329Z USD_STAGE webkit real-second-tab-CAS
+2026-11-15T07:03:33.0489551Z USD_STAGE webkit documentary-withdrawal
+2026-11-15T07:03:35.1047822Z KRAKEN_USD_PRINCIPAL_PASS webkit
+2026-11-15T07:03:35.1649383Z BROWSER_GATE_START flatex-reconciliation
+2026-11-15T07:04:00.9767897Z firefox: dated reconciliation full UI PASS
+2026-11-15T07:04:19.5088935Z webkit: dated reconciliation full UI PASS
+2026-11-15T07:04:19.6134801Z ##[group]Run actions/upload-artifact@v4
+2026-11-15T07:04:19.6135097Z with:
+2026-11-15T07:04:19.6135426Z   name: cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-3
+2026-11-15T07:04:19.6136045Z   path: artifacts/gates/
+2026-11-15T07:04:19.6136300Z   if-no-files-found: ignore
+2026-11-15T07:04:19.6136549Z   compression-level: 6
+2026-11-15T07:04:19.6136783Z   overwrite: false
+2026-11-15T07:04:19.6137020Z   include-hidden-files: false
+2026-11-15T07:04:19.6137261Z ##[endgroup]
+2026-11-15T07:04:19.7774190Z (node:114084) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T07:04:19.7775374Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T07:04:19.8962143Z With the provided path, there will be 868 files uploaded
+2026-11-15T07:04:19.8974783Z Artifact name is valid!
+2026-11-15T07:04:19.8975470Z Root directory input is valid!
+2026-11-15T07:04:20.1612136Z Beginning upload of artifact content to blob storage
+2026-11-15T07:04:20.5267669Z (node:114084) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T07:04:20.7545672Z Uploaded bytes 8388608
+2026-11-15T07:04:21.0599813Z Uploaded bytes 16777216
+2026-11-15T07:04:21.3729209Z Uploaded bytes 25165824
+2026-11-15T07:04:21.6733245Z Uploaded bytes 33554432
+2026-11-15T07:04:22.0409071Z Uploaded bytes 41943040
+2026-11-15T07:04:22.4054138Z Uploaded bytes 50331648
+2026-11-15T07:04:22.6676955Z Uploaded bytes 58720256
+2026-11-15T07:04:23.0190887Z Uploaded bytes 67108864
+2026-11-15T07:04:23.1081687Z Uploaded bytes 70282703
+2026-11-15T07:04:23.1303596Z Finished uploading artifact content to blob storage!
+2026-11-15T07:04:23.1306544Z SHA256 digest of uploaded artifact zip is 96c0992384fc5a6ff366815feb7fc5741d48319b2eb07878834ecf69f1848ae3
+2026-11-15T07:04:23.1308361Z Finalizing artifact upload
+2026-11-15T07:04:23.4628925Z Artifact cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-3.zip successfully finalized. Artifact ID 14151421248
+2026-11-15T07:04:23.4630835Z Artifact cross-engine-gates-e6ccb4d5f8d2e5062defe7dc1d43ea3ac3dc582a-3 has been successfully uploaded! Final size is 70282703 bytes. Artifact ID is 14151421248
+2026-11-15T07:04:23.4638612Z Artifact download URL: https://github.com/joke0071/foliolab-open/actions/runs/43686231550/artifacts/14151421248
+2026-11-15T07:04:23.4877748Z Post job cleanup.
+2026-11-15T07:04:23.5945189Z Cache hit occurred on the primary key foliolab-pw1.64.1-firefox-webkit-v1-Linux-X64, not saving cache.
+2026-11-15T07:04:23.5947058Z (node:114096) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T07:04:23.5948141Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T07:04:23.6047688Z Post job cleanup.
+2026-11-15T07:04:23.7290884Z (node:114105) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T07:04:23.7291676Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T07:04:23.7502376Z Post job cleanup.
+2026-11-15T07:04:23.8454959Z [command]/usr/bin/git version
+2026-11-15T07:04:23.8487030Z git version 2.56.1
+2026-11-15T07:04:23.8577866Z Temporarily overriding HOME='/home/runner/work/_temp/8039cd74-3340-493c-83b9-e2bbc157fdaa' before making global git config changes
+2026-11-15T07:04:23.8580203Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T07:04:23.8580984Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/foliolab-open/foliolab-open
+2026-11-15T07:04:23.8582555Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T07:04:23.8648982Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T07:04:23.8870849Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T07:04:23.8901432Z http.https://github.com/.extraheader
+2026-11-15T07:04:23.8917659Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-15T07:04:23.8972532Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T07:04:23.9225692Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T07:04:23.9272370Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T07:04:23.9739422Z Cleaning up orphan processes
+2026-11-15T07:04:23.9991406Z Terminate orphan process: pid (4540) (python3)
+2026-11-15T07:04:24.0128249Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache@v4, actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,15 @@
+{
+  "engine": "firefox",
+  "dialect": "depot12/account10",
+  "version": "157.0",
+  "result": "PASS",
+  "checks": [
+    "three executions and one cash document, both file orders",
+    "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+    "selection revokes all approvals; full zero-write quota/post-put rollback",
+    "actual Undo/recommit/reimport/offline reload",
+    "encrypted v5 backup and actual restore in fresh profile",
+    "real second-tab race at canonical save",
+    "five widths/Axe, no external requests"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "engine": "chromium",
+  "version": "141.0.7390.37",
+  "result": "PASS",
+  "checks": [
+    "two executions and one cash document, both file orders",
+    "one CAS revision, independent quantities/cash/fees, no invented costs",
+    "selection revokes all approvals; full zero-write quota/post-put rollback",
+    "actual Undo/recommit/reimport/offline reload",
+    "encrypted v5 backup and actual restore in fresh profile",
+    "real second-tab race at canonical save",
+    "five widths/Axe, no external requests"
+  ]
+}
