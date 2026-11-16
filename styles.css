@@ -2146,3 +2146,10 @@
   min-width:90px;min-height:44px;white-space:nowrap
  }
 }
+
+/* UI-R4: display-only position threshold, separate from economic settings. */
+.position-value-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.position-value-filter>.field{flex:0 1 210px;margin:0;min-width:0}
+.position-value-filter>.small-help{flex:1 1 240px;margin:0}
+.position-value-filter input{min-height:44px}
+.position-value-filter input[aria-invalid="true"]{border-color:var(--danger,#b43333)}
