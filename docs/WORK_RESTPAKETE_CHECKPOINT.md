@@ -1,6 +1,6 @@
 # HND01 · SW320 LIVE_ACCEPTED · SW321 DEPLOYED_NOT_LIVE_ACCEPTED / QA54_RUNNING
 
-Sole writer `hnd01-sw320-sw321-20261116-root`, authorized by Jochen16November2026; `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
+Sole writer `hnd01-sw321-live-20261116-97026efd-root`, authorized by Jochen16November2026; `hnd01-sw320-sw321-20261116-root` and `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
 
 ## Actual release status
 
@@ -47,7 +47,7 @@ Windows/Android/PWA physical-device/restore/interaction checks DEFERRED. Indepen
 
 After complete SW320 LIVE_ACCEPTED and independently restored proof, immediately freshly verified head8092649f/base112dc6d4/main112dc6d4/tree09419f00/synthetic same tree and ordered parents, clean mergeable state, all9checks completed with required tests/cross3/Wallet SUCCESS (main-only/FAST correctly skipped), both exact-head CI/Wallet runs SUCCESS,0reviews/inline comments. Expected-head-bound merge succeeded.
 
-Actual new main `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, verified tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, ordered parents actual accepted filter112dc6d4 + approved ring8092649f. [Regular main43884299916](https://github.com/joke0071/foliolab-open/actions/runs/43884299916) now running. No additional product/source/test change. SW321 not yet deployed/accepted; last accepted remainsSW320. Continue normal mainCI/deployment/full original live gates, save originals/independent restore and all3engine1000EUR combined receipts before acceptance.
+Actual new main `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, verified tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, ordered parents actual accepted filter112dc6d4 + approved ring8092649f. [Regular main43884299916](https://github.com/joke0071/foliolab-open/actions/runs/43884299916) completed: integration and deployment SUCCESS; original live step FAIL, diagnosed below. No additional product/source/test change. SW321 DEPLOYED_NOT_LIVE_ACCEPTED; last accepted remains SW320. Continue existing bounded QA run43889548405 at its first unfinished job; save originals/independent restore and all3engine1000EUR combined receipts before acceptance.
 
 ## SW321 actual deployment / original failure / bounded54remainder
 
