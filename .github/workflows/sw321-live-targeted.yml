@@ -1,0 +1,179 @@
+name: SW321 bounded missing-seven observation
+on:
+  push:
+    branches: [qa/sw321-targeted7-20261116]
+permissions:
+  contents: read
+concurrency:
+  group: sw321-frozen-live-isolated
+  cancel-in-progress: true
+jobs:
+  live:
+    name: ${{ matrix.group }} / ${{ matrix.engine }} / frozen SW321
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: [{"group":"recovery","engine":"firefox","gates":"browser-recovery-backup-limits browser-fin-e2e"},{"group":"display","engine":"webkit","gates":"browser-loading-pwa browser-ui-alltag10 browser-ui-textscale browser-price-csv-tools browser-cash-account-ux"}]
+    env:
+      RELEASE_SHA: 29f2a1c85a6b859c75c0811b3b478f745b12c8bf
+      ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      TRANSFER_STATE_BASE: https://foliolab.unperfekt.at/
+      LOADING_BASE: https://foliolab.unperfekt.at/
+      UI_BASE: https://foliolab.unperfekt.at/
+      CASH_UX_BASE: https://foliolab.unperfekt.at/
+      ETF_SOURCE_BASE: https://foliolab.unperfekt.at/
+      RECOVERY_BASE: https://foliolab.unperfekt.at/
+      FIN_E2E_BASE: https://foliolab.unperfekt.at/
+      UH02_BASE: https://foliolab.unperfekt.at/
+      UH03_BASE: https://foliolab.unperfekt.at/
+      PCHAIN_BASE: https://foliolab.unperfekt.at/
+      SONIC_EVIDENCE_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_ENGINES: ${{ matrix.engine }}
+      TRANSFER_STATE_ENGINES: ${{ matrix.engine }}
+      LOADING_ENGINES: ${{ matrix.engine }}
+      UI_ENGINES: ${{ matrix.engine }}
+      CASH_UX_ENGINES: ${{ matrix.engine }}
+      ETF_SOURCE_ENGINES: ${{ matrix.engine }}
+      RECOVERY_ENGINES: ${{ matrix.engine }}
+      FIN_E2E_ENGINES: ${{ matrix.engine }}
+      HISTORY_ENGINES: ${{ matrix.engine }}
+      PCHAIN_ENGINES: ${{ matrix.engine }}
+      SONIC_EVIDENCE_ENGINES: ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29f2a1c85a6b859c75c0811b3b478f745b12c8bf
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require the exact released product and unchanged original scripts
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          test "$(git rev-parse HEAD^{tree})" = "09419f00ebbd942fbb843a82b4c224212a2b2fdf"
+          test "$(head -n 1 sw.js)" = "const CACHE='foliolab-open-v321';"
+          mkdir -p artifacts/gates
+          git rev-parse HEAD > artifacts/gates/tested-sha.txt
+          git ls-tree -r HEAD -- tests .github/workflows/import.yml > artifacts/gates/frozen-test-blobs.txt
+      - name: Install the original pinned Chromium tools
+        if: matrix.engine == 'chromium'
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - name: Install the original pinned cross-engine tools
+        if: matrix.engine != 'chromium'
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          archive_mirror=''
+          security_mirror=''
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
+          fi
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
+          npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Bound origin continuations and fresh-profile admission without retries
+        run: |
+          cat > qa-origin-pacing.mjs <<'QA_PACING_EOF'
+          import {createHash} from 'node:crypto';
+          import {chromium,firefox,webkit} from 'playwright';
+          import {appendFileSync,mkdirSync} from 'node:fs';
+          import {setTimeout as delay} from 'node:timers/promises';
+          // QA request admission only. Existing route handlers retain their decisions.
+          // No response reads, caching, retries, mock replacement or timeout changes.
+          const origin='https://foliolab.unperfekt.at',spacing=20;
+          let next=0,nextContext=0;
+          mkdirSync('artifacts/gates',{recursive:true});
+          const log=x=>appendFileSync('artifacts/gates/qa-origin-pacing.jsonl',JSON.stringify(x)+'\n');
+          log({event:'configuration',spacingMs:spacing,contextSpacingMs:2000,origin,scope:'existing route.continue only',script:process.argv[1]});
+          for(const type of [chromium,firefox,webkit]){
+           const launch=type.launch.bind(type);
+           type.launch=async(...options)=>{
+            const browser=await launch(...options),newContext=browser.newContext.bind(browser);
+            browser.newContext=async(...options)=>{
+             const now=performance.now(),slot=Math.max(now,nextContext);nextContext=slot+2000;
+             await delay(Math.max(0,slot-now));log({event:'contextAdmission',at:Date.now(),waitMs:slot-now});
+             const context=await newContext(...options),route=context.route.bind(context),unroute=context.unroute.bind(context),wrappers=new WeakMap();
+             context.route=async(url,handler,options)=>{
+              const wrapped=async(r,request)=>{
+               const proxy=new Proxy(r,{get(target,key){
+                if(key==='continue')return async(...args)=>{
+                 if(new URL(target.request().url()).origin===origin){
+                  const now=performance.now(),slot=Math.max(now,next);next=slot+spacing;
+                  await delay(Math.max(0,slot-now));
+                  log({event:'continue',at:Date.now(),url:target.request().url(),waitMs:slot-now});
+                 }
+                 return target.continue(...args);
+                };
+                const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;
+               }});
+               return handler(proxy,request);
+              };
+              wrappers.set(handler,wrapped);return route(url,wrapped,options);
+             };
+             context.unroute=(url,handler)=>unroute(url,handler?(wrappers.get(handler)||handler):undefined);
+             const responses=[];
+             context.on('response',response=>{try{const url=new URL(response.url());if(url.origin===origin&&['/','/styles.css','/src/startup.js','/src/app.js'].includes(url.pathname)){responses.push(response);if(responses.length>20)responses.shift();}}catch{}});
+             const closeContext=context.close.bind(context);
+             context.close=async(...args)=>{
+              const capture=async()=>{
+               for(const page of context.pages()){
+                if(page.isClosed())continue;
+                const state=await page.evaluate(()=>{
+                 const element=document.getElementById('appStartup'),style=element?getComputedStyle(element):null,rect=element?.getBoundingClientRect();
+                 return {url:location.href,title:document.title,readyState:document.readyState,visibility:document.visibilityState,fontsStatus:document.fonts?.status??null,viewport:{width:innerWidth,height:innerHeight,scrollWidth:document.documentElement?.scrollWidth},startup:element?{hidden:element.hidden,connected:element.isConnected,display:style.display,visibility:style.visibility,opacity:style.opacity,position:style.position,rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},clientRects:element.getClientRects().length,html:element.outerHTML.slice(0,1200)}:null,startupText:document.getElementById('appStartupText')?.textContent,layoutInert:document.querySelector('.layout')?.inert??null,storageState:document.getElementById('portfolioStorageState')?.textContent,bodyText:document.body?.innerText.slice(0,4000),html:document.documentElement?.outerHTML??''};
+                }).catch(error=>({captureError:String(error)}));
+                if(state.html!==undefined){state.serializedDOMSHA256=createHash('sha256').update(state.html).digest('hex');delete state.html;}
+                appendFileSync('artifacts/gates/qa-teardown-dom.jsonl',JSON.stringify({at:Date.now(),phase:'AFTER original assertions; BEFORE original context.close; not an exact past-assertion snapshot',script:process.argv[1],state})+'\n');
+               }
+               for(const response of responses){
+                const body=await response.body().catch(()=>null);
+                appendFileSync('artifacts/gates/qa-teardown-dom.jsonl',JSON.stringify({at:Date.now(),event:'originalResponseBody',url:response.url(),status:response.status(),contentType:response.headers()['content-type']??null,bytes:body?.length??null,sha256:body?createHash('sha256').update(body).digest('hex'):null})+'\n');
+               }
+              };
+              try{await Promise.race([capture(),delay(3000).then(()=>{throw Error('read-only teardown capture deadline');})]);}catch(error){appendFileSync('artifacts/gates/qa-teardown-dom.jsonl',JSON.stringify({at:Date.now(),captureError:String(error),assertionsUnchanged:true})+'\n');}
+              return closeContext(...args);
+             };
+             return context;
+            };
+            return browser;
+           };
+          }
+          QA_PACING_EOF
+      - name: Run every original gate assigned to this isolated runner
+        env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./qa-origin-pacing.mjs --import ./tests/live-worker-diagnostics.mjs'
+          UI_QUALITY_SCREENSHOTS: '1'
+        run: |
+          set -euo pipefail
+          gates='${{ matrix.gates }}'
+          printf '%s\n' "$gates" > artifacts/gates/executed-original-gates.txt
+          for gate in $gates; do
+            echo "FROZEN_LIVE_BEGIN $gate ${{ matrix.engine }} $RELEASE_SHA"
+            node "tests/$gate.mjs" 2>&1 | tee "artifacts/gates/isolated-$gate.log"
+            echo "FROZEN_LIVE_PASS $gate ${{ matrix.engine }} $RELEASE_SHA"
+          done
+      - name: Preserve all original reports and first failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-live-sw321-${{ matrix.group }}-${{ matrix.engine }}
+          path: artifacts/gates/
+          if-no-files-found: error
+          retention-days: 30
