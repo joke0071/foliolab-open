@@ -1,7 +1,7 @@
 {
   "result": "PASS",
-  "filterHead": "d6ded8c4950d7c2c0e255929d9f5c4e8b65d3d38",
-  "ringHead": "ec4290c43a60af4e76273fbb1727a99f6628548d",
+  "filterHead": "19e2ec18923285f3316824e3e9fb89d98ff12127",
+  "ringHead": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
   "engine": "chromium141",
   "oracle": {
     "totalEUR": 1000,

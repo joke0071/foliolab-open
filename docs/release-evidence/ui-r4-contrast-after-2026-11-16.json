@@ -1,0 +1,41 @@
+{
+  "sourceHead": "19e2ec18923285f3316824e3e9fb89d98ff12127",
+  "scope": "controlled native430-to768px button transition at0/26/52/78/104/130ms; local Chromium141/Node24, not hardware",
+  "samples": {
+    "animations": [],
+    "states": [
+      {
+        "time": 0,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      },
+      {
+        "time": 26,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      },
+      {
+        "time": 52,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      },
+      {
+        "time": 78,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      },
+      {
+        "time": 104,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      },
+      {
+        "time": 130,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      }
+    ]
+  },
+  "during": [],
+  "after": []
+}

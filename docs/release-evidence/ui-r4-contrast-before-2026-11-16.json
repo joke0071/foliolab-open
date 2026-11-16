@@ -1,0 +1,104 @@
+{
+  "sourceHead": "5c0be96fa8707c04bcc460a7f9fe9a2a55efb5b2",
+  "scope": "controlled native430-to768px button transition at0/26/52/78/104/130ms; local Chromium141/Node24, not hardware",
+  "samples": {
+    "animations": [
+      {
+        "property": "background-color",
+        "duration": 130
+      },
+      {
+        "property": "color",
+        "duration": 130
+      }
+    ],
+    "states": [
+      {
+        "time": 0,
+        "color": "rgb(80, 120, 93)",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "time": 26,
+        "color": "rgb(132, 160, 141)",
+        "background": "rgb(191, 205, 198)"
+      },
+      {
+        "time": 52,
+        "color": "rgb(199, 212, 204)",
+        "background": "rgb(107, 140, 123)"
+      },
+      {
+        "time": 78,
+        "color": "rgb(235, 240, 236)",
+        "background": "rgb(63, 105, 83)"
+      },
+      {
+        "time": 104,
+        "color": "rgb(251, 252, 251)",
+        "background": "rgb(43, 90, 66)"
+      },
+      {
+        "time": 130,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(38, 86, 61)"
+      }
+    ]
+  },
+  "during": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c7d4cc",
+                "bgColor": "#6b8c7b",
+                "contrastRatio": 2.42,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "bold",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<button class=\"btn primary responsive-action\" id=\"addWizard\" type=\"button\" title=\"Anlage hinzuf\u00fcgen\" aria-label=\"Anlage hinzuf\u00fcgen\">",
+                  "target": [
+                    "#addWizard"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.42 (foreground color: #c7d4cc, background color: #6b8c7b, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"action-label\">Anlage</span>",
+          "target": [
+            "#addWizard > .action-label"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.42 (foreground color: #c7d4cc, background color: #6b8c7b, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "after": []
+}
