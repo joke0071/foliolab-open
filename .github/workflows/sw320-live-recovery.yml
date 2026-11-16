@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        include: [{"group":"market","engine":"chromium"}]
+        include: [{"group":"presentation","engine":"chromium","gates":"browser-ui-quality browser-transfer-states"},{"group":"imports","engine":"firefox","gates":"browser-kraken-import browser-bitpanda-import browser-flatex-native-ui browser-flatex-native-commit browser-flatex-net-settlement"},{"group":"presentation","engine":"firefox","gates":"browser-ui-quality browser-transfer-states"},{"group":"display","engine":"webkit","gates":"browser-loading-pwa browser-ui-alltag10 browser-ui-textscale browser-price-csv-tools browser-cash-account-ux"},{"group":"market","engine":"webkit","gates":"browser-etf-source-recovery"},{"group":"recovery","engine":"webkit","gates":"browser-recovery-backup-limits browser-fin-e2e"},{"group":"imports","engine":"webkit","gates":"browser-unified-bitcoin browser-kraken-import browser-bitpanda-import browser-flatex-native-ui browser-flatex-native-commit browser-flatex-net-settlement"},{"group":"chain","engine":"webkit","gates":"browser-pchain-evidence browser-sonic-staking-evidence"},{"group":"presentation","engine":"webkit","gates":"browser-ui-quality browser-transfer-states"}]
     env:
       RELEASE_SHA: 112dc6d441fe79b0cf3086a5720b6d48910bf784
       ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
@@ -137,16 +137,7 @@ jobs:
           UI_QUALITY_SCREENSHOTS: '1'
         run: |
           set -euo pipefail
-          case "${{ matrix.group }}" in
-            core) gates='browser-live-acceptance' ;;
-            display) gates='browser-loading-pwa browser-ui-alltag10 browser-ui-textscale browser-price-csv-tools browser-cash-account-ux' ;;
-            market) gates='browser-etf-source-recovery' ;;
-            recovery) gates='browser-recovery-backup-limits browser-fin-e2e' ;;
-            imports) gates='browser-unified-bitcoin browser-kraken-import browser-bitpanda-import browser-flatex-native-ui browser-flatex-native-commit browser-flatex-net-settlement' ;;
-            chain) gates='browser-pchain-evidence browser-sonic-staking-evidence' ;;
-            presentation) gates='browser-ui-quality browser-transfer-states' ;;
-            *) exit 1 ;;
-          esac
+          gates='${{ matrix.gates }}'
           printf '%s\n' "$gates" > artifacts/gates/executed-original-gates.txt
           for gate in $gates; do
             echo "FROZEN_LIVE_BEGIN $gate ${{ matrix.engine }} $RELEASE_SHA"
