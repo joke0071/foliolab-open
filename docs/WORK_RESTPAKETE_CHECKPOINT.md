@@ -1,3 +1,15 @@
+# HND01 · Main43956969224 · Pflichtjobs und Deployment SUCCESS, Live aktiv
+
+Main494ed8f0f6b627d8be972a5ceb886005e5064b31 unverändert. Genau ein gezielter Wiederanlauf: Cross2-Job133627209482 SUCCESS21:49:04Z (1117s=18:37). **Frischer Runner ebenfalls Image20261111.127.1**; diesmal Ubuntu-Paketindizes regulär geladen und Installation63s SUCCESS. Imageversion allein somit keine Ursache; APT-Zustand des ersten Runners eingegrenzt, genaue damalige Konfiguration nicht protokolliert. Kein Produkt-/Test-/Workflowpatch, kein weiterer Installationsretry.
+
+Originaler Haupttest1121s, Cross1627s, Cross3905s übernommen. Reale Pflichtjob-Wartephase21:08:48Z–21:49:04Z **40:16** =18:41 erster paralleler Abschnitt +2:58 Zwischenraum +18:37 Ersatzjob. Fehljob38s liegt parallel darin, keine zusätzliche serielle38s. Runnerarbeit erfolgreich3770s plus38s fehlgeschlagen =3808s. PR17:56 bleibt PR-Messung; Main mit Störung kein ungestörter18min-Benchmark.
+
+Deployment133638102686 SUCCESS21:49:27Z. Pages-Artefakt14273898961:154Dateien exakt Maintree. Ersatz-Cross2-Artefakt14274638708:837Berichtspfade erhalten. Originale Größe/Digest/CRC geprüft. **Live133638326346 aktiv**, letzter abgeschlossener Schritt Chromium-Toolinstallation, jetzt Verify published bytes, core flows and targeted UI in Chromium. Nächster Schritt: diesen bestehenden Livejob bis Ende verfolgen (inklusive Cross-Live danach), dann Originale sichern und Endstatus belegen. Keine zusätzlichen parallelen Originprüfungen oder neuen Voll-Läufe.
+
+[Diagnose/Zeittrennung/Originalbelege](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md). SW321 bestehende Produktabnahme bleibt gültig; neuen regulären Main-Live-Endstatus nicht vorwegnehmen.
+
+--- Vorherige Sicherungs-/Wiederanlaufstände ---
+
 ## Main43956969224 · Originale vollständig gesichert · Versuch2 läuft
 
 Erstversuch-Originalpaket vollständig unabhängig zurückgelesen:17Dateien,16Manifestprüfungen,6ZIPs/1668ursprüngliche Mitglieder, sämtliche Längen/Hashes/CRCs PASS. [Diagnose und dauerhafte Originalbelege](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md). Cross1/Cross3/Chromium/Dialog-Berichtspfade deckungsgleich zum qualifizierten PR; keine verlorenen Belege.
