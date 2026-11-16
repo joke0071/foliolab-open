@@ -87,10 +87,53 @@ jobs:
           fi
           npm install --no-save playwright@1.64.1 axe-core@4.10.3
           npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Admit existing same-origin continuations at 50 per second without retries
+        run: |
+          cat > qa-origin-pacing.mjs <<'QA_PACING_EOF'
+          import {chromium,firefox,webkit} from 'playwright';
+          import {appendFileSync,mkdirSync} from 'node:fs';
+          import {setTimeout as delay} from 'node:timers/promises';
+          // QA request admission only. Existing route handlers retain their decisions.
+          // No response reads, caching, retries, mock replacement or timeout changes.
+          const origin='https://foliolab.unperfekt.at',spacing=20;
+          let next=0;
+          mkdirSync('artifacts/gates',{recursive:true});
+          const log=x=>appendFileSync('artifacts/gates/qa-origin-pacing.jsonl',JSON.stringify(x)+'\n');
+          log({event:'configuration',spacingMs:spacing,origin,scope:'existing route.continue only',script:process.argv[1]});
+          for(const type of [chromium,firefox,webkit]){
+           const launch=type.launch.bind(type);
+           type.launch=async(...options)=>{
+            const browser=await launch(...options),newContext=browser.newContext.bind(browser);
+            browser.newContext=async(...options)=>{
+             const context=await newContext(...options),route=context.route.bind(context),unroute=context.unroute.bind(context),wrappers=new WeakMap();
+             context.route=async(url,handler,options)=>{
+              const wrapped=async(r,request)=>{
+               const proxy=new Proxy(r,{get(target,key){
+                if(key==='continue')return async(...args)=>{
+                 if(new URL(target.request().url()).origin===origin){
+                  const now=performance.now(),slot=Math.max(now,next);next=slot+spacing;
+                  await delay(Math.max(0,slot-now));
+                  log({event:'continue',at:Date.now(),url:target.request().url(),waitMs:slot-now});
+                 }
+                 return target.continue(...args);
+                };
+                const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;
+               }});
+               return handler(proxy,request);
+              };
+              wrappers.set(handler,wrapped);return route(url,wrapped,options);
+             };
+             context.unroute=(url,handler)=>unroute(url,handler?(wrappers.get(handler)||handler):undefined);
+             return context;
+            };
+            return browser;
+           };
+          }
+          QA_PACING_EOF
       - name: Run every original gate assigned to this isolated runner
         env:
           LIVE_WORKER_DIAGNOSTICS: '1'
-          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
+          NODE_OPTIONS: '--import ./qa-origin-pacing.mjs --import ./tests/live-worker-diagnostics.mjs'
           UI_QUALITY_SCREENSHOTS: '1'
         run: |
           set -euo pipefail
