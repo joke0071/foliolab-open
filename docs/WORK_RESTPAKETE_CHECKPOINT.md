@@ -1,8 +1,12 @@
 # HND01 · SW320 LIVE_ACCEPTED · SW321 DEPLOYED_NOT_LIVE_ACCEPTED · PR347 MERGE_DECISION_READY
 
-Sole writer `hnd01-sw321-loader-20261116-94e5d357-root`, explicitly authorized by Jochen16November2026. Previous writer `hnd01-sw321-live-20261116-97026efd-root` and earlier owners have no write authority. No subagents. This checkpoint branch must never be merged wholesale into main.
+Sole writer `hnd01-sw321-close-20261116-953e8d11597b-root`, explicitly authorized by Jochen16November2026. Write authority of `hnd01-sw321-loader-20261116-94e5d357-root` ended with this handover. Previous writer `hnd01-sw321-live-20261116-97026efd-root` and earlier owners have no write authority. No subagents. This checkpoint branch must never be merged wholesale into main.
 
-## Current release and concrete decision
+## Authorized merge executed; standard main run in progress
+
+Jochen explicitly approved PR347 exact head `da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd`, including main CI, deployment and SW321 live closure. Fresh GitHub head/base/main/tree/checks/reviews matched; mergeable clean, zero reviews/threads/comments, all integration/Wallet checks SUCCESS. Main branch has no configured required contexts (branch metadata); detailed protection endpoint returns integration403. Expected-head-bound merge succeeded. New main `e272297ab1ba855a2922c1faa4010b83c558a796`, tree `c787469e711f7303842a471bed2ff37a780f0059`, ordered parents original main + approved head. Standard push run [43929597892](https://github.com/joke0071/foliolab-open/actions/runs/43929597892) is in progress. SW321 is not yet marked LIVE_ACCEPTED. Prior sections below retain pre-merge qualification and source provenance; the former request for a merge decision is superseded by Jochen's explicit authorization.
+
+## Prior qualified release and decision
 
 | Release | Main / product tree | Actual status |
 | --- | --- | --- |
