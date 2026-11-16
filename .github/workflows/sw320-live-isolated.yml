@@ -1,4 +1,4 @@
-name: SW320 frozen live gates in isolated runners
+name: SW320 live qualification STOPPED after upstream failures
 on:
   push:
     branches: [qa/sw320-live-isolated-20261116]
@@ -8,113 +8,11 @@ concurrency:
   group: sw320-frozen-live-isolated
   cancel-in-progress: true
 jobs:
-  live:
-    name: ${{ matrix.group }} / ${{ matrix.engine }} / frozen SW320
+  stopped:
+    name: STOPPED - no release qualification
     runs-on: ubuntu-24.04
-    timeout-minutes: 55
-    strategy:
-      fail-fast: false
-      max-parallel: 3
-      matrix:
-        include: [{"group":"core","engine":"chromium"},{"group":"display","engine":"chromium"},{"group":"market","engine":"chromium"},{"group":"recovery","engine":"chromium"},{"group":"imports","engine":"chromium"},{"group":"chain","engine":"chromium"},{"group":"presentation","engine":"chromium"},{"group":"display","engine":"firefox"},{"group":"market","engine":"firefox"},{"group":"recovery","engine":"firefox"},{"group":"imports","engine":"firefox"},{"group":"chain","engine":"firefox"},{"group":"presentation","engine":"firefox"},{"group":"display","engine":"webkit"},{"group":"market","engine":"webkit"},{"group":"recovery","engine":"webkit"},{"group":"imports","engine":"webkit"},{"group":"chain","engine":"webkit"},{"group":"presentation","engine":"webkit"}]
-    env:
-      RELEASE_SHA: 112dc6d441fe79b0cf3086a5720b6d48910bf784
-      ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
-      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
-      TRANSFER_STATE_BASE: https://foliolab.unperfekt.at/
-      LOADING_BASE: https://foliolab.unperfekt.at/
-      UI_BASE: https://foliolab.unperfekt.at/
-      CASH_UX_BASE: https://foliolab.unperfekt.at/
-      ETF_SOURCE_BASE: https://foliolab.unperfekt.at/
-      RECOVERY_BASE: https://foliolab.unperfekt.at/
-      FIN_E2E_BASE: https://foliolab.unperfekt.at/
-      UH02_BASE: https://foliolab.unperfekt.at/
-      UH03_BASE: https://foliolab.unperfekt.at/
-      PCHAIN_BASE: https://foliolab.unperfekt.at/
-      SONIC_EVIDENCE_BASE: https://foliolab.unperfekt.at/
-      UI_QUALITY_ENGINES: ${{ matrix.engine }}
-      TRANSFER_STATE_ENGINES: ${{ matrix.engine }}
-      LOADING_ENGINES: ${{ matrix.engine }}
-      UI_ENGINES: ${{ matrix.engine }}
-      CASH_UX_ENGINES: ${{ matrix.engine }}
-      ETF_SOURCE_ENGINES: ${{ matrix.engine }}
-      RECOVERY_ENGINES: ${{ matrix.engine }}
-      FIN_E2E_ENGINES: ${{ matrix.engine }}
-      HISTORY_ENGINES: ${{ matrix.engine }}
-      PCHAIN_ENGINES: ${{ matrix.engine }}
-      SONIC_EVIDENCE_ENGINES: ${{ matrix.engine }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: 112dc6d441fe79b0cf3086a5720b6d48910bf784
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Require the exact released product and unchanged original scripts
-        run: |
-          set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
-          test "$(git rev-parse HEAD^{tree})" = "0c749ffda82a32ec0e98c025aeafa751b37aa759"
-          test "$(head -n 1 sw.js)" = "const CACHE='foliolab-open-v320';"
-          mkdir -p artifacts/gates
-          git rev-parse HEAD > artifacts/gates/tested-sha.txt
-          git ls-tree -r HEAD -- tests .github/workflows/import.yml > artifacts/gates/frozen-test-blobs.txt
-      - name: Install the original pinned Chromium tools
-        if: matrix.engine == 'chromium'
-        run: |
-          set -euo pipefail
-          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
-          npx playwright install chromium --only-shell
-      - name: Install the original pinned cross-engine tools
-        if: matrix.engine != 'chromium'
-        timeout-minutes: 8
-        run: |
-          set -euo pipefail
-          archive_mirror=''
-          security_mirror=''
-          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-            archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
-          fi
-          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-            security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
-          fi
-          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-            printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
-          fi
-          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-            printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
-          fi
-          npm install --no-save playwright@1.64.1 axe-core@4.10.3
-          npx playwright install --with-deps ${{ matrix.engine }}
-      - name: Run every original gate assigned to this isolated runner
-        env:
-          LIVE_WORKER_DIAGNOSTICS: '1'
-          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
-          UI_QUALITY_SCREENSHOTS: '1'
-        run: |
-          set -euo pipefail
-          case "${{ matrix.group }}" in
-            core) gates='browser-live-acceptance' ;;
-            display) gates='browser-loading-pwa browser-ui-alltag10 browser-ui-textscale browser-price-csv-tools browser-cash-account-ux' ;;
-            market) gates='browser-etf-source-recovery' ;;
-            recovery) gates='browser-recovery-backup-limits browser-fin-e2e' ;;
-            imports) gates='browser-unified-bitcoin browser-kraken-import browser-bitpanda-import browser-flatex-native-ui browser-flatex-native-commit browser-flatex-net-settlement' ;;
-            chain) gates='browser-pchain-evidence browser-sonic-staking-evidence' ;;
-            presentation) gates='browser-ui-quality browser-transfer-states' ;;
-            *) exit 1 ;;
-          esac
-          printf '%s\n' "$gates" > artifacts/gates/executed-original-gates.txt
-          for gate in $gates; do
-            echo "FROZEN_LIVE_BEGIN $gate ${{ matrix.engine }} $RELEASE_SHA"
-            node "tests/$gate.mjs" 2>&1 | tee "artifacts/gates/isolated-$gate.log"
-            echo "FROZEN_LIVE_PASS $gate ${{ matrix.engine }} $RELEASE_SHA"
-          done
-      - name: Preserve all original reports and first failure evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: frozen-live-sw320-${{ matrix.group }}-${{ matrix.engine }}
-          path: artifacts/gates/
-          if-no-files-found: error
-          retention-days: 30
+      - run: |
+          echo 'STOPPED: repeated original HTTP429/503 failures are preserved.'
+          echo 'This run cancels the remaining diagnostic load. It executes no product acceptance.'
+          echo 'SW320 is DEPLOYED_NOT_LIVE_ACCEPTED. PR346 remains unmerged.'
