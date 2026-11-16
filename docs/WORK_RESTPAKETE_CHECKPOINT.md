@@ -1,6 +1,6 @@
 # HND01 · BLOCKED_LIVE / SW320 DEPLOYED_NOT_LIVE_ACCEPTED · RING QUALIFIED_HOLD
 
-Sole writer `hnd01-filter-ring-20261116-root`, explicitly authorized by Jochen16 November2026; previous writer `ui-r4-alloc01-20261116-root` revoked. No other agents/writers. PR345 approved exact head merged; PR346's changed exact head remains reserved for Jochen. Parked332/161/157 unchanged.
+Sole writer `hnd01-sw320-sw321-20261116-root`, explicitly authorized by Jochen 16 November 2026; previous writer `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. PR345 approved exact head merged; PR346's changed exact head remains reserved for Jochen. Parked332/161/157 unchanged.
 
 ## Actual filter release
 
@@ -33,7 +33,7 @@ Full [43866839082](https://github.com/joke0071/foliolab-open/actions/runs/438668
 
 1000EUR oracle: selected1EUR real deposit/journal cash hidden at2EUR; ring40/30/29.9/0.1%, total1000EUR and main donut/legend unchanged; clearing restores selection. Entire canonical raw/revision/settings/journal/bookings/quantities identical. Local integrated Chromium/WebKit comparison also PASS,1505units/syntax/boundedTS5.8.3 PASS; direct320/390/1440visual review. Local WebKit unchanged official binary + isolated Debian13 libraries; no physical-device/Ubuntu-CI equivalence claim. Original Chromium/WebKit comparison evidence retained in previous checkpoint.
 
-PR346 merge recommendation is HOLD until the filter's full live acceptance is resolved. Exact new ring head is fully qualified; Jochen remains decision owner. Original bundles saved/version0 and independently read back/restored: all29ZIP API digests/CRCs and5922original manifest entries byte-equal. No ring merge/deployment authorization.
+PR346 merge recommendation is HOLD until the filter's full live acceptance is resolved. Exact new ring head is fully qualified; Jochen remains decision owner. Original bundles saved/version0 and independently read back/restored: all29ZIP API digests/CRCs and5922original manifest entries byte-equal. Jochen authorizes exact ring head `8092649f7037ca04192703ce08d2a6c1a6ad6d34` merge/main/deploy/full live acceptance ONLY AFTER full SW320 LIVE_ACCEPTED on exact main112dc6d4. Any ring-head or product-main change requires a newly qualified decision.
 
 ## External1.0 duties preserved
 
@@ -46,3 +46,7 @@ Windows/Android/PWA manual device/restore/interaction checks remain DEFERRED/ope
 - [PR345 actual release blocker/originals](PR345_SW320_RELEASE_BLOCKER_2026-11-16.md): SW320 DEPLOYED_NOT_LIVE_ACCEPTED; last acceptedSW319.23ZIPs/3427original manifest entries independently restored.
 - [PR346 exact new-head decision/originals](PR346_INTEGRATED_DECISION_2026-11-16.md):8092649f7037ca04192703ce08d2a6c1a6ad6d34 on actual main112dc6d441fe79b0cf3086a5720b6d48910bf784; full CI/Wallet SUCCESS,1505tests,9engine-contract receipts.6ZIPs/2495original manifest entries independently restored. Recommendation HOLD for filter live blocker; decision reserved for Jochen.
 - No ring merge, no automatic retry, all relevant workflows ended. Sole owner remains this HND01 agent. Deferred device/private finance/ETH duties remain open.
+
+## Takeover 16 November 2026
+
+Current owner hnd01-sw320-sw321-20261116-root resumed run43872461222: all19 groups ended (8success/2failure/9cancelled); market Firefox success, WebKit cancelled before execution. Fresh PR346 head/base still exactly authorized. Diagnosing original module429/503 and a bounded operational mitigation; no weakened tests/TLS/pins. SW320 remains DEPLOYED_NOT_LIVE_ACCEPTED and SW321 NOT_MERGED/NOT_DEPLOYED. Conditional authorization above supersedes earlier no-authorization/HOLD decision text; acceptance prerequisite remains unsatisfied.
