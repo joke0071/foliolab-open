@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 /** Real canonical IDB fixture; shared by regular UI-quality PR/Main/live runs. */
-export async function accountAllocationBrowserContract({p,record,engine}){
+export async function accountAllocationBrowserContract({p,record,engine,touch=false}){
  const dir='artifacts/gates/account-allocation';mkdirSync(dir,{recursive:true});
- await p.context().setOffline(false);
+ const report={engine,scope:'UI-ALLOC01 canonical IDB read-only account/depot rings',result:'NOT_REACHED',nativeDevice:false,touch,stages:[]};
+ const stage=name=>{report.stages.push(name);writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));console.log('ACCOUNT_ALLOCATION_STAGE '+engine+' '+name);};
+ try{
+ stage('BEGIN');await p.context().setOffline(false);
  const setup=async variant=>{
+  stage('fixture-'+variant);
   await p.evaluate(async variant=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
@@ -34,7 +38,7 @@ export async function accountAllocationBrowserContract({p,record,engine}){
  assert.match(await p.locator('#providerOverview').innerText(),/Leeres Depot/);
  const scans=[];
  for(const width of [320,360,390,412,430,768,1440]){
-  await p.setViewportSize({width,height:850});
+  stage('width-'+width);await p.setViewportSize({width,height:850});
   const geometry=await rows.evaluateAll(nodes=>nodes.map(el=>{
    const r=el.getBoundingClientRect(),parts=[...el.querySelectorAll('.provider-holding-name,.provider-holding-right>strong,.account-allocation,.provider-position-chevron')].map(n=>n.getBoundingClientRect());
    return {height:r.height,inside:parts.every(part=>part.left>=r.left-1&&part.right<=r.right+1&&part.top>=r.top-1&&part.bottom<=r.bottom+1)};
@@ -44,9 +48,9 @@ export async function accountAllocationBrowserContract({p,record,engine}){
   assert.deepEqual(await p.evaluate(async()=>(await axe.run('#providerOverview',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
   await rows.first().scrollIntoViewIfNeeded();await p.screenshot({path:dir+'/'+engine+'-'+width+'.png'});scans.push({width,result:'PASS'});
  }
- const first=rows.first();await first.focus();await p.keyboard.press('Enter');assert.equal(await first.locator('..').getAttribute('open'),'');
+ stage('keyboard-touch-text');const first=rows.first();await first.focus();await p.keyboard.press('Enter');assert.equal(await first.locator('..').getAttribute('open'),'');
  await p.keyboard.press('Enter');assert.equal(await first.locator('..').getAttribute('open'),null);
- await first.tap();assert.equal(await first.locator('..').getAttribute('open'),'');await first.tap();
+ await (touch?first.tap():first.click());assert.equal(await first.locator('..').getAttribute('open'),'');await (touch?first.tap():first.click());
  assert.equal(await first.locator('.account-allocation button,.account-allocation [tabindex]').count(),0);
  await p.setViewportSize({width:320,height:850});
  await p.evaluate(()=>document.documentElement.style.fontSize='200%');
@@ -63,5 +67,7 @@ export async function accountAllocationBrowserContract({p,record,engine}){
  assert.deepEqual(await record(),separateBefore);
  await setup('empty');const emptyBefore=await record();assert.equal(await rows.count(),0);
  assert.doesNotMatch(await p.locator('#providerOverview').innerText(),/NaN|Infinity/);assert.deepEqual(await record(),emptyBefore);
- writeFileSync(dir+'/'+engine+'.json',JSON.stringify({engine,result:'PASS',scope:'UI-ALLOC01 canonical IDB read-only account/depot rings',scans,checks:['40/30/20/10 including depot cash; separate savings excluded from denominator','UNKNOWN suppresses every share in its account','excluded/liability no share; no denominator dilution','empty account no fabricated shares','keyboard/click/detail retained; no new focus stops','exact complete IDB invariance; enlarged text'],nativeDevice:false},null,2));
+ Object.assign(report,{result:'PASS',scans,checks:['40/30/20/10 including depot cash; separate savings excluded from denominator','UNKNOWN suppresses every share in its account','excluded/liability no share; no denominator dilution','empty account no fabricated shares','keyboard/click/detail retained; no new focus stops','exact complete IDB invariance; enlarged text'],nativeDevice:false});stage('RESULT_PASS');
+ }catch(error){report.result='FAIL';report.error=String(error);stage('RESULT_FAIL');throw error;}
+ finally{writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));}
 }

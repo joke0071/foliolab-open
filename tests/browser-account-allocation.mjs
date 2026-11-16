@@ -13,7 +13,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.goto('http://127.0.0.1:4173/');await waitForAppServiceWorker(p);
   await p.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated');
   const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
-  await accountAllocationBrowserContract({p,record,engine});
+  await accountAllocationBrowserContract({p,record,engine,touch:true});
   assert.deepEqual(errors,[]);console.log('ACCOUNT_ALLOCATION_PASS '+engine);
  }finally{await browser.close();}
 }

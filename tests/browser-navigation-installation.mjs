@@ -110,7 +110,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const content=e.querySelector('.allocation-layout').getBoundingClientRect(),box=e.getBoundingClientRect();return box.bottom-content.bottom<50;}),'allocation has no stretched empty tail');
    if(width===1440){assert.ok(await layout.locator('.dashboard-overview').evaluate(e=>{const history=e.querySelector('.dashboard-history').getBoundingClientRect(),side=e.querySelector('.dashboard-side').getBoundingClientRect();return history.right<=side.left&&Math.abs(history.top-side.top)<2;}));assert.equal(await layout.locator('#sidebarNav button.active').evaluate(e=>getComputedStyle(e).boxShadow),'none');assert.equal(await layout.locator('#sidebarNav button.active span').evaluate(e=>getComputedStyle(e).textDecorationLine),'underline');}
    await layout.locator('#providerOverview details').evaluateAll(es=>es.forEach(e=>e.open=true));
-   assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet','compact summary never invents an EUR valuation for unknown FX');
+   assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet\n–','compact summary retains unknown valuation and explicitly unavailable allocation');
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
    if(width===430){
