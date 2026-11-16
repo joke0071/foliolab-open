@@ -36,3 +36,9 @@ Current helper releases CSS before awaiting app.js and bounds both handshakes at
 
 
 Final-head focused counterprobe43909800100 completed SUCCESS in all3original browser pins (jobs133448288416 Chromium,133448287757 Firefox,133448288470 WebKit). Real CSS visible=true and hidden-keyframe visible=false in each report. Saved archiveversion1 pinnedfile_00000000bdbc81f59e7ff6b73d698bf6/SHA2566e3d274acde30496817cd901c42e4e50f6b50c1ae87364cdc2a8a2e1365375a9 was actually fetched and independently restored:29ZIPs/2463original files/70manifest entries/55unique mappings/9contracts and154unchanged product paths verified. Final current CI and current synthetic merge metadata will be appended in the final archive revision before the merge decision.
+
+
+Current exact-head regular CI43909694363 and Wallet43909695155 completed SUCCESS.1505unit tests,0fail/cancel/skip;all3cross jobs successful. Full loading/PWA plus corrected counterprobe reports PASS in Chromium/Firefox/WebKit. Final synthetic merge ede02b0e95b06a96635d61df241baf8f5a8ce4f2/treec787469e711f7303842a471bed2ff37a780f0059 equals current-head tree, ordered parents main29f2a1c8+headda9b6455. Current required checks are now qualified; final saved-copy restoration and user exact-head merge decision remain.
+
+
+Final saved version2 pinnedfile_00000000c19881f4b13ac1f0cbdcb387/SHA2567b770d982cedb3bcd4c74cf07bb0c6429a6fe3ce1aab23b336134868bbb408e2 actually materialized and independently restored PASS:80manifest entries,35original ZIPs and4885original files byte-equal;55unique mappings,9contracts and154unchanged product paths verified. Fresh after-restore main29f2a1c8/head da9b6455/base29f2a1c8/mergeable clean,0reviews/0inline/0issue comments. MERGE_DECISION_READY_NOT_LIVE_ACCEPTED; no merge performed.
