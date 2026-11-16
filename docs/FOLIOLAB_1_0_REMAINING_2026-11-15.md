@@ -15,7 +15,7 @@ Stand nach vollständig belegtem **PR344 LIVE_ACCEPTED (SWv319)**, Main `7bb7b5a
 
 | Punkt | Blockiert den persönlichen 1.0-Umfang? |
 | --- | --- |
-| A09 / reale Windows-/Android-Restore- und Gerätebelege | **Ja.** Geparkt bedeutet hier weiterhin offene Pflicht, keine Abnahme. |
+| A09 / reale Windows-/Android-Restore- und Gerätebelege | **Ja.** Vom Nutzer am16.11.2026 ausdrücklich verschoben; weiterhin OFFEN, keine Abnahme. Jetzt kein Testprofil anfordern. |
 | Grafikherkunft / PNG-Exportprotokoll | **Kein bestätigter Blocker.** VERIFY bleibt erhalten; derzeit keine konkret belegte fehlende Pflichtangabe. Gemäß Nutzerentscheidung erst bei neuem Primärmaterial oder konkreter Auskunft wieder aufnehmen. |
 | Safari / TalkBack | **Nein**, ausdrücklich DEFERRED_USER. |
 | Aktive Drive-Autosync, unabhängiger Kryptoreview und optionale echte OAuth-Sonderabnahme | **Nein** für den beschlossenen lokalen Kern mit qualifiziertem manuellem Backup/Restore. Diese Erweiterungen bleiben offen; kein Sync-PASS aus Backup ableiten. |
@@ -26,8 +26,12 @@ Quellen: [kanonische Roadmap](KONSOLIDIERTE_ROADMAP.md), [aktueller Checkpoint](
 Konkrete private Anfrage mit den tatsächlichen vorhandenen Exportgrenzen: `FolioLab_Restnachweise_2026-11-15.txt`, dauerhaft separat gespeichert. Nur fehlende unabhängige Kraken-/Bitpanda-Anfangs-/Endanker und Wallet-/Staking-Ownership, tatsächliche ETH-Originalcursorfolge sowie ein bestätigter isolierter Geräte-Endpunkt zum Start; vorhandene Originale,10k-Soll1000EUR und K4-Kleinfälle unverändert verwenden. Keine privaten Stichtage/Identitäten in öffentlichen Docs. Diese Inputs ersetzen weder neue Mergefreigabe noch tatsächliche Geräteabnahme.
 
 
-## Konkreter Einstieg nach SWv319 · 16.11.2026
+## Aktuelle Reihenfolge · Geräteprüfung verschoben · 16.11.2026
 
-Nach Abgleich mit der kanonischenMatrix ist kein weiterer konkret belegter internerPflichtcoderest offen. Als nächster Schritt genügt **ein isoliertes Testprofil** auf Windows Chrome, Windows Edge oder Android Chrome/PWA. Online öffnen; Soll: leeres Testportfolio und bedienbareNavigation, SWv319 soweit sichtbar, andernfallsUNKNOWN. Vorhandenes10kOperatorpaket/Soll1000EUR anschließend unverändert verwenden. Ein einzelner Plattformfall kann beginnen; Gerätewechsel benötigt zwei Endpunkte.
+Die manuelle Geräteprüfung ist auf ausdrücklichen Nutzerwunsch verschoben und bleibt als 1.0-Pflicht offen. Jetzt keine Geräte- oder Testprofilaufforderung. Vorhandene Checklisten, 10k-Originalfixture/Soll1000EUR und K4-Kleinfälle erhalten.
 
-PrivateRestanfrage unter gleicherIdentität aufVersion1 fortgeschrieben. Nur konkret fehlende unabhängige Finanzstichtage/Ownership oder zusammengehörigeETH-Cursorantworten gemäß dieserDatei anfordern; privateOriginale bleiben außerhalbGitHub. D-ETH260nicht neu bauen. Keine neueMergeentscheidung fürPR344 erforderlich; neueProduktheads brauchen eine eigeneEntscheidung.
+Nach erneutem Abgleich der kanonischen Matrix mit K1-Belegzuordnung, jüngerem K3-Abschluss, K4-Plattformabgleich und K6-Abnahmen ist kein weiterer konkret abgegrenzter interner 1.0-Entwicklungsschritt frei. Ältere offene Release-/Restorezeilen sind durch ihre jüngeren Abnahmen erledigt; Grafikherkunft hat weiterhin keinen bestätigten Pflichtblocker.
+
+Offen bleiben externe unabhängige Bestands-/Eigentumsbelege, die tatsächliche ETH-Originalcursorfolge und die verschobenen Gerätebeobachtungen. Kleinster nächster Schritt ohne Gerät: zunächst einen verfügbaren unabhängigen Kraken-Bestandsstichtag nennen, daraus den belegbaren Prüfzeitraum und genau fehlenden Anfangs-/Endnachweis ableiten. Keine neuen Gesamtexporte auf Verdacht, keine privaten Stichtage/Identitäten in GitHub.
+
+UI-R4, Allokationsring/Sekundärnavigation, Projektion, zusätzliche Finanzsonderfälle, Sync und CI-Optimierung bleiben NACH_1.0 beziehungsweise ihren separaten Gates zugeordnet. Aus der Verschiebung folgt kein automatisches Vorziehen. D-ETH260 bleibt DONE. Neue Produktheads brauchen eine eigene Mergeentscheidung; PR344 ist vollständig abgenommen.

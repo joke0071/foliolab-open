@@ -1,3 +1,11 @@
+## Nutzerentscheidung · 16.11.2026 · manuelle Geräteprüfung verschoben
+
+Die realen Windows-Chrome/Edge-/Android-Chrome/PWA-Prüfungen sind ausdrücklich verschoben, bleiben aber OFFEN für 1.0. Jetzt kein Testprofil anfordern. [Checkpoint mit erneutem Belegabgleich und nächster Aktion](WORK_RESTPAKETE_CHECKPOINT.md): kein zusätzlicher konkret abgegrenzter interner 1.0-Entwicklungsschritt frei. Fehlende unabhängige Bestands-/Ownershipanker und die echte ETH-Cursorantwortfolge bleiben externe Eingaben; jüngere K3-/K4-/K6-Abnahmen weiterverwenden. Kleinster nächster Schritt ohne Gerät: einen vorhandenen unabhängigen Kraken-Bestandsstichtag benennen und daraus den begrenzten Prüfzeitraum bestimmen.
+
+Nach-1.0-Pakete bleiben vereinbart, werden durch diese Verschiebung aber nicht automatisch vorgezogen. Keine neuen Tests/CI/Produktänderungen oder pauschale 1.0-Abnahme aus dieser Prüfung. SWv319 bleibt LIVE_ACCEPTED. Private Stichtage/Identitäten bleiben außerhalb GitHub.
+
+---
+
 ## Fortschreibung · 16.11.2026 · PR344 / SWv319 LIVE_ACCEPTED
 
 [PR344 vollständig abgenommen](PR344_MAIN_RELEASE_ACCEPTANCE_2026-11-16.md): freigegebener Headfe2e6791 headgebunden gemergt, Main7bb7b5a/Treeb775686a exakt qualifiziert, ausgelieferterSWv319 geprüft. Regulärer Main43814956980/1 mit1493Tests und vollständigenBrowsergates/DeploymentSUCCESS. Nach zuerst gesichertem HTTP429-Erstfehler genau ein gezielter Livejob-Retry; Live133135769207/Versuch2 vollständigSUCCESS.24nativeFX-Fälle jeweils inMain undProduktion geprüft, UNKNOWN/IDB/Reopen/Offline/Restore geschützt. NeueOriginale gepinnt bytegleich rückgelesen und tatsächlich restauriert; [Maschinenbeleg](release-evidence/pr344-main-live-accepted-2026-11-16.json). Dieser begrenzte Frankfurter-Altersfix istDONE, kein Gesamt-K2-/1.0-Abschluss.

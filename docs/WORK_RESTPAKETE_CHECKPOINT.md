@@ -1,4 +1,4 @@
-# HND01 · WAITING_OPERATOR_INPUT · SW v319 / PR344 LIVE_ACCEPTED
+# HND01 · WAITING_EXTERNAL_INPUT · SW v319 / PR344 LIVE_ACCEPTED
 
 Writer: `takeover-pr344-v319-20261116-root`, alleiniger HND01-Hauptagent gemäß Nutzerübergabe vom16.11.2026. Die Schreibzuständigkeit von `takeover-pr343-fx-20261115-root` ist durch den Nutzer beendet. Kein zweiter Writer und keine Hintergrundfortsetzung behauptet.
 
@@ -14,14 +14,30 @@ Regulärer [Lauf43814956980](https://github.com/joke0071/foliolab-open/actions/r
 
 Versuch1-PaketV0/230328320Bytes exakt gepinnt bytegleich zurückgelesen,62Manifestdateien/8ZIPs/2479Originaldateien+154Pages-Dateien tatsächlich restauriert. NeuesLivepaketV0/153538560Bytes ebenfalls gepinnt bytegleich,44Manifestdateien/1ZIP/1883Originaldateien tatsächlich restauriert. Separate dauerhafte Restorequittungen enthalten vollständige komprimierte Dateimanifeste; allePins im Abnahmebericht. Keine zirkulären Selbsthashes.
 
-## Nächste konkret benötigte Aktion
+## Aktueller Auftrag · Geräteprüfung verschoben · 16.11.2026
 
-[Restübersicht](FOLIOLAB_1_0_REMAINING_2026-11-15.md) mit frisch gelesener kanonischerRoadmap abgeglichen. Frankfurter-TeilschnittDONE; kein zusätzlicher konkret belegter interner1.0-Pflichtcoderest gefunden. Keine neue Scope-ID, Routinewiederholung abgenommener Gates oder pauschale1.0-/Issue-Schließung.
+Jochen hat die manuelle Geräteprüfung ausdrücklich verschoben. K3/K4-Gerätebelege, K5/A01–A10 und K6-Bedienbeobachtungen bleiben **OFFEN / OPERATOR_INPUT_PENDING (vom Nutzer verschoben)**, nicht DONE und weiterhin Teil des beschlossenen 1.0-Abschlusses. Jetzt kein Testprofil anfordern und keine Geräteausführung starten. Vorbereitete Operatorpakete und Sollwerte bleiben unverändert nutzbar.
 
-**Jochen benennt ein tatsächlich isoliertes Testprofil: Windows Chrome, Windows Edge oder Android Chrome/PWA.** Ein Endpunkt reicht zum Einstieg. Erster Schritt: https://foliolab.unperfekt.at/ darin online öffnen. Soll: leeres Testportfolio, Navigation bedienbar; SWv319 soweit sichtbar, sonstUNKNOWN. Danach vorhandenes10kOperatorpaket/Soll1000EUR und K4-Kleinfälle unverändert verwenden, nicht neu erzeugen. Ein Plattformfall kann separat schließen; Gerätewechsel benötigt zwei Endpunkte.
+Die kanonische Matrix einschließlich jüngster Fortschreibungen und der Belege zu K1, K3, K4 und K6 erneut inhaltlich abgeglichen. Maßgeblich sind die jüngeren Abnahmen, nicht ältere OPEN-/BLOCKED-Zeilen:
+- K1/K2-FIN: technischer Import-/Finanzkern vorhanden; unabhängige historische Anfangs-/Endbestände sowie fehlende Wallet-/Staking-Ownership sind externe Voraussetzungen. Bestehende Originale und abgenommene Teilketten weiterverwenden.
+- K2-KURSE: Frequenz/Hilfen/Zugangsdaten/Frankfurter-Altersprüfung sind in ihren veröffentlichten Teilumfängen abgeschlossen. Kein neuer konkret belegter interner Pflichtfehler gefunden.
+- K2-ETH: D-ETH260 technisch DONE. Es fehlt die zusammengehörige echte Originalcursor-/Folgeseitenantwort; keine erneute Cursorimplementierung.
+- K3: jüngerer v317-Abschluss schließt Archivhinweis und benannte interne Normalfälle. Der ältere Releaseblocker im Fachbericht ist historisch.
+- K4: PR337/v315 und jüngere Produktionsbelege decken die benannten Legacy-/Präzisions-/UNKNOWN-/Datei-/Drive-/FreshRestore-Kernwege ab. Alte Aussagen „native Folgefreigabe offen“ im bereits geschlossenen Umfang nicht reaktivieren. Physische Zielplattformen fehlen weiter.
+- K6: UI-R1–R3 und veröffentlichte konkrete Text-/Hinweisschnitte abgeschlossen. Grafikherkunft bleibt ohne konkret bestätigte Pflichtverletzung geparkt; nur bei neuem Primärmaterial wieder aufnehmen.
 
-Private Datei `FolioLab_Restnachweise_2026-11-15.txt` unter gleicherIdentität aufVersion1 fortgeschrieben; tatsächliche Exportgrenzen/Identitäten bleiben privat. Für Finanzprüfung nur fehlende unabhängige Kraken-/Bitpanda-Stichtage oder Ownership beziehungsweise zusammengehörige ETH-Originalcursor-/Folgeseitenantwort gemäß dieserDatei anfordern. Keine pauschalen Gesamtexporte oder bereits gelieferten Originale aufVerdacht. D-ETH260 ist abgenommen und wird nicht erneut gebaut.
+**Ergebnis:** Derzeit kein weiterer konkret abgegrenzter, intern ausführbarer 1.0-Entwicklungsschritt. Kein Produktpatch, keine neue Testsuite, CI oder Wiederabnahme aus dieser Prüfung nötig. Produkt bleibt SWv319/Main7bb7b5a LIVE_ACCEPTED; kein globaler 1.0-Abschluss.
 
-K3/K4: reale Export-/FreshRestore-/Wiederöffnungs-/UNKNOWN-/Einstellungsbelege auf den Zielplattformen fehlen. K5/K6: realeAndroidA01–A10/Bedienung bleiben OPERATOR_INPUT_PENDING; echteUpdate-/Quotavoraussetzungen jeweils erforderlich. Safari/TalkBackDEFERRED_USER; Grafikherkunft ohne bestätigtenPflichtblocker geparkt. Alle EFF03-/Finanz-/UNKNOWN-/Identitäts-/Journal-/IDB-/CAS-/Backup-/Restore-/Offline-/PWA-Verträge bleiben erhalten. Checkpointbranch niemals vollständig nachMain mergen.
+Bereits vereinbarte spätere Entwicklung ist weiterhin erhalten: UI-R4/Kleinstbestandsfilter, Allokationsring/Sekundärnavigation, Projektion, zusätzliche Finanz-/Broker-/Walletklassen sowie CI-Optimierungen sind in der kanonischen Matrix ausdrücklich NACH_1.0. Sync hat zusätzlich unabhängige Review-/Autoritäts-/Persistenzgates. Diese Pakete werden durch das Verschieben der Geräteprüfung nicht automatisch vorgezogen oder zur 1.0-Pflicht erklärt.
 
-[Vorheriger vollständiger Laufstand](https://github.com/joke0071/foliolab-open/blob/aed46c1e88cb82eb97bda6ae9ed78b4fad7d36c8/docs/WORK_RESTPAKETE_CHECKPOINT.md). Keine laufende Produktentwicklung oder weitere CI-Aufträge; nächste abhängige Aktion wartet auf den benannten isolierten Operator-Endpunkt.
+## Offene Eingaben und kleinster nächster Schritt
+
+1. **Finanzumfang:** belegbaren Zeitraum für Kraken und Bitpanda anhand unabhängiger Bestandsanker festlegen; nur fehlende Wallet-/Stakingkonten und Eigentumsbeginn bestätigen.
+2. **ETH-Gegenprobe:** Endpunktart, unveränderte next_page_params und tatsächliche Folgeseitenantwort als zusammengehörige private Originalfolge.
+3. **Geräte:** erst auf erneuten Wunsch des Nutzers wieder aufnehmen; ein isoliertes Profil genügt später zum Einstieg. Keine erneute Gerätefrage jetzt.
+
+Kleinster sinnvoller nächster Schritt ohne Geräteprüfung: Jochen nennt zunächst nur einen verfügbaren unabhängigen Kraken-Bestandsstichtag. Danach den dazu passenden begrenzten Zeitraum und genau fehlenden Anfangs-/Endnachweis bestimmen; frühere unbelegte Abschnitte bleiben PARTIAL/UNKNOWN. Noch kein erneuter Gesamtexport oder Import erforderlich.
+
+Die aktuelle private Datei `FolioLab_Restnachweise_2026-11-15.txt`, Version1, wurde gelesen; ihre frühere sofortige Geräteaufforderung ist durch die obige jüngere Nutzerentscheidung verschoben. Konkrete Exportgrenzen/Identitäten bleiben ausschließlich privat. Keine privaten Originale auf GitHub. D-ETH260 nicht neu bauen; bereits akzeptierte Releases und Originalsicherungen erhalten.
+
+[Vorheriger vollständiger Stand](https://github.com/joke0071/foliolab-open/blob/76ba5d09f7164b057e9bc9da0a738f65fe2a10e3/docs/WORK_RESTPAKETE_CHECKPOINT.md). Alle EFF03-/Finanz-/UNKNOWN-/Identitäts-/Journal-/IDB-/CAS-/Backup-/Restore-/Offline-/PWA-Verträge bleiben bindend. Checkpointbranch niemals vollständig nach Main mergen. Keine laufende Produktentwicklung, zusätzlichen CI-Aufträge oder Hintergrundfortsetzung behauptet.
