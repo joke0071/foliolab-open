@@ -1,3 +1,5 @@
+Aktueller Mergeabschluss16.11.2026: Jochen hat PR349 am exakten qualifizierten Head411821d884d2a8df7a4be44bddb85bb62259ff2c freigegeben; gemergter Main494ed8f0f6b627d8be972a5ceb886005e5064b31, Tree identisch zum qualifizierten Kandidaten. Bestehende SW321-Produktabnahme unverändert gültig. Automatischer Mainlauf43956969224/attempt1 läuft; kein neues Main-CI-/Live-PASS vorweggenommen. Frühere Pending-Merge-Aussagen unten sind damit ersetzt. [Aktueller Lauf](https://github.com/joke0071/foliolab-open/actions/runs/43956969224).
+
 Aktualisiert16.11.2026: Bitpanda-Doppelzählungsfrage im geprüften normalen UI-Ablauf geschlossen; Windows-K6-Teilumfang und öffentliche ETH-Paare nach untenstehender Zuordnung akzeptiert. CI-PR349 am exakten Head411821d884d2a8df7a4be44bddb85bb62259ff2c vollständig qualifiziert, Mergeentscheidung ausstehend. Gemessene Integrationwartezeit17m56s statt23m04s/23m16s; keine Runner-Minutenersparnis behauptet. [Effizienzbefund](CI_SW321_EFFICIENCY_RESULT_2026-11-16.md). SW321-Liveabnahme bleibt gültig; kein globaler1.0-Abschluss.
 
 # FolioLab · verbleibende 1.0-Pflichten

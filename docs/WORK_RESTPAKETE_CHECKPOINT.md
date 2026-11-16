@@ -1,3 +1,13 @@
+# HND01 · PR349 freigegeben und gemergt · 16.11.2026
+
+Jochen hat den exakt vorgeschlagenen Head411821d884d2a8df7a4be44bddb85bb62259ff2c freigegeben. Unmittelbar vor Merge: Head/Basis identisch, clean/mergeable, alle Pflichtchecks SUCCESS, deploy/live auf PR korrekt skipped, keine Reviews/Kommentare. Headgebundener regulärer Merge erfolgreich; neuer Main **494ed8f0f6b627d8be972a5ceb886005e5064b31**, Eltern e272297ab1ba855a2922c1faa4010b83c558a796 und411821d884d2a8df7a4be44bddb85bb62259ff2c. Tatsächlicher Maintree47674d62c54c06a67e347bc73faef127ae33ee76 **exakt identisch zum qualifizierten Kandidaten-/Testmerge-Tree**. Produkt und SW321 unverändert; bestehende Produkt-Liveabnahme bleibt gültig. Keine neue vollständige Main-CI-/Live-Erfolgsmeldung vorwegnehmen.
+
+Automatischer [Mainlauf43956969224/attempt1](https://github.com/joke0071/foliolab-open/actions/runs/43956969224) aktiv. Plan SUCCESS/RELEASE; Haupttest zuletzt Standaloneprüfung, Cross3/1 zuletzt Browsercacherestore, Cross2 Checkout, FAST auf Main korrekt skipped. Nächster prüfbarer Schritt: laufende vier Integrationsjobs übernehmen, dann Deploy/Livezustand und Originalartefakte sichern. Keinen neuen Lauf starten. Bereits qualifizierte PR-/SW321-Originale erhalten; bei neuem Fehler Original sichern und Ursache eingrenzen, kein blindes Retry und keine Testlockerung. Laufstatus ist RUNNING, kein Mainlauf-PASS behauptet.
+
+Die frühere Bitte um Mergefreigabe unten ist erledigt. PR349 ist MERGED; QA350 und gesamter Checkpointbranch werden nicht in Main gemergt. Private Bitpanda-/Krakenbelege, Windows-K4/K6-Teilabnahmen, öffentliche ETH-Gegenprobe und verbleibende externen Grenzen bleiben wie dokumentiert. Keine neue Eingabe von Jochen erforderlich.
+
+--- Vorherige qualifizierte Entscheidungsvorlage und Originale ---
+
 # HND01 · gebündelter Abschlussstand · 16.11.2026
 
 Sole writer hnd01-sw321-reload-20261116-4672ea147672-root. Main **e272297ab1ba855a2922c1faa4010b83c558a796 / SW321 LIVE_ACCEPTED** unverändert. Kraken-Spotanker und elf Windows-K4-Export-/Restorefälle bleiben abgeschlossen. Keine neue Produkt-/SW-Änderung oder Merge erfolgt.
