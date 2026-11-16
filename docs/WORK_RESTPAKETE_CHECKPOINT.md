@@ -1,4 +1,4 @@
-# HND01 · BLOCKED_LIVE / SW320 DEPLOYED_NOT_LIVE_ACCEPTED · RING QUALIFIED_HOLD
+# HND01 · SW320 LIVE_QUALIFICATION_IN_PROGRESS · RING CONDITIONALLY_AUTHORIZED
 
 Sole writer `hnd01-sw320-sw321-20261116-root`, explicitly authorized by Jochen 16 November 2026; previous writer `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. PR345 approved exact head merged; PR346's changed exact head remains reserved for Jochen. Parked332/161/157 unchanged.
 
@@ -19,7 +19,7 @@ All3original ZIP API digests/CRCs and job logs secured before any further action
 
 No further identical whole-job retry. Operational-only branch `qa/sw320-live-isolated-20261116`, workflow head `35a2aa3b99ad1540d324c6f2c4901d6850c7cb18`, changes only one new workflow, never main/ring/product/tests/SW. Each job explicitly checks out exact main112dc6d4/tree0c749ffd/SW320, verifies those identities, and executes unchanged original release scripts/assertions with the original browser pins and standard TLS.19bounded runner groups, maximum3parallel, cover exactly the original55top-level executions (19Chromium +18Firefox +18WebKit). No omitted test, response retry/fallback, lower threshold, timeout relaxation or mock substitution. Job timeout remains55min; installation timeout8min. Every original report/first failure captured. Grouping reduces concentrated live requests per runner; full new evidence must succeed before acceptance. Original main live run remains red, not retrospectively PASS.
 
-## Confirmed blocker / no active continuation
+## Historical isolated-run stop (13:11 UTC; superseded by bounded recovery below)
 
 Isolated run43872461222 is now CANCELLED after8successful groups,2failed groups,9cancelled groups. Market/Chromium job133316873867 reproduces60same-origin moduleHTTP429s; Presentation/Chromium job133316873990 reproduces kraken-bitcoin-bridge.js HTTP503, so runner isolation did NOT resolve the delivery failure. Both original ZIPs/logs/diagnostics secured. No complete live acceptance and no further blind retry. QA-only stop commit4bfea34904c1971604f556bf09aa14a1e7c49d1d, run43873472823, cancels remaining diagnostic traffic via the same concurrency group. Its SUCCESS is only a stop receipt, NEVER a release gate. Main/ring/product/tests unchanged. All relevant workflows ended; no automatic continuation scheduled.
 
@@ -50,3 +50,15 @@ Windows/Android/PWA manual device/restore/interaction checks remain DEFERRED/ope
 ## Takeover 16 November 2026
 
 Current owner hnd01-sw320-sw321-20261116-root resumed run43872461222: all19 groups ended (8success/2failure/9cancelled); market Firefox success, WebKit cancelled before execution. Fresh PR346 head/base still exactly authorized. Diagnosing original module429/503 and a bounded operational mitigation; no weakened tests/TLS/pins. SW320 remains DEPLOYED_NOT_LIVE_ACCEPTED and SW321 NOT_MERGED/NOT_DEPLOYED. Conditional authorization above supersedes earlier no-authorization/HOLD decision text; acceptance prerequisite remains unsatisfied.
+
+## Bounded delivery recovery / current work
+
+Original market failure independently rechecked: root200,43successful responses/58module429s in failing FX context6, six earlier FX cases PASS, no active worker. No body snapshot exists; no stronger UI claim inferred. Firefox original market SUCCESS; WebKit cancelled before execution. Existing originals independently ZIP/API-digest/release checked;27of55 original top-level PASS receipts retained, including valid completed work in cancelled groups.
+
+Single-runner unchanged counterprobe43875168632/job133326205457 failed on original provider-retirement fresh profile2: allocation-ui.js HTTP503. Single runner alone insufficient. Original ZIP14230421953 SHA2565cc65277f42e830fcf3d101e5d0a8bc3d42cf704d5a194324180b5447251699f secured/CRC verified.
+
+QA-only operational request admission implemented in workflow, no product/test/assertion/browser-pin/TLS/deadline changes. Existing route.continue calls to actual origin are spaced20ms; original route decisions/external mock behavior remain, no new route or response read/cache/retry/fallback. Requests without existing routing remain untouched. Added scheduling is explicit timing-affecting evidence, not a claimed origin configuration fix. Original deadline remains enforced.
+
+Full original Chromium market PASS at43875605716/job133327709404, including K2 and all8native FX refresh/reopen cases. ZIP14230516631 SHA256a8e0af9c74da05c6318677c4e6b9978e64174322a0204f98da15ce984e625078 secured, API digest/CRC/exact main/eight FX receipts checked.28of55 executions now proven.
+
+QA headbd75f7f974e3abd771f94071c5b8f418bb36c1e1 on qa/sw320-resume-20261116 launches ONLY remaining27executions in9sequential groups; checkouts exact main112dc6d4/tree0c749ffd/SW320 and frozen originals/pins. No successful execution repeated. New originals to secure and independently restore before acceptance. SW320 DEPLOYED_NOT_LIVE_ACCEPTED; SW321 NOT_MERGED/NOT_DEPLOYED. Exact-head conditional authorization remains active once all SW320 proofs complete; no user decision needed for unchanged head/base. Device/private finance/ETH remain deferred/open.
