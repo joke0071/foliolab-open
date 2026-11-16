@@ -1,3 +1,4 @@
+import {historicalCrossEngineLayout} from './ci-cross-engine-layout.mjs';
 import {spawnSync} from 'node:child_process';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -120,7 +121,7 @@ function originalContractWithOnlyPinnedCaches(source) {
  return reduced;
 }
 function validate(s) {
-  const sealed=originalContractWithOnlyPinnedCaches(s);
+  const sealed=originalContractWithOnlyPinnedCaches(historicalCrossEngineLayout(s));
   assert.match(s, /types: \[opened, synchronize, reopened, ready_for_review, converted_to_draft\]/);
   for (const name of ['test', 'cross-engine']) assert.ok(s.includes('  '+name+':\n    needs: [plan]\n    if: needs.plan.outputs.full == '+"'true'"+'\n'));
   assert.ok(s.includes('    if: needs.plan.outputs.stage == '+"'FAST'"+" || needs.plan.outputs.ci_contract == 'true'"));
