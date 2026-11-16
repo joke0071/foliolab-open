@@ -1,4 +1,4 @@
-# HND01 · SW320 LIVE_ACCEPTED · SW321 MERGED_CI_RUNNING
+# HND01 · SW320 LIVE_ACCEPTED · SW321 DEPLOYED_NOT_LIVE_ACCEPTED / QA54_RUNNING
 
 Sole writer `hnd01-sw320-sw321-20261116-root`, authorized by Jochen16November2026; `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
 
@@ -7,7 +7,7 @@ Sole writer `hnd01-sw320-sw321-20261116-root`, authorized by Jochen16November202
 | Release | Main / tree | Actual status |
 | --- | --- | --- |
 | SW320 / PR345 | `112dc6d441fe79b0cf3086a5720b6d48910bf784` / `0c749ffda82a32ec0e98c025aeafa751b37aa759` | **LIVE_ACCEPTED**;55/55 original executions, originals saved and independently restored |
-| SW321 / PR346 | actual main`29f2a1c85a6b859c75c0811b3b478f745b12c8bf` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **MERGED_CI_RUNNING**; not yet DEPLOYED/LIVE_ACCEPTED |
+| SW321 / PR346 | actual main`29f2a1c85a6b859c75c0811b3b478f745b12c8bf` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **DEPLOYED_NOT_LIVE_ACCEPTED**;1of55complete;54original executions in progress |
 
 Last fully accepted release is now SW320. No product-main/ring-head change was required to resolve SW320 acceptance.
 
@@ -48,3 +48,11 @@ Windows/Android/PWA physical-device/restore/interaction checks DEFERRED. Indepen
 After complete SW320 LIVE_ACCEPTED and independently restored proof, immediately freshly verified head8092649f/base112dc6d4/main112dc6d4/tree09419f00/synthetic same tree and ordered parents, clean mergeable state, all9checks completed with required tests/cross3/Wallet SUCCESS (main-only/FAST correctly skipped), both exact-head CI/Wallet runs SUCCESS,0reviews/inline comments. Expected-head-bound merge succeeded.
 
 Actual new main `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, verified tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, ordered parents actual accepted filter112dc6d4 + approved ring8092649f. [Regular main43884299916](https://github.com/joke0071/foliolab-open/actions/runs/43884299916) now running. No additional product/source/test change. SW321 not yet deployed/accepted; last accepted remainsSW320. Continue normal mainCI/deployment/full original live gates, save originals/independent restore and all3engine1000EUR combined receipts before acceptance.
+
+## SW321 actual deployment / original failure / bounded54remainder
+
+Regular main43884299916 actual main29f2a1c85a6b859c75c0811b3b478f745b12c8bf: test/all3Cross/deploy SUCCESS,1505units/0fail/skip,9actual filter/ring/combined integration engine receipts. Deployed SW321; original Pages ZIP14234494437/SHA2563bb0c20281fe7ffb8750aed34f787dbecfbc54c9f850368d98fe49b0675ced3d restored154files byte-equal to exact approved/main tree09419. Deploy matching-homepage/SW verification SUCCESS attempt1. Fresh current main still29f2a1c8.
+
+Original regular live job133372406800/ZIP14234782956/SHA256bbf8497a00d1922fe61ea5a406e4371ff82de2fa3f5c3ac8053836e0230e1bc9: complete original core PASS (155asset matches,6flows,18Axe,no TLS proxy exception,actualHTTPS base/cache321/SHA29f verified). Retain that1of55execution. Following browser-loading-pwa at78 timed out30s: context7 valuation-status.jsHTTP503, HTML/Varnish/Retry-After0. Original ZIP/API digest/CRC and full job log secured. Module delivery failure, no product logic failure inferred; original main workflow remains FAIL because its live step failed. Never retrospectively PASS.
+
+[Bounded remaining54run43889548405](https://github.com/joke0071/foliolab-open/actions/runs/43889548405), QA-only head4d4db6bd7d1e026ac1b53873b7bfd2d7b885c4cc on qa/sw321-live-20261116:18sequential runner groups, exact checkout29f2a1c8/tree09419/SW321, original script/pin/TLS/assertion/deadline checks retained. Original successful core not repeated. Existing real-origin context.route continuation20ms admission retained; additionally fresh context starts admitted2000ms apart to bound consecutive cold-profile bursts observed in failing unrouted profile7. Original browser navigation/performance timing starts after admission; overall original deadlines unchanged. No added route/response read/cache/retry/mock fallback; no product/test/source/main change. Timing impact explicit. Regular live body/report original retained; no local/proxy substitute. Complete all54+originalcore, verify1000EURcombined actual-origin receipts in all3engines, save originals and independently restore before321LIVE_ACCEPTED.
