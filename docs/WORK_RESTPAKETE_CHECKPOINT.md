@@ -1,3 +1,15 @@
+# HND01 · ACTIVE · PR344 MERGED / MAIN_IN_PROGRESS · 16.11.2026
+
+Writer: `takeover-pr344-v319-20261116-root`, alleiniger HND01-Hauptagent gemäß Nutzerübergabe; Vorgängerzuständigkeit beendet. Übernahmecommit `5a5e82fa82afd7d787fadb5ad906f7330133bf71` mit expected Checkpoint `6eb2b78b602e6bd2bb560d1f7f98570c1dcf02f9` atomar aktualisiert.
+
+**PR344 headgebunden gemergt**, ausschließlich freigegebener Head `fe2e6791762c96590e3cb781f6cff1c4ae99730b`. Unmittelbar frisch: Head/Basis/Tree/alle Pflichtchecks/Reviews/Threads konsistent; in_progress/queued jeweils0. Tatsächlicher Main `7bb7b5a1f6124d933343590973310815df1d1653`, Tree `b775686abb60cd8d2e74af7ec601f3a8da8a5c2b` exakt qualifiziert, Parents exakt Basis `8c53cbfd77be9a37cce31cc4df8396e9f2f06ede` + freigegebener Head.
+
+Regulärer Mainlauf [43814956980/1](https://github.com/joke0071/foliolab-open/actions/runs/43814956980) läuft; Stage RELEASE/full=true am echten Main belegt, FAST korrekt übersprungen. Kein Retry/Abbruch/Doppelstart. Noch keine neue Deployment-/Live-Abnahme behauptet. Nächster Schritt: tatsächliche Main-/Cross-/Deployment-/Livejobs bis Ergebnis, neue Originale sichern und explizite Berichts-/Asset-/IDB-/Refresh-/Reopen-/Offlineprüfung abschließen. Bei Fehler zuerst Originaldiagnose.
+
+Restübersicht gegen frisch gelesene kanonische Roadmap abgeglichen: CSV-Teilschnitt PR343 erledigt; aktuelle interne Frankfurterlücke wird durch diesen Release geschlossen. K1/K2-FIN fehlen externe unabhängige Bestands-/Ownershipanker, K2-ETH echte Originalcursorfolge; D-ETH260 bereits DONE. K3/K4 interne Normalwege und bestehende Restorebelege weiterverwenden, physische WindowsChrome/Edge-/AndroidChrome/PWA-Beobachtungen bleiben OPERATOR_INPUT_PENDING, K5/K6 ebenso. Kein zusätzlicher konkret belegter interner Pflichtcoderest aus diesem Abgleich; keine Routinewiederholung abgenommener Gates, keine neue Scope-ID. Nach Liveabschluss Einstieg über ein einzelnes bestätigtes isoliertes Profil, erster Schritt Online-Leerstart/Identität, Soll: leeres Testportfolio/bedienbar, SWv319 soweit sichtbar, sonst UNKNOWN. Bestehendes10kOperatorpaket/Soll1000EUR anschließend, keine Neugenerierung. Private Anfrage gelesen, Originale bleiben privat.
+
+## Vorheriger Übernahmestand (historisch)
+
 # HND01 · ACTIVE · PR344 MERGE_AUTHORIZED · 16.11.2026
 
 Writer: `takeover-pr344-v319-20261116-root`, alleiniger HND01-Hauptagent. Nutzerübergabe beendet ausdrücklich die Schreibzuständigkeit von `takeover-pr343-fx-20261115-root`; dessen Belege bleiben gültig. Kein zweiter Writer, kein behaupteter technischer Prozessstopp.
