@@ -1,4 +1,4 @@
-name: SW321 sole remaining original WebKit loading gate
+name: SW321 loading gate with stylesheet-ready measurement
 on:
   push:
     branches: [qa/sw321-final5-97026efd]
@@ -178,6 +178,23 @@ jobs:
           };
           log({event:'configuration',scope:'read-only resource completion and original visibility result; failure-only DOM snapshot; false remains false',timingAffected:true});
           QA_OBSERVE_EOF
+      - name: Align only the loading measurement start with its real CSS animation
+        run: |
+          python3 - <<'QA_MEASUREMENT_EOF'
+          import hashlib,json,pathlib,subprocess
+          p=pathlib.Path('tests/browser-loading-pwa.mjs');original=p.read_text()
+          before=hashlib.sha256(p.read_bytes()).hexdigest()
+          assert before=='c1a4e2c9885f58007e79e494a0c13d209699bdcfedbe2c3acaad3823faa03c65'
+          old="await waiting;await p.waitForTimeout(450);"
+          new="await waiting;await p.waitForFunction(()=>document.getElementById('appStartup')?.getAnimations().some(a=>a.animationName==='startup-show'&&a.currentTime!==null),undefined,{timeout:30000});await p.waitForTimeout(450);"
+          assert original.count(old)==1
+          p.write_text(original.replace(old,new))
+          assert subprocess.check_output(['git','diff','--name-only'],text=True).splitlines()==['tests/browser-loading-pwa.mjs']
+          pathlib.Path('artifacts/gates/qa-loading-measurement.diff').write_text(subprocess.check_output(['git','diff','--','tests/browser-loading-pwa.mjs'],text=True))
+          receipt={'productMain':'29f2a1c85a6b859c75c0811b3b478f745b12c8bf','productUnchanged':True,'file':str(p),'baselineSHA256':before,'actualTestedSHA256':hashlib.sha256(p.read_bytes()).hexdigest(),'onlyChange':'Bounded CSS animation-created precondition before original450ms; never wait for visible; all original assertions/browser pins/TLS/remaining waits unchanged','preconditionTimeoutMs':30000,'measurementMs':450,'replaced':old,'replacement':new}
+          pathlib.Path('artifacts/gates/qa-loading-measurement.json').write_text(json.dumps(receipt,indent=2))
+          QA_MEASUREMENT_EOF
+          node --check tests/browser-loading-pwa.mjs
       - name: Run every original gate assigned to this isolated runner
         env:
           LIVE_WORKER_DIAGNOSTICS: '1'
@@ -188,15 +205,15 @@ jobs:
           gates='${{ matrix.gates }}'
           printf '%s\n' "$gates" > artifacts/gates/executed-original-gates.txt
           for gate in $gates; do
-            echo "FROZEN_LIVE_BEGIN $gate ${{ matrix.engine }} $RELEASE_SHA"
+            echo "QUALIFIED_LIVE_BEGIN $gate ${{ matrix.engine }} $RELEASE_SHA"
             node "tests/$gate.mjs" 2>&1 | tee "artifacts/gates/isolated-$gate.log"
-            echo "FROZEN_LIVE_PASS $gate ${{ matrix.engine }} $RELEASE_SHA"
+            echo "QUALIFIED_LIVE_PASS $gate ${{ matrix.engine }} $RELEASE_SHA"
           done
       - name: Preserve all original reports and first failure evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: frozen-live-sw321-final5-${{ matrix.group }}-${{ matrix.engine }}
+          name: qualified-live-sw321-final5-${{ matrix.group }}-${{ matrix.engine }}
           path: artifacts/gates/
           if-no-files-found: error
           retention-days: 30
