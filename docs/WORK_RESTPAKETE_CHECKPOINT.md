@@ -1,3 +1,12 @@
+
+## Aktiver Auftrag · 2026-11-16 · Fortsetzung ohne neue Freigabe
+
+Main e272297ab1ba855a2922c1faa4010b83c558a796 / SW321 bleibt LIVE_ACCEPTED. Kraken-Spot und elf Windows-K4-Fälle abgeschlossen und wiederverwendet.
+
+- CI-PR349 Head411821d884d2a8df7a4be44bddb85bb62259ff2c: regulärer Lauf43952358302/attempt1 aktiv. Plan+Standalone/Unitprüfung und FAST-Canary bestanden; Hauptbrowserprüfung und alle drei Cross-Engine-Jobs laufen (Cross1/3 zuletzt Browserinstallation, Cross2 Browserworkflows). Nächster prüfbarer Schritt: Jobstatus und Pflichtartefakte, anschließend gemessene kritische Integrationsdauer. Keine Wiederholung starten. Genau eine unveränderte UI-quality-Zeile Cross3→Cross2; 25 Vertragsprüfungen plus TS5.8.3-Preflight grün. Aus beiden Originalphasen geschätzte Warteersparnis3.0–4.9min; keine Runner-Minutenersparnis behauptet. Kein Merge ohne exakten Headentscheid.
+- QA-PR350 Head778468e639a957a9d55c1332f67e430ad29bdf5c gegen Checkpoint: Windowslauf43952605296/attempt1 aktiv. Pinned Produktmain, installierte Chrome/Edge, rein synthetische normale Bitpanda-UI bis Summe/Allokation; danach unabhängig K6 Tab/Enter/Escape/Fokus und berechnete CSS-Schriftverdoppelung. Nächster Schritt: zwei getrennte Ergebnisberichte/Originalartefakt sichern. Echte Systemschrift und physischer Touch daraus nicht ableiten.
+- Private Bitpanda-Gegenrechnung ohne Zwischenrundung reproduziert; beide Bewertungsvarianten runden auf Index-Centwert. Quellenoriginale/Zeiten/EUR-Wechselkurs privat gesichert. Keine persönliche Einzelkomponentenzuordnung oder Bargeldsaldo bestätigt, keine automatische Umbuchung. Tatsächlicher UI-Doppelzählungsbefund noch in Prüfung.
+- K2-ETH: vorhandene autorisierte Quellen auf echte endpointgebundene Originalcursor-/Folgeseitenpaare prüfen. D-ETH260 DONE; allgemeine Providerprobe von privatem Adressbeweis trennen. Android ohne isolierten zugänglichen physischen Testzugang weiterhin offen.
 # HND01 · SW321 LIVE_ACCEPTED
 
 Sole writer `hnd01-sw321-reload-20261116-4672ea147672-root`, explicitly authorized by Jochen on 16 November 2026. Write authority of `hnd01-sw321-close-20261116-953e8d11597b-root` ended with this handover. All previous owners have no write authority. No subagents. This checkpoint branch must never be merged wholesale into main.
