@@ -2153,3 +2153,6 @@
 .position-value-filter>.small-help{flex:1 1 240px;margin:0}
 .position-value-filter input{min-height:44px}
 .position-value-filter input[aria-invalid="true"]{border-color:var(--danger,#b43333)}
+
+/* Responsive foreground/background crossfades can lose text contrast mid-frame. */
+#positionsPage #addWizard{transition:none}

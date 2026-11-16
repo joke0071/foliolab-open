@@ -22,6 +22,14 @@ Headad5a03924111eb18f7757d3b69e79f491f5f8aaa / tested merge79133de7ca6c459dfc1b7
 
 The next changed test head captures the full original Axe node/color evidence, label/button/ancestor geometry and point stack, plus a bounded failure screenshot in the log. One post-frame observation is diagnostic only: the original audit always determines failure. No assertion, deadline, exclusion, successful retry fallback, product or workflow change. This is one scoped observation round, not a blind rerun. Full required checks remain mandatory for any final qualified head; original failed logs and artifact digests retained.
 
+## Resolved contrast cause — no waiting or weaker audit
+
+The bounded observation on5c0be96f/run43842903000 captures original Chromium contrast4.08:1 (interpolated foreground#dee6e1/background#4e7561) while the later computed endpoint is white on#26563d; diagnostic post-frame audit is empty. Original failure image98914bytes/SHA256fef7ecfd40a425876d0d34face3d178fdb74cb9afc584789e4fa6885d43b4a95 restored from exact bounded log chunks and visually inspected.
+
+A controlled native local430→768px probe identifies the existing global130ms button color AND background-color transitions. Pausing the real transitions at52ms reproduces a2.42:1 Axe violation at exactly #addWizard>.action-label; finishing those same transitions clears it. Native samples0/26/52/78/104/130ms retained. This closes the UNKNOWN cause: simultaneous responsive foreground/background crossfade passes through unreadable colors; slower local scan preparation had missed that interval.
+
+Product correction is scoped to the positions toolbar’s existing add button: transition:none. No other visual property, financial logic or control changes. The exact same native midpoint/endpoint probe then has no contrast violation, and the full targeted filter contract runs with its original immediate Axe assertions. No animation-settling wait, retry success, Axe exclusion, threshold or deadline modification. All final-head full/Wallet gates remain mandatory.
+
 ---
 
 <details><summary>Historical preparation (superseded gates/statuses)</summary>
