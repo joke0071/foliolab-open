@@ -75,12 +75,22 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   assert.equal(await p.locator('#positionValueFilter').inputValue(),'999999999999.123456789012345678');
   assert.equal(await p.locator('#positionValueFilter').getAttribute('aria-invalid'),'false');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  assert.ok(await p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('header')?.getBoundingClientRect();return document.activeElement===el&&r.top>=Math.max(0,header?.bottom||0)&&r.bottom<=nav.top&&r.height>=44;}),'short computed200percent view keeps focused field clear of navigation/header');
+  const readShortView=()=>p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('header')?.getBoundingClientRect();return {pass:document.activeElement===el&&r.top>=Math.max(0,header?.bottom||0)&&r.bottom<=nav.top&&r.height>=44,activeElement:document.activeElement?.id,field:r.toJSON(),navigation:nav.toJSON(),header:header?.toJSON(),viewport:{width:innerWidth,height:innerHeight,scrollY},css:{font:getComputedStyle(el).font,scrollMarginTop:getComputedStyle(el).scrollMarginTop,scrollMarginBottom:getComputedStyle(el).scrollMarginBottom}};});
+  const shortView=await readShortView();
+  if(!shortView.pass){
+   writeFileSync(dir+'/'+engine+'-short-focus.json',JSON.stringify(shortView,null,2));console.log('POSITION_VALUE_FILTER_SHORT_FAILURE '+JSON.stringify(shortView));
+   const bytes=await p.screenshot({path:dir+'/'+engine+'-short-focus.png'});
+   if(bytes.length<=256000){const data=bytes.toString('base64');console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_BEGIN '+JSON.stringify({engine,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}));for(let offset=0;offset<data.length;offset+=4000)console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_CHUNK '+offset/4000+' '+data.slice(offset,offset+4000));console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_END');}
+  }
+  assert.ok(shortView.pass,'short computed200percent view keeps focused field clear of navigation/header');
+  await p.locator('#positionArchiveFilter').focus();await p.keyboard.press('Tab');
+  const keyboardView=await readShortView();report.shortView=shortView;report.keyboardView=keyboardView;
+  assert.ok(keyboardView.pass,'native Tab focus clears sticky bars in short enlarged-text view');
   assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
   await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-320x360-text200.png'});
   assert.deepEqual(await record(),filterBefore,'display filtering preserves exact raw/revision/settings');
   stage('offline');await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');
-  Object.assign(report,{result:'PASS',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged']});stage('RESULT_PASS');
+  Object.assign(report,{result:'PASS',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged','320x360/200% text and native Tab keep the field clear of sticky bars']});stage('RESULT_PASS');
   }catch(error){report.result='FAIL';report.error=String(error);stage('RESULT_FAIL');throw error;}
   finally{writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));}
 }

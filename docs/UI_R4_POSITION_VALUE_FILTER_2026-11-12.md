@@ -30,6 +30,14 @@ A controlled native local430→768px probe identifies the existing global130ms b
 
 Product correction is scoped to the positions toolbar’s existing add button: transition:none. No other visual property, financial logic or control changes. The exact same native midpoint/endpoint probe then has no contrast violation, and the full targeted filter contract runs with its original immediate Axe assertions. No animation-settling wait, retry success, Axe exclusion, threshold or deadline modification. All final-head full/Wallet gates remain mandatory.
 
+## Resolved native WebKit short-view focus
+
+On19e2ec18/run43844865194 the contrast correction passes all five widths, but WebKit first reaches and fails the original320x360/200%-text focus-clearance assertion. Current local capability was checked and enabled using the unchanged official WebKit27.2/Playwright1.64.1 binary plus isolated official Debian13 libraries (no system/app dependency change). The existing vendor wrapper replaced LD_LIBRARY_PATH; a local launcher preserves the vendor paths and adds those libraries. This is an actual native browser run, not emulation or hardware acceptance; regular UbuntuCI remains required.
+
+The exact original failure reproduces locally: active input y304.65625–359.65625,height55; fixed bottom navigation starts at299.5; sticky header ends56. WebKit regards the input as inside the360px viewport and leaves it fully behind navigation, despite existing72/84px scroll margins. A real Tab from the preceding archive selector reproduces the same obscured focus. A separate native centered-scroll countercase confirms there is sufficient usable space; the test’s original geometry assertion remains unchanged.
+
+Product correction reuses the existing mobile fixed-bar focus guard previously used by dashboard period controls, extending its target set only to the new filter input. A focusin handler and a ResizeObserver for that one input also cover enlargement of an already focused field. Existing window-resize and dashboard behavior remain; scrolling changes no stored data or selection. No global focus framework or new custom event. Native WebKit full filter/Offline/exactIDB contract now PASS with the original short-view predicate, plus an added real Tab assertion; local Chromium/units/syntax/static checks also run. Bounded diagnostic geometry is retained, no centering workaround or relaxed test bound.
+
 ---
 
 <details><summary>Historical preparation (superseded gates/statuses)</summary>

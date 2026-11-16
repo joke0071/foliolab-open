@@ -2776,9 +2776,9 @@ $('apiSettings').addEventListener('submit',async e=>{
    else if(r.top<top)sidebar.scrollTop-=top-r.top;
   };
   // Native focus scrolling does not consistently account for the mobile sticky bars.
-  const revealDashboardPeriodFocus=()=>{
+  const revealMobileControlFocus=()=>{
    const target=document.activeElement;
-   if(!$('miniChartPeriods').contains(target)||!target?.getClientRects().length)return;
+   if((!$('miniChartPeriods').contains(target)&&target!==$('positionValueFilter'))||!target?.getClientRects().length)return;
    const header=document.querySelector('.mobile-header'),nav=$('mobileNav');
    const headerVisible=Boolean(header?.getClientRects().length),navVisible=Boolean(nav?.getClientRects().length);
    if(!headerVisible&&!navVisible)return;
@@ -2787,8 +2787,11 @@ $('apiSettings').addEventListener('submit',async e=>{
    const r=target.getBoundingClientRect(),delta=r.top<top?r.top-top:r.bottom>bottom?r.bottom-bottom:0;
    if(delta)window.scrollBy({top:delta,left:0,behavior:'auto'});
   };
-  $('miniChartPeriods').addEventListener('focusin',revealDashboardPeriodFocus);
-  window.addEventListener('resize',revealDashboardPeriodFocus);
+  $('miniChartPeriods').addEventListener('focusin',revealMobileControlFocus);
+  $('positionValueFilter').addEventListener('focusin',revealMobileControlFocus);
+  window.addEventListener('resize',revealMobileControlFocus);
+  // Font enlargement can resize an already focused field without another focus event.
+  new ResizeObserver(revealMobileControlFocus).observe($('positionValueFilter'));
   $('sidebarInstallHint').addEventListener('focusin',revealInstallHintFocus);
   window.addEventListener('resize',revealInstallHintFocus);
   $('dismissInstallHint').addEventListener('click',()=>{
