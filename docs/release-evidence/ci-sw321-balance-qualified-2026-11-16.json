@@ -1,5 +1,5 @@
 {
-  "status": "MERGED_MAIN_CI_RUNNING",
+  "status": "MERGED_MAIN_INTEGRATION_DEPLOY_SUCCESS_LIVE_FAILED",
   "main": "e272297ab1ba855a2922c1faa4010b83c558a796",
   "head": "411821d884d2a8df7a4be44bddb85bb62259ff2c",
   "testedMerge": "8504e6ecdcfad4c4238fc3bfd4a7b463184d3f1d",
@@ -51,7 +51,7 @@
     "allLengthsHashesCRCs": "PASS",
     "readbackAt": "2026-11-16T21:04:34.205027+00:00"
   },
-  "recommendation": "Approved exact head merged; follow existing automatic main run, no additional run needed",
+  "recommendation": "Approved head merged; tracked main finished. No further unchanged retries; delivery429/503 investigation/mitigation required for new regular full live qualification. Existing SW321 product acceptance retained.",
   "merge": {
     "authorizedBy": "Jochen: Freigabe",
     "approvedHead": "411821d884d2a8df7a4be44bddb85bb62259ff2c",
@@ -59,9 +59,13 @@
     "tree": "47674d62c54c06a67e347bc73faef127ae33ee76",
     "treeEqualsQualifiedCandidate": true,
     "mainRun": 43956969224,
-    "mainRunAttempt": 1,
-    "mainRunStatus": "in_progress",
+    "mainRunAttempt": 3,
+    "mainRunStatus": "completed",
     "newMainLiveSuccessClaim": false,
-    "existingSW321AcceptanceRetained": true
+    "existingSW321AcceptanceRetained": true,
+    "mainRunConclusion": "failure",
+    "integrationRecovered": "success",
+    "deployment": "success",
+    "finalReceipt": "pr349-main-final-2026-11-16.json"
   }
 }

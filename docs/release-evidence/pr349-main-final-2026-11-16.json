@@ -1,0 +1,196 @@
+{
+  "status": "MAIN_CI_FAILED_LIVE_DELIVERY",
+  "run": 43956969224,
+  "attempt": 3,
+  "workflowStatus": "completed",
+  "workflowConclusion": "failure",
+  "main": "494ed8f0f6b627d8be972a5ceb886005e5064b31",
+  "approvedHead": "411821d884d2a8df7a4be44bddb85bb62259ff2c",
+  "tree": "47674d62c54c06a67e347bc73faef127ae33ee76",
+  "integration": "SUCCESS:1507units,Chromium,all3CrossEngine",
+  "deployment": {
+    "job": 133638102686,
+    "result": "success",
+    "seconds": 19,
+    "pagesArtifact": 14273898961,
+    "exactSourceFiles": 154
+  },
+  "installation": {
+    "failedJob": 133614229345,
+    "artifact": 14271463119,
+    "failedJobSeconds": 38,
+    "failedInstallSeconds": 10,
+    "failedImage": "20261111.127.1",
+    "successfulComparisonImage": "20261111.370.1",
+    "retryJob": 133627209482,
+    "retrySeconds": 1117,
+    "retryInstallSeconds": 63,
+    "retryImage": "20261111.127.1",
+    "retryResult": "success",
+    "rootLimit": "Ubuntu package availability/index state; exact failed runner sources unrecorded; version alone not causal"
+  },
+  "time": {
+    "qualifiedPRIntegrationSeconds": 1076,
+    "olderComparablesSeconds": [
+      1384,
+      1396
+    ],
+    "mainIncompleteFirstWindowSeconds": 1121,
+    "postFirstWindowGapSeconds": 178,
+    "actualRecoveredCross2Seconds": 1117,
+    "actualIntegrationWaitSeconds": 2416,
+    "successfulIntegrationRunnerSeconds": 3770,
+    "failedIntegrationRunnerSeconds": 38,
+    "totalIntegrationRunnerSeconds": 3808,
+    "maxSuccessfulIndividualJobSeconds": 1121,
+    "mainIsUninterrupted18MinuteSample": false,
+    "observedWholeJobWindowSeconds": 2907,
+    "allActualRunnerSeconds": 4069,
+    "uniqueNonSkippedExecutions": 9,
+    "rawAllAttemptJobRows": 24,
+    "liveRunnerSeconds": 218
+  },
+  "live": [
+    {
+      "job": 133638326346,
+      "seconds": 170,
+      "result": "failure",
+      "artifact": 14274454228,
+      "case": "seven-days-boundary",
+      "caseIndex": 6,
+      "priorFullCases": 5,
+      "documentCSSApp": 200,
+      "sameOriginModules429": 72,
+      "burstMs": 35,
+      "serviceWorkers": "blocked",
+      "pageErrorArray": "not persisted by original FX harness"
+    },
+    {
+      "job": 133642045451,
+      "seconds": 48,
+      "result": "failure",
+      "artifact": 14276395300,
+      "case": "initial core navigation",
+      "marketModuleStatus": 503,
+      "responseMIME": "text/html; charset=utf-8",
+      "server": "Varnish",
+      "earlierAssetHashes": 155,
+      "earlierAssetStatuses": [
+        200
+      ],
+      "startupFailed": true,
+      "navigationButtons": 0,
+      "serviceWorkerControlled": false,
+      "recordedPageErrors": []
+    }
+  ],
+  "existingSW321ProductAcceptance": "LIVE_ACCEPTED retained for unchanged product; no new regular Main full-live success claimed",
+  "nextAction": "No further unchanged reruns; bounded origin/edge delivery/traffic investigation and demonstrated mitigation before next full live qualification",
+  "packages": [
+    {
+      "file_id": "file_00000000378c81fdb438f31d1d107965",
+      "library_file_id": "libfile_fde3_f-a7b5f88075348191a226d1a569f34f52_54e45e8130348191808d9aaa710cf372",
+      "file_name": "FolioLab_PR349_Main_Versuch1_Originale_2026-11-16.tar",
+      "bytes": 153384960,
+      "sha256": "e4c32fd63be9d9bcd103afa3a5e96b2947879a78b69869d382cd53fc4a4ad7b3",
+      "version": 0,
+      "archiveMembers": 17,
+      "manifestEntries": 16,
+      "originalZIPs": 6,
+      "ZIPMembers": 1668,
+      "actualSavedCopyReadback": true,
+      "lengthHashCRC": "PASS"
+    },
+    {
+      "file_id": "file_00000000b4b081fdacda04200e20adb2",
+      "library_file_id": "libfile_fde3_f-e855f5010a50819198d11603d8437ae0_54e45e8130348191808d9aaa710cf372",
+      "file_name": "FolioLab_PR349_Main_Versuch2_Livefehler_Originale_2026-11-16.tar",
+      "bytes": 83527680,
+      "sha256": "055c22f2e080c9e7f70f99136b3d848eed99a2c2d0658921681b410dfd585a57",
+      "version": 0,
+      "archiveMembers": 14,
+      "manifestEntries": 13,
+      "originalZIPs": 3,
+      "ZIPMembers": 945,
+      "actualSavedCopyReadback": true,
+      "lengthHashCRC": "PASS"
+    },
+    {
+      "library_file_id": "libfile_fde3_f-8a07eebe14b88191ba143d5920ce4f23_54e45e8130348191808d9aaa710cf372",
+      "file_id": "file_00000000baf481f49ab317d7329fd42c",
+      "file_name": "FolioLab_PR349_Main_Endstatus_Originale_2026-11-16.zip",
+      "version": 0,
+      "bytes": 345328,
+      "sha256": "2b6e311eb46f96a5003c537ca2a050e9b3fee4952a436efa04c472f867146e76",
+      "archiveMembers": 11,
+      "manifestEntries": 10,
+      "originalZIPs": 1,
+      "ZIPMembers": 10,
+      "actualSavedCopyReadback": true,
+      "lengthHashCRC": "PASS"
+    }
+  ],
+  "originalArtifacts": [
+    {
+      "id": 14276395300,
+      "name": "production-live-acceptance-494ed8f0f6b627d8be972a5ceb886005e5064b31",
+      "bytes": 324684,
+      "digest": "sha256:0546c4856e6f9e82ba1c9981287233a8110ed3b11f8ccc78079e7cc4f73be7f6"
+    },
+    {
+      "id": 14274940463,
+      "name": "dialog-visual-reference",
+      "bytes": 934834,
+      "digest": "sha256:effb6a574f2a2106dba1e660b458e8398e6392d5ec5380d55598be29777acfdc"
+    },
+    {
+      "id": 14274638708,
+      "name": "cross-engine-gates-494ed8f0f6b627d8be972a5ceb886005e5064b31-2",
+      "bytes": 71710232,
+      "digest": "sha256:c59296b65ecf18e6628def80108c592ca8bc529ba043b90b616b137fd6f8ede3"
+    },
+    {
+      "id": 14274500122,
+      "name": "cross-engine-gates-494ed8f0f6b627d8be972a5ceb886005e5064b31-3",
+      "bytes": 21538117,
+      "digest": "sha256:7760a3ac2d56342fdd8988ee6c462cfca5297a0cd8300431ccac25c81b77f8c7"
+    },
+    {
+      "id": 14274454228,
+      "name": "production-live-acceptance-494ed8f0f6b627d8be972a5ceb886005e5064b31",
+      "bytes": 10916862,
+      "digest": "sha256:0acde8ac1ac5d357292c138d8d6ca55d196cadd929ee37aa971b6544937a01a7"
+    },
+    {
+      "id": 14273940743,
+      "name": "release-gates-494ed8f0f6b627d8be972a5ceb886005e5064b31",
+      "bytes": 67998469,
+      "digest": "sha256:7d25b61fa6adb90a157a80abe5b5d1df3cc3d8d13cfa0608d598e30672270ebe"
+    },
+    {
+      "id": 14273898961,
+      "name": "github-pages",
+      "bytes": 578899,
+      "digest": "sha256:58a47ba18d6961c9fd79b156f300bc0bfc829ca5e169b545b5518947f2d4cd6d"
+    },
+    {
+      "id": 14271724550,
+      "name": "cross-engine-gates-494ed8f0f6b627d8be972a5ceb886005e5064b31-1",
+      "bytes": 61020043,
+      "digest": "sha256:855516158bf53f5e65be251635132246e50b81f80dc5eaece578cde61081bbd9"
+    },
+    {
+      "id": 14271463119,
+      "name": "cross-engine-gates-494ed8f0f6b627d8be972a5ceb886005e5064b31-2",
+      "bytes": 298554,
+      "digest": "sha256:aa2f8bb13a20fb2c9e168aec4af3fdf7a2bdf9b1f20ba23f961ea2b6a9f7cfab"
+    },
+    {
+      "id": 14270993102,
+      "name": "ci-stage-494ed8f0f6b627d8be972a5ceb886005e5064b31",
+      "bytes": 355,
+      "digest": "sha256:75b542e80aae75dd7fe36b9ef84ecaa91de554c851abc39bee3911a57a396084"
+    }
+  ],
+  "noFurtherRunsStarted": true
+}
