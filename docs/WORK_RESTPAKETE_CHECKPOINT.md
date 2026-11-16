@@ -1,3 +1,13 @@
+# HND01 · Main43956969224 · gezielter Wiederanlauf aktiv
+
+Main494ed8f0f6b627d8be972a5ceb886005e5064b31, PR349-Merge erledigt, SW321 unverändert. Versuch1 vollständig beendet FAILURE: Cross2-Job133614229345 scheiterte vor Tests an APT-Browserabhängigkeiten (Ubuntu-Image20261111.127.1; nur Microsoft-Indizes, viele Ubuntu-Pakete fehlen). Cross1 auf20261111.370.1 bestand denselben Installationspfad. Originaljoblog, Originalartefakt14271463119 (298554Bytes/SHA256aa2f8bb13a20fb2c9e168aec4af3fdf7a2bdf9b1f20ba23f961ea2b6a9f7cfab/CRC PASS), Vergleichslog und Metadaten gesichert. Alle sechs PNGs sind eingecheckte Referenzen, keine neuen Cross2-Testbelege. [Diagnose/Originale](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md).
+
+Nach EndeVersuch1 genau ein gezielter rerun-failed-jobs-Aufruf gemäß Jochens Auftrag. Versuch2 aktiv: neuer Cross2-Job133627209482, Start21:30:27Z. **Browserinstallation SUCCESS, jetzt Test portfolio workflows on Firefox and WebKit aktiv**. Übernommen: Haupttest1121s, Cross1627s, Cross3905s ausVersuch1. Neue API-IDs der übernommenen Jobs mit identischen Originalzeiten nicht als Ausführungen zählen. Kein zweiter Retry bei erneutem Installationsfehler ohne Eingrenzung. Nächster prüfbarer Schritt: diesen laufenden Cross2-Job/Artefakt bis Ende übernehmen, danach abhängiges Deployment und Liveprüfung begleiten. Keine zusätzlichen Voll-Läufe.
+
+Zeitmessung: Erstfehler38s Gesamt/10s Installation, Cross2-Tests skipped. Versuch1 ist keine erfolgreiche vollständige Integrationsphase. PR17m56s bleibt gemessener PR-Befund; Main-Stör-/Wiederanlaufzeit getrennt von erfolgreichen Prüfdauern führen. Produkt-SW321-Liveabnahme gültig, neuen Main-CI-/Live-Endstatus noch nicht vorwegnehmen. Auftrag läuft weiter.
+
+--- Vorheriger Merge-/Qualifikationsstand ---
+
 # HND01 · PR349 freigegeben und gemergt · 16.11.2026
 
 Jochen hat den exakt vorgeschlagenen Head411821d884d2a8df7a4be44bddb85bb62259ff2c freigegeben. Unmittelbar vor Merge: Head/Basis identisch, clean/mergeable, alle Pflichtchecks SUCCESS, deploy/live auf PR korrekt skipped, keine Reviews/Kommentare. Headgebundener regulärer Merge erfolgreich; neuer Main **494ed8f0f6b627d8be972a5ceb886005e5064b31**, Eltern e272297ab1ba855a2922c1faa4010b83c558a796 und411821d884d2a8df7a4be44bddb85bb62259ff2c. Tatsächlicher Maintree47674d62c54c06a67e347bc73faef127ae33ee76 **exakt identisch zum qualifizierten Kandidaten-/Testmerge-Tree**. Produkt und SW321 unverändert; bestehende Produkt-Liveabnahme bleibt gültig. Keine neue vollständige Main-CI-/Live-Erfolgsmeldung vorwegnehmen.
