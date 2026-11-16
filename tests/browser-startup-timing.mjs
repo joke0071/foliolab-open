@@ -11,9 +11,14 @@ export async function waitForStartupRevealWindow(page){
  await page.waitForTimeout(450);
 }
 
-// Controlled resource ordering reproduces an expired app-request timer before
+// Controlled resource ordering reproduces an expired request timer before
 // CSS starts. A hidden-keyframe mutant must still fail the visibility assertion.
 export async function verifyStartupTiming(browser,base){
+ const bounded=async(promise,label)=>{
+  let timer;
+  try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(label+' request not observed within30000ms')),30000);})]);}
+  finally{clearTimeout(timer);}
+ };
  const rows=[];
  for(const mutant of [false,true]){
   const context=await browser.newContext({viewport:{width:320,height:740},serviceWorkers:'block'});
@@ -29,9 +34,9 @@ export async function verifyStartupTiming(browser,base){
    await route.fulfill({response,body:body.replace('@keyframes startup-show{to{visibility:visible}}','@keyframes startup-show{to{visibility:hidden}}')});
   });
   try{
-   await page.clock.install();await page.goto(base,{waitUntil:'commit'});await Promise.all([appSeen,cssSeen]);
+   await page.clock.install();await page.goto(base,{waitUntil:'commit'});await bounded(cssSeen,'stylesheet');
    const timerStart=Date.now();await page.waitForTimeout(450);const oldTimerElapsed=Date.now()-timerStart;
-   releaseCSS();
+   releaseCSS();await bounded(appSeen,'held application');
    await page.waitForFunction(()=>getComputedStyle(document.getElementById('appStartup')).animationName==='startup-show');
    await page.locator('#appStartup').evaluate(async element=>{const animation=element.getAnimations().find(a=>a.animationName==='startup-show');await animation.ready;animation.pause();animation.currentTime=0;});
    // Freeze only the diagnostic's early observation so runner scheduling cannot
