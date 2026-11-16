@@ -1,4 +1,4 @@
-# HND01 · SW320 LIVE_ACCEPTED · SW321 AUTHORIZED_RELEASE_PENDING
+# HND01 · SW320 LIVE_ACCEPTED · SW321 MERGED_CI_RUNNING
 
 Sole writer `hnd01-sw320-sw321-20261116-root`, authorized by Jochen16November2026; `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
 
@@ -7,7 +7,7 @@ Sole writer `hnd01-sw320-sw321-20261116-root`, authorized by Jochen16November202
 | Release | Main / tree | Actual status |
 | --- | --- | --- |
 | SW320 / PR345 | `112dc6d441fe79b0cf3086a5720b6d48910bf784` / `0c749ffda82a32ec0e98c025aeafa751b37aa759` | **LIVE_ACCEPTED**;55/55 original executions, originals saved and independently restored |
-| SW321 / PR346 | proposed head`8092649f7037ca04192703ce08d2a6c1a6ad6d34` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **AUTHORIZED_RELEASE_PENDING**; not merged/deployed yet; fresh identity/check/review verification next |
+| SW321 / PR346 | actual main`29f2a1c85a6b859c75c0811b3b478f745b12c8bf` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **MERGED_CI_RUNNING**; not yet DEPLOYED/LIVE_ACCEPTED |
 
 Last fully accepted release is now SW320. No product-main/ring-head change was required to resolve SW320 acceptance.
 
@@ -31,7 +31,7 @@ Operational QA only: existing real-origin route.continue admissions spaced20ms,9
 
 Earlier regular Recovery70module429s, security-sources.js503 and FX root429/error-page primer-tiny.css failures preserved in [previous filter originals](https://chatgpt.com/library?file_id=libfile_fde3_f-5cc5b182b4d081919cc1e806a2e668bf_54e45e8130348191808d9aaa710cf372&account_id=personal), version0/SHA25668ba38d05c677667f6c6bc12c64b36450ce0c8bd030365b976746f8ab1fc9b64; prior23ZIPs/3427entries independently restored. [Full bounded recovery history](https://github.com/joke0071/foliolab-open/blob/d18c2a087ed1c5d64d676b4a6cfaabb47e618aff/docs/WORK_RESTPAKETE_CHECKPOINT.md). Earlier release-blocker document is historical and superseded by this complete acceptance.
 
-## Ring authorization — condition fulfilled, fresh premerge next
+## Ring authorization executed — exact head merged
 
 Jochen authorizes PR346 exact head `8092649f7037ca04192703ce08d2a6c1a6ad6d34` after SW320 LIVE_ACCEPTED on exact main112dc6d4. That prerequisite is now fulfilled. Authorization includes head-bound merge, regular main run, SW321 deployment and complete live acceptance. Changed ring head or new product-main requires newly qualified user decision.
 
@@ -42,3 +42,9 @@ Immediately before merge, freshly verify PR head/base/tree, main112dc6d4, requir
 ## External duties remain OPEN
 
 Windows/Android/PWA physical-device/restore/interaction checks DEFERRED. Independent Kraken/Bitpanda balance anchors, wallet/staking ownership and original ETH cursor/follow-page sequence external/open. No private data published; no global1.0 completion claim. EFF03/finance/UNKNOWN/identity/journal/IDB/CAS/backup/restore/offline/PWA protections retained.
+
+## PR346 executed merge / current continuation
+
+After complete SW320 LIVE_ACCEPTED and independently restored proof, immediately freshly verified head8092649f/base112dc6d4/main112dc6d4/tree09419f00/synthetic same tree and ordered parents, clean mergeable state, all9checks completed with required tests/cross3/Wallet SUCCESS (main-only/FAST correctly skipped), both exact-head CI/Wallet runs SUCCESS,0reviews/inline comments. Expected-head-bound merge succeeded.
+
+Actual new main `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, verified tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, ordered parents actual accepted filter112dc6d4 + approved ring8092649f. [Regular main43884299916](https://github.com/joke0071/foliolab-open/actions/runs/43884299916) now running. No additional product/source/test change. SW321 not yet deployed/accepted; last accepted remainsSW320. Continue normal mainCI/deployment/full original live gates, save originals/independent restore and all3engine1000EUR combined receipts before acceptance.
