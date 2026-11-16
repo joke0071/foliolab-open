@@ -1,3 +1,15 @@
+# HND01 · Main43956969224 · ein begrenzter Live-only-Wiederanlauf aktiv
+
+Main494ed8f0f6b627d8be972a5ceb886005e5064b31, Versuch3. **Alle Integrationsjobs und Deployment SUCCESS übernommen**; kein erneuter Integrations-/Deploylauf. WiederanlaufCross2 bestand auf derselben Imageversion127.1 wie Erstfehler: daher kein deterministischer Imageversionsfehler behauptet. Reale Integrationswartezeit40:16 mit getrenntem Erstfehler38s, Zwischenraum2:58 und Ersatzjob18:37; PR17:56 bleibt eigenständige PR-Messung.
+
+Erster Livejob133638326346 FAILURE (170s): **FX seven-days-boundary, Fall6**, Fälle1–5 vollständige Refresh/Reopen-PASS, Fall6 vor Reload fachlich korrekt. Wiederöffnen: Dokument/CSS/app.js200, **72ModulHTTP429 in35ms**,VarnishHTML/Retry-After0/ERR_ABORTED. SW blockiert, keine Controller/Registrierungen/Versionen. Originales pageerror/console-Array bei Crash nicht persistiert, daher keine Abwesenheitsbehauptung. Das ist neu belegter Modul-Auslieferungsfehler, kein APT-/Finanz-/SW-Defekt aus gleichem Timeout abgeleitet. Originalartefakt14274454228 (10916862Bytes/SHA2560acde8ac1ac5d357292c138d8d6ca55d196cadd929ee37aa971b6544937a01a7/107Mitglieder/CRC PASS) plus Logs gesichert.
+
+Nach Ende drei sequenzielle Ressourcen-Einzelproben200/exakte Mainbytes; keine Burst-/Gleich-Edge-Entwarnung. Daraus genau **ein** begrenzter Live-only-Wiederanlauf nach Originalschutz gestartet. **Aktiv: Live133642045451, Start21:56:01Z**, letzter abgeschlossener Schritt Chromium-Tools; jetzt Chromium published bytes/core/targetedUI. Nächster Schritt: diesen vorhandenen Job bis Ende beobachten, dann Originale/Endstatus sichern. **Bei erneutem gleichen Auslieferungsfehler keine weitere unveränderte Retryfolge.** Keine parallelen Produktivproben währenddessen.
+
+[Alle Belege und Zeittrennung](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md). Versuch1 Volloriginale153384960Bytes unabhängig vollständig geprüft; Versuch2-Originalpaket83527680Bytes gespeichert, Readbackprüfung in Arbeit. Produkt-SW321 bleibt bestehend LIVE_ACCEPTED; neuer vollständiger regulärer Main-Live-Erfolg noch offen.
+
+--- Vorherige Teilstände ---
+
 # HND01 · Main43956969224 · Pflichtjobs und Deployment SUCCESS, Live aktiv
 
 Main494ed8f0f6b627d8be972a5ceb886005e5064b31 unverändert. Genau ein gezielter Wiederanlauf: Cross2-Job133627209482 SUCCESS21:49:04Z (1117s=18:37). **Frischer Runner ebenfalls Image20261111.127.1**; diesmal Ubuntu-Paketindizes regulär geladen und Installation63s SUCCESS. Imageversion allein somit keine Ursache; APT-Zustand des ersten Runners eingegrenzt, genaue damalige Konfiguration nicht protokolliert. Kein Produkt-/Test-/Workflowpatch, kein weiterer Installationsretry.
