@@ -50,7 +50,8 @@ test('Historical reference FX uses exact request date and reports prior working 
  await assert.rejects(()=>historicalExchangeRate('USD','2027-01-01',f),/Zukunft/);
  await assert.rejects(()=>historicalExchangeRate('USD','2026-10-18',async()=>ok(fxPayload('2026-10-01',.9))),/gültiger/);
 });
-test('Daily reference quote records publication date and source',async()=>{
+test('Daily reference quote records publication date and source',async t=>{
+ t.mock.timers.enable({apis:['Date'],now:Date.parse('2026-10-21T18:00:00Z')});
  const result=await exchangeRateQuote('USD','',async url=>{assert.ok(url.includes('/v1/latest'));return ok(fxPayload('2026-10-21',.89));});
  assert.deepEqual(result,{rate:.89,date:'2026-10-21',source:'Frankfurter',reference:true});
 });

@@ -68,7 +68,11 @@ export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
    url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
    const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
    const rate=referenceRate(data,from);
-   if(!validFxDate(data?.date)||!/^(?:19|20)\d{2}/.test(data.date)||data.date>new Date().toISOString().slice(0,10))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
+   const today=new Date().toISOString().slice(0,10);
+   if(!validFxDate(data?.date)||!/^(?:19|20)\d{2}/.test(data.date)||data.date>today)throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
+   // Daily observations have no intraday timestamp: use UTC publication days,
+   // with the existing seven-day reference window (including weekends/holidays).
+   if(Date.parse(today)-Date.parse(data.date)>7*864e5)throw Error('Wechselkursdatum '+data.date+' ist älter als 7 Tage – bisheriger Kurs bleibt erhalten.');
    return {rate,date:data.date,source:'Frankfurter',reference:true};
  }
 }
