@@ -1,6 +1,6 @@
 # HND01 · BOTH PRs QUALIFIED · WAITING_EXACT_HEAD_MERGE_DECISION
 
-Sole writer `ui-r4-alloc01-20261116-root`, authorized by Jochen on16 November2026. No agents/background writers. Main freshly established at`7bb7b5a1f6124d933343590973310815df1d1653`, SW319 **LIVE_ACCEPTED** after PR344; accepted releases stay complete. [PR344 release acceptance](PR344_MAIN_RELEASE_ACCEPTANCE_2026-11-16.md). Open parked PRs332/161/157 unchanged. The explicit user order advances only UI-R4 and UI-ALLOC01, permits their separate branches/PRs and required CI, and reserves concrete merge heads for Jochen.
+Sole writer `hnd01-filter-ring-20261116-root` (this takeover), authorized by Jochen on 16 November 2026. Previous writer `ui-r4-alloc01-20261116-root` is revoked by the explicit handover. Filter PR345 exact head 859af3942db38ef2ed3439c1767a763fc500ff1f is explicitly approved for merge, main CI, SW320 deployment and full live acceptance. Ring PR346 must be integrated on actual filter main and requalified; its new exact head remains reserved for Jochen's decision. No agents/background writers. Main freshly established at`7bb7b5a1f6124d933343590973310815df1d1653`, SW319 **LIVE_ACCEPTED** after PR344; accepted releases stay complete. [PR344 release acceptance](PR344_MAIN_RELEASE_ACCEPTANCE_2026-11-16.md). Open parked PRs332/161/157 unchanged. The explicit user order advances only UI-R4 and UI-ALLOC01, permits their separate branches/PRs and required CI, and reserves concrete merge heads for Jochen.
 
 ## Current candidates
 
