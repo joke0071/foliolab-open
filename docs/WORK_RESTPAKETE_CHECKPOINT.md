@@ -1,13 +1,25 @@
-# HND01 · SW320 LIVE_ACCEPTED · SW321 DEPLOYED_NOT_LIVE_ACCEPTED / QA54_RUNNING
+# HND01 · SW320 LIVE_ACCEPTED · SW321 PRE_MERGE_QUALIFICATION
 
-Sole writer `hnd01-sw321-live-20261116-97026efd-root`, authorized by Jochen16November2026; `hnd01-sw320-sw321-20261116-root` and `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
+Sole writer `hnd01-sw321-loader-20261116-94e5d357-root`, authorized by Jochen16November2026; previous writer `hnd01-sw321-live-20261116-97026efd-root` revoked; `hnd01-sw320-sw321-20261116-root` and `hnd01-filter-ring-20261116-root` revoked. No other agents/writers. Parked332/161/157 unchanged. Never merge this checkpoint branch wholesale into main.
+
+## Current takeover and concrete next boundary
+
+The user explicitly transferred sole HND01 ownership and ended the previous owner's write authority. New owner: `hnd01-sw321-loader-20261116-94e5d357-root`. No subagents. Main remains29f2a1c8/tree09419/SW321. No merge/product change authorized for the new test-only fix until a concrete qualified-head decision.
+
+Newer existing run43903462738 completed all4 missing WebKit display gates SUCCESS; recovered Firefox job133422058330 in43902338380 already SUCCESS. Retained once. Exactly54 original executions proven (Chromium19/Firefox18/WebKit17). All9 original actual-origin filter/ring/combined reports and all3 exact1000EUR/nonempty-journal canonical invariance oracles verified.
+
+Loader diagnosis: original failures133376714554/14239831727 and133422057751/14244040918 wait450ms from app request, not CSS animation readiness. CSS response follows app request196/181ms; headers are not parse/start timestamps. The later teardown is not an assertion-time snapshot. Additional already-started original run43904261067 fails again; post-false snapshot records animation241ms of300ms delay, visibility:hidden, layout inert. Product relative timing violation is not established; test origin mismatch is demonstrated.
+
+[PR347](https://github.com/joke0071/foliolab-open/pull/347) exact head `72d430cbbc9f821a032d3dc0a11a8fb112555d39` changes two test files only: anchor existing450ms to existing animation readiness, retain immediate assertion; delayed-CSS controlled counterprobe and permanently-hidden negative control. [Actual-origin isolated loading qualification43904770625](https://github.com/joke0071/foliolab-open/actions/runs/43904770625) SUCCESS, ZIP14246180686; real CSS anchored visibility true, mutant false, both old timers451ms. QA head a7a7df69 has identical PR tests and unchanged product assets. Initial QA setup43904564470 failed before browser execution (missing shallow ancestor), corrected by full fetch; failure retained. Do not count the corrected measurement as an unchanged original.
+
+Regular PR CI43904550631 and Wallet43904550626 qualify exact head; Wallet SUCCESS, regular integration pending. Evidence originals25ZIPs/2410members/digests/lengths/CRCs gathered; durable save and independent restore pending. Continue to exact-head merge decision after complete CI and restoration; do not stop at this interim entry, do not mark LIVE_ACCEPTED, do not merge checkpoint branch.
 
 ## Actual release status
 
 | Release | Main / tree | Actual status |
 | --- | --- | --- |
 | SW320 / PR345 | `112dc6d441fe79b0cf3086a5720b6d48910bf784` / `0c749ffda82a32ec0e98c025aeafa751b37aa759` | **LIVE_ACCEPTED**;55/55 original executions, originals saved and independently restored |
-| SW321 / PR346 | actual main`29f2a1c85a6b859c75c0811b3b478f745b12c8bf` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **DEPLOYED_NOT_LIVE_ACCEPTED**;35of55complete;Chromium19/19;Firefox16/18;WebKit running;targetedFirefox2pending |
+| SW321 / PR346 | actual main`29f2a1c85a6b859c75c0811b3b478f745b12c8bf` / tree`09419f00ebbd942fbb843a82b4c224212a2b2fdf` | **DEPLOYED_NOT_LIVE_ACCEPTED / PRE_MERGE_QUALIFICATION**;54 unchanged original PASS +1 corrected WebKit measurement PASS; all9 filter/ring/combined reports verified; PR347 regular CI and independent restore pending |
 
 Last fully accepted release is now SW320. No product-main/ring-head change was required to resolve SW320 acceptance.
 
