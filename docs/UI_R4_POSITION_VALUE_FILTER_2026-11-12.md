@@ -16,6 +16,12 @@ The external1.0 obligations remain unchanged: deferred physical Windows/Android/
 
 First head d6ded8c4950d7c2c0e255929d9f5c4e8b65d3d38 / run43838115208 / tested mergeaf4fc2fe7d16d8ff216e077e0105c7c0f55ff404: Chromium failed the new dashboard-invariance assertion. The preceding locale suite left ?page=positions in the URL; after reload the hidden dashboard donut was still its initial placeholder, whereas the later navigation rendered the real donut. Total213.01EUR and canonical data were unchanged. A targeted local counterexample starting from the More page reproduced the exact failure. The contract now navigates to the real dashboard before the first snapshot and asserts that its actual SVG exists; both before/after snapshots and full exact IDB assertion stay unchanged. Standalone entry deliberately begins on More to retain this integration regression. Bounded stage/result receipts added; no product/timeout/threshold change, no unchanged retry.
 
+## Bounded contrast observation after the second CI finding
+
+Headad5a03924111eb18f7757d3b69e79f491f5f8aaa / tested merge79133de7ca6c459dfc1b7e112ff2f2a1064c8915 / run43840031422: the rendered-baseline regression is closed, but Chromium and WebKit report a color-contrast violation for existing #addWizard > .action-label at768px. Firefox completed the filter contract. Exact cause is UNKNOWN; no CSS patch or threshold change is justified yet. Local standalone wide-entry and locale-predecessor probes and a full Chromium UI-quality run with the initial observation variant pass, so they do not explain the CI finding.
+
+The next changed test head captures the full original Axe node/color evidence, label/button/ancestor geometry and point stack, plus a bounded failure screenshot in the log. One post-frame observation is diagnostic only: the original audit always determines failure. No assertion, deadline, exclusion, successful retry fallback, product or workflow change. This is one scoped observation round, not a blind rerun. Full required checks remain mandatory for any final qualified head; original failed logs and artifact digests retained.
+
 ---
 
 <details><summary>Historical preparation (superseded gates/statuses)</summary>

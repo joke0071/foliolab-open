@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {mkdirSync,writeFileSync} from 'node:fs';
 /** Existing UI-quality caller runs this contract in PR/Main and actual production. */
 export async function positionValueFilterBrowserContract({p,nav,record,scan,engine,scans}){
@@ -53,7 +54,18 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
    stage('width-'+width);
    await p.setViewportSize({width,height:900});await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.ok((await p.locator('#positionValueFilter').boundingBox()).height>=44);
-   assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
+   const audit=await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+   const geometry=await p.evaluate(()=>{const element=document.getElementById('addWizard'),label=element.querySelector('.action-label'),rect=label.getBoundingClientRect(),css=getComputedStyle(label);return {label:{rect:rect.toJSON(),color:css.color,font:css.font,display:css.display,pointStack:document.elementsFromPoint(rect.x+rect.width/2,rect.y+rect.height/2).map(node=>({tag:node.tagName,id:node.id,className:node.className,color:getComputedStyle(node).color,background:getComputedStyle(node).backgroundColor}))},viewport:{width:innerWidth,height:innerHeight,scrollY},button:element.outerHTML,rect:element.getBoundingClientRect().toJSON(),ancestors:[element,...(function*(node){for(let parent=node.parentElement;parent;parent=parent.parentElement)yield parent;})(element)].map(node=>{const css=getComputedStyle(node);return {tag:node.tagName,id:node.id,color:css.color,background:css.backgroundColor,opacity:css.opacity,position:css.position,rect:node.getBoundingClientRect().toJSON()};})};});
+   report.geometry??=[];report.geometry.push(geometry);
+   if(audit.length){
+    // Observe one post-frame countercase, but always fail the original audit.
+    await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    const postFrame=await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+    const evidence={width,audit,geometry,postFrame};writeFileSync(dir+'/'+engine+'-axe-'+width+'.json',JSON.stringify(evidence,null,2));console.log('POSITION_VALUE_FILTER_AXE_FAILURE '+JSON.stringify(evidence));
+    const bytes=await p.screenshot({path:dir+'/'+engine+'-axe-'+width+'.png'});
+    if(bytes.length<=256000){const data=bytes.toString('base64');console.log('POSITION_VALUE_FILTER_AXE_IMAGE_BEGIN '+JSON.stringify({width,engine,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}));for(let offset=0;offset<data.length;offset+=4000)console.log('POSITION_VALUE_FILTER_AXE_IMAGE_CHUNK '+offset/4000+' '+data.slice(offset,offset+4000));console.log('POSITION_VALUE_FILTER_AXE_IMAGE_END');}
+   }
+   assert.deepEqual(audit.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[]);
    await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-'+width+'.png'});
   }
   stage('short-text');await p.setViewportSize({width:320,height:360});
