@@ -7,7 +7,7 @@
   "release": "SW321",
   "lastAccepted": "SW320",
   "pr": 347,
-  "qualifiedHead": "72d430cbbc9f821a032d3dc0a11a8fb112555d39",
+  "qualifiedHead": "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd",
   "coverageCounts": {
     "chromium": 19,
     "firefox": 18,
@@ -1030,7 +1030,7 @@
     43902338380,
     43904261067
   ],
-  "decision": "Await qualified exact-head merge decision; no main/product merge performed. All55 uniquely assigned;54 unchanged originals plus1 CSS-anchored test qualification. Required PR CI must finish before final decision.",
+  "decision": "Continue until current exact-head CI and corrected three-engine counterprobe qualify, then save/restore guarded archive version update and ask concrete merge decision. No product/main merge performed.",
   "limits": [
     "Physical-device and private financial evidence deferred as instructed",
     "No exact historical DOM/computed style at first two assertion instants",
@@ -1043,7 +1043,8 @@
     "filename": "FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
     "bytes": 198545934,
     "sha256": "69d36d5b636b34c1e43c6b7e1eb998847ab9c6491c44f66356a14ed174b65566",
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372&account_id=personal"
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372&account_id=personal",
+    "supersededByFinalHeadUpdatePending": true
   },
   "independentSavedCopyRestore": {
     "result": "PASS",
@@ -1070,10 +1071,54 @@
     ]
   },
   "regularCI": {
-    "run": 43904550631,
-    "walletRun": 43904550626,
+    "run": 43909694363,
+    "walletRun": 43909695155,
     "status": "PENDING",
+    "head": "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd",
+    "syntheticMerge": "ede02b0e95b06a96635d61df241baf8f5a8ce4f2"
+  },
+  "previousCounterprobeDefect": {
     "head": "72d430cbbc9f821a032d3dc0a11a8fb112555d39",
-    "syntheticMerge": "fa034b84ee3ac85724a990d2b7f306a0045322fb"
+    "ciRun": 43904550631,
+    "ciResult": "cancelled",
+    "completedCrossJobs": [
+      133429958532,
+      133429958653,
+      133429958554
+    ],
+    "cancelledTestJob": 133429958292,
+    "cause": "CSS-held counterprobe awaited app.js before releasing CSS; Chromium parser blocks at preceding classic startup.js until CSS completes",
+    "localRepro": {
+      "browserPin": "playwright1.56.1 / Chromium141",
+      "nativeDeadlineMs": 10000,
+      "requestsObserved": [
+        "styles.css",
+        "startup.js"
+      ],
+      "appRequestObserved": false,
+      "readyState": "loading",
+      "documentScripts": [
+        "drive-backup.js",
+        "startup.js"
+      ]
+    },
+    "correction": "release CSS before awaiting app request; both request handshakes bounded30000ms",
+    "acceptanceEntryPointAndCSSAnchorUnchanged": true,
+    "localCorrectedCounterprobe": [
+      {
+        "mutant": false,
+        "oldTimerElapsed": 452,
+        "prematureVisible": false,
+        "anchoredVisible": true,
+        "result": "PASS"
+      },
+      {
+        "mutant": true,
+        "oldTimerElapsed": 451,
+        "prematureVisible": false,
+        "anchoredVisible": false,
+        "result": "PASS"
+      }
+    ]
   }
 }
