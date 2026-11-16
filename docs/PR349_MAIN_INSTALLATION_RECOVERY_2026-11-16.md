@@ -26,3 +26,10 @@ Attempt1 retained SUCCESS: test133614229212 (1121s), Cross1133614229433 (627s), 
 After attempt1 ended, exactly one rerun-failed-jobs request accepted. Attempt2 actual new Cross2 job133627209482 started21:30:27Z. Its installation is now SUCCESS and browser workflows active. Copied successful jobs have new API IDs but unchanged original execution timestamps; do not count them as reruns or new runner work. Existing head and qualified PR evidence retained. No further run started.
 
 PR measurement remains1076s versus1384/1396s, observed5.1–5.3min less wait on that comparison. Main must report separately: failed setup38s; unchanged successful job runtimes; restart scheduling/diagnosis gap; actual restarted job duration; wall time from initial integration start to complete accepted required jobs. Do not label that total as an uninterrupted18minute successful main phase or subtract infrastructure delay to manufacture an observed timing win. Final runtime and deployment/live results pending.
+
+
+## Completed preservation and current retry installation
+
+[Complete attempt1 original package](https://chatgpt.com/library?file_id=libfile_fde3_f-a7b5f88075348191a226d1a569f34f52_54e45e8130348191808d9aaa710cf372&account_id=personal), version0,153384960bytes,SHA256e4c32fd63be9d9bcd103afa3a5e96b2947879a78b69869d382cd53fc4a4ad7b3. Actual saved copy independently read back:17archive members/16manifest entries,6original ZIPs/1668ZIP members; all lengths/hashes/CRCs PASS. This includes all retained successful-job originals, not just the failed installation. Retained Cross1/Cross3/Chromium/Dialog report-path sets match the qualified PR after only the existing13digit storage-fixture filename timestamp normalization; no missing paths.
+
+Retry job133627209482: installation21:30:43Z–21:31:46Z SUCCESS (63s), browser workflows now active. The first failed installation took10s, successful original Cross1 took40s. New runner image is to be read from the completed retry's original log; no guessed version. Original successful jobs stay reused. No further run or product/test change.

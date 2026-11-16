@@ -1,3 +1,9 @@
+## Main43956969224 · Originale vollständig gesichert · Versuch2 läuft
+
+Erstversuch-Originalpaket vollständig unabhängig zurückgelesen:17Dateien,16Manifestprüfungen,6ZIPs/1668ursprüngliche Mitglieder, sämtliche Längen/Hashes/CRCs PASS. [Diagnose und dauerhafte Originalbelege](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md). Cross1/Cross3/Chromium/Dialog-Berichtspfade deckungsgleich zum qualifizierten PR; keine verlorenen Belege.
+
+Weiterhin genau ein gezielter Wiederanlauf: Cross2-Job133627209482. Letzter abgeschlossener Schritt Installation21:30:43Z–21:31:46Z SUCCESS (63s); jetzt Test portfolio workflows on Firefox and WebKit. Laufzeit dieses Nachlaufs von Erstfehler38s und übernommenen Erfolgen trennen. Nächster Schritt ist Abschluss dieses Jobs, dann Deployment/Live auf demselben Main494ed8f0. Keine neue Ausführung starten und keine Erfolgsmeldung vorwegnehmen.
+
 # HND01 · Main43956969224 · gezielter Wiederanlauf aktiv
 
 Main494ed8f0f6b627d8be972a5ceb886005e5064b31, PR349-Merge erledigt, SW321 unverändert. Versuch1 vollständig beendet FAILURE: Cross2-Job133614229345 scheiterte vor Tests an APT-Browserabhängigkeiten (Ubuntu-Image20261111.127.1; nur Microsoft-Indizes, viele Ubuntu-Pakete fehlen). Cross1 auf20261111.370.1 bestand denselben Installationspfad. Originaljoblog, Originalartefakt14271463119 (298554Bytes/SHA256aa2f8bb13a20fb2c9e168aec4af3fdf7a2bdf9b1f20ba23f961ea2b6a9f7cfab/CRC PASS), Vergleichslog und Metadaten gesichert. Alle sechs PNGs sind eingecheckte Referenzen, keine neuen Cross2-Testbelege. [Diagnose/Originale](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md).
