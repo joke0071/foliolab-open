@@ -1,4 +1,14 @@
-# K4 · Backup/Restore-Plattformabgleich · 14.11.2026
+# K4 · aktueller Windows-Plattformabschluss · 16.11.2026
+
+**Windows-Browser-/verschlüsselter Export-/Restore-/Prozess-Wiederöffnungsumfang PASS / DONE gemäß neuer Nutzerakzeptanz.** [11Fälle/22vollständige Prozessbeendigungen auf dokumentiertem Windows-Runner mit installiertem Chrome und Edge](WINDOWS_K4_PLATFORM_ACCEPTANCE_2026-11-16.md); [Maschinenbeleg und Originale](release-evidence/windows-k4-sw321-2026-11-16.json). Originale10k-Fixture sowie vier kleine Präzisions-/Legacy-/UNKNOWN-Dateien weiterverwendet, keine neue Modellgenerierung, keine Privatdaten.
+
+Android-A09 weiterhin OPEN: physischer fernbedienter Testendpunkt ist zugelassen, aber nicht zugänglich. [Konkrete Android-Voraussetzungen A01–A10](WINDOWS_K4_PLATFORM_ACCEPTANCE_2026-11-16.md#android--bestehende-a01a10). Windows-Arbeit abgeschlossen; ein kostenpflichtiger/Handy-Zugang ist eine getrennte Entscheidung. Nicht geprüfte K4-/K6-/Geräte-/Versions-/Quota-/OAuthumfänge bleiben offen. SW321-Liveabnahme unverändert gültig.
+
+Der folgende Abgleich vom14.11. ist Historie; seine pauschale fehlende Windows-Plattform und OPERATOR_INPUT_PENDING-Aussage ist im oben geprüften Teilumfang erledigt. Keine pauschale K4-/1.0-Abnahme.
+
+---
+
+## Historischer Backup/Restore-Plattformabgleich · 14.11.2026
 
 **Ergebnis: OPERATOR_INPUT_PENDING. Kein neues Roadmap-Abnahmekriterium geschlossen; keine neue Testausführung.** K4 bleibt PARTIAL, v315 LIVE_ACCEPTED unverändert.
 

@@ -1,4 +1,18 @@
-# Android03 – kurze reale Geräteabnahme
+# Android03 · aktueller Zugangs- und Plattformstand · 16.11.2026
+
+SW321 bleibt LIVE_ACCEPTED. Die jüngere Nutzerentscheidung erlaubt einen dokumentierten Windows-Runner für dort geprüfte Chrome-/Edge-/Export-/Restorefälle und ein **physisches fernbedientes Android-Testgerät**. Eine persönliche Gerätebedienung ist nicht erforderlich, sofern dieser Zugang unabhängig verfügbar ist; die frühere pauschale Verschiebung ist insoweit ersetzt.
+
+[Windows-Teilprüfung vollständig bestanden](WINDOWS_K4_PLATFORM_ACCEPTANCE_2026-11-16.md): installierter Chrome/Edge, originale10k-Fixture und kleine Präzisions-/Legacy-/UNKNOWN-Fälle, verschlüsselte UI-Exporte und FreshRestore in beide Richtungen, vollständiges Prozessende und Wiederöffnung. Das schließt nur den bezeichneten Windows-Teil von K3/K4/A09.
+
+**Android weiterhin OPEN / BLOCKED_EXTERNAL:** keine zugängliche physische adb-/USB-/Remote-Device-Verbindung gefunden. [Bestehende A01–A10 jeweils mit fehlender Voraussetzung](WINDOWS_K4_PLATFORM_ACCEPTANCE_2026-11-16.md#android--bestehende-a01a10). Als Erstes Installation, Start vom App-Symbol/A01, Offline-Kaltstart/A05 und Datei-Recovery/A09 ausführen, sobald ein isolierter physischer Endpunkt vorliegt. A07 braucht zusätzlich eine echte kontrollierte Versionsfolge, A08 eine isolierte Quota-Bedingung, A10 Messzugriff. Kein Emulator als Geräte-PASS.
+
+Kein Zugriff auf Privatportfolio oder private PWA. Ein kostenpflichtiger Testgerätezugang oder Nutzung von Jochens Handy erfordert zunächst genau diese Zugangsentscheidung; Windows-Arbeit ist abgeschlossen. Vorhandene Originalfixture/Passwörter/Sollwerte unten bleiben gültig; nicht neu erzeugen.
+
+Die folgenden Abschnitte sind die erhaltene frühere Checkliste. Ihre alten Windows-OPERATOR_INPUT_PENDING-/pauschalen Geräteverschiebungs-/Releaseblocker-Aussagen sind durch den aktuellen belegten Teilumfang ersetzt; ihre fachlichen Prüfkriterien gelten weiter.
+
+---
+
+## Historische Checkliste · Android03
 
 **Nutzer-Scope 13.11.2026:** Android Chrome/PWA bleibt Pflicht des persönlichen Zielumfangs; TalkBack ist ausdrücklich zurückgestellt. Alle folgenden TalkBack-Abfragen und Testschritte sind optional und blockieren Android-PASS nicht. Normale Dialog-/Tastatur-/Touch-/IME-/Systemschriftprüfungen bleiben erforderlich. Vorhandene Fixtures und historische Messergebnisse unverändert. Windows Chrome und Edge sind gesonderte Zielplattformen; dieser Androidauftrag ersetzt deren reale Prüfung nicht.
 

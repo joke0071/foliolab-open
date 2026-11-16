@@ -1,0 +1,299 @@
+{
+  "status": "PASS",
+  "scope": "Accepted Windows runner branded Chrome and Edge UI encrypted export/transfer/fresh restore/full-process same-profile reopen; original10k plus4small originals in both browsers",
+  "productMain": "e272297ab1ba855a2922c1faa4010b83c558a796",
+  "run": 43946304983,
+  "job": 133576766668,
+  "qaHead": "e67ba0b5e6c43169fcf51250ed99eca727b67f28",
+  "PR": 348,
+  "os": {
+    "type": "Windows_NT",
+    "release": "10.0.26100",
+    "version": "Windows Server 2025 Datacenter",
+    "arch": "x64",
+    "runnerOS": "Windows",
+    "runnerImage": "win25-vs2026",
+    "imageVersion": "20261103.298.1"
+  },
+  "browsers": {
+    "chrome": {
+      "brand": "Google Chrome",
+      "version": "156.0.8078.80",
+      "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "installedFile": {
+        "ProductName": "Google Chrome",
+        "ProductVersion": "156.0.8078.80",
+        "FileVersion": "156.0.8078.80"
+      }
+    },
+    "edge": {
+      "brand": "Microsoft Edge",
+      "version": "156.0.4314.58",
+      "executablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "installedFile": {
+        "ProductName": "Microsoft Edge",
+        "ProductVersion": "156.0.4314.58",
+        "FileVersion": "156.0.4314.58"
+      }
+    }
+  },
+  "sw": {
+    "version": "foliolab-open-v321",
+    "sha256": "5f0db36b3be4b4f53d8d51b4a75556d76e6147b2a6e0f16a5bd6950512b58548"
+  },
+  "cases": [
+    {
+      "name": "Chrome original10k UI import/export and full process reopen",
+      "result": "PASS",
+      "expectedEUR": "1000",
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "externalCashFlows": 10000,
+      "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7",
+      "settings": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "off",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "sw": {
+        "controller": true,
+        "script": "http://127.0.0.1:50027/sw.js",
+        "caches": [
+          "foliolab-open-v321"
+        ]
+      },
+      "file": {
+        "sha256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb",
+        "bytes": 12361784,
+        "filename": "foliolab-verschluesselt-2026-11-16.json"
+      }
+    },
+    {
+      "name": "Chrome file to fresh Edge UI restore/process reopen/Edge UI export",
+      "result": "PASS",
+      "expectedEUR": "1000",
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "externalCashFlows": 10000,
+      "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7",
+      "settings": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "off",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "sw": {
+        "controller": true,
+        "script": "http://127.0.0.1:50027/sw.js",
+        "caches": [
+          "foliolab-open-v321"
+        ]
+      },
+      "file": {
+        "sha256": "351c00a3443316e5c99c865ad9d1bef8b1537aa4a6adc311b8ed4254cec24d0e",
+        "bytes": 12361784,
+        "filename": "foliolab-verschluesselt-2026-11-16.json"
+      },
+      "receivedSHA256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb"
+    },
+    {
+      "name": "Edge file to fresh Chrome UI restore/full process reopen",
+      "result": "PASS",
+      "expectedEUR": "1000",
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "externalCashFlows": 10000,
+      "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7",
+      "settings": {
+        "currency": "EUR",
+        "alphaVantageKey": "",
+        "marketstackKey": "",
+        "securitySource": "auto",
+        "coinGeckoKey": "",
+        "etherscanKey": "",
+        "binplorerKey": "",
+        "solanaRpc": "https://solana-rpc.publicnode.com",
+        "showSmall": true,
+        "autoRefresh": "off",
+        "lastAccountId": "",
+        "publicInstrumentEndpoint": "",
+        "eodhdWorkerEndpoint": "",
+        "eodhdWorkerAccessToken": ""
+      },
+      "receivedSHA256": "351c00a3443316e5c99c865ad9d1bef8b1537aa4a6adc311b8ed4254cec24d0e"
+    },
+    {
+      "name": "chrome original precise-price encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "751be2ae13ea6d7a6ab7ca5ec25b9664e94bbe0c7f31302442e761a2c33fd933",
+      "quantityExact": "2",
+      "priceExact": "123.450000000000000005",
+      "fxRateExact": "1",
+      "totalExactEUR": "246.90000000000000001",
+      "rawSHA256": "edf884069d1ff5e069fcf09b2cdaf9b0dbce42920d3c9e1bcf4bd1f228f4f186"
+    },
+    {
+      "name": "chrome original localized-fx encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "2981dc8ffd0878a160caa7b322da15f82a9458adaed65633564df560198ff7ee",
+      "quantityExact": "2",
+      "priceExact": "100",
+      "fxRateExact": "0.9",
+      "totalExactEUR": "180",
+      "rawSHA256": "366522ca0c0684cdcb46594089c2d90eae31fec975d89b7d84b0508d8b658696"
+    },
+    {
+      "name": "chrome original localized-fx-discrepancy encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "2277b2dd871863de1b25b1dc96bc65aa50f1af13d8f31f3d7622d3e8e579352a",
+      "quantityExact": "2",
+      "priceExact": "100",
+      "fxRateExact": "0.8",
+      "totalExactEUR": null,
+      "rawSHA256": "30aab85dab6d98ca3d13f7c7c3163857b598de88539c233f1f2ef0a88c296e1d"
+    },
+    {
+      "name": "chrome original unknown encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "cb619732c428303ca4a69417b136ba4337449ceeb06225156b12c0d14cfdaab0",
+      "quantityExact": "17.000000000000000005",
+      "priceExact": "123.45",
+      "fxRateExact": "UNKNOWN",
+      "totalExactEUR": null,
+      "rawSHA256": "4daa830b42aebf0683d42704fb1fc8e9e5a6afa25a99ddab23796221f829053a"
+    },
+    {
+      "name": "edge original precise-price encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "751be2ae13ea6d7a6ab7ca5ec25b9664e94bbe0c7f31302442e761a2c33fd933",
+      "quantityExact": "2",
+      "priceExact": "123.450000000000000005",
+      "fxRateExact": "1",
+      "totalExactEUR": "246.90000000000000001",
+      "rawSHA256": "edf884069d1ff5e069fcf09b2cdaf9b0dbce42920d3c9e1bcf4bd1f228f4f186"
+    },
+    {
+      "name": "edge original localized-fx encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "2981dc8ffd0878a160caa7b322da15f82a9458adaed65633564df560198ff7ee",
+      "quantityExact": "2",
+      "priceExact": "100",
+      "fxRateExact": "0.9",
+      "totalExactEUR": "180",
+      "rawSHA256": "366522ca0c0684cdcb46594089c2d90eae31fec975d89b7d84b0508d8b658696"
+    },
+    {
+      "name": "edge original localized-fx-discrepancy encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "2277b2dd871863de1b25b1dc96bc65aa50f1af13d8f31f3d7622d3e8e579352a",
+      "quantityExact": "2",
+      "priceExact": "100",
+      "fxRateExact": "0.8",
+      "totalExactEUR": null,
+      "rawSHA256": "30aab85dab6d98ca3d13f7c7c3163857b598de88539c233f1f2ef0a88c296e1d"
+    },
+    {
+      "name": "edge original unknown encrypted UI restore/full process reopen",
+      "result": "PASS",
+      "inputSHA256": "cb619732c428303ca4a69417b136ba4337449ceeb06225156b12c0d14cfdaab0",
+      "quantityExact": "17.000000000000000005",
+      "priceExact": "123.45",
+      "fxRateExact": "UNKNOWN",
+      "totalExactEUR": null,
+      "rawSHA256": "4daa830b42aebf0683d42704fb1fc8e9e5a6afa25a99ddab23796221f829053a"
+    }
+  ],
+  "fullBrowserTerminations": 22,
+  "noPageErrors": true,
+  "noExternalAppRequests": true,
+  "syntheticOnly": true,
+  "privatePortfolioUsed": false,
+  "fixtureSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+  "originalArtifact": {
+    "id": 14264084074,
+    "bytes": 27942177,
+    "sha256": "dcd0b58f71b6e04a3afa4f8cb24d0e454501a115fa32f3113865630f16f11a2c",
+    "members": [
+      {
+        "path": "report.json",
+        "bytes": 32867,
+        "sha256": "c4c10e136910cb83306198fcf2609a61482f06307bf6432288fef35bc54224dc"
+      },
+      {
+        "path": "transfers/chrome-to-edge.encrypted.json",
+        "bytes": 12361784,
+        "sha256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb"
+      },
+      {
+        "path": "transfers/edge-to-chrome.encrypted.json",
+        "bytes": 12361784,
+        "sha256": "351c00a3443316e5c99c865ad9d1bef8b1537aa4a6adc311b8ed4254cec24d0e"
+      },
+      {
+        "path": "transfers/received-in-edge.encrypted.json",
+        "bytes": 12361784,
+        "sha256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb"
+      }
+    ]
+  },
+  "originalFailure": {
+    "run": 43946067928,
+    "job": 133575940656,
+    "status": "FAIL retained",
+    "cause": "Windows core.autocrlf changed SW/source bytes before browser startup; no product execution. Corrected checkout preserves original Git blob bytes; hash and all financial assertions unchanged."
+  },
+  "limits": [
+    "No Windows touch/physical keyboard/system-font or PWA-installation claim",
+    "No physical Android, two physical machines, real OAuth, crash or quota proof",
+    "Backup format supported settings only; no browser preferences or vault keys claimed portable"
+  ],
+  "android": {
+    "status": "BLOCKED_EXTERNAL",
+    "physicalDeviceFound": false,
+    "adb": false,
+    "usb": false,
+    "remoteDeviceIntegrationFound": false,
+    "configuredDeviceCredentialsObserved": false,
+    "concreteMissingPrerequisite": "Authorized remote physical Android test device/session, or isolated phone test environment; no emulator substituted"
+  },
+  "savedEvidence": {
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-37b607bbf7048191a8e8cea45eef7286_54e45e8130348191808d9aaa710cf372&account_id=personal",
+    "libraryFileId": "libfile_fde3_f-37b607bbf7048191a8e8cea45eef7286_54e45e8130348191808d9aaa710cf372",
+    "fileId": "file_00000000e5a081f48667353020b51956",
+    "version": 0,
+    "path": "/tmp/foliolab-windows/FolioLab_Windows_Chrome_Edge_SW321_2026-11-16.tar.gz",
+    "bytes": 28029677,
+    "sha256": "095519dddd4119a3e6fe018bccad82c7c8a3802e0f0f3c06bd71310e78e4e983",
+    "manifestEntries": 8
+  },
+  "actualSavedCopyRestore": {
+    "result": "PASS",
+    "actualSavedCopy": true,
+    "archiveBytes": 28029677,
+    "archiveSHA256": "095519dddd4119a3e6fe018bccad82c7c8a3802e0f0f3c06bd71310e78e4e983",
+    "manifestEntries": 8,
+    "originalZIPMembers": 4,
+    "digestsLengthsCRCs": "PASS"
+  }
+}
