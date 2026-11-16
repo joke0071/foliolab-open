@@ -1,0 +1,71 @@
+name: SW321 bounded loader counterprobe on all original browser pins
+on:
+  push:
+    branches: [qa/sw321-counterprobe]
+permissions:
+  contents: read
+concurrency:
+  group: sw321-counterprobe
+  cancel-in-progress: true
+jobs:
+  counterprobe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require exact PR head and unchanged product
+        run: |
+          test "$(git rev-parse HEAD)" = "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd"
+          git diff --exit-code 29f2a1c85a6b859c75c0811b3b478f745b12c8bf HEAD -- index.html styles.css sw.js manifest.webmanifest src icons
+      - name: Install original browser pins
+        run: |
+          if [[ "${{ matrix.engine }}" == "chromium" ]]; then
+            npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+            npx playwright install chromium --only-shell
+          else
+            archive_mirror=''
+            security_mirror=''
+            if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+              archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
+              printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+            fi
+            if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+              security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
+              printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+            fi
+            npm install --no-save playwright@1.64.1 axe-core@4.10.3
+            npx playwright install --with-deps ${{ matrix.engine }}
+          fi
+      - name: Run only changed counterprobe with explicit native deadline
+        env:
+          PROBE_ENGINE: ${{ matrix.engine }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/counterprobe
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/counterprobe-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          timeout 90s node --input-type=module - <<'JS'
+          import {chromium,firefox,webkit} from 'playwright';
+          import {verifyStartupTiming} from './tests/browser-startup-timing.mjs';
+          import {writeFileSync} from 'node:fs';
+          const engine=process.env.PROBE_ENGINE,browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
+          try{const cases=await verifyStartupTiming(browser,'http://127.0.0.1:4173/');const report={engine,result:'PASS',testHead:'da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd',productMain:'29f2a1c85a6b859c75c0811b3b478f745b12c8bf',cases};writeFileSync('artifacts/counterprobe/'+engine+'.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));}finally{await browser.close()}
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sw321-counterprobe-${{ matrix.engine }}
+          path: artifacts/counterprobe
+          if-no-files-found: error
+          retention-days: 30
