@@ -2,6 +2,14 @@
 
 Sole writer `hnd01-sw321-reload-20261116-4672ea147672-root`, explicitly authorized by Jochen on 16 November 2026. Write authority of `hnd01-sw321-close-20261116-953e8d11597b-root` ended with this handover. All previous owners have no write authority. No subagents. This checkpoint branch must never be merged wholesale into main.
 
+## Jüngster privater Bitpanda-Abgleich · 16.11.2026
+
+Der neu bereitgestellte Quartalsauszug wurde hashgeprüft und visuell gelesen. Acht ausgewiesene Einzelcoin-Mengen ohne Kleinstbestandsfilter gegen das lesende native Bitpanda-Quellreplay abgeglichen, zusätzlich unabhängig Decimal-geprüft. **Drei direkte Übereinstimmungen; fünf Coin-Differenzen und elf weitere nichtnullige Coinreste vor BCI25-Abtrennung bleiben offen.** Stakinganteile sind Teil der PDF-Menge, keine zusätzliche Position. Explizite Stakingfolgen erklären zwei ausgewiesene Teilbestände; spätere Quellvorgänge wurden nicht in den Stichtag vorgezogen. Für die übrigen Differenzen sind Originalbewegungen privat zugeordnet; Indexrebalancing ist plausibel, aber ohne unabhängige Komponenten-Zuordnung nicht endgültig bewiesen.
+
+Der Index-EUR-Wert ist im Auszug als privater Quellanker dokumentiert; Stückzahl, eigenständiger historischer FolioLab-Vergleichswert und eine numerische Differenz werden nicht erfunden. Der im PDF fehlende Bargeldsaldo bleibt OPEN, auch nicht durch Subtraktion von Summen als Nullsaldo abgenommen. **Genau ein vorrangiger Zusatznachweis:** passende BCI25-Komponenten-/Bestandsaufstellung mit Coinmengen zur Trennung von Index-/Einzel-/Stakingbestand. Kein neuer Gesamtexport auf Verdacht, keine zweite gleichzeitige Bargeldanfrage.
+
+Privatpaket mit Original-PDF, vorhandener CSV, Einzelmengen, Original-IDs, Methode und unabhängiger Kontrollrechnung separat gespeichert und tatsächliche gespeicherte Kopie vollständig hash-/längen-/CRC-geprüft. Keine Einzelbeträge, Stichtagsdetails, privaten Kennungen oder Originale in GitHub/CI. Kein Import, kein Privatportfolio geändert, kein Produktpatch oder Release ausgelöst. K1/K2-FIN bleiben PARTIAL; zuvor bestätigter Kraken-Spotanker und Windows-Prüfumfang bleiben abgeschlossen. Die SW321-Liveabnahme bleibt gültig.
+
 ## Fortschreibung · 1.0-Restübersicht, Windows und privater Kraken-Abgleich · 16.11.2026
 
 [Gebündelte aktuelle 1.0-Restübersicht](FOLIOLAB_1_0_REMAINING_2026-11-15.md) und [kanonische Roadmap](KONSOLIDIERTE_ROADMAP.md) sind mit SW321 zusammengeführt. **UI-R4 und UI-ALLOC01 sind produktiv DONE / LIVE_ACCEPTED**, keine offenen Mergeentscheidungen für PR343–347. [Filter-SW320-Abnahme](release-evidence/sw320-full55-live-accepted-2026-11-16.json), [SW321-Fachabschluss](SW321_LIVE_CLOSURE_2026-11-16.md) und bestehende Originale unverändert weiterverwendet.
