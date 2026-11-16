@@ -1,0 +1,96 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {mkdirSync,writeFileSync} from 'node:fs';
+/** Existing UI-quality caller runs this contract in PR/Main and actual production. */
+export async function positionValueFilterBrowserContract({p,nav,record,scan,engine,scans}){
+  const dir='artifacts/gates/position-value-filter';mkdirSync(dir,{recursive:true});
+  const report={engine,result:'NOT_REACHED',scope:'Synthetic UI-R4 display-only filter',stages:[]};
+  const stage=name=>{report.stages.push(name);writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));console.log('POSITION_VALUE_FILTER_STAGE '+engine+' '+name);};
+  try{
+  // A separate synthetic canonical setup; all subsequent filter actions are read-only.
+  stage('BEGIN');await p.context().setOffline(false);
+  await p.evaluate(async()=>{
+   const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
+   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+   const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'r4-provider',name:'Synthetic display filter'}));m.accounts.push(createAccount({id:'r4-account',providerId:'r4-provider',name:'Synthetic account',type:'securities'},m));
+   const add=(id,name,price,extra={})=>m.positions.push(createPosition({id,name,providerId:'r4-provider',accountId:'r4-account',kind:'etf',quantity:1,quantityExact:'1',price:Number(price),priceExact:price,quoteSource:'Synthetic quote',...extra},m));
+   add('r4-small','A small','0.999999999999999999');add('r4-equal','B equal','1');add('r4-above','C above','1.000000000000000001');add('r4-unknown','D unknown FX','0.01',{currency:'USD',fxRate:null,fxRateExact:'UNKNOWN'});add('r4-missing','E missing quote','0',{quoteSource:''});add('r4-zero','F true zero','0');add('r4-archived','G archived small','0.01',{archived:true});
+   for(let i=0;i<105;i++)add('r4-large-'+i,'Z large '+String(i).padStart(3,'0'),'2');
+   const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
+  });
+  await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  const filterBefore=await record();
+  // A preceding suite can leave ?page=more/positions in the URL. Render the
+  // same real dashboard before BOTH snapshots, never compare its placeholder.
+  await p.locator('#mobileNav [data-page=dashboard]:visible,#sidebarNav [data-page=dashboard]:visible').click();
+  assert.equal(await p.locator('#donut .allocation-svg').count(),1,'rendered synthetic allocation baseline');
+  stage('rendered-baseline');
+  const dashboard=()=>p.evaluate(()=>({total:document.getElementById('totalValue').textContent,donut:document.getElementById('donut').innerHTML,legend:document.getElementById('allocationLegend').innerHTML}));
+  const dashboardBefore=await dashboard();
+  await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();
+  await p.locator('#positionSort').selectOption('name');assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.equal(await p.locator('.position-entry').count(),100);
+  await p.locator('#positionListHead button').click();await p.locator('[data-position-select="r4-small"]').check();await p.locator('[data-position-select="r4-unknown"]').check();
+  await p.locator('#positionValueFilter').fill('1');assert.equal(await p.locator('#positionList [data-position-id="r4-small"]').count(),0);assert.equal(await p.locator('#positionList [data-position-id="r4-zero"]').count(),0);
+  for(const id of ['r4-equal','r4-above','r4-unknown','r4-missing'])assert.equal(await p.locator('#positionList [data-position-id="'+id+'"]').count(),1);
+  assert.match(await p.locator('#positionSelectionStatus').innerText(),/2 ausgewählt, davon 1 im aktuellen Filter · 1 ausgeblendet/);
+  assert.equal(await p.locator('[data-position-select="r4-unknown"]').isChecked(),true);assert.match(await p.locator('#positionValueFilterHint').innerText(),/2 von 111 Treffern ausgeblendet/);
+  await p.locator('[data-action="more-positions"]').click();assert.equal(await p.locator('.position-entry').count(),109);
+  await p.locator('#mobileNav [data-page=dashboard]:visible,#sidebarNav [data-page=dashboard]:visible').click();
+  assert.deepEqual(await dashboard(),dashboardBefore,'filter leaves displayed portfolio sum and allocation unchanged');
+  assert.deepEqual(await record(),filterBefore,'filter leaves all quantities, journals, sums and settings unchanged');
+  await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();
+  await p.locator('#positionValueFilter').fill('-1');assert.equal(await p.locator('#positionValueFilter').getAttribute('aria-invalid'),'true');assert.equal(await p.locator('#positionValueFilter').inputValue(),'-1');assert.equal(await p.locator('#positionList [data-position-id="r4-small"]').count(),0);
+  await p.locator('#positionValueFilter').fill('1,000000000000000001');assert.equal(await p.locator('#positionList [data-position-id="r4-equal"]').count(),0);assert.equal(await p.locator('#positionList [data-position-id="r4-above"]').count(),1);
+  await p.locator('#positionSearch').fill('A small');assert.equal(await p.locator('.position-entry').count(),0);assert.match(await p.locator('#positionList').innerText(),/Leere die Grenze/);await p.locator('#positionSearch').fill('');
+  await p.locator('#positionArchiveFilter').selectOption('archived');assert.equal(await p.locator('.position-entry').count(),0);await p.locator('#positionValueFilter').fill('');assert.equal(await p.locator('#positionList [data-position-id="r4-archived"]').count(),1);
+  await p.locator('#positionArchiveFilter').selectOption('active');assert.equal(await p.locator('[data-position-select="r4-small"]').isChecked(),true);await p.locator('#positionValueFilter').fill('1');
+  await p.locator('#mobileNav [data-page=more]:visible,#sidebarNav [data-page=more]:visible').click();await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'1');
+  await p.locator('[data-action="clear-position-selection"]').click();
+  assert.equal(await p.locator('[data-position-select="r4-unknown"]').isChecked(),false);
+  await p.locator('#positionValueFilter').fill('');assert.equal(await p.locator('[data-position-select="r4-small"]').isChecked(),false,'hidden selection can be cleared unambiguously');
+  await p.locator('#positionValueFilter').fill('1');
+  mkdirSync('artifacts/gates/position-value-filter',{recursive:true});
+  for(const width of [320,390,430,768,1440]){
+   stage('width-'+width);
+   await p.setViewportSize({width,height:900});await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
+   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.ok((await p.locator('#positionValueFilter').boundingBox()).height>=44);
+   const audit=await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+   const geometry=await p.evaluate(()=>{const element=document.getElementById('addWizard'),label=element.querySelector('.action-label'),rect=label.getBoundingClientRect(),css=getComputedStyle(label);return {label:{rect:rect.toJSON(),color:css.color,font:css.font,display:css.display,pointStack:document.elementsFromPoint(rect.x+rect.width/2,rect.y+rect.height/2).map(node=>({tag:node.tagName,id:node.id,className:node.className,color:getComputedStyle(node).color,background:getComputedStyle(node).backgroundColor}))},viewport:{width:innerWidth,height:innerHeight,scrollY},button:element.outerHTML,rect:element.getBoundingClientRect().toJSON(),ancestors:[element,...(function*(node){for(let parent=node.parentElement;parent;parent=parent.parentElement)yield parent;})(element)].map(node=>{const css=getComputedStyle(node);return {tag:node.tagName,id:node.id,color:css.color,background:css.backgroundColor,opacity:css.opacity,position:css.position,rect:node.getBoundingClientRect().toJSON()};})};});
+   report.geometry??=[];report.geometry.push(geometry);
+   if(audit.length){
+    // Observe one post-frame countercase, but always fail the original audit.
+    await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    const postFrame=await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+    const evidence={width,audit,geometry,postFrame};writeFileSync(dir+'/'+engine+'-axe-'+width+'.json',JSON.stringify(evidence,null,2));console.log('POSITION_VALUE_FILTER_AXE_FAILURE '+JSON.stringify(evidence));
+    const bytes=await p.screenshot({path:dir+'/'+engine+'-axe-'+width+'.png'});
+    if(bytes.length<=256000){const data=bytes.toString('base64');console.log('POSITION_VALUE_FILTER_AXE_IMAGE_BEGIN '+JSON.stringify({width,engine,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}));for(let offset=0;offset<data.length;offset+=4000)console.log('POSITION_VALUE_FILTER_AXE_IMAGE_CHUNK '+offset/4000+' '+data.slice(offset,offset+4000));console.log('POSITION_VALUE_FILTER_AXE_IMAGE_END');}
+   }
+   assert.deepEqual(audit.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[]);
+   await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-'+width+'.png'});
+  }
+  stage('short-text');await p.setViewportSize({width:320,height:360});
+  await p.locator('#positionValueFilter').fill('999999999999.123456789012345678');
+  await p.locator('.position-value-filter').evaluate(root=>{for(const el of root.querySelectorAll('span,input,p'))el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*2)+'px';});
+  await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
+  assert.equal(await p.locator('#positionValueFilter').inputValue(),'999999999999.123456789012345678');
+  assert.equal(await p.locator('#positionValueFilter').getAttribute('aria-invalid'),'false');
+  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  const readShortView=()=>p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('header')?.getBoundingClientRect();return {pass:document.activeElement===el&&r.top>=Math.max(0,header?.bottom||0)&&r.bottom<=nav.top&&r.height>=44,activeElement:document.activeElement?.id,field:r.toJSON(),navigation:nav.toJSON(),header:header?.toJSON(),viewport:{width:innerWidth,height:innerHeight,scrollY},css:{font:getComputedStyle(el).font,scrollMarginTop:getComputedStyle(el).scrollMarginTop,scrollMarginBottom:getComputedStyle(el).scrollMarginBottom}};});
+  const shortView=await readShortView();
+  if(!shortView.pass){
+   writeFileSync(dir+'/'+engine+'-short-focus.json',JSON.stringify(shortView,null,2));console.log('POSITION_VALUE_FILTER_SHORT_FAILURE '+JSON.stringify(shortView));
+   const bytes=await p.screenshot({path:dir+'/'+engine+'-short-focus.png'});
+   if(bytes.length<=256000){const data=bytes.toString('base64');console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_BEGIN '+JSON.stringify({engine,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}));for(let offset=0;offset<data.length;offset+=4000)console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_CHUNK '+offset/4000+' '+data.slice(offset,offset+4000));console.log('POSITION_VALUE_FILTER_SHORT_IMAGE_END');}
+  }
+  assert.ok(shortView.pass,'short computed200percent view keeps focused field clear of navigation/header');
+  await p.locator('#positionArchiveFilter').focus();await p.keyboard.press('Tab');
+  const keyboardView=await readShortView();report.shortView=shortView;report.keyboardView=keyboardView;
+  assert.ok(keyboardView.pass,'native Tab focus clears sticky bars in short enlarged-text view');
+  assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
+  await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-320x360-text200.png'});
+  assert.deepEqual(await record(),filterBefore,'display filtering preserves exact raw/revision/settings');
+  stage('offline');await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');
+  Object.assign(report,{result:'PASS',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged','320x360/200% text and native Tab keep the field clear of sticky bars']});stage('RESULT_PASS');
+  }catch(error){report.result='FAIL';report.error=String(error);stage('RESULT_FAIL');throw error;}
+  finally{writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));}
+}

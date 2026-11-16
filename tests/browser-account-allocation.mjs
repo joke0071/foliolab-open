@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 import {waitForAppServiceWorker,browserGateDeadline} from './browser-gate-deadline.mjs';
 import {accountAllocationBrowserContract} from './account-allocation-browser-contract.mjs';
+import {combinedFilterAllocationBrowserContract} from './combined-filter-allocation-browser-contract.mjs';
 const finish=browserGateDeadline('targeted account allocation');
 for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
@@ -14,6 +15,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated');
   const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
   await accountAllocationBrowserContract({p,record,engine,touch:true});
+  await combinedFilterAllocationBrowserContract({p,record,engine});
   assert.deepEqual(errors,[]);console.log('ACCOUNT_ALLOCATION_PASS '+engine);
  }finally{await browser.close();}
 }

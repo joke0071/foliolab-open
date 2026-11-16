@@ -25,3 +25,10 @@ Deferred devices, missing independent Kraken/Bitpanda balance/ownership evidence
 ## Preserved first CI finding
 
 Initial ring head ec4290c43a60af4e76273fbb1727a99f6628548d / tested merge1ae7d9f774e22ded9f237b5b686ab19296c4634f, run43838611073: Cross3 correctly failed the existing exact unknown-FX compact-summary text assertion because the new ring adds a visible unavailable-share dash. The amount remains “Nicht bewertet”; no invented EUR value. Expected full summary is extended by exactly that dash; all original price/CSV44px/negative-control/IDB/Axe assertions remain. Initial failing original log preserved. This is a changed test compatibility head, not an unchanged retry. Shared contract now also writes bounded BEGIN/STAGE/RESULT diagnostics before risky awaits; cleanup remains the existing caller’s separate operation.
+
+
+## Integration on actual filter main · 16 November 2026
+
+PR345 was merged with expected head859af3942db38ef2ed3439c1767a763fc500ff1f. Actual main112dc6d441fe79b0cf3086a5720b6d48910bf784 has the qualified filter tree0c749ffda82a32ec0e98c025aeafa751b37aa759. This integration merges that actual main into the existing ring branch; no ring product rewrite. Both UI-quality contracts remain and both independent CSS blocks are retained. Service-worker progression is main319 → merged filter320 → proposed ring321.
+
+The prior combined Chromium/WebKit 1000EUR oracle is now a regular shared contract called by UI-quality in PR/Main/live, also by the targeted allocation runner: select1EUR cash backed by a real deposit journal; threshold2EUR hides it; account shares stay40/30/29.9/0.1%, total1000EUR and main donut/legend stay identical; clearing restores its selection. Whole canonical IndexedDB raw record/revision/settings and nonempty journal/bookings/quantities must remain identical. Prior Chromium/WebKit receipts remain comparison evidence, not final-head CI. Local unit1505/1505 and syntax PASS; final new-head regular CI including Wallet is required. Ring merge remains reserved for Jochen's exact-head decision.
