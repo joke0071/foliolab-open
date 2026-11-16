@@ -1,3 +1,9 @@
+## Aktueller Teilabschluss · 16.11.2026 · SW321 unverändert
+
+[Bitpanda/Windows-Abnahme](SW321_WINDOWS_K6_BITPANDA_2026-11-16.md): native CSV-UI erzeugt keine zusätzliche Indexposition, fachliche Summe/Allokation stimmt; private historische Wertgegenrechnung auf Centebene plausibel. Persönliche Einzelkomponenten und Bargeld bleiben unbestätigt. Windows Chrome/Edge Tab/Enter/Escape, sinnvoller Fokus/3px Outline und CSS200%-Erreichbarkeit bestanden; echte Systemschrift/physischer Touch/Android weiter offen. Elf K4-Originalfälle wiederverwendet. Zwei öffentliche ETH-Originalcursorpaare mit Folgeseiten gesichert und vom Adapter akzeptiert; privater betroffener Fall bleibt VERIFY. D-ETH260 DONE. Keine privaten Einzelmengen/Originale in GitHub/CI.
+
+CI: PR349 Head411821d884d2a8df7a4be44bddb85bb62259ff2c ersetzt PR332 als aktuelle konkrete Kandidatenentscheidung. Genau eine unveränderte Cross3→Cross2-Zeile; regulärer Lauf43952358302 läuft, geschätzte Integrationwarteersparnis3.0–4.9min, gemessener Abschluss ausstehend. Kein Merge ohne Headentscheidung, keine erneute Vollprüfung nur zur Zeitmessung. Details im aktuellen Checkpoint. Frühere pauschale externe Blocker/alte PR332-Mergeentscheidungen gelten nur soweit hier nicht ersetzt.
+
 ## Aktueller Abgleich · SW v321 produktiv abgenommen · 16.11.2026
 
 **UI-R4 (Filter) und UI-ALLOC01 (Allokationsring) sind DONE / LIVE_ACCEPTED.** Filter: [SW320-Abnahme](release-evidence/sw320-full55-live-accepted-2026-11-16.json). Ring einschließlich Zusammenspiel mit Filter: [SW321-Abschluss](SW321_LIVE_CLOSURE_2026-11-16.md) und [Maschinenbeleg](release-evidence/sw321-main-live-accepted-2026-11-16.json). Produktivmain `e272297ab1ba855a2922c1faa4010b83c558a796`. PR345/346/347 sind gemergt; die früheren separaten Mergeentscheidungen sind erledigt. Historische Blockerberichte behalten ihre damaligen Ergebnisse, bestimmen aber nicht den aktuellen Releasezustand.

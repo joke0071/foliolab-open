@@ -1,0 +1,86 @@
+{
+  "scope": "general public provider mechanism only; not private affected address or original failure",
+  "capturedAt": "2026-11-16T20:44:11.818027+00:00",
+  "privateAffectedCase": "OPEN: original affected endpoint type and first next_page_params/follow-page pair absent from available evidence; public pair cannot identify that private failure",
+  "technicalD_ETH260": "DONE",
+  "cases": [
+    {
+      "kind": "transactions",
+      "result": "PAIR_CAPTURED",
+      "adapterCursorAccepted": true,
+      "overlapItems": 0,
+      "sameEndpoint": true,
+      "unmodifiedParameters": true,
+      "pages": [
+        {
+          "url": "https://eth.blockscout.com/api/v2/addresses/0xd8da6bf26964af9d7eed9e03e53415d37aa96045/transactions",
+          "status": 200,
+          "sha256": "d993054060a184d9f2b35db3589cee31011e9dbf52cdb8a008e395831d94b7f6",
+          "bytes": 523203,
+          "items": 50,
+          "next_page_params": {
+            "index": 178,
+            "value": "1000000000000",
+            "hash": "0xbdf76f6d69cb37c8fa07ac53bafe57a9597c4024eb5a6194c76e241aa6bfd0fc",
+            "inserted_at": "2026-10-11T14:29:34.044784Z",
+            "block_number": 26169813,
+            "fee": "3166702766450"
+          }
+        },
+        {
+          "url": "https://eth.blockscout.com/api/v2/addresses/0xd8da6bf26964af9d7eed9e03e53415d37aa96045/transactions?index=178&value=1000000000000&hash=0xbdf76f6d69cb37c8fa07ac53bafe57a9597c4024eb5a6194c76e241aa6bfd0fc&inserted_at=2026-10-11T14%3A29%3A34.044784Z&block_number=26169813&fee=3166702766450",
+          "status": 200,
+          "sha256": "d43992faa39994ac2b7b6fcd0ae3ce4f8ad6d638989d022699be7fddc2b19e60",
+          "bytes": 540993,
+          "items": 50,
+          "next_page_params": {
+            "index": 149,
+            "value": "0",
+            "hash": "0x9f310ef082ea274c64e881e36ac47f70ac183dde539db60e4ec8e110e89c448f",
+            "inserted_at": "2026-08-21T12:18:19.247832Z",
+            "block_number": 25803460,
+            "fee": "26052993545516"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "token-transfers",
+      "result": "PAIR_CAPTURED",
+      "adapterCursorAccepted": true,
+      "overlapItems": 0,
+      "sameEndpoint": true,
+      "unmodifiedParameters": true,
+      "pages": [
+        {
+          "url": "https://eth.blockscout.com/api/v2/addresses/0xd8da6bf26964af9d7eed9e03e53415d37aa96045/token-transfers",
+          "status": 200,
+          "sha256": "0c51adb95a4db670d23f5113a854082f6e505a4c9f0a9510742231e13f4cc4b1",
+          "bytes": 565240,
+          "items": 50,
+          "next_page_params": {
+            "index": 657,
+            "block_number": 26368599
+          }
+        },
+        {
+          "url": "https://eth.blockscout.com/api/v2/addresses/0xd8da6bf26964af9d7eed9e03e53415d37aa96045/token-transfers?index=657&block_number=26368599",
+          "status": 200,
+          "sha256": "9788fea8accc9f09ac2bab51cbee6e057c902c52619fbdd52e5db5092e7381e4",
+          "bytes": 615441,
+          "items": 50,
+          "next_page_params": {
+            "index": 777,
+            "block_number": 26368410
+          }
+        }
+      ]
+    },
+    {
+      "kind": "internal-transactions",
+      "result": "BLOCKED",
+      "missingPrerequisite": "Accessible successful original response for endpoint; bounded read timed out",
+      "error": "The read operation timed out"
+    }
+  ]
+}

@@ -1,3 +1,7 @@
+## Ergänzter Windows-K6-Teilumfang · 16.11.2026
+
+[Neue tatsächliche Windows-Bedienbelege](SW321_WINDOWS_K6_BITPANDA_2026-11-16.md): Chrome/Edge Tastatur-Position/Editor, Escape/Fokusrückkehr/Weiterarbeit und3px sichtbarer Fokus bestanden. Berechnete CSS-Schriftverdoppelung320/768 mit erreichbaren Aktionen bestanden; echte OS-Systemschrift wurde nicht verändert und bleibt OPEN. Physischer Touch und Android A01–A10 bleiben ohne isoliert zugängliches physisches Gerät OPEN. Bestehende elf K4-Fälle behalten ihre Abnahme und werden nicht wiederholt.
+
 # Android03 · aktueller Zugangs- und Plattformstand · 16.11.2026
 
 SW321 bleibt LIVE_ACCEPTED. Die jüngere Nutzerentscheidung erlaubt einen dokumentierten Windows-Runner für dort geprüfte Chrome-/Edge-/Export-/Restorefälle und ein **physisches fernbedientes Android-Testgerät**. Eine persönliche Gerätebedienung ist nicht erforderlich, sofern dieser Zugang unabhängig verfügbar ist; die frühere pauschale Verschiebung ist insoweit ersetzt.
