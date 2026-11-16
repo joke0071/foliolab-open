@@ -1,3 +1,7 @@
+## Laufender CI-Checkpoint · 16.11.2026 · Originalzeiten UTC
+
+PR349 Head411821d884d2a8df7a4be44bddb85bb62259ff2c; Lauf43952358302/attempt1. Getesteter Merge8504e6ecdcfad4c4238fc3bfd4a7b463184d3f1d hat exakt Kandidatentree47674d62c54c06a67e347bc73faef127ae33ee76 und Eltern Main e272297 + Kandidat411821d. Main frisch unverändert. Cross1 SUCCESS um20:52:12Z (633s), Cross3 SUCCESS um20:56:37Z (897s). Beide einschließlich Artefaktupload abgeschlossen; Cross1-Original Größe/Hash/CRC bereits geprüft, Cross3-Sicherung läuft. Test und Cross2 noch im Browserworkflow; letzter abgeschlossener Schritt jeweils Tool-/Browserinstallation. Nächster Schritt: diese beiden Originaljobs bis Ende übernehmen, Artefakte sichern und all-required critical path gegen1383/1396s vergleichen. Keine neue Ausführung/kein neuer Head. Private Originalrekonstruktion erneut identisch, private Restbelegliste Version3 unabhängig bytegleich rückgelesen.
+
 # Aktueller Ergebnisstand · SW321 · 16.11.2026
 
 Sole writer hnd01-sw321-reload-20261116-4672ea147672-root. LIVE_ACCEPTED main e272297ab1ba855a2922c1faa4010b83c558a796 unverändert. Keine neue Mergefreigabe unterstellt.
