@@ -1030,44 +1030,19 @@
     43902338380,
     43904261067
   ],
-  "decision": "Continue until current exact-head CI and corrected three-engine counterprobe qualify, then save/restore guarded archive version update and ask concrete merge decision. No product/main merge performed.",
+  "decision": "All55unique assignments and final-head three-engine counterprobe PASS; saved-copy version1 actual restore PASS. Current regular head CI43909694363 pending. Preserve prior successful originals; append final current CI and aligned current synthetic merge metadata in final archive version before user merge decision.",
   "limits": [
     "Physical-device and private financial evidence deferred as instructed",
     "No exact historical DOM/computed style at first two assertion instants",
     "No assertion that original450ms started after CSS parse/animation creation"
   ],
-  "savedEvidence": {
-    "libraryFileId": "libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372",
-    "fileId": "file_00000000186081f589bd896d7764a03f",
-    "version": 0,
-    "filename": "FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
-    "bytes": 198545934,
-    "sha256": "69d36d5b636b34c1e43c6b7e1eb998847ab9c6491c44f66356a14ed174b65566",
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372&account_id=personal",
-    "supersededByFinalHeadUpdatePending": true
-  },
-  "independentSavedCopyRestore": {
-    "result": "PASS",
-    "archive": "/workspace/scratch/94e5d3570e84/saved-copy/FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
-    "archiveSHA256": "69d36d5b636b34c1e43c6b7e1eb998847ab9c6491c44f66356a14ed174b65566",
-    "archiveBytes": 198545934,
-    "manifestEntries": 60,
-    "originalZIPs": 25,
-    "originalFiles": 2410,
-    "coverageUnique": 55,
-    "unchangedOriginal": 54,
-    "correctedWebKitQualification": 1,
-    "contracts": 9,
-    "productPathsUnchanged": 154,
-    "savedCopy": true
-  },
   "syntheticMerge": {
-    "sha": "fa034b84ee3ac85724a990d2b7f306a0045322fb",
-    "tree": "6f7455c39d85e41480fd40d1e1efd630d6058978",
+    "sha": "ede02b0e95b06a96635d61df241baf8f5a8ce4f2",
+    "tree": "c787469e711f7303842a471bed2ff37a780f0059",
     "sameTreeAsHead": true,
     "orderedParents": [
       "29f2a1c85a6b859c75c0811b3b478f745b12c8bf",
-      "72d430cbbc9f821a032d3dc0a11a8fb112555d39"
+      "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd"
     ]
   },
   "regularCI": {
@@ -1120,5 +1095,156 @@
         "result": "PASS"
       }
     ]
+  },
+  "counterprobeFinalHead": {
+    "run": 43909800100,
+    "result": "PASS",
+    "reports": [
+      {
+        "artifact": 14247685416,
+        "engine": "webkit",
+        "report": {
+          "engine": "webkit",
+          "result": "PASS",
+          "testHead": "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd",
+          "productMain": "29f2a1c85a6b859c75c0811b3b478f745b12c8bf",
+          "cases": [
+            {
+              "mutant": false,
+              "oldTimerElapsed": 451,
+              "prematureVisible": false,
+              "anchoredVisible": true,
+              "result": "PASS"
+            },
+            {
+              "mutant": true,
+              "oldTimerElapsed": 451,
+              "prematureVisible": false,
+              "anchoredVisible": false,
+              "result": "PASS"
+            }
+          ]
+        },
+        "sha256": "0850368896e12a8e5bf01bb9b91e45ebe11058aabfdcb446a500a99953c4e917"
+      },
+      {
+        "artifact": 14247092302,
+        "engine": "firefox",
+        "report": {
+          "engine": "firefox",
+          "result": "PASS",
+          "testHead": "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd",
+          "productMain": "29f2a1c85a6b859c75c0811b3b478f745b12c8bf",
+          "cases": [
+            {
+              "mutant": false,
+              "oldTimerElapsed": 452,
+              "prematureVisible": false,
+              "anchoredVisible": true,
+              "result": "PASS"
+            },
+            {
+              "mutant": true,
+              "oldTimerElapsed": 451,
+              "prematureVisible": false,
+              "anchoredVisible": false,
+              "result": "PASS"
+            }
+          ]
+        },
+        "sha256": "7aade5072dfba90834eafe7e7d54e15d860010864a528fef47d2dd939d8368ac"
+      },
+      {
+        "artifact": 14246777905,
+        "engine": "chromium",
+        "report": {
+          "engine": "chromium",
+          "result": "PASS",
+          "testHead": "da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd",
+          "productMain": "29f2a1c85a6b859c75c0811b3b478f745b12c8bf",
+          "cases": [
+            {
+              "mutant": false,
+              "oldTimerElapsed": 450,
+              "prematureVisible": false,
+              "anchoredVisible": true,
+              "result": "PASS"
+            },
+            {
+              "mutant": true,
+              "oldTimerElapsed": 451,
+              "prematureVisible": false,
+              "anchoredVisible": false,
+              "result": "PASS"
+            }
+          ]
+        },
+        "sha256": "8fbcfe956207eadcfbed0c9d446f79bc46ea1d83e84082fe0f9808297d632d94"
+      }
+    ],
+    "browserPins": {
+      "chromium": "playwright1.56.1",
+      "firefox": "playwright1.64.1",
+      "webkit": "playwright1.64.1"
+    }
+  },
+  "priorSavedEvidenceV0": {
+    "libraryFileId": "libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372",
+    "fileId": "file_00000000186081f589bd896d7764a03f",
+    "version": 0,
+    "filename": "FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
+    "bytes": 198545934,
+    "sha256": "69d36d5b636b34c1e43c6b7e1eb998847ab9c6491c44f66356a14ed174b65566",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372&account_id=personal",
+    "supersededByFinalHeadUpdatePending": true
+  },
+  "priorSavedCopyRestoreV0": {
+    "result": "PASS",
+    "archive": "/workspace/scratch/94e5d3570e84/saved-copy/FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
+    "archiveSHA256": "69d36d5b636b34c1e43c6b7e1eb998847ab9c6491c44f66356a14ed174b65566",
+    "archiveBytes": 198545934,
+    "manifestEntries": 60,
+    "originalZIPs": 25,
+    "originalFiles": 2410,
+    "coverageUnique": 55,
+    "unchangedOriginal": 54,
+    "correctedWebKitQualification": 1,
+    "contracts": 9,
+    "productPathsUnchanged": 154,
+    "savedCopy": true
+  },
+  "previousSyntheticMerge": {
+    "sha": "fa034b84ee3ac85724a990d2b7f306a0045322fb",
+    "tree": "6f7455c39d85e41480fd40d1e1efd630d6058978",
+    "sameTreeAsHead": true,
+    "orderedParents": [
+      "29f2a1c85a6b859c75c0811b3b478f745b12c8bf",
+      "72d430cbbc9f821a032d3dc0a11a8fb112555d39"
+    ]
+  },
+  "savedEvidence": {
+    "libraryFileId": "libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372",
+    "fileId": "file_00000000bdbc81f59e7ff6b73d698bf6",
+    "version": 1,
+    "filename": "FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
+    "bytes": 203137520,
+    "sha256": "6e3d274acde30496817cd901c42e4e50f6b50c1ae87364cdc2a8a2e1365375a9",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be51093008e4819195e37c91783a4718_54e45e8130348191808d9aaa710cf372&account_id=personal",
+    "finalMetadataAndCurrentCIAppendPending": true
+  },
+  "independentSavedCopyRestore": {
+    "result": "PASS",
+    "archive": "/workspace/scratch/94e5d3570e84/saved-copy-v1/FolioLab_SW321_PR347_qualification_2026-11-16.tar.gz",
+    "archiveSHA256": "6e3d274acde30496817cd901c42e4e50f6b50c1ae87364cdc2a8a2e1365375a9",
+    "archiveBytes": 203137520,
+    "manifestEntries": 70,
+    "originalZIPs": 29,
+    "originalFiles": 2463,
+    "coverageUnique": 55,
+    "unchangedOriginal": 54,
+    "correctedWebKitQualification": 1,
+    "contracts": 9,
+    "productPathsUnchanged": 154,
+    "savedCopy": true
   }
 }

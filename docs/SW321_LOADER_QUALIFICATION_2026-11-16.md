@@ -1,6 +1,6 @@
 # SW321 loader measurement qualification · 16 November 2026
 
-Product main: `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, SW321. Proposed test-only PR347 head: `72d430cbbc9f821a032d3dc0a11a8fb112555d39`. Shipped assets are byte-identical. SW320 remains the last accepted release until the merge decision and release bookkeeping are complete.
+Product main: `29f2a1c85a6b859c75c0811b3b478f745b12c8bf`, tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, SW321. Current test-only PR347 head: `da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd`. Shipped assets are byte-identical. SW320 remains the last accepted release until the merge decision and release bookkeeping are complete.
 
 ## Original evidence and what it proves
 
@@ -33,3 +33,6 @@ Do not label the failed regular main workflow successful. Do not claim55 unchang
 Initial proposed head72d430cb is superseded by current head `da9b6455036d97ebbfeb13b2c0b63d32e2ed40cd`. The initial controlled counterprobe itself deadlocked Chromium: with CSS held, the parser stops at the preceding classic startup.js script and never reaches the app.js module tag. A bounded10000ms local original-pin Chromium probe observed only stylesheet/startup requests, readyState loading, and only drive-backup/startup script elements. This is a test-harness defect, not a product defect. Prior regular CI43904550631 was cancelled after all3cross jobs passed; its Chromium test never completed and it is not a full PASS.
 
 Current helper releases CSS before awaiting app.js and bounds both handshakes at30000ms. Local original-pin Chromium now passes both controls (real visibility true, mutant false). The complete acceptance entry point browser-loading-pwa.mjs and waitForStartupRevealWindow function are byte-identical between72d430cb andda9b6455, so the previously completed actual-origin WebKit acceptance measurement remains valid and is counted once. Current counterprobe is separately requalified in all3original browser pins; regular current-head CI43909694363 remains required before the merge decision. Saved archiveversion0 contains the earlier proposed head and is awaiting a guarded replacement with the final-head additions.
+
+
+Final-head focused counterprobe43909800100 completed SUCCESS in all3original browser pins (jobs133448288416 Chromium,133448287757 Firefox,133448288470 WebKit). Real CSS visible=true and hidden-keyframe visible=false in each report. Saved archiveversion1 pinnedfile_00000000bdbc81f59e7ff6b73d698bf6/SHA2566e3d274acde30496817cd901c42e4e50f6b50c1ae87364cdc2a8a2e1365375a9 was actually fetched and independently restored:29ZIPs/2463original files/70manifest entries/55unique mappings/9contracts and154unchanged product paths verified. Final current CI and current synthetic merge metadata will be appended in the final archive revision before the merge decision.
