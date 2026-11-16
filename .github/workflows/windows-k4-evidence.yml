@@ -15,6 +15,8 @@ jobs:
     env:
       FOLIOLAB_PRODUCT_SHA: e272297ab1ba855a2922c1faa4010b83c558a796
     steps:
+      - name: Preserve exact Git blob line endings
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
           path: qa
