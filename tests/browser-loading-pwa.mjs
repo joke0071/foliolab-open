@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {clickDisclosed} from './browser-disclosures.mjs';
+import {waitForStartupRevealWindow,verifyStartupTiming} from './browser-startup-timing.mjs';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 // Deliberately unresolved module keeps document load pending; no web fonts are used.
@@ -18,7 +19,7 @@ for(const engine of engines){
   // A slow module graph must never expose a writable empty portfolio.
   const p=await fresh();let release,started;const waiting=new Promise(r=>started=r),hold=new Promise(r=>release=r);
   await p.route('**/src/app.js',async route=>{started();await hold;await route.continue();});
-  await p.clock.install();await p.goto(base,{waitUntil:'commit'});await waiting;await p.waitForTimeout(450);
+  await p.clock.install();await p.goto(base,{waitUntil:'commit'});await waiting;await waitForStartupRevealWindow(p);
   assert.ok(await p.locator('#appStartup').isVisible());assert.ok(await p.locator('.layout').evaluate(e=>e.inert));
   assert.equal(await p.locator('#appStartup .portfolio-loader-orbit circle').count(),3);
   const frames=[];for(let i=0;i<3;i++){frames.push(await p.locator('.portfolio-loader-orbit').evaluate(e=>getComputedStyle(e).transform));await p.waitForTimeout(160);}
@@ -76,7 +77,8 @@ for(const engine of engines){
   // Failed storage uses existing read-only recovery, never a blank writable model.
   const storage=await fresh();await storage.addInitScript(()=>{localStorage.setItem('foliolab-open-storage-mode','idb-v1');});await storage.goto(base);await interactive(storage);assert.match(await storage.locator('#notice').innerText(),/nicht lesbar/);assert.ok(await storage.locator('#addWizard').isDisabled());
   const timed=await fresh();await timed.goto(base);await interactive(timed);const coldMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.reload();await interactive(timed);const warmMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.evaluate(()=>{setTimeout(()=>{const d=document.createElement('details');d.id='loadingLateDisclosure';const s=document.createElement('summary');s.textContent='Synthetic late action';const b=document.createElement('button');b.dataset.loadingLate='true';b.textContent='Synthetic action';b.onclick=()=>b.dataset.clicked='true';d.append(s,b);document.getElementById('onboarding').append(d);},100);});await clickDisclosed(timed.locator('[data-loading-late]'));assert.equal(await timed.locator('[data-loading-late]').getAttribute('data-clicked'),'true');await timed.locator('#loadingLateDisclosure').evaluate(e=>e.remove());
-  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,checks:['watchdog download failure','refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout keeps three animation frames then late completion; actual error stops','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','shared More installation entry and conditional dismissible desktop hint','three distinct animation frames','320–1440px and 200% text','identical ID-free startup and inline SVG'],androidHardware:false}));
+  const startupTiming=await verifyStartupTiming(browser,base);
+  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,startupTiming,checks:['watchdog download failure','refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout keeps three animation frames then late completion; actual error stops','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','shared More installation entry and conditional dismissible desktop hint','three distinct animation frames','320–1440px and 200% text','identical ID-free startup and inline SVG'],androidHardware:false}));
   console.log(engine+' loading/PWA PASS');
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
 }
