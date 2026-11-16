@@ -1,0 +1,261 @@
+{
+  "beforeSource": "19e2ec18923285f3316824e3e9fb89d98ff12127",
+  "afterSource": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+  "nativeDevice": false,
+  "before": {
+    "before": {
+      "field": {
+        "x": 15,
+        "y": 304.65625,
+        "width": 210,
+        "height": 55,
+        "top": 304.65625,
+        "right": 225,
+        "bottom": 359.65625,
+        "left": 15
+      },
+      "nav": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "scrollY": 316,
+      "active": "positionValueFilter"
+    },
+    "centered": {
+      "field": {
+        "x": 15,
+        "y": 145.65625,
+        "width": 210,
+        "height": 55,
+        "top": 145.65625,
+        "right": 225,
+        "bottom": 200.65625,
+        "left": 15
+      },
+      "nav": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "scrollY": 475,
+      "active": "positionValueFilter"
+    },
+    "keyboard": {
+      "field": {
+        "x": 15,
+        "y": 304.65625,
+        "width": 210,
+        "height": 55,
+        "top": 304.65625,
+        "right": 225,
+        "bottom": 359.65625,
+        "left": 15
+      },
+      "nav": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "scrollY": 316,
+      "active": "positionValueFilter"
+    }
+  },
+  "chromium": {
+    "result": "PASS",
+    "shortView": {
+      "pass": true,
+      "activeElement": "positionValueFilter",
+      "field": {
+        "x": 15,
+        "y": 233.65625,
+        "width": 210,
+        "height": 60,
+        "top": 233.65625,
+        "right": 225,
+        "bottom": 293.65625,
+        "left": 15
+      },
+      "navigation": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 56,
+        "top": 0,
+        "right": 320,
+        "bottom": 56,
+        "left": 0
+      },
+      "viewport": {
+        "width": 320,
+        "height": 360,
+        "scrollY": 389
+      },
+      "css": {
+        "font": "710 26px Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", system-ui, sans-serif",
+        "scrollMarginTop": "72px",
+        "scrollMarginBottom": "84px"
+      }
+    },
+    "keyboardView": {
+      "pass": true,
+      "activeElement": "positionValueFilter",
+      "field": {
+        "x": 15,
+        "y": 233.65625,
+        "width": 210,
+        "height": 60,
+        "top": 233.65625,
+        "right": 225,
+        "bottom": 293.65625,
+        "left": 15
+      },
+      "navigation": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 56,
+        "top": 0,
+        "right": 320,
+        "bottom": 56,
+        "left": 0
+      },
+      "viewport": {
+        "width": 320,
+        "height": 360,
+        "scrollY": 389
+      },
+      "css": {
+        "font": "710 26px Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", system-ui, sans-serif",
+        "scrollMarginTop": "72px",
+        "scrollMarginBottom": "84px"
+      }
+    }
+  },
+  "webkit": {
+    "result": "PASS",
+    "shortView": {
+      "pass": true,
+      "activeElement": "positionValueFilter",
+      "field": {
+        "x": 15,
+        "y": 238.65625,
+        "width": 210,
+        "height": 55,
+        "top": 238.65625,
+        "right": 225,
+        "bottom": 293.65625,
+        "left": 15
+      },
+      "navigation": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 56,
+        "top": 0,
+        "right": 320,
+        "bottom": 56,
+        "left": 0
+      },
+      "viewport": {
+        "width": 320,
+        "height": 360,
+        "scrollY": 382
+      },
+      "css": {
+        "font": "710 26px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+        "scrollMarginTop": "72px",
+        "scrollMarginBottom": "84px"
+      }
+    },
+    "keyboardView": {
+      "pass": true,
+      "activeElement": "positionValueFilter",
+      "field": {
+        "x": 15,
+        "y": 238.65625,
+        "width": 210,
+        "height": 55,
+        "top": 238.65625,
+        "right": 225,
+        "bottom": 293.65625,
+        "left": 15
+      },
+      "navigation": {
+        "x": 0,
+        "y": 299.5,
+        "width": 320,
+        "height": 60.5,
+        "top": 299.5,
+        "right": 320,
+        "bottom": 360,
+        "left": 0
+      },
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 56,
+        "top": 0,
+        "right": 320,
+        "bottom": 56,
+        "left": 0
+      },
+      "viewport": {
+        "width": 320,
+        "height": 360,
+        "scrollY": 382
+      },
+      "css": {
+        "font": "710 26px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+        "scrollMarginTop": "72px",
+        "scrollMarginBottom": "84px"
+      }
+    }
+  }
+}

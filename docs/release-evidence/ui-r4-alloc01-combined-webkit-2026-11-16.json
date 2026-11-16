@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "filterHead": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+  "ringHead": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+  "engine": "webkit27.2",
+  "oracle": {
+    "totalEUR": 1000,
+    "shares": [
+      40,
+      30,
+      29.9,
+      0.1
+    ],
+    "thresholdEUR": 2,
+    "journals": 1,
+    "bookings": 1
+  },
+  "checks": [
+    "small selected cash hidden/restored",
+    "all four account ring markups byte-identical",
+    "main donut/legend/sum unchanged",
+    "canonical raw/revision/settings including nonempty journal unchanged"
+  ],
+  "nativeDevice": false
+}

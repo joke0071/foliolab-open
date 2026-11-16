@@ -29,6 +29,6 @@ try{
  await p.screenshot({path:'artifacts/combined/390.png'});
  await nav('positions');await p.locator('#positionValueFilter').fill('');assert.equal(await p.locator('[data-position-select=small]').isChecked(),true);
  await nav('dashboard');assert.deepEqual(await read(),before);assert.deepEqual(await record(),rawBefore);assert.deepEqual(errors,[]);
- const report={result:'PASS',filterHead:'19e2ec18923285f3316824e3e9fb89d98ff12127',ringHead:'6a9c4afd035dcebed940efa46cf5981f207d16ee',engine:'chromium141',oracle:{totalEUR:1000,shares:[40,30,29.9,.1],thresholdEUR:2,journals:1,bookings:1},checks:['small selected cash hidden/restored','all four account ring markups byte-identical','main donut/legend/sum unchanged','canonical raw/revision/settings including nonempty journal unchanged'],nativeDevice:false};
+ const report={result:'PASS',filterHead:'859af3942db38ef2ed3439c1767a763fc500ff1f',ringHead:'6a9c4afd035dcebed940efa46cf5981f207d16ee',engine:'chromium141',oracle:{totalEUR:1000,shares:[40,30,29.9,.1],thresholdEUR:2,journals:1,bookings:1},checks:['small selected cash hidden/restored','all four account ring markups byte-identical','main donut/legend/sum unchanged','canonical raw/revision/settings including nonempty journal unchanged'],nativeDevice:false};
  writeFileSync('artifacts/combined/result.json',JSON.stringify(report,null,2));console.log(report);
 }finally{await browser.close();}

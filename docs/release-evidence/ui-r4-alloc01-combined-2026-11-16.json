@@ -1,6 +1,6 @@
 {
   "result": "PASS",
-  "filterHead": "19e2ec18923285f3316824e3e9fb89d98ff12127",
+  "filterHead": "859af3942db38ef2ed3439c1767a763fc500ff1f",
   "ringHead": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
   "engine": "chromium141",
   "oracle": {
