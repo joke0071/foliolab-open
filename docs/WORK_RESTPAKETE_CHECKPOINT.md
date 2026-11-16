@@ -1,4 +1,4 @@
-# HND01 · SW320 DEPLOYED / LIVE QUALIFICATION ACTIVE · RING QUALIFIED
+# HND01 · BLOCKED_LIVE / SW320 DEPLOYED_NOT_LIVE_ACCEPTED · RING QUALIFIED_HOLD
 
 Sole writer `hnd01-filter-ring-20261116-root`, explicitly authorized by Jochen16 November2026; previous writer `ui-r4-alloc01-20261116-root` revoked. No other agents/writers. PR345 approved exact head merged; PR346's changed exact head remains reserved for Jochen. Parked332/161/157 unchanged.
 
@@ -19,6 +19,12 @@ All3original ZIP API digests/CRCs and job logs secured before any further action
 
 No further identical whole-job retry. Operational-only branch `qa/sw320-live-isolated-20261116`, workflow head `35a2aa3b99ad1540d324c6f2c4901d6850c7cb18`, changes only one new workflow, never main/ring/product/tests/SW. Each job explicitly checks out exact main112dc6d4/tree0c749ffd/SW320, verifies those identities, and executes unchanged original release scripts/assertions with the original browser pins and standard TLS.19bounded runner groups, maximum3parallel, cover exactly the original55top-level executions (19Chromium +18Firefox +18WebKit). No omitted test, response retry/fallback, lower threshold, timeout relaxation or mock substitution. Job timeout remains55min; installation timeout8min. Every original report/first failure captured. Grouping reduces concentrated live requests per runner; full new evidence must succeed before acceptance. Original main live run remains red, not retrospectively PASS.
 
+## Confirmed blocker / no active continuation
+
+Isolated run43872461222 is now CANCELLED after8successful groups,2failed groups,9cancelled groups. Market/Chromium job133316873867 reproduces60same-origin moduleHTTP429s; Presentation/Chromium job133316873990 reproduces kraken-bitcoin-bridge.js HTTP503, so runner isolation did NOT resolve the delivery failure. Both original ZIPs/logs/diagnostics secured. No complete live acceptance and no further blind retry. QA-only stop commit4bfea34904c1971604f556bf09aa14a1e7c49d1d, run43873472823, cancels remaining diagnostic traffic via the same concurrency group. Its SUCCESS is only a stop receipt, NEVER a release gate. Main/ring/product/tests unchanged. All relevant workflows ended; no automatic continuation scheduled.
+
+Concrete next blocker: establish a bounded, evidenced solution to repeated hosting/edge429/503 or wait for independently demonstrated delivery recovery, then qualify the unchanged original full live gates. Do not claim the repeated local proxy counterprobes or successful partial groups as full acceptance. Retain every valid main/PR/ring proof and first failures.
+
 ## Integrated ring candidate
 
 [PR346](https://github.com/joke0071/foliolab-open/pull/346) **QUALIFIED** new head `8092649f7037ca04192703ce08d2a6c1a6ad6d34`, tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`, actual main basis112dc6d4. Merge parents old qualified ring6a9c4afd + actual filter main112dc6d4. Synthetic merge `ec2870098290ddbc5827eb5a65a6af63408c9f6c` has identical qualified tree and expected parents actual main + new ring head. Original ring product unchanged; both CSS blocks and both UI-quality contracts retained. SW319 → filter320 → proposed ring321.
@@ -27,7 +33,7 @@ Full [43866839082](https://github.com/joke0071/foliolab-open/actions/runs/438668
 
 1000EUR oracle: selected1EUR real deposit/journal cash hidden at2EUR; ring40/30/29.9/0.1%, total1000EUR and main donut/legend unchanged; clearing restores selection. Entire canonical raw/revision/settings/journal/bookings/quantities identical. Local integrated Chromium/WebKit comparison also PASS,1505units/syntax/boundedTS5.8.3 PASS; direct320/390/1440visual review. Local WebKit unchanged official binary + isolated Debian13 libraries; no physical-device/Ubuntu-CI equivalence claim. Original Chromium/WebKit comparison evidence retained in previous checkpoint.
 
-Do not merge PR346 yet: finish filter live qualification, save/re-read/restore originals, then present exact head/main/CI and recommendation to Jochen. No ring merge/deployment authorization.
+PR346 merge recommendation is HOLD until the filter's full live acceptance is resolved. Exact new ring head is fully qualified; Jochen remains decision owner. Original bundles are being finalized with independent readback/restore receipts. No ring merge/deployment authorization.
 
 ## External1.0 duties preserved
 
