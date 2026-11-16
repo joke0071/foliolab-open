@@ -1,19 +1,42 @@
-# HND01 · Main43956969224 beendet · MAIN_CI_FAILED_LIVE_DELIVERY
+# HND01 · Main 43956969224 abgeschlossen
 
-**Endstatus:** completed/failure, Versuch3. Main **494ed8f0f6b627d8be972a5ceb886005e5064b31**, Tree47674d62c54c06a67e347bc73faef127ae33ee76. PR349 am genehmigten Head411821d884d2a8df7a4be44bddb85bb62259ff2c gemergt; keine weitere Mergefrage. **Integration und Deployment SUCCESS; neuer regulärer Liveabschluss blockiert.** Keine laufenden Jobs/keine weiteren unveränderten Wiederholungen. Bestehende SW321-Produkt-Liveabnahme für unveränderte Bytes bleibt gültig; kein neuer vollständiger Main-Live-PASS behauptet.
+**Endstatus: MAIN_CI_FAILED_LIVE_DELIVERY.** Der Lauf ist beendet: `completed / failure`, Versuch 3. Main ist `494ed8f0f6b627d8be972a5ceb886005e5064b31`; PR #349 wurde am freigegebenen Head gemergt. Alle Integrationsprüfungen und das Deployment sind erfolgreich. Der neue reguläre Liveabschluss bleibt durch die aufgezeichneten Auslieferungsfehler blockiert. Es laufen keine Jobs; weitere unveränderte Wiederholungen sind gestoppt.
 
-[Endbericht/Originale/Zeittrennung](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md) · [Maschinenbeleg](release-evidence/pr349-main-final-2026-11-16.json) · [abgeschlossener Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/43956969224).
+Die bestehende SW-v321-Produktabnahme gilt für die unveränderten Produktdateien weiter. Ein neuer vollständig grüner Main-/Live-Lauf wird ausdrücklich nicht behauptet. Es ist keine weitere Mergefreigabe für #349 offen.
 
-1. **Installation:** Originaljob133614229345/Artefakt14271463119 vor Tests gescheitert,38s Job/10s Installation. Ubuntu-Image127.1 nur Microsoft-Paketindizes, viele Ubuntu-Kandidaten fehlen. Erfolgreiche Vergleichsgruppe1 auf370.1. Nach EndeVersuch1 genau ein gezielter Failed-Job-Wiederanlauf; ErsatzCross2133627209482 SUCCESS18:37 und Installation63s. **Erfolgreicher Ersatzrunner ebenfalls127.1** mit regulären Ubuntu-Indizes: konkrete APT-Zustandsstörung eingegrenzt, Imageversion allein keine Ursache; damalige genaueQuellkonfiguration unprotokolliert. Keine Code-/Test-/Deadlineänderung, kein weiterer Installationsretry. Die sechs PNGs im fehlgeschlagenen Artefakt sind eingecheckte Referenzen, keine neuen Tests.
-2. **Übernommen/ausgeliefert:**1507Units/Chromium und alle3Cross SUCCESS. Haupttest18:41,Cross110:27,Cross315:05 ausErstversuch übernommen; erfolgreichesCross218:37. Deployment133638102686 SUCCESS/19s. Pages14273898961 exakt154Quelldateien; alle837wiederhergestelltenCross2-Berichtspfade erhalten.
-3. **Erster Liveversuch133638326346:** FAILURE/170s. Vorher155Assethashes/Core/Axe und weitere Kernprüfungen PASS. FX-Fall6 seven-days-boundary: erste5Fälle vollständigPASS, Fall6vorReload fachlich korrekt; Dokument/CSS/app.js200, dann72ModulHTTP429 in35ms,Varnish/text-html/Retry-After0/ERR_ABORTED. SW blockiert, Controller/Registrierungen/Versionen leer. OriginalFX-Pageerrorarraynichtpersistiert, keine Abwesenheitsbehauptung. Artefakt14274454228/10916862Bytes/0acde8ac1ac5d357292c138d8d6ca55d196cadd929ee37aa971b6544937a01a7/CRC PASS.
-4. **Genau ein begrenzter Live-only-Retry:** nach Originalschutz und drei sequenziellen200/exakteMainbytes-Proben. Live133642045451 FAILURE/48s schon beim Corestart: market.jsHTTP503,Varnish/text-html,fehlgeschlagenerStart/Navigation0Buttons. Dokument/CSS/app.js200;155separateAssethashes200/exakt vorherPASS,0Axe. KeinSW-Control/Registrierung, OriginalCoreerrors[] dokumentiert. Artefakt14276395300/324684Bytes/0546c4856e6f9e82ba1c9981287233a8110ed3b11f8ccc78079e7cc4f73be7f6/CRC PASS. AndererStatus/Kontext innerhalbModulauslieferungsfehlerklasse; identischeUpstreamursache nicht bewiesen. **Keine vierte Ausführung.**
+[Endbericht mit Originalen und Zeittrennung](PR349_MAIN_INSTALLATION_RECOVERY_2026-11-16.md) · [Maschinenbeleg](release-evidence/pr349-main-final-2026-11-16.json) · [Abgeschlossener Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/43956969224)
 
-**Zeitmessung:** PRqualifikation17:56gegen23:04/23:16=beobachtete5.1–5.3minWarteverkürzung dort. MainrealePflichtjobspanne21:08:48Z–21:49:04Z **40:16** =18:41ersterunvollständigerParallelabschnitt+2:58Zwischenraum+18:37Ersatzjob. Fehljob38s liegt parallel darin, nicht zusätzlichseriell. ErfolgreicheIntegrationsrunnerarbeit3770s=62:50 plusFehler38s=3808s=63:28. GrößtererfolgreicherEinzeljob18:41 ist kein wirklichgelaufenerungestörter18minMain. BeideLiveversuche170+48=218sseparat. GesamtebeobachteteJobspanne48:27;9tatsächlichenichtübersprungenenAusführungen4069s=67:49Runnerarbeit.24API-Zeilen mitübernommenenStart-/Endzeiten nichtmehrfachgezählt. MainistkeinungestörterVergleichsmaßstabzumPR.
+## Ausführung und Befund
 
-**Originale dauerhaft und unabhängig geprüft:** drei verknüpfteHauptpakete Version0 mit153384960/83527680/345328Bytes,42äußereDateien/39Manifestprüfungen,alle10originalenGitHubZIPs/2623Mitglieder. AlleLängen/Hashes/CRCs tatsächlichausgespeichertenKopienPASS;Originaleunverändert,spätereReadbackquittungseparatkeinSelbsthash. ZusätzlichkleinesOriginalpaketdesangefordertenFehlerserhalten. KeineprivatenFinanzmengen/-IDs/-OriginaleoderPrivatportfoliosinGitHub/CI.
+| Phase | Ergebnis |
+|---|---|
+| Erster Cross2-Job 133614229345 | Vor Testbeginn gescheitert: 38 s Joblaufzeit, davon 10 s Installation. APT lud nur Microsoft-Indizes; zahlreiche Ubuntu-Abhängigkeiten fehlten. Originalartefakt 14271463119 gesichert. Seine sechs PNGs sind eingecheckte Referenzbilder, keine neu ausgeführten Tests. |
+| Runnervergleich | Fehlgeschlagenes Image: 20261111.127.1; erfolgreiche Gruppe 1: 20261111.370.1. Der erfolgreiche Ersatzrunner verwendete ebenfalls 127.1 und lud reguläre Ubuntu-Indizes. Die Imageversion allein ist somit keine Ursache. Die genaue damalige APT-Quellkonfiguration ist nicht protokolliert. |
+| Genau ein Installations-Wiederanlauf | Nach Ende von Versuch 1 gezielt nur fehlgeschlagene Jobs wiederholt. Ersatz-Cross2 133627209482 bestand in 18:37 min; Installation 63 s. Haupttest sowie Gruppen 1/3 wurden übernommen, nicht erneut ausgeführt. Keine Code-, Test-, Assertion- oder Friständerung. |
+| Integration | 1.507 Unit-Tests, Chromium und alle drei Cross-Engine-Gruppen erfolgreich. Haupttest 18:41, Cross1 10:27, Cross3 15:05, Ersatz-Cross2 18:37 min. Alle 837 Cross2-Berichtspfade erhalten. |
+| Deployment | Job 133638102686 erfolgreich in 19 s. Pages-Artefakt 14273898961 enthält 154 Dateien, exakt bytegleich zum Main. |
+| Erster Liveversuch | Job 133638326346 scheiterte nach 170 s. Fünf vollständige FX-Fälle bestanden; im sechsten Fall „seven-days-boundary“ waren die fachlichen Prüfungen vor Reload korrekt. Nach Reload: Dokument/CSS/app.js HTTP 200, anschließend 72 Modulantworten HTTP 429 in 35 ms, Varnish/text-html/ERR_ABORTED. Service Worker blockiert; keine Controller/Registrierungen/Versionen. Originalartefakt 14274454228 gesichert. Das beim Fehler nicht persistierte FX-Pageerrorarray erlaubt keine Abwesenheitsbehauptung. |
+| Genau ein Live-only-Wiederanlauf | Nach Originalschutz und drei sequenziellen 200-/Quellbyteproben; erfolgreiche Integration und Deployment erneut übernommen. Job 133642045451 scheiterte nach 48 s schon beim Corestart: market.js HTTP 503, Varnish/text-html, fehlgeschlagener Start und keine Navigationsbuttons. Vorher 155 veröffentlichte Assethashes exakt; keine Axe-Scans erreicht. Originalartefakt 14276395300 gesichert. |
+| Schlussfolgerung | Neu belegte Auslieferungsfehler mit unterschiedlichen HTTP-Statuswerten und Fehlerstellen. Keine identische Upstreamursache allein aus Timeouts/Headers ableiten. Kein erneuter Installationsfehler und kein neuer Finanz-/SW-Defekt bewiesen. Keine vierte Ausführung gestartet. |
 
-**Konkreter verbleibender Blocker:** verlässlicheModulauslieferungamProduktiv-Origin/Edgebei429/503. UrsächlicheLimiter-/UpstreamkonfigurationundAuslöserausHeadersalleinnichtbewiesen. VoreinerneuenVoll-LiveprüfungUrsache/PrüftrafficbegrenztuntersuchenundAbhilfebelegen;keineAssertions-/FristlockerungoderunveränderteRetryfolge. KeinnochlaufenderLaufzuübernehmen,keinweitererMergefür349ausstehend. Andere1.0-/Windows-/Android-/ETH-/privateNachweispflichtenbleibenseparatwieabgenommen/offen.
+## Zeitmessung ohne Vermischung
+
+- **Qualifizierter PR:** 17:56 gegenüber zuvor 23:04/23:16 min; dort beobachtete Verkürzung um 5,1–5,3 min.
+- **Main tatsächlich:** vollständige Integrationswartezeit **40:16 min** (21:08:48Z–21:49:04Z).
+- Aufteilung: 18:41 erster unvollständiger Parallelabschnitt + 2:58 Zwischenraum + 18:37 Ersatzjob.
+- Der fehlgeschlagene Job mit 38 s liegt parallel im ersten Abschnitt. Diese 38 s werden nicht nochmals seriell zur Wartezeit addiert.
+- Addierte Integrations-Runnerlaufzeit: 3.770 s erfolgreich + 38 s fehlgeschlagen = **63:28 min**.
+- Der größte erfolgreiche Einzeljob mit 18:41 min ist keine tatsächlich durchgelaufene ungestörte Mainphase. Der gestörte Mainlauf ist kein unabhängiger 18-Minuten-Geschwindigkeitsbeleg.
+- Beide Liveversuche: 170 + 48 = 218 s, separat von der Integrationsmessung.
+- Gesamte beobachtete Jobspanne: 48:27 min. Neun tatsächliche, nicht übersprungene Ausführungen ergeben 4.069 s Runnerlaufzeit. Die 24 API-Zeilen enthalten übernommene Jobs mit unveränderten Originalzeiten; sie wurden nicht mehrfach gezählt.
+
+## Originale und nächster sachlicher Schritt
+
+Drei verknüpfte Hauptpakete, Version 0, mit 153.384.960 / 83.527.680 / 345.328 Bytes wurden tatsächlich unabhängig zurückgelesen. Geprüft: 42 äußere Dateien, 39 Manifesteinträge, alle zehn originalen GitHub-ZIPs mit 2.623 Mitgliedern; sämtliche Längen, Hashes und CRCs bestanden. Spätere Readbackquittungen sind separat erhalten, kein zirkulärer Selbsthash. Das zusätzliche kleine Originalpaket des angeforderten Installationsfehlers bleibt ebenfalls erhalten. Keine privaten Finanzmengen, Originalbuchungen oder Privatportfolios wurden veröffentlicht.
+
+**Konkreter Blocker:** verlässliche Modulauslieferung am Produktiv-Origin/Edge bei HTTP 429/503. Limiterkonfiguration, verantwortlicher Upstream und Auslöser sind durch die erfassten Header allein nicht bewiesen. Vor einer neuen vollständigen Liveprüfung: Ursache und Prüftraffic begrenzt untersuchen und eine Abhilfe belegen. Keine gelockerten Prüfungen und keine weitere unveränderte Retryfolge.
+
+Andere 1.0-, Windows-, Android-, ETH- und private Nachweispflichten bleiben entsprechend ihren eigenen Belegen abgeschlossen oder offen.
 
 --- Historische Zwischenstände, durch den Endstatus ersetzt ---
 
