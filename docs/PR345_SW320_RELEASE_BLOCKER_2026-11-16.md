@@ -1,3 +1,9 @@
+# Aktueller Status · historische Entscheidung ersetzt
+
+Der frühere SW320-Liveblocker ist historisch. Filter und Allokationsring sind produktiv abgenommen; aktueller SW321/Main e272297ab1ba855a2922c1faa4010b83c558a796 ist LIVE_ACCEPTED. Die damaligen Fehlversuche und Originale bleiben Diagnosehistorie; keine aktuelle Retry-/HOLD-Anweisung daraus ableiten. [Aktuelle Liveabnahme](SW321_LIVE_CLOSURE_2026-11-16.md). [Neue Teilabnahmen](SW321_WINDOWS_K6_BITPANDA_2026-11-16.md).
+
+---
+
 # PR345 / SW320 · DEPLOYED_NOT_LIVE_ACCEPTED · 16.11.2026
 
 Genehmigter Head `859af3942db38ef2ed3439c1767a763fc500ff1f` headgebunden gemergt. Tatsächlicher Main `112dc6d441fe79b0cf3086a5720b6d48910bf784`, qualifizierter Tree `0c749ffda82a32ec0e98c025aeafa751b37aa759`; Eltern akzeptierter Main7bb7b5a1 und genehmigter Head859af394. Unmittelbar zuvor Head/Basis/Tree/Pflichtchecks/Reviews frisch geprüft. Erfolgreiche identische PR-Head-CI43848472035 und Wallet43848472026 weiterverwendet.

@@ -1,0 +1,55 @@
+{
+  "status": "QUALIFIED_NOT_MERGED",
+  "main": "e272297ab1ba855a2922c1faa4010b83c558a796",
+  "head": "411821d884d2a8df7a4be44bddb85bb62259ff2c",
+  "testedMerge": "8504e6ecdcfad4c4238fc3bfd4a7b463184d3f1d",
+  "tree": "47674d62c54c06a67e347bc73faef127ae33ee76",
+  "pr": "https://github.com/joke0071/foliolab-open/pull/349",
+  "run": 43952358302,
+  "attempt": 1,
+  "walletRun": 43952358338,
+  "conclusions": "SUCCESS: 1507units/Chromium/all3Cross/FASTcanary/Wallet; deploy/live correctly skipped on PR",
+  "productAndSWUnchanged": true,
+  "onlyChange": "identical two-engine UI-quality call moves Cross3 to Cross2; all other workflow bytes/multiplicities preserved",
+  "targetedContracts": 25,
+  "TSPreflight": "5.8.3 static name/syntax PASS",
+  "integrationSpanSeconds": 1076,
+  "priorIntegrationSpanSeconds": [
+    1384,
+    1396
+  ],
+  "observedWaitDifferenceSeconds": [
+    308,
+    320
+  ],
+  "estimatedWaitDifferenceSecondsBeforeCandidate": [
+    181.486,
+    296.48
+  ],
+  "integrationRunnerSeconds": 3658,
+  "priorIntegrationRunnerSeconds": [
+    3687,
+    3556
+  ],
+  "runnerMinuteReductionClaim": false,
+  "uiBlockSeconds": 553.644,
+  "allNormalizedCrossArtifactPathsPreserved": true,
+  "normalizedUnionPaths": 1514,
+  "rawMembersBefore": 1556,
+  "rawMembersAfter": 1632,
+  "normalization": "Only storage-fixture/<engine>-13digit timestamp.json normalized; all other paths exact",
+  "originalSavedCopy": {
+    "archiveLibraryId": "libfile_fde3_f-cfbed2be21108191a4e502d157ce5935_54e45e8130348191808d9aaa710cf372",
+    "version": 0,
+    "bytes": 230236160,
+    "sha256": "7429a89dd8abf63d451dc1ac3f73283e3aef93eaf55158bb25824426f859c85a",
+    "archiveMembers": 38,
+    "manifestVerified": 37,
+    "originalZIPs": 7,
+    "originalZIPMembers": 2525,
+    "actualSavedCopyIndependentlyReadBack": true,
+    "allLengthsHashesCRCs": "PASS",
+    "readbackAt": "2026-11-16T21:04:34.205027+00:00"
+  },
+  "recommendation": "MERGE only exact qualified head after user decision; no merge performed"
+}

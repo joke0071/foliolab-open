@@ -1,3 +1,5 @@
+Aktualisiert16.11.2026: Bitpanda-Doppelzählungsfrage im geprüften normalen UI-Ablauf geschlossen; Windows-K6-Teilumfang und öffentliche ETH-Paare nach untenstehender Zuordnung akzeptiert. CI-PR349 am exakten Head411821d884d2a8df7a4be44bddb85bb62259ff2c vollständig qualifiziert, Mergeentscheidung ausstehend. Gemessene Integrationwartezeit17m56s statt23m04s/23m16s; keine Runner-Minutenersparnis behauptet. [Effizienzbefund](CI_SW321_EFFICIENCY_RESULT_2026-11-16.md). SW321-Liveabnahme bleibt gültig; kein globaler1.0-Abschluss.
+
 # FolioLab · verbleibende 1.0-Pflichten
 
 Stand 16.11.2026: **SW v321 LIVE_ACCEPTED**, Main `e272297ab1ba855a2922c1faa4010b83c558a796`, Tree `c787469e711f7303842a471bed2ff37a780f0059`. [Releaseabschluss](SW321_LIVE_CLOSURE_2026-11-16.md) · [Maschinenabnahme und Originalpins](release-evidence/sw321-main-live-accepted-2026-11-16.json). Diese Übersicht bündelt den aktuellen Rest und ersetzt ihre früheren SW319-/Mergeentscheidungszeilen; die kanonische Roadmap und ihre Schutzkriterien bleiben erhalten.

@@ -1,3 +1,9 @@
+# Aktueller Status · historische Entscheidung ersetzt
+
+Die frühere HOLD-Mergeentscheidung ist ersetzt: PR346 wurde am freigegebenen Head8092649f7037ca04192703ce08d2a6c1a6ad6d34 nach Main29f2a1c85a6b859c75c0811b3b478f745b12c8bf gemergt. Allokationsring und Filter sind produktiv abgenommen; SW321/Main e272297ab1ba855a2922c1faa4010b83c558a796 ist LIVE_ACCEPTED. Der folgende Text ist die unveränderte historische Entscheidungs-/Originalbelegbasis, keine neue Mergeanfrage. [Aktuelle Liveabnahme](SW321_LIVE_CLOSURE_2026-11-16.md). [Neue Teilabnahmen](SW321_WINDOWS_K6_BITPANDA_2026-11-16.md).
+
+---
+
 # PR346 · integrierter Head QUALIFIED · Mergeempfehlung HOLD
 
 [PR346](https://github.com/joke0071/foliolab-open/pull/346) bleibt ungemergt. Jochen entscheidet über exakt `8092649f7037ca04192703ce08d2a6c1a6ad6d34`; Tree `09419f00ebbd942fbb843a82b4c224212a2b2fdf`; geprüfter tatsächlicher Main `112dc6d441fe79b0cf3086a5720b6d48910bf784`.
