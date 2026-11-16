@@ -1,0 +1,218 @@
+{
+  "date": "2026-11-16",
+  "owner": "ui-r4-alloc01-20261116-root",
+  "status": "BOTH_PRS_QUALIFIED_AWAITING_EXACT_HEAD_MERGE_DECISION",
+  "acceptedMain": "7bb7b5a1f6124d933343590973310815df1d1653",
+  "productionSW": 319,
+  "prs": [
+    {
+      "number": 345,
+      "url": "https://github.com/joke0071/foliolab-open/pull/345",
+      "head": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+      "tree": "0c749ffda82a32ec0e98c025aeafa751b37aa759",
+      "sw": 320,
+      "base": "7bb7b5a1f6124d933343590973310815df1d1653",
+      "testedMerge": "faaf3fa5376ea2f7abace6b19a15d820bb401de4",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "comments": 0,
+      "reviewComments": 0,
+      "reviews": [],
+      "units": {
+        "tests": 1496,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runs": [
+        {
+          "id": 43848472035,
+          "url": "https://github.com/joke0071/foliolab-open/actions/runs/43848472035",
+          "head": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 43848472026,
+          "url": "https://github.com/joke0071/foliolab-open/actions/runs/43848472026",
+          "head": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "checks": [
+        {
+          "name": "live-acceptance",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "FAST only / UI contract canary — no integration approval",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "cross-engine (2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "cross-engine (1)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "cross-engine (3)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "test",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Determine FAST / INTEGRATION / RELEASE",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "number": 346,
+      "url": "https://github.com/joke0071/foliolab-open/pull/346",
+      "head": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+      "tree": "422caddbdae661839abf32245b992d78e755abfc",
+      "sw": 321,
+      "base": "7bb7b5a1f6124d933343590973310815df1d1653",
+      "testedMerge": "b0cf4dfc1e1cc4f5fcc953db8f24457a44e168d3",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "comments": 0,
+      "reviewComments": 0,
+      "reviews": [],
+      "units": {
+        "tests": 1502,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runs": [
+        {
+          "id": 43839227691,
+          "url": "https://github.com/joke0071/foliolab-open/actions/runs/43839227691",
+          "head": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 43839227640,
+          "url": "https://github.com/joke0071/foliolab-open/actions/runs/43839227640",
+          "head": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+          "attempt": 1,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "checks": [
+        {
+          "name": "live-acceptance",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "FAST only / UI contract canary — no integration approval",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "test",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "cross-engine (2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "cross-engine (1)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "cross-engine (3)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Determine FAST / INTEGRATION / RELEASE",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "combinedProof": {
+    "engines": [
+      "chromium141",
+      "webkit27.2"
+    ],
+    "filterHead": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+    "ringHead": "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+    "hiddenCashEUR": 1,
+    "thresholdEUR": 2,
+    "totalEUR": 1000,
+    "shares": [
+      40,
+      30,
+      29.9,
+      0.1
+    ],
+    "journalEntries": 1,
+    "bookings": 1,
+    "result": "PASS",
+    "reports": [
+      "ui-r4-alloc01-combined-2026-11-16.json",
+      "ui-r4-alloc01-combined-webkit-2026-11-16.json"
+    ],
+    "nativeDevice": false
+  },
+  "mergeOrder": [
+    345,
+    346
+  ],
+  "secondPRGate": "After first approved merge, rebase ring onto actual new main, retain next SW revision, reconcile both UI-quality contracts and CSS; run complete required checks on resulting new head and present that head/results for its own decision.",
+  "external1_0": [
+    "Deferred real Windows/Android/PWA device/restore/interaction proof",
+    "Independent Kraken/Bitpanda balances and missing wallet/staking ownership",
+    "Actual original ETH cursor/follow-page sequence"
+  ],
+  "privateRestList": {
+    "fileName": "FolioLab_Restnachweise_2026-11-15.txt",
+    "version": 2
+  },
+  "merged": false,
+  "deployed": false
+}
