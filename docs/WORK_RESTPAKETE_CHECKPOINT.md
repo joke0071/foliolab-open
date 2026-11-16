@@ -1,3 +1,23 @@
+# HND01 · UI-R4 / UI-ALLOC01 · QUALIFICATION_IN_PROGRESS
+
+Writer `ui-r4-alloc01-20261116-root`, sole HND01 principal authorized by Jochen on16 November2026. This succeeds `takeover-pr344-v319-20261116-root`; no agents/background writers. User explicitly advances both existing candidates and authorizes their branches, separate PRs and required CI. Exact merge heads remain Jochen’s later decision.
+
+Accepted production remains SW319/Main`7bb7b5a1f6124d933343590973310815df1d1653`. Main, previous checkpoint`cf36d3a95b48b085dec28769efa7eaa86faa6b47` and open PRs332/161/157 freshly reconciled; these parked PRs unchanged. No accepted release reopened. Historical local Chromium/socket blocker checked against current working native Chromium.
+
+- [FilterPR345](https://github.com/joke0071/foliolab-open/pull/345), head`d6ded8c4950d7c2c0e255929d9f5c4e8b65d3d38`, tree`8d15fe213450798c5e15809059a860663b9d85dc`, SW320. Regular full43838115208 running; Wallet43838114922 SUCCESS. Local1496units/syntax/static-name/targetedChromium PASS.
+- [RingPR346](https://github.com/joke0071/foliolab-open/pull/346), current head`6a9c4afd035dcebed940efa46cf5981f207d16ee`, tree`422caddbdae661839abf32245b992d78e755abfc`, SW321. First head`ec4290c43a60af4e76273fbb1727a99f6628548d`/run43838611073 has preserved Cross3 FAIL: exact unknown-FX summary expected old text without the new visible unavailable-share dash. Only exact expected text extended by that dash; no amount/CSV44px/negative/IDB/Axe gate relaxed. Bounded stage receipts added. New full qualification required/current. Local1502units/syntax/static-name/targetedChromium (pointer and emulated touch) and unchanged-navigation gate PASS.
+- Temporary combined local product tree PASS: selected1EUR cash hidden at2EUR, account shares40/30/29.9/0.1 unchanged; main donut/legend/sum unchanged; real nonempty journal/bookings/quantities and exact whole IDB record/revision/settings unchanged. Ring product blobs are identical across its two heads; no second product implementation. Current PRs remain separately reviewable from accepted main.
+
+**Next:** finish regular final-head PR/Wallet gates, examine any actual failure without blind retries, preserve qualification receipts and update this checkpoint/rest overview. Recommend filter first. After its separately approved merge, bring ring onto actual new main, resolve SW/UI-quality overlap and rerun required final checks on resulting head, then present that changed head before ring merge. No merge or deployment authorized by this checkpoint.
+
+External1.0 duties remain visible: deferred real Windows/Android/PWA device/restore/interaction checks; independent Kraken/Bitpanda balance and missing ownership evidence; actual original ETH cursor sequence. Existing private `FolioLab_Restnachweise_2026-11-15.txt` read and reused. Devices remain deferred; no profile request. Smallest useful Jochen action remains one available independent Kraken balance date. Other comfort features stay parked. No global1.0 completion claimed.
+
+[Prior checkpoint](https://github.com/joke0071/foliolab-open/blob/cf36d3a95b48b085dec28769efa7eaa86faa6b47/docs/WORK_RESTPAKETE_CHECKPOINT.md). Existing EFF03/finance/UNKNOWN/identity/journal/IDB/CAS/backup/restore/offline/PWA protections continue; checkpoint branch must never be merged wholesale into main.
+
+---
+
+<details><summary>Previous accepted release and deferred external evidence</summary>
+
 # HND01 · WAITING_EXTERNAL_INPUT · SW v319 / PR344 LIVE_ACCEPTED
 
 Writer: `takeover-pr344-v319-20261116-root`, alleiniger HND01-Hauptagent gemäß Nutzerübergabe vom16.11.2026. Die Schreibzuständigkeit von `takeover-pr343-fx-20261115-root` ist durch den Nutzer beendet. Kein zweiter Writer und keine Hintergrundfortsetzung behauptet.
@@ -41,3 +61,5 @@ Kleinster sinnvoller nächster Schritt ohne Geräteprüfung: Jochen nennt zunäc
 Die aktuelle private Datei `FolioLab_Restnachweise_2026-11-15.txt`, Version1, wurde gelesen; ihre frühere sofortige Geräteaufforderung ist durch die obige jüngere Nutzerentscheidung verschoben. Konkrete Exportgrenzen/Identitäten bleiben ausschließlich privat. Keine privaten Originale auf GitHub. D-ETH260 nicht neu bauen; bereits akzeptierte Releases und Originalsicherungen erhalten.
 
 [Vorheriger vollständiger Stand](https://github.com/joke0071/foliolab-open/blob/76ba5d09f7164b057e9bc9da0a738f65fe2a10e3/docs/WORK_RESTPAKETE_CHECKPOINT.md). Alle EFF03-/Finanz-/UNKNOWN-/Identitäts-/Journal-/IDB-/CAS-/Backup-/Restore-/Offline-/PWA-Verträge bleiben bindend. Checkpointbranch niemals vollständig nach Main mergen. Keine laufende Produktentwicklung, zusätzlichen CI-Aufträge oder Hintergrundfortsetzung behauptet.
+
+</details>

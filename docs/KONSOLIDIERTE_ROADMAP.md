@@ -1,3 +1,11 @@
+## Explicit priority update · 16 November2026
+
+Jochen advances only UI-R4 and UI-ALLOC01 for separate current-main PR qualification. [PR345](https://github.com/joke0071/foliolab-open/pull/345) and [PR346](https://github.com/joke0071/foliolab-open/pull/346) are active; historical NACH_1.0 statements for these two packages are superseded. No merge or release approval; accepted production remains SW319. Current heads/results and sole writer are recorded only in the central checkpoint. Recommended order: filter then rebase/requalify ring on resulting main; combined local invariance test passed.
+
+Deferred real device checks remain external1.0 duties, as do missing independent Kraken/Bitpanda balance/ownership evidence and the actual ETH original cursor sequence. Existing private rest-evidence list reused. Other comfort features remain parked; no new external exports or device work requested. Prior accepted releases stay complete; no global1.0 completion.
+
+---
+
 ## Nutzerentscheidung · 16.11.2026 · manuelle Geräteprüfung verschoben
 
 Die realen Windows-Chrome/Edge-/Android-Chrome/PWA-Prüfungen sind ausdrücklich verschoben, bleiben aber OFFEN für 1.0. Jetzt kein Testprofil anfordern. [Checkpoint mit erneutem Belegabgleich und nächster Aktion](WORK_RESTPAKETE_CHECKPOINT.md): kein zusätzlicher konkret abgegrenzter interner 1.0-Entwicklungsschritt frei. Fehlende unabhängige Bestands-/Ownershipanker und die echte ETH-Cursorantwortfolge bleiben externe Eingaben; jüngere K3-/K4-/K6-Abnahmen weiterverwenden. Kleinster nächster Schritt ohne Gerät: einen vorhandenen unabhängigen Kraken-Bestandsstichtag benennen und daraus den begrenzten Prüfzeitraum bestimmen.

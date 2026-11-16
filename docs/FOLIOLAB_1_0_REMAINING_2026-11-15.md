@@ -1,3 +1,11 @@
+## Explicit priority update · 16 November2026
+
+Jochen advances only UI-R4 and UI-ALLOC01 for separate current-main PR qualification. [PR345](https://github.com/joke0071/foliolab-open/pull/345) and [PR346](https://github.com/joke0071/foliolab-open/pull/346) are active; historical NACH_1.0 statements for these two packages are superseded. No merge or release approval; accepted production remains SW319. Current heads/results and sole writer are recorded only in the central checkpoint. Recommended order: filter then rebase/requalify ring on resulting main; combined local invariance test passed.
+
+Deferred real device checks remain external1.0 duties, as do missing independent Kraken/Bitpanda balance/ownership evidence and the actual ETH original cursor sequence. Existing private rest-evidence list reused. Other comfort features remain parked; no new external exports or device work requested. Prior accepted releases stay complete; no global1.0 completion.
+
+---
+
 # FolioLab · verbleibende 1.0-Pflichten
 
 Stand nach vollständig belegtem **PR344 LIVE_ACCEPTED (SWv319)**, Main `7bb7b5a1f6124d933343590973310815df1d1653`, 16.11.2026. [Abnahme und Originalpins](PR344_MAIN_RELEASE_ACCEPTANCE_2026-11-16.md). Persönlicher Zielumfang gemäß Nutzerentscheidung: Windows Chrome und Edge sowie Android Chrome/PWA. 5.000 Positionen reichen; 10.000 Buchungen und 10.000 Stichtage behalten ihre gesonderten Nachweise.
