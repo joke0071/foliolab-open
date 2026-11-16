@@ -1,3 +1,13 @@
+# HND01 · ACTIVE · PR344 MERGE_AUTHORIZED · 16.11.2026
+
+Writer: `takeover-pr344-v319-20261116-root`, alleiniger HND01-Hauptagent. Nutzerübergabe beendet ausdrücklich die Schreibzuständigkeit von `takeover-pr343-fx-20261115-root`; dessen Belege bleiben gültig. Kein zweiter Writer, kein behaupteter technischer Prozessstopp.
+
+Frischer Abgleich: Checkpoint `6eb2b78b602e6bd2bb560d1f7f98570c1dcf02f9`; Main/Basis `8c53cbfd77be9a37cce31cc4df8396e9f2f06ede`; PR344 offen/mergeable, Head `fe2e6791762c96590e3cb781f6cff1c4ae99730b`, Tree `b775686abb60cd8d2e74af7ec601f3a8da8a5c2b`. INTEGRATION43765440994 und Wallet43765441005 SUCCESS; Checkruns frisch geprüft, keine eingereichten Reviews/offenen Reviewthreads/angeforderten Reviewer. Actions in_progress/queued jeweils0. PR343 LIVE_ACCEPTED und PR344-Qualifikation werden weiterverwendet, keine Wiederholung allein wegen Chatwechsel.
+
+Nutzer hat exakt diesen Head einschließlich regulärem Mainlauf, Deployment SWv319 und vollständiger Live-Abnahme freigegeben. Nächster Schritt: nach unmittelbar frischer PR-/Refprüfung headgebunden mergen; tatsächlichen Mainlauf samt Originaldiagnose bei Fehler bis Live-Ergebnis begleiten. Neuer Head braucht neue Entscheidung. Danach Restübersicht mit kanonischer Roadmap abgleichen und kleinsten intern reproduzierbaren Pflichtschnitt bis QUALIFIED bearbeiten; andernfalls konkreter Einstieg in ein isoliertes WindowsChrome-/Edge-/AndroidChrome/PWA-Profil. Private Restdatei gelesen, private Originale bleiben außerhalb GitHub. D-ETH260 nicht erneut bauen.
+
+## Übernommener gültiger Stand (historische Entscheidungszeilen durch obige Freigabe ersetzt)
+
 # HND01 · WAITING_USER_DECISION · PR344 QUALIFIED / PR343 LIVE_ACCEPTED
 
 Writer: `takeover-pr343-fx-20261115-root`, alleiniger HND01-Hauptagent. Der Nutzer hat die Zuständigkeit des Vorgängers `release-v318-20261115-root` ausdrücklich beendet. [Vollständiger vorheriger Stand](https://github.com/joke0071/foliolab-open/blob/fbd32456bf732dfb3c1df10f535406bb7892bc20/docs/WORK_RESTPAKETE_CHECKPOINT.md). Kein zweiter Writer/Agent, keine Hintergrundfortsetzung behauptet.
