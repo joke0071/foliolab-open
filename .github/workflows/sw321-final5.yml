@@ -1,4 +1,4 @@
-name: SW321 four remaining gates and loader clock diagnosis
+name: SW321 sole remaining original WebKit loading gate
 on:
   push:
     branches: [qa/sw321-final5-97026efd]
@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        include: [{"group":"display-after-loader","engine":"webkit","gates":"browser-ui-alltag10 browser-ui-textscale browser-price-csv-tools browser-cash-account-ux"}]
+        include: [{"group":"loading-original","engine":"webkit","gates":"browser-loading-pwa"}]
     env:
       RELEASE_SHA: 29f2a1c85a6b859c75c0811b3b478f745b12c8bf
       ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
@@ -132,10 +132,56 @@ jobs:
            };
           }
           QA_PACING_EOF
+      - name: Preserve original visibility result and failure-only state
+        run: |
+          cat > qa-loader-observe.mjs <<'QA_OBSERVE_EOF'
+          import {webkit} from 'playwright';
+          import {appendFileSync,mkdirSync,writeFileSync} from 'node:fs';
+          const dir='artifacts/gates/loader-observation';mkdirSync(dir,{recursive:true});
+          const log=x=>appendFileSync(dir+'/events.jsonl',JSON.stringify({at:Date.now(),...x})+'\n');
+          let serial=0;
+          const launch=webkit.launch.bind(webkit);
+          webkit.launch=async(...args)=>{
+           const browser=await launch(...args),newContext=browser.newContext.bind(browser);
+           browser.newContext=async(...options)=>{
+            const context=await newContext(...options),id=serial++;
+            context.on('page',p=>{
+             const relevant=r=>r.isNavigationRequest()||/\/(styles\.css|src\/(startup|app)\.js)$/.test(new URL(r.url()).pathname);
+             p.on('requestfinished',r=>{if(relevant(r))log({event:'requestFinished',context:id,url:r.url(),timing:r.timing()});});
+             const locator=p.locator.bind(p);
+             p.locator=(selector,...rest)=>{
+              const target=locator(selector,...rest);
+              if(selector==='#appStartup'){
+               const visible=target.isVisible.bind(target);
+               target.isVisible=async(...args)=>{
+                const result=await visible(...args);
+                log({event:'originalVisibilityResult',context:id,selector,result});
+                if(!result){
+                 // The original false result is fixed BEFORE observation; it remains false.
+                 // No waiting for visibility, retries, delays or changed assertion outcomes.
+                 const state=await p.evaluate(()=>{
+                  const e=document.getElementById('appStartup'),s=e&&getComputedStyle(e);
+                  return {url:location.href,readyState:document.readyState,performanceNow:performance.now(),startup:e?.outerHTML??null,hidden:e?.hidden??null,display:s?.display??null,visibility:s?.visibility??null,animationName:s?.animationName??null,animationDelay:s?.animationDelay??null,animations:e?.getAnimations().map(a=>({currentTime:a.currentTime,playState:a.playState,timing:a.effect?.getComputedTiming()}))??[],layoutInert:document.querySelector('.layout')?.inert??null,resources:performance.getEntriesByType('resource').filter(r=>/styles\.css|startup\.js|app\.js/.test(r.name)).map(r=>r.toJSON())};
+                 }).catch(e=>({observationError:String(e)}));
+                 writeFileSync(dir+'/false-'+id+'.json',JSON.stringify(state,null,2));
+                 await p.screenshot({path:dir+'/false-'+id+'.png'}).catch(e=>log({event:'screenshotError',error:String(e)}));
+                }
+                return result;
+               };
+              }
+              return target;
+             };
+            });
+            return context;
+           };
+           return browser;
+          };
+          log({event:'configuration',scope:'read-only resource completion and original visibility result; failure-only DOM snapshot; false remains false',timingAffected:true});
+          QA_OBSERVE_EOF
       - name: Run every original gate assigned to this isolated runner
         env:
           LIVE_WORKER_DIAGNOSTICS: '1'
-          NODE_OPTIONS: '--import ./qa-origin-pacing.mjs --import ./tests/live-worker-diagnostics.mjs'
+          NODE_OPTIONS: '--import ./qa-origin-pacing.mjs --import ./tests/live-worker-diagnostics.mjs --import ./qa-loader-observe.mjs'
           UI_QUALITY_SCREENSHOTS: '1'
         run: |
           set -euo pipefail
@@ -146,38 +192,6 @@ jobs:
             node "tests/$gate.mjs" 2>&1 | tee "artifacts/gates/isolated-$gate.log"
             echo "FROZEN_LIVE_PASS $gate ${{ matrix.engine }} $RELEASE_SHA"
           done
-      - name: Characterize loader with native and installed browser clock
-        env:
-          LIVE_WORKER_DIAGNOSTICS: '1'
-          NODE_OPTIONS: '--import ./qa-origin-pacing.mjs --import ./tests/live-worker-diagnostics.mjs'
-        run: |
-          cat > qa-loader-diagnosis.mjs <<'QA_DIAG_EOF'
-          import {webkit} from 'playwright';
-          import {mkdirSync,writeFileSync} from 'node:fs';
-          import {setTimeout as delay} from 'node:timers/promises';
-          const base='https://foliolab.unperfekt.at/',rows=[];
-          mkdirSync('artifacts/gates/loader-diagnosis',{recursive:true});
-          for(const clock of [true,false]){
-           const browser=await webkit.launch({headless:true}),context=await browser.newContext({viewport:{width:320,height:740},serviceWorkers:'block'}),p=await context.newPage();
-           const row={clockInstalled:clock,observations:[],errors:[],badResponses:[]};
-           p.on('pageerror',e=>row.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)row.badResponses.push({url:r.url(),status:r.status()});});
-           let release,started;const waiting=new Promise(r=>started=r),hold=new Promise(r=>release=r);
-           await p.route('**/src/app.js',async route=>{started();await hold;await route.continue();});
-           if(clock)await p.clock.install();
-           const state=async label=>row.observations.push({label,at:Date.now(),visible:await p.locator('#appStartup').isVisible(),state:await p.evaluate(()=>{
-            const e=document.getElementById('appStartup'),s=e&&getComputedStyle(e);
-            return {readyState:document.readyState,performanceNow:performance.now(),hidden:e?.hidden,visibility:s?.visibility,display:s?.display,animationDelay:s?.animationDelay,animations:e?.getAnimations().map(a=>({name:a.animationName,currentTime:a.currentTime,playState:a.playState,startTime:a.startTime,pending:a.pending,timing:a.effect.getComputedTiming()})),layoutInert:document.querySelector('.layout')?.inert,resources:performance.getEntriesByType('resource').filter(r=>/styles\.css|startup\.js/.test(r.name)).map(r=>r.toJSON())};
-           })});
-           try{
-            await p.goto(base,{waitUntil:'commit'});await waiting;await p.waitForTimeout(450);await state('original real450ms after held app.js');
-            await delay(650);await state('additional native650ms without changing clock');
-            if(clock){await p.clock.runFor(450);await state('explicit virtual450ms');}
-            await delay(650);await state('additional native650ms');
-            release();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await state('real app released and ready');
-           }finally{release?.();rows.push(row);writeFileSync('artifacts/gates/loader-diagnosis/report.json',JSON.stringify({purpose:'Diagnostic only; no original acceptance assertion weakened or relabeled',base,engine:'webkit',rows},null,2));await context.close();await browser.close();}
-          }
-          QA_DIAG_EOF
-          node qa-loader-diagnosis.mjs
       - name: Preserve all original reports and first failure evidence
         if: always()
         uses: actions/upload-artifact@v4
