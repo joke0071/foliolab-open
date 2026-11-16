@@ -17,3 +17,7 @@ Nach Sicherung/Analyse und beobachteter Erreichbarkeit genau einen gezielten Liv
 ## Dauerhafter Originalpin
 
 [FolioLab_PR344_Main43814956980_Versuch1_Originalbelege_2026-11-16.tar](https://chatgpt.com/library?file_id=libfile_fde3_f-06b86ae5222c8191bd4c8ec2edd41e38_54e45e8130348191808d9aaa710cf372&account_id=personal), Version0,230328320Bytes, SHA256 `fc142d7c46117c048a4c5f8c5369cadd32f759fdaf01c9c6c2f372ea09ecde1f`, exakterPin `file_0000000043dc8212a6eb83580cd369b0`. Alle8CI-ZIPs mit API-Digest/Größe/CRC geprüft,62Manifestdateien. Unabhängig versiongepinnt bytegleich zurückgelesen,2479Originaldateien+154Pages-Dateien tatsächlich restauriert. Diagnose/Quellblobs/Originalheaders/Joblogs/Gegenprobe erhalten. Früheres PR344-Qualifikationspaket und PR343-Abnahme unverändert gültig.
+
+## Ergebnis der vorgesehenen einmaligen Wiederholung
+
+Livejob133135769207 / Versuch2 vollständig SUCCESS in Chromium, Firefox und WebKit; Originale separat gepinnt bytegleich rückgelesen und1883Dateien tatsächlich restauriert. [Vollständige Abnahme](PR344_MAIN_RELEASE_ACCEPTANCE_2026-11-16.md). Erster Fehlversuch und seine Ursache/Grenzen unverändert erhalten; kein weitererRetry oder Produktfix aus diesem Befund.

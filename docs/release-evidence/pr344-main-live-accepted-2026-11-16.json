@@ -1,0 +1,206 @@
+{
+  "technicalResult": "PASS",
+  "status": "LIVE_ACCEPTED",
+  "main": "7bb7b5a1f6124d933343590973310815df1d1653",
+  "tree": "b775686abb60cd8d2e74af7ec601f3a8da8a5c2b",
+  "approvedHead": "fe2e6791762c96590e3cb781f6cff1c4ae99730b",
+  "approvedBase": "8c53cbfd77be9a37cce31cc4df8396e9f2f06ede",
+  "run": 43814956980,
+  "mainAttempt": 1,
+  "liveAttempt": 2,
+  "liveJob": 133135769207,
+  "originalFailedLiveJob": 133132830196,
+  "targetedLiveRetries": 1,
+  "repeatedMainCrossDeploy": false,
+  "unitTests": 1493,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "mainExistingJson": 261,
+  "mainExplicitAssertions": 646,
+  "mainManualSchemas": 8,
+  "mainNativeFxCases": 24,
+  "mainNewFxJson": 3,
+  "productionExistingJson": 196,
+  "productionExplicitAssertions": 254,
+  "productionManualSchemas": 26,
+  "productionNewFxJson": 3,
+  "productionNativeFxCases": 24,
+  "sameFxFixturesSeparateExecutions": true,
+  "pagesFiles": 154,
+  "liveAssetHashMatches": 155,
+  "liveLoadedAssetMatches": 142,
+  "cache": "foliolab-open-v319",
+  "coreGroups": 6,
+  "coreAxeScans": 18,
+  "proxyCertificateException": false,
+  "csvMainHeights": 15,
+  "csvMinimumPx": 44,
+  "workerDiagnosticFiles": 211,
+  "workerEngines": {
+    "chromium": 71,
+    "firefox": 70,
+    "webkit": 70
+  },
+  "flagsBeforeBrowserClosing": 0,
+  "postClosingFlags": 1,
+  "postClosingDisposition": "Sonic Runtime.runIfWaitingForDebugger timeout4988ms after browserClosing and4955ms after browserClosed. Preserved as post-close diagnostic flag; historical503/SW causes remain UNKNOWN.",
+  "visualReview": {
+    "result": "BOUNDED_OWN_VISUAL_REVIEW_NO_NEW_SCOPE_FINDINGS",
+    "ownReview": true,
+    "coreCaptures": {
+      "attempt": 1,
+      "source": "Successful live core stage before subsequent independent recovery HTTP429 failure",
+      "members": [
+        "live/320.png",
+        "live/390.png",
+        "live/1440.png"
+      ],
+      "findings": "No new bounded layout finding: fixed header/navigation, controls and responsive account cards legible and contained; 320px backup toast is transient and preserved."
+    },
+    "limits": "Own bounded visual inspection of actual synthetic production images; no physical Android/Windows or independent reviewer claim.",
+    "finalDialog": {
+      "attempt": 2,
+      "member": "bitpanda-import/chromium-390.png",
+      "findings": "Scrolled synthetic CSV dialog: fixed heading/footer and input/checkbox text contained, controls visible; no new bounded layout finding."
+    }
+  },
+  "originalFailure": "65 actual moduleHTTP429/Varnish responses during recovery reload; first original failure pinned separately; precise limiter configuration/triggerUNKNOWN.",
+  "newOriginalArtifact": 14205851260,
+  "oldOriginalPin": "file_0000000043dc8212a6eb83580cd369b0",
+  "limits": [
+    "Fixed synthetic provider responses, native headless Linux engines; no real Frankfurter quote acceptance",
+    "No physical Windows Chrome/Edge or Android Chrome/PWA proof",
+    "Independent historical balances/ownership and actual ETH cursor original remain open",
+    "No global1.0 acceptance"
+  ],
+  "preservation": "COMPLETE; independent exact-version readback byte equal and original files physically restored; full compressed manifests preserved in separate receipt file.",
+  "attempt1Preservation": {
+    "result": "PASS",
+    "package": {
+      "file_name": "FolioLab_PR344_Main43814956980_Versuch1_Originalbelege_2026-11-16.tar",
+      "bytes": 230328320,
+      "sha256": "fc142d7c46117c048a4c5f8c5369cadd32f759fdaf01c9c6c2f372ea09ecde1f",
+      "manifestFiles": 62,
+      "originalZipCount": 8,
+      "head": "7bb7b5a1f6124d933343590973310815df1d1653",
+      "tree": "b775686abb60cd8d2e74af7ec601f3a8da8a5c2b",
+      "run": 43814956980,
+      "attempt": 1,
+      "status": "MAIN_DEPLOY_SUCCESS_LIVE_FAILURE_HTTP429",
+      "scope": "Exact original failed live job and complete successful main/deploy artifacts; no full live acceptance. Later retry, if any, remains separate."
+    },
+    "file_id": "file_0000000043dc8212a6eb83580cd369b0",
+    "library_file_id": "libfile_fde3_f-06b86ae5222c8191bd4c8ec2edd41e38_54e45e8130348191808d9aaa710cf372",
+    "pinnedVersion": 0,
+    "independentReadbackByteEqual": true,
+    "distinctFileIdentity": true,
+    "manifestFiles": 62,
+    "originalZIPs": 8,
+    "physicallyRestoredOriginalFiles": 2479,
+    "physicallyRestoredPagesFiles": 154,
+    "zipCounts": [
+      {
+        "zip": "chromium.zip",
+        "files": 827
+      },
+      {
+        "zip": "cross1.zip",
+        "files": 515
+      },
+      {
+        "zip": "cross2.zip",
+        "files": 127
+      },
+      {
+        "zip": "cross3.zip",
+        "files": 878
+      },
+      {
+        "zip": "dialogs.zip",
+        "files": 20
+      },
+      {
+        "zip": "pages.zip",
+        "files": 1
+      },
+      {
+        "zip": "production.zip",
+        "files": 110
+      },
+      {
+        "zip": "stage.zip",
+        "files": 1
+      }
+    ],
+    "fullRestoreManifest": {
+      "bytes": 603075,
+      "sha256": "808da0f2c4f22b415eb97459e96b88bd5f4408085624e7f39619cb58fc4eb032",
+      "gzipBytes": 134583,
+      "gzipSha256": "7f154ad121d79d40f3ef68d31f13b07d03603f0cd15996c49cb3f1e0ccce3f35"
+    },
+    "limits": "Evidence and deployed bytes physically restored. Actual portfolio UI plain/encrypted FreshRestore is independently proven in production live/report.json; no real Windows/Android or independent historical finance claim."
+  },
+  "attempt2Preservation": {
+    "result": "PASS",
+    "package": {
+      "file_name": "FolioLab_PR344_Live43814956980_Versuch2_Originalbelege_2026-11-16.tar",
+      "bytes": 153538560,
+      "sha256": "58cec67841a49e3f239e1b5f0d669f2a870d09f3ec1cc532d95f383e385c3777",
+      "manifestFiles": 44,
+      "originalZipCount": 1,
+      "head": "7bb7b5a1f6124d933343590973310815df1d1653",
+      "tree": "b775686abb60cd8d2e74af7ec601f3a8da8a5c2b",
+      "run": 43814956980,
+      "attempt": 2,
+      "scope": "Only new targeted regular live-job originals. Successful main/cross/deploy and first live failure are retained in separately pinned attempt1 package, whose original pin/restore receipt are included. No repeated main/deploy claimed."
+    },
+    "file_id": "file_0000000057e081f5af3160e847bd6c3c",
+    "library_file_id": "libfile_fde3_f-f2f9a53248388191a95ba7ccd65869bb_54e45e8130348191808d9aaa710cf372",
+    "pinnedVersion": 0,
+    "independentReadbackByteEqual": true,
+    "distinctFileIdentity": true,
+    "manifestFiles": 44,
+    "originalZIPs": 1,
+    "physicallyRestoredOriginalFiles": 1883,
+    "zipCounts": [
+      {
+        "zip": "production.zip",
+        "files": 1883
+      }
+    ],
+    "fullRestoreManifest": {
+      "bytes": 440681,
+      "sha256": "430cf333d42109a8be2d509109cf86ac90d864336baa38ead0aeb2041732e675",
+      "gzipBytes": 92363,
+      "gzipSha256": "485bc7c892f0622159ca1fda56ea82bcfc78d04c1e6bc9f5dda9d49129dd7bca"
+    },
+    "predecessorPin": "file_0000000043dc8212a6eb83580cd369b0",
+    "limits": "Only actual new live originals restored here; preceding successful main/deploy and failed live originals are separately pinned and physically restored. No physical Windows/Android or historical finance claim."
+  },
+  "efficiency": {
+    "liveAttempt2Seconds": 2989,
+    "source": "Actual GitHub job started_at/completed_at",
+    "activeImplementationReviewTime": "UNKNOWN",
+    "workCredits": "UNKNOWN",
+    "freezeChanges": 0,
+    "targetedLiveRetries": 1,
+    "retryCause": "Original HTTP429 evidence plus observed recovery; no unchanged blanket rerun",
+    "releaseWallSeconds": 4834
+  },
+  "restoreReceiptFile": {
+    "operation": "create_library_file",
+    "status": "succeeded",
+    "path": "/FolioLab_PR344_Restorequittungen_2026-11-16.json",
+    "file_id": "file_000000008f4081f49818193498eb1fcd",
+    "library_file_id": "libfile_fde3_f-e0c647c216208191ba86894279420246_54e45e8130348191808d9aaa710cf372",
+    "file_name": "FolioLab_PR344_Restorequittungen_2026-11-16.json",
+    "current_version_number": 0,
+    "restored_from_version_number": null,
+    "directory_id": "personal-root:v1",
+    "mime_type": "application/json",
+    "library_artifact_type": "report",
+    "file_size_bytes": 306795,
+    "external_connectors_accessed": false,
+    "sha256": "590dffb23cb7b673a0514a858ec64907f12607343e5f9df66b2b735981877598"
+  }
+}
