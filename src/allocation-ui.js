@@ -1,9 +1,43 @@
 /** Interaktives, rein lokales Allokationsdiagramm ohne Chart-Bibliothek. */
 import {compactMoney} from './format.js';
+import {hasMissingPositionValue,automaticValuationConfirmed} from './quote-quality.js';
 const shareFormat=new Intl.NumberFormat('de-AT',{maximumFractionDigits:1});
 export function formatAllocationShare(value){
  if(value>0&&value<.1)return '< 0,1 %';
  return shareFormat.format(value)+' %';
+}
+/** Read-only account weights. Unknown assets never turn known peers into 100%.
+ * Liabilities are separate from positive assets; archive is presentation only. */
+export function accountAllocation(positions,valueEUR,{depot=false,now=Date.now()}={}){
+ const basis=depot?'Anteil am Depot':'Anteil am Konto';
+ const rows=positions.map(position=>{
+  if(position.valuationMode==='excluded')return {position,value:null,reason:'Nicht doppelt summiert'};
+  if(position.valuationMode==='liability')return {position,value:null,reason:'Verbindlichkeit · keine Anlagengewichtung'};
+  const value=valueEUR(position);
+  if(hasMissingPositionValue(position)||typeof value!=='number'||!Number.isFinite(value))
+   return {position,value:null,reason:'EUR-Bewertung fehlt',missing:true};
+  if(value<0)return {position,value:null,reason:'Negativer Wert · keine Anlagengewichtung'};
+  return {position,value,review:!automaticValuationConfirmed(position,now)};
+ });
+ const missing=rows.some(r=>r.missing),gross=rows.reduce((sum,r)=>sum+(r.value??0),0);
+ const usable=!missing&&Number.isFinite(gross)&&gross>0;
+ const separate=rows.some(r=>r.reason&&!r.missing),review=rows.some(r=>r.review);
+ const note=(depot?'Gewichtung im Depot':'Gewichtung im Konto')+' · positive Anlagen inkl. Guthaben'+
+  (missing?' · Gewichtung unvollständig: EUR-Bewertung fehlt.':
+   !usable?' · Kein bewertbarer positiver Gesamtwert.':
+   review?' · Nach gespeicherten Bewertungen; Kurs-/FX-Qualität prüfen.':'.')+
+  (separate?' Ausgeschlossene und negative Beiträge sowie Verbindlichkeiten ohne Anteil.':'');
+ return {basis,note,shares:new Map(rows.map(row=>{
+  const percent=usable&&row.value!==null?100*(row.value/gross):null;
+  const label=percent===null?'–':formatAllocationShare(percent);
+  const reason=row.reason||(missing?'Gewichtung unvollständig':!usable?'Kein positiver Gesamtwert':'');
+  return [row.position,{percent,label,name:basis+': '+(percent===null?'nicht verfügbar · '+reason:label)+(percent!==null&&review?' · nach gespeicherten Bewertungen':'')}];
+ }))};
+}
+/** Static graphic and readable text; the enclosing summary remains the only control. */
+export function renderAccountAllocation(share,esc){
+ const arc=share.percent===null?'':'<circle cx="20" cy="20" r="16" pathLength="100" fill="none" stroke="currentColor" stroke-width="4" transform="rotate(-90 20 20)" stroke-dasharray="'+share.percent.toFixed(8)+' '+(100-share.percent).toFixed(8)+'"/>';
+ return '<span class="account-allocation" role="img" aria-label="'+esc(share.name)+'"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="4" class="account-allocation-track"/>'+arc+'</svg><span aria-hidden="true">'+esc(share.label)+'</span></span>';
 }
 /** Pie shares represent positive asset values, never net worth after liabilities. */
 /** Accessible name always starts with the visible label and share (WCAG 2.5.3). */

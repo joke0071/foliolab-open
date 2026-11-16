@@ -3,6 +3,7 @@ import {cashTermsAccountHint,simpleCashHolding} from './cash-terms-ui.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {units,exact} from './decimal.js';
 import {compactMoney as compactAmount} from './format.js';
+import {accountAllocation,renderAccountAllocation} from './allocation-ui.js';
 /** Presentation-only dashboard helpers. Never imply performance when only wealth history exists. */
 export {compactAmount};
 
@@ -71,15 +72,17 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
           '<button type="button" class="btn outline" data-action="edit-account" data-id="'+esc(account.id)+'">Konditionen bearbeiten</button></div>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
       }
+      const allocation=accountAllocation(positions,valueEUR,{depot:account.type==='securities'});
       const holdings=positions.map(p=>{
         const id=esc(p.id),opened=expandedPositions.has(p.id);
+        const share=allocation.shares.get(p);
         return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
-          '<summary class="provider-holding" aria-label="'+esc(p.name)+': Details '+(opened?'einklappen':'aufklappen')+'"><span class="provider-holding-name">'+esc(p.name)+'</span>'+
-          '<span class="provider-holding-right"><strong>'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
+          '<summary class="provider-holding has-account-allocation" aria-label="'+esc(p.name)+': Details '+(opened?'einklappen':'aufklappen')+' · '+esc(share.name)+'"><span class="provider-holding-name">'+esc(p.name)+'</span>'+
+          '<span class="provider-holding-right"><strong>'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+renderAccountAllocation(share,esc)+'<span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
       }).join('');
       return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small>'+cashTermsAccountHint(account,esc)+'</div><span class="aggregate-account-value"><strong>'+esc(accountView.value)+'</strong></span><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+
-        (accountView.note?'<p class="aggregate-account-note">'+esc(accountView.note)+'</p>':'')+(holdings?'<div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
+        (accountView.note?'<p class="aggregate-account-note">'+esc(accountView.note)+'</p>':'')+(holdings?'<p class="account-allocation-note">'+esc(allocation.note)+'</p><div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
     }).join('');
     const open=expanded.has(provider.id)?' open':'';
     return '<details class="provider-accordion" data-provider-id="'+esc(provider.id)+'"'+open+'>'+
