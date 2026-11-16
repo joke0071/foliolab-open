@@ -1,0 +1,101 @@
+{
+  "status": "DEPLOYED_NOT_LIVE_ACCEPTED",
+  "main": "112dc6d441fe79b0cf3086a5720b6d48910bf784",
+  "tree": "0c749ffda82a32ec0e98c025aeafa751b37aa759",
+  "sw": 320,
+  "approvedHead": "859af3942db38ef2ed3439c1767a763fc500ff1f",
+  "previousAccepted": {
+    "main": "7bb7b5a1f6124d933343590973310815df1d1653",
+    "sw": 319
+  },
+  "mainRun": 43866338423,
+  "mainOriginalAttempt": 1,
+  "mainUnits": {
+    "tests": 1496,
+    "pass": 1496,
+    "fail": 0,
+    "skip": 0
+  },
+  "mainCrossShards": [
+    1,
+    2,
+    3
+  ],
+  "pagesFilesMatched": 154,
+  "liveHashMatches": 155,
+  "liveAttempts": [
+    {
+      "attempt": 1,
+      "job": 133307915800,
+      "artifact": 14228185471,
+      "result": "FAIL",
+      "cause": "70 application module HTTP429 responses within59ms during Recovery bootstrap"
+    },
+    {
+      "attempt": 2,
+      "job": 133310887528,
+      "artifact": 14226749746,
+      "result": "FAIL",
+      "cause": "one security-sources.js HTTP503 during core bootstrap; same-job independent GET200/exact bytes1.1s later"
+    },
+    {
+      "attempt": 3,
+      "job": 133313638417,
+      "artifact": 14227738566,
+      "result": "FAIL",
+      "cause": "FX case8 root HTTP429/error-page stylesheet triggered strict non-Frankfurter assertion"
+    }
+  ],
+  "isolated": {
+    "workflowHead": "35a2aa3b99ad1540d324c6f2c4901d6850c7cb18",
+    "run": 43872461222,
+    "source": "unchanged original scripts checked out at released main/tree",
+    "plannedGroups": 19,
+    "plannedTopLevelExecutions": 55,
+    "result": "CANCELLED_AFTER_CONFIRMED_FAILURES",
+    "completedSuccess": 8,
+    "completedFailure": 2,
+    "cancelled": 9,
+    "failures": [
+      {
+        "job": 133316873867,
+        "artifact": 14229065476,
+        "cause": "60 same-origin HTTP429 module responses; source wrapper fails in FX stage"
+      },
+      {
+        "job": 133316873990,
+        "artifact": 14228881083,
+        "cause": "kraken-bitcoin-bridge.js HTTP503 during header-status bootstrap"
+      }
+    ],
+    "stopHead": "4bfea34904c1971604f556bf09aa14a1e7c49d1d",
+    "stopRun": 43873472823,
+    "stopRunIsAcceptance": false
+  },
+  "underlyingLimiterConfig": "UNKNOWN",
+  "browserAssertionOrTimeoutRelaxation": false,
+  "responseRetryOrMockFallbackAdded": false,
+  "productOrOriginalTestChangeAfterMerge": false,
+  "remainingBlocker": "Repeated origin/edge HTTP429/503 prevent complete original live qualification; no further automatic retry.",
+  "owner": "hnd01-filter-ring-20261116-root",
+  "archive": {
+    "file_id": "file_00000000fcd08212ac387aacb625940d",
+    "library_file_id": "libfile_fde3_f-5cc5b182b4d081919cc1e806a2e668bf_54e45e8130348191808d9aaa710cf372",
+    "file_name": "FolioLab_PR345_SW320_blocker_2026-11-16.tar",
+    "version": 0,
+    "bytes": 281333760,
+    "sha256": "68ba38d05c677667f6c6bc12c64b36450ce0c8bd030365b976746f8ab1fc9b64"
+  },
+  "independentRestore": {
+    "result": "PASS",
+    "source": "FolioLab_PR345_SW320_blocker_2026-11-16.tar",
+    "bytes": 281333760,
+    "sha256": "68ba38d05c677667f6c6bc12c64b36450ce0c8bd030365b976746f8ab1fc9b64",
+    "packedFilesVerified": 102,
+    "originalManifestEntriesByteEqual": 3427,
+    "originalZIPsRestored": 23,
+    "additionalManifestOnly": true,
+    "originalManifestSha256": "f55568f37d81fd50c57a95d66d83bdf25dec47131160cff62b0606f7926d915e",
+    "restoredManifestSha256": "2b9468a3f28a1f302ace058cfb9b14ca8e2586ae21e53c50ea72b724253920d4"
+  }
+}

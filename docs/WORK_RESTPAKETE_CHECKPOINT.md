@@ -33,10 +33,16 @@ Full [43866839082](https://github.com/joke0071/foliolab-open/actions/runs/438668
 
 1000EUR oracle: selected1EUR real deposit/journal cash hidden at2EUR; ring40/30/29.9/0.1%, total1000EUR and main donut/legend unchanged; clearing restores selection. Entire canonical raw/revision/settings/journal/bookings/quantities identical. Local integrated Chromium/WebKit comparison also PASS,1505units/syntax/boundedTS5.8.3 PASS; direct320/390/1440visual review. Local WebKit unchanged official binary + isolated Debian13 libraries; no physical-device/Ubuntu-CI equivalence claim. Original Chromium/WebKit comparison evidence retained in previous checkpoint.
 
-PR346 merge recommendation is HOLD until the filter's full live acceptance is resolved. Exact new ring head is fully qualified; Jochen remains decision owner. Original bundles are being finalized with independent readback/restore receipts. No ring merge/deployment authorization.
+PR346 merge recommendation is HOLD until the filter's full live acceptance is resolved. Exact new ring head is fully qualified; Jochen remains decision owner. Original bundles saved/version0 and independently read back/restored: all29ZIP API digests/CRCs and5922original manifest entries byte-equal. No ring merge/deployment authorization.
 
 ## External1.0 duties preserved
 
 Windows/Android/PWA manual device/restore/interaction checks remain DEFERRED/open. Independent Kraken/Bitpanda balance anchors, wallet/staking ownership and actual original ETH cursor/follow-page sequence remain external/open. No input required for this task, no global1.0 completion. Private details stay outside GitHub. Existing EFF03/finance/UNKNOWN/identity/journal/IDB/CAS/backup/restore/offline/PWA protections remain. Never merge the checkpoint branch wholesale into main.
 
 [Takeover-source checkpoint](https://github.com/joke0071/foliolab-open/blob/841e5a2aec330f0a7b1252f8c474eb832df31c0d/docs/WORK_RESTPAKETE_CHECKPOINT.md). [Full first/second failure history](https://github.com/joke0071/foliolab-open/blob/435a7ae4cb3e8fd81c2e22f6a501af1c6b438531/docs/WORK_RESTPAKETE_CHECKPOINT.md).
+
+## Permanent reviewable result
+
+- [PR345 actual release blocker/originals](PR345_SW320_RELEASE_BLOCKER_2026-11-16.md): SW320 DEPLOYED_NOT_LIVE_ACCEPTED; last acceptedSW319.23ZIPs/3427original manifest entries independently restored.
+- [PR346 exact new-head decision/originals](PR346_INTEGRATED_DECISION_2026-11-16.md):8092649f7037ca04192703ce08d2a6c1a6ad6d34 on actual main112dc6d441fe79b0cf3086a5720b6d48910bf784; full CI/Wallet SUCCESS,1505tests,9engine-contract receipts.6ZIPs/2495original manifest entries independently restored. Recommendation HOLD for filter live blocker; decision reserved for Jochen.
+- No ring merge, no automatic retry, all relevant workflows ended. Sole owner remains this HND01 agent. Deferred device/private finance/ETH duties remain open.

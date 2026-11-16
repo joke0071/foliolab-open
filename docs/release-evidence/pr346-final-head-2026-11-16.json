@@ -1,0 +1,91 @@
+{
+  "status": "QUALIFIED_HOLD_MERGE_FOR_FILTER_LIVE_ACCEPTANCE",
+  "pr": 346,
+  "url": "https://github.com/joke0071/foliolab-open/pull/346",
+  "head": "8092649f7037ca04192703ce08d2a6c1a6ad6d34",
+  "tree": "09419f00ebbd942fbb843a82b4c224212a2b2fdf",
+  "base": "112dc6d441fe79b0cf3086a5720b6d48910bf784",
+  "mergeParents": [
+    "6a9c4afd035dcebed940efa46cf5981f207d16ee",
+    "112dc6d441fe79b0cf3086a5720b6d48910bf784"
+  ],
+  "syntheticMerge": "ec2870098290ddbc5827eb5a65a6af63408c9f6c",
+  "syntheticTree": "09419f00ebbd942fbb843a82b4c224212a2b2fdf",
+  "sw": 321,
+  "runs": [
+    {
+      "id": 43866839082,
+      "attempt": 1,
+      "head": "8092649f7037ca04192703ce08d2a6c1a6ad6d34",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 43866839144,
+      "attempt": 1,
+      "head": "8092649f7037ca04192703ce08d2a6c1a6ad6d34",
+      "result": "SUCCESS"
+    }
+  ],
+  "units": {
+    "tests": 1505,
+    "pass": 1505,
+    "fail": 0,
+    "skip": 0
+  },
+  "contracts": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "filter": "PASS all3",
+    "ring": "PASS all3",
+    "combined": "PASS all3"
+  },
+  "combinedOracle": {
+    "totalEUR": 1000,
+    "shares": [
+      40,
+      30,
+      29.9,
+      0.1
+    ],
+    "selectedEUR": 1,
+    "thresholdEUR": 2,
+    "hidden": true,
+    "selectionRestored": true,
+    "wholeCanonicalRawRevisionSettingsJournalBookingsQuantitiesUnchanged": true
+  },
+  "reviews": 0,
+  "inlineComments": 0,
+  "openThreads": 0,
+  "mergeable": true,
+  "mergeableState": "clean",
+  "merged": false,
+  "ringProductBlobsUnchangedFromPreviousQualifiedHead": true,
+  "filterAndRingCSSAndUIContractsRetained": true,
+  "physicalDevices": "DEFERRED",
+  "privateFinancialAndETHDuties": "OPEN / unchanged",
+  "decisionOwner": "Jochen",
+  "recommendation": "HOLD until SW320 full live acceptance; exact ring head itself is qualified.",
+  "archive": {
+    "file_id": "file_00000000a7888212b7547548cc009df2",
+    "library_file_id": "libfile_fde3_f-1041f69d9358819181919d40f5e52814_54e45e8130348191808d9aaa710cf372",
+    "file_name": "FolioLab_PR346_8092649f_qualified_2026-11-16.tar",
+    "version": 0,
+    "bytes": 220692480,
+    "sha256": "1f927d212b2d98091752f05b7e1db8c302935a5acc4c01abb989519d179714db"
+  },
+  "independentRestore": {
+    "result": "PASS",
+    "source": "FolioLab_PR346_8092649f_qualified_2026-11-16.tar",
+    "bytes": 220692480,
+    "sha256": "1f927d212b2d98091752f05b7e1db8c302935a5acc4c01abb989519d179714db",
+    "packedFilesVerified": 74,
+    "originalManifestEntriesByteEqual": 2495,
+    "originalZIPsRestored": 6,
+    "additionalManifestOnly": true,
+    "originalManifestSha256": "010b58d30203ded346914d6c94068d04fd4ce08f3be42f56bff034145df74f2e",
+    "restoredManifestSha256": "911aa9c12f66f921a3086896df96cc9d3b8ae4d453cacd833f5bc56069f55ed4"
+  }
+}
