@@ -2,8 +2,12 @@ import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 /** Existing UI-quality caller runs this contract in PR/Main and actual production. */
 export async function positionValueFilterBrowserContract({p,nav,record,scan,engine,scans}){
+  const dir='artifacts/gates/position-value-filter';mkdirSync(dir,{recursive:true});
+  const report={engine,result:'NOT_REACHED',scope:'Synthetic UI-R4 display-only filter',stages:[]};
+  const stage=name=>{report.stages.push(name);writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));console.log('POSITION_VALUE_FILTER_STAGE '+engine+' '+name);};
+  try{
   // A separate synthetic canonical setup; all subsequent filter actions are read-only.
-  await p.context().setOffline(false);
+  stage('BEGIN');await p.context().setOffline(false);
   await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
@@ -15,6 +19,11 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   });
   await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   const filterBefore=await record();
+  // A preceding suite can leave ?page=more/positions in the URL. Render the
+  // same real dashboard before BOTH snapshots, never compare its placeholder.
+  await p.locator('#mobileNav [data-page=dashboard]:visible,#sidebarNav [data-page=dashboard]:visible').click();
+  assert.equal(await p.locator('#donut .allocation-svg').count(),1,'rendered synthetic allocation baseline');
+  stage('rendered-baseline');
   const dashboard=()=>p.evaluate(()=>({total:document.getElementById('totalValue').textContent,donut:document.getElementById('donut').innerHTML,legend:document.getElementById('allocationLegend').innerHTML}));
   const dashboardBefore=await dashboard();
   await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();
@@ -41,12 +50,13 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   await p.locator('#positionValueFilter').fill('1');
   mkdirSync('artifacts/gates/position-value-filter',{recursive:true});
   for(const width of [320,390,430,768,1440]){
+   stage('width-'+width);
    await p.setViewportSize({width,height:900});await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.ok((await p.locator('#positionValueFilter').boundingBox()).height>=44);
    assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
    await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-'+width+'.png'});
   }
-  await p.setViewportSize({width:320,height:360});
+  stage('short-text');await p.setViewportSize({width:320,height:360});
   await p.locator('#positionValueFilter').fill('999999999999.123456789012345678');
   await p.locator('.position-value-filter').evaluate(root=>{for(const el of root.querySelectorAll('span,input,p'))el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*2)+'px';});
   await p.locator('#positionValueFilter').scrollIntoViewIfNeeded();await p.locator('#positionValueFilter').focus();
@@ -57,6 +67,8 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
   await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-320x360-text200.png'});
   assert.deepEqual(await record(),filterBefore,'display filtering preserves exact raw/revision/settings');
-  await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');
-  writeFileSync('artifacts/gates/position-value-filter/'+engine+'.json',JSON.stringify({engine,result:'PASS',scope:'Synthetic UI-R4 display-only filter',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged']},null,2));
+  stage('offline');await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');
+  Object.assign(report,{result:'PASS',checks:['default all; exact decimal boundary; UNKNOWN/missing price preserved','true zero distinguished; archive/search/paging scope; hidden selection retained','invalid draft preserves previous applied filter','navigation retained; fresh offline session defaults all','five widths/Axe/44px/focus; exact IDB raw/revision/settings unchanged']});stage('RESULT_PASS');
+  }catch(error){report.result='FAIL';report.error=String(error);stage('RESULT_FAIL');throw error;}
+  finally{writeFileSync(dir+'/'+engine+'.json',JSON.stringify(report,null,2));}
 }

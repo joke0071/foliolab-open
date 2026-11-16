@@ -12,6 +12,10 @@ Expected merge order: UI-R4 first, UI-ALLOC01 second. Both start at accepted mai
 
 The external1.0 obligations remain unchanged: deferred physical Windows/Android/PWA checks; missing independent Kraken/Bitpanda balances and ownership; actual ETH provider cursor sequence. Existing private rest-evidence list reused; no private contents in GitHub. Other comfort features remain parked.
 
+## Preserved first integration finding
+
+First head d6ded8c4950d7c2c0e255929d9f5c4e8b65d3d38 / run43838115208 / tested mergeaf4fc2fe7d16d8ff216e077e0105c7c0f55ff404: Chromium failed the new dashboard-invariance assertion. The preceding locale suite left ?page=positions in the URL; after reload the hidden dashboard donut was still its initial placeholder, whereas the later navigation rendered the real donut. Total213.01EUR and canonical data were unchanged. A targeted local counterexample starting from the More page reproduced the exact failure. The contract now navigates to the real dashboard before the first snapshot and asserts that its actual SVG exists; both before/after snapshots and full exact IDB assertion stay unchanged. Standalone entry deliberately begins on More to retain this integration regression. Bounded stage/result receipts added; no product/timeout/threshold change, no unchanged retry.
+
 ---
 
 <details><summary>Historical preparation (superseded gates/statuses)</summary>
