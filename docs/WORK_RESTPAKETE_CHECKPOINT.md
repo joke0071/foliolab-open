@@ -1,10 +1,10 @@
-# HND01 · FX-Prüfverkehr: Abdeckung vor Verlagerung prüfen · 17.11.2026
+# HND01 · FX-Kandidat #354 in regulärer Qualifikation · 17.11.2026
 
-**GitHub Support Ticket #5016095:** Laut Jochen ist die Schließung angekündigt; keine technischen Befunde geliefert. Die 429-Regel (Schlüssel/Zeitraum) und der Ursprung des separaten market.js-503 bleiben UNKNOWN. Keine neue Providererkenntnis aus der Ticketbeendigung ableiten.
+GitHub Support Ticket #5016095: Jochen meldet angekündigte Schließung ohne technische Befunde. 429-Regel und Ursprung des separaten market.js-503 bleiben UNKNOWN. Bestehende Finanz-, Windows- und SW321-Abnahmen übernommen; Main unverändert `494ed8f0f6b627d8be972a5ceb886005e5064b31`.
 
-Aktiver Auftrag: vollständige acht FX-Fälle × Chromium/Firefox/WebKit gegen nachweislich byteidentische ausgelieferte Dateien vergleichen; tatsächliche Domain-/SW-/Reload-/Persistenzbelege gesondert erhalten. Erst lokaler Vergleich, dann begrenzte Liveprobe bei konkretem Vorteil; keine zusätzlichen Pausen oder pauschalen Retries. Bestehende Finanz-/Windows-/SW321-Abnahmen übernommen. Main weiterhin `494ed8f0f6b627d8be972a5ceb886005e5064b31`.
+**Exakter Kandidat:** [PR #354](https://github.com/joke0071/foliolab-open/pull/354), Head `ca354d3d323bf4a2f10d65559238a979894f9337`. Kein Merge ausgeführt. Letzter abgeschlossener Schritt: identischer lokaler24-Fälle-Vergleich44039980251 in Chromium/Firefox/WebKit PASS; direkte Domainkontrollen44040401966 (Chromium/WebKit) und44040894083 (Firefox) je2Fälle PASS. Alle2568Antworten200 und bytegleich, volle24-Fachmatrix Replay0Produktionsanfragen. Gegenüber identischer Originalrequeststruktur10272:75%weniger Produktionsabrufe; Peak535/s weiterhin im alten Bereich. Kein Hostingfix oder CI-Gesamtzeitgewinn behauptet. 30gezielte Unit-/Integritätstests und Preflight PASS.
 
-Letzter abgeschlossener Schritt: FX-Fall-/Assertion- und Vertragsinventar gelesen (K2_FRANKFURTER_AGE, PR344-Abnahme, regulärer Workflow). Nächster prüfbarer Schritt: Bytebindungs-/Transportkandidat und identischer 24-Fälle-Vergleich, ohne Produktionsverkehr. Noch keine neue Qualifikation oder Änderung des Abnahmeumfangs.
+**Aktueller Lauf:** [Wallet scan checks 44041385691](https://github.com/joke0071/foliolab-open/actions/runs/44041385691), [FolioLab Open – testen und veröffentlichen 44041385714](https://github.com/joke0071/foliolab-open/actions/runs/44041385714). Nächster prüfbarer Schritt: reguläre Pflichtjobs dieses Heads bis zum Abschluss begleiten, Originale sichern, dann Mergeempfehlung. Keine vollständige Liveprüfung vor Merge. Die24Fachfälle behalten sämtliche Assertions und arbeiten auf155perCorebeleg geprüften Dateien; zusätzlich6echte Domainfälle. Core-/SW-/Offline-/Restore-/übrigeETF-Gates unverändert.
 
 ---
 
