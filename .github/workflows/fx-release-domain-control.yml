@@ -12,11 +12,7 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - engine: chromium
-            playwright: 1.56.1
           - engine: firefox
-            playwright: 1.64.1
-          - engine: webkit
             playwright: 1.64.1
     runs-on: ubuntu-24.04
     timeout-minutes: 12
