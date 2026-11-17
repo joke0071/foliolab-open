@@ -1,0 +1,73 @@
+{
+  "status": "MANUAL_USER_CONFIRMED_BOUNDED_ACCEPTANCE",
+  "recordedAt": "2026-11-17T16:47:58.508071+00:00",
+  "testTimestamp": null,
+  "physicalAndroidConfirmed": true,
+  "portfolioClearedByUser": true,
+  "deviceModel": null,
+  "androidVersion": null,
+  "browser": null,
+  "browserVersion": null,
+  "swVersion": null,
+  "releaseSHATested": null,
+  "projectContextMain": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+  "evidence": {
+    "type": "explicit-user-statement",
+    "screenshotsAvailable": false,
+    "technicalLogsAvailable": false,
+    "agentObserved": false
+  },
+  "cases": [
+    {
+      "id": "app-icon-start",
+      "scope": "A01 subset",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "observed": "app icon launch and usable navigation"
+    },
+    {
+      "id": "basic-navigation",
+      "scope": "A03 subset",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "observed": "navigation works online/offline"
+    },
+    {
+      "id": "offline-reopen-read-navigation",
+      "scope": "A05 subset",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "observed": "airplane mode, WLAN off, close through recents, reopen; portfolio/navigation usable"
+    },
+    {
+      "id": "file-export-modify-restore",
+      "scope": "K3/K4/A09 subset",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "expectedEUR": "100",
+      "modifiedEUR": "200",
+      "restoredEUR": "100"
+    },
+    {
+      "id": "normal-reopen-value-retention",
+      "scope": "A02/A09 subset",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "retainedEUR": "100"
+    }
+  ],
+  "notProven": [
+    "fresh installation",
+    "full process termination",
+    "password encryption/backup format",
+    "independent fresh-profile restore",
+    "original1000EUR10k fixture",
+    "full canonical record equality",
+    "offline write/reload",
+    "controller/cache identity"
+  ],
+  "followUpOnly": [
+    "device/Android/browser and version",
+    "fresh install or already present",
+    "100 EUR backup password encrypted or not"
+  ],
+  "internallyExecutableCodeGapFound": false,
+  "ciRerunStarted": false,
+  "productChanged": false,
+  "global1point0Accepted": false
+}

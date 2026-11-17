@@ -1,3 +1,7 @@
+## Manuelle Android-Fortschreibung · 17.11.2026
+
+[Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Frische Installation, vollständiges Prozessende, Verschlüsselung/Format und genaue Geräte-/Browser-/SW-Version nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
+
 ## Ergänzter Windows-K6-Teilumfang · 16.11.2026
 
 [Neue tatsächliche Windows-Bedienbelege](SW321_WINDOWS_K6_BITPANDA_2026-11-16.md): Chrome/Edge Tastatur-Position/Editor, Escape/Fokusrückkehr/Weiterarbeit und3px sichtbarer Fokus bestanden. Berechnete CSS-Schriftverdoppelung320/768 mit erreichbaren Aktionen bestanden; echte OS-Systemschrift wurde nicht verändert und bleibt OPEN. Physischer Touch und Android A01–A10 bleiben ohne isoliert zugängliches physisches Gerät OPEN. Bestehende elf K4-Fälle behalten ihre Abnahme und werden nicht wiederholt.

@@ -1,3 +1,15 @@
+# HND01 · manuelle Android-Teilbefunde angenommen
+
+[Fallweise Soll/Ist-Abnahme](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md) · Quelle ausschließlich Nutzerbericht, physisches Android, keine Screenshots/technischen Logs. **DONE_MANUAL_USER_CONFIRMED:** App-Symbolstart/Grundnavigation, Offline-Lesen und Navigation nach Flugmodus/WLANaus/App-Übersicht-Schließen/Wiederöffnung, Datei-Export100EUR→Änderung200EUR→Restore100EUR und100EUR nach normaler Wiederöffnung. Portfolio vorab vom Nutzer geleert. Kein Agenten-/Lab-PASS.
+
+Frische Installation, vollständiges Prozessende, Verschlüsselung/Format, frisches Zielprofil, Original10k und konkrete Geräte-/Browser-/SW-Version nicht bestätigt. Gesamt-A01/A03/A05/A09/K4/K5 bleiben PARTIAL mit getrennten Restgrenzen; berichtete Teilfälle geschlossen. Pauschales „keine physische Android-Prüfung/alles NOT_RUN“ ersetzt. Keine erneute gleiche Gerätesuche/Lab-Anmeldung/Tests für diese abgeschlossenen Teilfälle. Samsung-Login zuvor unvollendet, keine Buchung/Reservierung.
+
+Anschließender aktueller K1–K6-/1.0-Restabgleich: keine neue intern reproduzierte Codepflichtlücke. Noch fehlende Gerätebedingungen/Zuordnung und private Bitpanda-/ETH-Belege sind externe Grenzen. Windows/Kraken DONE. Main e9130ad9/SW321 unverändert; separater csv-import.js503-/Main44048209546-Fehllauf bleibt eigenständig FAIL/UNKNOWN, kein CI-Retry.
+
+Nur konkret fehlende Angaben: Gerät/Android/Browser-Version, frisch installiert oder schon vorhanden,100EUR-Sicherung passwortverschlüsselt oder nicht. Keine fehlenden Screenshots/Protokolle nachfordern. Kein globaler1.0-Abschluss.
+
+--- Historische Zugangsstände, im oben belegten Teilumfang ersetzt ---
+
 # HND01 · Samsung-Lab erreichbar · Kontoanmeldung ausstehend
 
 Aktueller alleiniger HND01-Owner führt Jochens Samsung-Auftrag ab ed74481b fort; Main e9130ad9 unverändert. [Samsung-Zugang, Einzel-Soll/Ist und vorbereitete Originalfixture](ANDROID_SAMSUNG_DEVICE_ACCEPTANCE_2026-11-17.md). Öffentliche echte Galaxy-Geräteliste erreichbar, Available-Smartphones sichtbar; konkreter Samsung-Account-Login lädt korrekt. Noch nicht angemeldet/reserviert; Kontingent/Modell/Chrome der Testsitzung UNKNOWN.

@@ -1,3 +1,7 @@
+## Manuelle Android-Fortschreibung · 17.11.2026
+
+[Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Frische Installation, vollständiges Prozessende, Verschlüsselung/Format und genaue Geräte-/Browser-/SW-Version nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
+
 # Windows Chrome/Edge · K4-Plattformnachweis · 16.11.2026
 
 **PASS im ausdrücklich akzeptierten Windows-Runner-Umfang.** [Lauf43946304983](https://github.com/joke0071/foliolab-open/actions/runs/43946304983), Job133576766668, QA-Head `e67ba0b5e6c43169fcf51250ed99eca727b67f28`, [QA-PR348](https://github.com/joke0071/foliolab-open/pull/348). Ausschließlich synthetische Daten, kein Privatportfolio oder privates Belegmaterial in CI. Keine Produktänderung, kein Deployment und keine neue SW321-Livefreigabe erforderlich.

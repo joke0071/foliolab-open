@@ -1,3 +1,7 @@
+## Manuelle Android-Fortschreibung · 17.11.2026
+
+[Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Frische Installation, vollständiges Prozessende, Verschlüsselung/Format und genaue Geräte-/Browser-/SW-Version nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
+
 # Android · Samsung Remote Test Lab · 17.11.2026
 
 **SAMSUNG_REACHABLE_AUTHENTICATION_PENDING.** Alleiniger bestehender HND01-Hauptagent; Wiedereinstieg am frisch remote bestätigten ed74481b122d9efcedb8f7ee9b37d37d680306ac. Main e9130ad90874434a38bb329a7dafaa22e2163e1d unverändert. Jochens persönliches Handy ausgeschlossen, nur vorhandenes kostenloses Kontingent zulässig; keine bezahlte Buchung, kein CI-Retry.
