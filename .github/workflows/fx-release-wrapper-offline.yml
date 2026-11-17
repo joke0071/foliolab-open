@@ -1,0 +1,49 @@
+name: FX release wrapper offline wiring
+on:
+  pull_request:
+    branches: [feature/flh05-import-foundation]
+    paths: ['.github/workflows/fx-release-wrapper-offline.yml', 'tests/diagnostics/fx-wrapper-offline.mjs', 'tests/diagnostics/fx-wrapper-offline-observer.mjs']
+permissions:
+  contents: read
+jobs:
+  compare:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - engine: chromium
+            playwright: 1.56.1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: qa, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {path: app, ref: 494ed8f0f6b627d8be972a5ceb886005e5064b31, persist-credentials: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: fx-compare-${{ matrix.engine }}-${{ matrix.playwright }}-${{ runner.os }}
+      - name: Install prescribed engine
+        working-directory: app
+        run: |
+          npm install --no-save playwright@${{ matrix.playwright }}
+          npx playwright install --with-deps ${{ matrix.engine }}
+          ln -s "$PWD/node_modules" ../qa/node_modules
+      - name: Complete frozen release wrapper; no production requests
+        working-directory: app
+        env:
+          QA_ROOT: ${{ github.workspace }}/qa
+          FX_ENGINE: ${{ matrix.engine }}
+          RELEASE_SHA: 494ed8f0f6b627d8be972a5ceb886005e5064b31
+        run: node ../qa/tests/diagnostics/fx-wrapper-offline.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fx-wrapper-${{ matrix.engine }}-${{ github.run_id }}
+          path: wrapper-evidence/
+          if-no-files-found: error
+          retention-days: 30
