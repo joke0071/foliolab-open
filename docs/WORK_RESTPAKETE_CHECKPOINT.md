@@ -1,3 +1,13 @@
+# HND01 · alleinige Übernahme und headgebundene Mergefreigabe · 17.11.2026
+
+Sole writer `hnd01-1point0-20261117-root-5c3182824c09`. Neuester ausdrücklicher Auftrag von Jochen autorisiert den selbstständigen Merge des exakt qualifizierten Heads nach grünen Pflichtchecks, erhaltener Abdeckung und belegtem Nutzen. Damit ist die bisherige separate Entscheidungswarteposition für PR354 erledigt. Keine parallelen Agenten oder Funktionsstränge.
+
+Main frisch bestätigt `494ed8f0f6b627d8be972a5ceb886005e5064b31`, Checkpoint `0ac1df799af30e0b7860d0ccb2af169de4fdc9d5`, PR354 exakt `aeea7d11d0169dde8355a7f317a16c1a62dab806`, konfliktfrei. Reguläre PR-CI44041905697 und Wallet44041905817 erneut über GitHub geprüft: SUCCESS, alle vier Integrationsjobs grün; Deploy/Live im PR korrekt skipped. Zusätzlicher lokaler Read-only-Review:33 gezielte Integritäts-/UNKNOWN-/FX-/Workflowtests PASS, Produkt/SW/Workflow bytegleich zu Main. Vollständige bestehende Vergleichs-/Domainbelege übernommen; keine wiederholten Diagnoseläufe. Kaltstart/Reload vor SW-Kontrolle im Windows-Diagnoselauf bleibt ausschließlich dieser beobachtete Ablauf; echte SW-Aktivierung/Kontrolle/Offline-Reload/IDB bleibt im unveränderten regulären Coregate erforderlich.
+
+Entscheidung: PR354 am exakt geprüften Head mergen wegen vermiedener wiederholter Produktionsabrufe. Kein Laufzeit-/Spitzensenkungsversprechen. Danach tatsächlichen Mainbaum gegen Kandidat prüfen und automatischen Main-/Deployment-/regulären Liveabschluss begleiten. Frühere fehlgeschlagene Originalläufe unverändert dokumentiert; Supportstatus und getrennte UNKNOWN-Ursachen bereits einmal im vorhandenen Endbericht festgehalten. Nächster offener Schritt: headgebundener Merge, noch nicht als erfolgt behauptet.
+
+---
+
 # HND01 · FX-PR #354 qualifiziert · Entscheidung offen
 
 **QUALIFIED_PENDING_MERGE_DECISION.** [PR #354](https://github.com/joke0071/foliolab-open/pull/354), exakter Head `aeea7d11d0169dde8355a7f317a16c1a62dab806`. Reguläre Qualifikation [44041905697](https://github.com/joke0071/foliolab-open/actions/runs/44041905697) und Wallet44041905817 SUCCESS;1511Units, Chromium und Cross1/2/3 PASS. Deployment/Full-Live im PR korrekt übersprungen. Main `494ed8f0f6b627d8be972a5ceb886005e5064b31` und SW321 produktiv unverändert; kein Merge ausgeführt.
