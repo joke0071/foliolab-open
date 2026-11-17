@@ -1,3 +1,15 @@
+# HND01 · HTTP-Auslieferungsdiagnose 17.11.2026
+
+**Status: gezielte Gegenprobe auf frischem Runner läuft; kein neuer Merge-Head qualifiziert.** Alleiniger HND01-Hauptagent. Main `494ed8f0f6b627d8be972a5ceb886005e5064b31`, SW v321 sowie Bitpanda-, Kraken- und Windows-Abnahmen übernommen. Keine Produktänderung, keine neue vollständige Liveprüfung.
+
+- Gewöhnliche Nutzung: frisches installiertes Chrome 156.0.8078.80 / Windows Server 2025, Standard-TLS, regulärer SW, kein Hash-Vorlauf und keine Request-Routen. Start, Navigation, synthetischer UI-Import und normales Reload bestanden. Vollständiger Collector: [Run 44034081383](https://github.com/joke0071/foliolab-open/actions/runs/44034081383), Artefakt 14306422273. 17.11.2026 07:50:07.892–07:50:18.445 MEZ; 300 HTTP-Transaktionen (299×200, 1×304), maximal 90 gleichzeitig bis zu Antwortheadern; keine fehlgeschlagenen Ressourcen. SW anschließend aktiviert; Reload lag vor SW-Kontrolle. Keine Nutzerauswirkung in diesem Durchlauf beobachtet; andere Egress-/CDN-Knoten bleiben offen.
+- Original 429: 72 Module, Anfrageereignisfenster 44 ms, Antwortfenster 35 ms, maximal 66 dieser Anfragen gleichzeitig bis zur Fehlerantwort. In fünf vorangehenden FX-Fällen jeweils 426 gleichoriginige Requests durch drei kalte Modulgraphen pro isoliertem geroutetem Kontext. Routing deaktiviert den HTTP-Cache; SW in der Fachprüfung absichtlich blockiert. Keine Hashprüfung in diesem FX-Teil.
+- Original 503: market.js-Fehlerantwort 16.11. 21:56:15.220 UTC lag 1342 ms VOR der ersten Hashanfrage. 155 SHA-Prüfungen folgten mit bereits begrenzten acht Workern. Eine verringerte Hashparallelität wäre dafür keine belegte Abhilfe.
+- [Begrenzter A/B-Run 44034608089](https://github.com/joke0071/foliolab-open/actions/runs/44034608089): sieben Original-FX-Fälle PASS, im achten 65 Modul-429; nach 60 s Diagnosepause schon HTML-Dokument-429 vor Wirksamwerden des Kandidaten. Artefakt 14306816448, SHA256 7356b1c80177529134154ad54c8d32cb5bf2b91fd8a5de7aa48260a1acd76952. Keine Erfolgsbehauptung aus dem Vergleich.
+- Nächster prüfbarer Schritt: [QA-PR #352](https://github.com/joke0071/foliolab-open/pull/352), Head `f846dd3246dd3b6a854784dba01cd50c81e26ba1`: einmal nur die gepacete unveränderte Acht-Fälle-Suite auf frischem Runner auswerten. Einzige Kandidatenänderung: 1000 ms zwischen geschlossenen Live-Kontexten, nominell +7 s/Engine; alle übrigen Testbytes, Assertions, Mocks und Fristen identisch. 26 gezielte Unit-Tests und Syntax-/Namensprüfung bestanden. Noch kein Nutzen qualifiziert. Bei erneutem Auslieferungsfehler keine weitere unveränderte Wiederholung.
+
+---
+
 # HND01 · Main 43956969224 abgeschlossen
 
 **Endstatus: MAIN_CI_FAILED_LIVE_DELIVERY.** Der Lauf ist beendet: `completed / failure`, Versuch 3. Main ist `494ed8f0f6b627d8be972a5ceb886005e5064b31`; PR #349 wurde am freigegebenen Head gemergt. Alle Integrationsprüfungen und das Deployment sind erfolgreich. Der neue reguläre Liveabschluss bleibt durch die aufgezeichneten Auslieferungsfehler blockiert. Es laufen keine Jobs; weitere unveränderte Wiederholungen sind gestoppt.
