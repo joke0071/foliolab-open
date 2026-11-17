@@ -1,3 +1,9 @@
+## Verbindliche Aktualisierung · 17.11.2026
+
+[Kriterienabgleich](FOLIOLAB_1_0_CRITERIA_RECONCILIATION_2026-11-17.md) und [aktuelle Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md) gehen historischen Zugangsmeldungen/Rückfragetabellen unten vor. Browser/Version, bestehende Installation und Klartextsicherung sind geklärt; keine erneute Frage. Grundbefunde DONE_MANUAL_USER_CONFIRMED. Zusätzliche De-/Neuinstallation nicht als eigener Pflichtablauf vorgeschrieben; verschlüsselter Android-Restore und frischer Restore-Datenkontext bleiben getrennte Pflichtaussagen. Kleinster Offline-Write-/Prozess-Test vorbereitet, noch kein Ergebnis. Einziger freigegebener Live-Retry2 ist inzwischen FAIL nach coin-identity.js429/Worker-Timeout; ursprünglicher csv-import.js503 bleibt separat FAIL. Kein weiterer Retry, keine Produktänderung.
+
+--- Historische Einzelbefunde, nur im unverändert zutreffenden Umfang ---
+
 ## Android-Nachtrag · Browserbeleg und Testumfang geklärt
 
 Screenshot „Über Google Chrome“: **Chrome157.0.8103.78 / Android16 / CPH2663 / BuildUKQ1.231108.001**. Geräte-/Browserzuordnung nun visuell belegt; funktionale Ergebnisse weiterhin ausdrücklich Nutzerbericht ohne Funktionsbilder/Logs. Nutzer bestätigt **schon installiert, ohne Passwort**. Damit bestehender Symbolstart und **unverschlüsselter100EUR-Datei-Export/Restore/Wiederöffnung** manuell abgeschlossen; Neuinstallation und verschlüsselter Android-Restore **nicht geprüft**. Keine der bisherigen Sachrückfragen offen und keine erneute gleiche Frage/Testwiederholung.

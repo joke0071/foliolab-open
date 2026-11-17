@@ -1,3 +1,9 @@
+## Verbindliche Aktualisierung · 17.11.2026
+
+[Kriterienabgleich](FOLIOLAB_1_0_CRITERIA_RECONCILIATION_2026-11-17.md) und [aktuelle Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md) gehen historischen Zugangsmeldungen/Rückfragetabellen unten vor. Browser/Version, bestehende Installation und Klartextsicherung sind geklärt; keine erneute Frage. Grundbefunde DONE_MANUAL_USER_CONFIRMED. Zusätzliche De-/Neuinstallation nicht als eigener Pflichtablauf vorgeschrieben; verschlüsselter Android-Restore und frischer Restore-Datenkontext bleiben getrennte Pflichtaussagen. Kleinster Offline-Write-/Prozess-Test vorbereitet, noch kein Ergebnis. Einziger freigegebener Live-Retry2 ist inzwischen FAIL nach coin-identity.js429/Worker-Timeout; ursprünglicher csv-import.js503 bleibt separat FAIL. Kein weiterer Retry, keine Produktänderung.
+
+--- Historische Einzelbefunde, nur im unverändert zutreffenden Umfang ---
+
 ## Versions- und Umfangsnachtrag · Angaben vollständig geklärt
 
 Der vom Nutzer übermittelte Screenshot **1000043713.jpg** der Seite „Über Google Chrome“ zeigt **Google Chrome157.0.8103.78**, **Android16**, **CPH2663**, Build **UKQ1.231108.001**. Damit ist die nachgefragte Browser-/OS-Zuordnung visuell belegt. Bild50638Bytes, SHA256cd7df7b0928f4dc9e5c7eb3629dcbc0ce81a1bd3e5ff0b315f72c7e10fb425ab; sichtbare Uhr17:59, kein daraus abgeleitetes Test-/Aufnahmedatum. Originalbild bleibt außerhalb Git; kein Beleg für die eigentlichen Funktionsabläufe oder deren exakte Ausführungszeit.

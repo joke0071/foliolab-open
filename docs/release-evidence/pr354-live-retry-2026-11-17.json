@@ -1,0 +1,45 @@
+{
+  "run_id": 44048209546,
+  "attempt": 2,
+  "head": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+  "conclusion": "failure",
+  "live_job": 134216858755,
+  "job_duration_seconds": 194,
+  "failed_request": {
+    "url": "https://foliolab.unperfekt.at/src/coin-identity.js",
+    "status": 429,
+    "at_utc": "2026-11-17T17:10:52.260Z",
+    "retry_after": "0",
+    "edge": "cache-iad-kcgs7200061-IAD"
+  },
+  "subsequent_failure": "20s activated controller timeout in browser-kraken-import.mjs:132 before offline saved fixture/reload; final active/installing/controller null",
+  "passed": [
+    "155 published asset exact hashes SW321",
+    "core live 6 groups /18 Axe",
+    "ALPHA ETF",
+    "Chromium FX 8 byte-replay cases",
+    "Chromium FX 2 direct-domain cases"
+  ],
+  "not_completed": [
+    "Chromium Kraken offline controlled fixture continuation",
+    "remaining chained live gates / Firefox / WebKit completion"
+  ],
+  "chromium_fx_direct_measured": {
+    "production_requests": 852,
+    "peak_requests_per_wallclock_second": 471
+  },
+  "original_attempt_1": "FAIL csv-import.js HTTP503, preserved separately; not replaced by attempt2",
+  "artifact_id": 14350907511,
+  "artifact_bytes": 12603196,
+  "artifact_sha256": "d3146f13d1831e012d09585a96e1eb5314ddc03f8db0141e978b5399498f5d28",
+  "zip_members": 137,
+  "zip_crc": "PASS",
+  "cause_rule": "Origin HTTP429 observed; exact limit/window and original503 cause unknown; no product data corruption demonstrated",
+  "additional_reruns": 0,
+  "archive": {
+    "file_name": "FolioLab_PR354_Live_Retry_2026-11-17.tar.gz",
+    "bytes": 12609594,
+    "sha256": "5114b30e507bdefff3bd8eb489957e8b61c5f195ac2cb3dbc933eddf860222d0",
+    "persistent_copy": "Library version0; exact ID kept in private receipt; no credentials/private originals"
+  }
+}

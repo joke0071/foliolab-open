@@ -1,3 +1,9 @@
+## Verbindliche Aktualisierung · 17.11.2026
+
+[Kriterienabgleich](FOLIOLAB_1_0_CRITERIA_RECONCILIATION_2026-11-17.md) und [aktuelle Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md) gehen historischen Zugangsmeldungen/Rückfragetabellen unten vor. Browser/Version, bestehende Installation und Klartextsicherung sind geklärt; keine erneute Frage. Grundbefunde DONE_MANUAL_USER_CONFIRMED. Zusätzliche De-/Neuinstallation nicht als eigener Pflichtablauf vorgeschrieben; verschlüsselter Android-Restore und frischer Restore-Datenkontext bleiben getrennte Pflichtaussagen. Kleinster Offline-Write-/Prozess-Test vorbereitet, noch kein Ergebnis. Einziger freigegebener Live-Retry2 ist inzwischen FAIL nach coin-identity.js429/Worker-Timeout; ursprünglicher csv-import.js503 bleibt separat FAIL. Kein weiterer Retry, keine Produktänderung.
+
+--- Historische Einzelbefunde, nur im unverändert zutreffenden Umfang ---
+
 # K4 · aktueller Windows-Plattformabschluss · 16.11.2026
 
 **Windows-Browser-/verschlüsselter Export-/Restore-/Prozess-Wiederöffnungsumfang PASS / DONE gemäß neuer Nutzerakzeptanz.** [11Fälle/22vollständige Prozessbeendigungen auf dokumentiertem Windows-Runner mit installiertem Chrome und Edge](WINDOWS_K4_PLATFORM_ACCEPTANCE_2026-11-16.md); [Maschinenbeleg und Originale](release-evidence/windows-k4-sw321-2026-11-16.json). Originale10k-Fixture sowie vier kleine Präzisions-/Legacy-/UNKNOWN-Dateien weiterverwendet, keine neue Modellgenerierung, keine Privatdaten.
