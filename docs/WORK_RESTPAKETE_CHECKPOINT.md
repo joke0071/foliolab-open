@@ -1,3 +1,9 @@
+# HND01 · Main und Deployment grün · reguläre Liveabnahme aktiv
+
+PR354 am freigegebenen exakten Head gemergt; Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`, qualifizierter Tree unverändert `3fd78f746c08ab0fe0347ab30932a00309d7d008`, Produkt/SW321/Workflow bytegleich. Alle vier Integrationsjobs in [Main44048209546](https://github.com/joke0071/foliolab-open/actions/runs/44048209546) SUCCESS,1511Units/0Fehler; Deploy133931214832 SUCCESS. **Live133931409548 läuft**, zuletzt veröffentlichte Bytes/Kernabläufe/Chromium. Kein Live-PASS vorweggenommen und kein weiterer Lauf gestartet. Nächster Schritt: diesen regulären Livejob bis Ergebnis übernehmen, Pagespayload und Originale prüfen, tatsächliche FX-Anfragen/Spitze/Laufzeiten auswerten. Restbelege und genau ein nächster Geräteauftrag erst nach diesem Abschluss.
+
+---
+
 # HND01 · PR354 gemergt · regulärer Main-/Liveabschluss aktiv
 
 Sole writer `hnd01-1point0-20261117-root-5c3182824c09`. Jochen autorisierte in diesem Auftrag den selbstständigen Merge nach exakter Headqualifikation. PR354 wurde headgebunden an `aeea7d11d0169dde8355a7f317a16c1a62dab806` gemergt. Neuer Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`, Tree `3fd78f746c08ab0fe0347ab30932a00309d7d008`, Parents exakt alter Main494ed8f0 und qualifizierter Head. Tree identisch zum qualifizierten synthetischen Merge; Produkt/SW321/Workflow unverändert.33 zusätzliche gezielte lokale Tests PASS. Vorhandene 24-Fälle-/6-Domain-/CI-/Originalnachweise übernommen; keine Diagnosewiederholung.
