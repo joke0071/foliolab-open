@@ -1,0 +1,57 @@
+{
+  "status": "SAMSUNG_REACHABLE_AUTHENTICATION_PENDING",
+  "startedFrom": "ed74481b122d9efcedb8f7ee9b37d37d680306ac",
+  "main": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+  "observedAt": "2026-11-17T12:51:43.703077+00:00",
+  "samsung": {
+    "landingReachable": true,
+    "deviceListReachable": true,
+    "loginFormReachable": true,
+    "authenticated": false,
+    "reservations": 0,
+    "cost": 0,
+    "deviceSessionIdentity": null,
+    "quotaUnknown": true
+  },
+  "cases": [
+    {
+      "id": "installation",
+      "status": "NOT_RUN",
+      "reason": "authentication pending"
+    },
+    {
+      "id": "restore-reopen",
+      "status": "NOT_RUN",
+      "reason": "authentication pending"
+    },
+    {
+      "id": "offline-cold-start",
+      "status": "NOT_RUN",
+      "reason": "authentication pending; scheduled last"
+    }
+  ],
+  "fixture": {
+    "fixture_source": "qa/windows-k4-sw321, unchanged compressed original",
+    "fixture_bytes": 9270601,
+    "fixture_sha256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+    "encrypted_source_artifact": 14264084074,
+    "encrypted_bytes": 12361784,
+    "encrypted_sha256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb",
+    "expected_EUR": "1000",
+    "bookings": 10000,
+    "journalEntries": 10000,
+    "externalCashFlows": 10000,
+    "autoRefresh_must_be_disabled_in_device_profile": true,
+    "not_a_new_device_execution": true,
+    "syntheticOnly": true
+  },
+  "firebase": {
+    "supportedAndroidStudioFound": false,
+    "adbFound": false,
+    "authorizedProjectAndFreeQuotaVerified": false,
+    "genericFirebasePluginFound": true,
+    "streamingCapabilityVerified": false
+  },
+  "personalPhoneUsed": false,
+  "ciRerunStarted": false
+}

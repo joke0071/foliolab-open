@@ -1,3 +1,13 @@
+# HND01 · Samsung-Lab erreichbar · Kontoanmeldung ausstehend
+
+Aktueller alleiniger HND01-Owner führt Jochens Samsung-Auftrag ab ed74481b fort; Main e9130ad9 unverändert. [Samsung-Zugang, Einzel-Soll/Ist und vorbereitete Originalfixture](ANDROID_SAMSUNG_DEVICE_ACCEPTANCE_2026-11-17.md). Öffentliche echte Galaxy-Geräteliste erreichbar, Available-Smartphones sichtbar; konkreter Samsung-Account-Login lädt korrekt. Noch nicht angemeldet/reserviert; Kontingent/Modell/Chrome der Testsitzung UNKNOWN.
+
+Original10k-Datei9270601Bytes/SHA25667d95268… und tatsächlicher verschlüsselter Original-UI-Export12361784Bytes/SHA2567f128dea… lokal hashgleich bereitgestellt, Soll1000EUR/10000Buchungen/Journale/Flows geprüft. Bestehende Kriterien vor Gerätezeit gelesen. Installation, Android-Datei-Restore/Wiederöffnung und Offline-Kaltstart jeweils **NOT_RUN/AUTHENTICATION_PENDING**, kein Produktfehler und kein Geräte-PASS. Reihenfolge nach Freigabe: Installation → Restore → Offline zuletzt. Nur kostenloses bestätigtes Kontingent; keine persönliche Handyverwendung, keine bezahlte Buchung.
+
+Kleinster nächster Nutzerbeitrag: sicher im geöffneten Samsung-Anmeldedialog mit bestehendem Konto anmelden. Firebase-Ersatzweg gezielt geprüft: unterstütztes Android Studio und autorisiertes kostenloses Projektkontingent hier noch nicht nachgewiesen, kein paralleler Neuaufbau. Samsung ist nicht allgemein unzugänglich. BrowserStack/TestMu nicht wiederholen. Windows/Kraken und separater csv-import.js503-Status unverändert, kein CI-Retry.
+
+--- Vorheriger Zugangsstand ---
+
 # HND01 · Android-Labzugang technisch blockiert · kein Geräte-PASS
 
 Aktueller Auftrag geprüft: physisches Android-Lab, persönliches Handy ausgeschlossen. **ACCESS_BLOCKED / Installation,A01,A05,A09 NOT_RUN**. BrowserStack Dashboard/offizieller Login jeweils Site Unavailable. TestMu-Loginseite zunächst erreichbar; Jochen wählte sichere Google-Anmeldung, aber Anbieterweiterleitung `accounts.lambdatest.com` zeigt Site Unavailable. Sofortige frische Gegenprüfung am TestMu-Ursprung zeigt clientseitigen Application error. Anmeldeergebnis UNKNOWN, kein Dashboard/Entitlement/Gerät belegt. Keine weiteren automatischen Loginversuche.
