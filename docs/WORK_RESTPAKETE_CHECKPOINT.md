@@ -1,3 +1,13 @@
+# HND01 · Android-Labzugang technisch blockiert · kein Geräte-PASS
+
+Aktueller Auftrag geprüft: physisches Android-Lab, persönliches Handy ausgeschlossen. **ACCESS_BLOCKED / Installation,A01,A05,A09 NOT_RUN**. BrowserStack Dashboard/offizieller Login jeweils Site Unavailable. TestMu-Loginseite zunächst erreichbar; Jochen wählte sichere Google-Anmeldung, aber Anbieterweiterleitung `accounts.lambdatest.com` zeigt Site Unavailable. Sofortige frische Gegenprüfung am TestMu-Ursprung zeigt clientseitigen Application error. Anmeldeergebnis UNKNOWN, kein Dashboard/Entitlement/Gerät belegt. Keine weiteren automatischen Loginversuche.
+
+[Zugangsbelege und Funktionsgrenzen](ANDROID_REAL_DEVICE_ACCESS_2026-11-17.md). Kriterien/Original10k-Fixture/Soll1000EUR übernommen; keine Wiederholung abgeschlossener Windows-/Kraken-Prüfungen. Kein Gerät reserviert, nichts gekauft, keine persönlichen Handy-/Portfoliodaten verwendet, kein CI-Retry. PR354/Main e9130ad9 und separater regulärer Liveabschluss nach csv-import.js503 bleiben unverändert.
+
+**Jetzt fehlt konkret:** tatsächlich erreichbarer authentifizierter TestMu/LambdaTest-Real-Device-Browser-Zugang (Android/Chrome, vorhandenes gedecktes Testkontingent; Home/PWA-/Prozess-/Offlinekontrolle vor Reservierung prüfen). Eine weitere Erlaubnis zum bereits ausgeführten Google-Methodenklick oder ein Kauf behebt die technische Nichterreichbarkeit nicht belegt. Keine erneute pauschale Handy-/Testdateianfrage. Kostenpflichtige Buchung nur nach separater konkreter Zustimmung zu Preis und Laufzeit. Aktueller Zugangsauftrag ist blockiert, keine Android-Abnahme und kein globaler1.0-Abschluss.
+
+--- Vorheriger Zwischenstand, durch obigen Endstatus ersetzt ---
+
 # HND01 · Android-Gerätelab gesucht · Anmeldung fehlt
 
 Neuer ausdrücklicher Auftrag: physisches fernbedientes Android-Lab nutzen; Jochens persönliches Handy ausgeschlossen, Kosten nur nach Zustimmung. Main e9130ad9 und Checkpoint c9382925 frisch bestätigt; keine neue CI/Produktänderung/Buchung.

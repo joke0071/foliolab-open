@@ -1,3 +1,15 @@
+# Android-Lab · endgültiger Zugangsstatus: technische Loginblockade
+
+**ACCESS_BLOCKED / KEINE PHYSISCHE SITZUNG / ALLE GERÄTEFÄLLE NOT_RUN.** Beobachtungen bis 2026-11-17T10:40:51.386394+00:00. Die sichere Anmeldeauswahl wurde tatsächlich angeboten; Jochen wählte **Google**. Der erfolgreiche Methodenklick ist keine erfolgreiche Kontoanmeldung: Die Weiterleitung zum Anbieterursprung `https://accounts.lambdatest.com` endete mit sichtbarem **Site Unavailable / Unable to access this site**. Keine Identität, Kontofreigabe, Testminuten oder Kosten bestätigt. Der vollständige weitergeleitete URL mit Geräte-/Cookieparametern wird aus Datenschutzgründen nicht gespeichert.
+
+Unmittelbar danach frische unabhängige Gegenprüfung am ursprünglichen TestMu-Ursprung `https://www.testmuai.com/`: sichtbar **Application error: a client-side exception has occurred while loading www.testmuai.com**. Damit Anmeldungsergebnis UNKNOWN und kein erreichbarer Geräte-Dashboardnachweis. Nach diesem generischen Fehler keine weiteren automatischen Anmeldeversuche, kein Methodenwechsel, keine Umgehung und keine wiederholte Anmeldeaufforderung. BrowserStack bleibt zuvor ebenfalls an beiden regulären Einstiegen nicht erreichbar. Keine ausdrückliche Botblockade nachgewiesen und keine genaue Netz-/Anbieterursache erfunden.
+
+Die frühere Zwischenposition „nur anmelden“ ist damit unvollständig und durch diesen Endstatus ersetzt. **Konkreter benötigter Zugang:** ein in dieser Prüfumgebung tatsächlich erreichbarer und authentifizierter **TestMu/LambdaTest Real Device Browser Testing**-Zugang mit Android/Chrome und bereits gedecktem Geräte-Testkontingent. Alternativ ein hier erreichbarer BrowserStack-Live-Zugang mit passendem vorhandenen Kontingent. Eine bloße zusätzliche Erlaubnis zum Methodenklick oder ein Kauf löst die beobachtete Nichterreichbarkeit nicht belegt; keinen Account/Plan auf Verdacht bestellen. Kostenfreigabe bleibt erst nach konkretem erreichbarem Angebot mit Preis/Laufzeit erforderlich.
+
+Installation/App-Symbol/Navigation, Offline-Kaltstart und Android-Datei-Restore/Wiederöffnung sind **nicht ausgeführt**. Kein Android-Modell/OS/Chrome/SW-Stand und kein gewöhnlicher Android-Ressourcenfehler beobachtet. Keine Emulatorbelege, keine Nutzung von Jochens persönlichem Handy, keine Zahlung/Reservierung/Registrierung, keine weitere CI. PR354 und die gescheiterte separate reguläre Liveabnahme bleiben unverändert. Checkpoint und1.0-Restliste enthalten genau diesen begrenzten Status.
+
+--- Erhaltene vorbereitende Zugangs- und Kriterienprüfung ---
+
 # Android · Real-Device-Zugangsprüfung · 17.11.2026
 
 **ACCESS_AUTHENTICATION_REQUIRED / KEIN GERÄTE-PASS.** Alleiniger bestehender HND01-Owner; aktueller Main e9130ad90874434a38bb329a7dafaa22e2163e1d und Checkpoint c93829255608ea26496439d08d437dac1aa61cca vor Beginn frisch remote bestätigt. Kein CI-Lauf, keine Produktänderung, keine Reservierung/Buchung, kein Zugriff auf Jochens persönliches Handy.
