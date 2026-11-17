@@ -76,6 +76,32 @@
       "technicalLogsAvailable": false,
       "explicitAdditionalInAppReloadReported": false,
       "swOrReleaseIdentityIndependentlyVerified": false
+    },
+    {
+      "id": "password-encrypted-file-restore-force-stop-reopen",
+      "scope": "K4/A09 Android encrypted path; same existing test portfolio",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "source": "explicit user confirmation \"Ja hat funktioniert\" to the immediately preceding complete five-step test instructions",
+      "recordedAt": "2026-11-17T18:16:57.190819+00:00",
+      "testTimestamp": null,
+      "observed": {
+        "passwordEncryptedExport": true,
+        "androidFilePicker": true,
+        "passwordPromptAndRestore": true,
+        "expectedEUR": "100",
+        "modifiedEUR": "200",
+        "restoredEUR": "100",
+        "forceStoppedApps": [
+          "Chrome",
+          "FolioLab"
+        ],
+        "appIconReopenEUR": "100"
+      },
+      "agentObserved": false,
+      "functionalScreenshotsAvailable": false,
+      "technicalLogsAvailable": false,
+      "freshTargetProfileTested": false,
+      "original10kRecordEqualityTested": false
     }
   ],
   "notProven": [
@@ -116,8 +142,16 @@
   "clarificationSource": "explicit user follow-up: schon installiert, ohne Passwort",
   "pendingClarifications": [],
   "notTested": {
-    "freshInstallation": "NOT_TESTED_EXISTING_INSTALLATION",
-    "passwordEncryptedRestore": "NOT_TESTED_UNENCRYPTED_BACKUP"
+    "freshInstallation": "NOT_TESTED_EXISTING_INSTALLATION"
   },
-  "ciRerunStartedScope": "This manual Android evidence record only; separately documented PR354 attempt2 was already completed before this follow-up."
+  "ciRerunStartedScope": "This manual Android evidence record only; separately documented PR354 attempt2 was already completed before this follow-up.",
+  "backupPasswordEncryptedFieldScope": "false refers to the original earlier 100-EUR cleartext backup only; subsequent password-encrypted test is separately accepted in cases",
+  "nextPreparedCase": {
+    "id": "editor-background-lock-return",
+    "status": "PREPARED_AWAITING_USER_OBSERVATION",
+    "draftName": "Hintergrund-Test",
+    "expectedPersistedNameAfterCancel": "Offline-Test",
+    "expectedEUR": "100",
+    "scope": "unsaved editor survives Home/other app/screen lock and return; no force-stop; cancel preserves stored position"
+  }
 }

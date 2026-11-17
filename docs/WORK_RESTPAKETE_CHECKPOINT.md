@@ -1,3 +1,11 @@
+## Android-Nachtrag · verschlüsselter Datei-Restore bestätigt
+
+Jochen bestätigt mit „Ja hat funktioniert“ den unmittelbar davor vollständig beschriebenen Test: Passwort festgelegt, verschlüsselte100EUR-Sicherung heruntergeladen, Bestand200EUR geändert, tatsächlichen Android-Dateidialog verwendet, Datei mit Passwort restauriert,100EUR geprüft; Chrome und FolioLab beenden erzwungen, per Symbol wiedergeöffnet, erneut100EUR. **DONE_MANUAL_USER_CONFIRMED** für diesen K4/A09-Verschlüsselungspfad und Werterhalt nach Prozess-Wiederöffnung. Quelle ist die zusammenfassende ausdrückliche Nutzerbestätigung des konkreten Ablaufs, keine Agentenbeobachtung/technischen Logs/Funktionsbilder. Kein Passwort/Dateioriginal angefordert oder veröffentlicht.
+
+Der frühere Klartextfall bleibt eigenständig DONE. FreshRestore auf isoliertem Ziel, Original10k-/Record-/Herkunfts-/UNKNOWN-Gleichheit und zusätzlicher expliziter Offline-In-App-Reload sind hierdurch nicht geprüft. Versionen wie bisher zugeordnet, keine aktuelle SW-/Releaseidentität unabhängig ermittelt. Keine Produkt-/Main-/SW-/CI-Änderung; Live429 und ursprünglicher503 separat offen.
+
+Nächster kleiner vorbereiteter manueller Teilfall A06: im bestehenden Testpositionseditor den Namen nur als **Hintergrund-Test** eintippen, NICHT speichern; per Home zu einer anderen App wechseln, Bildschirm rund30Sekunden sperren, entsperren und zu FolioLab zurückkehren, ohne Apps zu beenden erzwingen. Soll: Editor und Entwurf erhalten. Anschließend abbrechen: gespeicherter Name **Offline-Test** und100EUR unverändert. PREPARED, kein Ergebnis behauptet. Dieser Ablauf schließt bei Erfolg nur die beobachtete Hintergrund-/Sperr-Rückkehr, nicht pauschal alle A06-Netz-/Importbedingungen.
+
 # HND01 · Offline-Write und Force-Stop-Kaltstart manuell abgenommen · 17.11.2026
 
 Fortsetzung05b85cae. ## Android-Nachtrag · Offline-Schreiben und Prozess-Kaltstart bestätigt

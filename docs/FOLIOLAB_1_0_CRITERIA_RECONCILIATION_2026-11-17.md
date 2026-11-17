@@ -8,7 +8,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 
 **Installation:** Installation/Launcher/Standalone gehören zu K5. Der Nutzer bestätigt eine vorhandene installierte PWA und erfolgreichen Symbolstart; diese Aussage ist erledigt. Kein Vertrag verlangt ausdrücklich Deinstallation und erneute Installation für diesen Nachtest. Ein frischer nativer Installationsdialog ist nicht beobachtet, aber daraus wird kein zusätzlicher Pflichtablauf erzeugt. **FreshRestore ist ein eigener K4-Datenkontext**, nicht automatisch ein App-Neuinstallationsauftrag.
 
-**Verschlüsselter Restore:** ausdrücklich im persönlichen Windows-Chrome/Edge-/Android-Plattformumfang (K4-Review, Abschnitt Plattform). Der unverschlüsselte 100-EUR-Erfolg ersetzt ihn nicht. Der bestehende 100-EUR-Testbestand genügt für den kleinsten Android-Verschlüsselungspfad; er ersetzt nicht den zusätzlich vorgeschriebenen Großdaten-/Herkunftsvergleich. Keine Wiederholung des bereits geschlossenen Klartextfalls.
+**Verschlüsselter Restore:** ausdrücklich im persönlichen Windows-Chrome/Edge-/Android-Plattformumfang (K4-Review, Abschnitt Plattform). Nun zusätzlich mit bestehendem100EUR-Testportfolio manuell bestätigt; Klartext- und Passwortpfad sind getrennt DONE. Der kleine Android-Verschlüsselungsfall ersetzt nicht den Großdaten-/Herkunfts-/FreshRestorevergleich.
 
 ## Geschlossene Pflichten und Teilpflichten
 
@@ -19,6 +19,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 | Offline lesen/navigieren nach App-Übersicht-Schließen und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED, Flugmodus und WLANaus. Kein vollständiges Prozessende/Offline-Write hineininterpretiert. |
 | Offline-Schreiben und Prozess-Kaltstart | DONE_MANUAL_USER_CONFIRMED: offline Name gespeichert; Chrome und FolioLab jeweils Beenden erzwingen; weiterhin offline per Symbol gestartet; Offline-Test/100EUR/Navigation erhalten. Kein zusätzlicher In-App-Reload behauptet. |
 | Unverschlüsselter Datei-Export/Restore und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED: 100→200→Datei-Restore100→Wiederöffnung100EUR. |
+| Android verschlüsselter Datei-Restore | DONE_MANUAL_USER_CONFIRMED: vorgegebenen vollständigen Passwort-Export/Dateipicker/100→200→Restore100-Ablauf samt Force-Stop beider Apps und Wiederöffnung100EUR bestätigt. Keine Funktionsbilder/Logs. |
 | Windows K4 | Elf Fälle/22 Prozessbeendigungen, Chrome/Edge, Original10k, verschlüsselte UI-Exporte/FreshRestore sowie Präzisions-/Legacy-/UNKNOWN-Fälle DONE im dokumentierten Umfang. |
 | Kraken Spotanker | Alle13 Spotwährungen beidseitig abgeglichen, DONE; kein erneuter Nachweis erforderlich. |
 | Produktkern/UI | Bestehende K1–K3-Implementierungen, UI-R1–R4/UI-ALLOC01 und K6-TRUST erhalten ihre Abnahme. D-ETH260-Fix und öffentliche Cursorpaare DONE. Kein neuer belegter Codefehler aus diesem Dokumentationsabgleich. |
@@ -28,7 +29,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 | Vertrag | Noch erforderliche Aussage | Fehlender Nachweis / kleinster nächster Schritt |
 |---|---|---|
 | A05 verbleibende Reload-/technische Teilbehauptungen | Expliziter Offline-Dokumentreload und technische Controller-/Cache-/Recordidentität. | Offline-Schreiben und Start nach Force-Stop beider Apps sind nun manuell DONE. Zusätzlicher In-App-Reload/Internas nicht berichtet; diese Grenze getrennt führen und den bestätigten Kaltstart nicht wiederholen. |
-| K4/A09 Android verschlüsselt | Regulärer Passwort-Export, tatsächlicher Android-Dateipicker, Entschlüsselung/Restore, Werte nach Wiederöffnung unverändert. | Bisher nur Klartext. Vorbereiteter Ablauf unten mit bestehendem100EUR-Bestand; Passwort lokal, nicht im Chat. |
+
 | K4/A09 FreshRestore/Originaldatenumfang | Isoliertes frisches Ziel, vorgeschriebene Original10k sowie Finanz-/Herkunfts-/Journal-/UNKNOWN- und tatsächlich eingeschlossene Einstellungssemantik erhalten. | Kleiner Restore auf gleichem Bestand belegt das nicht. Vorhandene originale10k-Datei und tatsächlicher verschlüsselter Export sind vorbereitet; geschütztes separates Zielprofil bzw. zweiter isolierter Endpunkt plus Record-/Sollvergleich erforderlich. Kein Löschen des bestehenden Nutzerprofils. Windows-Gegenstücke erledigt. |
 | A02/A03/A06 | Warmrückkehr und Navigation inklusive Kerneditor/Long-Press/Zurück/Fokus/Safe-Area; Sperren/Hintergrund/Netzwechsel ohne Editorverlust oder doppelten Import. | Grundnavigation und normale Wiederöffnung erledigt; die benannten Bedingungen nicht berichtet. Nach kleinstem Test eine gezielte manuelle Hintergrund-/Editorsequenz mit synthetischem Bestand. |
 | A04/A10 | Repräsentative Großlisten/Scrollen/Suche/Mehrfachauswahl und Ressourcen-/Latenzverhalten auf echtem Android. | Keine Android-Großdaten-/Messserie. Vorhandene Fixtures verwenden: Ziel5000Positionen, getrennte10000Buchungs-/Stichtagsnachweise; Messzugriff/Protokoll auf physischem Gerät, keine Emulatormessung als Ersatz. |
@@ -51,13 +52,17 @@ Zweck A01/A05: Offline-Schreiben und Start nach tatsächlichem Prozessende. Best
 4. Weiterhin offline über das FolioLab-App-Symbol öffnen. Prüfen: **Offline-Test und100EUR** erhalten, Portfolio und Navigation bedienbar. Wenn möglich innerhalb der PWA einmal neu laden und erneut prüfen.
 5. Nur beobachtetes Ergebnis melden: Name/Wert, welche Apps tatsächlich beendet wurden, ob ein zusätzlicher Reload möglich war. Fehlende Screenshots nicht nachfordern; manuelle Bestätigung als solche führen.
 
-Status nach ausdrücklichem Nutzerbericht: **DONE_MANUAL_USER_CONFIRMED** für offline umbenennen/speichern, Beenden erzwingen von Chrome UND FolioLab, weiterhin offline Symbolstart mit Offline-Test/100EUR/Navigation. Keine Funktionsbilder/Logs; kein Agenten-/Lab-PASS. Ein zusätzliches Neu laden innerhalb der PWA wurde nicht berichtet; technische Internas ebenfalls nicht. Vorbereitete Schritte oben bleiben als tatsächlich beantworteter Prüfauftrag nachvollziehbar. Nächster vorbereiteter Test ist der verschlüsselte Datei-Restore unten.
+Status nach ausdrücklichem Nutzerbericht: **DONE_MANUAL_USER_CONFIRMED** für offline umbenennen/speichern, Beenden erzwingen von Chrome UND FolioLab, weiterhin offline Symbolstart mit Offline-Test/100EUR/Navigation. Keine Funktionsbilder/Logs; kein Agenten-/Lab-PASS. Ein zusätzliches Neu laden innerhalb der PWA wurde nicht berichtet; technische Internas ebenfalls nicht. Vorbereitete Schritte oben bleiben als tatsächlich beantworteter Prüfauftrag nachvollziehbar. Der anschließend vorbereitete verschlüsselte Datei-Restore ist inzwischen ebenfalls manuell bestätigt (siehe unten).
 
-## Vollständig vorbereiteter nächster Verschlüsselungsfall, noch nicht gestartet
+## Verschlüsselungsfall · inzwischen DONE_MANUAL_USER_CONFIRMED
 
 Mit bestehendem100EUR-Testportfolio, automatischen Abruf aus lassen: Mehr → Lokales Portfolio → Backup-Passwort → Passwort festlegen (mindestens10Zeichen, nur lokal merken) → verschlüsseltes Backup herunterladen. Tatsächliche Datei in Downloads sichern; eingeschlossene History-/Einstellungsoptionen notieren. Bestand sichtbar200EUR ändern. Backup wiederherstellen wählen, im Android-Dateidialog genau diese Datei auswählen, Passwort eingeben und regulären Restore bestätigen. Soll100EUR. PWA/Chrome beenden und per Symbol wiederöffnen: Soll100EUR. Bei fehlendem Download/Picker/Passwortdialog den konkreten Schritt berichten. Keine Entschlüsselungsdatei/Passwörter im Chat und keine künstlichen Erfolgsannahmen. Ein falsches Passwort ist optional separat negativ zu prüfen und ersetzt nicht den Erfolgsfall.
 
-Dieser kleine Test schließt bei bestätigtem Erfolg den Android-Verschlüsselungspfad; ein frisches Zielprofil, Gerätewechsel und10k-/Recordgleichheit bleiben getrennt. Die bereits vorhandenen Originaldateien werden dafür weiterverwendet; keine neue Fixtureerzeugung.
+Nutzer bestätigt den unmittelbar vorgegebenen gesamten Ablauf mit „Ja hat funktioniert“. Damit Android-Verschlüsselungspfad und Werterhalt nach Force-Stop/Wiederöffnung DONE_MANUAL_USER_CONFIRMED; ein frisches Zielprofil, Gerätewechsel und10k-/Recordgleichheit bleiben getrennt. Die bereits vorhandenen Originaldateien werden dafür weiterverwendet; keine neue Fixtureerzeugung.
+
+## Nächster vorbereiteter kleiner Gerätefall: A06 Hintergrund/Sperren
+
+Im bestehenden Testpositionseditor den Namen nur als **Hintergrund-Test** eintippen, nicht speichern. Mit Home zu einer anderen App wechseln, Bildschirm rund30Sekunden sperren, entsperren und zu FolioLab zurückkehren, ohne Apps zu beenden erzwingen. Soll: Editor und Entwurf erhalten. Danach abbrechen; gespeicherter Name **Offline-Test** und100EUR unverändert. PREPARED/AWAITING_USER_OBSERVATION. Kein pauschaler Abschluss weiterer Netz-/Importbedingungen und keine unberichtete Beobachtung.
 
 ## Vorhandene private Quellen vor neuen Anforderungen ausgewertet
 
