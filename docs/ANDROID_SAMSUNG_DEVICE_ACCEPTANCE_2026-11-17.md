@@ -1,6 +1,6 @@
 ## Manuelle Android-Fortschreibung · 17.11.2026
 
-[Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Frische Installation, vollständiges Prozessende, Verschlüsselung/Format und genaue Geräte-/Browser-/SW-Version nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
+[Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Gerätekennung CPH2663/Android16 laut ausdrücklichem Nutzernachtrag aus Sitzungsangaben ergänzt, nicht technisch ausgelesen. Browser-/SW-Version, frische Installation, vollständiges Prozessende und Verschlüsselung/Format weiter nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
 
 # Android · Samsung Remote Test Lab · 17.11.2026
 

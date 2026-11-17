@@ -1,3 +1,9 @@
+## Android-Nutzernachtrag · Gerätezuordnung ergänzt
+
+**CPH2663 / Android16 laut ausdrücklich bestätigten Sitzungsangaben** übernommen; kein technisches Auslesen behauptet. Bereits geschlossene manuelle Symbolstart-/Navigations-/Offline-Wiederöffnungs-/100EUR-Datei-Restorebefunde unverändert. Browser/Version werden nachgereicht. Die Klammeralternativen zu Installation und Verschlüsselung sind nicht ausgewählt; beide Angaben bleiben offen.
+
+[Zuordnung und Rückfragezweck](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md). Künftige Fragen müssen jeweils den konkreten Abnahmepunkt nennen: Browser/Version → Testumgebungszuordnung; Installationsart → Neuinstallation; Passwortverschlüsselung → verschlüsselter K4/A09-Dateipfad. Keine erneute pauschale Geräte-/Androidfrage, keine neuen Screenshots/Logs verlangen und keine Wiederholung akzeptierter Tests. Kein Code-/Main-/SW-/CI-Delta.
+
 # HND01 · manuelle Android-Teilbefunde angenommen
 
 [Fallweise Soll/Ist-Abnahme](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md) · Quelle ausschließlich Nutzerbericht, physisches Android, keine Screenshots/technischen Logs. **DONE_MANUAL_USER_CONFIRMED:** App-Symbolstart/Grundnavigation, Offline-Lesen und Navigation nach Flugmodus/WLANaus/App-Übersicht-Schließen/Wiederöffnung, Datei-Export100EUR→Änderung200EUR→Restore100EUR und100EUR nach normaler Wiederöffnung. Portfolio vorab vom Nutzer geleert. Kein Agenten-/Lab-PASS.
@@ -6,7 +12,7 @@ Frische Installation, vollständiges Prozessende, Verschlüsselung/Format, frisc
 
 Anschließender aktueller K1–K6-/1.0-Restabgleich: keine neue intern reproduzierte Codepflichtlücke. Noch fehlende Gerätebedingungen/Zuordnung und private Bitpanda-/ETH-Belege sind externe Grenzen. Windows/Kraken DONE. Main e9130ad9/SW321 unverändert; separater csv-import.js503-/Main44048209546-Fehllauf bleibt eigenständig FAIL/UNKNOWN, kein CI-Retry.
 
-Nur konkret fehlende Angaben: Gerät/Android/Browser-Version, frisch installiert oder schon vorhanden,100EUR-Sicherung passwortverschlüsselt oder nicht. Keine fehlenden Screenshots/Protokolle nachfordern. Kein globaler1.0-Abschluss.
+Verbleibend nur Browser/Version (Testumgebungszuordnung), Installationsart (Neuinstallation) und tatsächliche Passwortverschlüsselung (K4/A09-Verschlüsselungspfad). CPH2663/Android16 laut Sitzungsangaben übernommen; Klammeralternativen unbeantwortet. Keine fehlenden Screenshots/Protokolle nachfordern. Kein globaler1.0-Abschluss.
 
 --- Historische Zugangsstände, im oben belegten Teilumfang ersetzt ---
 

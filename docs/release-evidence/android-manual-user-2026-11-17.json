@@ -5,7 +5,7 @@
   "physicalAndroidConfirmed": true,
   "portfolioClearedByUser": true,
   "deviceModel": null,
-  "androidVersion": null,
+  "androidVersion": "16",
   "browser": null,
   "browserVersion": null,
   "swVersion": null,
@@ -62,12 +62,28 @@
     "controller/cache identity"
   ],
   "followUpOnly": [
-    "device/Android/browser and version",
-    "fresh install or already present",
-    "100 EUR backup password encrypted or not"
+    "browser name and version (user will provide)",
+    "actual selection: already present or freshly installed",
+    "actual selection: 100 EUR backup password encrypted or not"
   ],
   "internallyExecutableCodeGapFound": false,
   "ciRerunStarted": false,
   "productChanged": false,
-  "global1point0Accepted": false
+  "global1point0Accepted": false,
+  "deviceIdentifier": "CPH2663",
+  "deviceIdentityProvenance": {
+    "source": "explicit user follow-up based on session information",
+    "recordedAt": "2026-11-17T16:59:36.813276+00:00",
+    "technicallyReadFromDevice": false,
+    "commercialModelNameInferred": false
+  },
+  "installationKind": null,
+  "backupPasswordEncrypted": null,
+  "followUpPurpose": {
+    "browser": "bind already accepted manual A01/A03/A05/A09 subsets to the actual browser/version",
+    "installationKind": "resolve fresh PWA installation versus launch of an existing installation",
+    "backupPasswordEncrypted": "determine whether the 100 EUR K4/A09 file export/restore case covers password encryption"
+  },
+  "unselectedBracketAlternativesAreNotAnswers": true,
+  "futureQuestionsMustIdentifyAcceptancePoint": true
 }

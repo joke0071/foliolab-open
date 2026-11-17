@@ -1,6 +1,6 @@
 # Android · manuell bestätigte funktionale Teilabnahme · 17.11.2026
 
-**Quelle: ausschließlich ausdrücklicher Nutzerbericht auf physischem Android.** Eingetragen 2026-11-17T16:47:58.508071+00:00. Keine Screenshots, technischen Protokolle oder Agenten-/Lab-Beobachtung vorhanden. Keine genaue Testzeit, Geräte-/Android-/Browser-/App-/SW-Version bestätigt. Chatclient-Metadaten ersetzen diese Zuordnung nicht. Main e9130ad9/SW321 ist Projektkontext, kein nachgewiesener Gerätestand.
+**Quelle: ausschließlich ausdrücklicher Nutzerbericht auf physischem Android.** Eingetragen 2026-11-17T16:47:58.508071+00:00. Keine Screenshots, technischen Protokolle oder Agenten-/Lab-Beobachtung vorhanden. Gerätekennung **CPH2663** und Android-Version **16** sind vom Nutzer ausdrücklich **laut Sitzungsangaben** nachgereicht. Quelle ist diese Nutzermitteilung, kein technisches Auslesen des Testgeräts. Handelsname/Modellbezeichnung nicht abgeleitet. Genaue Testzeit, Browser samt Version sowie App-/SW-Version bleiben unbekannt. Main e9130ad9/SW321 ist Projektkontext, kein nachgewiesener Gerätestand.
 
 Der Nutzer hatte das Portfolio zuvor geleert und bestätigt Symbolstart/Navigation, Offline-Nutzung nach Flugmodus/WLANaus und Schließen in der App-Übersicht sowie Datei-Export100EUR→Änderung200EUR→Restore100EUR mit100EUR nach Schließen/Wiederöffnung. Die100EUR sind das Soll dieses eigenen Testfalls; keine Ausführung oder Abweichung der vorbereiteten1000EUR-/10k-Fixture behauptet. Keine Agentenlöschung/Mutation des Privatportfolios. Der aktuelle Auftrag erlaubt die erfolgte eigene manuelle Prüfung; frühere Lab-only-/Handyausschlussbedingungen werden für diesen Beleg ersetzt.
 
@@ -20,11 +20,11 @@ Diese Teilpunkte sind geschlossen und werden nicht wegen fehlender Lab-Fernsteue
 - **Vollständiger Prozess-/OS-Kaltstart:** Schließen in der App-Übersicht ist belegt, Prozessabwesenheit/Beenden erzwingen nicht. Keine nachträgliche Umdeutung.
 - **A05 insgesamt PARTIAL:** Offline-Wiederöffnung/Lesen/Navigation geschlossen; Offline-Schreibaktion mit anschließendem Reload und vollständiger Record-/Controller-/Cachebeleg nicht berichtet.
 - **K4/A09 insgesamt PARTIAL:** „vollständige Sicherung“ belegt nicht automatisch Passwortverschlüsselung, konkrete History-/Settingsoptionen, Dateiformat/-hash, frisches separates Zielprofil, Original10k oder vollständige Journal-/Herkunfts-/UNKNOWN-Gleichheit. Nur sichtbarer100EUR-Sollwert und berichteter Dateiablauf geschlossen.
-- **Gerätestand UNKNOWN:** Modell, Android, verwendeter Browser samt Version und App-/SW-Identität nicht aus Main oder Chatgerät ergänzen.
+- **Gerätezuordnung ergänzt:** CPH2663/Android16 laut ausdrücklich übernommenen Sitzungsangaben des Nutzers; keine technische Verifikation behauptet. Browser/Version werden nachgereicht, App-/SW-Identität bleibt unbekannt.
 - A04Großlisten, A06Hintergrundbedingungen, A07Update, A08Quota, A10Ressourcen sowie umfassende Systemschrift/Fokus/Bedienbarkeit nicht abgenommen. Keine Messzeiten/5Wiederholungen erfunden.
 - Kein beobachteter Produktfehler in den gemeldeten Abläufen; fehlende Zusatzbelege sind kein FAIL.
 
-**Gezielt erfragbare Angaben:** Gerät/Android/Browser samt Version; war FolioLab vor diesem Test frisch installiert oder bereits vorhanden; war die100EUR-Sicherung mit Passwort verschlüsselt? Keine nicht vorhandenen Screenshots/Protokolle nachfordern. Weitergehende Prozess-/Offline-Write-/FreshRestorefälle sind eigene offene Prüfungen, keine stillschweigende Zusatzbedingung für die geschlossenen Grundabläufe.
+**Gezielt verbleibende Angaben mit Zweck:** Browsername/-version → Zuordnung der manuellen A01/A03/A05/A09-Teilbefunde zur konkreten Browserumgebung (vom Nutzer angekündigt); tatsächliche Auswahl „bereits vorhanden“ oder „frisch installiert“ → offener Neuinstallationspunkt; tatsächliche Auswahl „mit Passwort“ oder „ohne Passwort“ → Verschlüsselungsumfang des100EUR-Export-/Restorefalls K4/A09. Die eckigen Klammeralternativen im Nachtrag sind nicht ausgewählt und werden nicht als Antwort gewertet. Gerät/Android nicht erneut pauschal erfragen. Jede künftige Rückfrage muss den genauen offenen Abnahmepunkt und ihren Zweck nennen. Keine nicht vorhandenen Screenshots/Protokolle nachfordern. Weitergehende Prozess-/Offline-Write-/FreshRestorefälle sind eigene offene Prüfungen, keine stillschweigende Zusatzbedingung für die geschlossenen Grundabläufe.
 
 ## Anschließender interner1.0-Abgleich
 
@@ -39,3 +39,15 @@ Aktuellen Checkpoint,1.0-Restliste, K1–K6 und separaten PR354-Mainbefund gepr�
 | Regulärer Liveabschluss | Main44048209546 bleibt FAIL nach initialem csv-import.js503 vor FX. Nutzererfolg ersetzt diesen regulären Beleg nicht. Historische Diagnose/Originale und UrsacheUNKNOWN erhalten; kein neuer kausaler Fixkandidat, kein unveränderter CI-Retry. |
 
 **Kein weiterer unabhängig intern ausführbarer1.0-Codepflichtpunkt anhand dieser aktuellen Belege identifiziert.** Die konkrete interne Arbeit dieses Schritts ist die abgeschlossene Evidenz-/Restlistenfortschreibung. Keine künstliche QA-/Komfortserie, kein globaler1.0-Abschluss. Keine Produkt-/SW-/Workflowänderung, keine Tests/Deployments für reine Dokumentation erforderlich. Eng begrenzte Geräteangaben zuerst; keine gleichzeitige neue Finanz-/Supportanforderung.
+
+## Nutzernachtrag: Gerätezuordnung und Rückfragevertrag
+
+CPH2663 und Android16 ausdrücklich **laut Sitzungsangaben** übernommen. Keine neue technische Beobachtung und keine Erweiterung der bereits geschlossenen manuellen Funktionstests. Browsername/-version werden angekündigt nachgereicht. Installationsart und Verschlüsselung bleiben offen, weil im Nachtrag beide Klammeralternativen stehen.
+
+| Noch offene Angabe | Welcher konkrete Abnahmepunkt damit geklärt wird |
+|---|---|
+| Browser und Version | Versions-/Plattformzuordnung der bereits manuell bestätigten Start-/Navigations-/Offline-/Restorebefunde |
+| Bereits vorhanden oder für diesen Test frisch installiert | Neuinstallation gegenüber bloßem Start einer bestehenden PWA |
+| Mit Passwort verschlüsselt oder ohne Passwort | Ob der100EUR-Dateifall auch den verschlüsselten Export-/Restorepfad K4/A09 belegt; kein automatischer Gesamt-FreshRestore-/10k-Abschluss |
+
+Jetzt keine erneute allgemeine Gerätefrage und keine Wiederholung abgeschlossener Abläufe. Künftige Nachfragen jeweils mit konkretem Punkt/Zweck. Keine Behauptung frischer Installation oder Passwortverschlüsselung aus den nicht ausgewählten Alternativen.
