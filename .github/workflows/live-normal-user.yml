@@ -1,0 +1,54 @@
+name: SW321 ordinary live user observation
+on:
+  pull_request:
+    branches: [feature/flh05-import-foundation]
+    paths:
+      - '.github/workflows/live-normal-user.yml'
+      - 'tests/diagnostics/live-normal-user.mjs'
+permissions:
+  contents: read
+jobs:
+  normal-user-once:
+    runs-on: windows-2025
+    timeout-minutes: 8
+    env:
+      FOLIOLAB_PRODUCT_SHA: 494ed8f0f6b627d8be972a5ceb886005e5064b31
+    steps:
+      - name: Preserve Git blob line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+          path: qa
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 494ed8f0f6b627d8be972a5ceb886005e5064b31
+          path: app
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Use installed Google Chrome and pinned automation
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $chrome = Join-Path $env:ProgramFiles 'Google\Chrome\Application\chrome.exe'
+          if (!(Test-Path $chrome)) { throw 'Installed Google Chrome missing' }
+          "FOLIOLAB_CHROME=$chrome" | Out-File $env:GITHUB_ENV -Append
+          npm install --prefix qa --no-save playwright@1.56.1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: ONE ordinary start navigation synthetic UI restore and normal reload
+        shell: pwsh
+        run: |
+          $env:FOLIOLAB_PRODUCT_ROOT = Join-Path $env:GITHUB_WORKSPACE 'app'
+          $env:FOLIOLAB_OUTPUT = Join-Path $env:GITHUB_WORKSPACE 'normal-user-evidence'
+          node qa/tests/diagnostics/live-normal-user.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Preserve passive raw observation without private data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sw321-normal-user-${{ github.run_id }}-${{ github.run_attempt }}
+          path: normal-user-evidence/
+          if-no-files-found: error
+          retention-days: 30
