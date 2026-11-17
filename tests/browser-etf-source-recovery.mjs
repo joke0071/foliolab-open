@@ -3,4 +3,4 @@ await import('./browser-provider-retirement.mjs');
 await import('./browser-alpha-vantage.mjs');
 await import('./browser-marketstack.mjs');
 await import('./browser-refresh-frequency.mjs');
-await import('./browser-fx-age.mjs');
+await import('./browser-fx-age-release.mjs');

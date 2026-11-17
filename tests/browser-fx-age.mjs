@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync,appendFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+import {verifiedFXRelease} from './verified-fx-release.mjs';
 
 // Normal UI refresh, real Web Lock and native IndexedDB. Every response and the
 // publication clock are fixed; no provider traffic or legacy storage double.
@@ -18,11 +19,14 @@ const cases=[
  {id:'old-known-other-fx-saved',date:'2000-01-03',known:true,accept:false,mixed:true},
  {id:'old-unknown-other-fx-saved',date:'2000-01-03',known:false,accept:false,mixed:true}
 ];
+const replay=process.env.FX_AGE_VERIFIED_RELEASE?verifiedFXRelease(process.env.FX_AGE_VERIFIED_RELEASE,{base}):null;
+const selected=process.env.FX_AGE_DOMAIN_CONTROL==='1'?cases.filter(f=>['today','old-unknown-other-fx-saved'].includes(f.id)):cases;
+assert.equal(selected.length,process.env.FX_AGE_DOMAIN_CONTROL==='1'?2:8);
 const deadline=setTimeout(()=>{console.error('FX age browser deadline exceeded');process.exit(1);},180000);deadline.unref();
 for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
- const results=[];
- try{for(const fixture of cases){
+ const results=[],transport={mode:replay?'verified-published-byte-replay':'original',releaseSHA:replay?.sha??null,verifiedFiles:replay?.count??null,sameOriginRequests:0,productionRequests:[],replayedRequests:0};
+ try{for(const fixture of selected){
   const event=(stage,detail={})=>appendFileSync(dir+'/'+engine+'-stages.jsonl',JSON.stringify({engine,case:fixture.id,stage,...detail})+'\n');
   event('BEGIN');
   const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'}),page=await context.newPage(),errors=[],requests=[];
@@ -32,7 +36,9 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    await context.route('**/*',async route=>{
     const u=new URL(route.request().url());
     if(u.origin===origin){
-     if(origin===new URL(base).origin)return route.continue();
+     transport.sameOriginRequests++;
+     if(replay){const bytes=replay.files.get(u.pathname);assert.ok(bytes,'Unverified application resource '+u.pathname);transport.replayedRequests++;return route.fulfill({body:bytes,contentType:u.pathname.endsWith('.js')?'text/javascript':u.pathname.endsWith('.css')?'text/css':u.pathname.endsWith('.png')?'image/png':u.pathname.endsWith('.svg')?'image/svg+xml':u.pathname.endsWith('.webmanifest')?'application/manifest+json':'text/html'});}
+     if(origin===new URL(base).origin){transport.productionRequests.push({url:u.href,at:Date.now()});return route.continue();}
      return route.fulfill({path:process.cwd()+(u.pathname==='/'?'/index.html':u.pathname)});
     }
     assert.equal(u.hostname,'api.frankfurter.dev');assert.equal(u.pathname,'/v1/latest');
@@ -81,7 +87,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    event('RESULT',{result:'PASS'});
   }finally{event('CLEANUP_BEGIN');await context.close();event('CLEANUP_DONE');}
  }}finally{await browser.close();}
- writeFileSync(dir+'/'+engine+'.json',JSON.stringify({engine,base,clock,storage:'native IndexedDB',serviceWorkers:'blocked; existing separate PWA gates retained',synthetic:true,results},null,2));
+ writeFileSync(dir+'/'+engine+'.json',JSON.stringify({engine,base,clock,storage:'native IndexedDB',serviceWorkers:'blocked; existing separate PWA gates retained',synthetic:true,transport,results},null,2));
  console.log('FX age '+engine+': '+results.length+' native refresh/reopen cases '+'PASS');
 }
 clearTimeout(deadline);
