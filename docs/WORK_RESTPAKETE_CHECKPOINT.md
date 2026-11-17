@@ -1,3 +1,15 @@
+# HND01 · Android-Gerätelab gesucht · Anmeldung fehlt
+
+Neuer ausdrücklicher Auftrag: physisches fernbedientes Android-Lab nutzen; Jochens persönliches Handy ausgeschlossen, Kosten nur nach Zustimmung. Main e9130ad9 und Checkpoint c9382925 frisch bestätigt; keine neue CI/Produktänderung/Buchung.
+
+[Konkrete Zugangs- und Funktionsprüfung](ANDROID_REAL_DEVICE_ACCESS_2026-11-17.md). Keine passende Geräteintegration/adb/USB-/aktive Gerätesitzung gefunden. BrowserStack Live und offizieller Login in dieser Browserumgebung jeweils Site Unavailable; Ursache UNKNOWN. TestMu/LambdaTest ist erreichbar, zeigt aber Login statt angemeldetem Gerätezugang. Dokumentiert: echte Android-/Chrome-Browsersitzungen und JSON-Dateien bis15MB im echten Dateipicker. Home/PWA-/Prozess-/Offlinekontrolle im tatsächlich zugänglichen Browsermodus noch vor Reservierung zu prüfen.
+
+**Status Installation/A01/A05/A09: NOT_RUN / ACCESS_AUTHENTICATION_REQUIRED.** Kein Gerätemodell oder Android/Chrome-Version erfunden. Gültige Kriterien und Original10k-Fixture/Soll1000EUR übernommen; keine Neugenerierung oder Wiederholung abgeschlossener Windows-/Kraken-Prüfungen. Nächster konkreter Zugang: sicher in vorhandenes TestMu/LambdaTest-Konto mit Real Device Browser Testing/Android-Chrome und vorhandenem Testkontingent anmelden. Keine Bezahlung/Planänderung ohne konkrete Zustimmung. Anschließend belegbare Teilfälle ausführen. Der bisherige Auftrag, ein eigenes Android-Gerät bereitzustellen, ist durch diesen Lab-Auftrag ersetzt.
+
+PR354 bleibt gemergt, reguläre Liveabnahme nach csv-import.js503 separat offen; kein CI-Retry gestartet.
+
+--- Vorheriger Abschlussstand ---
+
 # HND01 · PR354 integriert · Main/Deploy grün, regulärer Liveabschluss503-blockiert
 
 Alleiniger Owner `hnd01-1point0-20261117-root-5c3182824c09`; alle früheren Owner abgelöst. Jochen autorisierte den exakten Merge, PR354 ist **MERGED**, keine separate Headfreigabe offen. Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`/Tree`3fd78f746c08ab0fe0347ab30932a00309d7d008` exakt qualifiziert; Produkt/SW321/Workflow unverändert.
