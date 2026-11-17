@@ -1,3 +1,13 @@
+# HND01 · PR354 gemergt · regulärer Main-/Liveabschluss aktiv
+
+Sole writer `hnd01-1point0-20261117-root-5c3182824c09`. Jochen autorisierte in diesem Auftrag den selbstständigen Merge nach exakter Headqualifikation. PR354 wurde headgebunden an `aeea7d11d0169dde8355a7f317a16c1a62dab806` gemergt. Neuer Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`, Tree `3fd78f746c08ab0fe0347ab30932a00309d7d008`, Parents exakt alter Main494ed8f0 und qualifizierter Head. Tree identisch zum qualifizierten synthetischen Merge; Produkt/SW321/Workflow unverändert.33 zusätzliche gezielte lokale Tests PASS. Vorhandene 24-Fälle-/6-Domain-/CI-/Originalnachweise übernommen; keine Diagnosewiederholung.
+
+Automatischer [Mainlauf44048209546](https://github.com/joke0071/foliolab-open/actions/runs/44048209546), Versuch1, aktiv. Plan SUCCESS/RELEASE, vier Integrationsjobs laufen. Nächster erforderlicher Schritt: diesen Lauf regulär beenden lassen, danach Deploymentbytegleichheit und vollständige reguläre Liveabnahme einschließlich aktiviertem/kontrollierendem SW, Offline-Reload und IDB-Erhalt prüfen. Noch kein Main-/Live-PASS behauptet. Historische Fehler bleiben FAIL. Supportstatus und getrennte UNKNOWN-Ursachen bereits dokumentiert; keine weitere Supportwartepflicht.
+
+Restlistenabgleich: physisches isoliertes Android weiterhin ohne adb/USB-/Remote-Zugang; Windows-K4/K6 im tatsächlich belegten Umfang und Kraken-Spotanker DONE. Bitpanda historische Indexbewertung plausibel/normaler UI-Import ohne automatische Doppelzählung; persönliche BCI25-Komponentenzuordnung und Cashanker bleiben extern offen. Öffentliche ETH-Endpunkt-/Folgeseitenpaare übernommen, private betroffene Originalfolge fehlt. Keine neue intern belegte Produktlücke aus diesen fehlenden Original-/Gerätenachweisen ableiten. Komfort/Sync/TalkBack/Safari gemäß aktuellem Nutzerumfang nach1.0/deferred.
+
+---
+
 # HND01 · alleinige Übernahme und headgebundene Mergefreigabe · 17.11.2026
 
 Sole writer `hnd01-1point0-20261117-root-5c3182824c09`. Neuester ausdrücklicher Auftrag von Jochen autorisiert den selbstständigen Merge des exakt qualifizierten Heads nach grünen Pflichtchecks, erhaltener Abdeckung und belegtem Nutzen. Damit ist die bisherige separate Entscheidungswarteposition für PR354 erledigt. Keine parallelen Agenten oder Funktionsstränge.
