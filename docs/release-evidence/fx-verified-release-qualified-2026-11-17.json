@@ -1,0 +1,138 @@
+{
+  "schema": "foliolab-fx-release-qualification-v1",
+  "status": "QUALIFIED_PENDING_MERGE_DECISION",
+  "head": "aeea7d11d0169dde8355a7f317a16c1a62dab806",
+  "main": "494ed8f0f6b627d8be972a5ceb886005e5064b31",
+  "tree": "3fd78f746c08ab0fe0347ab30932a00309d7d008",
+  "testedMerge": "504ec4bf30ef2e1bdfa2a3a2838419b4b98cd6ca",
+  "parents": [
+    "494ed8f0f6b627d8be972a5ceb886005e5064b31",
+    "aeea7d11d0169dde8355a7f317a16c1a62dab806"
+  ],
+  "qualification": {
+    "run": 44041905697,
+    "conclusion": "success",
+    "attempt": 1,
+    "event": "pull_request",
+    "mainUnitTests": 1511,
+    "unitFailures": 0,
+    "unitSkipped": 0,
+    "walletRun": 44041905817,
+    "wallet": "success",
+    "deployment": "skipped",
+    "fullLive": "skipped"
+  },
+  "productAndWorkflowBytesUnchanged": true,
+  "mainNotMerged": true,
+  "allEightCasesAndOriginalAssertionBodyPreserved": true,
+  "fullMatrixEngineCases": 24,
+  "directDomainCases": 6,
+  "originalRequestShapeReference": 10272,
+  "measuredDirectDomainProductionRequests": 2568,
+  "reductionAtSameRequestShape": 0.75,
+  "productionStartsPeakPerSecond": 535,
+  "previousObservedPeaks": [
+    547,
+    697
+  ],
+  "exactDeliveredFileHashes": 155,
+  "supportTicket": {
+    "number": 5016095,
+    "source": "Jochen",
+    "closure": "announced",
+    "technicalFindings": "none supplied",
+    "rule429": "UNKNOWN",
+    "separate503Origin": "UNKNOWN"
+  },
+  "timing": {
+    "requiredJobs": [
+      {
+        "id": 133898473868,
+        "name": "test",
+        "startedAt": "2026-11-17T07:51:55Z",
+        "completedAt": "2026-11-17T08:10:17Z",
+        "status": "completed",
+        "conclusion": "success",
+        "durationSeconds": 1102
+      },
+      {
+        "id": 133898473894,
+        "name": "cross-engine (1)",
+        "startedAt": "2026-11-17T07:51:55Z",
+        "completedAt": "2026-11-17T08:05:14Z",
+        "status": "completed",
+        "conclusion": "success",
+        "durationSeconds": 799
+      },
+      {
+        "id": 133898473989,
+        "name": "cross-engine (3)",
+        "startedAt": "2026-11-17T07:51:55Z",
+        "completedAt": "2026-11-17T08:06:11Z",
+        "status": "completed",
+        "conclusion": "success",
+        "durationSeconds": 856
+      },
+      {
+        "id": 133898474002,
+        "name": "cross-engine (2)",
+        "startedAt": "2026-11-17T07:51:55Z",
+        "completedAt": "2026-11-17T08:16:06Z",
+        "status": "completed",
+        "conclusion": "success",
+        "durationSeconds": 1451
+      }
+    ],
+    "criticalSpanSeconds": 1451,
+    "runnerSeconds": 4208,
+    "referencePR349SpanSeconds": 1076,
+    "referencePR349RunnerSeconds": 3658,
+    "noIntegrationSpeedupClaimed": true
+  },
+  "comparisonRuns": [
+    44039980251,
+    44040401793
+  ],
+  "targetedDomainRuns": [
+    44040401966,
+    44040894083
+  ],
+  "wrapperOfflineRuns": [
+    44041588811,
+    44041910430
+  ],
+  "extraDiagnosticDomainRun": 44041588590,
+  "diagnosticActualProductionRequests": 3855,
+  "extraDiagnosticProductionRequestsBeyondSixCases": 1287,
+  "initialNonqualifiedHead": "ca354d3d323bf4a2f10d65559238a979894f9337",
+  "initialRun": 44041385714,
+  "initialFailure": "Existing sealed workflow-command contract; removed unnecessary workflow environment additions, no assertion change",
+  "review": {
+    "reviews": 0,
+    "threads": 0,
+    "comments": 0,
+    "selfReview": true,
+    "independentReview": false
+  },
+  "residuals": [
+    "No general CDN reliability claim",
+    "No end-to-end live timing saving measured",
+    "Full replay matrix does not repeat fresh CDN misses for every fixture",
+    "Existing core initial market.js transport and failures remain unchanged"
+  ],
+  "cut": "Final receipt after successful saved-copy readback; the archived receipt predates this save/readback by design.",
+  "durableArchive": {
+    "status": "PASS",
+    "libraryFileId": "libfile_fde3_f-ef351668a23081918749a18d58362f0a_54e45e8130348191808d9aaa710cf372",
+    "fileId": "file_000000002dc88246a1650f563b506266",
+    "version": 0,
+    "bytes": 253121109,
+    "sha256": "770c4c852e00a245c792114ca3ede3aab85bf69c20874c707db8aaee7d3f2000",
+    "originalZIPs": 25,
+    "originalMembers": 2841,
+    "savedCopyPath": "/workspace/scratch/4672ea147672/pr354-readback/FolioLab_FX_Verified_Release_PR354_2026-11-17.zip",
+    "outerCRC": true,
+    "allInnerCRCs": true,
+    "allOriginalBytesAndHashesEqual": true
+  }
+}
