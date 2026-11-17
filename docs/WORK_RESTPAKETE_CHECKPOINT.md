@@ -1,3 +1,11 @@
+# HND01 · einmaliger kontrollierter Live-only-Wiederanlauf ausdrücklich freigegeben
+
+Neuer Nutzerauftrag ab f9ef0f83: verbliebene1.0-Pflichten quellengebunden abgleichen, kleinsten fehlenden Android-Test vorbereiten und genau einen kontrollierten Wiederanlauf des separaten PR354-Liveabschlusses durchführen, sofern noch erforderlich. Aktueller Main frisch bestätigt e9130ad90874434a38bb329a7dafaa22e2163e1d; Main44048209546 noch Versuch1/FAILURE, nur Live133931409548 fehlgeschlagen. Integration/Deployment SUCCESS bleiben erhalten. Original503/155Hashbeleg und gesicherte Originale wiederverwendet. Frische Standard-TLS-Einzelabrufe von Homepage und SW200 und exakt aktuelle Checkoutbytes; keine parallele Stressprobe.
+
+Nächster erlaubter Schritt: **genau einmal nur fehlgeschlagene Jobs von44048209546 wiederholen**, somit nur reguläre Liveabnahme auf demselben Main, kein neuer Integrations-/Deploylauf. Alter Versuch1 bleibt FAIL; Ergebnis2 offen. Weitere Wiederholung nach erneutem Fehler ist nicht freigegeben. Manueller Android-Grundumfang bleibt DONE gemäß f9ef0f83, keine Wiederholung. Neue Quellenprüfung der tatsächlich verpflichtenden Restfälle läuft.
+
+--- Vorheriger Stand ---
+
 ## Android-Nachtrag · Browserbeleg und Testumfang geklärt
 
 Screenshot „Über Google Chrome“: **Chrome157.0.8103.78 / Android16 / CPH2663 / BuildUKQ1.231108.001**. Geräte-/Browserzuordnung nun visuell belegt; funktionale Ergebnisse weiterhin ausdrücklich Nutzerbericht ohne Funktionsbilder/Logs. Nutzer bestätigt **schon installiert, ohne Passwort**. Damit bestehender Symbolstart und **unverschlüsselter100EUR-Datei-Export/Restore/Wiederöffnung** manuell abgeschlossen; Neuinstallation und verschlüsselter Android-Restore **nicht geprüft**. Keine der bisherigen Sachrückfragen offen und keine erneute gleiche Frage/Testwiederholung.
