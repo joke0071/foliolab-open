@@ -36,13 +36,13 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install chromium --only-shell
-      - name: One baseline and one paced original FX suite sequentially
+      - name: One paced original FX suite on a fresh runner
         working-directory: app
         env:
           FOLIOLAB_QA_ROOT: ${{ github.workspace }}/qa
           FOLIOLAB_OUTPUT: ${{ github.workspace }}/fx-control-evidence
         run: node ../qa/tests/diagnostics/run-fx-pacing-control.mjs
-      - name: Preserve both original responses cases and timing
+      - name: Preserve original responses cases and timing
         if: always()
         uses: actions/upload-artifact@v4
         with:
