@@ -1,3 +1,13 @@
+# HND01 · FX-Prüfverkehr: Abdeckung vor Verlagerung prüfen · 17.11.2026
+
+**GitHub Support Ticket #5016095:** Laut Jochen ist die Schließung angekündigt; keine technischen Befunde geliefert. Die 429-Regel (Schlüssel/Zeitraum) und der Ursprung des separaten market.js-503 bleiben UNKNOWN. Keine neue Providererkenntnis aus der Ticketbeendigung ableiten.
+
+Aktiver Auftrag: vollständige acht FX-Fälle × Chromium/Firefox/WebKit gegen nachweislich byteidentische ausgelieferte Dateien vergleichen; tatsächliche Domain-/SW-/Reload-/Persistenzbelege gesondert erhalten. Erst lokaler Vergleich, dann begrenzte Liveprobe bei konkretem Vorteil; keine zusätzlichen Pausen oder pauschalen Retries. Bestehende Finanz-/Windows-/SW321-Abnahmen übernommen. Main weiterhin `494ed8f0f6b627d8be972a5ceb886005e5064b31`.
+
+Letzter abgeschlossener Schritt: FX-Fall-/Assertion- und Vertragsinventar gelesen (K2_FRANKFURTER_AGE, PR344-Abnahme, regulärer Workflow). Nächster prüfbarer Schritt: Bytebindungs-/Transportkandidat und identischer 24-Fälle-Vergleich, ohne Produktionsverkehr. Noch keine neue Qualifikation oder Änderung des Abnahmeumfangs.
+
+---
+
 # HND01 · HTTP-Auslieferungsdiagnose abgeschlossen · 17.11.2026
 
 **Endstatus: DELIVERY_CAUSE_REQUIRES_PROVIDER_TRACE. Kein wirksamer PR-Kandidat.** Main `494ed8f0f6b627d8be972a5ceb886005e5064b31`, SW v321 produktiv abgenommen. Bitpanda-, Kraken- und Windows-Abnahmen übernommen. Produkt und regulärer QA-Workflow unverändert; keine neue vollständige Liveprüfung. Alle Diagnosejobs beendet, QA-PR #351/#352 ohne Merge geschlossen.
