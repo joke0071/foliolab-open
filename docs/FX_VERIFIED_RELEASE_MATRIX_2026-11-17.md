@@ -21,7 +21,7 @@ In allen24Fällen unverändert: normale Refresh-Schaltfläche, native Web Locks,
 
 ## Bytebindung und Auslieferungsgrenze
 
-Der bestehende unabhängige Core-Hashlauf bleibt unverändert: alle155Einträge einschließlich SW, acht Worker, echte HTTP-Antworten und Originalstatus. Erst dessen vollständiger PASS ohne TLS-Ausnahme, mit exakt aktuellem RELEASE_SHA, Base und SW-Revision autorisiert die neue Phase. Jeder erforderliche Pfad muss genau einmal im Report stehen. Alle lokalen Bytes werden erneut gegen die dort gemessenen SHA256 geprüft und anschließend als unveränderliche Buffer gehalten. Fehlende, zusätzliche, doppelte, fremde oder geänderte Bytes brechen ab; kein Netz-Fallback und kein unvollständiges Proof-PASS.
+Alle bestehenden Workflow-Kommandos bleiben bytegleich. Der FX-Einstieg erkennt den Release über die bereits vorhandenen RELEASE_SHA/ETF_SOURCE_BASE-Werte und verwendet den vorhandenen Corebericht. Der bestehende unabhängige Core-Hashlauf bleibt unverändert: alle155Einträge einschließlich SW, acht Worker, echte HTTP-Antworten und Originalstatus. Erst dessen vollständiger PASS ohne TLS-Ausnahme, mit exakt aktuellem RELEASE_SHA, Base und SW-Revision autorisiert die neue Phase. Jeder erforderliche Pfad muss genau einmal im Report stehen. Alle lokalen Bytes werden erneut gegen die dort gemessenen SHA256 geprüft und anschließend als unveränderliche Buffer gehalten. Fehlende, zusätzliche, doppelte, fremde oder geänderte Bytes brechen ab; kein Netz-Fallback und kein unvollständiges Proof-PASS.
 
 Die24Fachfälle laufen auf genau diesen Bytes und weiterhin der sicheren Produktivorigin in getrennten Browserkontexten, mit nativen Speicher-/Lock-APIs. Die Auslieferung dieser Phase wird ausdrücklich als `verified-published-byte-replay` protokolliert: keine24neuen unabhängigen CDN-Kaltstartproben behauptet. Das ist keine allgemeine HTTP-Cacheänderung und keine zweite Anwendungs-/Finanzimplementierung.
 
@@ -58,3 +58,6 @@ Kritischer Pfad: reguläre Integrationsjobs bleiben unverändert, daher keine ne
 Der robuste gemessene Vorteil ist die Eliminierung der mehrfachen Produktionsabrufe, bei vollständig erhaltenen24Fachfällen plus sechs direkten Domainfällen. Eine grüne Domainstichprobe beweist nicht allgemeine CDN-Zuverlässigkeit. Der market.js-503 wird weder abgefangen noch mit Retries kaschiert; sein Core-Originaltransport und seine Fehlerbefunde bleiben eigenständig.
 
 Reguläre PR-CI wird einmal für den qualifikationsreifen endgültigen Head gestartet. Exakter Head und Endstatus werden im Checkpoint geführt; Merge bleibt Jochens Entscheidung.
+
+
+Qualifikationskorrektur: Der erste Kandidat ca354d3d323bf4a2f10d65559238a979894f9337 scheiterte vor Browserstart an der bestehenden versiegelten Workflow-Kommandoprüfung (1510/1511 Unit-Tests). Die unnötigen zusätzlichen Workflow-Umgebungsvariablen wurden entfernt; keine Vertragsassertion gelockert. Der endgültige Kandidat erhält den Workflow bytegleich und verwendet die bereits vorhandene Releaseumgebung. Alte Fehler-/Mehrverbrauchsbelege bleiben im Checkpoint getrennt.
