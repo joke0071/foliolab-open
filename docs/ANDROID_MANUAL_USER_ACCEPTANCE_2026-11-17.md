@@ -1,6 +1,22 @@
+## Versions- und Umfangsnachtrag · Angaben vollständig geklärt
+
+Der vom Nutzer übermittelte Screenshot **1000043713.jpg** der Seite „Über Google Chrome“ zeigt **Google Chrome157.0.8103.78**, **Android16**, **CPH2663**, Build **UKQ1.231108.001**. Damit ist die nachgefragte Browser-/OS-Zuordnung visuell belegt. Bild50638Bytes, SHA256cd7df7b0928f4dc9e5c7eb3629dcbc0ce81a1bd3e5ff0b315f72c7e10fb425ab; sichtbare Uhr17:59, kein daraus abgeleitetes Test-/Aufnahmedatum. Originalbild bleibt außerhalb Git; kein Beleg für die eigentlichen Funktionsabläufe oder deren exakte Ausführungszeit.
+
+Zusätzliche ausdrückliche Nutzerantwort: **„schon installiert, ohne Passwort“**. Installationsart und Verschlüsselung sind damit **geklärt**, nicht weiter nachzufragen. Bestandene manuelle Symbolstart-/Navigations-/Offline-Wiederöffnungs-/100EUR-Dateifälle bleiben unverändert geschlossen. Der100EUR-Datei-Export/Restore ist **unverschlüsselt**. **Neuinstallation und passwortverschlüsselter Android-Restore wurden nicht geprüft**; keine Gesamt-A01/A09-/K4/K5-Freigabe daraus ableiten.
+
+| Nachgereichte Angabe | Konkreter geklärter Punkt |
+|---|---|
+| Chrome157.0.8103.78/Android16/CPH2663/BuildUKQ1.231108.001 im Screenshot | Browser-/OS-Zuordnung der manuell berichteten Testumgebung |
+| Schon installiert | Bestehender PWA-Symbolstart bestätigt; Neuinstallationsfall nicht ausgeführt |
+| Ohne Passwort | Bestandener100EUR-Dateifall dem unverschlüsselten Pfad zugeordnet; verschlüsselter Pfad nicht getestet |
+
+**Keine der bisherigen drei Sachrückfragen mehr offen.** Bereits bestandene Abläufe nicht wiederholen lassen. Weitergehende Tests sind eigenständige Abnahmepunkte; falls später nötig, genau Punkt und Zweck nennen. Der Screenshot hebt die fehlenden funktionalen Bild-/Logbelege nicht auf. Kein Produkt-/Main-/SW-/Workflowdelta, kein CI-Retry.
+
+--- Vorherige funktionale Abnahme mit den oben präzisierten Angaben ---
+
 # Android · manuell bestätigte funktionale Teilabnahme · 17.11.2026
 
-**Quelle: ausschließlich ausdrücklicher Nutzerbericht auf physischem Android.** Eingetragen 2026-11-17T16:47:58.508071+00:00. Keine Screenshots, technischen Protokolle oder Agenten-/Lab-Beobachtung vorhanden. Gerätekennung **CPH2663** und Android-Version **16** sind vom Nutzer ausdrücklich **laut Sitzungsangaben** nachgereicht. Quelle ist diese Nutzermitteilung, kein technisches Auslesen des Testgeräts. Handelsname/Modellbezeichnung nicht abgeleitet. Genaue Testzeit, Browser samt Version sowie App-/SW-Version bleiben unbekannt. Main e9130ad9/SW321 ist Projektkontext, kein nachgewiesener Gerätestand.
+**Quelle: ausschließlich ausdrücklicher Nutzerbericht auf physischem Android.** Eingetragen 2026-11-17T16:47:58.508071+00:00. Für die Funktionsabläufe keine Screenshots, technischen Protokolle oder Agenten-/Lab-Beobachtung vorhanden; der spätere Versions-Screenshot belegt nur Browser/OS. Gerätekennung **CPH2663** und Android-Version **16** sind vom Nutzer ausdrücklich **laut Sitzungsangaben** nachgereicht. Quelle ist diese Nutzermitteilung, kein technisches Auslesen des Testgeräts. Handelsname/Modellbezeichnung nicht abgeleitet. Genaue Testzeit, Browser samt Version sowie App-/SW-Version bleiben unbekannt. Main e9130ad9/SW321 ist Projektkontext, kein nachgewiesener Gerätestand.
 
 Der Nutzer hatte das Portfolio zuvor geleert und bestätigt Symbolstart/Navigation, Offline-Nutzung nach Flugmodus/WLANaus und Schließen in der App-Übersicht sowie Datei-Export100EUR→Änderung200EUR→Restore100EUR mit100EUR nach Schließen/Wiederöffnung. Die100EUR sind das Soll dieses eigenen Testfalls; keine Ausführung oder Abweichung der vorbereiteten1000EUR-/10k-Fixture behauptet. Keine Agentenlöschung/Mutation des Privatportfolios. Der aktuelle Auftrag erlaubt die erfolgte eigene manuelle Prüfung; frühere Lab-only-/Handyausschlussbedingungen werden für diesen Beleg ersetzt.
 
@@ -16,15 +32,15 @@ Diese Teilpunkte sind geschlossen und werden nicht wegen fehlender Lab-Fernsteue
 
 ## Noch nicht belegt
 
-- **Frische Installation:** ausdrücklich nicht bestätigt; Symbolstart beweist keinen neuen Installationsvorgang.
+- **Frische Installation:** laut Nachtrag nicht ausgeführt, App war bereits installiert. Symbolstart bestehender PWA ist bestätigt.
 - **Vollständiger Prozess-/OS-Kaltstart:** Schließen in der App-Übersicht ist belegt, Prozessabwesenheit/Beenden erzwingen nicht. Keine nachträgliche Umdeutung.
 - **A05 insgesamt PARTIAL:** Offline-Wiederöffnung/Lesen/Navigation geschlossen; Offline-Schreibaktion mit anschließendem Reload und vollständiger Record-/Controller-/Cachebeleg nicht berichtet.
 - **K4/A09 insgesamt PARTIAL:** „vollständige Sicherung“ belegt nicht automatisch Passwortverschlüsselung, konkrete History-/Settingsoptionen, Dateiformat/-hash, frisches separates Zielprofil, Original10k oder vollständige Journal-/Herkunfts-/UNKNOWN-Gleichheit. Nur sichtbarer100EUR-Sollwert und berichteter Dateiablauf geschlossen.
-- **Gerätezuordnung ergänzt:** CPH2663/Android16 laut ausdrücklich übernommenen Sitzungsangaben des Nutzers; keine technische Verifikation behauptet. Browser/Version werden nachgereicht, App-/SW-Identität bleibt unbekannt.
+- **Gerätezuordnung ergänzt:** Chrome157.0.8103.78/Android16/CPH2663/BuildUKQ1.231108.001 im Nutzer-Screenshot sichtbar. App-/SW-Identität und genauer Testzeitbezug nicht unabhängig belegt.
 - A04Großlisten, A06Hintergrundbedingungen, A07Update, A08Quota, A10Ressourcen sowie umfassende Systemschrift/Fokus/Bedienbarkeit nicht abgenommen. Keine Messzeiten/5Wiederholungen erfunden.
 - Kein beobachteter Produktfehler in den gemeldeten Abläufen; fehlende Zusatzbelege sind kein FAIL.
 
-**Gezielt verbleibende Angaben mit Zweck:** Browsername/-version → Zuordnung der manuellen A01/A03/A05/A09-Teilbefunde zur konkreten Browserumgebung (vom Nutzer angekündigt); tatsächliche Auswahl „bereits vorhanden“ oder „frisch installiert“ → offener Neuinstallationspunkt; tatsächliche Auswahl „mit Passwort“ oder „ohne Passwort“ → Verschlüsselungsumfang des100EUR-Export-/Restorefalls K4/A09. Die eckigen Klammeralternativen im Nachtrag sind nicht ausgewählt und werden nicht als Antwort gewertet. Gerät/Android nicht erneut pauschal erfragen. Jede künftige Rückfrage muss den genauen offenen Abnahmepunkt und ihren Zweck nennen. Keine nicht vorhandenen Screenshots/Protokolle nachfordern. Weitergehende Prozess-/Offline-Write-/FreshRestorefälle sind eigene offene Prüfungen, keine stillschweigende Zusatzbedingung für die geschlossenen Grundabläufe.
+**Bisherige Sachrückfragen erledigt:** Browser/Version im Screenshot belegt; App bereits installiert, Sicherung ohne Passwort. Neuinstallation und verschlüsselter Android-Restore sind nicht ausgeführte eigene Tests, keine noch unbeantworteten Auswahlfragen. Gerät/Android nicht erneut pauschal erfragen. Jede künftige Rückfrage muss den genauen offenen Abnahmepunkt und ihren Zweck nennen. Keine nicht vorhandenen Screenshots/Protokolle nachfordern. Weitergehende Prozess-/Offline-Write-/FreshRestorefälle sind eigene offene Prüfungen, keine stillschweigende Zusatzbedingung für die geschlossenen Grundabläufe.
 
 ## Anschließender interner1.0-Abgleich
 
@@ -42,7 +58,7 @@ Aktuellen Checkpoint,1.0-Restliste, K1–K6 und separaten PR354-Mainbefund gepr�
 
 ## Nutzernachtrag: Gerätezuordnung und Rückfragevertrag
 
-CPH2663 und Android16 ausdrücklich **laut Sitzungsangaben** übernommen. Keine neue technische Beobachtung und keine Erweiterung der bereits geschlossenen manuellen Funktionstests. Browsername/-version werden angekündigt nachgereicht. Installationsart und Verschlüsselung bleiben offen, weil im Nachtrag beide Klammeralternativen stehen.
+CPH2663 und Android16 ausdrücklich **laut Sitzungsangaben** übernommen. Keine neue technische Beobachtung und keine Erweiterung der bereits geschlossenen manuellen Funktionstests. Browsername/-version inzwischen per Screenshot belegt; Installationsart „schon installiert“ und Verschlüsselung „ohne Passwort“ ausdrücklich nachgereicht. Die frühere Klammerauswahl ist damit ersetzt.
 
 | Noch offene Angabe | Welcher konkrete Abnahmepunkt damit geklärt wird |
 |---|---|

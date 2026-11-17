@@ -1,3 +1,9 @@
+## Android-Nachtrag · Browserbeleg und Testumfang geklärt
+
+Screenshot „Über Google Chrome“: **Chrome157.0.8103.78 / Android16 / CPH2663 / BuildUKQ1.231108.001**. Geräte-/Browserzuordnung nun visuell belegt; funktionale Ergebnisse weiterhin ausdrücklich Nutzerbericht ohne Funktionsbilder/Logs. Nutzer bestätigt **schon installiert, ohne Passwort**. Damit bestehender Symbolstart und **unverschlüsselter100EUR-Datei-Export/Restore/Wiederöffnung** manuell abgeschlossen; Neuinstallation und verschlüsselter Android-Restore **nicht geprüft**. Keine der bisherigen Sachrückfragen offen und keine erneute gleiche Frage/Testwiederholung.
+
+[Präzisierte Einzelabnahme](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md). Screenshot nur als Versionsbeleg, keine neue Gesamt-A01/A09-/K4/K5-Abnahme. Originalbild nicht in Git veröffentlicht. Main e9130ad9/SW321 und separater csv-import.js503-Status unverändert; kein CI-Retry.
+
 ## Manuelle Android-Fortschreibung · 17.11.2026
 
 [Manueller Nutzerbeleg](ANDROID_MANUAL_USER_ACCEPTANCE_2026-11-17.md): Symbolstart/Grundnavigation, Offline-Wiederöffnung aus App-Übersicht bei Flugmodus/WLANaus und100EUR-Datei-Export→Änderung200EUR→Restore100EUR mit Werterhalt nach Wiederöffnung **DONE_MANUAL_USER_CONFIRMED**. Ausschließlich Nutzerbericht, keine Screenshots/Logs. Gerätekennung CPH2663/Android16 laut ausdrücklichem Nutzernachtrag aus Sitzungsangaben ergänzt, nicht technisch ausgelesen. Browser-/SW-Version, frische Installation, vollständiges Prozessende und Verschlüsselung/Format weiter nicht bestätigt. Gesamtverträge A01/A03/A05/A09/K4/K5 nicht pauschal geschlossen. Historische NOT_RUN-/Gerätezugangsblocker unten gelten nicht mehr für die genannten erledigten Teilfälle.
