@@ -1,0 +1,216 @@
+{
+  "local": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "baselineMs": 9049,
+      "replayMs": 8242,
+      "assertionsIdentical": true,
+      "resultsEqual": true,
+      "variants": [
+        {
+          "label": "baseline",
+          "sameOriginLogicalRequests": 3408,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 563,
+          "versions": [
+            {
+              "name": "chromium",
+              "version": "141.0.7390.37"
+            }
+          ]
+        },
+        {
+          "label": "replay",
+          "sameOriginLogicalRequests": 3408,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 555,
+          "versions": [
+            {
+              "name": "chromium",
+              "version": "141.0.7390.37"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "baselineMs": 15807,
+      "replayMs": 14852,
+      "assertionsIdentical": true,
+      "resultsEqual": true,
+      "variants": [
+        {
+          "label": "baseline",
+          "sameOriginLogicalRequests": 3432,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 325,
+          "versions": [
+            {
+              "name": "firefox",
+              "version": "157.0"
+            }
+          ]
+        },
+        {
+          "label": "replay",
+          "sameOriginLogicalRequests": 3432,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 378,
+          "versions": [
+            {
+              "name": "firefox",
+              "version": "157.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "baselineMs": 17392,
+      "replayMs": 8419,
+      "assertionsIdentical": true,
+      "resultsEqual": true,
+      "variants": [
+        {
+          "label": "baseline",
+          "sameOriginLogicalRequests": 3432,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 566,
+          "versions": [
+            {
+              "name": "webkit",
+              "version": "27.2"
+            }
+          ]
+        },
+        {
+          "label": "replay",
+          "sameOriginLogicalRequests": 3432,
+          "actualProductionRequests": 0,
+          "logicalPeakPerSecond": 546,
+          "versions": [
+            {
+              "name": "webkit",
+              "version": "27.2"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "domain": {
+    "controls": [
+      {
+        "engine": "chromium",
+        "artifact": 14308114960,
+        "versions": [
+          {
+            "name": "chromium",
+            "version": "141.0.7390.37"
+          }
+        ],
+        "durationMs": 3254,
+        "status": "PASS",
+        "cases": [
+          "today",
+          "old-unknown-other-fx-saved"
+        ],
+        "productionRequests": 852,
+        "observedRequests": 852,
+        "responses": 852,
+        "statusCounts": {
+          "200": 852
+        },
+        "peakStartsIn1s": 535,
+        "bodyErrors": [],
+        "failedRequests": []
+      },
+      {
+        "engine": "firefox",
+        "artifact": 14308833479,
+        "versions": [
+          {
+            "name": "firefox",
+            "version": "157.0"
+          }
+        ],
+        "durationMs": 5389,
+        "status": "PASS",
+        "cases": [
+          "today",
+          "old-unknown-other-fx-saved"
+        ],
+        "productionRequests": 858,
+        "observedRequests": 858,
+        "responses": 858,
+        "statusCounts": {
+          "200": 858
+        },
+        "peakStartsIn1s": 351,
+        "bodyErrors": [],
+        "failedRequests": []
+      },
+      {
+        "engine": "webkit",
+        "artifact": 14309331681,
+        "versions": [
+          {
+            "name": "webkit",
+            "version": "27.2"
+          }
+        ],
+        "durationMs": 12385,
+        "status": "PASS",
+        "cases": [
+          "today",
+          "old-unknown-other-fx-saved"
+        ],
+        "productionRequests": 858,
+        "observedRequests": 858,
+        "responses": 858,
+        "statusCounts": {
+          "200": 858
+        },
+        "peakStartsIn1s": 376,
+        "bodyErrors": [],
+        "failedRequests": []
+      }
+    ],
+    "actualProductionRequests": 2568,
+    "fullMatrixRequestReferenceFromCompleteLocalRuns": 10272,
+    "reductionAtEqualLogicalRequestShape": 0.75,
+    "caveats": [
+      "Prior complete local baseline gives request-shape reference, not new complete successful production baseline",
+      "Historical original successful Chromium cases426requests each and failed429 bursts547/697requests per1s retained",
+      "Single runs and different runners for production controls; no CI-wide speedup proven"
+    ],
+    "noProductionMatrixRequests": true
+  },
+  "originalPins": [
+    {
+      "artifact": 14274454228,
+      "sha256": "0acde8ac1ac5d357292c138d8d6ca55d196cadd929ee37aa971b6544937a01a7"
+    },
+    {
+      "artifact": 14276395300,
+      "sha256": "0546c4856e6f9e82ba1c9981287233a8110ed3b11f8ccc78079e7cc4f73be7f6"
+    }
+  ],
+  "supportTicket": {
+    "id": 5016095,
+    "source": "Jochen",
+    "status": "closure announced without technical findings",
+    "rateRule": "UNKNOWN",
+    "separate503Origin": "UNKNOWN"
+  },
+  "limitations": [
+    "No end-to-end live-duration speedup measured",
+    "Production burst peak remains comparable to baseline",
+    "24 auditable published-byte native cases plus6direct domain cases, not24fresh CDN coldstarts"
+  ]
+}

@@ -471,7 +471,7 @@ jobs:
           UI_BASE="$ACCEPTANCE_BASE" node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-chromium.log
           UI_BASE="$ACCEPTANCE_BASE" node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-chromium.log
           CASH_UX_BASE="$ACCEPTANCE_BASE" node tests/browser-cash-account-ux.mjs 2>&1 | tee artifacts/gates/production-cash-ux-chromium.log
-          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log
+          FX_AGE_VERIFIED_RELEASE=artifacts/gates/live/report.json ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log
           RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log
           FIN_E2E_BASE="$ACCEPTANCE_BASE" node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-chromium.log
           UH02_BASE="$ACCEPTANCE_BASE" node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-chromium.log
@@ -529,7 +529,7 @@ jobs:
           PCHAIN_BASE="$ACCEPTANCE_BASE" PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-cross.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-cross.log
           CASH_UX_BASE="$ACCEPTANCE_BASE" CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs 2>&1 | tee artifacts/gates/production-cash-ux-cross.log
-          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-cross.log
+          FX_AGE_VERIFIED_RELEASE=artifacts/gates/live/report.json ETF_SOURCE_BASE="$ACCEPTANCE_BASE" ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-cross.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
           RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log
           FIN_E2E_BASE="$ACCEPTANCE_BASE" FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-cross.log
