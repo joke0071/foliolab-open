@@ -17,6 +17,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 | Android-Zuordnung | Chrome157.0.8103.78, Android16, CPH2663; Versionsbild vorhanden. Keine Funktionsbilder/Logs behauptet. |
 | Bestehende PWA / Symbolstart / Grundnavigation | DONE_MANUAL_USER_CONFIRMED. |
 | Offline lesen/navigieren nach App-Übersicht-Schließen und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED, Flugmodus und WLANaus. Kein vollständiges Prozessende/Offline-Write hineininterpretiert. |
+| Offline-Schreiben und Prozess-Kaltstart | DONE_MANUAL_USER_CONFIRMED: offline Name gespeichert; Chrome und FolioLab jeweils Beenden erzwingen; weiterhin offline per Symbol gestartet; Offline-Test/100EUR/Navigation erhalten. Kein zusätzlicher In-App-Reload behauptet. |
 | Unverschlüsselter Datei-Export/Restore und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED: 100→200→Datei-Restore100→Wiederöffnung100EUR. |
 | Windows K4 | Elf Fälle/22 Prozessbeendigungen, Chrome/Edge, Original10k, verschlüsselte UI-Exporte/FreshRestore sowie Präzisions-/Legacy-/UNKNOWN-Fälle DONE im dokumentierten Umfang. |
 | Kraken Spotanker | Alle13 Spotwährungen beidseitig abgeglichen, DONE; kein erneuter Nachweis erforderlich. |
@@ -26,7 +27,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 
 | Vertrag | Noch erforderliche Aussage | Fehlender Nachweis / kleinster nächster Schritt |
 |---|---|---|
-| A01/A05 Kaltstart und Offline-Schreiben | Tatsächlich beendeter Prozess öffnet offline eine bedienbare PWA; erlaubte lokale Änderung übersteht Offline-Reload/Neustart. | Gemeldet wurde Recents-Schließen, Lesen/Navigation. Offline-Testnamen speichern, Chrome/PWA ohne Datenlöschung beenden erzwingen, offline per Symbol starten und Namen/100EUR vergleichen. Danach separater Offline-Reload, falls der Neustartbericht keinen Dokumentreload belegt. Controller-/Cacheinternas bleiben ohne Messzugriff ausdrücklich ungeprüft. |
+| A05 verbleibende Reload-/technische Teilbehauptungen | Expliziter Offline-Dokumentreload und technische Controller-/Cache-/Recordidentität. | Offline-Schreiben und Start nach Force-Stop beider Apps sind nun manuell DONE. Zusätzlicher In-App-Reload/Internas nicht berichtet; diese Grenze getrennt führen und den bestätigten Kaltstart nicht wiederholen. |
 | K4/A09 Android verschlüsselt | Regulärer Passwort-Export, tatsächlicher Android-Dateipicker, Entschlüsselung/Restore, Werte nach Wiederöffnung unverändert. | Bisher nur Klartext. Vorbereiteter Ablauf unten mit bestehendem100EUR-Bestand; Passwort lokal, nicht im Chat. |
 | K4/A09 FreshRestore/Originaldatenumfang | Isoliertes frisches Ziel, vorgeschriebene Original10k sowie Finanz-/Herkunfts-/Journal-/UNKNOWN- und tatsächlich eingeschlossene Einstellungssemantik erhalten. | Kleiner Restore auf gleichem Bestand belegt das nicht. Vorhandene originale10k-Datei und tatsächlicher verschlüsselter Export sind vorbereitet; geschütztes separates Zielprofil bzw. zweiter isolierter Endpunkt plus Record-/Sollvergleich erforderlich. Kein Löschen des bestehenden Nutzerprofils. Windows-Gegenstücke erledigt. |
 | A02/A03/A06 | Warmrückkehr und Navigation inklusive Kerneditor/Long-Press/Zurück/Fokus/Safe-Area; Sperren/Hintergrund/Netzwechsel ohne Editorverlust oder doppelten Import. | Grundnavigation und normale Wiederöffnung erledigt; die benannten Bedingungen nicht berichtet. Nach kleinstem Test eine gezielte manuelle Hintergrund-/Editorsequenz mit synthetischem Bestand. |
@@ -40,7 +41,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 
 Nicht jeder Zeile entspricht ein zusätzlicher Produktausbau. A07/A08/A10 sind fehlende Beobachtungsbedingungen; kein beobachteter Produktfehler. Safari/TalkBack und Komfortfunktionen bleiben nach Nutzerentscheidung zurückgestellt.
 
-## Genau der kleinste nächste manuelle Test
+## Ausgeführter kleinster manueller Test · DONE_MANUAL_USER_CONFIRMED
 
 Zweck A01/A05: Offline-Schreiben und Start nach tatsächlichem Prozessende. Bestehendes synthetisches100EUR-Portfolio verwenden, keine Daten löschen.
 
@@ -50,7 +51,7 @@ Zweck A01/A05: Offline-Schreiben und Start nach tatsächlichem Prozessende. Best
 4. Weiterhin offline über das FolioLab-App-Symbol öffnen. Prüfen: **Offline-Test und100EUR** erhalten, Portfolio und Navigation bedienbar. Wenn möglich innerhalb der PWA einmal neu laden und erneut prüfen.
 5. Nur beobachtetes Ergebnis melden: Name/Wert, welche Apps tatsächlich beendet wurden, ob ein zusätzlicher Reload möglich war. Fehlende Screenshots nicht nachfordern; manuelle Bestätigung als solche führen.
 
-Status dieser neuen Sequenz: **PREPARED / AWAITING_USER_OBSERVATION**, kein PASS ohne Bericht. Der bestehende Offline-Lesebefund bleibt geschlossen, unabhängig vom neuen Ergebnis.
+Status nach ausdrücklichem Nutzerbericht: **DONE_MANUAL_USER_CONFIRMED** für offline umbenennen/speichern, Beenden erzwingen von Chrome UND FolioLab, weiterhin offline Symbolstart mit Offline-Test/100EUR/Navigation. Keine Funktionsbilder/Logs; kein Agenten-/Lab-PASS. Ein zusätzliches Neu laden innerhalb der PWA wurde nicht berichtet; technische Internas ebenfalls nicht. Vorbereitete Schritte oben bleiben als tatsächlich beantworteter Prüfauftrag nachvollziehbar. Nächster vorbereiteter Test ist der verschlüsselte Datei-Restore unten.
 
 ## Vollständig vorbereiteter nächster Verschlüsselungsfall, noch nicht gestartet
 

@@ -51,15 +51,39 @@
       "scope": "A02/A09 subset",
       "status": "DONE_MANUAL_USER_CONFIRMED",
       "retainedEUR": "100"
+    },
+    {
+      "id": "offline-write-force-stop-cold-start",
+      "scope": "A01/A05 bounded manual acceptance",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "source": "explicit user statement in current conversation",
+      "recordedAt": "2026-11-17T18:14:11.509955+00:00",
+      "testTimestamp": null,
+      "observed": {
+        "offlineRenameSaved": true,
+        "expectedName": "Offline-Test",
+        "forceStoppedApps": [
+          "Chrome",
+          "FolioLab"
+        ],
+        "stillOfflineAppIconLaunch": true,
+        "nameRetained": "Offline-Test",
+        "retainedEUR": "100",
+        "navigationUsable": true
+      },
+      "agentObserved": false,
+      "functionalScreenshotsAvailable": false,
+      "technicalLogsAvailable": false,
+      "explicitAdditionalInAppReloadReported": false,
+      "swOrReleaseIdentityIndependentlyVerified": false
     }
   ],
   "notProven": [
-    "full process termination",
     "independent fresh-profile restore",
     "original1000EUR10k fixture",
     "full canonical record equality",
-    "offline write/reload",
-    "controller/cache identity"
+    "controller/cache identity",
+    "additional explicit offline in-app reload"
   ],
   "followUpOnly": [],
   "internallyExecutableCodeGapFound": false,
@@ -94,5 +118,6 @@
   "notTested": {
     "freshInstallation": "NOT_TESTED_EXISTING_INSTALLATION",
     "passwordEncryptedRestore": "NOT_TESTED_UNENCRYPTED_BACKUP"
-  }
+  },
+  "ciRerunStartedScope": "This manual Android evidence record only; separately documented PR354 attempt2 was already completed before this follow-up."
 }

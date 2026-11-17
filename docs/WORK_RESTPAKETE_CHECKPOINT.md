@@ -1,3 +1,11 @@
+# HND01 · Offline-Write und Force-Stop-Kaltstart manuell abgenommen · 17.11.2026
+
+Fortsetzung05b85cae. ## Android-Nachtrag · Offline-Schreiben und Prozess-Kaltstart bestätigt
+
+Jochen bestätigt ausdrücklich: offline umbenannt/gespeichert; **Chrome und FolioLab jeweils „Beenden erzwingen“**; anschließend weiterhin offline per App-Symbol gestartet; **Offline-Test,100EUR und Navigation erhalten**. Diese neuen Teilpflichten A01/A05 sind **DONE_MANUAL_USER_CONFIRMED**, ohne Funktionsbilder/technische Logs und ohne Agentenbeobachtung. Kein zusätzlicher In-App-Reload/Controller-/Cache-/Recordvergleich behauptet. Der vorherige Recents-Ablauf bleibt als eigener historischer Befund erhalten. Testumgebung wie zugeordnet: CPH2663/Android16/Chrome157.0.8103.78; keine unabhängig ermittelte aktuelle SW-/Releaseidentität.
+
+Kein beobachteter Produktfehler. Nächster vorbereiteter manueller Fall: verschlüsselter Datei-Export/Restore/Wiederöffnung mit bestehendem100EUR-Testportfolio; frisches Ziel/Original10k bleiben getrennt. Main und separater regulärer Live429-/ursprünglicher503-Befund unverändert; keine neue CI/Produktänderung. Frühere „full process termination/Offline-Write fehlen“-Aussagen unten sind in genau diesem neuen Nutzerumfang ersetzt.
+
 # HND01 · Kriterien bereinigt, einmaliger Live-Retry abgeschlossen · 17.11.2026
 
 Alleiniger HND01-Hauptagent, Fortsetzung f9ef0f83/e61352a9. Main e9130ad9/SW321 unverändert. [Aktueller verbindlicher Kriterienabgleich](FOLIOLAB_1_0_CRITERIA_RECONCILIATION_2026-11-17.md) und [vollständige aktuelle Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md). Historische niedrigere Status gelten nur soweit nicht ausdrücklich ersetzt.

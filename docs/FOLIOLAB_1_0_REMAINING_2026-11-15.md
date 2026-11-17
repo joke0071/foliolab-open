@@ -8,7 +8,8 @@ Verbindlicher [Kriterienabgleich und Einzelanforderungen](FOLIOLAB_1_0_CRITERIA_
 | Android Offline-Lesen/Navigation nach Recents-Schließen | DONE_MANUAL_USER_CONFIRMED | Geschlossen exakt für berichteten Ablauf. |
 | Android Klartextdatei100→200→Restore100→Wiederöffnung100 | DONE_MANUAL_USER_CONFIRMED | Geschlossen; keine Funktionsscreenshots/Logs behauptet. |
 | Windows K4, Kraken Spot, UI-R1–R4/ALLOC01 | DONE im dokumentierten Umfang | Bestehende Abnahmen erhalten; keine Wiederholung. |
-| A01/A05 Offline-Write und Prozess-Kaltstart | PREPARED / Nutzerbeobachtung fehlt | Nur Testnamen offline ändern, Chrome/PWA beenden erzwingen, offline per Symbol wiederöffnen; Sollname/100EUR vergleichen. Vollständiger Ablauf im Kriterienabgleich. |
+| A01/A05 Offline-Write und Prozess-Kaltstart | DONE_MANUAL_USER_CONFIRMED | Offline gespeichert, Chrome UND FolioLab beenden erzwungen, offline per Symbol gestartet: Offline-Test/100EUR/Navigation erhalten. Keine Wiederholung. |
+| A05 zusätzlicher expliziter Offline-Reload / technische Identität | Nicht berichtet | Separater In-App-Reload und Controller-/Cache-/Recordvergleich nicht aus dem Nutzerbericht ableiten; kein Wiederöffnen des erledigten Prozess-Kaltstarts. |
 | Android verschlüsselter Datei-Restore K4/A09 | OPEN, ausdrücklich Pflicht | Mit bestehendem100EUR-Testportfolio Passwortdatei exportieren,200EUR ändern, Android-Dateidialog/Restore/Wiederöffnung100EUR; vorbereiteter Ablauf im Bericht. |
 | Android FreshRestore/Großdaten-/Recordgleichheit | OPEN | Isoliertes frisches Ziel und vorhandene Original10k-/Präzisions-/UNKNOWN-Belege; kein Löschen des bestehenden Profils. Kleiner Passworttest ersetzt das nicht. |
 | A02/A03/A06 vollständige Bedien-/Hintergrundbedingungen | PARTIAL | Warmrückkehr, Editor/Long-Press/Zurück/Fokus, Sperren/Netzwechsel mit synthetischem Bestand gezielt beobachten. Grundnavigation bereits erledigt. |
@@ -20,4 +21,4 @@ Verbindlicher [Kriterienabgleich und Einzelanforderungen](FOLIOLAB_1_0_CRITERIA_
 
 Private Kraken-/Wallet-/Bitpanda-Befunde und ihre Grenzen stehen im Kriterienbericht; keine privaten Originale/Mengen hier veröffentlichen. Fehlende Nachweise sind kein beobachteter Produktfehler.
 
-**Entwicklung:** Zugesagter Produktkern implementiert, keine konkret fehlende Featureimplementierung ermittelt. Ungeklärter regulärer Worker-/Transportabschluss verhindert einen vorbehaltlosen technischen Gesamtabschluss. **Abnahme:**1.0noch nicht vollständig. Safari/TalkBack/Komfort bleiben zurückgestellt. Kein intern belegter weiterer Codefix; nächste kleinste Handlung ist nur der vorbereitete Offline-Write-/Prozess-Test am bestehenden Testportfolio.
+**Entwicklung:** Zugesagter Produktkern implementiert, keine konkret fehlende Featureimplementierung ermittelt. Ungeklärter regulärer Worker-/Transportabschluss verhindert einen vorbehaltlosen technischen Gesamtabschluss. **Abnahme:**1.0noch nicht vollständig. Safari/TalkBack/Komfort bleiben zurückgestellt. Kein intern belegter weiterer Codefix; nächste vorbereitete manuelle Handlung ist der verschlüsselte Datei-Restore am bestehenden100EUR-Testportfolio.
