@@ -1,3 +1,17 @@
+# HND01 · PR354 integriert · Main/Deploy grün, regulärer Liveabschluss503-blockiert
+
+Alleiniger Owner `hnd01-1point0-20261117-root-5c3182824c09`; alle früheren Owner abgelöst. Jochen autorisierte den exakten Merge, PR354 ist **MERGED**, keine separate Headfreigabe offen. Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`/Tree`3fd78f746c08ab0fe0347ab30932a00309d7d008` exakt qualifiziert; Produkt/SW321/Workflow unverändert.
+
+[Abschlussbericht mit Originalen, Messwerten und Restliste](PR354_MAIN_RESULT_2026-11-17.md) · [Maschinenbeleg](release-evidence/pr354-main-result-2026-11-17.json) · [Main44048209546](https://github.com/joke0071/foliolab-open/actions/runs/44048209546)
+
+**Endstatus: FAILURE/Versuch1.**1511Units, Chromium/alle3Cross und Deployment SUCCESS;154Pages-Dateien bytegleich. Kritische Integration1497s=24:57/Runner4053s=67:33, kein CI-Zeitgewinn behauptet. Live133931409548 scheitert nach48s: initiales `csv-import.js`HTTP503/HTML,879ms vor erster Hashanfrage. Danach155Hashprüfungen PASS; Start/Navigation fehlgeschlagen, SW-Kontrolle/Offline/Restore/FX nicht erreicht. Kein neuer vollständiger Live-PASS; bisherige SW321-Produktabnahme und alle historischen Fehler unverändert. Neuer503-Ursprung UNKNOWN, nicht mit market.js503 oder429 gleichsetzen. Kein Retry und keine Supportwartepflicht.
+
+Qualifizierter FX-Vorteil bleibt2568statt10272Abrufen bei gleicher gemessener Originalrequeststruktur (−75%);24Fachfälle+6Domainfälle erhalten, keine Spitzensenkung/Hostingheilung. Neuer gescheiterter Coreversuch281beobachtete Abrufe/Spitze155Starts/s, FX0/NOT_REACHED: kein neuer erfolgreicher FX-Vergleich. Alle4Integrations-Berichtsinventare erhalten.8Original-ZIPs/2509Mitglieder und38Manifestdateien dauerhaft gesichert; gespeicherte Kopie vollständig hash-/längen-/CRC-geprüft.
+
+Restliste anhand privater Version3/Bitpanda-NachtragVersion0 geprüft: Windows/Kraken erledigt; physisches Android, persönliche Bitpanda-Zuordnung/Cash und betroffene originale ETH-Folgeseite extern offen. Kein weiterer intern belegter Pflichtpunkt. **Genau eine nächste Handlung für Jochen:** autorisiertes fernbedienbares physisches Android mit leerem isoliertem Testprofil ohne Privatportfolio bereitstellen; klärt Installation/App-Symbolstart, Offline-Kaltstart und Datei-Restore/Wiederöffnung. Kein zusätzlicher Finanzexport/Supportauftrag. Komfort nach1.0/deferred. Kein globaler1.0-Abschluss.
+
+--- Historische Zwischenstände, durch diesen Endstatus ersetzt ---
+
 # HND01 · Main und Deployment grün · reguläre Liveabnahme aktiv
 
 PR354 am freigegebenen exakten Head gemergt; Main `e9130ad90874434a38bb329a7dafaa22e2163e1d`, qualifizierter Tree unverändert `3fd78f746c08ab0fe0347ab30932a00309d7d008`, Produkt/SW321/Workflow bytegleich. Alle vier Integrationsjobs in [Main44048209546](https://github.com/joke0071/foliolab-open/actions/runs/44048209546) SUCCESS,1511Units/0Fehler; Deploy133931214832 SUCCESS. **Live133931409548 läuft**, zuletzt veröffentlichte Bytes/Kernabläufe/Chromium. Kein Live-PASS vorweggenommen und kein weiterer Lauf gestartet. Nächster Schritt: diesen regulären Livejob bis Ergebnis übernehmen, Pagespayload und Originale prüfen, tatsächliche FX-Anfragen/Spitze/Laufzeiten auswerten. Restbelege und genau ein nächster Geräteauftrag erst nach diesem Abschluss.

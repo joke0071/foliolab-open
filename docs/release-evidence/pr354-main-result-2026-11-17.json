@@ -1,0 +1,181 @@
+{
+  "status": "MERGED_MAIN_SUCCESS_DEPLOYED_REGULAR_LIVE_FAILED",
+  "owner": "hnd01-1point0-20261117-root-5c3182824c09",
+  "main": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+  "head": "aeea7d11d0169dde8355a7f317a16c1a62dab806",
+  "tree": "3fd78f746c08ab0fe0347ab30932a00309d7d008",
+  "workflow": 44048209546,
+  "attempt": 1,
+  "mainUnits": {
+    "passed": 1511,
+    "failed": 0
+  },
+  "targetedLocal": {
+    "passed": 33,
+    "failed": 0
+  },
+  "productAndWorkflowUnchanged": true,
+  "existingSW321AcceptanceRetained": true,
+  "newFullLiveAccepted": false,
+  "integration": {
+    "span_seconds": 1497,
+    "runner_seconds": 4053,
+    "jobs": [
+      {
+        "id": 133919203744,
+        "name": "cross-engine (1)",
+        "conclusion": "success",
+        "seconds": 660
+      },
+      {
+        "id": 133919203751,
+        "name": "test",
+        "conclusion": "success",
+        "seconds": 1112
+      },
+      {
+        "id": 133919203762,
+        "name": "cross-engine (3)",
+        "conclusion": "success",
+        "seconds": 784
+      },
+      {
+        "id": 133919203902,
+        "name": "cross-engine (2)",
+        "conclusion": "success",
+        "seconds": 1497
+      }
+    ]
+  },
+  "deploy": {
+    "job": 133931214832,
+    "status": "success",
+    "seconds": 19,
+    "exactFiles": 154
+  },
+  "live": {
+    "job": 133931409548,
+    "status": "failure",
+    "seconds": 48,
+    "hashMatches": 155,
+    "fx": "NOT_REACHED",
+    "swControlled": false
+  },
+  "traffic": {
+    "scope": "failed regular initial core attempt only; FX not reached",
+    "browser_context_requests": 126,
+    "independent_hash_requests": 155,
+    "total_observed_production_requests": 281,
+    "combined_peak_starts_per_rolling_second": 155,
+    "browser_context_peak_starts_per_rolling_second": 125,
+    "hash_peak_starts_per_rolling_second": 155,
+    "bad_response": {
+      "at": 1794906150205,
+      "event": "badResponse",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/src/csv-import.js",
+      "status": 503,
+      "headers": {
+        "x-fastly-request-id": "0c54eff5fbb6677a105ddd7159c292072747880f",
+        "retry-after": "0",
+        "x-timer": "S1794906150.142679,VS0,VE39",
+        "via": "1.1 varnish",
+        "accept-ranges": "bytes",
+        "x-cache": "MISS",
+        "content-length": "54887",
+        "date": "Tue, 17 Nov 2026 09:02:30 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "x-served-by": "cache-dfw-kdfw8210118-DFW",
+        "server": "Varnish",
+        "x-cache-hits": "0"
+      }
+    },
+    "bad_response_before_first_hash_ms": 879,
+    "fx_execution": "NOT_REACHED",
+    "fx_requests": 0,
+    "no_full_live_pass": true
+  },
+  "fxBenefit": {
+    "qualificationRequestsMeasured": 2568,
+    "referenceLocalRequestStructure": 10272,
+    "reductionUnderSameStructure": 0.75,
+    "qualificationPeakMeasured": 535,
+    "newFullProductionComparison": false,
+    "speedGainClaimed": false
+  },
+  "savedCopy": {
+    "library_file_id": "libfile_fde3_f-6e44ed2f00f88191b3a20dfd04ae088b_54e45e8130348191808d9aaa710cf372",
+    "file_id": "file_00000000c9088210a2b0dbe7ae639d5d",
+    "version": 0,
+    "bytes": 224147208,
+    "sha256": "b2945c52f58edc0cba598d37d5525ab233adcfa73b39c2e65213e1c1b123a009",
+    "saved_copy_readback": "PASS",
+    "manifest_files": 38,
+    "original_zip_count": 8,
+    "original_zip_members": 2509,
+    "all_inner_crcs": "PASS",
+    "archive_cut_precedes_this_receipt": true
+  },
+  "archives": [
+    {
+      "name": "14311459916-original.zip",
+      "bytes": 353,
+      "sha256": "f50751f9b6917c6b5c1972069681010efe622844a1e5f3c28b275c27ca2b2a7b",
+      "members": 1,
+      "crc": "PASS"
+    },
+    {
+      "name": "14312744114-original.zip",
+      "bytes": 934514,
+      "sha256": "03423fb2624326813559881ff7f3481a08ba9c35f9d40fa3be6038e7c7872c14",
+      "members": 20,
+      "crc": "PASS"
+    },
+    {
+      "name": "14312789015-original.zip",
+      "bytes": 67993970,
+      "sha256": "c73c44491f207730fd2f0fb6e1424a935a882f895de44583099ce855607945e1",
+      "members": 845,
+      "crc": "PASS"
+    },
+    {
+      "name": "14313067102-original.zip",
+      "bytes": 61008112,
+      "sha256": "067cbe908a6f743c22374baf5913f7c246c7ee6e09d0e57f28cf5742a872045f",
+      "members": 515,
+      "crc": "PASS"
+    },
+    {
+      "name": "14313678036-original.zip",
+      "bytes": 71710853,
+      "sha256": "30b9078549302dd42d2ff0c05c4ac927f4521f5e2754fc9bf7891ec54dc75a43",
+      "members": 837,
+      "crc": "PASS"
+    },
+    {
+      "name": "14313780546-original.zip",
+      "bytes": 21534765,
+      "sha256": "7a13e2c63bb3b7616434a0c74f0dfe084d77e37e90f3984954e80f6161b9657f",
+      "members": 280,
+      "crc": "PASS"
+    },
+    {
+      "name": "14314167152-original.zip",
+      "bytes": 325435,
+      "sha256": "857ec182886187df0db99c3114273d460a75cbd00eb781b95c2017fa1323905a",
+      "members": 10,
+      "crc": "PASS"
+    },
+    {
+      "name": "14314296050-original.zip",
+      "bytes": 577371,
+      "sha256": "76c57fc7d041c90e3a14abe1b2ed8fe3909df0ac30c2e8a6da3e912f81612820",
+      "members": 1,
+      "crc": "PASS"
+    }
+  ],
+  "nextAction": "Provide an authorized remotely controllable physical Android device with an isolated empty test profile; enables installation/app-icon/offline cold-start/file restore/reopen.",
+  "privateRestListVersionRead": 3,
+  "privateBitpandaSupplementVersionRead": 0,
+  "noFurtherRunStarted": true
+}
