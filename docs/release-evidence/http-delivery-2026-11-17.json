@@ -1,0 +1,865 @@
+{
+  "delivery": {
+    "original429": {
+      "requests": 72,
+      "requestEventWindowMs": 44,
+      "responseEventWindowMs": 35,
+      "maxOverlappingUntilBadResponse": 66,
+      "contexts": [
+        {
+          "index": 0,
+          "requests": 427,
+          "sameOriginRequests": 426,
+          "requestFirstAt": 1794865902832,
+          "requestLastAt": 1794865903530,
+          "requestWindowMs": 698,
+          "peakStartsIn1s": 426
+        },
+        {
+          "index": 1,
+          "requests": 427,
+          "sameOriginRequests": 426,
+          "requestFirstAt": 1794865903615,
+          "requestLastAt": 1794865904291,
+          "requestWindowMs": 676,
+          "peakStartsIn1s": 426
+        },
+        {
+          "index": 2,
+          "requests": 427,
+          "sameOriginRequests": 426,
+          "requestFirstAt": 1794865904355,
+          "requestLastAt": 1794865905058,
+          "requestWindowMs": 703,
+          "peakStartsIn1s": 426
+        },
+        {
+          "index": 3,
+          "requests": 427,
+          "sameOriginRequests": 426,
+          "requestFirstAt": 1794865905128,
+          "requestLastAt": 1794865905761,
+          "requestWindowMs": 633,
+          "peakStartsIn1s": 426
+        },
+        {
+          "index": 4,
+          "requests": 427,
+          "sameOriginRequests": 426,
+          "requestFirstAt": 1794865905836,
+          "requestLastAt": 1794865906471,
+          "requestWindowMs": 635,
+          "peakStartsIn1s": 426
+        },
+        {
+          "index": 5,
+          "requests": 400,
+          "sameOriginRequests": 399,
+          "requestFirstAt": 1794865906541,
+          "requestLastAt": 1794865907153,
+          "requestWindowMs": 612,
+          "peakStartsIn1s": 399
+        }
+      ],
+      "sameOriginRequestsTotal": 2529,
+      "sameOriginPeakStartsIn1s": 697,
+      "observationLimit": "Node context request/response event timestamps, not packet-level wire timestamps",
+      "pairs": [
+        {
+          "url": "https://foliolab.unperfekt.at/src/credential-visibility.js",
+          "requestEventAt": 1794865907111,
+          "badResponseEventAt": 1794865907147,
+          "headersDelayMs": 36
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/dialog-discard.js",
+          "requestEventAt": 1794865907111,
+          "badResponseEventAt": 1794865907147,
+          "headersDelayMs": 36
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/model.js",
+          "requestEventAt": 1794865907110,
+          "badResponseEventAt": 1794865907147,
+          "headersDelayMs": 37
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/cash-terms-ui.js",
+          "requestEventAt": 1794865907110,
+          "badResponseEventAt": 1794865907147,
+          "headersDelayMs": 37
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/cash-terms.js",
+          "requestEventAt": 1794865907109,
+          "badResponseEventAt": 1794865907152,
+          "headersDelayMs": 43
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/wallet-history-ui.js",
+          "requestEventAt": 1794865907110,
+          "badResponseEventAt": 1794865907152,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/market.js",
+          "requestEventAt": 1794865907110,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/dashboard-ui.js",
+          "requestEventAt": 1794865907111,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 45
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/chart-periods.js",
+          "requestEventAt": 1794865907111,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 45
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/bitcoin-hd.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 44
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/allocation-ui.js",
+          "requestEventAt": 1794865907114,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/public-instruments-client.js",
+          "requestEventAt": 1794865907115,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/asset-wizard.js",
+          "requestEventAt": 1794865907115,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/refresh-frequency.js",
+          "requestEventAt": 1794865907115,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+          "requestEventAt": 1794865907115,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/market-diagnostics.js",
+          "requestEventAt": 1794865907116,
+          "badResponseEventAt": 1794865907156,
+          "headersDelayMs": 40
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/position-detail-ui.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907157,
+          "headersDelayMs": 45
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/historical-csv.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/crypto-fallbacks.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/security-sources.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/security-discovery.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/onboarding-suggestions.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/position-history.js",
+          "requestEventAt": 1794865907112,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 46
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/position-search.js",
+          "requestEventAt": 1794865907114,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 44
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/valuation-status.js",
+          "requestEventAt": 1794865907113,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 45
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/booking-insights-ui.js",
+          "requestEventAt": 1794865907117,
+          "badResponseEventAt": 1794865907158,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/transactions.js",
+          "requestEventAt": 1794865907117,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/capital-flows.js",
+          "requestEventAt": 1794865907117,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/blockchain-adapters.js",
+          "requestEventAt": 1794865907118,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/performance.js",
+          "requestEventAt": 1794865907117,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/browser-portfolio-storage.js",
+          "requestEventAt": 1794865907116,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 43
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/quote-quality.js",
+          "requestEventAt": 1794865907116,
+          "badResponseEventAt": 1794865907159,
+          "headersDelayMs": 43
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/solana-rpc.js",
+          "requestEventAt": 1794865907119,
+          "badResponseEventAt": 1794865907172,
+          "headersDelayMs": 53
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/wallet-scan-update.js",
+          "requestEventAt": 1794865907120,
+          "badResponseEventAt": 1794865907173,
+          "headersDelayMs": 53
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/legacy-quote-audit.js",
+          "requestEventAt": 1794865907121,
+          "badResponseEventAt": 1794865907173,
+          "headersDelayMs": 52
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/staking-catalog.js",
+          "requestEventAt": 1794865907121,
+          "badResponseEventAt": 1794865907173,
+          "headersDelayMs": 52
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/wallet-visibility.js",
+          "requestEventAt": 1794865907121,
+          "badResponseEventAt": 1794865907174,
+          "headersDelayMs": 53
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/csv-batch.js",
+          "requestEventAt": 1794865907122,
+          "badResponseEventAt": 1794865907174,
+          "headersDelayMs": 52
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-backfill.js",
+          "requestEventAt": 1794865907125,
+          "badResponseEventAt": 1794865907174,
+          "headersDelayMs": 49
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-reconciliation.js",
+          "requestEventAt": 1794865907124,
+          "badResponseEventAt": 1794865907174,
+          "headersDelayMs": 50
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-settlement-audit.js",
+          "requestEventAt": 1794865907124,
+          "badResponseEventAt": 1794865907174,
+          "headersDelayMs": 50
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-cash-audit.js",
+          "requestEventAt": 1794865907125,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 50
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/defi.js",
+          "requestEventAt": 1794865907126,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 49
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-import.js",
+          "requestEventAt": 1794865907122,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 53
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/complete-backup.js",
+          "requestEventAt": 1794865907126,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 49
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-cost-basis.js",
+          "requestEventAt": 1794865907126,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 49
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/assets.js",
+          "requestEventAt": 1794865907152,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 23
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/interest-scenario.js",
+          "requestEventAt": 1794865907153,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 22
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/csv-import.js",
+          "requestEventAt": 1794865907122,
+          "badResponseEventAt": 1794865907175,
+          "headersDelayMs": 53
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-review-export.js",
+          "requestEventAt": 1794865907125,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 51
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/wallet-identity.js",
+          "requestEventAt": 1794865907120,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 56
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-solana-bridge.js",
+          "requestEventAt": 1794865907149,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 27
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/request-cache.js",
+          "requestEventAt": 1794865907141,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 35
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/decimal.js",
+          "requestEventAt": 1794865907136,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 40
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/account-opening.js",
+          "requestEventAt": 1794865907127,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 49
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/shared-import.js",
+          "requestEventAt": 1794865907135,
+          "badResponseEventAt": 1794865907176,
+          "headersDelayMs": 41
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/reference-listings.js",
+          "requestEventAt": 1794865907141,
+          "badResponseEventAt": 1794865907177,
+          "headersDelayMs": 36
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/portfolio-edit-actions.js",
+          "requestEventAt": 1794865907127,
+          "badResponseEventAt": 1794865907177,
+          "headersDelayMs": 50
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/shared-flatex-ui.js",
+          "requestEventAt": 1794865907135,
+          "badResponseEventAt": 1794865907177,
+          "headersDelayMs": 42
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/purchase-evidence.js",
+          "requestEventAt": 1794865907148,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 33
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/link-explorer-evidence.js",
+          "requestEventAt": 1794865907149,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 32
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/flatex-net-reconciliation.js",
+          "requestEventAt": 1794865907136,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 45
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/history-evidence-cache.js",
+          "requestEventAt": 1794865907152,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 29
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/historical-position-value.js",
+          "requestEventAt": 1794865907147,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 34
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/bitpanda-withdrawal-evidence.js",
+          "requestEventAt": 1794865907141,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 40
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-link-bridge.js",
+          "requestEventAt": 1794865907148,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 33
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-ethereum-bridge.js",
+          "requestEventAt": 1794865907149,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 32
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-withdrawal-evidence.js",
+          "requestEventAt": 1794865907150,
+          "badResponseEventAt": 1794865907181,
+          "headersDelayMs": 31
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/fx-state.js",
+          "requestEventAt": 1794865907152,
+          "badResponseEventAt": 1794865907182,
+          "headersDelayMs": 30
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-source-plan.js",
+          "requestEventAt": 1794865907150,
+          "badResponseEventAt": 1794865907182,
+          "headersDelayMs": 32
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/kraken-bitcoin-bridge.js",
+          "requestEventAt": 1794865907149,
+          "badResponseEventAt": 1794865907182,
+          "headersDelayMs": 33
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/src/backup-vault.js",
+          "requestEventAt": 1794865907126,
+          "badResponseEventAt": 1794865907182,
+          "headersDelayMs": 56
+        }
+      ]
+    },
+    "original503": {
+      "requestEventAt": 1794866175156,
+      "badResponseAt": 1794866175220,
+      "firstHashRequestedAt": 1794866176562,
+      "lastHashRequestedAt": 1794866176928,
+      "hashFiles": 155,
+      "responsePrecedesFirstHashMs": 1342,
+      "hashDispatchWindowMs": 366,
+      "hashConcurrencyFromUnchangedSource": 8,
+      "sequence": "Browser goto(networkidle) -> independent 8-worker hash comparison -> navigation assertion. Thus recorded503preceded this hash pass."
+    },
+    "normalComplete": {
+      "artifact": 14306422273,
+      "run": 44034081383,
+      "status": "PASS",
+      "browser": {
+        "name": "installed Google Chrome",
+        "version": "156.0.8078.80",
+        "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      },
+      "os": {
+        "type": "Windows_NT",
+        "release": "10.0.26100",
+        "version": "Windows Server 2025 Datacenter",
+        "image": "20261103.298.1"
+      },
+      "startUTC": "2026-11-17T06:50:07.892Z",
+      "finishUTC": "2026-11-17T06:50:18.445Z",
+      "foregroundSteps": [
+        {
+          "name": "ordinary-cold-start",
+          "startedAt": 1794898212746,
+          "finishedAt": 1794898215508,
+          "result": "PASS"
+        },
+        {
+          "name": "ordinary-navigation-and-synthetic-ui-import",
+          "startedAt": 1794898215683,
+          "finishedAt": 1794898216574,
+          "result": "PASS"
+        },
+        {
+          "name": "ordinary-single-reload",
+          "startedAt": 1794898216589,
+          "finishedAt": 1794898216896,
+          "result": "PASS"
+        },
+        {
+          "name": "ordinary-post-reload-navigation",
+          "startedAt": 1794898216927,
+          "finishedAt": 1794898217049,
+          "result": "PASS"
+        },
+        {
+          "name": "ordinary-background-service-worker-completion",
+          "startedAt": 1794898217078,
+          "finishedAt": 1794898218060,
+          "result": "PASS"
+        }
+      ],
+      "playwrightLogicalPageRequests": 290,
+      "playwrightMaxLogicalOverlap": 93,
+      "browserOriginURLJobs": 304,
+      "HTTPTransactionStarts": 300,
+      "maxOverlappingURLJobs": 92,
+      "maxOverlappingAwaitingHTTPHeaders": 90,
+      "HTTPStartsPeakIn1s": 138,
+      "HTTPResponseStatusCounts": {
+        "HTTP/1.1 200": 299,
+        "HTTP/1.1 304": 1
+      },
+      "byObservedPhaseIncludingBackgroundWorker": [
+        {
+          "phase": "ordinary-cold-start",
+          "URLJobStarts": 151,
+          "HTTPStarts": 148
+        },
+        {
+          "phase": "ordinary-navigation-and-synthetic-ui-import",
+          "URLJobStarts": 75,
+          "HTTPStarts": 77
+        },
+        {
+          "phase": "ordinary-single-reload",
+          "URLJobStarts": 23,
+          "HTTPStarts": 20
+        },
+        {
+          "phase": "ordinary-post-reload-navigation",
+          "URLJobStarts": 22,
+          "HTTPStarts": 21
+        },
+        {
+          "phase": "ordinary-background-service-worker-completion",
+          "URLJobStarts": 33,
+          "HTTPStarts": 34
+        }
+      ],
+      "finalSW": {
+        "url": "https://foliolab.unperfekt.at/",
+        "startupText": "Lokale Daten werden vorbereitet \u2026Schlie\u00dfe andere FolioLab-Tabs und pr\u00fcfe deine Verbindung beim ersten Start. Deine gespeicherten Daten bitte nicht l\u00f6schen und die App nicht deinstallieren.Erneut \u00f6ffnen<p>FolioLab ben\u00f6tigt JavaScript. Bitte im Browser aktivieren. Gespeicherte Daten bleiben erhalten.</p>",
+        "startupHidden": true,
+        "storage": "Transaktionale IndexedDB aktiv",
+        "navButtons": 10,
+        "controller": "https://foliolab.unperfekt.at/sw.js",
+        "registrations": [
+          {
+            "scope": "https://foliolab.unperfekt.at/",
+            "active": "activated",
+            "activeScript": "https://foliolab.unperfekt.at/sw.js"
+          }
+        ]
+      },
+      "requestFailures": [],
+      "scope": "Foreground navigation/reload success in observed fresh profiles; background SW completion confirmed only by final collector; reload happened before SW control. Not general reliability proof."
+    }
+  },
+  "pacing": {
+    "baseline": {
+      "sameOriginRequests": 3234,
+      "peakRequestStartsIn1s": 547,
+      "contexts": [
+        {
+          "context": 0,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898451527,
+          "lastRequestAt": 1794898453272,
+          "gapSincePreviousContextClosedMs": null
+        },
+        {
+          "context": 1,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898453381,
+          "lastRequestAt": 1794898454244,
+          "gapSincePreviousContextClosedMs": 38
+        },
+        {
+          "context": 2,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898454337,
+          "lastRequestAt": 1794898455219,
+          "gapSincePreviousContextClosedMs": 41
+        },
+        {
+          "context": 3,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898455315,
+          "lastRequestAt": 1794898456152,
+          "gapSincePreviousContextClosedMs": 37
+        },
+        {
+          "context": 4,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898456243,
+          "lastRequestAt": 1794898457192,
+          "gapSincePreviousContextClosedMs": 35
+        },
+        {
+          "context": 5,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898457291,
+          "lastRequestAt": 1794898458148,
+          "gapSincePreviousContextClosedMs": 37
+        },
+        {
+          "context": 6,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898458259,
+          "lastRequestAt": 1794898459198,
+          "gapSincePreviousContextClosedMs": 39
+        },
+        {
+          "context": 7,
+          "sameOriginRequests": 252,
+          "firstRequestAt": 1794898459297,
+          "lastRequestAt": 1794898459780,
+          "gapSincePreviousContextClosedMs": 46
+        }
+      ],
+      "passedCases": [
+        "old-known",
+        "old-unknown",
+        "eight-days-known",
+        "today",
+        "weekend-friday",
+        "seven-days-boundary",
+        "old-known-other-fx-saved"
+      ],
+      "badResponses": 65,
+      "badStatuses": {
+        "429": 65
+      },
+      "firstBadResponse": {
+        "at": 1794898459781,
+        "event": "badResponse",
+        "context": 7,
+        "url": "https://foliolab.unperfekt.at/src/position-icons.js",
+        "status": 429,
+        "headers": {
+          "retry-after": "0",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "x-cache": "MISS",
+          "content-length": "1510",
+          "date": "Tue, 17 Nov 2026 06:54:19 GMT",
+          "content-type": "text/html; charset=utf-8",
+          "x-served-by": "cache-iad-khef600070-IAD",
+          "server": "Varnish",
+          "x-cache-hits": "0"
+        }
+      }
+    },
+    "pacedFresh": {
+      "sameOriginRequests": 3123,
+      "peakRequestStartsIn1s": 424,
+      "contexts": [
+        {
+          "context": 0,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898817148,
+          "lastRequestAt": 1794898818634,
+          "gapSincePreviousContextClosedMs": null
+        },
+        {
+          "context": 1,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898819763,
+          "lastRequestAt": 1794898820894,
+          "gapSincePreviousContextClosedMs": 1043
+        },
+        {
+          "context": 2,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898822004,
+          "lastRequestAt": 1794898823109,
+          "gapSincePreviousContextClosedMs": 1040
+        },
+        {
+          "context": 3,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898824225,
+          "lastRequestAt": 1794898825341,
+          "gapSincePreviousContextClosedMs": 1044
+        },
+        {
+          "context": 4,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898826472,
+          "lastRequestAt": 1794898827568,
+          "gapSincePreviousContextClosedMs": 1045
+        },
+        {
+          "context": 5,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898828685,
+          "lastRequestAt": 1794898829791,
+          "gapSincePreviousContextClosedMs": 1043
+        },
+        {
+          "context": 6,
+          "sameOriginRequests": 426,
+          "firstRequestAt": 1794898830887,
+          "lastRequestAt": 1794898831980,
+          "gapSincePreviousContextClosedMs": 1043
+        },
+        {
+          "context": 7,
+          "sameOriginRequests": 141,
+          "firstRequestAt": 1794898833095,
+          "lastRequestAt": 1794898833400,
+          "gapSincePreviousContextClosedMs": 1042
+        }
+      ],
+      "passedCases": [
+        "old-known",
+        "old-unknown",
+        "eight-days-known",
+        "today",
+        "weekend-friday",
+        "seven-days-boundary",
+        "old-known-other-fx-saved"
+      ],
+      "badResponses": 65,
+      "badStatuses": {
+        "429": 65
+      },
+      "firstBadResponse": {
+        "at": 1794898833383,
+        "event": "badResponse",
+        "context": 7,
+        "url": "https://foliolab.unperfekt.at/src/defi.js",
+        "status": 429,
+        "headers": {
+          "retry-after": "0",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "x-cache": "MISS",
+          "content-length": "1511",
+          "date": "Tue, 17 Nov 2026 07:00:33 GMT",
+          "content-type": "text/html; charset=utf-8",
+          "x-served-by": "cache-iad-khef600095-IAD",
+          "server": "Varnish",
+          "x-cache-hits": "0"
+        }
+      }
+    },
+    "comparison": {
+      "baselineDurationMs": 38713,
+      "pacedFreshDurationMs": 46784,
+      "observedDurationDifferenceMs": 8071,
+      "nominalAddedGapMs": 7000,
+      "qualification": "FAILED: both variants seven cases PASS, then65module429; candidate is not an effective delivery remedy",
+      "scope": "Different runners/eastUS regions; same image and IAD edge family. Timing difference includes runner/network variation; no causal rate-limit threshold inferred."
+    }
+  },
+  "originals": [
+    {
+      "path": "14274454228-original.zip",
+      "bytes": 10916862,
+      "sha256": "0acde8ac1ac5d357292c138d8d6ca55d196cadd929ee37aa971b6544937a01a7",
+      "members": 107
+    },
+    {
+      "path": "14276395300-original.zip",
+      "bytes": 324684,
+      "sha256": "0546c4856e6f9e82ba1c9981287233a8110ed3b11f8ccc78079e7cc4f73be7f6",
+      "members": 10
+    },
+    {
+      "path": "14306234283-original.zip",
+      "bytes": 47434,
+      "sha256": "4a4682da9574780efcd2398e7f2baf6f7b6bbc3e30c57d82ad49488f04255276",
+      "members": 4
+    },
+    {
+      "path": "14306345290-normal-user-original.zip",
+      "bytes": 104582,
+      "sha256": "3638c64281e67a01e844c550368fe87403052b5a41b3b5f502c3ad835719f544",
+      "members": 1
+    },
+    {
+      "path": "14306422273-normal-complete-original.zip",
+      "bytes": 594906,
+      "sha256": "57f14b0af94a1c2772b9348a3f81e15be1bebf9e613cebb85068d0b311a2429f",
+      "members": 2
+    },
+    {
+      "path": "14306431202-original.zip",
+      "bytes": 549691,
+      "sha256": "96bf8885c4256ff6daf3d7b076f16d5ceb0a2ee4ca6e15532ec0a87c4c3b07dc",
+      "members": 2
+    },
+    {
+      "path": "14306816448-original.zip",
+      "bytes": 49906,
+      "sha256": "7356b1c80177529134154ad54c8d32cb5bf2b91fd8a5de7aa48260a1acd76952",
+      "members": 7
+    }
+  ],
+  "endStatus": "DELIVERY_CAUSE_REQUIRES_PROVIDER_TRACE",
+  "main": "494ed8f0f6b627d8be972a5ceb886005e5064b31",
+  "productChanged": false,
+  "effectiveCandidate": false
+}
