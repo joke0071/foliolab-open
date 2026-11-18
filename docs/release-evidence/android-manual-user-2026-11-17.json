@@ -168,14 +168,29 @@
   "backupPasswordEncryptedFieldScope": "false refers to the original earlier 100-EUR cleartext backup only; subsequent password-encrypted test is separately accepted in cases",
   "nextPreparedCase": {
     "id": "android-os-font-size-core-actions",
-    "status": "PAUSED_PENDING_SCOPE_DECISION",
+    "status": "DEFERRED_USER_APPROVED_QUALITY",
     "scope": "largest offered Android OS font size; overview/positions/editor legibility and reachable navigation/save/cancel; cancel preserves Offline-Test/100EUR; restore prior font setting; no inferred measured200percent"
   },
   "manualTestPlan": {
-    "status": "PAUSED_PENDING_SCOPE_DECISION",
+    "status": "PARTIAL_MANUAL_USER_CONFIRMED",
     "recordedDate": "2026-11-18",
     "preparedCombinedCase": "isolated Android encrypted 10k fresh restore, booking-list interaction, reopen and retained EUR 1000",
     "priorManualAcceptancesRetained": true,
-    "planDocument": "docs/FOLIOLAB_1_0_REMAINING_2026-11-15.md"
+    "planDocument": "docs/FOLIOLAB_1_0_REMAINING_2026-11-15.md",
+    "lastUserStatement": {
+      "target": "Chrome in existing Android user, FolioLab data cleared by user before restore",
+      "retainedEUR": "1000",
+      "reopenWorks": true,
+      "listInteraction": "awaiting explicit confirmation"
+    },
+    "file": {
+      "bytes": 12361784,
+      "sha256": "7f128dea63a18cbc33e902ec0c6544adfc35c390f816b1b7be2632297b958bbb",
+      "bookings": 10000,
+      "journals": 10000,
+      "cashFlows": 10000,
+      "exactEUR": "1000",
+      "locallyDecryptedAndVerified": true
+    }
   }
 }

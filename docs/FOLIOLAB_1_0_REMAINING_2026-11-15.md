@@ -1,3 +1,16 @@
+# FolioLab 1.0 · aktueller Abschlussstand · 18.11.2026
+
+Die freigegebene Umfangszuordnung und die aktuellen Nachweise gehen der historischen Herkunftsanalyse weiter unten vor.
+
+| Kernnachweis | Stand |
+| --- | --- |
+| Fünf Anbieter und unabhängige Sollwerte | Abgegrenzte [Originalkernfälle](FOLIOLAB_1_0_ORIGINAL_CORE_2026-11-18.md) vollständig zugeordnet. Die kombinierte Fachmatrix bleibt erhalten. |
+| Android großer verschlüsselter FreshRestore | Datei 10.000 Buchungen, 10.000 Journal- und Cashflowbezüge, 1.000 EUR unabhängig entschlüsselt/validiert. Chrome mit zuvor geleerten FolioLab-Daten, 1.000 EUR nach Wiederöffnung manuell bestätigt. Große Liste noch nicht ausdrücklich bestätigt. |
+| Regulärer Liveabschluss | [PR #355](https://github.com/joke0071/foliolab-open/pull/355) mit lokal geprüfter Abrufreduktion. Integrations-/Main-/Liveabschluss erforderlich. PR #354 Versuch 1 und 2 bleiben fehlgeschlagen dokumentiert. |
+| Nachgelagerte Qualität | Höchste native Schrift, zusätzliche Fokus-/Netzwechselvarianten, Alltagsbeobachtung, Ressourcen-/Gerätemessungen, zusätzliche Android-Störfall-/Updatevarianten und private Gegenproben außerhalb des Kernumfangs sind freigegeben nachgelagert. Ein tatsächlicher Daten-, Rechen-, Speicher- oder Kernbedienungsfehler bleibt abschlussrelevant. |
+
+## Historische Herkunftsanalyse und Testplan vor Freigabe
+
 # FolioLab 1.0 · Herkunft, Risiken und Abschlussstand · 18.11.2026
 
 **Empfehlung:** SW321 im bereits abgenommenen Produktstand weiter nutzen. Die 1.0-Gesamtabnahme bleibt offen. Der reguläre Main-Livelauf von PR #354 ist fehlgeschlagen. Die reale Android-Abnahme deckt den Alltag bereits in wesentlichen Teilen ab. Der Abschluss braucht noch eine kompakte Prüfung des Wiederherstellens und der Bedienbarkeit mit einem großen Bestand sowie eine eindeutige Zuordnung der Finanzbelege zum zugesagten Kern. Die vorgeschlagene Zuordnung von ergänzenden Untersuchungen wartet auf eine gemeinsame Umfangsfreigabe.
