@@ -1,0 +1,264 @@
+{
+  "main": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+  "run": 44394422744,
+  "liveJob": 135134360977,
+  "jobConclusion": "success",
+  "jobs": [
+    {
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "id": 135120372923,
+      "result": "success"
+    },
+    {
+      "name": "cross-engine (3)",
+      "id": 135120568270,
+      "result": "success"
+    },
+    {
+      "name": "test",
+      "id": 135120568353,
+      "result": "success"
+    },
+    {
+      "name": "cross-engine (2)",
+      "id": 135120568490,
+      "result": "success"
+    },
+    {
+      "name": "cross-engine (1)",
+      "id": 135120568502,
+      "result": "success"
+    },
+    {
+      "name": "FAST only / UI contract canary — no integration approval",
+      "id": 135120571970,
+      "result": "skipped"
+    },
+    {
+      "name": "deploy",
+      "id": 135134165815,
+      "result": "success"
+    },
+    {
+      "name": "live-acceptance",
+      "id": 135134360977,
+      "result": "success"
+    }
+  ],
+  "artifact": {
+    "id": 14472779151,
+    "name": "production-live-acceptance-4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+    "bytes": 152441822,
+    "sha256": "1d6ea7f28ab09b1e6d246199daa74a94eb6056e9c86bc3b363f9b62eddd65cf2",
+    "entries": 1946,
+    "zipCRC": "PASS"
+  },
+  "core": {
+    "result": "PASS",
+    "checks": 6,
+    "scans": 18,
+    "assetHashes": 155,
+    "failure": null
+  },
+  "kraken": {
+    "transport": [
+      {
+        "engine": "chromium",
+        "scenario": "link-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 1053,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "solana-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 909,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "ethereum-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 909,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "bitcoin-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 909,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "distinct-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 909,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "cross-reference",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 909,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "chromium",
+        "scenario": "same-asset-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 0,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "link-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 1060,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "link-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 1060,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "solana-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "solana-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "ethereum-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "ethereum-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "bitcoin-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "bitcoin-bridge",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "distinct-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "distinct-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "cross-reference",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "cross-reference",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 915,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "firefox",
+        "scenario": "same-asset-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 0,
+        "worker": "direct-origin"
+      },
+      {
+        "engine": "webkit",
+        "scenario": "same-asset-fee",
+        "sha": "4317cf8bd2460a144731c13ba651a8fd3db6bdf9",
+        "verifiedFiles": 155,
+        "reused": 0,
+        "worker": "direct-origin"
+      }
+    ],
+    "caseChecksPassed": 21,
+    "controlledEntries": {
+      "chromium": 7,
+      "firefox": 7,
+      "webkit": 7
+    }
+  },
+  "firstOrigin429or503": [],
+  "pages": {
+    "artifactId": 14470148008,
+    "bytes": 580127,
+    "sha256": "81e1f2ef62a4c48b6d2fd1874458af96903d87c74801f1ce6fa7a1f9279a3072",
+    "files": 154,
+    "exactMatchUnchangedProductTree": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+    "zipCRC": "PASS"
+  },
+  "archivedOriginal": {
+    "name": "FolioLab-PR355-Live-Original.zip",
+    "libraryVersion": 0,
+    "pinnedReadbackSameSizeAndSHA256": true
+  },
+  "sameOrigin429or503ObservedInArchivedBrowserWorkerDiagnostics": 0,
+  "integration": {
+    "run": 44390983304,
+    "walletRun": 44390983357,
+    "approvedHead": "e19c48440276b11d9aac1c5e87174378b8e2d8e4",
+    "testedTree": "dcf29b9ad118751bebfa7cd987b37465da37776d"
+  },
+  "product": "folioLab SW321",
+  "milestone": "Foliolab 1.0 accepted in approved scope"
+}

@@ -1,15 +1,15 @@
-# FolioLab 1.0 · aktueller Abschlussstand · 18.11.2026
+# FolioLab 1.0 · abgeschlossen · 18.11.2026
 
-Die freigegebene Umfangszuordnung und die aktuellen Nachweise gehen der historischen Herkunftsanalyse weiter unten vor.
+**1.0 ist im freigegebenen Umfang abgeschlossen.** [Abschlussbericht und Quittungen](FOLIOLAB_1_0_RELEASE_ACCEPTANCE_2026-11-18.md). Die historische Herkunftsanalyse weiter unten beschreibt den Stand vor der Freigabe und Abnahme.
 
 | Kernnachweis | Stand |
 | --- | --- |
 | Fünf Anbieter und unabhängige Sollwerte | Abgegrenzte [Originalkernfälle](FOLIOLAB_1_0_ORIGINAL_CORE_2026-11-18.md) vollständig zugeordnet. Die kombinierte Fachmatrix bleibt erhalten. |
 | Android großer verschlüsselter FreshRestore | Datei 10.000 Buchungen, 10.000 Journal- und Cashflowbezüge, 1.000 EUR unabhängig entschlüsselt/validiert. Chrome mit zuvor geleerten FolioLab-Daten, 1.000 EUR nach Wiederöffnung manuell bestätigt. Scrollen/Suche oder Filter/Zeilenaktion und Rückkehr im selben Durchgang ausdrücklich bestätigt. Gebündelte Android-Abnahme abgeschlossen. |
-| Regulärer Liveabschluss | [PR #355](https://github.com/joke0071/foliolab-open/pull/355) nach bestandener vollständiger Integration gemergt. Regulärer [Main-/Deploy-/Livelauf](https://github.com/joke0071/foliolab-open/actions/runs/44394422744) läuft. PR #354 Versuch 1 und 2 bleiben fehlgeschlagen dokumentiert. |
+| Regulärer Liveabschluss | [PR #355](https://github.com/joke0071/foliolab-open/pull/355) nach bestandener vollständiger Integration gemergt. Regulärer [Main-/Deploy-/Livelauf](https://github.com/joke0071/foliolab-open/actions/runs/44394422744) beim ersten Versuch bestanden. PR #354 Versuch 1 und 2 bleiben fehlgeschlagen dokumentiert. |
 | Nachgelagerte Qualität | Höchste native Schrift, zusätzliche Fokus-/Netzwechselvarianten, Alltagsbeobachtung, Ressourcen-/Gerätemessungen, zusätzliche Android-Störfall-/Updatevarianten und private Gegenproben außerhalb des Kernumfangs sind freigegeben nachgelagert. Ein tatsächlicher Daten-, Rechen-, Speicher- oder Kernbedienungsfehler bleibt abschlussrelevant. |
 
-## Historische Herkunftsanalyse und Testplan vor Freigabe
+## Historische Herkunftsanalyse und Testplan vor Freigabe und Abschluss
 
 # FolioLab 1.0 · Herkunft, Risiken und Abschlussstand · 18.11.2026
 
