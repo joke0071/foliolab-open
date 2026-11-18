@@ -1,3 +1,11 @@
+## HND01 · 18.11.2026 · Umfangsprüfung und Android-Einzeltests pausiert
+
+[Befund, priorisierte Restliste und gemeinsame Umfangsfreigabe](FOLIOLAB_1_0_REMAINING_2026-11-15.md). Die aktuelle Liste führt Nutzerbeschluss K1–K6 und spätere Prüfmethode getrennt. Alle bisherigen manuellen Android-Ergebnisse bleiben erledigt. Der letzte vorbereitete Einzeltest zur höchsten OS-Schriftstufe ist pausiert und wartet auf die einmalige Umfangsentscheidung. Kein aktueller Auftrag zum Abarbeiten historischer Einzelanleitungen.
+
+Empfohlen wird ein einziger realer Android-Durchgang im frischen isolierten Testprofil mit vorhandenem verschlüsseltem 10k-Original, Soll 1.000 EUR, großer Buchungsliste und Wertkontrolle nach Wiederöffnung. Native Störfall-/Update-/Record- sowie bisherige Text-/Browsergates bleiben als vorhandene technische Belege zugeordnet. Vorgeschlagene offene Qualitätsprüfungen und zusätzliche private Original-Gegenproben außerhalb des zugesagten Kerns sind noch nicht umpriorisiert. Abgegrenzter Originalkern je Anbieter und reguläres vollständiges Livegate bleiben Pflicht.
+
+Main e9130ad9 und PR #354-Dateiumfang über GitHub geprüft. Originalversuch 503, Versuch 2 Precache-429 mit folgendem Controller-Timeout. Source-Abgleich bestätigt, dass die Worker-Installation auf vollständiges cache.addAll wartet. Keine qualifizierte Änderung und kein zusätzlicher Liveversuch. 1.0-Gesamtabnahme offen. Bestehende SW321-Produktabnahme wird weiterverwendet.
+
 ## Android-Nachtrag · 18.11.2026 · Editor nach Hintergrund/Sperre erhalten
 
 **DONE_MANUAL_USER_CONFIRMED:** Jochen berichtet ausdrücklich, dass Editor und ungespeicherter Name **Hintergrund-Test** nach Appwechsel und etwa30Sekunden Bildschirmsperre erhalten waren. Nach Abbrechen standen weiterhin **Offline-Test und100EUR** im Portfolio. Damit ist dieser begrenzte A02/A06-Rückkehr-/Entwurfs-/Abbruchfall abgeschlossen. Quelle nur Nutzerbericht; keine Agentenbeobachtung, Funktionsbilder oder technischen Logs. Nicht auf andere Netzwechsel, erneute Imports, längere OS-Verdrängung oder gesamten A06-Vertrag erweitern. Frühere PREPARED-Angaben zu genau dieser Sequenz unten sind historisch ersetzt. Kein Produktfehler berichtet, kein Code-/SW-/CI-/Live-Delta.

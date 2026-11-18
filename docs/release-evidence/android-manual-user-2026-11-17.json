@@ -168,7 +168,14 @@
   "backupPasswordEncryptedFieldScope": "false refers to the original earlier 100-EUR cleartext backup only; subsequent password-encrypted test is separately accepted in cases",
   "nextPreparedCase": {
     "id": "android-os-font-size-core-actions",
-    "status": "PREPARED_AWAITING_USER_OBSERVATION",
+    "status": "PAUSED_PENDING_SCOPE_DECISION",
     "scope": "largest offered Android OS font size; overview/positions/editor legibility and reachable navigation/save/cancel; cancel preserves Offline-Test/100EUR; restore prior font setting; no inferred measured200percent"
+  },
+  "manualTestPlan": {
+    "status": "PAUSED_PENDING_SCOPE_DECISION",
+    "recordedDate": "2026-11-18",
+    "preparedCombinedCase": "isolated Android encrypted 10k fresh restore, booking-list interaction, reopen and retained EUR 1000",
+    "priorManualAcceptancesRetained": true,
+    "planDocument": "docs/FOLIOLAB_1_0_REMAINING_2026-11-15.md"
   }
 }

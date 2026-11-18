@@ -1,3 +1,5 @@
+> **Aktualisierung vom 18.11.2026.** Die manuelle Einzeltestfolge ist pausiert. Herkunft und Status der Kriterien, die gebündelte Android-Probe und die noch ausstehende Umfangsentscheidung stehen in der [aktuellen Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md). Vorbereitete Einzeltests unten sind historische Prüfentwürfe. Bereits bestätigte Ergebnisse gelten weiter.
+
 ## Android-Nachtrag · 18.11.2026 · Editor nach Hintergrund/Sperre erhalten
 
 **DONE_MANUAL_USER_CONFIRMED:** Jochen berichtet ausdrücklich, dass Editor und ungespeicherter Name **Hintergrund-Test** nach Appwechsel und etwa30Sekunden Bildschirmsperre erhalten waren. Nach Abbrechen standen weiterhin **Offline-Test und100EUR** im Portfolio. Damit ist dieser begrenzte A02/A06-Rückkehr-/Entwurfs-/Abbruchfall abgeschlossen. Quelle nur Nutzerbericht; keine Agentenbeobachtung, Funktionsbilder oder technischen Logs. Nicht auf andere Netzwechsel, erneute Imports, längere OS-Verdrängung oder gesamten A06-Vertrag erweitern. Frühere PREPARED-Angaben zu genau dieser Sequenz unten sind historisch ersetzt. Kein Produktfehler berichtet, kein Code-/SW-/CI-/Live-Delta.

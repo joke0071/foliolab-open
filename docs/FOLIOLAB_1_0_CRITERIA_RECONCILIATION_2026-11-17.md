@@ -1,3 +1,5 @@
+> **Aktualisierung vom 18.11.2026.** Die manuelle Einzeltestfolge ist pausiert. Herkunft und Status der Kriterien, die gebündelte Android-Probe und die noch ausstehende Umfangsentscheidung stehen in der [aktuellen Restliste](FOLIOLAB_1_0_REMAINING_2026-11-15.md). Vorbereitete Einzeltests unten sind historische Prüfentwürfe. Bereits bestätigte Ergebnisse gelten weiter.
+
 # 1.0: verbindlicher Umfang und verbliebene Nachweise · 17.11.2026
 
 Ausgang: Checkpoint f9ef0f83, anschließend e61352a9 (einmaliger Retry ausdrücklich freigegeben). Produkt-Main e9130ad90874434a38bb329a7dafaa22e2163e1d / SW321 unverändert. Dieser Bericht ersetzt widersprüchliche ältere Android-Zugangsrückfragen und die Gleichsetzung „nicht frisch installiert = zusätzliche Neuinstallation Pflicht“.
