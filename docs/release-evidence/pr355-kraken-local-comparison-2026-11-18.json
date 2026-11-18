@@ -1,0 +1,109 @@
+{
+  "comparedProductBase": "e9130ad90874434a38bb329a7dafaa22e2163e1d",
+  "candidate": "e19c48440276b11d9aac1c5e87174378b8e2d8e4",
+  "environment": "loopback HTTP, unchanged SW321 product files; no claim about CDN timing",
+  "chromiumBaselineAndCandidatePlaywright": "1.56.1",
+  "crossPlaywright": "1.64.1",
+  "cases": [
+    "link-bridge",
+    "solana-bridge",
+    "ethereum-bridge",
+    "bitcoin-bridge",
+    "distinct-fee",
+    "cross-reference",
+    "same-asset-fee"
+  ],
+  "local": {
+    "baseline": {
+      "requests": 8926,
+      "uniqueRequestPaths": 157,
+      "sevenCases": true,
+      "sevenControlledFixtures": true,
+      "directServiceWorkerScriptRequests": 8,
+      "requestsBeforeSecondWorkerScript": 1499,
+      "peakWallClockBuckets": {
+        "1": 297,
+        "5": 842,
+        "10": 1491
+      },
+      "firstToLastServerRequestSeconds": 92,
+      "replayedRequests": 0
+    },
+    "candidate": {
+      "requests": 3328,
+      "uniqueRequestPaths": 157,
+      "sevenCases": true,
+      "sevenControlledFixtures": true,
+      "directServiceWorkerScriptRequests": 8,
+      "requestsBeforeSecondWorkerScript": 446,
+      "peakWallClockBuckets": {
+        "1": 297,
+        "5": 530,
+        "10": 927
+      },
+      "firstToLastServerRequestSeconds": 88,
+      "replayedRequests": 5598
+    },
+    "firefox": {
+      "requests": 3356,
+      "uniqueRequestPaths": 157,
+      "sevenCases": true,
+      "sevenControlledFixtures": true,
+      "directServiceWorkerScriptRequests": 23,
+      "requestsBeforeSecondWorkerScript": 448,
+      "peakWallClockBuckets": {
+        "1": 297,
+        "5": 429,
+        "10": 714
+      },
+      "firstToLastServerRequestSeconds": 156,
+      "replayedRequests": 5635
+    },
+    "webkit": {
+      "requests": 3346,
+      "uniqueRequestPaths": 157,
+      "sevenCases": true,
+      "sevenControlledFixtures": true,
+      "directServiceWorkerScriptRequests": 12,
+      "requestsBeforeSecondWorkerScript": 448,
+      "peakWallClockBuckets": {
+        "1": 246,
+        "5": 591,
+        "10": 1014
+      },
+      "firstToLastServerRequestSeconds": 150,
+      "replayedRequests": 5635
+    }
+  },
+  "unit": {
+    "pass": 1511,
+    "fail": 0,
+    "skipped": 0
+  },
+  "originalLiveAttempt2": {
+    "artifact": 14350907511,
+    "sha256": "d3146f13d1831e012d09585a96e1eb5314ddc03f8db0141e978b5399498f5d28",
+    "zipCrc": "PASS",
+    "auditAssetsVerified": 155,
+    "sourceContextSameOriginRequestsBeforeWorker": 1064,
+    "http429": "/src/coin-identity.js",
+    "directWorkerError": "cache.addAll request failed"
+  },
+  "retainedDirect": [
+    "document navigation",
+    "every offline browser context in all three engines",
+    "all worker registration, bytes and precache",
+    "all fresh encrypted restore contexts",
+    "same-asset-fee full case per engine"
+  ],
+  "limitations": [
+    "1-second observed peak unchanged",
+    "localhost figures cannot establish the CDN rule or predict live duration",
+    "local cross-engine host setup is not real-device or production acceptance"
+  ],
+  "durableArchive": {
+    "name": "FolioLab-PR355-Lokale-Qualifikation.tar.gz",
+    "sha256": "08cd3ae7db8f7a8d2785d72f7f2b1c4fa581f453af0b20c4c0fd58f47ce1adab",
+    "items": 13
+  }
+}
