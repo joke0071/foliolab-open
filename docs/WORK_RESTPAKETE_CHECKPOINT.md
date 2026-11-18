@@ -1,10 +1,14 @@
+## Android-Abschluss · 18.11.2026
+
+**DONE_MANUAL_USER_CONFIRMED.** Jochen nutzte Chrome im bestehenden Android-Nutzer und hatte ausschließlich die FolioLab-Daten vorher geleert. Das ergibt einen frischen FolioLab-Origin-Datenkontext im bestehenden Chrome. Der ursprüngliche Kontext wurde dadurch nicht als separates Profil parallel gehalten. Der Nutzer bestätigte den Restore der bereitgestellten verschlüsselten Originaldatei, 1.000 EUR nach Wiederöffnung sowie auf gezielte Rückfrage Scrollen, Suche oder Filter und Buchungsaktion mit Rückkehr. Der gebündelte reale Android-Durchgang ist abgeschlossen. Die Datei wurde separat entschlüsselt und mit 10.000 Buchungen, 10.000 Journalen, 10.000 Geldflussbezügen und exakt 1.000 EUR geprüft. Aus dem Nutzerbericht wird keine direkte Sichtprüfung jeder Buchung abgeleitet. Die früheren Android-Befunde bleiben anerkannt. Erweiterte Hardwarevarianten sind freigegeben nachgelagert.
+
 ## HND01 · 18.11.2026 · Umfang freigegeben, Fünfanbieter-Kern zugeordnet
 
 Jochen hat die Umfangsentscheidung freigegeben. Maximale native Schriftgröße, zusätzliche Fokus-/Netzwechselvarianten, ergänzende Hardware-/Ressourcenmessungen und private Gegenproben außerhalb des Kernumfangs sind Folgeaufgaben. Vorhandene automatisierte Fehler-/Rollback-/CAS-/Offline-/Updatebelege sind für ihre definierten Aussagen anerkannt. Datenintegrität und erreichbare Kernaktionen bleiben Pflicht.
 
 [Originalkernfälle](FOLIOLAB_1_0_ORIGINAL_CORE_2026-11-18.md) für alle fünf Anbieter zugeordnet. Reale Bitpanda-Einzelgutschrift gegen unabhängigen vorhandenen PDF-Endbestand, nativen Commit, Restore/Wiederimport und Ablehnung eines falschen Solls geprüft. Bittr-UH02- und Ledger-Live-SOL-Originalbelege weiterverwendet. Kein zusätzlicher Privatbeleg für diese Fälle.
 
-Android 10.000 / 1.000 EUR: Originaldatei bereitgestellt und unabhängig entschlüsselt/geprüft. Nutzer meldet Chrome, keinen zweiten Nutzer, FolioLab-Daten vor Restore geleert und 1.000 EUR nach Wiederöffnung. Große Listenbedienung separat im bereits laufenden Durchgang erfragt. Keine neue Löschung erforderlich.
+Android 10.000 / 1.000 EUR: Originaldatei bereitgestellt und unabhängig entschlüsselt/geprüft. Nutzer meldet Chrome, keinen zweiten Nutzer, FolioLab-Daten vor Restore geleert und 1.000 EUR nach Wiederöffnung. Große Listenbedienung im selben Durchgang anschließend manuell bestätigt. Kein weiterer Gerätefall für 1.0.
 
 [PR #355](https://github.com/joke0071/foliolab-open/pull/355), Head e19c48440276b11d9aac1c5e87174378b8e2d8e4, qualifiziert eng begrenzte Wiederverwendung exakt geprüfter statischer Bytes in sechs Kraken-Testkontexten ohne Worker pro Engine. Lokaler Chromium-Vergleich 8.926 → 3.328 Abrufe. Vor zweitem Worker-Script 1.499 → 446. Sekundenspitze jeweils 297. Alle sieben Fachfälle und sieben Controller-/Offline-Einstiege in beiden Vergleichsläufen bestanden. Bestehende direkte Dokumente, verschlüsseltes Ziel, alle Worker und ein kompletter direkter Fall pro Engine erhalten. 1.511 lokale Units grün. Reguläre PR-/Main-/Liveabschlusskette bleibt erforderlich. Die 503-/429-Originalversuche von PR #354 bleiben getrennt erhalten.
 
