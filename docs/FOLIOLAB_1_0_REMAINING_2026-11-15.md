@@ -6,7 +6,7 @@ Die freigegebene Umfangszuordnung und die aktuellen Nachweise gehen der historis
 | --- | --- |
 | Fünf Anbieter und unabhängige Sollwerte | Abgegrenzte [Originalkernfälle](FOLIOLAB_1_0_ORIGINAL_CORE_2026-11-18.md) vollständig zugeordnet. Die kombinierte Fachmatrix bleibt erhalten. |
 | Android großer verschlüsselter FreshRestore | Datei 10.000 Buchungen, 10.000 Journal- und Cashflowbezüge, 1.000 EUR unabhängig entschlüsselt/validiert. Chrome mit zuvor geleerten FolioLab-Daten, 1.000 EUR nach Wiederöffnung manuell bestätigt. Scrollen/Suche oder Filter/Zeilenaktion und Rückkehr im selben Durchgang ausdrücklich bestätigt. Gebündelte Android-Abnahme abgeschlossen. |
-| Regulärer Liveabschluss | [PR #355](https://github.com/joke0071/foliolab-open/pull/355) mit lokal geprüfter Abrufreduktion. Integrations-/Main-/Liveabschluss erforderlich. PR #354 Versuch 1 und 2 bleiben fehlgeschlagen dokumentiert. |
+| Regulärer Liveabschluss | [PR #355](https://github.com/joke0071/foliolab-open/pull/355) nach bestandener vollständiger Integration gemergt. Regulärer [Main-/Deploy-/Livelauf](https://github.com/joke0071/foliolab-open/actions/runs/44394422744) läuft. PR #354 Versuch 1 und 2 bleiben fehlgeschlagen dokumentiert. |
 | Nachgelagerte Qualität | Höchste native Schrift, zusätzliche Fokus-/Netzwechselvarianten, Alltagsbeobachtung, Ressourcen-/Gerätemessungen, zusätzliche Android-Störfall-/Updatevarianten und private Gegenproben außerhalb des Kernumfangs sind freigegeben nachgelagert. Ein tatsächlicher Daten-, Rechen-, Speicher- oder Kernbedienungsfehler bleibt abschlussrelevant. |
 
 ## Historische Herkunftsanalyse und Testplan vor Freigabe
