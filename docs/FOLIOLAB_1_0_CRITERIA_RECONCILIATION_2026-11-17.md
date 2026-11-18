@@ -19,6 +19,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 | Offline lesen/navigieren nach App-Übersicht-Schließen und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED, Flugmodus und WLANaus. Kein vollständiges Prozessende/Offline-Write hineininterpretiert. |
 | Offline-Schreiben und Prozess-Kaltstart | DONE_MANUAL_USER_CONFIRMED: offline Name gespeichert; Chrome und FolioLab jeweils Beenden erzwingen; weiterhin offline per Symbol gestartet; Offline-Test/100EUR/Navigation erhalten. Kein zusätzlicher In-App-Reload behauptet. |
 | Unverschlüsselter Datei-Export/Restore und Wiederöffnung | DONE_MANUAL_USER_CONFIRMED: 100→200→Datei-Restore100→Wiederöffnung100EUR. |
+| A02/A06 Hintergrund-/Sperr-Rückkehr, Entwurf/Abbruch | DONE_MANUAL_USER_CONFIRMED: Editor und Hintergrund-Test nach Appwechsel/ca.30s Sperre erhalten; Abbrechen bewahrt Offline-Test/100EUR. Kein weiterer Netz-/Import-/Langzeitumfang behauptet. |
 | Android verschlüsselter Datei-Restore | DONE_MANUAL_USER_CONFIRMED: vorgegebenen vollständigen Passwort-Export/Dateipicker/100→200→Restore100-Ablauf samt Force-Stop beider Apps und Wiederöffnung100EUR bestätigt. Keine Funktionsbilder/Logs. |
 | Windows K4 | Elf Fälle/22 Prozessbeendigungen, Chrome/Edge, Original10k, verschlüsselte UI-Exporte/FreshRestore sowie Präzisions-/Legacy-/UNKNOWN-Fälle DONE im dokumentierten Umfang. |
 | Kraken Spotanker | Alle13 Spotwährungen beidseitig abgeglichen, DONE; kein erneuter Nachweis erforderlich. |
@@ -31,7 +32,7 @@ Verbindlich sind die Nutzerentscheidung K1–K6 in [Issue124, Kommentar672611675
 | A05 verbleibende Reload-/technische Teilbehauptungen | Expliziter Offline-Dokumentreload und technische Controller-/Cache-/Recordidentität. | Offline-Schreiben und Start nach Force-Stop beider Apps sind nun manuell DONE. Zusätzlicher In-App-Reload/Internas nicht berichtet; diese Grenze getrennt führen und den bestätigten Kaltstart nicht wiederholen. |
 
 | K4/A09 FreshRestore/Originaldatenumfang | Isoliertes frisches Ziel, vorgeschriebene Original10k sowie Finanz-/Herkunfts-/Journal-/UNKNOWN- und tatsächlich eingeschlossene Einstellungssemantik erhalten. | Kleiner Restore auf gleichem Bestand belegt das nicht. Vorhandene originale10k-Datei und tatsächlicher verschlüsselter Export sind vorbereitet; geschütztes separates Zielprofil bzw. zweiter isolierter Endpunkt plus Record-/Sollvergleich erforderlich. Kein Löschen des bestehenden Nutzerprofils. Windows-Gegenstücke erledigt. |
-| A02/A03/A06 | Warmrückkehr und Navigation inklusive Kerneditor/Long-Press/Zurück/Fokus/Safe-Area; Sperren/Hintergrund/Netzwechsel ohne Editorverlust oder doppelten Import. | Grundnavigation und normale Wiederöffnung erledigt; die benannten Bedingungen nicht berichtet. Nach kleinstem Test eine gezielte manuelle Hintergrund-/Editorsequenz mit synthetischem Bestand. |
+| A02/A03/A06 verbleibende Bedingungen | Vollständige Navigation inklusive Long-Press/Zurück/Fokus/Safe-Area und weitere Netz-/Importbedingungen. | Grundnavigation, normale Wiederöffnung sowie Editorerhalt nach Appwechsel/ca.30s Sperre und sicherer Abbruch manuell DONE; weitere Bedingungen nicht berichtet. Keine Wiederholung des erledigten Hintergrundfalls. |
 | A04/A10 | Repräsentative Großlisten/Scrollen/Suche/Mehrfachauswahl und Ressourcen-/Latenzverhalten auf echtem Android. | Keine Android-Großdaten-/Messserie. Vorhandene Fixtures verwenden: Ziel5000Positionen, getrennte10000Buchungs-/Stichtagsnachweise; Messzugriff/Protokoll auf physischem Gerät, keine Emulatormessung als Ersatz. |
 | A07 | Sicherer kontrollierter Versionswechsel mit offenem Editor/zweitem Kontext, korrektem Worker/Assetstand, ohne Datenreset. | Keine reale Android-Alt-/Neuversionfolge. Erst nächste qualifizierte tatsächliche Versionsfolge vorbereiten; kein nutzloses Produktdeployment zum Erzeugen eines Prüfanlasses. |
 | A08 | Quota-/Postput-Abbruch ohne Mutation und mit exakter Revision auf Android. | Automatisierte Gegenstücke vorhanden, kein isolierter physischer Android-Fehleraufbau. Benötigt isolierten synthetischen Gerätekontext und Instrumentierung, keine Speicherauslastung auf dem persönlichen Profil. |
@@ -60,9 +61,13 @@ Mit bestehendem100EUR-Testportfolio, automatischen Abruf aus lassen: Mehr → Lo
 
 Nutzer bestätigt den unmittelbar vorgegebenen gesamten Ablauf mit „Ja hat funktioniert“. Damit Android-Verschlüsselungspfad und Werterhalt nach Force-Stop/Wiederöffnung DONE_MANUAL_USER_CONFIRMED; ein frisches Zielprofil, Gerätewechsel und10k-/Recordgleichheit bleiben getrennt. Die bereits vorhandenen Originaldateien werden dafür weiterverwendet; keine neue Fixtureerzeugung.
 
-## Nächster vorbereiteter kleiner Gerätefall: A06 Hintergrund/Sperren
+## A06 Hintergrund/Sperren · DONE_MANUAL_USER_CONFIRMED
 
-Im bestehenden Testpositionseditor den Namen nur als **Hintergrund-Test** eintippen, nicht speichern. Mit Home zu einer anderen App wechseln, Bildschirm rund30Sekunden sperren, entsperren und zu FolioLab zurückkehren, ohne Apps zu beenden erzwingen. Soll: Editor und Entwurf erhalten. Danach abbrechen; gespeicherter Name **Offline-Test** und100EUR unverändert. PREPARED/AWAITING_USER_OBSERVATION. Kein pauschaler Abschluss weiterer Netz-/Importbedingungen und keine unberichtete Beobachtung.
+Im bestehenden Testpositionseditor den Namen nur als **Hintergrund-Test** eintippen, nicht speichern. Mit Home zu einer anderen App wechseln, Bildschirm rund30Sekunden sperren, entsperren und zu FolioLab zurückkehren, ohne Apps zu beenden erzwingen. Soll: Editor und Entwurf erhalten. Danach abbrechen; gespeicherter Name **Offline-Test** und100EUR unverändert. Nutzer berichtet am18.11.2026 ausdrücklich Editor/Entwurf erhalten; nach Abbrechen Offline-Test/100EUR. DONE_MANUAL_USER_CONFIRMED. Kein pauschaler Abschluss weiterer Netz-/Importbedingungen und keine unberichtete Beobachtung.
+
+## Nächster vorbereiteter manueller Teilfall K6: Android-Systemschrift
+
+Android-Einstellungen nach Schriftgröße durchsuchen, bisherige Stufe merken, größte angebotene Schriftstufe wählen. PWA über Symbol öffnen, Übersicht/Positionen und Testpositionseditor prüfen: Texte/Werte lesbar, Navigation/Speichern/Abbrechen erreichbar; vertikales Scrollen erlaubt. Abbrechen bewahrt Offline-Test/100EUR. Anschließend ursprüngliche Schriftstufe wiederherstellen. PREPARED, kein Ergebnis. Keine200%-Messung aus der Reglerstellung ableiten, kein Displayzoom als OS-Schriftnachweis und kein globaler K6-PASS.
 
 ## Vorhandene private Quellen vor neuen Anforderungen ausgewertet
 

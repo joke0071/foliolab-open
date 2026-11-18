@@ -102,6 +102,26 @@
       "technicalLogsAvailable": false,
       "freshTargetProfileTested": false,
       "original10kRecordEqualityTested": false
+    },
+    {
+      "id": "editor-background-lock-return",
+      "scope": "A02/A06 bounded editor/background/screen-lock/cancel observation",
+      "status": "DONE_MANUAL_USER_CONFIRMED",
+      "source": "explicit user report in current conversation",
+      "recordedDate": "2026-11-18",
+      "testTimestamp": null,
+      "observed": {
+        "appSwitch": true,
+        "screenLockDurationApproxSeconds": 30,
+        "editorRetained": true,
+        "unsavedNameRetained": "Hintergrund-Test",
+        "afterCancelName": "Offline-Test",
+        "afterCancelEUR": "100"
+      },
+      "agentObserved": false,
+      "functionalScreenshotsAvailable": false,
+      "technicalLogsAvailable": false,
+      "otherNetworkTransitionsOrImportReplayProven": false
     }
   ],
   "notProven": [
@@ -147,11 +167,8 @@
   "ciRerunStartedScope": "This manual Android evidence record only; separately documented PR354 attempt2 was already completed before this follow-up.",
   "backupPasswordEncryptedFieldScope": "false refers to the original earlier 100-EUR cleartext backup only; subsequent password-encrypted test is separately accepted in cases",
   "nextPreparedCase": {
-    "id": "editor-background-lock-return",
+    "id": "android-os-font-size-core-actions",
     "status": "PREPARED_AWAITING_USER_OBSERVATION",
-    "draftName": "Hintergrund-Test",
-    "expectedPersistedNameAfterCancel": "Offline-Test",
-    "expectedEUR": "100",
-    "scope": "unsaved editor survives Home/other app/screen lock and return; no force-stop; cancel preserves stored position"
+    "scope": "largest offered Android OS font size; overview/positions/editor legibility and reachable navigation/save/cancel; cancel preserves Offline-Test/100EUR; restore prior font setting; no inferred measured200percent"
   }
 }
