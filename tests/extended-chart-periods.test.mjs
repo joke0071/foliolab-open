@@ -70,3 +70,29 @@ test('Uncovered three-year request displays actual CSV extent with gaps and no n
  assert.equal(calls,0);
  assert.equal(JSON.stringify(m),before,'history observations and financial data unchanged');
 });
+test('A stale CSV leaves current native prices available and is retained for offline and Max',async()=>{
+ const {m,p}=detailModel();
+ Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'});
+ m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(500),total:80},{date:ago(499),total:81}]};
+ const before=JSON.stringify(m);
+ const target={isConnected:true,innerHTML:'',querySelector:()=>null};
+ const mount={isConnected:true,dataset:{},querySelector:s=>s==='.position-history-plot'?target:null};
+ let nativeRequests=0;
+ await loadPositionDetail(p,m,mount,{...display,days:30,fetcher:async()=>{
+  nativeRequests++;
+  return Response.json({schemaVersion:1,status:'ok',symbol:'VWCE.XETRA',
+   points:Array.from({length:15},(_,i)=>({date:ago(15-i),close:95+i}))});
+ }});
+ assert.equal(nativeRequests,1);
+ assert.match(target.innerHTML,/EODHD · eigener Worker/);
+ const offline=async()=>{throw Error('Offline');};
+ await loadPositionDetail(p,m,mount,{...display,days:'max',reuse:true,fetcher:offline});
+ assert.match(target.innerHTML,/CSV-Daten vom Nutzer übernommen/);
+ await loadPositionDetail(p,m,mount,{...display,days:7,reuse:true,fetcher:offline});
+ assert.match(target.innerHTML,/EODHD · eigener Worker/);
+ m.settings.eodhdWorkerEndpoint='https://offline.workers.dev';
+ await loadPositionDetail(p,m,mount,{...display,days:30,fetcher:offline});
+ assert.match(target.innerHTML,/CSV-Daten vom Nutzer übernommen/);
+ m.settings.eodhdWorkerEndpoint='https://own.workers.dev';
+ assert.equal(JSON.stringify(m),before,'chart source selection preserves the complete portfolio record');
+});

@@ -107,7 +107,12 @@ export async function loadPositionDetail(position,model,mount,{days=30,reuse=fal
   const crypto=position.kind==='crypto';
   const now=Date.now();
   const periods=observedPositionPeriods(points,history.periods,{crypto,now});
-  const selected=periods.includes(days)?days:periods.find(period=>typeof period==='number'&&period>=days)??periods.at(-1);
+  const fallbackPeriod=periods.find(period=>typeof period==='number'&&period>=days)??periods.at(-1);
+  if(history.savedMaximum)periods.push('max');
+  const selected=periods.includes(days)?days:fallbackPeriod;
+  if(selected==='max'&&history.savedMaximum){
+   ({points,kind,currency,source,fxPoints}=history.savedMaximum);
+  }
   if(selected!==undefined)points=filterHistoryByDays(points,selected,now);
   const windowStart=points[0].date,windowEnd=points.at(-1).date;
   const shortCoverage=selected===undefined;
@@ -170,13 +175,23 @@ export async function loadPositionDetail(position,model,mount,{days=30,reuse=fal
   positionCharts.delete(mount);
   const periods=availablePositionPeriods(position,model);
   const imported=importedHistoryForPeriod(model,position,'max');
-  if(imported?.points.length>=2){render({...imported,periods});return;}
-  if(marketHistoryCapability(position,model.settings)){
-   const widest=periods.includes(1826)?1826:365;
-   const history=await fetchPositionMarketHistory(position,model.settings,widest,fetcher);
-   render({...history,periods:periods.filter(period=>period!=='max')});
-   return;
+  const local=imported?.points.length>=2?{...imported,periods}:null;
+  const requestedWindow=days==='max'?30:days;
+  if(marketHistoryCapability(position,model.settings)&&
+     (!local||filterHistoryByDays(local.points,requestedWindow).length<2)){
+   const nativePeriods=availablePositionPeriods(position,{settings:model.settings});
+   const widest=nativePeriods.includes(1826)?1826:365;
+   try{
+    const history=await fetchPositionMarketHistory(position,model.settings,widest,fetcher);
+    if(!local||filterHistoryByDays(history.points,requestedWindow).length>=2){
+     render({...history,periods:nativePeriods,savedMaximum:local&&periods.includes('max')?local:null});
+     return;
+    }
+   }catch(error){
+    if(!local)throw error;
+   }
   }
+  if(local){render(local);return;}
   fallback('Keine bestätigte Kursquelle eingerichtet.');
  }catch(error){fallback(safeHistoryError(error,{security:securityKind(position)}));}
 }
