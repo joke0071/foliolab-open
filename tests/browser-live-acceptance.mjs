@@ -73,5 +73,17 @@ try{
  for(const [label,bytes,pwd] of [['plain',plain,null],['encrypted',encrypted,password]]){const rc=await context(),rp=await rc.newPage();rp.on('pageerror',e=>errors.push(e.message));await rp.goto(base);await restore(rp,bytes,pwd);await rp.reload();const restored=await state(rp);assert.equal(restored.positions.length,m.positions.length+1);assert.deepEqual(restored.bookings,(await state(p)).bookings);if(pwd){assert.equal(restored.walletHistory.sessions.length,1);assert.equal(restored.settings.autoRefresh,'off');}else assert.equal(restored.walletHistory,undefined);report.checks.push(label+' actual UI download -> fresh profile UI restore -> reload, exact bookings');}
  await p.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';},null,{timeout:60000});await p.reload();await p.waitForFunction(()=>!!navigator.serviceWorker.controller);const reg=await p.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();return {url:r.active.scriptURL,caches:await caches.keys()};});assert.ok(reg.caches.includes(cache));assert.equal(reg.caches.filter(k=>k.startsWith('foliolab-open-')).length,1);
  await c.setOffline(true);await p.reload();await nav(p,'positions');assert.ok(await p.locator('#positionList').innerText().then(t=>t.includes('SYNTHETIC Live ETH')));await nav(p,'bookings');assert.ok(await p.locator('#bookingList .history-row').count()>0);await nav(p,'more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('SYNTHETIC offline saved');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});await p.reload();assert.ok((await state(p)).providers.some(x=>x.name==='SYNTHETIC offline saved'));report.checks.push('actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload');
+ const beforeProjection=await state(p);
+ await nav(p,'history');
+ const projection=p.locator('#portfolioProjection');
+ await projection.locator(':scope > summary').click();
+ await projection.locator('[name="start"]').fill('1000');
+ await projection.locator('[name="monthly"]').fill('25');
+ await projection.getByRole('button',{name:'Szenarien berechnen'}).click();
+ assert.equal(await projection.locator('.projection-result').count(),3);
+ assert.match(await projection.locator('.projection-results').innerText(),/Kaufkraft heute/);
+ await scan(p,'#portfolioProjection','controlled offline projection');
+ assert.deepEqual(await state(p),beforeProjection,'projection must not change portfolio or history');
+ report.checks.push('actual controlled offline projection changes no portfolio data');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
 }catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}

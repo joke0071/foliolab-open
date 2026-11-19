@@ -69,6 +69,7 @@ import {executeTransaction,TX_TYPES} from './transactions.js';
 import {annualOverviewMarkup} from './booking-insights-ui.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {capitalReferenceSeries} from './capital-flows.js';
+import {bindPortfolioProjection} from './portfolio-projection-ui.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
 import {updateScannedWalletPosition} from './wallet-scan-update.js';
@@ -109,6 +110,7 @@ let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],positi
 let positionValueFilterRaw='',positionValueFilterExact='0',positionValueFilterError='';
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
+const refreshPortfolioProjection=bindPortfolioProjection($('portfolioProjection'),()=>model);
 const transferMatchingUI=createTransferMatchingUI({restoreFocus:restoreBookingTransferFocus,getModel:()=>model,assertCurrent:async()=>{assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();},commit:async draft=>{assertBookingWritable();model=draft;await save();},onCreate:kind=>$(kind==='cash'?'addWizard':'addBooking').click(),canCreate:kind=>!$(kind==='cash'?'addWizard':'addBooking').disabled});
 const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
 const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
@@ -368,6 +370,7 @@ function shiftSnapshotCalendar(months){
  renderSnapshotCalendar();
 }
 function renderHistory(){
+ refreshPortfolioProjection();
  const disclosure=$('historyCalendarDisclosure');disclosure.hidden=!model.snapshots.length&&!wealthView().samples.length;if(disclosure.hidden)disclosure.open=false;
 
  const info=$('performanceInfo'),summary=$('performanceSummary'),start=model.performanceFlowTrackingSince,end=model.snapshots.at(-1)?.date;
