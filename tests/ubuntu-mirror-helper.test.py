@@ -40,11 +40,15 @@ sys.exit(6)
         self.assertEqual(result.stdout,'https://archive.ubuntu.com/ubuntu/\n')
         self.assertEqual(len(calls),1)
 
-    def test_dns_failure_selects_regional(self):
+    def test_archive_falls_back_to_regional_if_primary_and_independent_hosts_fail(self):
         result,calls=self.run_helper('archive','us.archive.ubuntu.com')
         self.assertEqual(result.returncode,0)
         self.assertEqual(result.stdout,'https://us.archive.ubuntu.com/ubuntu/\n')
-        self.assertEqual(len(calls),2)
+        self.assertEqual(calls,[
+            'https://archive.ubuntu.com/ubuntu/dists/noble/InRelease',
+            'https://mirrors.edge.kernel.org/ubuntu/dists/noble/InRelease',
+            'https://us.archive.ubuntu.com/ubuntu/dists/noble/InRelease',
+        ])
 
     def test_security_uses_security_pocket(self):
         result,calls=self.run_helper('security','us.archive.ubuntu.com')
@@ -58,8 +62,8 @@ sys.exit(6)
         self.assertEqual(result.stdout,'')
         self.assertEqual(len(calls),3)
 
-    def test_ubuntu_domain_dns_failure_selects_independent_mirror(self):
-        for mode,pocket,count in [('archive','noble',3),('security','noble-security',4)]:
+    def test_unreachable_primary_selects_independent_archive_and_security_keeps_original_order(self):
+        for mode,pocket,count in [('archive','noble',2),('security','noble-security',4)]:
             result,calls=self.run_helper(mode,'mirrors.edge.kernel.org')
             self.assertEqual(result.returncode,0)
             self.assertEqual(result.stdout,'https://mirrors.edge.kernel.org/ubuntu/\n')
