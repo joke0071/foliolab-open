@@ -1,0 +1,59 @@
+{
+  "version": "SW326",
+  "scope": "HIST-VIS01: four data bases, separate plot style, and opt-in display estimate for one missing EUR close",
+  "main": "b89ecb56d3c693ce707b50178d6865e2c0ce43ba",
+  "tree": "36345b42c960360675fee2628567b6de56462097",
+  "pullRequest": 362,
+  "candidate": {
+    "head": "66cc4987723b15153f66a9d8f39c80230aef3b46",
+    "testedMerge": "5593a6e1bf404b4354eb2f2a554a3156013cbb19",
+    "integrationRun": 44532155977,
+    "walletRun": 44532155984,
+    "unitTests": 1526,
+    "initialRegression": {
+      "run": 44529691468,
+      "job": 135579683580,
+      "reason": "The closed history options hid two desktop period buttons. The corrected candidate keeps all eight inline and the mobile disclosure compact."
+    }
+  },
+  "run": 44540002948,
+  "attempt": 1,
+  "deployJob": 135628577936,
+  "liveJob": 135628772440,
+  "completed": "2026-11-19T15:06:27Z",
+  "pages": {
+    "artifact": 14539960274,
+    "name": "github-pages-attempt-1",
+    "sha256": "eb3a4e00196271d1aeaf262f0e83e4657534a8a92c76cf19a6d4e97bb1088731"
+  },
+  "liveArtifact": 14541864145,
+  "archive": "FolioLab-SW326-Live-Accepted.zip",
+  "archiveCRC": "PASS",
+  "pinnedByteReadback": "PASS",
+  "report": "live/report.json",
+  "byteSize": 152931640,
+  "entries": 1946,
+  "sha256": "8924a182aaf383607981b2c506bef07ff25dcbead0ca8d6b2f9a3897c1ad3ea7",
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu",
+    "controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record",
+    "controlled offline opt-in estimate is graphically distinct and never persists values"
+  ],
+  "axeScans": 22,
+  "assetMatches": 159,
+  "origin": "https://foliolab.unperfekt.at/",
+  "kraken": {
+    "Chromium": 7,
+    "Firefox": 7,
+    "WebKit": 7
+  },
+  "errors": []
+}
