@@ -1,7 +1,7 @@
 import {createSyncSnapshot,validateSyncSnapshot} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
-import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from '../../src/atomic-storage.js';
+import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText} from '../../src/atomic-storage.js';
 import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
@@ -41,7 +41,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
-  if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
+  if(syncPreimageText(after.portfolio)!==syncPreimageText(current.portfolio)||syncPreimageText(after.sync)!==syncPreimageText(current.sync))
    throw Error('sync-outbox-apply-plan-race');
   return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
  }
@@ -54,7 +54,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    const ticket=await verifySyncOutboxState(sync,verifySnapshotFrame);
    await checkCurrentHead(portfolio,sync,ticket);
    const after=await readPortfolioSyncRecord(db,{forOutbox:true});
-   if(JSON.stringify(after.portfolio)!==JSON.stringify(portfolio)||JSON.stringify(after.sync)!==JSON.stringify(sync))
+   if(syncPreimageText(after.portfolio)!==syncPreimageText(portfolio)||syncPreimageText(after.sync)!==syncPreimageText(sync))
     throw Error('sync-outbox-recovery-race');
    return {state:readSyncOutboxState(ticket),summary:syncOutboxSummary(ticket,portfolio.revision),localRevision:portfolio.revision};
   },
