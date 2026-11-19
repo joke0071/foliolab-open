@@ -14,7 +14,7 @@ function fixture({origin='page',initial='dashboard',removed=false}={}){
  const button={isConnected:true,closest:selector=>selector==='.page'&&origin==='page'?originPage:null};active=button;
  const nodes={pageTitle:{textContent:'',tabIndex:0,focus(){active=this;focusCalls++;}},pageDescription:{},pageKicker:{}};
  const document={get activeElement(){return active;},querySelectorAll:selector=>selector==='.page'?pages:[]};
- const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(){}},location:{pathname:'/'},window:{scrollTo(){}},render(){if(removed){button.isConnected=false;active=null;}}};
+ const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(){}},location:{pathname:'/'},window:{scrollTo(){}},syncHistorySection(){},render(){if(removed){button.isConnected=false;active=null;}}};
  runInNewContext(router+';this.navigate=go;',context);
  return {navigate:context.navigate,heading:nodes.pageTitle,get active(){return active;},button,get focusCalls(){return focusCalls;}};
 }
