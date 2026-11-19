@@ -15,7 +15,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   return receipt;
  }
  async function read(expectedLocalRevision,expectedSyncVersion) {
-  const current=await readPortfolioSyncRecord(db);
+  const current=await readPortfolioSyncRecord(db,{forOutbox:true});
   if(!current.portfolio||current.portfolio.deleted||current.portfolio.revision!==expectedLocalRevision||
    (current.sync?.version??null)!==expectedSyncVersion)throw Error('sync-outbox-stale-preimage');
   if(current.portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
@@ -40,20 +40,20 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   const last=current.sync.entries.at(-1);
   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
-  const after=await readPortfolioSyncRecord(db);
+  const after=await readPortfolioSyncRecord(db,{forOutbox:true});
   if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
    throw Error('sync-outbox-apply-plan-race');
   return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
  }
  return Object.freeze({
   async recover() {
-   const {portfolio,sync}=await readPortfolioSyncRecord(db);
+   const {portfolio,sync}=await readPortfolioSyncRecord(db,{forOutbox:true});
    if(!portfolio||portfolio.deleted)throw Error('sync-outbox-no-local-portfolio');
    if(portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
    if(sync===null)return {state:null,summary:null,localRevision:portfolio.revision};
    const ticket=await verifySyncOutboxState(sync,verifySnapshotFrame);
    await checkCurrentHead(portfolio,sync,ticket);
-   const after=await readPortfolioSyncRecord(db);
+   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
    if(JSON.stringify(after.portfolio)!==JSON.stringify(portfolio)||JSON.stringify(after.sync)!==JSON.stringify(sync))
     throw Error('sync-outbox-recovery-race');
    return {state:readSyncOutboxState(ticket),summary:syncOutboxSummary(ticket,portfolio.revision),localRevision:portfolio.revision};

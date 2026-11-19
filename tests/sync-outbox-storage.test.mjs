@@ -515,3 +515,33 @@ test('frame planning detaches the listing and discards a result raced by another
  const after=await readPortfolioSyncRecord(db);assert.equal(after.portfolio.revision,2);
  assert.equal(after.sync.entries.length,1);assert.equal(after.sync.entries[0].status,'pending');
 });
+
+test('present nullish outbox slots survive capture, cutover, restore and explicit recovery',async()=>{
+ for(const value of [null,undefined]){
+  const {db,p,api,args}=await fixture();db.data.set('sync-outbox-v1',value);
+  for(const action of [()=>api.recover(),()=>api.capture(args),
+   ()=>adoptPortfolioRecord(db,{expectedPortfolio:p,raw:p.raw,settings:p.settings})])
+   await assert.rejects(action,/malformed-outbox-slot/);
+  assert.deepEqual(db.data.get('portfolio'),p);
+  const restored=await commitPortfolioRecord(db,{expectedRevision:p.revision,raw:p.raw,settings:p.settings,intent:'restore'});
+  await restoreDamagedRecord(db,{expected:restored,raw:p.raw,settings:p.settings});
+  assert.equal(db.data.has('sync-outbox-v1'),true);assert.equal(db.data.get('sync-outbox-v1'),value);
+  await assert.rejects(()=>api.recover(),/malformed-outbox-slot/);
+ }
+});
+
+test('outbox commits recheck keyslot presence and cannot overwrite a nullish slot inserted during verification',async()=>{
+ for(const key of ['sync-local-anchor-v1','sync-outbox-v1'])for(const value of [null,undefined]){
+  const {db,p,args}=await fixture();
+  const api=createSyncOutboxStorage(db,async text=>{
+   const receipt=await verify(text);db.data.set(key,value);return receipt;
+  });
+  const reason=key==='sync-outbox-v1'?/malformed-outbox-slot/:/unfenced-anchor/;
+  await assert.rejects(()=>api.capture(args),reason);
+  await assert.rejects(()=>api.recover(),reason);
+  await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:p,raw:p.raw,settings:p.settings}),reason);
+  assert.deepEqual(db.data.get('portfolio'),p);
+  assert.equal(db.data.has(key),true);assert.equal(db.data.get(key),value);
+  assert.equal(db.data.has('sync-outbox-v1'),key==='sync-outbox-v1');
+ }
+});

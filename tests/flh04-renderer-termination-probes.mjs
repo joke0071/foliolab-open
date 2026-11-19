@@ -122,6 +122,34 @@ async function checkCrossTabFramePlan(browser,setup,operation){
  }finally{await context.close();}
 }
 
+async function checkMalformedSyncSlots(browser,setup,operation){
+ const context=await browser.newContext();
+ try{
+  const a=await context.newPage(),b=await context.newPage();await setup(a);await setup(b);
+  const root=await operation(a,'initialize'),request={expectedLocalRevision:root.revision,expectedSyncVersion:null,frameText:frame(root.raw)};
+  for(const key of ['sync-outbox-v1','sync-local-anchor-v1'])for(const isNull of [true,false]){
+   await b.evaluate(async({key,isNull})=>{
+    const tx=window.syncTest.db.transaction('records','readwrite');
+    tx.objectStore('records').put(isNull?null:undefined,key);
+    await new Promise((resolve,reject)=>{tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);});
+   },{key,isNull});
+   const reason=key==='sync-outbox-v1'?/malformed-outbox-slot/:/unfenced-anchor/;
+   await assert.rejects(()=>operation(a,'capture',request),reason);
+   await assert.rejects(()=>operation(a,'adopt',{expected:root,raw:root.raw}),reason);
+   const originals=await b.evaluate(async key=>{
+    const tx=window.syncTest.db.transaction('records','readwrite'),store=tx.objectStore('records');
+    const count=store.count(key),value=store.get(key),portfolio=store.get('portfolio');
+    store.delete(key);
+    await new Promise((resolve,reject)=>{tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);});
+    return {count:count.result,isNull:value.result===null,isUndefined:value.result===undefined,portfolio:portfolio.result};
+   },key);
+   assert.deepEqual(originals,{count:1,isNull,isUndefined:!isNull,portfolio:root});
+  }
+  const captured=await operation(a,'capture',request);assert.equal(captured.entries.length,1);
+  console.log(JSON.stringify({kind:'FLH04MalformedSyncSlots',status:'PASS',nativeCases:4}));
+ }finally{await context.close();}
+}
+
 export async function runRendererTerminationCandidate({browser,setup,operation,url}){
  const origin=new URL(url);
  assert.equal(origin.protocol,'http:');assert.equal(origin.port,'4173');
@@ -224,5 +252,6 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   const {checkProfileRestore}=await import('./flh04-profile-restore.mjs');
   await checkProfileRestore({setup,operation});
   await checkCrossTabFramePlan(browser,setup,operation);
+  await checkMalformedSyncSlots(browser,setup,operation);
  }
 }
