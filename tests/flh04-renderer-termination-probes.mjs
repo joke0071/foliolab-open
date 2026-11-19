@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {frame} from './sync-outbox-fixture.mjs';
 import {expectedRevertIntent} from './flh04-source-lifecycle-probes.mjs';
 
-// CDP Page.crash is a renderer crash, NOT normal page.close, synthetic close,
+// Chromium’s chrome://crash terminates the renderer, NOT normal page.close, synthetic close,
 // browser-process termination, power loss, or a native IDB close-event proof.
 export async function crashRenderer({context,page,browser}){
  const session=await context.newCDPSession(page);
@@ -11,13 +11,19 @@ export async function crashRenderer({context,page,browser}){
  page.on('crash',onCrash);page.on('close',onClose);
  try{
   // A protocol rejection alone is never accepted as a crash oracle.
+  await session.send('Inspector.enable');
   const observed=page.waitForEvent('crash',{timeout:15000});
   let commandOutcome='pending-at-crash';
-  session.send('Page.crash').then(()=>{commandOutcome='resolved';},()=>{commandOutcome='rejected';});
-  await observed;
+  session.send('Page.navigate',{url:'chrome://crash'}).then(()=>{commandOutcome='resolved';},()=>{commandOutcome='rejected';});
+  try{
+   await observed;
+  }catch(error){
+   console.error('Renderer crash was not observed', {commandOutcome,closed,browserConnected:browser.isConnected(),errorName:error.name});
+   throw error;
+  }
   assert.equal(crashed,true);assert.equal(closed,false);
   assert.equal(browser.isConnected(),true,'browser must survive renderer crash');
-  return {mechanism:'CDP.Page.crash',crashObserved:true,pageClosed:false,
+  return {mechanism:'CDP.Page.navigate chrome://crash',crashObserved:true,pageClosed:false,
    browserConnected:true,commandOutcome};
  }finally{
   page.off('crash',onCrash);page.off('close',onClose);
@@ -169,7 +175,7 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   }catch(error){
    const row=checks.find(row=>row.id===id+'.'+active);
    if(row)row.status='FAIL';else checks.push({id:id+'.'+active,status:'FAIL'});
-   results.push({id,status:'FAIL',checks,errorType:error?.name==='AssertionError'?'AssertionError':'Error'});
+   results.push({id,status:'FAIL',checks,errorType:error?.name==='AssertionError'?'AssertionError':error?.name==='TimeoutError'?'TimeoutError':'Error'});
   }finally{
    // Never release a failed crash fixture into product writes during cleanup.
    // Context disposal happens only after the crash oracle or a recorded FAIL.

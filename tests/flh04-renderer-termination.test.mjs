@@ -12,14 +12,16 @@ function crashFixture({event='crash',connected=true,rejectCommand=false}={}){
   page.once('crash',resolve);
   if(event!=='crash')queueMicrotask(()=>reject(Error('synthetic missing-crash timeout')));
  });
- const session={send(command){calls.push(command);queueMicrotask(()=>page.emit(event));
+ const session={send(command,params){calls.push([command,params]);
+  if(command==='Inspector.enable')return Promise.resolve();
+  queueMicrotask(()=>page.emit(event));
   return rejectCommand?Promise.reject(Error('synthetic protocol closure')):Promise.resolve();},async detach(){detached++;}};
  return {page,context:{newCDPSession:async target=>{assert.equal(target,page);return session;}},
   browser:{isConnected:()=>connected},calls,detached:()=>detached};
 }
 test('crash orchestration requires actual crash event in double and surviving browser',async()=>{
  const f=crashFixture();const r=await crashRenderer(f);
- assert.deepEqual(f.calls,['Page.crash']);assert.equal(r.crashObserved,true);
+ assert.deepEqual(f.calls,[['Inspector.enable',undefined],['Page.navigate',{url:'chrome://crash'}]]);assert.equal(r.crashObserved,true);
  assert.equal(r.pageClosed,false);assert.equal(r.browserConnected,true);assert.equal(f.detached(),1);
  assert.equal(f.page.listenerCount('close'),0);
 });

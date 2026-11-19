@@ -34,4 +34,5 @@ jobs:
           curl --fail --silent --show-error --retry 8 --retry-connrefused --retry-delay 1 \
             http://127.0.0.1:4173/tests/storage-origin.html | cmp - tests/storage-origin.html
           kill -0 "$server"
+          ulimit -c 0
           timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
