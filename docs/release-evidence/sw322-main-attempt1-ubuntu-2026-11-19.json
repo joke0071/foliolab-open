@@ -1,0 +1,73 @@
+{
+  "main": "ae2c0aa84dce573968be15c57f1280ce0506e681",
+  "run": 44474927927,
+  "attempt": 1,
+  "result": "failed before deployment",
+  "failedJobs": [
+    {
+      "name": "cross-engine (3)",
+      "id": 135393173787,
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 5,
+        "started_at": "2026-11-19T06:49:25Z",
+        "completed_at": "2026-11-19T06:57:37Z"
+      },
+      "primaryProbe": "archive.ubuntu.com TLS timeout",
+      "fallback": "us.archive.ubuntu.com selected; APT package/index downloads exceeded 8-minute setup limit",
+      "testsExecuted": false,
+      "originalArtifact": {
+        "name": "sw322-main-run1-cross-3.zip",
+        "id": 14505987953,
+        "bytes": 302390,
+        "sha": "sha256:9d752d105007f632056d2e76b5b188f1b81e486e82ccbe7511bf7fcd9be433ed"
+      }
+    },
+    {
+      "name": "cross-engine (2)",
+      "id": 135393173839,
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 5,
+        "started_at": "2026-11-19T06:49:27Z",
+        "completed_at": "2026-11-19T06:57:39Z"
+      },
+      "primaryProbe": "archive.ubuntu.com TLS timeout",
+      "fallback": "us.archive.ubuntu.com selected; APT package/index downloads exceeded 8-minute setup limit",
+      "testsExecuted": false,
+      "originalArtifact": {
+        "name": "sw322-main-run1-cross-2.zip",
+        "id": 14505639801,
+        "bytes": 301317,
+        "sha": "sha256:05dd0b98fb1fb9dc442b46b7bf3b934923f10e57cfdc84e4aa0974ae097ad501"
+      }
+    },
+    {
+      "name": "cross-engine (1)",
+      "id": 135393173846,
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 5,
+        "started_at": "2026-11-19T06:49:32Z",
+        "completed_at": "2026-11-19T06:57:45Z"
+      },
+      "primaryProbe": "archive.ubuntu.com TLS timeout",
+      "fallback": "us.archive.ubuntu.com selected; APT package/index downloads exceeded 8-minute setup limit",
+      "testsExecuted": false,
+      "originalArtifact": {
+        "name": "sw322-main-run1-cross-1.zip",
+        "id": 14506536606,
+        "bytes": 302333,
+        "sha": "sha256:04ca22bf21e8916fded866edd3dbdde62d1ff6bb9f82b34e775aa0ef1139ad2b"
+      }
+    }
+  ],
+  "archiveLibraryId": "libfile_fde3_f-7e6e0fa35c0481918396610edc22b04f_54e45e8130348191808d9aaa710cf372",
+  "policy": "one bounded retry of failed jobs after exact Main run terminates; keep original attempt"
+}
