@@ -545,3 +545,29 @@ test('outbox commits recheck keyslot presence and cannot overwrite a nullish slo
   assert.equal(db.data.has('sync-outbox-v1'),key==='sync-outbox-v1');
  }
 });
+
+test('native values hidden by JSON cannot pass the outbox preimage after verification',async()=>{
+ for(const action of ['capture','begin','recover','planFrameApply'])for(const slot of ['portfolio','sync-outbox-v1']){
+  const {db,p,api,args}=await fixture();await api.capture(args);
+  const before=structuredClone(db.data);
+  const raced=createSyncOutboxStorage(db,async text=>{
+   const value=structuredClone(db.data.get(slot));value.extra=undefined;db.data.set(slot,value);
+   return verify(text);
+  });
+  const params={expectedLocalRevision:p.revision,expectedSyncVersion:1};
+  const call={capture:()=>raced.capture({...args,...params}),begin:()=>raced.begin({...params,revisionId:'R'}),
+   recover:()=>raced.recover(),planFrameApply:()=>raced.planFrameApply({...params,frameTexts:[],observationComplete:true})};
+  await assert.rejects(call[action],/unsupported-preimage/);
+  before.get(slot).extra=undefined;assert.deepEqual(db.data,before);
+ }
+});
+test('cutover cannot equate distinct structured-clone data with the same JSON encoding',async()=>{
+ const shared={id:'example'};
+ for(const [original,replacement] of [[null,NaN],[0,-0],['2026-01-01T00:00:00.000Z',new Date('2026-01-01')],
+  [{},new Map()],[[null],Array(1)],[[1],Object.assign([1],{metadata:true})],[shared,{...shared,extra:undefined}]]){
+  const {db,p}=await fixture(),expected={...p,metadata:original},actual={...p,metadata:replacement};
+  assert.equal(JSON.stringify(expected),JSON.stringify(actual));db.data.set('portfolio',actual);
+  await assert.rejects(()=>adoptPortfolioRecord(db,{expectedPortfolio:expected,raw:p.raw,settings:p.settings}),/unsupported-preimage/);
+  assert.deepEqual(db.data.get('portfolio'),actual);
+ }
+});

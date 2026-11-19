@@ -276,6 +276,21 @@ export function readPortfolioSyncRecord(db,{forOutbox=false}={}) {
  });
 }
 
+// Sync CAS compares the complete IDB preimage. Structured clones can hold values
+// that ordinary JSON silently drops, coerces, or serializes via Date.toJSON().
+export function syncPreimageText(value){
+ return JSON.stringify(value,function(key,encoded){
+  const original=this[key];
+  if(original===null||typeof original==='boolean'||typeof original==='string')return encoded;
+  if(typeof original==='number'&&Number.isFinite(original)&&!Object.is(original,-0))return encoded;
+  if(Array.isArray(original)){
+   const keys=Object.keys(original);
+   if(keys.length===original.length&&keys.every((k,i)=>k===String(i)))return encoded;
+  }else if(typeof original==='object'&&Object.getPrototypeOf(original)===Object.prototype)return encoded;
+  throw Error('sync-storage-unsupported-preimage');
+ });
+}
+
 /** Markerless cutover: atomically fence ALL future outbox work before the
  * localStorage marker. This creates NO identity/enrollment or sender rights.
  * Only a future independently qualified enrollment adapter may replace it.
@@ -285,7 +300,7 @@ export function adoptPortfolioRecord(db,{expectedPortfolio,raw,settings,allowTom
  try {
   if(expectedPortfolio===undefined)throw Error('adoption-preimage-required');
   const snapshot=structuredClone(expectedPortfolio);assertRecord(snapshot);
-  expected=JSON.stringify(snapshot);portable=portablePortfolio(raw);prefs=portableSettings(settings);
+  expected=syncPreimageText(snapshot);portable=portablePortfolio(raw);prefs=portableSettings(settings);
   if(snapshot?.deleted&&!allowTombstone)throw Error('adoption-tombstone');
   if(snapshot&&!snapshot.deleted&&(snapshot.raw!==portable||JSON.stringify(snapshot.settings)!==JSON.stringify(prefs)))
    throw Error('adoption-data-mismatch');
@@ -299,7 +314,7 @@ export function adoptPortfolioRecord(db,{expectedPortfolio,raw,settings,allowTom
     const sync=syncSlotValue(value,present);
     assertRecord(portfolio);
     if(anchorPresent&&!portfolio?.syncEnrollmentRequired)throw Error('sync-storage-unfenced-anchor');
-    if(JSON.stringify(portfolio)!==expected)throw Error('adoption-stale-preimage');
+    if(syncPreimageText(portfolio)!==expected)throw Error('adoption-stale-preimage');
     if(sync!==null&&!portfolio?.deleted)
      throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
     if(portfolio?.revision===Number.MAX_SAFE_INTEGER)throw Error('adoption-revision-limit');
@@ -330,16 +345,17 @@ export function strictSyncTransaction(db){
 export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPortfolio,expectedState,nextState}) {
  // Snapshot all caller inputs before async IDB callbacks; never accept a live
  // object that can change between verification/CAS/write.
- let before,next,portfolioBefore;
+ let before,next,nextText,portfolioBefore;
  try {
   if(!Number.isSafeInteger(expectedLocalRevision)||expectedLocalRevision<1)throw Error('sync-storage-cas');
   assertRecord(expectedPortfolio);
   if(!expectedPortfolio||expectedPortfolio.deleted||expectedPortfolio.revision!==expectedLocalRevision)
    throw Error('sync-storage-portfolio-preimage');
-  portfolioBefore=JSON.stringify(expectedPortfolio);
-  before=JSON.stringify(expectedState);next=structuredClone(nextState);
+  portfolioBefore=syncPreimageText(expectedPortfolio);
+  before=syncPreimageText(expectedState);next=structuredClone(nextState);
+  nextText=syncPreimageText(next);
   if(!next||next.format!==1||!Number.isSafeInteger(next.version)||next.version<1||
-   !(next.version===(expectedState===null?1:expectedState.version+1)||JSON.stringify(next)===before))throw Error('sync-storage-version');
+   !(next.version===(expectedState===null?1:expectedState.version+1)||nextText===before))throw Error('sync-storage-version');
  }catch(error){return Promise.reject(error);}
  return new Promise((resolve,reject)=>{
   const tx=strictSyncTransaction(db),store=tx.objectStore(STORE);
@@ -350,11 +366,11 @@ export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPort
     const sync=syncSlotValue(value,present);
     assertRecord(portfolio);
     if(!portfolio||portfolio.deleted||portfolio.revision!==expectedLocalRevision)throw Error('sync-storage-local-cas');
-    if(JSON.stringify(portfolio)!==portfolioBefore)throw Error('sync-storage-portfolio-preimage');
+    if(syncPreimageText(portfolio)!==portfolioBefore)throw Error('sync-storage-portfolio-preimage');
     if(portfolio.syncEnrollmentRequired)throw Error('sync-storage-enrollment-required');
     if(anchorPresent)throw Error('sync-storage-unfenced-anchor');
-    if(JSON.stringify(sync)!==before)throw Error('sync-storage-metadata-cas');
-    if(JSON.stringify(next)!==before)store.put(next,SYNC_KEY);
+    if(syncPreimageText(sync)!==before)throw Error('sync-storage-metadata-cas');
+    if(nextText!==before)store.put(next,SYNC_KEY);
    }catch(error){failure=error;tx.abort();}
   };
   const p=store.get(KEY),anchor=store.count(ANCHOR_KEY);

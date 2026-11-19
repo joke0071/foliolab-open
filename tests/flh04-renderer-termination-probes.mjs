@@ -118,6 +118,22 @@ async function checkCrossTabFramePlan(browser,setup,operation){
   const result=await a.evaluate(()=>{window.releaseFramePlan();return window.framePlan;});
   assert.deepEqual(result,{error:'sync-outbox-apply-plan-race'});
   assert.deepEqual(await operation(a,'read'),{portfolio:updated,sync:queue});
+  // The version and serialized JSON can both stay unchanged after an IndexedDB update.
+  await b.evaluate(async updated=>{
+   const tx=window.syncTest.db.transaction('records','readwrite');
+   tx.objectStore('records').put({...updated,extra:undefined},'portfolio');
+   await new Promise((resolve,reject)=>{tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);});
+  },updated);
+  await assert.rejects(()=>a.evaluate(({updated,queue})=>{
+   const {db,storage}=window.syncTest;
+   return storage.commitPortfolioSyncRecord(db,{expectedLocalRevision:updated.revision,expectedPortfolio:updated,
+    expectedState:queue,nextState:queue});
+  },{updated,queue}),/unsupported-preimage/);
+  const preserved=await a.evaluate(async()=>{
+   const {db,storage}=window.syncTest,record=await storage.readPortfolioSyncRecord(db);
+   return {extra:Object.hasOwn(record.portfolio,'extra'),revision:record.portfolio.revision,sync:record.sync};
+  });
+  assert.deepEqual(preserved,{extra:true,revision:updated.revision,sync:queue});
   console.log(JSON.stringify({kind:'FLH04CrossTabFramePlan',status:'PASS',engine:browser.version()}));
  }finally{await context.close();}
 }
