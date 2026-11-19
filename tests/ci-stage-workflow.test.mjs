@@ -63,6 +63,10 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  '          node tests/browser-dialog-native-navigation.mjs\n',
+  '            DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs\n',
+  '          DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-chromium.log\n',
+  '          DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-cross.log\n',
   "          node tests/browser-flatex-net-settlement.mjs\n",
   "            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs\n",
   '          UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-chromium.log\n',
@@ -120,7 +124,7 @@ function originalContractWithOnlyPinnedCaches(source) {
   '          RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log\n',
   '          RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log\n'
  ];
- for(const line of additions){assert.equal(reduced.split(line).length,2,'Each recovery addition is mandatory exactly once');reduced=reduced.replace(line,'');}
+ for(const line of additions){assert.equal(reduced.split(line).length,2,'Each additional gate is mandatory exactly once');reduced=reduced.replace(line,'');}
  assert.equal(reduced.split('    timeout-minutes: 55\n').length,2);
  reduced=reduced.replace('    timeout-minutes: 55\n','    timeout-minutes: 20\n');
  for(const block of pinnedCacheSteps){
