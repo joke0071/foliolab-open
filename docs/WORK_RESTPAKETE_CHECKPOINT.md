@@ -1,3 +1,9 @@
+## SW322 · gezielte Wiederaufnahme · 19.11.2026
+
+Der Chromium-Hauptjob des ersten Main-Versuchs endete erfolgreich. [Versuch 2](https://github.com/joke0071/foliolab-open/actions/runs/44474927927/attempts/2) startete um 08:13 Uhr MEZ für die drei fehlgeschlagenen Cross-Engine-Jobs und ihre regulären Nachfolger. Der Chromium-Erfolg bleibt am selben Main-SHA gültig. Deployment und reguläre Liveabnahme stehen aus.
+
+Der Verlaufspilot liegt auf `feature/history-section-links`, Head `f8c4325fcfe8fe8c4f9005b9f3617ade117b13e1`, Tree `5163512c421716b8e0993095d49ed67766576099`. Die isolierte Router-Fokus-Fixture wurde nachgezogen. 1.514 Unit-Tests, Syntax, 200%-Regression und fokussierter Offline-Navigationstest lokal bestanden. Der Integrations-PR wartet auf den freien Releasepfad. Ein unter gleichzeitiger lokaler Last abgebrochener Firefox-Start bleibt im lokalen Log erhalten. Derselbe fokussierte Ablauf am gleichen Tree lief separat in Firefox und WebKit durch.
+
 ## SW322 · Main-Versuch 1 vor Deployment gescheitert · 19.11.2026
 
 Im [ersten Main-Versuch](https://github.com/joke0071/foliolab-open/actions/runs/44474927927/attempts/1) liefen alle drei Ubuntu-Installationsschritte für Firefox/WebKit ins Acht-Minuten-Limit. `archive.ubuntu.com` scheiterte bereits im TLS-Probeabruf; Paket- und Indexabrufe am ausgewählten Ersatzspiegel `us.archive.ubuntu.com` stockten. Die Cross-Engine-Tests selbst starteten in diesem Versuch nicht. Die drei [Originalartefakte](release-evidence/sw322-main-attempt1-ubuntu-2026-11-19.json) sind SHA-256-/CRC-geprüft und archiviert. Der reguläre Nachweis bleibt für SW322 offen. Der exakt gleiche Produkttree war im PR in allen Browserchecks erfolgreich. Nach Abschluss des laufenden Chromium-Jobs werden nur die fehlgeschlagenen Jobs und ihre regulären Nachfolger erneut gestartet.
