@@ -26,7 +26,10 @@ for(const engine of (process.env.DIALOG_NATIVE_ENGINES||'chromium').split(',')){
   // Use the browser's reload command. In Firefox a script-triggered
   // location.reload() can leave the old document after dismiss-then-accept.
   const reload=p.reload({timeout:accept?15000:2000}).catch(error=>{
-   if(accept||error.name!=='TimeoutError')throw error;
+   // WebKit reports a refusal directly. Other engines wait for the load
+   // that was cancelled. The dialog and original document are checked below.
+   const refused=error.name==='TimeoutError'||error.message.includes('navigation cancelled by beforeunload dialog');
+   if(accept||!refused)throw error;
    return null;
   });
   const [,response]=await Promise.all([handled,reload]);
