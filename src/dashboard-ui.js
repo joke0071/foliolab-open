@@ -108,7 +108,7 @@ function eurAxisLabels(values){
  return values.map(value=>formatter.format(value/divisor)+unit);
 }
 
-export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false,display='auto'}){
+export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false,display='auto',estimates=[]}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Ein weiterer belegter Zeitpunkt für den Verlauf fehlt.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const times=samples.map(s=>Date.parse(s.date));
  if(times.some((t,i)=>!Number.isFinite(t)||i>0&&t<times[i-1]))return '<p class="chart-zero">Datumsangaben für das Diagramm nicht verfügbar.</p>';
@@ -135,7 +135,14 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  const comparePath=second?points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+(pad+(yMax-second[i])/range*(height-pad*2)).toFixed(2)).join(' '):'';
  if(second)points.forEach((p,i)=>{p.compareValue='Kapitalreferenz: '+money(second[i]);});
  const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+points[0].x.toFixed(2)+' '+height+' Z';
- const series=esc(JSON.stringify(points));
+ const originalPoints=estimates.length?new Map(sampled.map((sample,index)=>[sample.date,points[index]])):null;
+ const estimatedPoints=estimates.flatMap(estimate=>{
+  const before=originalPoints.get(estimate.before),after=originalPoints.get(estimate.after);
+  if(!before||!after)return [];
+  const x=(before.x+after.x)/2,y=pad+(yMax-Number(estimate.totalEURExact))/range*(height-pad*2);
+  return [{point:{x,y,value:'≈ '+money(Number(estimate.totalEURExact)),date:dateLabel(estimate.date),detail:'Grafisch geschätzt · lineares Mittel zweier belegter Tageswerte'},path:`M${before.x} ${before.y} L${x} ${y} L${after.x} ${after.y}`}];
+ });
+ const series=esc(JSON.stringify(estimatedPoints.length?[...points,...estimatedPoints.map(e=>e.point)].sort((a,b)=>a.x-b.x):points));
  const ticks=[yMax,(yMax+yMin)/2,yMin];
  // Labels only: bounds, tick positions, exact point values and custom currency
  // or unit formatters retain their existing calculations and contracts.
@@ -148,6 +155,7 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" stroke-dasharray="4 6"/>').join('')+
  (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="#e8f2ea"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
  (disjoint||display==='points'?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" vector-effect="non-scaling-stroke"/>').join(''):'')+
+ estimatedPoints.map(({point,path})=>(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#637089" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>')+'<circle cx="'+point.x+'" cy="'+point.y+'" r="3" fill="white" stroke="#637089" stroke-width="2" vector-effect="non-scaling-stroke"/>').join('')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
  '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
  '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+

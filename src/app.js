@@ -29,6 +29,7 @@ import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prep
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {modeledWealthSeries} from './wealth-model-history.js';
+import {historyDisplayEstimates} from './history-display-estimates.js';
 import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
@@ -375,6 +376,7 @@ function wealthView(){const key=JSON.stringify([wealthBasis,model.positions,mode
 const historyBasisPreference='foliolab-open-history-basis';
 let modelHistorySelected=false,modelHistoryKey='',modelHistoryCached;
 let historyChartStyle='auto';
+let historyEstimateKey='',historyEstimateCache=[];
 try{
  modelHistorySelected=localStorage.getItem(historyBasisPreference)==='model';
 }catch{}
@@ -388,7 +390,7 @@ function selectHistoryBasis(value){
  if(!modelHistorySelected)renderDashboard();
  renderHistory();
 }
-function drawChart(samples,comparison=null,display='auto'){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,display,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
+function drawChart(samples,comparison=null,display='auto',estimates=[]){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,display,estimates,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
 
 
 let calendarMonth=null,calendarSelection=[];
@@ -470,13 +472,21 @@ function renderHistory(){
  }else if(range!=='calendar'){
   data=filterChartPeriod(data,'wealth',range);
  }
+ const estimateOption=$('historyEstimates'),eligibleForEstimates=!modelHistorySelected&&wealthBasis==='auto';
+ if(eligibleForEstimates&&historyEstimateKey!==wealthKey){historyEstimateCache=historyDisplayEstimates(wealth,model);historyEstimateKey=wealthKey;}
+ estimateOption.closest('label').hidden=!eligibleForEstimates||!historyEstimateCache.length;
+ const displayedDates=eligibleForEstimates&&estimateOption.checked?new Set(data.map(point=>point.date)):null;
+ const estimates=displayedDates?historyEstimateCache.filter(item=>displayedDates.has(item.before)&&displayedDates.has(item.after)):[];
+ const estimateNote=$('historyEstimateNote');
+ estimateNote.hidden=!estimates.length;
+ estimateNote.textContent=estimates.length?(historyChartStyle==='points'?'Hohle Punkte':'Gestrichelte Abschnitte')+' zeigen grafische Schätzwerte zwischen zwei belegten Tagen.':'';
  const reference=!modelHistorySelected&&wealth.basis==='observed'?capitalReferenceSeries(model,data):null,comparisonToggle=$('compareCapital');
  comparisonToggle.disabled=!reference;
  if(!reference&&!modelHistorySelected)comparisonToggle.checked=false;
  $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
  $('historyChart').innerHTML=emptyHistory?'<div class="empty"><p>'+
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
-  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button>'+(modelAvailable?'<button type="button" class="btn outline" data-history-show-model>Heutigen Bestand als Modellverlauf anzeigen</button>':'')+'</div>':drawChart(data,comparisonToggle.checked?reference:null,historyChartStyle);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
+  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button>'+(modelAvailable?'<button type="button" class="btn outline" data-history-show-model>Heutigen Bestand als Modellverlauf anzeigen</button>':'')+'</div>':drawChart(data,comparisonToggle.checked?reference:null,historyChartStyle,estimates);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
  $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  $('positionArchiveFilter').value=positionArchiveView;
@@ -2521,6 +2531,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  $('historyCalendarReset').addEventListener('click',()=>{calendarSelection=[];range='all';$('historyCalendarDisclosure').open=false;renderHistory();});
  $('historyBasis').addEventListener('change',e=>selectHistoryBasis(e.target.value));
  $('historyChartStyle').addEventListener('change',e=>{historyChartStyle=e.target.value;renderHistory();});
+ $('historyEstimates').addEventListener('change',renderHistory);
  $('historyChart').addEventListener('click',e=>{if(e.target.closest('[data-history-show-model]')){selectHistoryBasis('model');$('historyChart').querySelector('.chart-plot')?.focus();}});
  $('compareCapital').addEventListener('change',renderHistory);
  $('historyCalendarGrid').addEventListener('click',e=>{

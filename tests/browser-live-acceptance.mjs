@@ -2,6 +2,7 @@ import {manageList} from './browser-management-mode.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import {observeLiveStartup} from './live-startup-diagnostics.mjs';
 import {seedWealthModelHistory} from './browser-wealth-model-history.mjs';
+import {seedHistoryEstimate,verifyHistoryEstimate} from './browser-history-display-estimates.mjs';
 // Manual release gate: actual published bytes, isolated synthetic profiles, no API credentials.
 // Run from the matching release checkout: RELEASE_SHA=<sha> node tests/browser-live-acceptance.mjs
 import assert from 'node:assert/strict';
@@ -150,5 +151,15 @@ try{
  assert.equal(await historyOptions.evaluate(el=>document.activeElement===el),true);
  assert.deepEqual(await readRecord(),beforeModelHistory,'model history must not change the exact IndexedDB record');
  report.checks.push('controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record');
+ await historyOptions.press('Enter');
+ await p.locator('#historyBasis').selectOption('auto');
+ await p.locator('#historyBasis').press('Escape');
+ await seedHistoryEstimate(p);
+ const beforeWealthEstimate=await readRecord();
+ await p.reload();
+ await nav(p,'history');
+ await verifyHistoryEstimate(p,{scan:()=>scan(p,'#chartPeriods','controlled offline estimated chart overlay')});
+ assert.deepEqual(await readRecord(),beforeWealthEstimate,'estimated overlay must not change the exact IndexedDB record');
+ report.checks.push('controlled offline opt-in estimate is graphically distinct and never persists values');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
 }catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}

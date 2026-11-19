@@ -1,5 +1,6 @@
 import {clickDisclosed} from './browser-disclosures.mjs';
 import {wealthModelHistoryBrowserContract} from './browser-wealth-model-history.mjs';
+import {historyEstimateBrowserContract} from './browser-history-display-estimates.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';import {readFile} from 'node:fs/promises';import {createRequire} from 'node:module';
 const base='http://127.0.0.1:4173/';
 const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
@@ -17,5 +18,6 @@ for(const engine of (process.env.FLH02_ENGINES||'chromium').split(',')){
  assert.deepEqual(errors,[]);console.log('FLH02 '+engine+': real total 999/1059 without snapshots, partial/observed separation, six-width axe, optional controls, retained services, canonical USD CSV FX persistence/reload and zero financial writes PASS');
  await context.close();
  await wealthModelHistoryBrowserContract({browser,base,axe});
+ await historyEstimateBrowserContract({browser,base,axe});
  }finally{await browser.close();}
 }
