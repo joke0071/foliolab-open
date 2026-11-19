@@ -71,4 +71,10 @@ test('actual prelaunch guard requires explicit bounded combination before any br
   {FLH04_SOURCE_LIFECYCLE:'1',FLH04_RENDERER_TERMINATION:'1',BASE_URL:'https://example.invalid'},
   {FLH04_SOURCE_LIFECYCLE:'1',FLH04_RENDERER_TERMINATION:'1',BASE_URL:'http://127.0.0.1:4174'}])assert.throws(()=>run(env));
  assert.throws(()=>run({FLH04_SOURCE_LIFECYCLE:'1',FLH04_RENDERER_TERMINATION:'1'},'firefox'));
+ for(const engine of ['firefox','webkit']){
+  run({FLH04_PORTABLE:'1'},engine);
+  assert.throws(()=>run({FLH04_PORTABLE:'1',BASE_URL:'https://example.invalid'},engine));
+  assert.throws(()=>run({FLH04_PORTABLE:'0'},engine));
+ }
+ assert.throws(()=>run({FLH04_PORTABLE:'1'},'chromium'));
 });
