@@ -48,7 +48,36 @@
  </div></details>
  <details class="snapshot-manager" id="snapshotManager"><summary><span class="history-disclosure-title"><span class="history-disclosure-icon" data-history-icon="clipboard-check" aria-hidden="true"></span>Historische Referenzwerte</span></summary><div class="reference-toolbar"><label class="field reference-filter"><span>Ansicht</span><select id="referenceArchiveFilter"><option value="active">Aktive Stichtage</option><option value="archived">Archivierte Stichtage</option><option value="all">Alle Stichtage</option></select></label><div class="list-selection-head reference-management-head"><button type="button" class="btn outline" id="addSnapshot" aria-label="Stichtag hinzufügen" title="Stichtag hinzufügen"><span class="action-icon"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="manual-snapshot-label">Stichtag hinzufügen</span></button><button type="button" class="btn light" id="manageReferences" aria-controls="referenceSelectionTools snapshotList" aria-pressed="false">Verwalten</button></div></div><div id="referenceSelectionTools"></div><p id="referenceSelectionStatus" class="small-help" role="status" aria-live="polite"></p><div class="snapshot-manager-body" id="snapshotList"></div></details>
  </div>
- </div></section>
+ </div>
+ <details class="panel projection-panel" id="portfolioProjection">
+  <summary><h2>Zukunft simulieren</h2></summary>
+  <div class="projection-body">
+   <p class="small-help">Simulation mit eigenen Annahmen. Beispielwerte sind frei änderbar. Die Berechnung speichert keine Buchungen oder Stichtage.</p>
+   <p class="small-help projection-source"></p>
+   <form aria-label="Annahmen für Zukunftsszenarien">
+    <div class="projection-inputs">
+     <label class="field"><span>Startwert in EUR</span><input name="start" inputmode="decimal" required maxlength="16"></label>
+     <label class="field"><span>Monatlich in EUR (+ Sparrate / − Entnahme)</span><input name="monthly" inputmode="decimal" required maxlength="16" value="0"></label>
+     <label class="field"><span>Zeitraum in Jahren</span><input name="years" inputmode="numeric" required maxlength="2" value="10"></label>
+     <label class="field"><span>Inflation pro Jahr in %</span><input name="inflation" inputmode="decimal" required maxlength="7" value="2"></label>
+     <label class="field"><span>Untere Rendite pro Jahr in %</span><input name="low" inputmode="decimal" required maxlength="7" value="2"></label>
+     <label class="field"><span>Mittlere Rendite pro Jahr in %</span><input name="middle" inputmode="decimal" required maxlength="7" value="5"></label>
+     <label class="field"><span>Obere Rendite pro Jahr in %</span><input name="high" inputmode="decimal" required maxlength="7" value="8"></label>
+    </div>
+    <div class="projection-actions">
+     <button class="btn outline projection-use-current" type="button" disabled>Belegten Portfoliowert übernehmen</button>
+     <button class="btn primary" type="submit">Szenarien berechnen</button>
+    </div>
+    <p class="small-help projection-message" role="alert"></p><p class="visually-hidden projection-announcement" role="status"></p>
+   </form>
+   <div class="projection-results"></div>
+   <details class="projection-method">
+    <summary>So wird gerechnet</summary>
+    <p class="small-help">Jeden Monat wird mit der zwölften Wurzel aus (1 + Jahresrendite) verzinst. Am Monatsende folgt die Sparrate oder Entnahme. Ungedeckte Entnahmen werden angezeigt. Es entsteht kein Kredit. Die heutige Kaufkraft ergibt sich aus dem Endwert geteilt durch (1 + Inflationsrate) hoch Laufzeit. Steuern, Gebühren und Kursschwankungen sind nicht modelliert.</p>
+   </details>
+  </div>
+ </details>
+ </section>
  <section class="page" id="positionsPage"><section id="qualityReviewPanel" class="panel quality-review-panel" hidden aria-labelledby="qualityReviewHeading"><div class="quality-review-head"><div><div class="panel-kicker">DATENQUALITÄT</div><h2 id="qualityReviewHeading" tabindex="-1">Prüfbereich</h2></div><button type="button" class="btn outline" data-action="close-quality-review">Zurück</button></div><p id="qualityReviewIntro"></p><div id="qualityReviewSummary" class="quality-review-summary"></div><div id="qualityReviewSourceActions" class="quality-review-source-actions"></div><p id="qualityReviewRefreshStatus" class="small-help" role="status" aria-live="polite"></p><details id="qualityReviewRefreshErrors" hidden><summary>Details zur letzten Aktualisierung</summary><p id="qualityReviewRefreshErrorText" class="small-help"></p></details><p id="qualityReviewProgress" class="small-help" role="status" aria-live="polite"></p><div class="position-search-tools hidden" id="qualityReviewTools"><label class="field"><span>Prüfhinweise</span><select id="qualityReviewKind"><option value="all">Alle Hinweise</option><option value="quote">Kurse</option><option value="history">Historie</option></select></label><label class="field"><span>Konto</span><select id="qualityReviewAccount"><option value="">Alle Konten</option></select></label><details class="advanced-apis" hidden id="legacyQuoteAudit"><summary>Anzeige- und Exaktkurse abgleichen</summary>
  <p class="small-help more-panel-intro">Prüft gespeicherte Anzeige- und Exaktkurse lokal, ohne Daten zu übertragen oder zu verändern.</p>
  <div class="source-actions"><button type="button" class="btn outline" id="runLegacyQuoteAudit">Kursdaten lokal prüfen</button></div>

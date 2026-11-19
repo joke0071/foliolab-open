@@ -34,6 +34,12 @@ test('closed or unresponsive page cannot replace the original gate result with a
 });
 const liveSource=readFileSync(new URL('./browser-live-acceptance.mjs',import.meta.url),'utf8');
 function assertHistoricalLiveContract(source){
+ // Require one exact additive offline projection gate. The original
+ // contract fingerprint below still seals every pre-existing assertion.
+ const projectionGate=source.match(/^ const beforeProjection=await state\(p\);\n[\s\S]*?^ report\.checks\.push\('actual controlled offline projection changes no portfolio data'\);\n/gm);
+ assert.equal(projectionGate?.length,1);
+ assert.equal(createHash('sha256').update(projectionGate[0]).digest('hex'),'bf79687eca2a0e5b9f2d49779847ddfc0b6d7623fb560bcae15a37e5e0a01144');
+ source=source.replace(projectionGate[0],'');
  // Reverse only the two exact asset-observation deltas; keep every gate byte.
  const assetDiagnosticDeltas=[
   ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
@@ -51,9 +57,10 @@ function assertHistoricalLiveContract(source){
  for(const [current,previous] of frequencyDeltas){assert.equal(source.split(current).length,2);source=source.replace(current,previous);}
  assert.equal(createHash('sha256').update(source).digest('hex'),'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3');
 }
-test('pre-existing live assertions and deadlines remain byte-identical except exact frequency and diagnostic deltas',()=>assertHistoricalLiveContract(liveSource));
+test('pre-existing live assertions and deadlines remain byte-identical after sealed additive deltas',()=>assertHistoricalLiveContract(liveSource));
 test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
  for(const changed of [
+  liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
   liveSource.replace('assetResponses:[],',''),
   liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
   liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),
