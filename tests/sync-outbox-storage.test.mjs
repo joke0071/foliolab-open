@@ -613,3 +613,37 @@ test('a concurrent edit during selected-branch comparison discards the whole com
   observationComplete:true,comparisonHeads:['L','S']}),/apply-plan-race/);
  assert.equal(reads,2);assert.equal((await readPortfolioSyncRecord(db)).sync.version,1);
 });
+
+test('conflict archive preserves every encrypted branch and ancestor and reopens under an independent pin',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const initial=await readPortfolioSyncRecord(db);
+ const child=(id,parent,gen,n)=>frame(p.raw,id,parent,gen,n.repeat(32));
+ const r=frame(p.raw),b=child('B','R','2','61'),c=child('C','B','3','62'),d=child('D','R','2','63'),z=child('Z','R','2','64');
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1},request={...cas,frameTexts:[d,z,b,c,b],observationComplete:true};
+ const saved=await api.createConflictArchive(request),{text,digest}=saved.archive;
+ const [header,...frames]=text.split('\n');assert.match(header,/^FolioLabConflict\/1 1 1 [0-9a-f]{64}$/);
+ assert.deepEqual(frames,[b,c,d,r,z]);
+ const {createHash}=await import('node:crypto');const pin=t=>createHash('sha256').update(t).digest('hex');
+ assert.equal(digest,pin(text));assert.equal(saved.applyAuthorized,false);
+ const restarted=createSyncOutboxStorage(db,verify);
+ const reopen=(t,hash=digest)=>restarted.reopenConflictArchive({...cas,text:t,expectedDigest:hash,comparisonHeads:['C','D']});
+ const restored=await reopen(text);assert.deepEqual(restored.heads,['C','D','Z']);
+ assert.equal(restored.comparison.baseId,'R');assert.equal(restored.applyAuthorized,false);
+ assert.deepEqual((await api.createConflictArchive({...request,frameTexts:[z,c,d,b]})).archive,saved.archive);
+ await assert.rejects(()=>reopen(text.replace('\n'+z,'')),/digest/);
+ for(const altered of [text.replace('\n'+r,''),text+'\n'+b])
+  await assert.rejects(()=>reopen(altered,pin(altered)),/noncanonical/);
+ await assert.rejects(()=>api.createConflictArchive({...request,observationComplete:false}),/needs-conflict/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),initial);
+ await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+ await assert.rejects(()=>reopen(text),/stale-preimage/);
+});
+
+test('conflict archive is bound to the actual local queue even if the revision counters match',async()=>{
+ const first=await fixture(),second=await fixture();await first.api.capture(first.args);
+ const other=frame(first.p.raw,'S',null,'1','66'.repeat(32));
+ await second.api.capture({...second.args,receipt:await verify(other)});
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const {archive}=await first.api.createConflictArchive({...cas,frameTexts:[other],observationComplete:true});
+ await assert.rejects(()=>second.api.reopenConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest}),/noncanonical/);
+});
