@@ -8,12 +8,28 @@ export const PORTFOLIO_DB_VERSION = 1;
 const STORE = 'records';
 const KEY = 'portfolio';
 const SYNC_KEY = 'sync-outbox-v1';
+const ANCHOR_KEY = 'sync-local-anchor-v1';
+
+// get() alone cannot distinguish a missing key from a stored undefined.
+function readSyncSlot(store,done){
+ const value=store.get(SYNC_KEY);
+ value.onsuccess=()=>{
+  if(value.result!==undefined){done(value.result,true);return;}
+  const count=store.count(SYNC_KEY);
+  count.onsuccess=()=>done(undefined,count.result!==0);
+ };
+}
+function syncSlotValue(value,present){
+ if(present&&value==null)throw Error('sync-storage-malformed-outbox-slot');
+ return present?value:null;
+}
+
 
 // Preserve encrypted originals but invalidate the old sync line on reset/recovery.
 function invalidateSyncState(store, reason) {
  const request=store.get(SYNC_KEY);
  request.onsuccess=()=>{
-  if(request.result!==undefined)store.put({...request.result,disabled:reason},SYNC_KEY);
+  if(request.result!=null)store.put({...request.result,disabled:reason},SYNC_KEY);
  };
 }
 
@@ -242,14 +258,20 @@ export function retirePortfolioCredentials(db,expectedRevision){
  * portfolio bytes or returns before oncomplete. No crypto/network await in tx.
  * High-level caller must reverify persisted encrypted frames before mutation.
  */
-export function readPortfolioSyncRecord(db) {
+export function readPortfolioSyncRecord(db,{forOutbox=false}={}) {
  return new Promise((resolve,reject)=>{
   const tx=db.transaction(STORE,'readonly'),store=tx.objectStore(STORE);
-  let portfolio=null,sync=null;
-  const p=store.get(KEY),s=store.get(SYNC_KEY);
-  p.onsuccess=()=>{portfolio=p.result??null;};
-  s.onsuccess=()=>{sync=s.result??null;};
-  tx.oncomplete=()=>{try{assertRecord(portfolio);resolve({portfolio,sync});}catch(error){reject(error);}};
+  let portfolio=null,value,present=false,anchorPresent=false;
+  const p=store.get(KEY);p.onsuccess=()=>{portfolio=p.result??null;};
+  readSyncSlot(store,(raw,exists)=>{value=raw;present=exists;});
+  if(forOutbox){
+   const anchor=store.count(ANCHOR_KEY);anchor.onsuccess=()=>{anchorPresent=anchor.result!==0;};
+  }
+  tx.oncomplete=()=>{try{
+   assertRecord(portfolio);
+   if(anchorPresent&&!portfolio?.syncEnrollmentRequired)throw Error('sync-storage-unfenced-anchor');
+   resolve({portfolio,sync:syncSlotValue(value,present)});
+  }catch(error){reject(error);}};
   tx.onabort=()=>reject(tx.error||Error('sync-storage-read-aborted'));tx.onerror=()=>{};
  });
 }
@@ -270,11 +292,13 @@ export function adoptPortfolioRecord(db,{expectedPortfolio,raw,settings,allowTom
  }catch(error){return Promise.reject(error);}
  return new Promise((resolve,reject)=>{
   const tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE);
-  let portfolio,sync,reads=0,failure=null,next=null;
+  let portfolio,value,present,anchorPresent,reads=0,failure=null,next=null;
   const finish=()=>{
-   if(++reads!==2)return;
+   if(++reads!==3)return;
    try {
+    const sync=syncSlotValue(value,present);
     assertRecord(portfolio);
+    if(anchorPresent&&!portfolio?.syncEnrollmentRequired)throw Error('sync-storage-unfenced-anchor');
     if(JSON.stringify(portfolio)!==expected)throw Error('adoption-stale-preimage');
     if(sync!==null&&!portfolio?.deleted)
      throw Error('Vorhandene Synchronisierungslinie ohne aktiven Speichermodus. Originaldaten sichern und ausdrücklich wiederherstellen.');
@@ -285,9 +309,10 @@ export function adoptPortfolioRecord(db,{expectedPortfolio,raw,settings,allowTom
     if(sync!==null)store.put({...sync,disabled:'portfolio-reinitialized'},SYNC_KEY);
    }catch(error){failure=error;tx.abort();}
   };
-  const p=store.get(KEY),s=store.get(SYNC_KEY);
+  const p=store.get(KEY),anchor=store.count(ANCHOR_KEY);
+  anchor.onsuccess=()=>{anchorPresent=anchor.result!==0;finish();};
   p.onsuccess=()=>{portfolio=p.result??null;finish();};
-  s.onsuccess=()=>{sync=s.result??null;finish();};
+  readSyncSlot(store,(raw,exists)=>{value=raw;present=exists;finish();});
   tx.oncomplete=()=>resolve(next);
   tx.onabort=()=>reject(failure||tx.error||Error('adoption-write-aborted'));tx.onerror=()=>{};
  });
@@ -318,21 +343,24 @@ export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPort
  }catch(error){return Promise.reject(error);}
  return new Promise((resolve,reject)=>{
   const tx=strictSyncTransaction(db),store=tx.objectStore(STORE);
-  let portfolio,sync,failure=null,reads=0;
+  let portfolio,value,present,anchorPresent,failure=null,reads=0;
   const finish=()=>{
-   if(++reads!==2)return;
+   if(++reads!==3)return;
    try{
+    const sync=syncSlotValue(value,present);
     assertRecord(portfolio);
     if(!portfolio||portfolio.deleted||portfolio.revision!==expectedLocalRevision)throw Error('sync-storage-local-cas');
     if(JSON.stringify(portfolio)!==portfolioBefore)throw Error('sync-storage-portfolio-preimage');
     if(portfolio.syncEnrollmentRequired)throw Error('sync-storage-enrollment-required');
+    if(anchorPresent)throw Error('sync-storage-unfenced-anchor');
     if(JSON.stringify(sync)!==before)throw Error('sync-storage-metadata-cas');
     if(JSON.stringify(next)!==before)store.put(next,SYNC_KEY);
    }catch(error){failure=error;tx.abort();}
   };
-  const p=store.get(KEY),s=store.get(SYNC_KEY);
+  const p=store.get(KEY),anchor=store.count(ANCHOR_KEY);
   p.onsuccess=()=>{portfolio=p.result??null;finish();};
-  s.onsuccess=()=>{sync=s.result??null;finish();};
+  anchor.onsuccess=()=>{anchorPresent=anchor.result!==0;finish();};
+  readSyncSlot(store,(raw,exists)=>{value=raw;present=exists;finish();});
   tx.oncomplete=()=>resolve(next);
   tx.onabort=()=>reject(failure||tx.error||Error('sync-storage-write-aborted'));tx.onerror=()=>{};
  });
@@ -345,7 +373,7 @@ export function readPortfolioSyncAnchorPreimage(db) {
  return new Promise((resolve,reject)=>{
   const tx=db.transaction(STORE,'readonly'),store=tx.objectStore(STORE);
   let portfolio=null,syncPresent=false,anchorPresent=false;
-  const p=store.get(KEY),s=store.count(SYNC_KEY),a=store.count('sync-local-anchor-v1');
+  const p=store.get(KEY),s=store.count(SYNC_KEY),a=store.count(ANCHOR_KEY);
   p.onsuccess=()=>{portfolio=p.result??null;};
   s.onsuccess=()=>{syncPresent=s.result!==0;};
   a.onsuccess=()=>{anchorPresent=a.result!==0;};
