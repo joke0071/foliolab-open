@@ -13,6 +13,29 @@ test('Official transaction and token-batch cursors retain exact large strings/nu
  while(resumed.resume&&rounds++<8)resumed=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({cursors}).fetcher,resume:resumed.resume});
  assert.deepEqual(resumed.events,r.events);assert.ok(resumed.replay);
 });
+test('Blockscout internal pages accept its boolean scope and resume without booking zero-value traces',async()=>{
+ const cursor={index:4,block_number:10,transaction_index:142,include_zero_value:true};
+ const baseline=await fetchEthereumHistory({...options,fetcher:provider().fetcher});
+ const p=provider({cursors:{'internal-transactions':cursor}});
+ const first=await fetchEthereumHistory({...options,maxPages:3,fetcher:p.fetcher});
+ assert.deepEqual(first.issues,['page-limit']);
+ assert.deepEqual(first.resume.jobs.find(job=>job.kind==='internal-transactions').cursor,cursor);
+ assert.equal(first.replay,null);
+ const result=await fetchEthereumHistory({...options,fetcher:p.fetcher,resume:first.resume});
+ assert.deepEqual(result.events,baseline.events);
+ assert.deepEqual(result.replay,baseline.replay);
+ assert.ok(result.replay);
+ const followUp=p.calls.map(call=>new URL(call.url)).filter(url=>url.pathname.endsWith('/internal-transactions')&&url.searchParams.has('index'));
+ assert.equal(followUp.length,1);
+ assert.deepEqual(Object.fromEntries(followUp[0].searchParams),{index:'4',block_number:'10',transaction_index:'142',include_zero_value:'true'});
+ for(const value of [false,'true',1,null,{}]){
+  assert.throws(()=>validateEthereumCursor({...cursor,include_zero_value:value},'internal-transactions'),/provider-cursor-format-changed/);
+ }
+ for(const kind of ['transactions','token-transfers']){
+  assert.throws(()=>validateEthereumCursor({index:1,include_zero_value:true},kind),/provider-cursor-format-changed/);
+ }
+ assert.throws(()=>validateEthereumCursor({include_zero_value:true},'internal-transactions'),/provider-cursor-format-changed/);
+});
 test('Cursor endpoint/type limits reject unknown fields, unsafe numbers, query strings and wrong hashes',()=>{
  for(const [kind,cursor]of [['transactions',{index:1,index_in_batch:2}],['internal-transactions',{index:1,fee:'2'}],['token-transfers',{index:1,redirect:'https://untrusted.invalid'}],['transactions',{index:-1}],['transactions',{index:Number.MAX_SAFE_INTEGER+1}],['transactions',{index:'1&apikey=secret'}],['transactions',{index:1,hash:'0x123'}],['transactions',{index:1,fee:{value:'1'}}],['transactions',{index:1,inserted_at:'invalid'}],['token-transfers',{index_in_batch:'9'.repeat(101)}]])assert.throws(()=>validateEthereumCursor(cursor,kind),/provider-cursor-format-changed/);
  assert.deepEqual(validateEthereumCursor({index:'1',block_number:null,fee:null,value:'0',hash:H(1),inserted_at:cursors.transactions.inserted_at},'transactions').fee,null);
