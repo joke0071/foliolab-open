@@ -161,8 +161,8 @@ test('locked anchor double: completed preparation retry preserves keys, includin
 test('locked anchor double: readonly and commit-read abort expose no result or partial material',async()=>{
  for(const mode of ['readonly','readwrite']) {
   const {db}=await fixture(),before=structuredClone(db.data),transaction=db.transaction;
-  db.transaction=function(store,kind){
-   const tx=transaction.call(this,store,kind);
+  db.transaction=function(store,kind,options){
+   const tx=transaction.call(this,store,kind,options);
    if(kind===mode)setImmediate(()=>tx.abort());
    return tx;
   };
@@ -209,4 +209,14 @@ test('locked anchor double: preparation never bypasses A1/A2 or releases outbox 
  await assert.rejects(()=>api.confirm({http200:true}),/remote-provenance-unavailable/);
  // CryptoKey instances are cloned by each successful readonly double tx.
  assert.deepEqual(db.data,before);
+});
+
+test('a backend ignoring strict durability cannot commit or acknowledge a prepared anchor',async()=>{
+ const {db,portfolio}=await fixture();
+ const native=db.transaction.bind(db);db.transaction=(store,mode)=>native(store,mode);
+ await assert.rejects(()=>prepareLocalSyncAnchor(db),/strict-durability-unavailable/);
+ assert.equal(db.data.has(anchorKey),false);
+ assert.deepEqual(await readPortfolioSyncRecord(db),{portfolio,sync:null});
+ db.transaction=native;
+ assert.equal((await prepareLocalSyncAnchor(db)).status,'prepared-locked');
 });

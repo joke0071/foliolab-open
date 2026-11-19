@@ -22,14 +22,13 @@ async function fixtureBrowserPid(context,profile){
  }finally{await session.detach();}
 }
 
-export async function checkPersistentRestart({setup,operation,checkUncertainRetry}){
+async function withCrashedProfile(run){
  assert.equal(process.platform,'linux');
  const profile=await mkdtemp(join(tmpdir(),'foliolab-outbox-restart-'));
  let context;
  try{
   context=await chromium.launchPersistentContext(profile);
-  const engine=context.browser().version();
-  const evidence=await checkUncertainRetry({context,setup,operation,restart:async()=>{
+  await run(context,async()=>{
    const browser=context.browser(),pid=await fixtureBrowserPid(context,profile);
    const disconnected=once(browser,'disconnected',{signal:AbortSignal.timeout(15000)});
    process.kill(pid,'SIGKILL');
@@ -38,9 +37,54 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
    context=await chromium.launchPersistentContext(profile);
    assert.notEqual(await fixtureBrowserPid(context,profile),pid);
    return {reopened:await context.newPage(),crash:{mechanism:'SIGKILL',target:'browser',freshProcess:true,sameProfile:true}};
-  }});
-  console.log(JSON.stringify({kind:'FLH04PersistentOutboxRestart',status:'PASS',engine,...evidence}));
+  });
  }finally{
   try{if(context?.browser()?.isConnected())await context.close();}finally{await rm(profile,{recursive:true,force:true});}
  }
+}
+
+// A synthetic challenge lets us check continuity of the non-extractable epoch key across processes.
+async function checkEpochKey(page,previous=null){
+ return page.evaluate(async previous=>{
+  const tx=window.syncTest.db.transaction('records','readonly');
+  const request=tx.objectStore('records').get('sync-local-anchor-v1');
+  const anchor=await new Promise((resolve,reject)=>{tx.oncomplete=()=>resolve(request.result);tx.onabort=()=>reject(tx.error);});
+  const params={name:'HKDF',hash:'SHA-256',salt:new Uint8Array(32),info:new TextEncoder().encode('fixture:anchor-reopen')};
+  const key=await crypto.subtle.deriveKey(params,anchor.epochKey,{name:'AES-GCM',length:256},false,[previous?'decrypt':'encrypt']);
+  if(previous){
+   const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(previous.iv)},key,new Uint8Array(previous.cipher));
+   return new TextDecoder().decode(plain);
+  }
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode('persistent test profile'));
+  return {iv:Array.from(iv),cipher:Array.from(new Uint8Array(cipher))};
+ },previous);
+}
+
+export async function checkPersistentRestart({setup,operation,checkUncertainRetry,assertCrashBarrier}){
+ await withCrashedProfile(async(context,restart)=>{
+  const engine=context.browser().version();
+  const evidence=await checkUncertainRetry({context,setup,operation,restart});
+  console.log(JSON.stringify({kind:'FLH04PersistentOutboxRestart',status:'PASS',engine,...evidence}));
+ });
+ await withCrashedProfile(async(context,restart)=>{
+  const source=await context.newPage();await setup(source);
+  const initial=await operation(source,'initialize');
+  const fenced=await operation(source,'adopt',{expected:initial,raw:initial.raw});
+  await source.evaluate(async()=>{
+   const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+   const {prepareLocalSyncAnchor,db}=window.syncTest;
+   window.anchorPreparation=installLifecycleHarness({controller:{prepare:()=>prepareLocalSyncAnchor(db)},action:'prepare',barrierMode:'readwrite'});
+  });
+  await source.waitForFunction(()=>window.anchorPreparation.snapshot().settled||window.anchorPreparation.snapshot().events.some(e=>e.name==='barrier-held'));
+  assertCrashBarrier(await source.evaluate(()=>window.anchorPreparation.snapshot()),'readwrite',0);
+  const proof=await operation(source,'anchor-proof'),challenge=await checkEpochKey(source);
+  const {reopened,crash}=await restart();await setup(reopened);
+  assert.deepEqual(await operation(reopened,'read'),{portfolio:fenced,sync:null});
+  assert.deepEqual(await operation(reopened,'anchor-proof'),proof);
+  assert.equal(await checkEpochKey(reopened,challenge),'persistent test profile');
+  await assert.rejects(()=>operation(reopened,'prepare-anchor'),/existing-anchor/);
+  await assert.rejects(()=>operation(reopened,'recover'),/enrollment-required/);
+  console.log(JSON.stringify({kind:'FLH04PersistentAnchorRestart',status:'PASS',crash}));
+ });
 }
