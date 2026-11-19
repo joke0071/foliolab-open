@@ -1,4 +1,4 @@
-import {createSyncSnapshot,validateSyncSnapshot} from './sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText} from '../../src/atomic-storage.js';
@@ -35,11 +35,31 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,
    expectedPortfolio:current.portfolio,expectedState:current.sync,nextState});
  }
- async function finishPlan(current,revisions,observationComplete){
+ async function compareBranches(current,revisions,plan,frames,[leftId,rightId]){
+  if(plan.status!=='conflict'||!plan.heads.includes(leftId)||!plan.heads.includes(rightId))
+   throw Error('sync-outbox-comparison-needs-conflicting-heads');
+  const parents=new Map([...current.sync.entries.map(e=>e.revision),...revisions].map(r=>[r.revisionId,r.parentId]));
+  const ancestors=new Set();
+  for(let id=leftId;id!==null;id=parents.get(id))ancestors.add(id);
+  let baseId=rightId;
+  while(baseId!==null&&!ancestors.has(baseId))baseId=parents.get(baseId);
+  if(baseId===null)return {status:'no-common-ancestor',leftId,rightId};
+  const plain=[];
+  for(const id of [baseId,leftId,rightId]){
+   const text=frames.get(id);
+   const frame=readVerifiedSyncFrame(await verifyFrame(text));
+   if(frame.frameText!==text||frame.descriptor.revisionId!==id||frame.epochId!==current.sync.epochId||
+      frame.descriptor.portfolioId!==current.sync.portfolioId)throw Error('sync-outbox-frame-binding');
+   plain.push(frame.plain);
+  }
+  return {status:'compared',baseId,leftId,rightId,sections:await compareSyncSnapshotSections(...plain)};
+ }
+ async function finishPlan(current,revisions,observationComplete,frames,comparisonHeads){
   if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
   const last=current.sync.entries.at(-1);
   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
+  if(comparisonHeads)result.comparison=await compareBranches(current,revisions,result,frames,comparisonHeads);
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
   if(syncPreimageText(after.portfolio)!==syncPreimageText(current.portfolio)||syncPreimageText(after.sync)!==syncPreimageText(current.sync))
    throw Error('sync-outbox-apply-plan-race');
@@ -83,7 +103,14 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   },
   // Read-only group-frame preview. The caller still supplies listing completeness.
   // Group authentication is insufficient for individual writer or transport authority.
-  async planFrameApply({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete}) {
+  async planFrameApply({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete,comparisonHeads}) {
+   let pair;
+   if(comparisonHeads!==undefined){
+    if(!Array.isArray(comparisonHeads)||comparisonHeads.length!==2||comparisonHeads[0]===comparisonHeads[1]||
+       !comparisonHeads.every(id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,128}$/.test(id)))
+     throw Error('sync-outbox-invalid-comparison-heads');
+    pair=[comparisonHeads[0],comparisonHeads[1]];
+   }
    if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
    const frames=[];let total=0;
    for(const text of frameTexts){
@@ -105,7 +132,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
     known.set(frame.descriptor.revisionId,text);
     seen.add(text);revisions.push(frame.descriptor);
    }
-   return finishPlan(current,revisions,observationComplete);
+   return finishPlan(current,revisions,observationComplete,known,pair);
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.

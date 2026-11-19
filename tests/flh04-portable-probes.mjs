@@ -12,6 +12,12 @@ async function checkCrossTabFramePlan(browser,setup,operation){
    frameTexts:[frame(root.raw,'B','R','2','71'.repeat(32))]};
   const stable=await a.evaluate(request=>window.syncTest.api.planFrameApply(request),request);
   assert.equal(stable.candidateId,'B');assert.equal(stable.applyAuthorized,false);
+  const left=JSON.parse(root.raw);left.performanceFlowTrackingSince='2026-11-01';
+  const fork=await a.evaluate(request=>window.syncTest.api.planFrameApply(request),{...request,
+   comparisonHeads:['L','B'],frameTexts:[...request.frameTexts,frame(JSON.stringify(left),'L','R','2','72'.repeat(32))]});
+  assert.equal(fork.status,'conflict');assert.equal(fork.applyAuthorized,false);
+  assert.deepEqual(fork.comparison,{status:'compared',baseId:'R',leftId:'L',rightId:'B',
+   sections:[{section:'performanceFlowTrackingSince',change:'left-only'}]});
   await a.evaluate(async request=>{
    const {createSyncOutboxStorage}=await import('/experimental/sync/sync-outbox-storage.js');
    const {db,verify}=window.syncTest;
