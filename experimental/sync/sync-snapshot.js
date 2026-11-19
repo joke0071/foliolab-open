@@ -1,5 +1,6 @@
 import {safeImport,assertDataVersion} from '../../src/model.js';
 import {syncPayloadDigest} from './sync-payload-integrity.js';
+import {validateLedgerOnlyBitcoinSnapshot} from '../../src/unified-bitcoin.js';
 import {units,exact} from '../../src/decimal.js';
 import {provenCashImport,sourceUnmodified} from '../../src/import-identity.js';
 
@@ -267,13 +268,14 @@ const dataFields=object({version:v=>v===3||v===4||v===5,providers:array(provider
  externalCashFlows:array(flow),snapshots:array(snapshot),performanceFlowTrackingSince:scalar,
  priceHistories:map(priceHistory),bookingPresentation:archive,walletHistory:history,purchaseEvidence,
  flatexNetRemovals:v=>Array.isArray(v)&&v.length===0});
-// A ledger-only v5 observation is a different incomplete evidence slice.
-// No blanket v5 acceptance: require the existing complete UH02 economic path
-// (purchase or permanent undo), then let its existing validators decide.
+// Standalone documentary rows can qualify v5 without creating any economic events.
+const ledgerOnly=v=>v.purchaseEvidence?.bitcoinLedger?.length>0&&
+ v.purchaseEvidence.receipts?.length===0&&v.purchaseEvidence.decisions?.length===0&&
+ v.bookings?.length===0&&v.journalEntries?.length===0&&v.externalCashFlows?.length===0;
 const hasUSDPrincipal=v=>(v.journalEntries||[]).some(j=>usdPrincipalJournal(j)||usdPrincipalRemovalJournal(j));
 const dataSchema=v=>dataFields(v)&&
  (v.flatexNetRemovals===undefined||hasUSDPrincipal(v))&&
- (v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin')||hasUSDPrincipal(v))&&
+ (v.version!==5||v.journalEntries?.some(j=>j.source==='unified-bitcoin')||hasUSDPrincipal(v)||ledgerOnly(v))&&
  stakingScope(v)&&
  (v.bookings||[]).every(b=>b.importSource?.sourceId!=='generic-csv'||provenCashImport(b,(v.journalEntries||[]).find(j=>j.id===b.journalEntryId)))&&
  // Scope, not a second economics engine: original positions must still be
@@ -310,6 +312,7 @@ function checkData(data){
  // may migrate/normalize old inputs; a sync gate MUST NOT accept those changes.
  const checked=safeImport(data);delete checked.settings;
  if(!same(data,checked))fail('normalization-required');
+ if(data.version===5&&ledgerOnly(data))validateLedgerOnlyBitcoinSnapshot(checked);
  return data;
 }
 function freeze(value){
