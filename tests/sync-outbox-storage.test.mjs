@@ -477,3 +477,41 @@ test('a backend ignoring strict durability cannot return sendable bytes or advan
  await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/strict-durability-unavailable/);
  assert.deepEqual(await readPortfolioSyncRecord(db),before);
 });
+
+test('frame planning verifies the whole encrypted branch and classifies forks without mutation',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const before=await readPortfolioSyncRecord(db),root=frame(p.raw);
+ const child=frame(p.raw,'B','R','2','41'.repeat(32)),tip=frame(p.raw,'C','B','3','42'.repeat(32));
+ const sibling=frame(p.raw,'X','R','2','43'.repeat(32));
+ const plan=(frameTexts,observationComplete=true)=>api.planFrameApply({expectedLocalRevision:1,expectedSyncVersion:1,frameTexts,observationComplete});
+ const next=await plan([tip,child,root,child]);
+ assert.equal(next.status,'apply-candidate');assert.equal(next.candidateId,'C');assert.equal(next.applyAuthorized,false);
+ const fork=await plan([tip,sibling,child]);assert.equal(fork.status,'conflict');assert.deepEqual(fork.heads,['C','X']);
+ assert.equal((await plan([tip])).reason,'missing-parent');
+ assert.equal((await plan([child],false)).reason,'incomplete-observation');
+ assert.equal((await plan([root])).status,'unchanged');
+ for(const batch of [[frame(p.raw,'R',null,'1','45'.repeat(32))],[child,frame(p.raw,'B','R','2','46'.repeat(32))]])
+  await assert.rejects(()=>plan(batch),/identity-collision/);
+ await assert.rejects(()=>plan([tip,frame(p.raw,'B','R','2','41'.repeat(32),Buffer.alloc(32,99))]),/authentication/);
+ const bad=JSON.parse(p.raw);bad.purchaseEvidence={privateExtension:true};
+ await assert.rejects(()=>plan([tip,frame(JSON.stringify(bad),'B','R','2')]));
+ for(const batch of [[{}],Array(2049).fill(''),['x'.repeat(15000001)],Array(4).fill('x'.repeat(8000000))])
+  await assert.rejects(()=>plan(batch),/frame-batch-limit/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+
+test('frame planning detaches the listing and discards a result raced by another save during remote verification',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const child=frame(p.raw,'B','R','2','49'.repeat(32)),batch=[child];
+ const request={expectedLocalRevision:1,expectedSyncVersion:1,frameTexts:batch,observationComplete:true};
+ const first=api.planFrameApply(request);batch[0]='altered';
+ assert.equal((await first).candidateId,'B');
+ const racing=createSyncOutboxStorage(db,async text=>{
+  const receipt=await verify(text);
+  if(text===child)await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+  return receipt;
+ });
+ await assert.rejects(()=>racing.planFrameApply({...request,frameTexts:[child]}),/apply-plan-race/);
+ const after=await readPortfolioSyncRecord(db);assert.equal(after.portfolio.revision,2);
+ assert.equal(after.sync.entries.length,1);assert.equal(after.sync.entries[0].status,'pending');
+});

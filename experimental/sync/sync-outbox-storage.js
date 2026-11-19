@@ -1,7 +1,8 @@
 import {createSyncSnapshot,validateSyncSnapshot} from './sync-snapshot.js';
-import {readVerifiedSyncFrame} from './sync-frame-verifier.js';
+import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
+import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from '../../src/atomic-storage.js';
-import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
+import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
  * store as the canonical portfolio. No upload, RemoteApply or key persistence.
@@ -33,6 +34,16 @@ export function createSyncOutboxStorage(db,verifyFrame) {
  async function commit(current,nextState) {
   return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,
    expectedPortfolio:current.portfolio,expectedState:current.sync,nextState});
+ }
+ async function finishPlan(current,revisions,observationComplete){
+  if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
+  const last=current.sync.entries.at(-1);
+  const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
+  const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
+  const after=await readPortfolioSyncRecord(db);
+  if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
+   throw Error('sync-outbox-apply-plan-race');
+  return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
  }
  return Object.freeze({
   async recover() {
@@ -68,14 +79,33 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   async planApply({expectedLocalRevision,expectedSyncVersion,revisions,observationComplete}) {
    const remoteDescriptors=structuredClone(revisions); // detach before crypto awaits
    const current=await read(expectedLocalRevision,expectedSyncVersion);
-   if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
-   const last=current.sync.entries.at(-1);
-   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
-   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions:remoteDescriptors,observationComplete});
-   const after=await readPortfolioSyncRecord(db);
-   if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
-    throw Error('sync-outbox-apply-plan-race');
-   return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
+   return finishPlan(current,remoteDescriptors,observationComplete);
+  },
+  // Read-only group-frame preview. The caller still supplies listing completeness.
+  // Group authentication is insufficient for individual writer or transport authority.
+  async planFrameApply({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete}) {
+   if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+   const frames=[];let total=0;
+   for(const text of frameTexts){
+    if(typeof text!=='string'||text.length>SYNC_FRAME_TEXT_LIMIT||(total+=text.length)>SYNC_OUTBOX_TEXT_LIMIT)
+     throw Error('sync-outbox-frame-batch-limit');
+    frames.push(text);
+   }
+   const current=await read(expectedLocalRevision,expectedSyncVersion);
+   if(!current.ticket)return finishPlan(current,[],observationComplete);
+   const known=new Map(current.sync.entries.map(e=>[e.revision.revisionId,e.frameText]));
+   const seen=new Set(known.values()),revisions=[];
+   for(const text of frames){
+    if(seen.has(text))continue;
+    const frame=readVerifiedSyncFrame(await verifySnapshotFrame(text));
+    if(frame.frameText!==text||frame.epochId!==current.sync.epochId||frame.descriptor.portfolioId!==current.sync.portfolioId)
+     throw Error('sync-outbox-frame-binding');
+    if(known.has(frame.descriptor.revisionId))throw Error('sync-outbox-frame-identity-collision');
+    if(known.size>=SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+    known.set(frame.descriptor.revisionId,text);
+    seen.add(text);revisions.push(frame.descriptor);
+   }
+   return finishPlan(current,revisions,observationComplete);
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
