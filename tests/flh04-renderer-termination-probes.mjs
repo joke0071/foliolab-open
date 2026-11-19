@@ -220,7 +220,7 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
  }finally{await context.close();}
  if(process.env.FLH04_BROWSER_PROCESS_RESTART==='1'){
   const {checkPersistentRestart}=await import('./flh04-persistent-restart.mjs');
-  await checkPersistentRestart({setup,operation,checkUncertainRetry});
+  await checkPersistentRestart({setup,operation,checkUncertainRetry,assertCrashBarrier});
   const {checkProfileRestore}=await import('./flh04-profile-restore.mjs');
   await checkProfileRestore({setup,operation});
   await checkCrossTabFramePlan(browser,setup,operation);

@@ -293,6 +293,15 @@ export function adoptPortfolioRecord(db,{expectedPortfolio,raw,settings,allowTom
  });
 }
 
+// A successful sync write may release immutable bytes or acknowledge local key custody.
+export function strictSyncTransaction(db){
+ const tx=db.transaction(STORE,'readwrite',{durability:'strict'});
+ if(tx.durability!=='strict'){
+  tx.abort();throw Error('sync-storage-strict-durability-unavailable');
+ }
+ return tx;
+}
+
 export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPortfolio,expectedState,nextState}) {
  // Snapshot all caller inputs before async IDB callbacks; never accept a live
  // object that can change between verification/CAS/write.
@@ -308,13 +317,7 @@ export function commitPortfolioSyncRecord(db,{expectedLocalRevision,expectedPort
    !(next.version===(expectedState===null?1:expectedState.version+1)||JSON.stringify(next)===before))throw Error('sync-storage-version');
  }catch(error){return Promise.reject(error);}
  return new Promise((resolve,reject)=>{
-  const tx=db.transaction(STORE,'readwrite',{durability:'strict'});
-  if(tx.durability!=='strict'){
-   tx.abort();
-   reject(Error('sync-storage-strict-durability-unavailable'));
-   return;
-  }
-  const store=tx.objectStore(STORE);
+  const tx=strictSyncTransaction(db),store=tx.objectStore(STORE);
   let portfolio,sync,failure=null,reads=0;
   const finish=()=>{
    if(++reads!==2)return;

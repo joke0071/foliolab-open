@@ -1,4 +1,4 @@
-import {readPortfolioSyncAnchorPreimage} from '../../src/atomic-storage.js';
+import {readPortfolioSyncAnchorPreimage,strictSyncTransaction} from '../../src/atomic-storage.js';
 
 // Isolated preparation ONLY. No app integration, enrollment, key export, frame
 // verifier, encoder or unlock API. Stored keys never confer sender/Apply rights.
@@ -33,7 +33,7 @@ function assertEligible({portfolio,syncPresent,anchorPresent}) {
 // Private writer: no exported caller-key or arbitrary prepared-record entry.
 function commitPrepared(db,before,anchor) {
  return new Promise((resolve,reject)=>{
-  const tx=db.transaction('records','readwrite'),store=tx.objectStore('records');
+  const tx=strictSyncTransaction(db),store=tx.objectStore('records');
   let portfolio,syncPresent,anchorPresent,reads=0,failure=null;
   const finish=()=>{
    if(++reads!==3)return;
@@ -57,7 +57,7 @@ function commitPrepared(db,before,anchor) {
  * Existing material is never adopted, overwritten or unlocked, including retry
  * after a committed write whose response was lost. Explicit recovery is open.
  * Platform WebCrypto is trusted; hostile same-realm code/full clones are not
- * excluded by these local checks. Native CryptoKey IDB persistence is unproven.
+ * excluded by these local checks. Recovery of a committed prepared slot does not authorize its use for enrollment.
  */
 export async function prepareLocalSyncAnchor(db) {
  const current=await readPortfolioSyncAnchorPreimage(db);
