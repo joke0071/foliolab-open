@@ -1,6 +1,10 @@
 # FolioLab · HND01 und Restpakete · 19.11.2026
 
-Alleiniger Hauptagent `hnd01-20261119-root-9883dc4ff1d6`. [Übernahme und Ref-Abgleich](https://github.com/joke0071/foliolab-open/commit/7a9771cf06d7761d1f1a9a70b7e8da0f6346e30e). Die Vorgänger-Worktrees sind erhalten. Die Mergefreigabe gilt für beauftragte Pakete am exakt qualifizierten Head. Der Checkpointbranch bleibt als Belegzweig getrennt von Main.
+Alleiniger Hauptagent `hnd01-20261119-root-5b740339df00` nach beauftragter Übernahme am 19.11.2026. Main/Basis für neue Produktarbeit `b89ecb56d3c693ce707b50178d6865e2c0ce43ba`; vorheriger Checkpoint `9202438e7f0b04a7007ce7d872851b7f2dd62b5d`. Öffentliche GitHub-Abfrage ergab keine laufenden oder wartenden Workflows. Die Vorgänger-Worktrees sind erhalten. Alle acht zuletzt vorbereiteten Code- und Testdateien sind bytegleich auf Main. Die restlichen lokalen Änderungen der jüngsten Worktrees bestehen aus generierten Screenshots. Ältere Worktrees bleiben als Belege erhalten. Die Mergefreigabe gilt für beauftragte Pakete am exakt qualifizierten Head. Der Checkpointbranch bleibt als Belegzweig getrennt von Main.
+
+## Aktive Fortsetzung
+
+- **D/P2, Schutz offener Formularentwürfe** ([#157](https://github.com/joke0071/foliolab-open/pull/157), [Roadmap](KONSOLIDIERTE_ROADMAP.md)). Der gemeinsame Editor und Anlage-Assistent sollen bei geänderten Eingaben native Neulade-Warnungen auslösen. Alter Versuch geparkt nach Firefox-Befund. Lokaler Arbeitsbranch `fix/hnd01-draft-reload-protection` auf SW326. Prüfe Anbieter, Assistent und CSV-Vorschau in Chromium, Firefox und WebKit, einschließlich Warnung, Ablehnen, Bestätigen, sauberem Formular, gespeichertem Formular und exakt identischen IndexedDB-Daten bei verworfenem Entwurf. Status in Arbeit.
 
 ## Produktivstand und Releaseabschlüsse
 
@@ -41,7 +45,7 @@ Abgleich mit der [Roadmap](KONSOLIDIERTE_ROADMAP.md), dem Versandcode, den aktue
 
 ## Fortsetzung bei neuer Grundlage
 
-Die freigegebenen intern ausführbaren Folgepakete sind produktiv abgenommen. Externe Fälle starten mit dem jeweils benannten Originalbeleg, Testzugang oder einer Produktentscheidung aus der Übersicht. Die nachgelagerte native Gerätequalität und kleinere Darstellungsdeltas können bei konkretem Nutzungsfeedback gebündelt werden. Neue Kernprobleme bei Daten, Berechnung, Speichern und Bedienung haben Vorrang.
+Der aktive nächste Schnitt steht oben. Externe Fälle starten mit dem jeweils benannten Originalbeleg, Testzugang oder einer Produktentscheidung aus der Übersicht. Die nachgelagerte native Gerätequalität und kleinere Darstellungsdeltas können bei konkretem Nutzungsfeedback gebündelt werden. Neue Kernprobleme bei Daten, Berechnung, Speichern und Bedienung haben Vorrang.
 
 ## Historie
 
