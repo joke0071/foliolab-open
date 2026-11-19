@@ -349,3 +349,19 @@ export async function validateSyncSnapshot(plain){
  checkData(envelope.data);
  return freeze({plain,data:envelope.data});
 }
+
+/** Compare validated financial sections without exposing values or inferring a merge. */
+export async function compareSyncSnapshotSections(basePlain,leftPlain,rightPlain){
+ const {data:base}=await validateSyncSnapshot(basePlain);
+ const {data:left}=await validateSyncSnapshot(leftPlain);
+ const {data:right}=await validateSyncSnapshot(rightPlain);
+ const sections=[];
+ for(const section of [...new Set([...Object.keys(base),...Object.keys(left),...Object.keys(right)])].sort()){
+  const leftChanged=!same(base[section],left[section]),rightChanged=!same(base[section],right[section]);
+  if(!leftChanged&&!rightChanged)continue;
+  let change=leftChanged?'left-only':'right-only';
+  if(leftChanged&&rightChanged)change=same(left[section],right[section])?'both-equal':'both-different';
+  sections.push({section,change});
+ }
+ return sections;
+}

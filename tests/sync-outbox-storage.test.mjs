@@ -571,3 +571,45 @@ test('cutover cannot equate distinct structured-clone data with the same JSON en
   assert.deepEqual(db.data.get('portfolio'),actual);
  }
 });
+
+test('selected conflict heads are compared to the nearest shared ancestor without leaking portfolio values',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const before=await readPortfolioSyncRecord(db),baseline=JSON.parse(p.raw);
+ baseline.providers.push(createProvider({id:'private-broker',name:'Sensitive source',type:'broker'}));
+ const left=structuredClone(baseline),right=structuredClone(baseline);
+ left.providers[0].name='Sensitive left';right.providers[0].name='Sensitive right';
+ left.performanceFlowTrackingSince='2026-11-01';
+ right.snapshots.push({id:'snap',date:'2026-11-01',total:1,totalEURExact:'1',recordedAt:null,byAccount:null,
+  byPosition:null,valuationStatus:'manual',source:'manual',quoteTimes:[],revisions:[],note:''});
+ const middle=frame(JSON.stringify(baseline),'M','R','2','45'.repeat(32));
+ const l=frame(JSON.stringify(left),'L','M','3','46'.repeat(32)),r=frame(JSON.stringify(right),'S','M','3','47'.repeat(32));
+ const third=frame(p.raw,'T','R','2','49'.repeat(32));
+ const pair=['L','S'];
+ const request={expectedLocalRevision:1,expectedSyncVersion:1,frameTexts:[r,third,l,middle],observationComplete:true,comparisonHeads:pair};
+ const pending=api.planFrameApply(request);pair.reverse();const result=await pending;
+ assert.equal(result.status,'conflict');assert.equal(result.applyAuthorized,false);
+ assert.deepEqual(result.comparison,{status:'compared',baseId:'M',leftId:'L',rightId:'S',sections:[
+  {section:'performanceFlowTrackingSince',change:'left-only'},{section:'providers',change:'both-different'},{section:'snapshots',change:'right-only'}]});
+ assert.doesNotMatch(JSON.stringify(result),/Sensitive|private-broker|2026-11-01/);
+ const equal=await api.planFrameApply({...request,frameTexts:[middle,l,frame(JSON.stringify(left),'S','M','3','48'.repeat(32))]});
+ assert.equal(equal.status,'conflict');assert.deepEqual(equal.comparison.sections,[
+  {section:'performanceFlowTrackingSince',change:'both-equal'},{section:'providers',change:'both-equal'}]);
+ for(const heads of [['M','L'],['L','absent'],['S','S'],['L'],null])
+  await assert.rejects(()=>api.planFrameApply({...request,comparisonHeads:heads}),/comparison/);
+ const separate=await api.planFrameApply({...request,comparisonHeads:['L','Z'],frameTexts:[l,middle,frame(p.raw,'Z',null,'1','50'.repeat(32))]});
+ assert.deepEqual(separate.comparison,{status:'no-common-ancestor',leftId:'L',rightId:'Z'});
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
+
+test('a concurrent edit during selected-branch comparison discards the whole comparison',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const child=frame(p.raw,'L','R','2','51'.repeat(32)),sibling=frame(p.raw,'S','R','2','52'.repeat(32));
+ let reads=0;
+ const racing=createSyncOutboxStorage(db,async text=>{
+  if(text===sibling&&++reads===2)await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+  return verify(text);
+ });
+ await assert.rejects(()=>racing.planFrameApply({expectedLocalRevision:1,expectedSyncVersion:1,frameTexts:[child,sibling],
+  observationComplete:true,comparisonHeads:['L','S']}),/apply-plan-race/);
+ assert.equal(reads,2);assert.equal((await readPortfolioSyncRecord(db)).sync.version,1);
+});
