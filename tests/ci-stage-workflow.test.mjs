@@ -13,6 +13,16 @@ function normalizeUbuntuMirrorSetup(source) {
  assert.equal(source.split(originalUbuntuMirrorSetup).length,1,'Old forced single mirror must be replaced in both paths');
  return source.split(boundedUbuntuMirrorSetup).join(originalUbuntuMirrorSetup);
 }
+const pagesArtifactName='github-pages-attempt-${{ github.run_attempt }}';
+const originalPagesUpload='      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: _site\n';
+const originalPagesDeploy='      - id: deployment\n        uses: actions/deploy-pages@v4\n';
+const retryPagesUpload=originalPagesUpload.replace('          path:',`          name: ${pagesArtifactName}\n          path:`);
+const retryPagesDeploy=originalPagesDeploy+`        with:\n          artifact_name: ${pagesArtifactName}\n`;
+function normalizePagesArtifactName(source){
+ assert.equal(source.split(retryPagesUpload).length,2,'Exactly one attempt-specific Pages artifact upload required');
+ assert.equal(source.split(retryPagesDeploy).length,2,'Deploy must resolve only the Pages artifact for that attempt');
+ return source.replace(retryPagesUpload,originalPagesUpload).replace(retryPagesDeploy,originalPagesDeploy);
+}
 const pinnedCacheSteps = [
  [
   "      - name: Restore pinned Chromium shell cache (FAST)",
@@ -49,7 +59,7 @@ function originalContractWithOnlyPinnedCaches(source) {
   assert.equal(source.split(observed).length,2,'Exact worker observation required once in each live engine path');
   source=source.replace(observed,original);
  }
- source=normalizeUbuntuMirrorSetup(source);
+ source=normalizePagesArtifactName(normalizeUbuntuMirrorSetup(source));
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
@@ -155,6 +165,19 @@ test('stage policy rejects missing review event, unsafe gate, reduced deploy dep
 test('superseded PR runs share one concurrency group while main remains separate', () => {
   assert.ok(source.includes("group: foliolab-open-pages-"+'$'+"{{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}"));
   assert.match(source, /cancel-in-progress: true/);
+});
+
+test('a Pages retry uses the artifact produced by its own attempt and retains prior uploads',()=>{
+ const artifactName=attempt=>pagesArtifactName.replace('${{ github.run_attempt }}',String(attempt));
+ const available=[1,2,3].map(artifactName);
+ for(const attempt of [1,2,3])assert.deepEqual(available.filter(name=>name===artifactName(attempt)),[artifactName(attempt)]);
+ for(const changed of [
+  source.replace(retryPagesUpload,originalPagesUpload),
+  source.replace(retryPagesDeploy,originalPagesDeploy),
+  source.replace('artifact_name: '+pagesArtifactName,'artifact_name: github-pages'),
+  source.replace(retryPagesUpload,retryPagesUpload+retryPagesUpload),
+  source.replaceAll('github.run_attempt','github.run_number')
+ ]) {assert.notEqual(changed,source);assert.throws(()=>validate(changed));}
 });
 
 test('UH03 Kraken additions are mandatory without changing any sealed earlier gate',()=>{
