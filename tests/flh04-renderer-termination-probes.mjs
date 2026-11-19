@@ -47,57 +47,49 @@ export function assertCrashBarrier(snapshot,barrierMode,sourceCount=1){
 
 // Interrupt the real begin() after its IDB transaction commits but before the
 // caller receives sendable bytes. Both frames are queued through the storage API.
-async function checkUncertainRetry({browser,setup,operation}){
- const context=await browser.newContext();
- try{
-  const source=await context.newPage();
-  await setup(source);
-  const root=await operation(source,'initialize');
-  const rootFrame=frame(root.raw);
-  await operation(source,'capture',{expectedLocalRevision:root.revision,expectedSyncVersion:null,frameText:rootFrame});
-  const model=JSON.parse(root.raw);
-  model.providers.push({id:'test-broker',name:'Second revision',type:'broker'});
-  const child=await operation(source,'save',{revision:root.revision,raw:JSON.stringify(model)});
-  const childFrame=frame(child.raw,'S','R','2','56'.repeat(32));
-  const queued=await operation(source,'capture',{expectedLocalRevision:child.revision,expectedSyncVersion:1,frameText:childFrame});
-  assert.deepEqual(queued.entries.map(e=>[e.capturedLocalRevision,e.status,e.frameText]),
-   [[root.revision,'pending',rootFrame],[child.revision,'pending',childFrame]]);
-  assert.equal(queued.anchorIndex,-1);
-  const begin={expectedLocalRevision:child.revision,expectedSyncVersion:queued.version,revisionId:'R'};
-  await source.evaluate(async args=>{
-   const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
-   window.lifecycle=installLifecycleHarness({controller:window.syncTest.api,action:'begin',model:args,barrierMode:'readwrite'});
-  },begin);
-  await source.waitForFunction(()=>window.lifecycle.snapshot().settled||window.lifecycle.snapshot().events.some(e=>e.name==='barrier-held'));
-  const barrier=await source.evaluate(()=>window.lifecycle.snapshot());
-  assertCrashBarrier(barrier,'readwrite',0); // begin uses the open database handle
-  const uncertain=structuredClone(queued);
-  uncertain.version++;
-  uncertain.entries[0].status='uncertain';
-  const expected={portfolio:child,sync:uncertain};
-  assert.deepEqual(await operation(source,'read'),expected);
-  const crash=await crashRenderer({context,page:source,browser});
-
-  const reopened=await context.newPage();
-  await setup(reopened);
-  assert.deepEqual(await operation(reopened,'read'),expected);
-  const recovered=await operation(reopened,'recover');
-  assert.deepEqual(recovered.state,uncertain);
-  assert.equal(recovered.localRevision,child.revision);
-  assert.equal(recovered.summary.remoteAnchor,null);
-  assert.equal(recovered.summary.acknowledgedLocalRevision,null);
-  assert.equal(recovered.summary.hasPendingChanges,true);
-  const retry={...begin,expectedSyncVersion:uncertain.version};
-  await assert.rejects(()=>operation(reopened,'begin',begin),/stale-preimage/);
-  await assert.rejects(()=>operation(reopened,'begin',{...retry,revisionId:'S'}),/anchor-order/);
-  assert.deepEqual(await operation(reopened,'begin',retry),{state:uncertain,frameText:rootFrame});
-  await assert.rejects(()=>operation(reopened,'confirm',{...retry,frameText:rootFrame}),/remote-provenance-unavailable/);
-  assert.deepEqual(await operation(reopened,'read'),expected);
-  console.log(JSON.stringify({kind:'FLH04OutboxRetryAfterCrash',status:'PASS',engine:browser.version(),
-   crash,events:barrier.events,entryStates:uncertain.entries.map(entry=>entry.status)}));
- }finally{
-  await context.close();
- }
+async function checkUncertainRetry({context,setup,operation,restart}){
+ const source=await context.newPage();
+ await setup(source);
+ const root=await operation(source,'initialize');
+ const rootFrame=frame(root.raw);
+ await operation(source,'capture',{expectedLocalRevision:root.revision,expectedSyncVersion:null,frameText:rootFrame});
+ const model=JSON.parse(root.raw);
+ model.providers.push({id:'test-broker',name:'Second revision',type:'broker'});
+ const child=await operation(source,'save',{revision:root.revision,raw:JSON.stringify(model)});
+ const childFrame=frame(child.raw,'S','R','2','56'.repeat(32));
+ const queued=await operation(source,'capture',{expectedLocalRevision:child.revision,expectedSyncVersion:1,frameText:childFrame});
+ assert.deepEqual(queued.entries.map(e=>[e.capturedLocalRevision,e.status,e.frameText]),
+  [[root.revision,'pending',rootFrame],[child.revision,'pending',childFrame]]);
+ assert.equal(queued.anchorIndex,-1);
+ const begin={expectedLocalRevision:child.revision,expectedSyncVersion:queued.version,revisionId:'R'};
+ await source.evaluate(async args=>{
+  const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+  window.lifecycle=installLifecycleHarness({controller:window.syncTest.api,action:'begin',model:args,barrierMode:'readwrite'});
+ },begin);
+ await source.waitForFunction(()=>window.lifecycle.snapshot().settled||window.lifecycle.snapshot().events.some(e=>e.name==='barrier-held'));
+ const barrier=await source.evaluate(()=>window.lifecycle.snapshot());
+ assertCrashBarrier(barrier,'readwrite',0); // begin uses the open database handle
+ const uncertain=structuredClone(queued);
+ uncertain.version++;
+ uncertain.entries[0].status='uncertain';
+ const expected={portfolio:child,sync:uncertain};
+ assert.deepEqual(await operation(source,'read'),expected);
+ const {reopened,crash}=await restart(source);
+ await setup(reopened);
+ assert.deepEqual(await operation(reopened,'read'),expected);
+ const recovered=await operation(reopened,'recover');
+ assert.deepEqual(recovered.state,uncertain);
+ assert.equal(recovered.localRevision,child.revision);
+ assert.equal(recovered.summary.remoteAnchor,null);
+ assert.equal(recovered.summary.acknowledgedLocalRevision,null);
+ assert.equal(recovered.summary.hasPendingChanges,true);
+ const retry={...begin,expectedSyncVersion:uncertain.version};
+ await assert.rejects(()=>operation(reopened,'begin',begin),/stale-preimage/);
+ await assert.rejects(()=>operation(reopened,'begin',{...retry,revisionId:'S'}),/anchor-order/);
+ assert.deepEqual(await operation(reopened,'begin',retry),{state:uncertain,frameText:rootFrame});
+ await assert.rejects(()=>operation(reopened,'confirm',{...retry,frameText:rootFrame}),/remote-provenance-unavailable/);
+ assert.deepEqual(await operation(reopened,'read'),expected);
+ return {crash,events:barrier.events,entryStates:uncertain.entries.map(entry=>entry.status)};
 }
 
 export async function runRendererTerminationCandidate({browser,setup,operation,url}){
@@ -188,5 +180,16 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   engine:browser.version(),cases:results,instrumentation:'native transaction complete callback held after event; native renderer termination; no browser-process or power-loss claim',
   openCases:['native IDB forced-close event','browser-process crash','power loss','real quota','full writer/worker/assets/keyslot/ABA/recovery qualification']}));
  if(results.some(x=>x.status!=='PASS'))throw new AggregateError(results.filter(x=>x.status!=='PASS').map(x=>Error(x.id)),'renderer termination candidate failed');
- await checkUncertainRetry({browser,setup,operation});
+ const context=await browser.newContext();
+ try{
+  const evidence=await checkUncertainRetry({context,setup,operation,restart:async page=>{
+   const crash=await crashRenderer({context,page,browser});
+   return {reopened:await context.newPage(),crash};
+  }});
+  console.log(JSON.stringify({kind:'FLH04OutboxRetryAfterCrash',status:'PASS',engine:browser.version(),...evidence}));
+ }finally{await context.close();}
+ if(process.env.FLH04_BROWSER_PROCESS_RESTART==='1'){
+  const {checkPersistentRestart}=await import('./flh04-persistent-restart.mjs');
+  await checkPersistentRestart({setup,operation,checkUncertainRetry});
+ }
 }

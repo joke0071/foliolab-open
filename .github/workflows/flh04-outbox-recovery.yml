@@ -21,7 +21,7 @@ jobs:
         run: |
           npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1
           npx --no-install playwright install chromium --only-shell
-      - name: Exercise renderer recovery and storage-version fences
+      - name: Exercise renderer and browser restart, recovery and storage-version fences
         env:
           ENGINE: chromium
         run: |
@@ -33,5 +33,5 @@ jobs:
             http://127.0.0.1:4173/tests/storage-origin.html | cmp - tests/storage-origin.html
           kill -0 "$server"
           ulimit -c 0
-          FLH04_SOURCE_LIFECYCLE=1 FLH04_RENDERER_TERMINATION=1 timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
+          FLH04_BROWSER_PROCESS_RESTART=1 FLH04_SOURCE_LIFECYCLE=1 FLH04_RENDERER_TERMINATION=1 timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
           FLH04_VERSION2_CANDIDATE=1 timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
