@@ -1,0 +1,73 @@
+{
+  "version": "SW324",
+  "scope": [
+    "Position chart coverage and compact CSV actions",
+    "COPY01 storage/backup guidance",
+    "Pages attempt-specific artifact selection",
+    "Ubuntu dependency mirror recovery"
+  ],
+  "main": "8ea5f210620a847da73e746b16cb31c798a98e44",
+  "tree": "905855ae9905ba4d7d29b63ee085f761862931cf",
+  "productChangePR": 360,
+  "setupRecoveryPR": 361,
+  "run": 44529527421,
+  "attempt": 1,
+  "deployJob": 135591131391,
+  "liveJob": 135591319757,
+  "completed": "2026-11-19T14:02:14Z",
+  "precedingFailedRun": {
+    "run": 44521092293,
+    "attempt1": {
+      "chromium": "success",
+      "crossProbeFailures": [
+        135549716205,
+        135549716150
+      ],
+      "crossAptFailure": 135549716142
+    },
+    "attempt2": {
+      "crossProbeFailures": [
+        135562545226,
+        135562546132
+      ],
+      "cross3Success": 135562545887
+    }
+  },
+  "browserSetup": {
+    "cross1": "archive.ubuntu.com",
+    "cross2": "mirrors.edge.kernel.org",
+    "cross3": "archive.ubuntu.com"
+  },
+  "pages": {
+    "artifact": 14534947335,
+    "name": "github-pages-attempt-1",
+    "sha256": "9dffc141dcb4eef06a18036c113f2bfd870cc3cafcde237162ab1c0677fd823e"
+  },
+  "liveArtifact": 14536984959,
+  "archive": "FolioLab-SW324-Live-Accepted.zip",
+  "archiveCRC": "PASS",
+  "pinnedByteReadback": "PASS",
+  "report": "live/report.json",
+  "byteSize": 152743443,
+  "entries": 1946,
+  "sha256": "7cdf925f0984587b6728662aea02eae4880e9f44a4e4995da8dae7d1a9b80778",
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu"
+  ],
+  "axeScans": 20,
+  "assetMatches": 157,
+  "origin": "https://foliolab.unperfekt.at/",
+  "kraken": {
+    "Chromium": 7,
+    "Firefox": 7,
+    "WebKit": 7
+  }
+}
