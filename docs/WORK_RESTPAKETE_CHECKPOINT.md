@@ -1,3 +1,9 @@
+## HND01 · Übernahme der Gesamtentwicklung · 19.11.2026
+
+Aktiver alleiniger Hauptagent `hnd01-20261119-root-3743061d806b` gemäß Jochens Übernahmeauftrag. Die frühere Zuständigkeit `hnd01-1point0-20261117-root-5c3182824c09` ist für weitere Projektmutationen abgelöst. Lesende Gegenprüfungen bestätigten unveränderte Main-, Checkpoint-, Fix- und Pilot-Refs. Der einzige laufende Produktworkflow ist die Integration von #357. Die Übernahme erfolgt auf dem erwarteten Checkpoint-Head `45a315835edf4edc154d1e5772894c96c2c5aa67`. Für sechs zugängliche Vorgänger-Worktrees wurden HEAD, Index, lokale Diffs und neue Projektdateien lokal gesichert. Die ursprünglichen Worktrees blieben unangetastet.
+
+**Aktiver Pfad:** [PR #357](https://github.com/joke0071/foliolab-open/pull/357) auf Head `3e86dc0b534a9faab11be70594bc1e8d39638086`. [Cross 1](https://github.com/joke0071/foliolab-open/actions/runs/44479219013/job/135415246157) und [Cross 2](https://github.com/joke0071/foliolab-open/actions/runs/44479219013/job/135415182793) mit erfolgreichem APT und Browserlauf. Beide Logs weisen bezogene Ubuntu-Pakete von `mirrors.edge.kernel.org` aus. Cross 3 hat APT beendet und prüft die Browser. Wallet grün. Main `ae2c0aa8` enthält SW322, die veröffentlichte PWA liefert weiter SW321. Nach vollständiger SW322-Liveabnahme folgt der begrenzte Verlaufspilot auf `f8c4325f`.
+
 ## SW322 · Ubuntu-Fallback separat korrigiert und in Prüfung · 19.11.2026
 
 [Main-Versuch 2](https://github.com/joke0071/foliolab-open/actions/runs/44474927927/attempts/2) wiederholte die drei fehlgeschlagenen Cross-Jobs. Zwei Jobs kamen erneut wegen Ubuntu-Übertragung nicht bis zu den Browserprüfungen. Der dritte erreichte den Browserlauf. Das Acht-Minuten-Limit brach noch laufende Paketabrufe aus `us.archive.ubuntu.com` ab. [Belege beider Fehler und der geprüften Originalartefakte](release-evidence/sw322-main-attempt2-ubuntu-2026-11-19.json). SW322 ist integriert und wartet vor dem Deployment.
