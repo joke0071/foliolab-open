@@ -6,6 +6,10 @@ The isolated implementation lives in `experimental/sync/`, outside the Pages pay
 
 Capture derives the snapshot from the committed IDB portfolio and verifies the submitted frame with the adapter's own verifier. The transaction compares the complete original portfolio and outbox after those asynchronous checks. Reopen and retry validate every stored snapshot and compare the captured head to the current financial bytes when their local revisions match. Historical raw-portfolio frames are preserved for explicit recovery. They cannot be sent or silently converted. The supported financial schema below is unchanged.
 
+## Standalone Ledger Live BTC observations · 19.11.2026
+
+A v5 financial snapshot may carry confirmed documentary BTC receipts without Bittr receipts, decisions, bookings, journal entries or external cash flows. Each Ledger row must reproduce its native observation ID with a missing or zero fee, identify a distinct transaction in the single configured BTC wallet, and match all owned incoming vouts, their fingerprints and exact sum. Accepted mainnet history must reconcile with the scanned position. A missing history, ambiguous row or unsupported fee blocks the whole snapshot. Restore and reimport retain the scan quantity and create no bookings.
+
 ## Current scope · 13.11.2026
 
 Canonical accepted BTC/ETH/SOL sessions and separate canonical CSV/user-confirmed
@@ -17,8 +21,7 @@ The dated CSV-cash, manual EUR-cash management and complete native USD-principal
 slices below additionally preserve their full active/permanent-removal provenance.
 The dated ETH-staking slice additionally supports complete principal and
 reward+fee groups with their permanent original-group withdrawal chains.
-Ledger-only v5, other import/management/withdrawal/bridge evidence and pending/resume
-remain unsupported in full. Earlier empty-only price-history statements below describe
+Other import/management/withdrawal/bridge evidence and pending/resume remain unsupported outside the dated slices. Earlier empty-only price-history statements below describe
 historical slices and are superseded only for this dated scope.
 No active integration or Apply permission, no independent crypto/native acceptance.
 

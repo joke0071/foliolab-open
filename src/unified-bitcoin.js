@@ -1,7 +1,7 @@
 /** UH02: economic backfill into the existing journal. Scanned quantities stay authoritative. */
 import {parseCSV} from './csv-import.js';
 import {parseBittrEvidence,validatePurchaseEvidence,emptyPurchaseEvidence,previewPurchaseEvidence,confirmPurchaseEvidence} from './purchase-evidence.js';
-import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV} from './ledger-live.js';
+import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,ledgerObservationId} from './ledger-live.js';
 import {validateHistorySession,bitcoinHistoryScope} from './wallet-history-state.js';
 import {replayWalletHistory} from './wallet-history-core.js';
 import {sourceDigest,bookingOwnership,sourceUnmodified} from './import-identity.js';
@@ -47,17 +47,57 @@ function scope(model,positionId){
  if(!ledgerQuantityAudit(model).ok)throw Error('Bestehendes Journal stimmt nicht mit den Beständen überein.');
  return {p,session};
 }
+function ownIncomingVouts(session,accountId){
+ const byTx=new Map();
+ for(const event of session.events){
+  if(event.accountId!==accountId||event.type!=='incoming'||event.locator.kind!=='vout')continue;
+  if(!byTx.has(event.txid))byTx.set(event.txid,[]);
+  byTx.get(event.txid).push(event);
+ }
+ return byTx;
+}
+function ledgerEventRefs(events,amount){
+ const received=events.reduce((sum,event)=>sum+BigInt(event.quantityBaseUnits),0n);
+ if(!events.length||received*10n**10n!==units(amount))throw Error('Ledger-BTC-Eingang ohne exakt verifizierte eigene vout-Zuordnung.');
+ return events.map(event=>({id:event.id,fingerprint:fingerprint(event)})).sort((a,b)=>a.id.localeCompare(b.id));
+}
+
+/** Verify documentary rows against the current scan without creating purchases or reconstructing a CSV. */
+export function validateLedgerOnlyBitcoinSnapshot(model){
+ const wallet=model.positions.find(position=>position.wallet?.enabled&&['btc','btc-hd'].includes(position.wallet.chain));
+ const {p,session}=scope(model,wallet?.id);
+ const stream=session.streams[0];
+ if(p.symbol!=='BTC'||stream.network!=='bitcoin'||stream.chainId!=='mainnet'||stream.assetId!=='bitcoin'||
+    stream.decimals!==8||stream.contract!==null||stream.mint!==null)throw Error('Ledger-Beleg ohne bestätigten Bitcoin-Mainnet-Bestand.');
+ const byTx=ownIncomingVouts(session,p.accountId),seen=new Set();
+ const start=BigInt(stream.opening.beforeBlock),end=BigInt(stream.throughBlock);
+ const ownerDigest=sourceDigest(p.wallet.address),accountRef=sourceDigest(JSON.stringify(p.wallet.address));
+ for(const row of model.purchaseEvidence.bitcoinLedger){
+  if(row.ownerDigest!==ownerDigest||seen.has(row.txid))throw Error('Ledger-Eingang ohne eindeutige Wallet- und Transaktionsbindung.');
+  seen.add(row.txid);
+  // Format v5 omits the original fee. Accept only an identity reproduced with an absent or explicit zero fee.
+  const matchesId=[null,'0'].some(fee=>ledgerObservationId(accountRef,'BTC',row.timestamp,'Confirmed','IN',row.txid,row.amountBTC,fee)===row.id);
+  if(!matchesId)throw Error('Ledger-Belegidentität lässt sich nicht vollständig prüfen.');
+  const events=byTx.get(row.txid)||[];
+  if(events.some(event=>event.locator.subindex!=='0'||!event.blockHash||event.blockHeight===null||
+   BigInt(event.blockHeight)<start||BigInt(event.blockHeight)>end))
+   throw Error('Ledger-Ausgang außerhalb der bestätigten Bitcoin-Historie.');
+  const refs=ledgerEventRefs(events,row.amountBTC);
+  if(refs.length!==row.events.length||refs.some((ref,i)=>ref.id!==row.events[i].id||ref.fingerprint!==row.events[i].fingerprint))
+   throw Error('Ledger-Beleg stimmt nicht mit allen eigenen Bitcoin-Ausgängen überein.');
+ }
+}
 /** Pure preview: each group is all own verified vouts for a tx, never a txid-wide dedupe. */
 export function previewUnifiedBitcoin(model,input,positionId){
  const {p,session}=scope(model,positionId),state=validatePurchaseEvidence(model.purchaseEvidence??emptyPurchaseEvidence());
  const ownerDigest=sourceDigest(p.wallet.address),observations=new Map((state.bitcoinLedger||[]).filter(r=>r.ownerDigest===ownerDigest).map(r=>[r.id,r]));
  const ledger=(input.operations||[]).filter(r=>r.currency==='BTC'&&r.accountIdentity===p.wallet.address&&r.type==='IN'&&r.status==='Confirmed'&&!r.issues.length);
  const excluded=(input.operations||[]).length-ledger.length;
+ const byTx=ledger.length?ownIncomingVouts(session,p.accountId):null;
  for(const row of ledger){
-  const events=session.events.filter(e=>e.txid===row.txid.toLowerCase()&&e.accountId===p.accountId&&e.type==='incoming'&&e.locator.kind==='vout');
-  const received=events.reduce((n,e)=>n+BigInt(e.quantityBaseUnits),0n);
-  if(!events.length||received*10n**10n!==units(row.amountExact))throw Error('Ledger-BTC-Eingang ohne exakt verifizierte eigene vout-Zuordnung.');
-  const observation={id:row.observationId,ownerDigest,txid:row.txid.toLowerCase(),timestamp:row.timestamp,amountBTC:row.amountExact,events:events.map(e=>({id:e.id,fingerprint:fingerprint(e)})).sort((a,b)=>a.id.localeCompare(b.id))};
+  const txid=row.txid.toLowerCase();
+  const observation={id:row.observationId,ownerDigest,txid,timestamp:row.timestamp,amountBTC:row.amountExact,
+   events:ledgerEventRefs(byTx.get(txid)||[],row.amountExact)};
   const old=observations.get(observation.id);if(old&&digest(old)!==digest(observation))throw Error('Gespeicherter Ledger-Nachweis widerspricht dem aktuellen Blockchain-Beleg.');
   observations.set(observation.id,observation);
  }

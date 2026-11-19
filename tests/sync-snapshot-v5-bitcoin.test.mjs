@@ -4,6 +4,10 @@ import {ledgerModel,ledgerEvidence,ledgerCSV,at} from './ledger-live-fixture.mjs
 import {safeImport,backup,createPosition} from '../src/model.js';
 import {readUnifiedBitcoinFiles,previewUnifiedBitcoin,confirmUnifiedBitcoin,undoUnifiedBitcoin} from '../src/unified-bitcoin.js';
 import {sourceDigest} from '../src/import-identity.js';
+import {commitPortfolioRecord,readPortfolioSyncRecord} from '../src/atomic-storage.js';
+import {createSyncOutboxStorage} from '../experimental/sync/sync-outbox-storage.js';
+import {memoryDB} from './transaction-double.mjs';
+import {portfolioId,epochId,verify,snapshotFrame} from './sync-outbox-fixture.mjs';
 import {setArchivePresentation} from '../src/booking-history.js';
 import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
@@ -82,11 +86,76 @@ test('internal undefined wallet projection keys do not reject canonical persiste
  const d=fixture();assert.ok(!Object.hasOwn(d.positions[0].wallet,'chainId'));await roundtrip(d);
  for(const edit of [d=>delete d.positions[0].wallet.contract,d=>d.positions[0].wallet.chainId=null,d=>d.positions[0].wallet.addressType=null,d=>d.positions[0].name=' Synthetic BTC ',d=>d.purchaseEvidence.receipts[0].fiatEUR='500.0']){const x=structuredClone(d);edit(x);await rejectBoth(x);}
 });
-test('empty v5 and isolated populated Ledger remain wholly unsupported',async()=>{
- const m=ledgerEvidence(ledgerModel()),i=input(m);delete m.purchaseEvidence;
- const only=canonical(commit(m,{receipts:[],operations:i.operations}));assert.equal(only.version,5);assert.equal(only.bookings.length,0);assert.equal(only.purchaseEvidence.bitcoinLedger.length,1);
- await rejectBoth(only,/unsupported-data-or-field|envelope/);
- const empty=canonical(ledgerModel());empty.version=5;await rejectBoth(empty,/unsupported-data-or-field|envelope/);
+function ledgerOnlyFixture(rows=[{}],split=false){
+ const m=ledgerEvidence(ledgerModel());delete m.purchaseEvidence;
+ if(split){
+  const session=m.walletHistory.sessions[0],event=session.events[0];
+  session.events=[{...event,quantityBaseUnits:'1200000'},{...event,id:undefined,
+   locator:{kind:'vout',index:'1',subindex:'0'},quantityBaseUnits:'1280000'}];
+ }
+ const source=readUnifiedBitcoinFiles([ledgerCSV(rows)]);
+ return {data:canonical(commit(m,source)),source};
+}
+test('standalone Ledger-only v5 restores exact verified vouts and reimport stays documentary',async()=>{
+ for(const fee of ['','0']){
+  const {data,source}=ledgerOnlyFixture([{'Operation Fees':fee}],true),r=await roundtrip(data);
+  const {bitcoinLedger}=r.purchaseEvidence;
+  assert.equal(bitcoinLedger[0].id,source.operations[0].observationId);
+  assert.equal(bitcoinLedger[0].events.length,2);assert.equal(bitcoinLedger[0].amountBTC,'0.0248');
+  assert.equal(r.positions[0].quantityExact,'0.0248');
+  assert.deepEqual([r.bookings,r.journalEntries,r.externalCashFlows],[[],[],[]]);
+  const restored=safeImport(r);assert.deepEqual(commit(restored,source),restored);
+ }
+});
+test('multiple native operations keep separate txids and exact amounts through outbox capture and reopen',async()=>{
+ const m=ledgerEvidence(ledgerModel());delete m.purchaseEvidence;
+ const session=m.walletHistory.sessions[0],event=session.events[0],other='c'.repeat(64);
+ session.events=[{...event,quantityBaseUnits:'1200000'},{...event,id:undefined,txid:other,quantityBaseUnits:'1280000'}];
+ const input=readUnifiedBitcoinFiles([ledgerCSV([{'Operation Amount':'0.012'},{'Operation Hash':other,'Operation Amount':'0.0128'}])]);
+ const saved=commit(m,input),db=memoryDB(),p=await commitPortfolioRecord(db,
+  {expectedRevision:null,raw:backup(saved,{includeHistory:true}),settings:saved.settings});
+ const api=createSyncOutboxStorage(db,verify),frame=snapshotFrame(p.raw);
+ await api.capture({expectedLocalRevision:p.revision,expectedSyncVersion:null,receipt:await verify(frame),
+  expectedPortfolioId:portfolioId,expectedEpochId:epochId});
+ const reopened=createSyncOutboxStorage(db,verify),record=await reopened.recover();
+ assert.deepEqual(record.state.entries.map(e=>[e.status,e.frameText]),[['pending',frame]]);
+ assert.deepEqual(await readPortfolioSyncRecord(db),{portfolio:p,sync:record.state});
+ assert.deepEqual(saved.purchaseEvidence.bitcoinLedger.map(r=>r.amountBTC),['0.012','0.0128']);
+});
+test('a reconciled opening balance cannot stand in for a vout outside the covered height',async()=>{
+ const m=ledgerEvidence(ledgerModel());delete m.purchaseEvidence;
+ const s=m.walletHistory.sessions[0];s.events[0].blockHeight='11';
+ s.streams[0].opening.quantityBaseUnits='2480000';
+ const saved=commit(m,readUnifiedBitcoinFiles([ledgerCSV()]));
+ await rejectBoth(canonical(saved),/außerhalb/);
+});
+test('even a reproducible source identity cannot justify missing on-chain quantity',async()=>{
+ const {data}=ledgerOnlyFixture();
+ const [mismatch]=readUnifiedBitcoinFiles([ledgerCSV([{'Operation Amount':'0.02'}])]).operations;
+ Object.assign(data.purchaseEvidence.bitcoinLedger[0],{amountBTC:mismatch.amountExact,id:mismatch.observationId});
+ await rejectBoth(data,/vout-Zuordnung/);
+});
+test('standalone Ledger-only requires complete own vouts, matching ownership, scan, row identity and history',async()=>{
+ const {data}=ledgerOnlyFixture([{}],true);
+ for(const edit of [
+  d=>delete d.walletHistory,d=>d.walletHistory.sessions[0].events[1].timestamp='2025-01-01T12:00:01.000Z',
+  d=>d.purchaseEvidence.bitcoinLedger[0].events.pop(),d=>d.purchaseEvidence.bitcoinLedger[0].events.reverse(),
+  d=>d.purchaseEvidence.bitcoinLedger[0].events[0].fingerprint='f'.repeat(64),
+  d=>d.purchaseEvidence.bitcoinLedger[0].amountBTC='0.0247',d=>d.purchaseEvidence.bitcoinLedger[0].id='f'.repeat(64),
+  d=>d.purchaseEvidence.bitcoinLedger[0].ownerDigest='f'.repeat(64),d=>d.purchaseEvidence.bitcoinLedger[0].txid='f'.repeat(64),
+  d=>d.purchaseEvidence.bitcoinLedger[0].timestamp='2025-01-01T12:00:01.000Z',
+  d=>d.purchaseEvidence.bitcoinLedger[0].extra='foreign',d=>d.positions[0].wallet.address='1BitcoinEaterAddressDontSendf59kuE',
+  d=>d.walletHistory.sessions[0].streams[0].coverage.status='partial',
+  d=>d.purchaseEvidence.bitcoinLedger.push({...d.purchaseEvidence.bitcoinLedger[0],id:'f'.repeat(64)})
+ ]){
+  const d=structuredClone(data);edit(d);await rejectBoth(d);
+ }
+});
+test('ambiguous source rows, unreconstructible fee evidence, missing Ledger and empty v5 reject',async()=>{
+ const withFee=ledgerOnlyFixture([{'Operation Fees':'0.0001'}]);await rejectBoth(withFee.data);
+ const sameTx=ledgerOnlyFixture([{}, {'Operation Fees':'0'}]);await rejectBoth(sameTx.data);
+ const {data}=ledgerOnlyFixture();delete data.purchaseEvidence.bitcoinLedger;await rejectBoth(data);
+ const empty=canonical(ledgerModel());empty.version=5;await rejectBoth(empty);
 });
 test('downgrades and future versions reject full chain without partial output',async()=>{
  for(const version of [3,4,6]){const d=fixture();d.version=version;if(version===4)d.bookingPresentation={version:1,archivedIds:[]};await rejectBoth(d);}

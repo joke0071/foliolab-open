@@ -9,6 +9,10 @@ const types={IN:'Zugang: Herkunft und Gegenkonto prüfen.',OUT:'Abgang: Gegenkon
 const text=(value,max=300)=>{if(typeof value!=='string'||value.length>max||/[\u0000-\u001f]/.test(value))throw Error('Ungültiger Ledger-Textwert.');return value;};
 const number=value=>{if(value==='')return null;if(!/^[+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?$/i.test(value))throw Error('Unbelegtes Zahlenformat.');return exact(units(value));};
 const utc=value=>{if(!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/.test(value)||!Number.isFinite(Date.parse(value))||new Date(value).toISOString()!==value.replace(/Z$/,value.includes('.')?'Z':'.000Z'))throw Error('Ungültiger UTC-Zeitpunkt.');return new Date(value).toISOString();};
+// Keep parser and persisted documentary evidence on the same identity contract.
+export function ledgerObservationId(accountRef,currency,timestamp,status,type,txid,amountExact,feeExact){
+ return sourceDigest(JSON.stringify([accountRef,currency,timestamp,status,type,txid,amountExact,feeExact]));
+}
 /** Recognizable incomplete native files are quarantined too, never routed to generic trade mapping. */
 export function looksLikeLedgerLiveCSV(parsed){return ['Operation Date','Operation Type','Operation Hash','Account xpub','Countervalue at CSV Export'].filter(h=>parsed?.headers?.includes(h)).length>=2;}
 export function parseLedgerLiveCSV(input){
@@ -37,7 +41,7 @@ export function parseLedgerLiveCSV(input){
   const scopeId=sourceDigest(JSON.stringify([accountRef,currency]));
   // A stable documentary observation, NOT an on-chain event ID/locator or import consent.
   // Export-time market observations and mutable account names never define identity.
-  const observationId=sourceDigest(JSON.stringify([accountRef,currency,timestamp,status,type,txid,amountExact,feeExact]));
+  const observationId=ledgerObservationId(accountRef,currency,timestamp,status,type,txid,amountExact,feeExact);
   return {line:index+2,observationId,scopeId,accountRef,accountIdentity,accountName,currency,timestamp,status,type,txid,amountExact,feeExact,counterCurrency,counterAtOperation,counterAtExport,issues,meaning:Object.hasOwn(types,type)?types[type]:'Wirtschaftliche Bedeutung ungeklärt.'};
  });
  const counts=new Map();for(const row of operations)counts.set(row.observationId,(counts.get(row.observationId)||0)+1);
