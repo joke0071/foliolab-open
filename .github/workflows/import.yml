@@ -164,6 +164,7 @@ jobs:
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-csv-batch.mjs
           node tests/browser-flh03-abce.mjs
+          node tests/browser-dialog-native-navigation.mjs
           node tests/browser-position-selection.mjs
           node tests/browser-position-removal.mjs
           node tests/browser-position-archive.mjs
@@ -360,6 +361,7 @@ jobs:
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
             SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
             FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
+            DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs
             FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
           else
@@ -470,6 +472,7 @@ jobs:
           echo "LIVE_QA_SHA $RELEASE_SHA"
           node tests/browser-live-acceptance.mjs 2>&1 | tee artifacts/gates/production-core.log
           LOADING_BASE="$ACCEPTANCE_BASE" node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-chromium.log
+          DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-chromium.log
           UI_BASE="$ACCEPTANCE_BASE" node tests/browser-ui-alltag10.mjs 2>&1 | tee artifacts/gates/production-ui-alltag10-chromium.log
           UI_BASE="$ACCEPTANCE_BASE" node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-chromium.log
           UI_BASE="$ACCEPTANCE_BASE" node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-chromium.log
@@ -526,6 +529,7 @@ jobs:
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-cross.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-cross.log
           LOADING_BASE="$ACCEPTANCE_BASE" LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-cross.log
+          DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-cross.log
           UI_BASE="$ACCEPTANCE_BASE" UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs 2>&1 | tee artifacts/gates/production-ui-alltag10-cross.log
           UI_BASE="$ACCEPTANCE_BASE" UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-cross.log
           UI_BASE="$ACCEPTANCE_BASE" UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-cross.log
