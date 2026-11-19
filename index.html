@@ -41,9 +41,9 @@
    </details>
 
    </div>
-   <label class="field history-basis"><span>Datenbasis</span><select id="historyBasis"><option value="auto">Automatisch – belegte Quellen</option><option value="observed">Erfasste Stichtage</option><option value="partial">Rekonstruierte Positionen</option></select></label>
+   <template id="historyOptions"><div class="history-options-fields"><label class="field"><span>Datenbasis</span><select id="historyBasis" aria-describedby="historyModelAvailability"><option value="auto">Automatisch – belegte Quellen</option><option value="observed">Erfasste Stichtage</option><option value="partial">Rekonstruierte Positionen</option><option value="model">Modellverlauf · heutiger Bestand</option></select></label><p class="small-help" id="historyModelAvailability"></p><label class="field"><span>Diagramm</span><select id="historyChartStyle"><option value="auto">Auto</option><option value="line">Linie</option><option value="points">Punkte</option></select></label><label class="history-estimates-option" hidden><input type="checkbox" id="historyEstimates"> Einzelne Kurslücken grafisch schätzen</label></div></template>
  </div>
- <p class="small-help" id="historySourceStatus"></p><div id="historyChart" class="chart-area large"></div>
+ <p class="small-help" id="historySourceStatus"></p><p class="small-help" id="historyModelNote" hidden></p><p class="small-help" id="historyEstimateNote" hidden></p><div id="historyChart" class="chart-area large"></div>
  <details id="historyCoverage" class="performance-details"><summary><span class="history-disclosure-title"><span class="history-disclosure-icon" data-history-icon="shield" aria-hidden="true"></span>Datenabdeckung &amp; Abgleich</span></summary><div id="historyCoverageBody" class="small-help performance-details-body"></div></details><div class="history-insights" aria-label="Rendite und Stichtage">
  <details class="performance-details" id="performanceDetails"><summary><span class="history-disclosure-title"><span class="history-disclosure-icon" data-history-icon="chart-no-axes-combined" aria-hidden="true"></span>Rendite &amp; Geldflüsse</span><small id="performanceSummary">Noch nicht verfügbar</small></summary>
  <div class="performance-details-body">

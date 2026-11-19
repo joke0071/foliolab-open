@@ -28,6 +28,8 @@ import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowsActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
+import {modeledWealthSeries} from './wealth-model-history.js';
+import {historyDisplayEstimates} from './history-display-estimates.js';
 import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
@@ -371,7 +373,24 @@ const dateLabelFormatter=new Intl.DateTimeFormat('de-AT',{day:'2-digit',month:'s
 function dateLabel(date){const d=new Date(date+'T12:00:00Z');return Number.isNaN(d.getTime())?date:dateLabelFormatter.format(d);}
 let wealthBasis='auto',wealthKey='',wealthCached;
 function wealthView(){const key=JSON.stringify([wealthBasis,model.positions,model.accounts,model.openingPositions,model.journalEntries,model.bookings,model.walletHistory,model.priceHistories,model.snapshots]);if(key!==wealthKey){wealthCached=historicalWealthView(model,wealthBasis);wealthKey=key;}return wealthCached;}
-function drawChart(samples,comparison=null){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
+const historyBasisPreference='foliolab-open-history-basis';
+let modelHistorySelected=false,modelHistoryKey='',modelHistoryCached;
+let historyChartStyle='auto';
+let historyEstimateKey='',historyEstimateCache=[];
+try{
+ modelHistorySelected=localStorage.getItem(historyBasisPreference)==='model';
+}catch{}
+function selectHistoryBasis(value){
+ modelHistorySelected=value==='model';
+ if(!modelHistorySelected)wealthBasis=value;
+ try{
+  if(modelHistorySelected)localStorage.setItem(historyBasisPreference,'model');
+  else localStorage.removeItem(historyBasisPreference);
+ }catch{}
+ if(!modelHistorySelected)renderDashboard();
+ renderHistory();
+}
+function drawChart(samples,comparison=null,display='auto',estimates=[]){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,display,estimates,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
 
 
 let calendarMonth=null,calendarSelection=[];
@@ -403,7 +422,13 @@ function shiftSnapshotCalendar(months){
 }
 function renderHistory(){
  refreshPortfolioProjection();
- const disclosure=$('historyCalendarDisclosure');disclosure.hidden=!model.snapshots.length&&!wealthView().samples.length;if(disclosure.hidden)disclosure.open=false;
+ const wealth=wealthView();
+ if(modelHistoryKey!==wealthKey){modelHistoryCached=modeledWealthSeries(model);modelHistoryKey=wealthKey;}
+ const modelAvailable=modelHistoryCached.samples.length>0;
+ if(modelHistorySelected&&!modelAvailable)modelHistorySelected=false;
+ const samples=modelHistorySelected?modelHistoryCached.samples:wealth.samples;
+ if(modelHistorySelected&&range!=='calendar'&&filterChartPeriod(samples,'wealth',range).length<2)range='all';
+ const disclosure=$('historyCalendarDisclosure');disclosure.hidden=!model.snapshots.length&&!samples.length;if(disclosure.hidden)disclosure.open=false;
 
  const info=$('performanceInfo'),summary=$('performanceSummary'),start=model.performanceFlowTrackingSince,end=model.snapshots.at(-1)?.date;
  const rate=start&&end&&start!==end?portfolioXirr(model,start,end):null;
@@ -421,14 +446,24 @@ function renderHistory(){
   'Für eine zeitgewichtete Rendite fehlen noch bewertete Zeitpunkte vor und nach externen Geldflüssen.':
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
- const wealth=wealthView();let data=wealth.samples;
- $('historySourceStatus').textContent=wealthBasis==='observed'&&wealth.basis==='observed'?'Quelle: gespeicherte Referenzwerte':wealth.label;
+ let data=samples;
+ $('historySourceStatus').textContent=modelHistorySelected?'Modellverlauf · heutige Stückzahlen angenommen · keine persönliche Rendite':wealthBasis==='observed'&&wealth.basis==='observed'?'Quelle: gespeicherte Referenzwerte':wealth.label;
+ const modelNote=$('historyModelNote');
+ modelNote.hidden=!modelHistorySelected;
+ modelNote.textContent=modelHistorySelected?['Heutige Guthaben zum Nominalbetrag ohne Zinsentwicklung.',modelHistoryCached.reason].filter(Boolean).join(' '):'';
  if(page==='history')$('pageDescription').textContent=PAGE_DESCRIPTIONS.history;
- const emptyHistory=!wealth.samples.length;
+ const emptyHistory=!samples.length;
  $('historySourceStatus').hidden=emptyHistory;
- $('chartPeriods').classList.toggle('hidden',emptyHistory);
+ $('chartPeriods').classList.toggle('hidden',emptyHistory&&!modelAvailable);
  $('historyChart').classList.toggle('is-empty',emptyHistory);
- const basis=$('historyBasis');basis.parentElement.hidden=!(wealth.projection.observations.length&&wealth.projection.days.some(d=>d.partialEURExact!==null));
+ const basis=$('historyBasis');
+ basis.querySelector('[value="observed"]').disabled=wealth.basis!=='observed'&&!model.snapshots.length;
+ basis.querySelector('[value="partial"]').disabled=!wealth.projection.days.some(d=>d.partialEURExact!==null);
+ basis.querySelector('[value="model"]').disabled=!modelAvailable;
+ basis.value=modelHistorySelected?'model':basis.querySelector(`[value="${wealthBasis}"]`).disabled?'auto':wealthBasis;
+ const modelAvailability=$('historyModelAvailability');
+ modelAvailability.hidden=modelAvailable;
+ modelAvailability.textContent=modelAvailable?'':'Modellverlauf derzeit nicht verfügbar. '+modelHistoryCached.reason;
  const missing=[...new Set(wealth.projection.days.flatMap(d=>d.missing).map(m=>m.reason))].filter(reason=>reason!==wealth.reason);
  $('historyCoverageBody').innerHTML='<p>'+esc(wealth.reason)+'</p>'+(wealth.projection.observations.length?'<p>Erfasste Kontrollpunkte sind keine interpolierte Tagesbewertung.</p>':'')+(missing.length?'<ul>'+missing.slice(0,8).map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>':'')+wealth.projection.reconciliation.filter(r=>r.status==='review').slice(-30).map(r=>'<p>'+esc(r.date)+' · Kontrollpunkt '+money(Number(r.observedEURExact))+' · Rekonstruiert '+money(Number(r.reconstructedEURExact))+' · Differenz '+money(Number(r.differenceEURExact))+'</p>').join('');
  if(range==='calendar'&&calendarSelection.length===2){
@@ -437,13 +472,21 @@ function renderHistory(){
  }else if(range!=='calendar'){
   data=filterChartPeriod(data,'wealth',range);
  }
- const reference=wealth.basis==='observed'?capitalReferenceSeries(model,data):null,comparisonToggle=$('compareCapital');
+ const estimateOption=$('historyEstimates'),eligibleForEstimates=!modelHistorySelected&&wealthBasis==='auto';
+ if(eligibleForEstimates&&historyEstimateKey!==wealthKey){historyEstimateCache=historyDisplayEstimates(wealth,model);historyEstimateKey=wealthKey;}
+ estimateOption.closest('label').hidden=!eligibleForEstimates||!historyEstimateCache.length;
+ const displayedDates=eligibleForEstimates&&estimateOption.checked?new Set(data.map(point=>point.date)):null;
+ const estimates=displayedDates?historyEstimateCache.filter(item=>displayedDates.has(item.before)&&displayedDates.has(item.after)):[];
+ const estimateNote=$('historyEstimateNote');
+ estimateNote.hidden=!estimates.length;
+ estimateNote.textContent=estimates.length?(historyChartStyle==='points'?'Hohle Punkte':'Gestrichelte Abschnitte')+' zeigen grafische Schätzwerte zwischen zwei belegten Tagen.':'';
+ const reference=!modelHistorySelected&&wealth.basis==='observed'?capitalReferenceSeries(model,data):null,comparisonToggle=$('compareCapital');
  comparisonToggle.disabled=!reference;
- if(!reference)comparisonToggle.checked=false;
+ if(!reference&&!modelHistorySelected)comparisonToggle.checked=false;
  $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
  $('historyChart').innerHTML=emptyHistory?'<div class="empty"><p>'+
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
-  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
+  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button>'+(modelAvailable?'<button type="button" class="btn outline" data-history-show-model>Heutigen Bestand als Modellverlauf anzeigen</button>':'')+'</div>':drawChart(data,comparisonToggle.checked?reference:null,historyChartStyle,estimates);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
  $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  $('positionArchiveFilter').value=positionArchiveView;
@@ -2486,7 +2529,11 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
  $('historyCalendarReset').addEventListener('click',()=>{calendarSelection=[];range='all';$('historyCalendarDisclosure').open=false;renderHistory();});
- $('historyBasis').addEventListener('change',e=>{wealthBasis=e.target.value;renderDashboard();renderHistory();});$('compareCapital').addEventListener('change',renderHistory);
+ $('historyBasis').addEventListener('change',e=>selectHistoryBasis(e.target.value));
+ $('historyChartStyle').addEventListener('change',e=>{historyChartStyle=e.target.value;renderHistory();});
+ $('historyEstimates').addEventListener('change',renderHistory);
+ $('historyChart').addEventListener('click',e=>{if(e.target.closest('[data-history-show-model]')){selectHistoryBasis('model');$('historyChart').querySelector('.chart-plot')?.focus();}});
+ $('compareCapital').addEventListener('change',renderHistory);
  $('historyCalendarGrid').addEventListener('click',e=>{
   const day=e.target.closest('[data-calendar-day]')?.dataset.calendarDay;if(!day)return;
   if(calendarSelection.length!==1)calendarSelection=[day];
@@ -2855,7 +2902,18 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
 });
 {const origin=$('driveOriginExample');if(origin&&/^https?:/.test(location.origin))origin.textContent=location.origin;}
 $('miniChartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-mini-range',miniRange));
-$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));layoutPeriodMore();bindPeriodMore();
+$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));
+{
+ const options=$('chartPeriods').querySelector('.period-more');
+ options.classList.add('history-period-options');
+ const panel=document.createElement('div');
+ panel.className='history-options-popover';
+ panel.id='historyOptionsPanel';
+ options.querySelector('summary').setAttribute('aria-controls',panel.id);
+ panel.append(options.querySelector('.period-more-list'),$('historyOptions').content.cloneNode(true));
+ options.after(panel);
+}
+layoutPeriodMore();bindPeriodMore();
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
  if(!loadFailure)return;
  const control=event.target.closest('button,input,select,textarea,form');

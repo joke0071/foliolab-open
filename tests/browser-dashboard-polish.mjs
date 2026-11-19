@@ -49,12 +49,13 @@ try {
    const more=page.locator('#chartPeriods .period-more>summary');
    if(await more.isVisible()){
     await more.click();
-    const expanded=await page.locator('#chartPeriods .period-more-list').evaluate(el=>{
-     const parent=el.closest('.panel').getBoundingClientRect(),buttons=[...el.querySelectorAll('button')].map(b=>b.getBoundingClientRect());
-     return {within:buttons.length>0&&buttons.every(b=>b.width>=44&&b.height>=44&&b.left>=parent.left-1&&b.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
-    });
-    assert.equal(expanded.within,true,'expanded history period targets stay inside card at '+width+' px');
-    assert.ok(expanded.scroll<=width+1,'expanded history periods have no page overflow at '+width+' px');
+    const expanded=await page.locator('#chartPeriods .history-options-popover').evaluate((el,wide)=>{
+     const parent=el.closest('.panel').getBoundingClientRect();
+     const targets=[...el.querySelectorAll(wide?'select':'.period-more-list button')].map(b=>b.getBoundingClientRect());
+     return {within:targets.length>0&&targets.every(b=>b.width>=44&&b.height>=44&&b.left>=parent.left-1&&b.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
+    },width>=721);
+    assert.equal(expanded.within,true,'expanded history controls stay inside card at '+width+' px');
+    assert.ok(expanded.scroll<=width+1,'expanded history controls have no page overflow at '+width+' px');
     await more.click();
    }
    assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);

@@ -2157,6 +2157,37 @@
  }
 }
 
+/* The history view shares its period disclosure with the two display controls. */
+#chartPeriods{position:relative}
+#chartPeriods .history-period-options{display:block;position:static}
+#chartPeriods .history-period-options>summary{
+ display:flex;align-items:center;justify-content:center;min-width:48px;min-height:44px;
+ padding:0 6px;border-radius:10px;color:#4d6756;font-size:12px;font-weight:730;list-style:none;cursor:pointer
+}
+#chartPeriods .history-period-options>summary::-webkit-details-marker{display:none}
+#chartPeriods .history-period-options[open]>summary,#chartPeriods .history-period-options.has-active>summary{background:#e3ebe0;color:#24533b}
+#chartPeriods .history-period-options>summary:focus-visible{outline:2px solid #397f52;outline-offset:-2px}
+#chartPeriods .history-options-popover{
+ position:absolute;right:0;top:calc(100% + 4px);z-index:20;width:min(282px,100%);box-sizing:border-box;
+ padding:8px;border:1px solid #d8e5db;border-radius:12px;background:#fff;box-shadow:0 8px 22px #183b2726
+}
+#chartPeriods .history-period-options:not([open])+.history-options-popover{display:none}
+#chartPeriods .history-options-popover .period-more-list{
+ display:flex;position:static;flex-wrap:wrap;gap:2px;padding:0;border:0;box-shadow:none
+}
+#chartPeriods .history-options-popover .period-more-list button{min-height:44px;min-width:48px}
+#chartPeriods .history-options-fields{display:grid;gap:8px;border-top:1px solid #d8e5db;margin-top:4px;padding-top:8px}
+#chartPeriods .history-options-fields .field,#chartPeriods .history-options-fields .small-help{margin:0;min-width:0}
+#chartPeriods .history-options-fields select{min-height:44px;width:100%;min-width:0}
+#chartPeriods .history-estimates-option:not([hidden]){display:flex;align-items:center;gap:8px;min-height:44px;font-size:12px;color:#26432e}
+#chartPeriods .history-estimates-option input{accent-color:#327f52}
+#historyChart [data-history-show-model]{margin:4px;min-height:44px}
+@media(max-width:720px){
+ #historyPage #chartPeriods.history-chart-period>.period-more,#historyPage #chartPeriods.history-chart-period>button{flex:1 1 0}
+ #chartPeriods>button:is([data-range="threeYears"],[data-range="fiveYears"]){display:none}
+ #chartPeriods .history-period-options>summary{padding:0 4px}
+}
+
 /* UI-R4: display-only position threshold, separate from economic settings. */
 .position-value-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}
 .position-value-filter>.field{flex:0 1 210px;margin:0;min-width:0}

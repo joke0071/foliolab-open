@@ -68,8 +68,7 @@ export function localHistoricalPrices(model,p){
  const h=model.priceHistories?.[p.id];return h?{...validateImportedPriceHistory(h,p),priceType:h.priceType??'close'}:null;
 }
 /** marketHistory must describe one compatible series; no automatic provider fusion. */
-export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=null,dates=null,walletDaysCache=new Map()}={}){
- const p=model.positions.find(p=>p.id===positionId);if(!p)return {rows:[],segments:[],reason:'Positionsidentität fehlt.'};
+export function historicalPositionMarket(model,p,{marketHistory=null,fxPoints=null}={}){
  let history=marketHistory??localHistoricalPrices(model,p);
  const session=p.wallet?.enabled?positionWalletSession(model,p):null;
  if(!history&&session){const qs=session.quotes.filter(q=>walletStreamMatches({...q,accountId:p.accountId},p));if(qs.length)history={source:qs[0].source,currency:'EUR',priceType:'crypto-daily',points:qs.map(q=>({date:q.date,total:q.priceExact}))};}
@@ -84,14 +83,24 @@ export function projectHistoricalPosition(model,positionId,{marketHistory=null,f
    if(quotes.has(valuationDate)&&quotes.get(valuationDate)!==exact(units(point.total)))throw Error('Widersprüchliche Tageskurse.');quotes.set(valuationDate,exact(units(point.total)));
   }
  }
+ const fxDates=new Map(),fx=new Map();for(const point of fxPoints??history?.fxPoints??[]){if(!validDate(point.date)||point.currency!==p.currency||point.source!=='Frankfurter'||units(point.rate)<=0n)throw Error('Historischer FX-Nachweis ungültig.');if(fx.has(point.date)&&fx.get(point.date)!==exact(units(point.rate)))throw Error('Widersprüchlicher FX.');fx.set(point.date,exact(units(point.rate)));fxDates.set(point.date,point.referenceDate??point.date);}
+ return {history,session,valuationCurrency,quotes,fx,fxDates};
+}
+
+export function historicalEURValue(quantity,price,fx){
+ return quantity==='0'?'0':quantity!==null&&price!==null&&fx!==null?exact(mul(mul(units(quantity),units(price)),units(fx))):null;
+}
+
+export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=null,dates=null,walletDaysCache=new Map()}={}){
+ const p=model.positions.find(p=>p.id===positionId);if(!p)return {rows:[],segments:[],reason:'Positionsidentität fehlt.'};
+ const {history,session,valuationCurrency,quotes,fx,fxDates}=historicalPositionMarket(model,p,{marketHistory,fxPoints});
  const calendar=[...new Set(dates??[...quotes.keys(),...(model.journalEntries||[]).filter(e=>e.postings.some(x=>x.positionId===positionId)).map(e=>e.date),...(session?.events||[]).filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10))])].sort();
  const quantities=p.wallet?.enabled?walletQuantities(model,p,calendar,walletDaysCache):historicalQuantityRows(model,positionId,calendar);
- const fxDates=new Map(),fx=new Map();for(const point of fxPoints??history?.fxPoints??[]){if(!validDate(point.date)||point.currency!==p.currency||point.source!=='Frankfurter'||units(point.rate)<=0n)throw Error('Historischer FX-Nachweis ungültig.');if(fx.has(point.date)&&fx.get(point.date)!==exact(units(point.rate)))throw Error('Widersprüchlicher FX.');fx.set(point.date,exact(units(point.rate)));fxDates.set(point.date,point.referenceDate??point.date);}
  const rows=quantities.map(row=>{
   const price=p.kind==='cash'?'1':quotes.get(row.date)??null,fxExact=valuationCurrency==='EUR'?'1':fx.get(row.date)??null;
   let reason=row.reason;if(row.quantityExact!==null&&row.quantityExact!=='0'&&price===null)reason='Historischer Schlusskurs fehlt – Kurs-CSV importieren oder bestätigte API-Quelle laden.';
   if(row.quantityExact!==null&&row.quantityExact!=='0'&&price!==null&&fxExact===null)reason='Historischer EUR-Wechselkurs fehlt – datierten FX-Nachweis laden.';
-  let valueEURExact=null;try{valueEURExact=row.quantityExact==='0'?'0':row.quantityExact!==null&&price!==null&&fxExact!==null?exact(mul(mul(units(row.quantityExact),units(price)),units(fxExact))):null;}catch{reason='Menge oder Bewertung überschreitet die sichere Dezimalpräzision. Rohmenge bleibt erhalten; kein gerundeter Gesamtwert.';}
+  let valueEURExact=null;try{valueEURExact=historicalEURValue(row.quantityExact,price,fxExact);}catch{reason='Menge oder Bewertung überschreitet die sichere Dezimalpräzision. Rohmenge bleibt erhalten; kein gerundeter Gesamtwert.';}
   return {...row,priceExact:price,priceDate:price===null?null:row.date,fxExact,fxDate:valuationCurrency==='EUR'?row.date:fxDates.get(row.date)??null,valueEURExact,source:history?.source??(p.kind==='cash'?'Journal':'Keine Kursquelle'),priceType:history?.priceType??'close',coverage:valueEURExact===null?'unknown':'verified',reason};
  });
  const segments=[];let segment=[];for(const row of rows){

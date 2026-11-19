@@ -25,7 +25,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   const ids=['historyCoverage','performanceDetails','snapshotManager'];
   await nav('history');for(const id of ids)assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false,'closed default '+id);
   assert.match(await p.locator('#snapshotManager>summary').innerText(),/Historische Referenzwerte/);
-  assert.deepEqual(await p.locator('#historyBasis option').evaluateAll(es=>es.map(e=>[e.value,e.textContent])),[['auto','Automatisch – belegte Quellen'],['observed','Erfasste Stichtage'],['partial','Rekonstruierte Positionen']]);
+  assert.deepEqual(await p.locator('#historyBasis option').evaluateAll(es=>es.map(e=>[e.value,e.textContent])),[['auto','Automatisch – belegte Quellen'],['observed','Erfasste Stichtage'],['partial','Rekonstruierte Positionen'],['model','Modellverlauf · heutiger Bestand']]);
   assert.equal(await p.locator('#historyBasis').inputValue(),'auto');
   const historyPeriods=['7 T','1 M','3 M','6 M','1 J','3 J','5 J'];
   const expectedPeriods=width=>[...historyPeriods,...(width<=720?['Kalender']:[]),'Max'];
@@ -33,13 +33,19 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   for(const width of [320,390,768,1024,1440]){
    await p.setViewportSize({width,height:900});await nav('history');
    assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(width),'history presets and mobile calendar at '+width);
+   const more=p.locator('#chartPeriods .period-more>summary');
+   assert.equal(await p.locator('#historyBasis').isVisible(),false);
+   await more.click();
    assert.ok(await p.locator('#historyBasis').isVisible());
-   const control=await p.locator('.history-basis').evaluate(e=>{const r=e.getBoundingClientRect(),s=e.querySelector('select').getBoundingClientRect();return {width:r.width,height:r.height,selectHeight:s.height,right:r.right};});
-   assert.ok(control.width<=331&&control.height<=(width<=360?70:60)&&control.selectHeight>=44&&control.right<=width,'compact accessible source control '+JSON.stringify(control));
+   const control=await p.locator('.history-options-fields .field').first().evaluate(e=>{const r=e.getBoundingClientRect(),s=e.querySelector('select').getBoundingClientRect();return {width:r.width,height:r.height,selectHeight:s.height,right:r.right};});
+   assert.ok(control.width<=331&&control.height<=74&&control.selectHeight>=44&&control.right<=width,'compact accessible source control '+JSON.stringify(control));
+   await p.keyboard.press('Escape');
+   assert.equal(await more.evaluate(e=>e===document.activeElement),true);
    const icons=await p.locator('.history-disclosure-icon svg').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect(),c=getComputedStyle(e);return [r.width,r.height,e.getAttribute('stroke-width'),c.color,e.getAttribute('aria-hidden')];}));
    assert.equal(icons.length,3);for(const i of icons){assert.deepEqual(i,icons[0]);assert.deepEqual(i.slice(0,3),[17,17,'1.8']);assert.equal(i[4],'true');}
    for(const id of ids){const summary=p.locator('#'+id+'>summary');await summary.focus();await p.keyboard.press('Enter');assert.equal(await p.locator('#'+id).evaluate(e=>e.open),true);if(id==='snapshotManager')assert.match(await p.locator('#snapshotList').innerText(),/historisch ungeprüft/);await scan();await summary.focus();await p.keyboard.press('Space');assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false);}
    await p.evaluate(()=>{document.activeElement?.blur();scrollTo(0,0);});await scan();await p.screenshot({path:'artifacts/gates/history-followup/'+engine+'-history-'+width+'.png',fullPage:true});
+   await more.click();
    for(const basis of ['observed','partial','auto']){await p.locator('#historyBasis').selectOption(basis);assert.ok((await p.locator('#historySourceStatus').innerText()).length);assert.deepEqual(await record(),before,'basis only changes view');}
    await nav('dashboard');const cash=p.locator('#cashTermsOverview');assert.ok(await cash.isVisible());assert.equal(await cash.count(),1);assert.equal(await cash.evaluate(e=>e.open),false);await cash.locator('summary').click();assert.equal(await cash.locator('.cash-term-row').count(),2);await scan();
    for(const open of [false,true]){for(const summary of await p.locator('.provider-accordion>summary').all())if(await summary.evaluate(e=>e.parentElement.open)!==open)await summary.click();const borders=await p.locator('.provider-accordion').evaluateAll(es=>es.map(e=>({outer:getComputedStyle(e).borderBottomWidth,summary:getComputedStyle(e.querySelector('summary')).borderBottomWidth})));assert.equal(borders[0].outer,'1px','intermediate separator retained');assert.equal(borders[1].outer,'0px','no extra end separator before liquidity');if(!open)for(const b of borders)assert.equal(b.summary,'0px','no duplicate closed summary separator');}
