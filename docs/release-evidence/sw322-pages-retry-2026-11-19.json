@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-19",
+  "run": 44492522647,
+  "main": "e95bca3a73536cd13270683ba6352fdb78b483b6",
+  "attempts": [
+    {
+      "attempt": 1,
+      "job": 135460267582,
+      "artifact": 14514447111,
+      "created": "2026-11-19T09:18:18.3260320Z",
+      "ended": "2026-11-19T09:18:23.4940373Z",
+      "cause": "Deployment failed, try again later at the first status request after acknowledged creation."
+    },
+    {
+      "attempt": 2,
+      "job": 135460887635,
+      "artifact": 14513884784,
+      "ended": "2026-11-19T09:19:31.2422300Z",
+      "cause": "Multiple artifacts named github-pages were unexpectedly found for this workflow run. Artifact count is 2."
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "FolioLab-SW322-Pages-14513884784.zip",
+      "bytes": 581094,
+      "sha256": "e99152b62625afbd7c6afca443224cd7debf35fe06d462dd3fbdbf37024517bb",
+      "tarFiles": 156,
+      "matches": "e95bca3a73536cd13270683ba6352fdb78b483b6",
+      "zipCRC": "PASS",
+      "unpackedFiles": "Complete expected Pages payload, each matched exactly to Git"
+    },
+    {
+      "file": "FolioLab-SW322-Pages-14514447111.zip",
+      "bytes": 582170,
+      "sha256": "fc3fd697f0d0bb58b4d3a049191f95fecd3957c9b574e3aa12c7cd228948c5c1",
+      "tarFiles": 156,
+      "matches": "e95bca3a73536cd13270683ba6352fdb78b483b6",
+      "zipCRC": "PASS",
+      "unpackedFiles": "Complete expected Pages payload, each matched exactly to Git"
+    }
+  ],
+  "recovery": {
+    "workflowDispatch": 44495608210,
+    "runNumber": 1336,
+    "exactMainPreserved": true
+  },
+  "followup": {
+    "branch": "ci/pages-artifact-per-attempt",
+    "head": "f1e774a8918ae718b88691c74f479eb38470e7c6",
+    "tree": "2a912de3c76f65543de600a67cb6a4fbbc2b6bd1",
+    "checks": "26 exact workflow and mirror contract tests passed locally",
+    "changes": "Use matched unique upload and deployment artifact names based on GitHub run_attempt."
+  }
+}
