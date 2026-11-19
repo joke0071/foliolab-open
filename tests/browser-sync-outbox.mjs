@@ -23,6 +23,10 @@ if(v2Candidate==='1'||sourceLifecycle==='1'){
     candidateURL.port!=='4173'||candidateURL.pathname!=='/tests/storage-origin.html')
   throw Error('FLH04 C1 requires the local synthetic test origin on port 4173');
 }
+const portable=process.env.FLH04_PORTABLE;
+if(portable!==undefined&&(portable!=='1'||!['firefox','webkit'].includes(name)||
+ !['http://127.0.0.1:4173','http://localhost:4173'].includes(process.env.BASE_URL||'http://127.0.0.1:4173')))
+ throw Error('Portable FLH04 probes require Firefox or WebKit and the local synthetic origin.');
 const browser=await engines[name].launch({headless:true});
 const context=await browser.newContext();
 const url=(process.env.BASE_URL||'http://127.0.0.1:4173')+'/tests/storage-origin.html';
@@ -171,6 +175,10 @@ try{
    const {runRendererTerminationCandidate}=await import('./flh04-renderer-termination-probes.mjs');
    await runRendererTerminationCandidate({browser,setup,operation,url});
   }
+ }
+ if(portable==='1'){
+  const {runPortableProbes}=await import('./flh04-portable-probes.mjs');
+  await runPortableProbes(browser,setup,operation);
  }
  if(v2Candidate==='1'){
   const {runVersion2Candidate}=await import('./flh04-version2-candidate-probes.mjs');
