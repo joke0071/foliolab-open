@@ -1,3 +1,9 @@
+## SW322 · Ubuntu-Fallback separat korrigiert und in Prüfung · 19.11.2026
+
+[Main-Versuch 2](https://github.com/joke0071/foliolab-open/actions/runs/44474927927/attempts/2) wiederholte die drei fehlgeschlagenen Cross-Jobs. Zwei Jobs kamen erneut wegen Ubuntu-Übertragung nicht bis zu den Browserprüfungen. Der dritte erreichte den Browserlauf. Das Acht-Minuten-Limit brach noch laufende Paketabrufe aus `us.archive.ubuntu.com` ab. [Belege beider Fehler und der geprüften Originalartefakte](release-evidence/sw322-main-attempt2-ubuntu-2026-11-19.json). SW322 ist integriert und wartet vor dem Deployment.
+
+[PR #357](https://github.com/joke0071/foliolab-open/pull/357) ändert ausschließlich die Reihenfolge schon zugelassener HTTPS-Spiegel nach Ausfall des primären Archives: Der unabhängige Spiegel hat Vorrang vor dem regionalen Ubuntu-Spiegel. Auflösung im Prüflauf und tatsächliche Paketinstallation sind vor Merge zu belegen. Tests, PWA-Bytes, Workflow und Zeitgrenzen bleiben identisch. Sieben simulierte Hostfälle und elf Workflow-Vertragsprüfungen grün. [Integration](https://github.com/joke0071/foliolab-open/actions/runs/44479219013) und [Wallet](https://github.com/joke0071/foliolab-open/actions/runs/44479219011) prüfen Head `3e86dc0b534a9faab11be70594bc1e8d39638086`.
+
 ## SW322 · gezielte Wiederaufnahme · 19.11.2026
 
 Der Chromium-Hauptjob des ersten Main-Versuchs endete erfolgreich. [Versuch 2](https://github.com/joke0071/foliolab-open/actions/runs/44474927927/attempts/2) startete um 08:13 Uhr MEZ für die drei fehlgeschlagenen Cross-Engine-Jobs und ihre regulären Nachfolger. Der Chromium-Erfolg bleibt am selben Main-SHA gültig. Deployment und reguläre Liveabnahme stehen aus.

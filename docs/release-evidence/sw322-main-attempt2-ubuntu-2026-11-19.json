@@ -1,0 +1,95 @@
+{
+  "main": "ae2c0aa84dce573968be15c57f1280ce0506e681",
+  "run": 44474927927,
+  "attempt": 2,
+  "retry": "failed jobs and their dependents only",
+  "jobs": [
+    {
+      "name": "cross-engine (2)",
+      "id": 135402788512,
+      "status": "completed",
+      "result": "failure",
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 5,
+        "started_at": "2026-11-19T07:13:26Z",
+        "completed_at": "2026-11-19T07:21:38Z"
+      }
+    },
+    {
+      "name": "cross-engine (1)",
+      "id": 135402788900,
+      "status": "completed",
+      "result": "failure",
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 5,
+        "started_at": "2026-11-19T07:13:31Z",
+        "completed_at": "2026-11-19T07:21:43Z"
+      }
+    },
+    {
+      "name": "cross-engine (3)",
+      "id": 135402788918,
+      "status": "in_progress",
+      "result": null,
+      "setup": {
+        "name": "Install Firefox and WebKit for cross-engine regression",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-19T07:13:14Z",
+        "completed_at": "2026-11-19T07:14:30Z"
+      }
+    },
+    {
+      "name": "test",
+      "id": 135402790095,
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "id": 135402840620,
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "name": "FAST only / UI contract canary — no integration approval",
+      "id": 135402845523,
+      "status": "completed",
+      "result": "skipped"
+    }
+  ],
+  "failedArchiveMirrors": {
+    "primary": "archive.ubuntu.com TLS probe timeout",
+    "regional": "us.archive.ubuntu.com continued receiving APT package data at the signed setup time limit"
+  },
+  "originalArtifacts": [
+    {
+      "id": 14507676962,
+      "name": "sw322-main-run2-cross-2.zip",
+      "bytes": 303253,
+      "sha256": "2e1030a42eab568eeb9ba905c9d957dc321c1c933a6ac2a81780d8c40d09defc"
+    },
+    {
+      "id": 14506559665,
+      "name": "sw322-main-run2-cross-1.zip",
+      "bytes": 303016,
+      "sha256": "1cb07f07de5fc94dede3ab8c332b6acb799eb8d87f375c027fd67207fbc06e4d"
+    }
+  ],
+  "originalArchiveLibraryId": "libfile_fde3_f-6b543084b7d4819199df7c2a83633f0e_54e45e8130348191808d9aaa710cf372",
+  "candidate": {
+    "pull": 357,
+    "head": "3e86dc0b534a9faab11be70594bc1e8d39638086",
+    "tree": "8be553eefffd3ff0e8a83ba20ef617a81ffc9764",
+    "checks": 44479219013,
+    "wallet": 44479219011,
+    "shippingAssetsChanged": false
+  }
+}
