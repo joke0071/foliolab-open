@@ -4,6 +4,13 @@ import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText} from '../../src/atomic-storage.js';
 import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
+// Canonical group frames are single-line ASCII. Keep exact ciphertext, including all local ancestors.
+const archiveHeader=(revision,version)=>'FolioLabConflict/1 '+revision+' '+version;
+async function archiveDigest(text){
+ const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
+ return Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
+}
+
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
  * store as the canonical portfolio. No upload, RemoteApply or key persistence.
  * Native IDB/crash/quota/multitab qualification remains required before use.
@@ -54,17 +61,60 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   }
   return {status:'compared',baseId,leftId,rightId,sections:await compareSyncSnapshotSections(...plain)};
  }
- async function finishPlan(current,revisions,observationComplete,frames,comparisonHeads){
+ async function finishPlan(current,revisions,observationComplete,frames,comparisonHeads,archive){
   if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
   const last=current.sync.entries.at(-1);
   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
   if(comparisonHeads)result.comparison=await compareBranches(current,revisions,result,frames,comparisonHeads);
+  if(archive){
+   if(result.status!=='conflict')throw Error('sync-outbox-archive-needs-conflict');
+   const ordered=[...frames.keys()].sort().map(id=>frames.get(id));
+   if(ordered.reduce((size,text)=>size+text.length,0)>SYNC_OUTBOX_TEXT_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+   const binding=await archiveDigest(syncPreimageText(current.sync));
+   const text=[archiveHeader(current.portfolio.revision,current.sync.version)+' '+binding,...ordered].join('\n');
+   if(archive.mode==='create')result.archive={text,digest:await archiveDigest(text)};
+   else if(text!==archive.original)throw Error('sync-outbox-incomplete-or-noncanonical-archive');
+  }
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
   if(syncPreimageText(after.portfolio)!==syncPreimageText(current.portfolio)||syncPreimageText(after.sync)!==syncPreimageText(current.sync))
    throw Error('sync-outbox-apply-plan-race');
   return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
  }
+  // Read-only group-frame preview. The caller still supplies listing completeness.
+  // Group authentication is insufficient for individual writer or transport authority.
+ async function planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete,comparisonHeads},archive) {
+   let pair;
+   if(comparisonHeads!==undefined){
+    if(!Array.isArray(comparisonHeads)||comparisonHeads.length!==2||comparisonHeads[0]===comparisonHeads[1]||
+       !comparisonHeads.every(id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,128}$/.test(id)))
+     throw Error('sync-outbox-invalid-comparison-heads');
+    pair=[comparisonHeads[0],comparisonHeads[1]];
+   }
+   if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+   const frames=[];let total=0;
+   for(const text of frameTexts){
+    if(typeof text!=='string'||text.length>SYNC_FRAME_TEXT_LIMIT||(total+=text.length)>SYNC_OUTBOX_TEXT_LIMIT)
+     throw Error('sync-outbox-frame-batch-limit');
+    frames.push(text);
+   }
+   const current=await read(expectedLocalRevision,expectedSyncVersion);
+   if(archive&&!current.ticket)throw Error('sync-outbox-archive-needs-conflict');
+   if(!current.ticket)return finishPlan(current,[],observationComplete);
+   const known=new Map(current.sync.entries.map(e=>[e.revision.revisionId,e.frameText]));
+   const seen=new Set(known.values()),revisions=[];
+   for(const text of frames){
+    if(seen.has(text))continue;
+    const frame=readVerifiedSyncFrame(await verifySnapshotFrame(text));
+    if(frame.frameText!==text||frame.epochId!==current.sync.epochId||frame.descriptor.portfolioId!==current.sync.portfolioId)
+     throw Error('sync-outbox-frame-binding');
+    if(known.has(frame.descriptor.revisionId))throw Error('sync-outbox-frame-identity-collision');
+    if(known.size>=SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+    known.set(frame.descriptor.revisionId,text);
+    seen.add(text);revisions.push(frame.descriptor);
+   }
+   return finishPlan(current,revisions,observationComplete,known,pair,archive);
+  }
  return Object.freeze({
   async recover() {
    const {portfolio,sync}=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -101,38 +151,19 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    const current=await read(expectedLocalRevision,expectedSyncVersion);
    return finishPlan(current,remoteDescriptors,observationComplete);
   },
-  // Read-only group-frame preview. The caller still supplies listing completeness.
-  // Group authentication is insufficient for individual writer or transport authority.
-  async planFrameApply({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete,comparisonHeads}) {
-   let pair;
-   if(comparisonHeads!==undefined){
-    if(!Array.isArray(comparisonHeads)||comparisonHeads.length!==2||comparisonHeads[0]===comparisonHeads[1]||
-       !comparisonHeads.every(id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,128}$/.test(id)))
-     throw Error('sync-outbox-invalid-comparison-heads');
-    pair=[comparisonHeads[0],comparisonHeads[1]];
-   }
-   if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
-   const frames=[];let total=0;
-   for(const text of frameTexts){
-    if(typeof text!=='string'||text.length>SYNC_FRAME_TEXT_LIMIT||(total+=text.length)>SYNC_OUTBOX_TEXT_LIMIT)
-     throw Error('sync-outbox-frame-batch-limit');
-    frames.push(text);
-   }
-   const current=await read(expectedLocalRevision,expectedSyncVersion);
-   if(!current.ticket)return finishPlan(current,[],observationComplete);
-   const known=new Map(current.sync.entries.map(e=>[e.revision.revisionId,e.frameText]));
-   const seen=new Set(known.values()),revisions=[];
-   for(const text of frames){
-    if(seen.has(text))continue;
-    const frame=readVerifiedSyncFrame(await verifySnapshotFrame(text));
-    if(frame.frameText!==text||frame.epochId!==current.sync.epochId||frame.descriptor.portfolioId!==current.sync.portfolioId)
-     throw Error('sync-outbox-frame-binding');
-    if(known.has(frame.descriptor.revisionId))throw Error('sync-outbox-frame-identity-collision');
-    if(known.size>=SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
-    known.set(frame.descriptor.revisionId,text);
-    seen.add(text);revisions.push(frame.descriptor);
-   }
-   return finishPlan(current,revisions,observationComplete,known,pair);
+  planFrameApply(request){return planFrames(request);},
+  createConflictArchive(request){return planFrames(request,{mode:'create'});},
+  async reopenConflictArchive({text,expectedDigest,expectedLocalRevision,expectedSyncVersion,comparisonHeads}){
+   // The expected digest is retained separately by the caller; it is not writer authority.
+   if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
+      typeof expectedDigest!=='string'||!/^[0-9a-f]{64}$/.test(expectedDigest))
+    throw Error('sync-outbox-invalid-archive');
+   const pair=comparisonHeads===undefined?undefined:structuredClone(comparisonHeads);
+   if(await archiveDigest(text)!==expectedDigest)throw Error('sync-outbox-archive-digest');
+   const [header,...frameTexts]=text.split('\n',SYNC_GRAPH_LIMIT+2);
+   if(!header.startsWith(archiveHeader(expectedLocalRevision,expectedSyncVersion)+' '))throw Error('sync-outbox-archive-local-binding');
+   return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
+    {mode:'reopen',original:text});
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.

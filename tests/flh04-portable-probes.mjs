@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import {mkdtemp,readFile,rm,writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 
 // Hold the return of a real remote-frame verification while a second tab commits.
@@ -13,11 +16,23 @@ async function checkCrossTabFramePlan(browser,setup,operation){
   const stable=await a.evaluate(request=>window.syncTest.api.planFrameApply(request),request);
   assert.equal(stable.candidateId,'B');assert.equal(stable.applyAuthorized,false);
   const left=JSON.parse(root.raw);left.performanceFlowTrackingSince='2026-11-01';
-  const fork=await a.evaluate(request=>window.syncTest.api.planFrameApply(request),{...request,
-   comparisonHeads:['L','B'],frameTexts:[...request.frameTexts,frame(JSON.stringify(left),'L','R','2','72'.repeat(32))]});
+  const forkRequest={...request,comparisonHeads:['L','B'],
+   frameTexts:[...request.frameTexts,frame(JSON.stringify(left),'L','R','2','72'.repeat(32))]};
+  const fork=await a.evaluate(request=>window.syncTest.api.createConflictArchive(request),forkRequest);
   assert.equal(fork.status,'conflict');assert.equal(fork.applyAuthorized,false);
   assert.deepEqual(fork.comparison,{status:'compared',baseId:'R',leftId:'L',rightId:'B',
    sections:[{section:'performanceFlowTrackingSince',change:'left-only'}]});
+  const directory=await mkdtemp(join(tmpdir(),'flh04-conflict-'));
+  try{
+   const file=join(directory,'conflict.flh');
+   await writeFile(file,fork.archive.text,'utf8');
+   const fresh=await context.newPage();await setup(fresh);
+   const reopened=await fresh.evaluate(request=>window.syncTest.api.reopenConflictArchive(request),{
+    expectedLocalRevision:root.revision,expectedSyncVersion:queue.version,comparisonHeads:['L','B'],
+    expectedDigest:fork.archive.digest,text:await readFile(file,'utf8')});
+   assert.deepEqual(reopened.comparison,fork.comparison);assert.equal(reopened.applyAuthorized,false);
+   await fresh.close();
+  }finally{await rm(directory,{recursive:true,force:true});}
   await a.evaluate(async request=>{
    const {createSyncOutboxStorage}=await import('/experimental/sync/sync-outbox-storage.js');
    const {db,verify}=window.syncTest;
