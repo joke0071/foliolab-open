@@ -1,5 +1,11 @@
 # NAM01 – begrenzte Vorprüfung vom 02.11.2026
 
+## Fortschreibung · 19.11.2026 · Registerabfrage für Österreich
+
+Im Register des Österreichischen Patentamts wurden nationale Marken, Unionsmarken und internationale Marken ausdrücklich ausgewählt und ohne Status-/Klassenfilter durchsucht. [Einzelabfrage FolioLab](https://seeip.patentamt.at/markesuche/results?searchCriteria=%7B%22origin%22%3A%5B%22OEPA%22%2C%22UnionTrademark%22%2C%22WIPO%22%5D%2C%22names%22%3A%5B%22FolioLab%22%5D%7D&page=0&size=20) ergab 0 Treffer. Die anschließende Abfrage mit FolioLab, Folio Lab und Folio-Lab zusammen zeigte ebenfalls 0 Treffer. TMview blieb nach einem erneuten Laden auf dem Ladebildschirm. Eine eigenständige Ähnlichkeitsrecherche in TMview ist offen.
+
+Die gleichnamige, benachbarte tatsächliche Nutzung bleibt belegt. Die [US-App-Store-Seite](https://apps.apple.com/us/app/foliolab-ai-stock-research/id6776871557) führt FolioLab LLC und die Kategorie Finance, während die [Anbieterbedingungen](https://foliolab.io/terms) den Dienst als US-Aktienrecherche ohne Brokeranbindung beschreiben. Die tatsächliche Verfügbarkeit im österreichischen Store ist weiterhin unbestätigt. Register-Nulltreffer decken den dokumentierten Suchumfang ab. Sonstige ähnliche Zeichen und mögliche ältere Rechte bleiben außerhalb dieses begrenzten Befunds. Der bestehende Auftrag zur Beibehaltung des sichtbaren Appnamens gilt.
+
 Status: **Teilbefund dokumentiert, keine rechtliche Freigabe und keine abgeschlossene Registerrecherche.** Ergänzt [NAM01/COPY01/PWA-FULL01](NAME_COPY_PWA_PLAN_2026-11-02.md). Bestehender Nutzerauftrag bleibt: FolioLab erhalten, vorrangig Android-Launcher kurz benennen; keine alternative Marke, neue Domain oder externe Kontaktaufnahme.
 
 | Gesicherter Befund | Bedeutung für die Beibehaltung | Offene Grenze |
