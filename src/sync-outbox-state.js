@@ -10,7 +10,7 @@ const integer=n=>Number.isSafeInteger(n)&&n>=1;
 const shape=(o,keys)=>o&&typeof o==='object'&&!Array.isArray(o)&&
  Object.keys(o).length===keys.length&&keys.every(k=>Object.hasOwn(o,k));
 const verifiedStates=new WeakMap();
-const verifiedPayloads=new WeakMap();
+const verifiedHeadPayloads=new WeakMap();
 
 /** Re-decrypt EVERY stored frame with an independently locally bound verifier.
  * Copy first: IDB data has no authority and cannot mutate across async work.
@@ -22,7 +22,7 @@ export async function verifySyncOutboxState(input,verifyFrame) {
   state.format!==1||!integer(state.version)||state.disabled!==null||
   !Array.isArray(state.entries)||!state.entries.length||state.entries.length>SYNC_OUTBOX_ENTRY_LIMIT||
   !Number.isInteger(state.anchorIndex)||state.anchorIndex< -1||state.anchorIndex>=state.entries.length)fail('format-or-disabled');
- let total=0,previous=null;const payloads=[];
+ let total=0,previous=null,headPlain;
  const ids=new Set();
  for(let i=0;i<state.entries.length;i++) {
   const e=state.entries[i];
@@ -41,16 +41,21 @@ export async function verifySyncOutboxState(input,verifyFrame) {
   if(e.status==='uncertain'&&i!==state.anchorIndex+1)fail('attempt-order');
   const v=readVerifiedSyncFrame(await verifyFrame(e.frameText));
   if(v.epochId!==state.epochId||!same(v.descriptor,e.revision)||v.frameText!==e.frameText||v.frameDigest!==e.frameDigest)fail('frame-binding');
-  payloads.push(v.plain);previous=e;
+  headPlain=v.plain;previous=e;
  }
  const ticket=Object.freeze({type:'verified-sync-outbox-state'});
- verifiedStates.set(ticket,state);verifiedPayloads.set(ticket,payloads);
+ verifiedStates.set(ticket,state);verifiedHeadPayloads.set(ticket,headPlain);
  return ticket;
 }
 
 export function readSyncOutboxState(ticket) {
  const state=verifiedStates.get(ticket);if(!state)fail('unverified');
  return structuredClone(state);
+}
+
+export function syncOutboxHeadMatches(ticket,plain) {
+ if(!verifiedHeadPayloads.has(ticket))fail('unverified');
+ return verifiedHeadPayloads.get(ticket)===plain;
 }
 
 /** Capture only a locally committed byte-identical snapshot. First capture is
@@ -125,7 +130,7 @@ export function planSyncOutboxApply({ticket,portfolio,revisions,observationCompl
  if(!portfolio||portfolio.deleted||!integer(portfolio.revision))return {status:'blocked',reason:'invalid-local-preimage'};
  if(portfolio.revision>last.capturedLocalRevision)return {status:'blocked',reason:'unrepresented-local-changes'};
  if(portfolio.revision!==last.capturedLocalRevision)return {status:'blocked',reason:'local-cas-mismatch'};
- if(portfolio.raw!==verifiedPayloads.get(ticket).at(-1))return {status:'blocked',reason:'local-snapshot-mismatch'};
+ if(!syncOutboxHeadMatches(ticket,portfolio.raw))return {status:'blocked',reason:'local-snapshot-mismatch'};
  if(!Array.isArray(revisions))return {status:'blocked',reason:'invalid-remote-descriptors'};
  // Local offline successors remain heads too; remote B following old A cannot
  // win over a captured local sibling, even when its generation is higher.

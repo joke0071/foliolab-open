@@ -1,18 +1,34 @@
+import {createSyncSnapshot,validateSyncSnapshot} from './sync-snapshot.js';
+import {readVerifiedSyncFrame} from './sync-frame-verifier.js';
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from './atomic-storage.js';
-import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
+import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
  * store as the canonical portfolio. No upload, RemoteApply or key persistence.
  * Native IDB/crash/quota/multitab qualification remains required before use.
  */
 export function createSyncOutboxStorage(db,verifyFrame) {
+ async function verifySnapshotFrame(text) {
+  const receipt=await verifyFrame(text);
+  await validateSyncSnapshot(readVerifiedSyncFrame(receipt).plain);
+  return receipt;
+ }
  async function read(expectedLocalRevision,expectedSyncVersion) {
   const current=await readPortfolioSyncRecord(db);
   if(!current.portfolio||current.portfolio.deleted||current.portfolio.revision!==expectedLocalRevision||
    (current.sync?.version??null)!==expectedSyncVersion)throw Error('sync-outbox-stale-preimage');
   if(current.portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
-  const ticket=current.sync===null?null:await verifySyncOutboxState(current.sync,verifyFrame);
+  const ticket=current.sync===null?null:await verifySyncOutboxState(current.sync,verifySnapshotFrame);
   return {...current,ticket};
+ }
+ // The state machine compares payload bytes. The transaction compares the complete original IDB record.
+ async function snapshotPreimage(portfolio) {
+  return {revision:portfolio.revision,deleted:portfolio.deleted,raw:await createSyncSnapshot(portfolio.raw)};
+ }
+ async function checkCurrentHead(portfolio,sync,ticket) {
+  if(sync?.entries.at(-1)?.capturedLocalRevision!==portfolio.revision)return;
+  const plain=await createSyncSnapshot(portfolio.raw);
+  if(!syncOutboxHeadMatches(ticket,plain))throw Error('sync-outbox-local-snapshot-mismatch');
  }
  async function commit(current,nextState) {
   return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,
@@ -24,7 +40,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(!portfolio||portfolio.deleted)throw Error('sync-outbox-no-local-portfolio');
    if(portfolio.syncEnrollmentRequired)throw Error('sync-outbox-enrollment-required');
    if(sync===null)return {state:null,summary:null,localRevision:portfolio.revision};
-   const ticket=await verifySyncOutboxState(sync,verifyFrame);
+   const ticket=await verifySyncOutboxState(sync,verifySnapshotFrame);
+   await checkCurrentHead(portfolio,sync,ticket);
    const after=await readPortfolioSyncRecord(db);
    if(JSON.stringify(after.portfolio)!==JSON.stringify(portfolio)||JSON.stringify(after.sync)!==JSON.stringify(sync))
     throw Error('sync-outbox-recovery-race');
@@ -32,11 +49,16 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   },
   async capture({expectedLocalRevision,expectedSyncVersion,receipt,expectedPortfolioId,expectedEpochId}) {
    const current=await read(expectedLocalRevision,expectedSyncVersion);
-   const next=appendSyncOutboxState({ticket:current.ticket,receipt,portfolio:current.portfolio,expectedPortfolioId,expectedEpochId});
+   const local=await snapshotPreimage(current.portfolio);
+   // A caller's receipt may originate from another verifier with the same IDs.
+   const bound=await verifyFrame(readVerifiedSyncFrame(receipt).frameText);
+   const next=appendSyncOutboxState({ticket:current.ticket,receipt:bound,portfolio:local,
+    expectedPortfolioId,expectedEpochId});
    return commit(current,next);
   },
   async begin({expectedLocalRevision,expectedSyncVersion,revisionId}) {
    const current=await read(expectedLocalRevision,expectedSyncVersion);
+   await checkCurrentHead(current.portfolio,current.sync,current.ticket);
    const next=advanceSyncOutboxState({ticket:current.ticket,revisionId,currentLocalRevision:current.portfolio.revision});
    const entry=next.entries.find(e=>e.revision.revisionId===revisionId);
    if(entry.status!=='uncertain')throw Error('sync-outbox-not-publishable');
@@ -47,11 +69,13 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    const remoteDescriptors=structuredClone(revisions); // detach before crypto awaits
    const current=await read(expectedLocalRevision,expectedSyncVersion);
    if(current.ticket===null)return {status:'blocked',reason:'no-local-sync-preimage',applyAuthorized:false};
-   const result=planSyncOutboxApply({ticket:current.ticket,portfolio:current.portfolio,revisions:remoteDescriptors,observationComplete});
+   const last=current.sync.entries.at(-1);
+   const portfolio=last.capturedLocalRevision===current.portfolio.revision?await snapshotPreimage(current.portfolio):current.portfolio;
+   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions:remoteDescriptors,observationComplete});
    const after=await readPortfolioSyncRecord(db);
    if(JSON.stringify(after.portfolio)!==JSON.stringify(current.portfolio)||JSON.stringify(after.sync)!==JSON.stringify(current.sync))
     throw Error('sync-outbox-apply-plan-race');
-   return result; // Actual Apply must repeat this preimage/CAS in its OWN tx.
+   return {...result,applyAuthorized:false}; // Actual Apply must repeat this preimage/CAS in its OWN tx.
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
