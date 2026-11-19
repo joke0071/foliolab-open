@@ -1,0 +1,51 @@
+{
+  "version": "SW322",
+  "scope": "FLH-PROJ01",
+  "main": "e95bca3a73536cd13270683ba6352fdb78b483b6",
+  "tree": "5f46e23a6836f78003d9c14a7262aa5be8ae26b5",
+  "run": 44495608210,
+  "deployJob": 135473750801,
+  "liveJob": 135474024003,
+  "completed": "2026-11-19T10:33:29Z",
+  "liveArtifact": 14519847688,
+  "kraken": {
+    "Chromium": 7,
+    "Firefox": 7,
+    "WebKit": 7
+  },
+  "bitpanda": {
+    "Chromium": {
+      "importReused": 430,
+      "withdrawalReused": 287
+    },
+    "Firefox": {
+      "importReused": 433,
+      "withdrawalReused": 289
+    },
+    "WebKit": {
+      "importReused": 433,
+      "withdrawalReused": 289
+    },
+    "applicationNavigationAndServiceWorkers": "direct-origin"
+  },
+  "archive": "FolioLab-SW322-Live-Accepted.zip",
+  "sha256": "44f4fa3452b909a6954d36de4981ec881a1df403abbe7d3971860038deaa6ec9",
+  "byteSize": 153294585,
+  "entries": 1946,
+  "archiveCRC": "PASS",
+  "report": "live/report.json",
+  "base": "https://foliolab.unperfekt.at/",
+  "assetMatches": 157,
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data"
+  ],
+  "axeScans": 19,
+  "errors": [],
+  "httpErrors": 0
+}

@@ -1,3 +1,7 @@
+## Folgeentwicklung · 19.11.2026
+
+**SW322 / FLH-PROJ01 ist produktiv abgenommen.** Die [produktive Abnahme](release-evidence/sw322-live-accepted-2026-11-19.json) gilt für lokale nominale und reale Zukunftsszenarien mit unverändertem Portfolio, einschließlich Offline-Nutzung. Die früheren Integriert-/Live-offen-Status und älteren PARKED-Angaben zu #252 sind ersetzt. Der Verlaufspilot #358 ist auf `fd428a60` integriert. Die SW323-Produktionsprüfung, Folgeschnitte und fachlichen Restgrenzen stehen im [aktuellen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md).
+
 ## 1.0-Abschluss · 18.11.2026
 
 **FolioLab 1.0 ist im ausdrücklich freigegebenen K1–K6-Umfang abgenommen.** Die fünf Originalkernfälle, der abschließende Android-Durchgang und Main/Deploy/Live auf SW321 sind geprüft. [Verbindlicher Abschlussstand mit Grenzen und Folgethemen](FOLIOLAB_1_0_RELEASE_ACCEPTANCE_2026-11-18.md). Historische offene Android-/Original-/Live-Angaben unten gelten jeweils nur für ihren damaligen Stand oder ausdrücklich weiter offene Spezialfälle.
