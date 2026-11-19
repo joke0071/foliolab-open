@@ -37,6 +37,8 @@ export async function verifySyncOutboxState(input,verifyFrame) {
     e.capturedLocalRevision<=previous.capturedLocalRevision :
     e.revision.parentId!==null||e.revision.generation!=='1')fail('lineage');
   if((i<=state.anchorIndex)!==(e.status==='confirmed'))fail('anchor');
+  // Only the first entry after the matched prefix can have begun a send.
+  if(e.status==='uncertain'&&i!==state.anchorIndex+1)fail('attempt-order');
   const v=readVerifiedSyncFrame(await verifyFrame(e.frameText));
   if(v.epochId!==state.epochId||!same(v.descriptor,e.revision)||v.frameText!==e.frameText||v.frameDigest!==e.frameDigest)fail('frame-binding');
   payloads.push(v.plain);previous=e;

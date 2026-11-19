@@ -23,6 +23,17 @@ test('crash orchestration requires actual crash event in double and surviving br
  assert.equal(r.pageClosed,false);assert.equal(r.browserConnected,true);assert.equal(f.detached(),1);
  assert.equal(f.page.listenerCount('close'),0);
 });
+test('a crashed target can leave detach pending while the caller reopens storage',{timeout:2000},async()=>{
+ const f=crashFixture();
+ const session=await f.context.newCDPSession(f.page);
+ let finishDetach,detachRequested=false;
+ session.detach=()=>{detachRequested=true;return new Promise(resolve=>{finishDetach=resolve;});};
+ f.context.newCDPSession=async()=>session;
+ try{
+  assert.equal((await crashRenderer(f)).crashObserved,true);
+  assert.equal(detachRequested,true);
+ }finally{finishDetach?.();}
+});
 test('protocol rejection with observed crash is distinct from crash evidence',async()=>{
  const f=crashFixture({rejectCommand:true}),r=await crashRenderer(f);
  assert.equal(r.commandOutcome,'rejected');assert.equal(r.crashObserved,true);
