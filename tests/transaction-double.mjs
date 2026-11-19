@@ -4,8 +4,8 @@
  */
 export function memoryDB() {
  const data=new Map();let tail=Promise.resolve();
- const db={data,fault:null,transaction(_store,mode){
-  const tx={error:null,abort(){if(tx.done)return;tx.done=true;setImmediate(()=>{tx.onabort?.();release();});}};
+ const db={data,fault:null,transaction(_store,mode,options){
+  const tx={durability:options?.durability??'default',error:null,abort(){if(tx.done)return;tx.done=true;setImmediate(()=>{tx.onabort?.();release();});}};
   let working,active=false,release,scheduled=false;const queue=[];
   const done=new Promise(r=>release=r),prior=tail;tail=done;
   const store={get(key){const req={};queue.push(()=>{req.result=structuredClone(working.get(key));req.onsuccess?.();});pump();return req;},

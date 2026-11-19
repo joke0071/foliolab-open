@@ -468,3 +468,12 @@ test('reopening and retry refuse an uncertain successor behind another outstandi
  assert.deepEqual(allowed.state.entries.map(entry=>entry.status),['confirmed','uncertain']);
  assert.deepEqual((await api.recover()).state,allowed.state);
 });
+
+test('a backend ignoring strict durability cannot return sendable bytes or advance the outbox',async()=>{
+ const {db,api,args}=await fixture();
+ await api.capture(args);
+ const before=await readPortfolioSyncRecord(db),transaction=db.transaction.bind(db);
+ db.transaction=(store,mode)=>transaction(store,mode);
+ await assert.rejects(()=>api.begin({expectedLocalRevision:1,expectedSyncVersion:1,revisionId:'R'}),/strict-durability-unavailable/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
