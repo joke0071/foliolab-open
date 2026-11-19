@@ -18,12 +18,23 @@ const checkAxe=async(root,width,state)=>{
 };
 const verifyTargets=async(root,width)=>{
  const history=(await root.getAttribute('id'))==='chartPeriods';
- if(width>720&&!history){
+ if(width>720){
   assert.deepEqual(await root.locator('button:visible').allTextContents(),labels);
-  assert.equal(await root.locator('.period-more > summary').isVisible(),false);
+  const summary=root.locator('.period-more > summary');
+  assert.equal(await summary.isVisible(),history);
   const rows=await root.locator('button:visible').evaluateAll(nodes=>new Set(nodes.map(el=>Math.round(el.getBoundingClientRect().top))).size);
   assert.equal(rows,1,'All wealth periods must stay inline at '+width);
   await checkAxe(root,width,'desktop');
+  if(history){
+   await summary.focus();
+   await page.keyboard.press('Enter');
+   const options=root.locator('#historyBasis,#historyChartStyle');
+   assert.equal(await options.count(),2);
+   assert.ok(await options.evaluateAll(es=>es.every(e=>e.getBoundingClientRect().height>=44)));
+   await checkAxe(root,width,'desktop options open');
+   await page.keyboard.press('Escape');
+   assert.ok(await summary.evaluate(el=>el===document.activeElement));
+  }
   return;
  }
  const narrow=width<=374;

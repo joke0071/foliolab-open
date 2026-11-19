@@ -2184,6 +2184,7 @@
 #historyChart [data-history-show-model]{margin:4px;min-height:44px}
 @media(max-width:720px){
  #historyPage #chartPeriods.history-chart-period>.period-more,#historyPage #chartPeriods.history-chart-period>button{flex:1 1 0}
+ #chartPeriods>button:is([data-range="threeYears"],[data-range="fiveYears"]){display:none}
  #chartPeriods .history-period-options>summary{padding:0 4px}
 }
 

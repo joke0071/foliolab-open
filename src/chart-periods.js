@@ -65,11 +65,13 @@ const panelOwner=target=>target.closest?.('.period-more')??target.closest?.('.hi
 export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
  doc.querySelectorAll('.period-more').forEach(more=>{
   const options=more.classList.contains('history-period-options');
-  const group=more.parentElement,list=(options?more.nextElementSibling:more).querySelector('.period-more-list'),summary=more.querySelector('summary');
+  const panel=options?more.nextElementSibling:more;
+  const group=more.parentElement,list=panel.querySelector('.period-more-list'),summary=more.querySelector('summary');
+  const wide=match(WIDE);
   // On phones, the existing history calendar is accessed from the period More menu.
   // Dashboard periods retain their original options; desktop keeps the direct calendar.
   const calendar=list.querySelector('[data-open-history-calendar]');
-  if(group.id==='chartPeriods'&&!match(WIDE)){
+  if(group.id==='chartPeriods'&&!wide){
    if(!calendar){
     const button=doc.createElement('button');
     button.type='button';button.dataset.openHistoryCalendar='';
@@ -81,16 +83,28 @@ export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
   }else calendar?.remove();
   const half=[...group.querySelectorAll('button')].find(b=>rangeOf(b)==='year');
   if(half){
-   if(match(NARROW)&&!match(WIDE)){if(half.parentElement!==list)list.prepend(half);}
+   if(match(NARROW)&&!wide){if(half.parentElement!==list)list.prepend(half);}
    else if(half.parentElement===list)group.insertBefore(half,more);
   }
-  const wide=match(WIDE);
+  if(options){
+   const ranges='button[data-range="threeYears"],button[data-range="fiveYears"]';
+   const max=group.querySelector('button[data-range="all"]');
+   if(wide){
+    for(const button of list.querySelectorAll(ranges))group.insertBefore(button,more);
+    if(panel.nextElementSibling===max)group.insertBefore(max,more);
+   }else{
+    for(const button of Array.from(group.querySelectorAll(ranges)).filter(button=>button.parentElement===group)){
+     list.insertBefore(button,list.querySelector('[data-open-history-calendar]'));
+    }
+    if(max.nextElementSibling===more)panel.after(max);
+   }
+  }
   if(wide&&!options)more.open=true;else if(more.dataset.wasWide==="1")more.open=false;
   more.dataset.wasWide=wide&&!options?"1":"0";
   const active=[...list.querySelectorAll('button')].find(b=>b.getAttribute('aria-pressed')==='true');
   summary.textContent=active?active.textContent:'Mehr';
   const choices=[...list.querySelectorAll('button')].map(b=>b.textContent.trim()).join(', ');
-  summary.setAttribute('aria-label',active?
+  summary.setAttribute('aria-label',options&&wide?'Mehr · Datenbasis und Diagramm':active?
    active.textContent.trim()+' ausgewählt; weitere Zeiträume: '+choices+(options?' · Datenbasis und Diagramm':''):
    'Mehr: weitere Zeiträume'+(choices?': '+choices:'')+(options?' · Datenbasis und Diagramm':''));
   more.classList.toggle('has-active',Boolean(active));
