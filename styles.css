@@ -2169,7 +2169,7 @@
 #positionsPage #addWizard{transition:none}
 .projection-panel{margin-top:16px;min-width:0}
 .projection-panel>summary,.projection-method>summary{cursor:pointer;min-height:44px;align-content:center;font-weight:650}
-.projection-panel>summary h2{display:inline;font:inherit;margin:0}
+.projection-panel>summary h2{display:inline;font:inherit;margin:0;overflow-wrap:anywhere}
 .projection-body{padding-bottom:4px;overflow-wrap:anywhere}
 .projection-inputs,.projection-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
 .projection-inputs .field,.projection-inputs input{min-width:0;width:100%}
@@ -2179,7 +2179,7 @@
 .projection-source{color:#3c5e4b}
 .projection-message:empty{display:none}
 .projection-message{color:#8a2921}
-.projection-chart{display:grid;grid-template-columns:minmax(52px,auto) minmax(0,1fr);gap:4px 8px;font-size:.85rem}
+.projection-chart{display:grid;grid-template-columns:minmax(52px,25%) minmax(0,1fr);gap:4px 8px;font-size:.85rem}
 .projection-chart svg{display:block;width:100%;height:auto}
 .projection-chart-scale,.projection-chart-time{display:flex;justify-content:space-between;gap:8px}
 .projection-chart-scale{flex-direction:column;padding-block:6px}

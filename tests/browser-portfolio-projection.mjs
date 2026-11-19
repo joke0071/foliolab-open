@@ -53,6 +53,14 @@ for(const engine of (process.env.PROJECTION_ENGINES||'chromium').split(',')){
    await page.setViewportSize({width,height:850});
    assert.ok(await projection.evaluate(e=>e.scrollWidth<=e.clientWidth+1),'Projection overflow at '+width);
   }
+  await page.setViewportSize({width:320,height:850});
+  const scaled=await projection.evaluate(section=>{
+   const fonts=[...section.querySelectorAll('*')].map(node=>[node,node.style.fontSize,parseFloat(getComputedStyle(node).fontSize)]);
+   for(const [node,,size] of fonts)node.style.fontSize=(2*size)+'px';
+   try{return {width:innerWidth,scroll:document.documentElement.scrollWidth};}
+   finally{for(const [node,original] of fonts)node.style.fontSize=original;}
+  });
+  assert.ok(scaled.scroll<=scaled.width+1,'Open projection overflows the page with doubled font sizes');
   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#portfolioProjection')).violations.map(v=>v.id)),[]);
   await projection.locator('[name="low"]').fill('10');
   await projection.getByRole('button',{name:'Szenarien berechnen'}).click();
