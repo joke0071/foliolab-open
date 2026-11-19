@@ -92,6 +92,36 @@ async function checkUncertainRetry({context,setup,operation,restart}){
  return {crash,events:barrier.events,entryStates:uncertain.entries.map(entry=>entry.status)};
 }
 
+// Hold the return of a real remote-frame verification while a second tab commits.
+async function checkCrossTabFramePlan(browser,setup,operation){
+ const context=await browser.newContext();
+ try{
+  const a=await context.newPage(),b=await context.newPage();await setup(a);await setup(b);
+  const root=await operation(a,'initialize');
+  const queue=await operation(a,'capture',{expectedLocalRevision:root.revision,expectedSyncVersion:null,frameText:frame(root.raw)});
+  const request={expectedLocalRevision:root.revision,expectedSyncVersion:queue.version,observationComplete:true,
+   frameTexts:[frame(root.raw,'B','R','2','71'.repeat(32))]};
+  const stable=await a.evaluate(request=>window.syncTest.api.planFrameApply(request),request);
+  assert.equal(stable.candidateId,'B');assert.equal(stable.applyAuthorized,false);
+  await a.evaluate(async request=>{
+   const {createSyncOutboxStorage}=await import('/experimental/sync/sync-outbox-storage.js');
+   const {db,verify}=window.syncTest;
+   const api=createSyncOutboxStorage(db,async text=>{
+    const receipt=await verify(text);
+    if(text===request.frameTexts[0])await new Promise(resolve=>{window.releaseFramePlan=resolve;});
+    return receipt;
+   });
+   window.framePlan=api.planFrameApply(request).then(result=>result,error=>({error:error.message}));
+  },request);
+  await a.waitForFunction(()=>typeof window.releaseFramePlan==='function');
+  const updated=await operation(b,'save',{revision:root.revision,raw:root.raw});
+  const result=await a.evaluate(()=>{window.releaseFramePlan();return window.framePlan;});
+  assert.deepEqual(result,{error:'sync-outbox-apply-plan-race'});
+  assert.deepEqual(await operation(a,'read'),{portfolio:updated,sync:queue});
+  console.log(JSON.stringify({kind:'FLH04CrossTabFramePlan',status:'PASS',engine:browser.version()}));
+ }finally{await context.close();}
+}
+
 export async function runRendererTerminationCandidate({browser,setup,operation,url}){
  const origin=new URL(url);
  assert.equal(origin.protocol,'http:');assert.equal(origin.port,'4173');
@@ -193,5 +223,6 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   await checkPersistentRestart({setup,operation,checkUncertainRetry});
   const {checkProfileRestore}=await import('./flh04-profile-restore.mjs');
   await checkProfileRestore({setup,operation});
+  await checkCrossTabFramePlan(browser,setup,operation);
  }
 }
