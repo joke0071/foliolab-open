@@ -1,6 +1,6 @@
-# FolioLab Open
+# FolioLab
 
-Eine eigenständige, **lokale Portfolio-Web-App** für ETFs, Aktien, Fonds, Konten und Kryptowährungen. Keine Anmeldung, kein Bankzugriff, kein Screenshot-Upload, keine integrierten API-Schlüssel.
+**Portfolio-Tracker für ETFs, Aktien, Krypto und Guthaben.** Behalte den Wert und die Zusammensetzung deines Portfolios im Blick. Das Portfolio liegt in deinem Browser. Die App braucht kein FolioLab-Konto. Kurs- und Wallet-Abrufe nutzen externe Anbieter. Verschlüsselte Google-Drive-Sicherungen sind optional.
 
 ## Starten
 
@@ -19,15 +19,16 @@ Dann http://localhost:4173 öffnen. Für die Offline-PWA ist HTTPS erforderlich.
 - Anbieter frei erstellen und bearbeiten, mit mehreren separaten Konten pro Anbieter. Anbietervorschläge ohne Zwang oder automatisch angelegte Leer-Konten.
 - Beliebige ETFs und weitere Anlagen anhand von Namen, Ticker oder ISIN erfassen. Positionen und Guthaben vollständig manuell bearbeiten.
 - Manuelle Käufe, Verkäufe und Bestandszugänge buchen sowie Vermögensstände speichern.
+- CSV-Dateien von Flatex AT, Bittr, Bitpanda, Kraken und Ledger Live in unterstützten Fällen prüfen und nach ausdrücklicher Bestätigung übernehmen. Die Vorschau zeigt Zuordnungen und offene Angaben vor der Übernahme.
 - Krypto-Coins frei über die **CoinGecko-ID** erfassen; Katalogsuche über `/coins/list`. CoinGecko bietet limitierten schlüssellosen Zugriff, ein eigener Demo-Key ist optional.
 - **Wallet hinzufügen** in Positionen: öffentliche Adresse eingeben, Netzwerk wählen, entdeckte Guthaben prüfen und mehrere Coins ohne API-Key übernehmen. Unterstützt Bitcoin-Einzeladressen und Bitcoin-HD-Account-Keys (xpub/ypub/zpub), Ethereum, Base, Arbitrum, Optimism, Polygon, Avalanche C-Chain (inklusive BENQI sAVAX), Sonic Mainnet (S, ausgewählte ERC-20 und SFC-Delegationen) sowie Solana (SOL, SPL, Token-2022 und native Stake-Accounts). EVM nutzt öffentliche Explorer bzw. offizielle read-only RPCs; Solana den konfigurierten RPC (ohne Schlüssel). Endpunkte sind nicht garantiert jederzeit erreichbar.
 - Tägliche Fremdwährungsreferenzkurse ohne API-Schlüssel über Frankfurter; optionale Wertpapier-Tageskurse über **Alpha Vantage** oder **Marketstack** mit eigenem Schlüssel. Optional kann ein eigener EODHD-Worker verwendet werden. Die belegte EUR/Xetra-Abdeckung umfasst VWCE, XDEM, XDEQ und 5MVL; weitere Notierungen sind nicht pauschal bestätigt. Ohne Zugang bleibt manuelle Kurspflege möglich. Ticker, Börse/MIC und Handelswährung müssen zur Position passen.
 - Automatische Kurs- und Wallet-Aktualisierung beim Öffnen: **Täglich** ist Standard; unter **Mehr → Datenquellen & Aktualisierung** sind außerdem **Nur manuell**, **Alle 6 Stunden** und **Alle 30 Minuten** wählbar. Die Auswahl ändert die Abrufhäufigkeit, nicht den Zeitraum oder die Abtastung eines Diagramms. Anbieterlimits und Teilabrufe bleiben sichtbar.
-- Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**. Optional: AES-GCM-verschlüsselte Google-Drive-Backups mit eigener OAuth-Client-ID je Nutzer.
+- Gespeicherte Portfoliodaten und lokale Funktionen stehen in der installierten PWA offline zur Verfügung. Für neue Kurs- und Wallet-Abrufe braucht die App eine Verbindung. JSON-Sicherungen enthalten standardmäßig keine API-Schlüssel. Verschlüsselte Datei- und Google-Drive-Sicherungen sind optional.
 
 ## Staking-Scanner: 50 Asset-Einträge (Stand Oktober 2026)
 
-Unter **Positionen → Wallet hinzufügen → Staking-Asset** bietet FolioLab Open einen transparenten Katalog zu den 50 gelieferten Coin-/Netzwerk-Kombinationen. Die Auswahl eines Assets ist nur eine Orientierungshilfe und **keine** Bestätigung, dass sämtliche Stakes oder Rewards erkannt wurden. Bei nicht unterstützten Netzwerken wird automatisches Scannen deaktiviert; die Anlage kann manuell erfasst werden.
+Unter **Positionen → Wallet hinzufügen → Staking-Asset** bietet FolioLab einen transparenten Katalog zu den 50 gelieferten Coin-/Netzwerk-Kombinationen. Die Auswahl eines Assets ist nur eine Orientierungshilfe und **keine** Bestätigung, dass sämtliche Stakes oder Rewards erkannt wurden. Bei nicht unterstützten Netzwerken wird automatisches Scannen deaktiviert; die Anlage kann manuell erfasst werden.
 
 - **Bisherige unterstützte Netze:** Ethereum/EVM, Solana-SPL und eigene Stake-Accounts, Sonic SFC und ausgewählte ERC-20-Liquid-Staking-Tokens, Avalanche C-Chain inklusive BENQI sAVAX. EVM/ERC-20-Inventare liefern Tokenbestände, aber keinen Beweis für Protokoll-Staking, Vault-Anteile oder staked Validator-Balances.
 - **Cosmos Hub (ATOM):** freies ATOM (Bank), aktive Delegationen und Unbonding getrennt über das öffentliche Cosmos-SDK-LCD `rest.cosmos.directory/cosmoshub`. Unerhobene Rewards, Interchain-Accounts oder andere Cosmos-Netzwerke werden **nicht** pauschal mitgescannt. Validator-Identitäten bleiben im Positionsbezug; Paginierungsfehler werden nicht als verifizierter Nullbestand übernommen.
@@ -77,7 +78,7 @@ Ein vergessenes Passwort macht die Sicherungsdateien auf anderen Geräten unlesb
 ### Persönlichen Google-Drive-OAuth-Zugang einrichten
 
 1. In der [Google Cloud Console](https://console.cloud.google.com/apis/credentials) ein eigenes Projekt erstellen, **Google Drive API** aktivieren und den OAuth-Zustimmungsdialog konfigurieren. Bei Testmodus das eigene Google-Konto als Testnutzer hinzufügen.
-2. Einen OAuth-Client vom Typ **Webanwendung** erstellen und die tatsächliche FolioLab-Origin als **autorisierte JavaScript-Quelle** eintragen (bei GitHub Pages z. B. `https://joke0071.github.io`, ohne Unterpfad).
+2. Einen OAuth-Client vom Typ **Webanwendung** erstellen und die tatsächliche FolioLab-Origin als **autorisierte JavaScript-Quelle** eintragen. Für die öffentliche App lautet sie `https://foliolab.unperfekt.at`. Verwende bei eigener Veröffentlichung deren Origin, jeweils ohne Pfad oder abschließenden Schrägstrich.
 3. Die öffentliche Client-ID (`…apps.googleusercontent.com`) unter **Mehr → Deine Daten → Google Drive Backup** einfügen und Google verbinden. **Kein API-Key, Client-Secret oder Refresh-Token** erforderlich. Die OAuth-Client-ID verbleibt in den lokalen Einstellungen, der kurzlebige Access-Token nur im Arbeitsspeicher.
 4. Optionalen FolioLab-Ordner auswählen/erstellen, manuell sichern oder einen automatischen Rhythmus wählen. Standard sind drei Versionen; einstellbar sind 1–30.
 
@@ -104,7 +105,9 @@ Der **normale unverschlüsselte JSON-Export** enthält ausdrücklich keine Zugan
 
 ## Datenschutz und Sicherheitsmodell
 
-Das Portfolio wird ausschließlich in `localStorage` gespeichert (unverschlüsselt, gerätegebunden). Für jedes Gerät / Browserprofil gibt es einen eigenen Datensatz. Keine zentrale Nutzerverwaltung, keine Serverdatenbank, keine Tracker. API-Schlüssel werden lokal, **nicht verschlüsselt** gespeichert und über HTTPS an die jeweiligen Dienste gesendet, wenn deren Funktionen benutzt werden. Eine Website und ihre Skripte sind keine Hochsicherheitsumgebung: nur eigene, ggf. eingeschränkte API-Schlüssel verwenden. Im Backup sind keine API-Schlüssel enthalten. Es werden keine privaten Wallet-Schlüssel oder Seed-Phrases angefordert.
+Neue Portfolios liegen im jeweiligen Browserprofil in **IndexedDB**. Ein älterer, noch nicht übernommener Datensatz kann in `localStorage` liegen. FolioLab betreibt keine zentrale Nutzerverwaltung oder Portfoliodatenbank.
+
+Eigene API-Schlüssel werden lokal unverschlüsselt gespeichert und bei Nutzung der jeweiligen Funktion über HTTPS an deren Anbieter gesendet. Ein normaler JSON-Export enthält keine Zugangsdaten. In verschlüsselten Sicherungen können sie ausdrücklich eingeschlossen werden. FolioLab verlangt keine privaten Wallet-Schlüssel oder Seed-Phrases.
 
 **Beachten:** Blockchain-Abfragen übertragen die beobachtete öffentliche Adresse an Blockstream, öffentliche Explorer, Sonic-/Avalanche-RPCs, ggf. Etherscan oder den konfigurierten Solana-RPC. Öffentliche Endpunkte können ratelimitiert, gesperrt oder durch CORS-Probleme nicht erreichbar sein. Es gibt keinen eingebauten zentralen Proxy. Eigene Solana-RPC-Adressen können in „Mehr“ konfiguriert werden. Browser können Schlüssel bei API-Calls im Netzwerkdialog sichtbar machen, insbesondere bei Query-Parametern. Für produktive Nutzung prüfen, ob der jeweilige Datenanbieter Client-Aufrufe erlaubt und ob Lizenz-/Nutzungsbedingungen zur Veröffentlichung passen.
 
@@ -228,7 +231,7 @@ Ein `xpub` oder andere Wallet-Daten werden beim historischen CSV-Import nicht ü
 
 ### Historische Kryptowährungskurse (Stand Oktober 2026)
 
-Ein CoinGecko-**aktueller** Kurs ist unabhängig vom API-Endpunkt **/market_chart** für Diagramme. Um das öffentliche Ratenlimit nicht unnötig zu erreichen, verwendet Foliolab Open beim Aufklappen eine gemeinsame 365-Tage-Zeitreihe und filtert die vier Zeiträume 7T / 1M / 3M / 1J lokal, statt jeden Zeitraum neu zu laden. Gleichzeitig angeforderte Diagramme werden mit Abstand abgefragt; bei API-Fehlern wird **kein künstlicher Kursverlauf** angezeigt. Ein Link zur offiziellen CoinGecko-Coinseite ermöglicht den Vergleich außerhalb der App. Optional kann jeder Nutzer einen persönlichen kostenlosen Demo-API-Schlüssel unter **Mehr → Erweiterte Einstellungen** eintragen (nur lokal gespeichert); öffentliche Endpunkte können trotzdem wegen Netzsperren/CORS ausfallen. Das Marktdatum ist entscheidend: Antworten mit mehr als sieben Tage alten CoinGecko-Zeitstempeln gelten nicht als frisch und überschreiben keine vorhandenen Preise.
+Ein CoinGecko-**aktueller** Kurs ist unabhängig vom API-Endpunkt **/market_chart** für Diagramme. Um das öffentliche Ratenlimit nicht unnötig zu erreichen, verwendet FolioLab beim Aufklappen eine gemeinsame 365-Tage-Zeitreihe und filtert die vier Zeiträume 7T / 1M / 3M / 1J lokal, statt jeden Zeitraum neu zu laden. Gleichzeitig angeforderte Diagramme werden mit Abstand abgefragt; bei API-Fehlern wird **kein künstlicher Kursverlauf** angezeigt. Ein Link zur offiziellen CoinGecko-Coinseite ermöglicht den Vergleich außerhalb der App. Optional kann jeder Nutzer einen persönlichen kostenlosen Demo-API-Schlüssel unter **Mehr → Erweiterte Einstellungen** eintragen (nur lokal gespeichert); öffentliche Endpunkte können trotzdem wegen Netzsperren/CORS ausfallen. Das Marktdatum ist entscheidend: Antworten mit mehr als sieben Tage alten CoinGecko-Zeitstempeln gelten nicht als frisch und überschreiben keine vorhandenen Preise.
 
 **Sonic (S)** muss bei CoinGecko als **sonic-3** zugeordnet sein. Ältere, ähnlich benannte Coins (z.B. API-ID `sonic`) dürfen nicht mit Sonic Mainnet verwechselt werden. Die App ändert vorhandene Coin-Zuordnungen nicht automatisch.
 
