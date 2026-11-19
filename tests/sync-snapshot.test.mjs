@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider,createAccount,createPosition} from '../src/model.js';
 import {executeTransaction} from '../src/transactions.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 function model(){
  const m=blankModel();

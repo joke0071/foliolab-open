@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider} from '../src/model.js';
 import {commitPortfolioRecord,readPortfolioSyncRecord} from '../src/atomic-storage.js';
-import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
-import {appendSyncOutboxState} from '../src/sync-outbox-state.js';
-import {createSyncFrameVerifier,readVerifiedSyncFrame} from '../src/sync-frame-verifier.js';
+import {createSyncOutboxStorage} from '../experimental/sync/sync-outbox-storage.js';
+import {appendSyncOutboxState} from '../experimental/sync/sync-outbox-state.js';
+import {createSyncFrameVerifier,readVerifiedSyncFrame} from '../experimental/sync/sync-frame-verifier.js';
 import {memoryDB} from './transaction-double.mjs';
 import {frame,snapshotFrame,verify,portfolioId,epochId} from './sync-outbox-fixture.mjs';
 

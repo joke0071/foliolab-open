@@ -7,7 +7,7 @@ import {bookingOwnership} from '../src/import-identity.js';
 import {setArchivePresentation} from '../src/booking-history.js';
 import {ledgerModel,ledgerEvidence,ledgerCSV,at} from './ledger-live-fixture.mjs';
 import {readUnifiedBitcoinFiles,previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoin.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 const types=['deposit','withdraw','dividend','interest','fee','tax'];
 const canonical=m=>{const d=JSON.parse(backup(m,{includeHistory:true}));delete d.settings;return d;};

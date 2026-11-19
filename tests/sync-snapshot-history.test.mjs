@@ -5,7 +5,7 @@ import {executeTransaction} from '../src/transactions.js';
 import {validateHistorySession} from '../src/wallet-history-state.js';
 import {replayWalletHistory} from '../src/wallet-history-core.js';
 import {valueHistoryRows} from '../src/wallet-history-valuation.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 import {event,stream,NOW} from './wallet-history-fixtures.mjs';
 
 const envelope=data=>JSON.stringify({kind:SYNC_SNAPSHOT_KIND,snapshotVersion:1,data});

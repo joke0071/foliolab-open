@@ -1,7 +1,7 @@
-import {safeImport,assertDataVersion} from './model.js';
+import {safeImport,assertDataVersion} from '../../src/model.js';
 import {syncPayloadDigest} from './sync-payload-integrity.js';
-import {units,exact} from './decimal.js';
-import {provenCashImport,sourceUnmodified} from './import-identity.js';
+import {units,exact} from '../../src/decimal.js';
+import {provenCashImport,sourceUnmodified} from '../../src/import-identity.js';
 
 /** Bounded credential-free financial gate, NOT crypto/graph/CAS/Apply approval.
  * Unsupported financial evidence blocks the entire snapshot; nothing is pruned.

@@ -5,7 +5,7 @@ import {safeImport,backup,createPosition} from '../src/model.js';
 import {readUnifiedBitcoinFiles,previewUnifiedBitcoin,confirmUnifiedBitcoin,undoUnifiedBitcoin} from '../src/unified-bitcoin.js';
 import {sourceDigest} from '../src/import-identity.js';
 import {setArchivePresentation} from '../src/booking-history.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 const envelope=d=>JSON.stringify({kind:SYNC_SNAPSHOT_KIND,snapshotVersion:1,data:d});
 const input=m=>({receipts:m.purchaseEvidence?.receipts||[],operations:readUnifiedBitcoinFiles([ledgerCSV()]).operations});

@@ -5,7 +5,7 @@ import {executeTransaction} from '../src/transactions.js';
 import {prepareBookingChange,prepareBookingUndo,previewBookingChange} from '../src/booking-management.js';
 import {parseCSV,inferMapping,previewCSV,importCSV} from '../src/csv-import.js';
 import {setArchivePresentation} from '../src/booking-history.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 const kinds=['deposit','withdraw','dividend','interest','fee','tax'];
 const canonical=m=>{const d=JSON.parse(backup(m,{includeHistory:true}));delete d.settings;return d;};
 function fixture(type='deposit'){

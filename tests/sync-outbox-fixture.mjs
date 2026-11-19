@@ -1,5 +1,5 @@
 import {createHash,createCipheriv,hkdfSync} from 'node:crypto';
-import {createSyncFrameVerifier} from '../src/sync-frame-verifier.js';
+import {createSyncFrameVerifier} from '../experimental/sync/sync-frame-verifier.js';
 export const portfolioId='P',epochId='12'.repeat(16),secret=Buffer.alloc(32,17),suite='HKDF-SHA256-A256GCM';
 const key=await crypto.subtle.importKey('raw',secret,'HKDF',false,['deriveKey']);
 export const verify=createSyncFrameVerifier({portfolioId,epochId,key});

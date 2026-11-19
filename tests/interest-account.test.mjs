@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {installLegacyStorageProbe} from './fixtures/legacy-storage-probe.mjs';
 import assert from 'node:assert/strict';
 import {blankModel,createProvider,createAccount,createPosition,totalExactEUR,backup,safeImport} from '../src/model.js';
 import {forecastAccountInterest} from '../src/interest-account.js';
@@ -62,7 +63,8 @@ test('optional rate metadata roundtrips open/current complete data and legacy en
  }
 });
 
-test('read-only storage freshness check never changes bytes or adopts a peer revision',async()=>{
+test('read-only storage freshness check never changes bytes or adopts a peer revision',async t=>{
+ installLegacyStorageProbe(t);
  const {PortfolioStorage}=await import('../src/browser-portfolio-storage.js');
  const {STORE_KEY}=await import('../src/model.js');
  // Explicit existing v3 installation: node unit tests have no browser IndexedDB.

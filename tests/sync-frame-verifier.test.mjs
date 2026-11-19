@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash,createCipheriv,hkdfSync} from 'node:crypto';
-import {createSyncFrameVerifier,readVerifiedSyncFrame,SYNC_FRAME_TEXT_LIMIT,SYNC_FRAME_CIPHER_LIMIT} from '../src/sync-frame-verifier.js';
-import {prepareSyncOutboxAttempt,readSyncOutboxAttempt,classifySyncOutboxAttempt} from '../src/sync-outbox-attempt.js';
-import {planSyncRevisions} from '../src/sync-revisions.js';
+import {createSyncFrameVerifier,readVerifiedSyncFrame,SYNC_FRAME_TEXT_LIMIT,SYNC_FRAME_CIPHER_LIMIT} from '../experimental/sync/sync-frame-verifier.js';
+import {prepareSyncOutboxAttempt,readSyncOutboxAttempt,classifySyncOutboxAttempt} from '../experimental/sync/sync-outbox-attempt.js';
+import {planSyncRevisions} from '../experimental/sync/sync-revisions.js';
 
 // Independent Node/OpenSSL encoder: no production encoding/AAD/KDF helper used.
 // Fixed keys/nonces are synthetic fixtures ONLY; there is no production encoder.

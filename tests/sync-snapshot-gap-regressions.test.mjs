@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,createProvider,createPosition,backup,snapshot} from '../src/model.js';
 import {executeTransaction} from '../src/transactions.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 const marker='SYNTHETIC_CREDENTIAL_NEVER_REAL';
 function fixture(){
  const m=blankModel(),p=createProvider({id:'synthetic-provider',name:'Synthetic',type:'broker'});m.providers.push(p);

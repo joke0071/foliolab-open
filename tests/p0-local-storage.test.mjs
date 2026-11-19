@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
 import {blankModel,STORE_KEY,createProvider} from '../src/model.js';
+import {installLegacyStorageProbe} from './fixtures/legacy-storage-probe.mjs';
+test.beforeEach(installLegacyStorageProbe);
 const memory=()=>{const data=new Map();data.set(STORE_KEY,JSON.stringify(blankModel()));return {get length(){return data.size;},key:i=>[...data.keys()][i],getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};};
 test('Stale local writer cannot overwrite a confirmed save; reload renews comparison',async()=>{
  const storage=memory(),a=new PortfolioStorage(storage),b=new PortfolioStorage(storage);

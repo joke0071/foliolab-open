@@ -10,7 +10,7 @@ import {withdrawalDigest,validateKrakenWithdrawals} from '../src/kraken-withdraw
 import {setArchivePresentation} from '../src/booking-history.js';
 import {csvUndoReceipt,undoCSV} from '../src/csv-batch.js';
 import {usdPrincipalFixture} from './kraken-usd-principal-fixture.mjs';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 const at='1999-02-01T12:00:00.000Z';
 const rows=[

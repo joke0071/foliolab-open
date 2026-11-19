@@ -28,7 +28,7 @@ function harness({accept=true,fail=false,cacheFail=false,configuration=true,vaul
   window:{FolioDriveBackup:{}},location:{reload(){throw Error('unexpected reload');}}
  });
  const run=(a,b)=>vm.runInContext(source.slice(source.indexOf(a),source.indexOf(b,source.indexOf(a))),context);
- run('async function save(){','function notify(');
+ run('async function save(','function notify(');
  run('function decideImportedConfiguration(','function applyImportedDriveConfiguration(');
  if(source.includes('function syncApiSettingsForm('))run('function syncApiSettingsForm(','function initEvents(');
  run("$('backupFile').addEventListener('change'",'  // Drive only receives');

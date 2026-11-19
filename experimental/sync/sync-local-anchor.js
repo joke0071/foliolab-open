@@ -1,4 +1,4 @@
-import {readPortfolioSyncAnchorPreimage} from './atomic-storage.js';
+import {readPortfolioSyncAnchorPreimage} from '../../src/atomic-storage.js';
 
 // Isolated preparation ONLY. No app integration, enrollment, key export, frame
 // verifier, encoder or unlock API. Stored keys never confer sender/Apply rights.

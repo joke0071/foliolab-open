@@ -30,9 +30,9 @@ async function setup(page){
  await page.goto(url);
  await page.evaluate(async()=>{
   const storage=await import('/src/atomic-storage.js'),model=await import('/src/model.js');
-  const {createSyncFrameVerifier}=await import('/src/sync-frame-verifier.js');
-  const {createSyncOutboxStorage}=await import('/src/sync-outbox-storage.js');
-  const {prepareLocalSyncAnchor}=await import('/src/sync-local-anchor.js');
+  const {createSyncFrameVerifier}=await import('/experimental/sync/sync-frame-verifier.js');
+  const {createSyncOutboxStorage}=await import('/experimental/sync/sync-outbox-storage.js');
+  const {prepareLocalSyncAnchor}=await import('/experimental/sync/sync-local-anchor.js');
   const key=await crypto.subtle.importKey('raw',new Uint8Array(32).fill(17),'HKDF',false,['deriveKey']);
   const verify=createSyncFrameVerifier({portfolioId:'P',epochId:'12'.repeat(16),key});
   const db=await storage.openPortfolioDB();
