@@ -1,6 +1,6 @@
 import {createSyncSnapshot,validateSyncSnapshot} from './sync-snapshot.js';
 import {readVerifiedSyncFrame} from './sync-frame-verifier.js';
-import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from './atomic-storage.js';
+import {readPortfolioSyncRecord,commitPortfolioSyncRecord} from '../../src/atomic-storage.js';
 import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB

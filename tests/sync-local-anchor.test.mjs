@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {blankModel,backup} from '../src/model.js';
 import {adoptPortfolioRecord,commitPortfolioRecord,restoreDamagedRecord,readPortfolioSyncRecord} from '../src/atomic-storage.js';
-import {prepareLocalSyncAnchor} from '../src/sync-local-anchor.js';
-import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
+import {prepareLocalSyncAnchor} from '../experimental/sync/sync-local-anchor.js';
+import {createSyncOutboxStorage} from '../experimental/sync/sync-outbox-storage.js';
 import {verify,frame} from './sync-outbox-fixture.mjs';
 import {memoryDB} from './transaction-double.mjs';
 

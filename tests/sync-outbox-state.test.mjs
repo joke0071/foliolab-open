@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
 import {createHash} from 'node:crypto';
 const hash=s=>createHash('sha256').update(s).digest('hex');
-import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary,planSyncOutboxApply} from '../src/sync-outbox-state.js';
+import {verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxSummary,planSyncOutboxApply} from '../experimental/sync/sync-outbox-state.js';
 const raw='{"quantity":"9007199254740993.00000001","fx":null,"fxState":"UNKNOWN","journal":["J"]}';
 export const capture=async(plain=raw,revision=7,extra={})=>appendSyncOutboxState({receipt:await verify(frame(plain)),portfolio:{raw:plain,revision,deleted:false},expectedPortfolioId:portfolioId,expectedEpochId:epochId,...extra});
 const ticket=s=>verifySyncOutboxState(s,verify);

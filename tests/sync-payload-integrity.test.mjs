@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {syncPayloadDigest,assertSyncPayloadDigest} from '../src/sync-payload-integrity.js';
+import {syncPayloadDigest,assertSyncPayloadDigest} from '../experimental/sync/sync-payload-integrity.js';
 import {PASSWORD_BACKUP_PLAIN_CHARS,PASSWORD_BACKUP_CIPHER_BYTES} from '../src/backup-limits.js';
 const oracle=s=>createHash('sha256').update(s,'utf8').digest('hex');
 

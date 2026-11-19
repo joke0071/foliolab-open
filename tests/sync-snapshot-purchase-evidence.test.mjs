@@ -5,7 +5,7 @@ import {executeTransaction} from '../src/transactions.js';
 import {validateHistorySession} from '../src/wallet-history-state.js';
 import {validateImportedPriceHistory} from '../src/historical-csv.js';
 import {validatePurchaseReceipt,validatePurchaseEvidence,confirmPurchaseEvidence,unlinkPurchaseEvidence,previewPurchaseEvidence} from '../src/purchase-evidence.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 const at='2025-01-01T12:00:00.000Z',txid='a'.repeat(64);
 const receipt=(v={})=>validatePurchaseReceipt({provider:'bittr',currency:'EUR',timestamp:at,txid,fiatEUR:'500',serviceFeeEUR:'9',grossBTC:'0.0125',miningFeeBTC:'0.0001',netBTC:'0.0124',...v});

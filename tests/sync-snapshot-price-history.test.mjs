@@ -6,7 +6,7 @@ import {validateImportedPriceHistory} from '../src/historical-csv.js';
 import {retainedHistoryDraft,historyIdentity} from '../src/history-evidence-cache.js';
 import {validateHistorySession} from '../src/wallet-history-state.js';
 import {event,stream,NOW} from './wallet-history-fixtures.mjs';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND,SYNC_SNAPSHOT_UTF8_LIMIT} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND,SYNC_SNAPSHOT_UTF8_LIMIT} from '../experimental/sync/sync-snapshot.js';
 
 const days=['2025-01-02','2025-01-03'];
 const points=()=>days.map((date,i)=>({date,total:100.1234567890123+i}));

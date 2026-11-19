@@ -1,4 +1,4 @@
-import {PASSWORD_BACKUP_PLAIN_CHARS,PASSWORD_BACKUP_CIPHER_BYTES} from './backup-limits.js';
+import {PASSWORD_BACKUP_PLAIN_CHARS,PASSWORD_BACKUP_CIPHER_BYTES} from '../../src/backup-limits.js';
 
 /** Commitment to exact plaintext bytes, NOT authentication or model validation.
  * No parsing/reserialization: decimal strings, UNKNOWN/null and journal IDs

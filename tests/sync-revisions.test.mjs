@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {planSyncRevisions,createSyncSuccessor,classifySyncPublication,SYNC_GRAPH_LIMIT} from '../src/sync-revisions.js';
+import {planSyncRevisions,createSyncSuccessor,classifySyncPublication,SYNC_GRAPH_LIMIT} from '../experimental/sync/sync-revisions.js';
 const root = {format:1,portfolioId:'portfolio-A',revisionId:'root',deviceId:'device-A',parentId:null,generation:'1',payloadDigest:'a'.repeat(64)};
 const child = {...root,revisionId:'child',parentId:'root',generation:'2',payloadDigest:'b'.repeat(64)};
 const sibling = {...child,revisionId:'sibling',deviceId:'device-B',payloadDigest:'c'.repeat(64)};

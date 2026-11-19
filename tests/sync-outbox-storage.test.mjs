@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider} from '../src/model.js';
 import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commitPortfolioSyncRecord,adoptPortfolioRecord} from '../src/atomic-storage.js';
-import {verifySyncOutboxState,advanceSyncOutboxState} from '../src/sync-outbox-state.js';
-import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
+import {verifySyncOutboxState,advanceSyncOutboxState} from '../experimental/sync/sync-outbox-state.js';
+import {createSyncOutboxStorage} from '../experimental/sync/sync-outbox-storage.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
 import {portfolioId,epochId,verify,snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 

@@ -14,7 +14,7 @@ import {parseCSV,inferMapping,previewCSV,importCSV} from '../src/csv-import.js';
 import {ledgerModel,ledgerEvidence,ledgerCSV,at} from './ledger-live-fixture.mjs';
 import {readUnifiedBitcoinFiles,previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoin.js';
 import {projectHistoricalPosition} from '../src/historical-position-value.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../src/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 const oracle=JSON.parse(readFileSync(new URL('../docs/release-evidence/uh05-usd-principal-decimal100.json',import.meta.url)));
 const canonical=m=>{const d=JSON.parse(backup(m,{includeHistory:true}));delete d.settings;return d;};
 function fixture(){const f=usdPrincipalFixture(),p=previewKrakenImport(f.m,[f.text],f.assignments,f.options);assert.equal(p.ready,1);return {...f,active:confirmKrakenImport(f.m,[f.text],f.assignments,{...f.options,baseline:p.baseline,confirmed:true})};}
