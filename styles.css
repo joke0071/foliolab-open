@@ -504,6 +504,13 @@
 
 
 /* Compact private-style history controls and accessible two-date calendar. */
+#historyPage .history-sections{display:flex;gap:4px;max-width:100%;overflow-x:auto;padding:4px 4px 8px;margin:0 0 8px}
+.history-sections a{display:flex;align-items:center;min-height:44px;flex:none;padding:0 12px;border-radius:9px;color:#405b4b;font-weight:700;text-decoration:none}
+.history-sections a:is(:hover,[aria-current="location"]){color:#24533b;background:#e3ebe0}
+.history-sections a[aria-current="location"]{text-decoration:underline;text-underline-offset:3px}
+.history-sections a:focus-visible,.history-controls:focus-visible{outline:2px solid #327f52;outline-offset:1px}
+#historyPage :is(#historyDiagram,#historyCoverage>summary,#performanceDetails>summary,#snapshotManager>summary,#portfolioProjection>summary){scroll-margin-top:calc(82px + env(safe-area-inset-top))}
+@media print{#historyPage .history-sections{display:none}}
 #historyPage .history-panel{min-width:0}
 #historyPage .history-controls{position:relative;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0;margin:0 0 14px}
 #historyPage .history-chart-period{display:flex;align-items:center;flex-wrap:nowrap;min-width:0;margin:0;padding:3px;border:1px solid #e1eae2;border-radius:12px;background:#f2f7f2;gap:1px}

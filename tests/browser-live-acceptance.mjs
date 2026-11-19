@@ -85,5 +85,14 @@ try{
  await scan(p,'#portfolioProjection','controlled offline projection');
  assert.deepEqual(await state(p),beforeProjection,'projection must not change portfolio or history');
  report.checks.push('actual controlled offline projection changes no portfolio data');
+ const sectionLinks=p.getByRole('navigation',{name:'Abschnitte im Verlauf'});
+ await sectionLinks.getByRole('link',{name:'Stichtage'}).click();
+ assert.ok(new URL(p.url()).hash==='#snapshotManager');
+ assert.ok(await p.locator('#snapshotManager > summary').evaluate(node=>node.parentElement.open&&document.activeElement===node));
+ assert.equal(await sectionLinks.locator('[aria-current="location"]').innerText(),'Stichtage');
+ await sectionLinks.getByRole('link',{name:'Szenarien'}).click();
+ assert.equal(await projection.locator('[name="start"]').inputValue(),'1000');
+ assert.deepEqual(await state(p),beforeProjection,'section navigation must not change portfolio or history');
+ report.checks.push('actual controlled offline history section links preserve portfolio and projection input');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
 }catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}

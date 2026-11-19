@@ -40,6 +40,10 @@ function assertHistoricalLiveContract(source){
  assert.equal(projectionGate?.length,1);
  assert.equal(createHash('sha256').update(projectionGate[0]).digest('hex'),'bf79687eca2a0e5b9f2d49779847ddfc0b6d7623fb560bcae15a37e5e0a01144');
  source=source.replace(projectionGate[0],'');
+ const sectionNavigationGate=source.match(/^ const sectionLinks=p.getByRole\('navigation',\{name:'Abschnitte im Verlauf'\}\);\n[\s\S]*?^ report\.checks\.push\('actual controlled offline history section links preserve portfolio and projection input'\);\n/gm);
+ assert.equal(sectionNavigationGate?.length,1);
+ assert.equal(createHash('sha256').update(sectionNavigationGate[0]).digest('hex'),'fd4e5755a4d97c549e10d8772cc620808ed86a75c419dc3ab062b1af3600f656');
+ source=source.replace(sectionNavigationGate[0],'');
  // Reverse only the two exact asset-observation deltas; keep every gate byte.
  const assetDiagnosticDeltas=[
   ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
@@ -61,6 +65,7 @@ test('pre-existing live assertions and deadlines remain byte-identical after sea
 test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
  for(const changed of [
   liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
+  liveSource.replace("name:'Stichtage'","name:'Rendite'"),
   liveSource.replace('assetResponses:[],',''),
   liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
   liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),
