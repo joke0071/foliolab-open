@@ -4,12 +4,15 @@ import {source,fixture} from './bitpanda-import-fixture.mjs';
 import {prepareBitpandaSourcePlan} from '../src/bitpanda-import.js';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
-export async function bitpandaWithdrawalBrowserContract({browser,base,engine,model}){
+import {replayVerifiedFixtureAssets} from './verified-fx-release.mjs';
+export async function bitpandaWithdrawalBrowserContract({browser,base,engine,model,published}){
  const context=await browser.newContext({viewport:{width:390,height:900},serviceWorkers:'block'}),p=await context.newPage();p.setDefaultTimeout(20000);
  const errors=[];p.on('pageerror',e=>errors.push(e.message));
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const read=()=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
- await p.goto(base+'?page=bookings');await ready();await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},model);await p.reload();await ready();
+ await p.goto(base+'?page=bookings');await ready();await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},model);
+ const reused=await replayVerifiedFixtureAssets(context,base,published);
+ await p.reload();await ready();
  const before=await read(),f=fixture(),groups=prepareBitpandaSourcePlan([source()]).groups;
  const file={name:'synthetic-bitpanda.csv',mimeType:'text/csv',buffer:Buffer.from(source())};
  const open=async()=>{await p.locator('#openCSVImport').click();await p.locator('#csvFile').setInputFiles(file);await clickDisclosed(p.locator('[data-bitpanda="simulate"]'));};
@@ -57,4 +60,5 @@ export async function bitpandaWithdrawalBrowserContract({browser,base,engine,mod
  await page.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},restored);await page.reload();await offlineReady();await offline.setOffline(true);await page.reload();await offlineReady();
  await page.locator('#openCSVImport').click();await page.locator('#csvFile').setInputFiles(file);await clickDisclosed(page.locator('[data-bitpanda="simulate"]'));await page.locator('[data-bitpanda="net"]').check();await page.locator('[data-bitpanda="simulate"]').click();await page.locator('[data-bitpanda="status"]').filter({hasText:'dauerhaft zurückgenommen'}).waitFor();assert.ok(await page.locator('#saveDialog').isDisabled());assert.deepEqual(JSON.parse((await offlineRecord()).raw).journalEntries,restored.journalEntries);await offline.close();assert.deepEqual(errors,[]);
  console.log('UH03 Bitpanda '+engine+': persistent terminal withdrawal through real shared UI, exact independent before/after controls, seven widths/Axe, approval race, quota/one CAS revision, retained original/reimport block/reload/encrypted restore/offline PWA PASS');
+ return reused();
 }
