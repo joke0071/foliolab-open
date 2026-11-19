@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {frame} from './sync-outbox-fixture.mjs';
 import {expectedRevertIntent} from './flh04-source-lifecycle-probes.mjs';
 
-// Chromium’s chrome://crash terminates the renderer, NOT normal page.close, synthetic close,
+// Chromium's chrome://kill terminates the target renderer abruptly, NOT normal page.close, synthetic close,
 // browser-process termination, power loss, or a native IDB close-event proof.
 export async function crashRenderer({context,page,browser}){
  const session=await context.newCDPSession(page);
@@ -13,17 +13,19 @@ export async function crashRenderer({context,page,browser}){
   // A protocol rejection alone is never accepted as a crash oracle.
   await session.send('Inspector.enable');
   const observed=page.waitForEvent('crash',{timeout:15000});
-  let commandOutcome='pending-at-crash';
-  session.send('Page.navigate',{url:'chrome://crash'}).then(()=>{commandOutcome='resolved';},()=>{commandOutcome='rejected';});
+  let commandOutcome='pending-at-crash',navigationError;
+  session.send('Page.navigate',{url:'chrome://kill'}).then(result=>{
+   commandOutcome='resolved';navigationError=result?.errorText;
+  },()=>{commandOutcome='rejected';});
   try{
    await observed;
   }catch(error){
-   console.error('Renderer crash was not observed', {commandOutcome,closed,browserConnected:browser.isConnected(),errorName:error.name});
+   console.error('Renderer crash was not observed', {commandOutcome,navigationError,closed,browserConnected:browser.isConnected(),errorName:error.name});
    throw error;
   }
   assert.equal(crashed,true);assert.equal(closed,false);
   assert.equal(browser.isConnected(),true,'browser must survive renderer crash');
-  return {mechanism:'CDP.Page.navigate chrome://crash',crashObserved:true,pageClosed:false,
+  return {mechanism:'CDP.Page.navigate chrome://kill',crashObserved:true,pageClosed:false,
    browserConnected:true,commandOutcome};
  }finally{
   page.off('crash',onCrash);page.off('close',onClose);
@@ -183,7 +185,7 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   }
  }
  console.log(JSON.stringify({kind:'FLH04RendererTerminationProbe',version:1,node:process.version,
-  engine:browser.version(),cases:results,instrumentation:'native transaction complete callback held after event; actual CDP renderer crash; no browser-process or power-loss claim',
+  engine:browser.version(),cases:results,instrumentation:'native transaction complete callback held after event; native renderer termination; no browser-process or power-loss claim',
   openCases:['native IDB forced-close event','browser-process crash','power loss','real quota','full writer/worker/assets/keyslot/ABA/recovery qualification']}));
  if(results.some(x=>x.status!=='PASS'))throw new AggregateError(results.filter(x=>x.status!=='PASS').map(x=>Error(x.id)),'renderer termination candidate failed');
  await checkUncertainRetry({browser,setup,operation});

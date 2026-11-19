@@ -21,7 +21,7 @@ function crashFixture({event='crash',connected=true,rejectCommand=false}={}){
 }
 test('crash orchestration requires actual crash event in double and surviving browser',async()=>{
  const f=crashFixture();const r=await crashRenderer(f);
- assert.deepEqual(f.calls,[['Inspector.enable',undefined],['Page.navigate',{url:'chrome://crash'}]]);assert.equal(r.crashObserved,true);
+ assert.deepEqual(f.calls,[['Inspector.enable',undefined],['Page.navigate',{url:'chrome://kill'}]]);assert.equal(r.crashObserved,true);
  assert.equal(r.pageClosed,false);assert.equal(r.browserConnected,true);assert.equal(f.detached(),1);
  assert.equal(f.page.listenerCount('close'),0);
 });
