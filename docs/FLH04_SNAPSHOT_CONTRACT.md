@@ -1,5 +1,9 @@
 # FLH04 credential-free snapshot gate — bounded canonical histories and UH02 v5
 
+## Local outbox binding · 19.11.2026
+
+Capture derives the snapshot from the committed IDB portfolio and verifies the submitted frame with the adapter's own verifier. The transaction compares the complete original portfolio and outbox after those asynchronous checks. Reopen and retry validate every stored snapshot and compare the captured head to the current financial bytes when their local revisions match. Historical raw-portfolio frames are preserved for explicit recovery. They cannot be sent or silently converted. The supported financial schema below is unchanged.
+
 ## Current scope · 13.11.2026
 
 Canonical accepted BTC/ETH/SOL sessions and separate canonical CSV/user-confirmed

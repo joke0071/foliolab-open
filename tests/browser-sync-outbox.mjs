@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
-import {frame} from './sync-outbox-fixture.mjs';
+import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 
 // Directed NATIVE IDB acceptance harness. Not part of a workflow until reviewed.
 // No test double; scripted abort/quota are fault injection, not real process

@@ -5,7 +5,7 @@ import {commitPortfolioRecord,readPortfolioSyncRecord,restoreDamagedRecord,commi
 import {verifySyncOutboxState,advanceSyncOutboxState} from '../src/sync-outbox-state.js';
 import {createSyncOutboxStorage} from '../src/sync-outbox-storage.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
-import {portfolioId,epochId,verify,frame} from './sync-outbox-fixture.mjs';
+import {portfolioId,epochId,verify,snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 
 import {memoryDB} from './transaction-double.mjs';
 

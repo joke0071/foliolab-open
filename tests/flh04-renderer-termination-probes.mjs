@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {frame} from './sync-outbox-fixture.mjs';
+import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 import {expectedRevertIntent} from './flh04-source-lifecycle-probes.mjs';
 
 // Chromium's chrome://kill terminates the target renderer abruptly, NOT normal page.close, synthetic close,

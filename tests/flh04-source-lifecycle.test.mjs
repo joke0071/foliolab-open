@@ -127,6 +127,7 @@ test('C1 helper stays byte exact and the lifecycle hook preserves the entire pri
  const helper=await readFile(new URL('./flh04-version2-candidate-probes.mjs',import.meta.url),'utf8');
  assert.equal(blob(helper),'d87ab642d1ba409814af517c2b28ad50fd924b0c');
  let harness=await readFile(new URL('./browser-sync-outbox.mjs',import.meta.url),'utf8');
+ harness=harness.replace("import {snapshotFrame as frame} from './sync-outbox-fixture.mjs'","import {frame} from './sync-outbox-fixture.mjs'");
  harness=harness.replace("// Independent opt-in; consumed C1 runs are not repeated by this candidate.\nconst sourceLifecycle=process.env.FLH04_SOURCE_LIFECYCLE;\nif(sourceLifecycle!==undefined&&(sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))\n throw Error('FLH04 lifecycle requires value 1, Chromium and no C1 opt-in');\n",'')
   .replace("if(v2Candidate==='1'||sourceLifecycle==='1'){","if(v2Candidate==='1'){")
   .replace("const rendererTermination=process.env.FLH04_RENDERER_TERMINATION;\nif(rendererTermination!==undefined&&(rendererTermination!=='1'||sourceLifecycle!=='1'||name!=='chromium'||v2Candidate!==undefined))\n throw Error('FLH04 renderer termination requires value 1, source lifecycle, Chromium and no C1 opt-in');\n",'')
