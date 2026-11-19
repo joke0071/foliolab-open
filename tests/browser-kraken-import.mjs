@@ -11,19 +11,10 @@ import {previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoi
 import {prepareKrakenSourcePlan} from '../src/kraken-source-plan.js';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
-import {verifiedFXRelease} from './verified-fx-release.mjs';
+import {verifiedFixtureRelease,replayVerifiedFixtureAssets} from './verified-fx-release.mjs';
 const base=process.env.UH03_BASE||process.env.BASE_URL||'http://127.0.0.1:4173/';
 // The regular live job already binds the SHA and runs the core audit first.
-const releaseProof=process.env.UH03_VERIFIED_RELEASE
- ||(process.env.RELEASE_SHA&&new URL(base).protocol==='https:'?'artifacts/gates/live/report.json':'');
-const published=releaseProof?verifiedFXRelease(releaseProof,{base}):null;
-const origin=new URL(base).origin;
-const mimeTypes=new Map([
- ['.js','text/javascript'],['.css','text/css'],['.png','image/png'],
- ['.svg','image/svg+xml'],['.webmanifest','application/manifest+json']
-]);
-const workerPath=new URL('sw.js',base).pathname;
-const contentType=url=>mimeTypes.get(url.pathname.slice(url.pathname.lastIndexOf('.')));
+const published=verifiedFixtureRelease(base);
 for(const scenario of [
  {name:'link-bridge',bridge:true,link:true,source:()=>linkBridgeFixture().text,seed:linkBridgeFixture().text,quantities:['0']},
  {name:'solana-bridge',bridge:true,solana:true,source:()=>solanaBridgeFixture().text,seed:solanaBridgeFixture().text,quantities:['0']},
@@ -48,13 +39,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   // worker-blocked financial contexts may reuse audited static subresources.
   // Navigation, the fresh encrypted target and every offline worker stay live.
   const replay=published&&scenario.name!=='same-asset-fee';
-  let reused=0;
-  if(replay)await context.route(url=>url.origin===origin&&!url.search&&url.pathname!==workerPath&&!!contentType(url),async route=>{
-   const request=route.request(),url=new URL(request.url()),bytes=published.files.get(url.pathname);
-   if(request.method()!=='GET'||request.isNavigationRequest()||!bytes)return route.fallback();
-   reused++;
-   return route.fulfill({body:bytes,contentType:contentType(url)});
-  });
+  const reused=await replayVerifiedFixtureAssets(context,base,replay?published:null);
   const errors=[],linkExternal=[];page.on('pageerror',e=>errors.push(e.message));if(scenario.link)await context.route('https://**/*',r=>{if(r.request().url().startsWith(base))return r.fallback();linkExternal.push(new URL(r.request().url()).hostname);return r.abort();});
   await context.route('**/__uh03-fixture.html',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html lang="de"><title>Synthetic UH03 fixture</title><body></body></html>'}));
   await page.goto(base+'__uh03-fixture.html');
@@ -158,8 +143,8 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await offlinePage.locator('#openCSVImport').click();await offlinePage.locator('#csvFile').setInputFiles(file);await clickDisclosed(offlinePage.locator('[data-kraken="simulate"]'));await offlinePage.locator('[data-kraken="status"]').filter({hasText:'1 gesperrt'}).waitFor();assert.equal(await offlinePage.locator('#saveDialog').isDisabled(),true);
   const offline=JSON.parse((await record()).raw);assert.equal(offline.version,5);assert.equal(offline.bookings.length,withdrawn.model.bookings.length);await offlineContext.close();
   if(published){
-   if(replay)assert.ok(reused>0,'Worker-blocked financial case used audited resources');
-   console.log('UH03 Kraken transport '+JSON.stringify({engine,scenario:scenario.name,sha:published.sha,verifiedFiles:published.count,reused,worker:'direct-origin'}));
+   if(replay)assert.ok(reused()>0,'Worker-blocked financial case used audited resources');
+   console.log('UH03 Kraken transport '+JSON.stringify({engine,scenario:scenario.name,sha:published.sha,verifiedFiles:published.count,reused:reused(),worker:'direct-origin'}));
   }
   if(scenario.link){await fs.mkdir('artifacts/gates/kraken-link',{recursive:true});await fs.writeFile('artifacts/gates/kraken-link/'+engine+'.json',JSON.stringify({result:'PASS',engine,version:browser.version(),scope:'synthetic local LINK explorer/Beacon evidence; no live provider or private originals',checks:['explicit actual partial history acceptance; no opening/whole coverage/position write','explicit local evidence consent; zero external lookups','actual shared CSV preview/commit and one CAS revision','exact principal and separate source fee; sender gas documentary; recipient/history unchanged','320-430 history/preview layout and Axe; seven preview widths','reload/replay/undo; persistent whole-group rollback/tombstone','quota/postput abort exact no mutation; stale second writer','fresh context encrypted v5 actual UI restore with history','actual offline PWA reload and tombstone replay']},null,2)+'\n');}
   console.log('UH03 Kraken '+engine+' '+scenario.name+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, persistent complete-group withdrawal/reimport tombstone, encrypted restore, withdrawal quota/stale CAS and actual offline PWA reload PASS');

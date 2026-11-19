@@ -8,7 +8,9 @@ import {ledgerModel,ledgerEvidence} from './ledger-live-fixture.mjs';
 import {previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoin.js';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
+import {verifiedFixtureRelease,replayVerifiedFixtureAssets} from './verified-fx-release.mjs';
 const base=process.env.UH03_BASE||process.env.BASE_URL||'http://127.0.0.1:4173/';
+const published=verifiedFixtureRelease(base);
 const {m,assignments,options}=fixture();
 const protectedModel=ledgerEvidence(ledgerModel()),input={receipts:protectedModel.purchaseEvidence.receipts,operations:[]};
 const seed=confirmUnifiedBitcoin(protectedModel,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(protectedModel,input,'wallet').baseline});
@@ -26,6 +28,9 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   const file={name:'synthetic-bitpanda.csv',mimeType:'text/csv',buffer:Buffer.from(source())};
   const open=async()=>{await page.goto(base+'?page=bookings');await page.locator('#openCSVImport').click();await page.locator('#csvFile').setInputFiles(file);await page.locator('#csvBitpandaEconomic').waitFor();};
   await open();assert.deepEqual(await read(),before);
+  // The initial app load is direct. Repeated worker-blocked visits may reuse
+  // audited static subresources; document navigation and both SW contexts stay direct.
+  const reused=await replayVerifiedFixtureAssets(context,base,published);
   // Paged economic selection must preserve explicit exclusions and never mutate storage.
   const paged=bitpandaCSV(Array.from({length:75},(_,i)=>({'Transaction ID':'SYN-PAGE-'+i,'Transaction Type':'reward','In/Out':'incoming','Amount Asset':'0.1',Asset:'ETH','Product ID':'SYN-ETH',Fee:'-','Fee asset':'-',omitTax:true})));
   await page.locator('#csvFile').setInputFiles({name:'synthetic-paged.csv',mimeType:'text/csv',buffer:Buffer.from(paged)});
@@ -95,7 +100,11 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await offlinePage.reload();await ready();await offlineContext.setOffline(true);await offlinePage.reload();await ready();
   await offlinePage.locator('#openCSVImport').click();await offlinePage.locator('#csvFile').setInputFiles(file);await clickDisclosed(offlinePage.locator('[data-bitpanda="simulate"]'));await offlinePage.locator('[data-bitpanda="net"]').check();await offlinePage.locator('[data-bitpanda="simulate"]').click();await offlinePage.locator('[data-bitpanda="status"]').filter({hasText:'2 bereits vorhanden'}).waitFor();
   const offline=JSON.parse((await record()).raw);assert.equal(offline.version,5);assert.equal(offline.bookings.length,saved.model.bookings.length);await offlineContext.close();
-  await bitpandaWithdrawalBrowserContract({browser,base,engine,model:saved.model});
+  const withdrawalReused=await bitpandaWithdrawalBrowserContract({browser,base,engine,model:saved.model,published});
+  if(published){
+   assert.ok(reused()>0&&withdrawalReused>0,'Both revisits used audited static resources');
+   console.log('UH03 Bitpanda transport '+JSON.stringify({engine,sha:published.sha,verifiedFiles:published.count,importReused:reused(),withdrawalReused,document:'direct-origin',worker:'direct-origin'}));
+  }
   console.log('UH03 Bitpanda '+engine+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS');
  }finally{await browser.close();}
 }

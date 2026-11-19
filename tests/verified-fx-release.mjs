@@ -25,3 +25,27 @@ export function verifiedFXRelease(reportPath,{root=process.cwd(),sha=process.env
  }
  return {files,sha,cache:report.cache,count:expected.length};
 }
+
+export function verifiedFixtureRelease(base){
+ const report=process.env.UH03_VERIFIED_RELEASE
+  ||(process.env.RELEASE_SHA&&new URL(base).protocol==='https:'?'artifacts/gates/live/report.json':'');
+ return report?verifiedFXRelease(report,{base}):null;
+}
+
+const fixtureTypes=new Map([
+ ['.js','text/javascript'],['.css','text/css'],['.png','image/png'],
+ ['.svg','image/svg+xml'],['.webmanifest','application/manifest+json']
+]);
+export async function replayVerifiedFixtureAssets(workerBlockedContext,base,published){
+ let reused=0;
+ if(!published)return ()=>reused;
+ const origin=new URL(base).origin,workerPath=new URL('sw.js',base).pathname;
+ const contentType=url=>fixtureTypes.get(path.extname(url.pathname));
+ await workerBlockedContext.route(url=>url.origin===origin&&!url.search&&url.pathname!==workerPath&&!!contentType(url),async route=>{
+  const request=route.request(),url=new URL(request.url()),bytes=published.files.get(url.pathname);
+  if(request.method()!=='GET'||request.isNavigationRequest()||request.serviceWorker?.()||!bytes)return route.fallback();
+  reused++;
+  return route.fulfill({body:bytes,contentType:contentType(url)});
+ });
+ return ()=>reused;
+}
