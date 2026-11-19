@@ -94,5 +94,41 @@ try{
  assert.equal(await projection.locator('[name="start"]').inputValue(),'1000');
  assert.deepEqual(await state(p),beforeProjection,'section navigation must not change portfolio or history');
  report.checks.push('actual controlled offline history section links preserve portfolio and projection input');
+ const shortHistoryId=h.ids[0];
+ const readRecord=()=>p.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioRecord}=await import('./src/atomic-storage.js');
+  const db=await openPortfolioDB();
+  try{return await readPortfolioRecord(db);}finally{db.close();}
+ });
+ await p.evaluate(async id=>{
+  const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');
+  const store=new PortfolioStorage();
+  try{
+   const model=await store.initialize();
+   const days=[8,5,2].map(offset=>new Date(Date.now()-offset*86400000).toISOString().slice(0,10));
+   model.priceHistories[id]={source:'CSV (selbst geprüft)',currency:'EUR',points:days.map((date,index)=>({date,total:98+index}))};
+   await store.save(model);
+  }finally{store.close();}
+ },shortHistoryId);
+ const beforeChartTools=await readRecord();
+ await p.reload();
+ await p.setViewportSize({width:390,height:900});
+ await nav(p,'dashboard');
+ const row=p.locator('[data-position-id="'+shortHistoryId+'"]');
+ await p.locator('.provider-accordion').filter({has:row}).locator(':scope > summary').click();
+ await row.locator(':scope > summary').click();
+ await row.locator('.position-history-chart .chart-plot').waitFor();
+ assert.deepEqual(await row.locator('.position-period-presets button').allTextContents(),['7 T']);
+ assert.equal(await row.locator('[data-position-range="365"]').count(),0);
+ const csvTools=row.locator('.position-period-more > summary');
+ const replaceHistory=row.getByRole('button',{name:'CSV-Kursverlauf ersetzen',includeHidden:true});
+ assert.equal(await replaceHistory.isVisible(),false);
+ await csvTools.press('Enter');
+ assert.equal(await replaceHistory.isVisible(),true);
+ await scan(p,'[data-position-id="'+shortHistoryId+'"]','controlled offline position periods and CSV menu');
+ await replaceHistory.press('Escape');
+ assert.equal(await csvTools.evaluate(el=>document.activeElement===el),true);
+ assert.deepEqual(await readRecord(),beforeChartTools,'opening chart tools must not persist financial data');
+ report.checks.push('controlled offline position chart shows only evidenced periods and accessible read-only CSV menu');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
 }catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}

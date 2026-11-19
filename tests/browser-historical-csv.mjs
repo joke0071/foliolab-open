@@ -6,7 +6,9 @@ const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 const day=n=>new Date(Date.now()-n*86400000).toISOString().slice(0,10);
 const getModel=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
 async function chooseCSV(csv,accept=true){
- const button=page.locator('[data-action="import-price-history"]');
+ const position=page.locator('[data-position-id="etf-csv"]');
+ const button=position.locator('[data-action="import-price-history"]');
+ if(!await button.isVisible())await position.locator('.position-period-more > summary').click();
  await button.waitFor({state:'visible'});
  const chooser=page.waitForEvent('filechooser');
  await button.click();
@@ -57,9 +59,10 @@ try{
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(overflow<=1,'CSV import details overflow at '+width);
  }
- assert.equal(await row.locator('[data-action="remove-price-history"]').isVisible(),true,'CSV removal stays directly available without an external-chart disclosure');
+ await row.locator('.position-period-more > summary').click();
+ assert.equal(await row.locator('[data-action="remove-price-history"]').isVisible(),true,'CSV removal stays available in the chart tools');
  page.once('dialog',d=>d.accept());
- await page.locator('[data-action="remove-price-history"]').click();
+ await row.locator('[data-action="remove-price-history"]').click();
  await page.waitForFunction(()=>!JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['etf-csv']);
  assert.equal((await getModel()).priceHistories['etf-csv'],undefined);
  await page.locator('.position-history-compact').waitFor({state:'attached'});

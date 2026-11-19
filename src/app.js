@@ -363,8 +363,8 @@ function showPositionDetail(id){
   const mount=[...$('providerOverview').querySelectorAll('[data-position-detail]')].find(el=>el.dataset.positionDetail===id);
   if(!p||!mount||!mount.closest('details[data-position-id]')?.open)return;
   const days=positionDetailRanges.get(id)||30;
-  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days});
-  void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
+  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR});
+  void loadPositionDetail(p,model,mount,{days,esc,money,dateLabel});
 }
 // Calendar dates keep their day even if the device time zone changes while the app stays open.
 const dateLabelFormatter=new Intl.DateTimeFormat('de-AT',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'});
@@ -2323,7 +2323,17 @@ $('providerOverview').addEventListener('click',event=>{
  const position=model.positions.find(x=>x.id===id);
  if(!position||!availablePositionPeriods(position,model).includes(days))return;
  positionDetailRanges.set(id,days);
- showPositionDetail(id);
+ const popup=rangeButton.closest('.position-period-more');
+ if(popup){popup.open=false;popup.querySelector('summary').focus();}
+ void loadPositionDetail(position,model,mount,{days,reuse:true,esc,money,dateLabel});
+});
+$('providerOverview').addEventListener('keydown',event=>{
+ const popup=event.target.closest('.position-period-more[open]');
+ if(event.key==='Escape'&&popup){
+  event.preventDefault();
+  popup.open=false;
+  popup.querySelector('summary').focus();
+ }
 });
 function renderHistoricalPriceCSVTools(){
  const root=$('historicalPriceCSVTools');if(!root)return;

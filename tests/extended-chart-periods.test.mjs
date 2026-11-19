@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {availablePositionPeriods,fetchPositionMarketHistory} from '../src/position-history.js';
+import {availablePositionPeriods,fetchPositionMarketHistory,observedPositionPeriods} from '../src/position-history.js';
 import {positionDetailMarkup,loadPositionDetail} from '../src/position-detail-ui.js';
 import {blankModel,createProvider,createAccount,createPosition,escapeHTML,money,valueEUR} from '../src/model.js';
 const ago=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
@@ -32,40 +32,67 @@ function detailModel(kind='etf'){
 }
 const display={esc:escapeHTML,money,quant:String,valueEUR,dateLabel:d=>d};
 const longCSV=()=>({source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(2200),total:50},{date:ago(1650),total:80},{date:ago(5),total:95},{date:ago(2),total:100}]});
-test('Actual supported presets remain reachable in detail controls, including three years',()=>{
+test('Observed windows require coverage at both ends and through the interval',()=>{
+ const now=Date.UTC(2026,10,19,12);
+ const point=offset=>({date:new Date(now-offset*86400000).toISOString().slice(0,10),total:100});
+ const periods=[7,30,90,180,365,1096,1826,'max'];
+ const sparse=[point(365),point(8),point(5),point(2)];
+ assert.deepEqual(observedPositionPeriods(sparse,periods,{now}),[7,'max']);
+ assert.deepEqual(observedPositionPeriods(sparse,periods,{now,crypto:true}),['max']);
+ const fiveYears=Array.from({length:1826},(_,offset)=>point(offset));
+ assert.deepEqual(observedPositionPeriods(fiveYears,periods,{now}),periods);
+ const holiday=fiveYears.filter((_,offset)=>offset<10||offset>14);
+ assert.ok(observedPositionPeriods(holiday,periods,{now}).includes(30));
+ const missingWeek=fiveYears.filter((_,offset)=>offset<10||offset>17);
+ assert.deepEqual(observedPositionPeriods(missingWeek,periods,{now}),[7,'max']);
+});
+test('Detail markup offers only the actions valid before price observations arrive',()=>{
  for(const kind of ['etf','crypto']){
   const {m,p}=detailModel(kind);
-  const rendered=(selected,controlsExpected=true)=>{
-   const before=JSON.stringify(m),html=positionDetailMarkup(p,m,{...display,days:selected});
-   assert.equal(JSON.stringify(m),before,'render leaves canonical data unchanged');
-   const values=new Set([...html.matchAll(/data-position-range="([^"]+)"/g)].map(x=>x[1]));
-   assert.deepEqual(values,new Set(controlsExpected?availablePositionPeriods(p,m).map(String):[]),'no allowed preset dropped and no unsupported preset invented; no empty chart controls');
-   return html;
-  };
-  assert.doesNotMatch(rendered(30,kind==='crypto'),/data-position-range="1096"/);
+  if(kind==='etf')Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'});
   m.priceHistories[p.id]=longCSV();
-  for(const selected of [30,1096,1826,'max']){
-   const html=rendered(selected);
-   assert.match(html,/data-position-range="1096"[^>]*>3 J<\/button>/);
-   if(selected===1096)assert.match(html,/data-position-range="1096" aria-pressed="true" class="selected">3 J/);
-   if(selected===1096)assert.match(html,/<summary aria-label="Ausgewählter Zeitraum 3 J\. Weitere Zeiträume auswählen" title="Weitere Zeiträume">3 J<\/summary>/);
-   if(selected===1826)assert.match(html,/<summary aria-label="Ausgewählter Zeitraum 5 J\. Weitere Zeiträume auswählen" title="Weitere Zeiträume">5 J<\/summary>/);
-   if(kind==='crypto')assert.doesNotMatch(html,/data-action="import-price-history"/,'legacy history does not expose unsupported crypto CSV import');
-  }
-  m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(700),total:80},{date:ago(2),total:100}]};
-  assert.doesNotMatch(rendered(30),/data-position-range="1096"/);
-  if(kind==='etf'){
-   m.priceHistories={};Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'});
-   assert.match(rendered(1096),/data-position-range="1096" aria-pressed="true"/);
-  }
+  const before=JSON.stringify(m),html=positionDetailMarkup(p,m,display);
+  assert.doesNotMatch(html,/data-position-range/,'no range is advertised before actual coverage is known');
+  if(kind==='etf')assert.match(html,/<details class="position-period-more">.*data-action="remove-price-history"/);
+  else assert.doesNotMatch(html,/data-action="import-price-history"/,'legacy history does not expose unsupported crypto CSV import');
+  assert.equal(JSON.stringify(m),before,'render leaves canonical data unchanged');
  }
 });
-test('Three-year local view reports actual coverage and never requests or invents older prices',async()=>{
+test('Uncovered three-year request displays actual CSV extent with gaps and no network',async()=>{
  const {m,p}=detailModel();m.priceHistories[p.id]=longCSV();const before=JSON.stringify(m);
  const target={isConnected:true,innerHTML:'',querySelector:()=>null};
  const mount={isConnected:true,dataset:{},querySelector:s=>s==='.position-history-plot'?target:null};
- await loadPositionDetail(p,m,mount,{...display,days:1096,fetcher:async()=>{throw Error('Local three-year view must not fetch');}});
- assert.match(target.innerHTML,new RegExp('Tatsächlich verfügbare Kurse: '+ago(5)+' bis '+ago(2)));
- assert.match(target.innerHTML,/Fehlende frühere Kurse werden nicht ergänzt/);
+ let calls=0;
+ await loadPositionDetail(p,m,mount,{...display,days:1096,fetcher:async()=>{calls++;throw Error('Local history must not fetch');}});
+ assert.match(target.innerHTML,new RegExp('Tatsächlich verfügbare Kurse: '+ago(2200)+' bis '+ago(2)));
+ assert.match(target.innerHTML,/Fehlende Kurse werden nicht ergänzt/);
+ assert.match(target.innerHTML,/<path d="M[\d. ]+M/,'multi-year gaps are not connected');
+ assert.equal(calls,0);
  assert.equal(JSON.stringify(m),before,'history observations and financial data unchanged');
+});
+test('A stale CSV leaves current native prices available and is retained for offline and Max',async()=>{
+ const {m,p}=detailModel();
+ Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'});
+ m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(500),total:80},{date:ago(499),total:81}]};
+ const before=JSON.stringify(m);
+ const target={isConnected:true,innerHTML:'',querySelector:()=>null};
+ const mount={isConnected:true,dataset:{},querySelector:s=>s==='.position-history-plot'?target:null};
+ let nativeRequests=0;
+ await loadPositionDetail(p,m,mount,{...display,days:30,fetcher:async()=>{
+  nativeRequests++;
+  return Response.json({schemaVersion:1,status:'ok',symbol:'VWCE.XETRA',
+   points:Array.from({length:15},(_,i)=>({date:ago(15-i),close:95+i}))});
+ }});
+ assert.equal(nativeRequests,1);
+ assert.match(target.innerHTML,/EODHD · eigener Worker/);
+ const offline=async()=>{throw Error('Offline');};
+ await loadPositionDetail(p,m,mount,{...display,days:'max',reuse:true,fetcher:offline});
+ assert.match(target.innerHTML,/CSV-Daten vom Nutzer übernommen/);
+ await loadPositionDetail(p,m,mount,{...display,days:7,reuse:true,fetcher:offline});
+ assert.match(target.innerHTML,/EODHD · eigener Worker/);
+ m.settings.eodhdWorkerEndpoint='https://offline.workers.dev';
+ await loadPositionDetail(p,m,mount,{...display,days:30,fetcher:offline});
+ assert.match(target.innerHTML,/CSV-Daten vom Nutzer übernommen/);
+ m.settings.eodhdWorkerEndpoint='https://own.workers.dev';
+ assert.equal(JSON.stringify(m),before,'chart source selection preserves the complete portfolio record');
 });
