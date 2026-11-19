@@ -1,0 +1,58 @@
+{
+  "version": "SW323",
+  "scope": "History section navigation (#300 / #358)",
+  "main": "fd428a60e1ea930d8d9c64ecb89b1181c2f36c2e",
+  "tree": "8651d0183274272c9a613f78710cf1c31d79e9e8",
+  "run": 44506853353,
+  "attempt": 2,
+  "deployJob": 135515713115,
+  "liveJob": 135515875774,
+  "completed": "2026-11-19T11:53:42Z",
+  "initialFailure": {
+    "job": 135500807729,
+    "phase": "cross-engine (1) / APT browser dependency setup",
+    "reason": "noble-updates/main index byte count mismatch on the primary Ubuntu mirror (1455616 vs 1455584), APT exit 100"
+  },
+  "recovery": {
+    "job": 135510029710,
+    "phase": "cross-engine (1) retry",
+    "conclusion": "success",
+    "retainedValidation": [
+      "Chromium",
+      "cross-engine (2)",
+      "cross-engine (3)"
+    ]
+  },
+  "pages": {
+    "artifact": 14523900827,
+    "sha256": "fcb9b541001ddfc4e2dec15dffb95778c407a65338202b4cb077de7b768a87d5",
+    "matchingPayloadFiles": 156
+  },
+  "liveArtifact": 14526443009,
+  "archive": "FolioLab-SW323-Live-Accepted.zip",
+  "byteSize": 153607376,
+  "sha256": "70cdc0fe068e7b97203e62c00fe18d09df2750df7b5cba73fc84302898bd9d88",
+  "entries": 1946,
+  "archiveCRC": "PASS",
+  "pinnedByteReadback": "PASS",
+  "report": "live/report.json",
+  "origin": "https://foliolab.unperfekt.at/",
+  "assetMatches": 157,
+  "axeScans": 19,
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input"
+  ],
+  "kraken": {
+    "Chromium": 7,
+    "Firefox": 7,
+    "WebKit": 7
+  },
+  "errors": []
+}
