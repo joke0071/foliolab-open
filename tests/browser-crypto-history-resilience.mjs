@@ -33,7 +33,8 @@ try{
  // A failed fetch is not retained in the yearly history cache.
  await page.route('https://api.coingecko.com/api/v3/coins/sonic-3/market_chart**',route=>{
   const now=Date.now();
-  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({prices:[[now-3*86400000,.0054],[now-86400000,.0056],[now,.0058]]})});
+  const prices=Array.from({length:7},(_,index)=>[now-(6-index)*864e5,.0054+index*.00005]);
+  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({prices})});
  });
  await row.locator('[data-action="retry-price-chart"]').click();
  await row.locator('.chart-y-labels').waitFor();

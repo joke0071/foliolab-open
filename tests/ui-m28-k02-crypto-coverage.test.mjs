@@ -33,9 +33,9 @@ test('K02: BTC, ETH and SOL cannot offer long periods without actual locally val
  }
 });
 
-test('K02: 365/366 and 1800/1801 calendar-day gates expose only evidenced options',()=>{
+test('K02: local dates constrain which long windows can be considered',()=>{
  const {model,position}=cryptoCase();
- for(const [oldDays,expected] of [[365,STANDARD],[366,[...STANDARD,'max']],[1800,[...STANDARD,'max']],[1801,extended]]){
+ for(const [oldDays,expected] of [[365,STANDARD],[366,[...STANDARD,'max']],[1093,[...STANDARD,'max']],[1094,[...STANDARD,1096,'max']],[1823,[...STANDARD,1096,'max']],[1824,extended]]){
   setLocalHistory(model,position,[oldDays,1]);
   const clean=validated(model),before=JSON.stringify(clean);
   assert.deepEqual(availablePositionPeriods(position,clean,NOW),expected,`${oldDays} days`);

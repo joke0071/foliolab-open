@@ -13,14 +13,12 @@ function fakeMount(){
  const mount={isConnected:true,dataset:{},querySelector:selector=>selector==='.position-history-plot'?target:null};
  return {mount,target};
 }
-test('ETF shows native chart first and directly offers local CSV without third-party widget',()=>{
+test('ETF offers local CSV in the chart tools without showing unverified ranges or a third-party widget',()=>{
  const p=position(),m=model(p);Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'});
  const html=positionDetailMarkup(p,m,config);
  assert.match(html,/position-history-plot/);
- assert.match(html,/class="position-native-quote-actions"/);
- assert.ok(html.indexOf('position-history-plot')<html.indexOf('position-native-quote-actions'));
- assert.ok(html.indexOf('data-position-range')<html.indexOf('position-native-quote-actions'));
- assert.ok(html.includes('CSV-Kursverlauf importieren'));
+ assert.match(html,/<details class="position-period-more">.*CSV-Kursverlauf importieren.*<\/details>/);
+ assert.doesNotMatch(html,/data-position-range/);
  assert.doesNotMatch(html,/TradingView|load-tradingview|tradingview-slot|public-chart|Weitere Kursoptionen/);
  assert.ok(!html.includes('Gespeicherter Positionswert'));
 });
@@ -53,7 +51,7 @@ test('Confirmed local history precedes remote providers without unnecessary requ
  assert.match(failMount.target.innerHTML,/CSV-Daten vom Nutzer/);
 });
 
-test('Failed direct worker request collapses its chart, hides periods and never exposes the key',async()=>{
+test('Failed worker request collapses the chart, keeps CSV tools reachable and masks the key',async()=>{
  const p=position(),m=model(p);
  const secret='SYNTHETIC_SECRET_TEST_ONLY_123456789';
  Object.assign(m.settings,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:secret});
@@ -62,10 +60,11 @@ test('Failed direct worker request collapses its chart, hides periods and never 
  const mount={isConnected:true,dataset:{},querySelector:selector=>selector==='.position-history-plot'?target:selector==='.position-period'?period:null};
  const fetcher=async url=>{throw new TypeError('Failed to fetch '+url)};
  await loadPositionDetail(p,m,mount,{...config,fetcher});
- assert.ok(period.classList.items.has('hidden'));
+ assert.equal(period.classList.items.has('hidden'),false);
  assert.match(target.innerHTML,/<details class="position-history-compact"><summary>Kursverlauf nicht verfügbar<\/summary>/);
  assert.match(target.innerHTML,/data-action="retry-price-chart"/);
  assert.match(target.innerHTML,/CORS/);
+ assert.match(target.innerHTML,/Lokale Kurse kannst du über ⋯ importieren/);
  assert.doesNotMatch(target.innerHTML,/SYNTHETIC_SECRET/);
 });
 test('Only specific safe non-truncated failure guidance is shown',()=>{

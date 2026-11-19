@@ -9,24 +9,45 @@ export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[18
 const LONG_PERIOD=1826;
 const allowed=new Set([...POSITION_PERIODS.map(([days])=>days),1096,LONG_PERIOD,'max']);
 const normalPeriods=Object.freeze([7,30,90,180,365]);
+const DAY_MS=86400000;
 /** Restrict long presets to configured providers or sufficiently old CSV observations. */
 export function availablePositionPeriods(position,model,now=Date.now()){
  const result=[...normalPeriods];
- if(position?.kind==='crypto'){const h=model?.priceHistories?.[position.id];if(h?.points?.length>=2&&h.points[0].date<isoFromMs(now-365*864e5)){result.push('max');if(h.points[0].date<isoFromMs(now-1800*864e5))result.splice(result.length-1,0,1096,LONG_PERIOD);}return result;}
- if(!['etf','stock','fund'].includes(position?.kind))return result;
- let providers=[];
- try{providers=marketSourceOptions(position,model?.settings||{});}catch{}
- const longProvider=providers.some(x=>['eodhd'].includes(x));
+ const security=['etf','stock','fund'].includes(position?.kind);
+ if(!security&&position?.kind!=='crypto')return result;
+ let longProvider=false;
+ if(security){
+  try{longProvider=marketSourceOptions(position,model?.settings||{}).includes('eodhd');}catch{}
+ }
  const points=model?.priceHistories?.[position.id]?.points;
  const first=Array.isArray(points)&&points.length>=2?String(points[0]?.date||''):'';
  const last=Array.isArray(points)&&points.length>=2?String(points.at(-1)?.date||''):'';
  const csv=/^\d{4}-\d{2}-\d{2}$/.test(first)&&/^\d{4}-\d{2}-\d{2}$/.test(last)&&first<last;
- if(longProvider||(csv&&first<=isoFromMs(now-1800*864e5)))result.push(1096,LONG_PERIOD);
+ const tolerance=position.kind==='crypto'?1:5;
+ for(const period of [1096,LONG_PERIOD]){
+  if(longProvider||(csv&&first<=isoFromMs(now-(period-1-tolerance)*DAY_MS)))result.push(period);
+ }
  if(csv&&first<isoFromMs(now-365*864e5))result.push('max');
  return result;
 }
 const isoFromMs=ms=>new Date(ms).toISOString().slice(0,10);
 const finitePositive=n=>Number.isFinite(n)&&n>0;
+/** Periods offered for this specific set of dated observations. A provider
+ * capability or two isolated observations cannot establish coverage. */
+export function observedPositionPeriods(points,periods,{now=Date.now(),crypto=false}={}){
+ const end=Math.floor(now/DAY_MS);
+ const tolerance=crypto?1:5;
+ const dates=[...new Set(points.map(point=>Date.parse(point.date)/DAY_MS))]
+  .filter(date=>Number.isInteger(date)&&date<=end)
+  .sort((a,b)=>a-b);
+ return periods.filter(period=>{
+  if(period==='max')return dates.length>=2;
+  const start=end-period+1;
+  const observed=dates.filter(date=>date>=start);
+  return observed.length>=2&&observed[0]<=start+tolerance&&observed.at(-1)>=end-tolerance&&
+   observed.every((date,index)=>index===0||date-observed[index-1]<=tolerance+1);
+ });
+}
 /**
  * The public CoinGecko limit is shared between quote and chart requests.
  * Use a single 365-day series per coin across UI time-range changes and pace

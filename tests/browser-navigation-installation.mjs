@@ -111,6 +111,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    if(width===1440){assert.ok(await layout.locator('.dashboard-overview').evaluate(e=>{const history=e.querySelector('.dashboard-history').getBoundingClientRect(),side=e.querySelector('.dashboard-side').getBoundingClientRect();return history.right<=side.left&&Math.abs(history.top-side.top)<2;}));assert.equal(await layout.locator('#sidebarNav button.active').evaluate(e=>getComputedStyle(e).boxShadow),'none');assert.equal(await layout.locator('#sidebarNav button.active span').evaluate(e=>getComputedStyle(e).textDecorationLine),'underline');}
    await layout.locator('#providerOverview details').evaluateAll(es=>es.forEach(e=>e.open=true));
    assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet\n–','compact summary retains unknown valuation and explicitly unavailable allocation');
+   const sourceMenus=layout.locator('[data-position-id] .position-period-more');
+   await layout.locator('[data-position-id=nav-etf] .position-period-more').waitFor({state:'attached'});
+   await layout.locator('[data-position-id=nav-unknown] .position-period-more').waitFor({state:'attached'});
+   await sourceMenus.evaluateAll(elements=>elements.forEach(element=>element.open=true));
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
    if(width===430){
@@ -120,6 +124,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      const before={connected:retained.isConnected,height:retained.getBoundingClientRect().height};
      document.querySelector('details[data-position-id="nav-etf"]').dispatchEvent(new Event('toggle'));
      const current=document.querySelector('.position-csv-import');
+     current.closest('details').open=true;
      return {before,retainedAfterRender:{connected:retained.isConnected,height:retained.getBoundingClientRect().height},currentAfterRender:{connected:current.isConnected,height:current.getBoundingClientRect().height}};
     });
     assert.deepEqual(csvMeasurementLifecycle,{before:{connected:true,height:44},retainedAfterRender:{connected:false,height:0},currentAfterRender:{connected:true,height:44}});
@@ -134,6 +139,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     writeFileSync(`artifacts/gates/navigation-installation/${engine}-csv-height-failure.json`,JSON.stringify({engine,width,result:'FAIL',error:String(error),measured},null,2));
     await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-csv-height-failure.png`,fullPage:true});throw error;
    }
+   await sourceMenus.evaluateAll(elements=>elements.forEach(element=>element.open=false));
    if(width<=430){
     assert.ok(await layout.locator('#providerOverview>.provider-accordion').first().evaluate(root=>{const row=root.querySelector(':scope>.provider-row'),name=row.querySelector('.provider-l>div');return name.getBoundingClientRect().width>=row.getBoundingClientRect().width*.55;}),'narrow provider name retains readable width beside the separate value row');
     assert.ok(await layout.locator('.provider-account-head').first().evaluate(head=>head.querySelector(':scope>div').getBoundingClientRect().width>=head.getBoundingClientRect().width*.8),'narrow account name retains a full row above value and positions action');
@@ -174,7 +180,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await s.save(m);s.close();
   });await layout.reload();await ready(layout);await nav(layout,'dashboard');const large=await record(layout);
   assert.equal(await layout.locator('#providerOverview>.provider-accordion').count(),12);assert.equal(await layout.locator('#providerOverview [data-position-id]').count(),90,'large list retains every position');
-  await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});assert.ok(await lastCsv.isVisible());await scan(layout);
+  await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();await last.locator('[data-position-id=nav-large-11-7] .position-period-more>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});assert.ok(await lastCsv.isVisible());await scan(layout);
   await layout.locator('#dashboardPage').evaluate(root=>{const sizes=[...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const[e,size]of sizes)e.style.fontSize=size*1.5+'px';});await scan(layout);assert.ok(await layout.locator('.donut-inner').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+1),'large amount remains inside the scaled donut centre');assert.deepEqual(await record(layout),large,'large list, actual disclosures and synthetic text scale preserve canonical record');
   checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
   writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],breakpoints:[980,1180],checks,csvMeasurementLifecycle,csvMeasurementControls,csvMeasurementControlObservations,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
