@@ -59,11 +59,13 @@ export function groupExtraWealthPeriods(html){
 }
 const WIDE='(min-width:721px)',NARROW='(max-width:374px)';
 const rangeOf=el=>el.getAttribute('data-range')||el.getAttribute('data-mini-range');
+const panelOwner=target=>target.closest?.('.period-more')??target.closest?.('.history-options-popover')?.previousElementSibling;
 /* Places the buttons for the current width without re-rendering, so selected and disabled states survive:
    wide = all inline, medium = 3 J/5 J in "Mehr", narrow = 1 J moves into "Mehr" as well. */
 export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
  doc.querySelectorAll('.period-more').forEach(more=>{
-  const group=more.parentElement,list=more.querySelector('.period-more-list'),summary=more.querySelector('summary');
+  const options=more.classList.contains('history-period-options');
+  const group=more.parentElement,list=(options?more.nextElementSibling:more).querySelector('.period-more-list'),summary=more.querySelector('summary');
   // On phones, the existing history calendar is accessed from the period More menu.
   // Dashboard periods retain their original options; desktop keeps the direct calendar.
   const calendar=list.querySelector('[data-open-history-calendar]');
@@ -83,14 +85,14 @@ export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
    else if(half.parentElement===list)group.insertBefore(half,more);
   }
   const wide=match(WIDE);
-  if(wide)more.open=true;else if(more.dataset.wasWide==="1")more.open=false;
-  more.dataset.wasWide=wide?"1":"0";
+  if(wide&&!options)more.open=true;else if(more.dataset.wasWide==="1")more.open=false;
+  more.dataset.wasWide=wide&&!options?"1":"0";
   const active=[...list.querySelectorAll('button')].find(b=>b.getAttribute('aria-pressed')==='true');
   summary.textContent=active?active.textContent:'Mehr';
   const choices=[...list.querySelectorAll('button')].map(b=>b.textContent.trim()).join(', ');
   summary.setAttribute('aria-label',active?
-   active.textContent.trim()+' ausgewählt; weitere Zeiträume: '+choices:
-   'Mehr: weitere Zeiträume'+(choices?': '+choices:''));
+   active.textContent.trim()+' ausgewählt; weitere Zeiträume: '+choices+(options?' · Datenbasis und Diagramm':''):
+   'Mehr: weitere Zeiträume'+(choices?': '+choices:'')+(options?' · Datenbasis und Diagramm':''));
   more.classList.toggle('has-active',Boolean(active));
  });
 }
@@ -101,14 +103,14 @@ export function bindPeriodMore(doc=document){
  const refresh=()=>layoutPeriodMore(doc);
  for(const q of [WIDE,NARROW])matchMedia(q).addEventListener('change',refresh);
  new MutationObserver(refresh).observe(doc.body,{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
- const close=(more,focus)=>{if(more.open&&!matchMedia(WIDE).matches){more.open=false;if(focus)more.querySelector('summary').focus();}};
+ const close=(more,focus)=>{if(more.open&&(!matchMedia(WIDE).matches||more.classList.contains('history-period-options'))){more.open=false;if(focus)more.querySelector('summary').focus();}};
  doc.addEventListener('click',e=>{
-  const inside=e.target.closest('.period-more');
+  const inside=panelOwner(e.target);
   doc.querySelectorAll('.period-more[open]').forEach(m=>{if(m!==inside||e.target.closest('.period-more-list button'))close(m,false);});
  });
  doc.addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
-  const more=e.target.closest?.('.period-more');
+  const more=panelOwner(e.target);
   if(more)close(more,true);
  });
 }

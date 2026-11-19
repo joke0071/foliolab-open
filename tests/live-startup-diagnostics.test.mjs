@@ -48,6 +48,12 @@ function assertHistoricalLiveContract(source){
  assert.equal(positionPeriodGate?.length,1);
  assert.equal(createHash('sha256').update(positionPeriodGate[0]).digest('hex'),'4c6571a74b010b110d65c4586f90604d433da1da91424103d451d4b0976e5ae5');
  source=source.replace(positionPeriodGate[0],'');
+ const wealthModelGate=source.match(/^ await seedWealthModelHistory\(p\);\n[\s\S]*?^ report\.checks\.push\('controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record'\);\n/gm);
+ const wealthModelImport="import {seedWealthModelHistory} from './browser-wealth-model-history.mjs';\n";
+ assert.equal(wealthModelGate?.length,1);
+ assert.equal(source.split(wealthModelImport).length,2);
+ assert.equal(createHash('sha256').update(wealthModelGate[0]).digest('hex'),'25528dfe17f7b02946e87a0e78e59b7091b472034850128486d8713ee3f899eb');
+ source=source.replace(wealthModelGate[0],'').replace(wealthModelImport,'');
  // Reverse only the two exact asset-observation deltas; keep every gate byte.
  const assetDiagnosticDeltas=[
   ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
@@ -71,6 +77,7 @@ test('asset observation contract rejects missing or duplicated diagnostics and u
   liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
   liveSource.replace("name:'Stichtage'","name:'Rendite'"),
   liveSource.replace('data-position-range="365"','data-position-range="30"'),
+  liveSource.replace("'70,00','79,00','88,00','97,00'","'70,00','79,00','90,00','97,00'"),
   liveSource.replace('assetResponses:[],',''),
   liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
   liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),

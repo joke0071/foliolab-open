@@ -17,7 +17,8 @@ const checkAxe=async(root,width,state)=>{
  assert.deepEqual(violations,[],'Axe period-control violations at '+width+'px ('+state+')');
 };
 const verifyTargets=async(root,width)=>{
- if(width>720){
+ const history=(await root.getAttribute('id'))==='chartPeriods';
+ if(width>720&&!history){
   assert.deepEqual(await root.locator('button:visible').allTextContents(),labels);
   assert.equal(await root.locator('.period-more > summary').isVisible(),false);
   const rows=await root.locator('button:visible').evaluateAll(nodes=>new Set(nodes.map(el=>Math.round(el.getBoundingClientRect().top))).size);
@@ -32,25 +33,29 @@ const verifyTargets=async(root,width)=>{
  const rects=await targets.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height,top:r.top};}));
  assert.equal(rects.length,narrow?6:7,'inline options and the More disclosure remain reachable');
  assert.ok(rects.every(r=>r.width>=44&&r.height>=44),'Touch targets below 44px at '+width+': '+JSON.stringify(rects));
- assert.equal(new Set(rects.map(r=>Math.round(r.top))).size,1,'Adaptive period row at '+width);
+ assert.equal(new Set(rects.map(r=>Math.round(r.top))).size,1,'Adaptive period row at '+width+': '+JSON.stringify(rects));
  await checkAxe(root,width,'disclosure closed');
  const summary=root.locator('.period-more > summary');
  await summary.click();
  await checkAxe(root,width,'disclosure open');
  const extra=root.locator('.period-more-list button:visible');
- const history=(await root.getAttribute('id'))==='chartPeriods';
- assert.deepEqual(await extra.allTextContents(),[...(narrow?['1 J','3 J','5 J']:['3 J','5 J']),...(history?['Kalender']:[])]);
+ assert.deepEqual(await extra.allTextContents(),[...(narrow?['1 J','3 J','5 J']:['3 J','5 J']),...(history&&width<=720?['Kalender']:[])]);
+ if(history){
+  const options=root.locator('#historyBasis,#historyChartStyle');
+  assert.equal(await options.count(),2);
+  assert.ok(await options.evaluateAll(es=>es.every(e=>e.getBoundingClientRect().height>=44)));
+ }
  const extraRects=await extra.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return [r.width,r.height];}));
  assert.ok(extraRects.every(([w,h])=>w>=44&&h>=44),'Disclosure targets below 44px at '+width+': '+JSON.stringify(extraRects));
  await summary.click();
  if(narrow){
   const transition=await root.evaluate(async root=>{
-   const more=root.querySelector('.period-more'),year=more.querySelector('button[data-range="year"],button[data-mini-range="year"]');
+   const more=root.querySelector('.period-more'),list=root.querySelector('.period-more-list'),year=list.querySelector('button[data-range="year"],button[data-mini-range="year"]');
    // Reproduce the real pre-handler DOM immediately after a wide-to-narrow resize.
    root.insertBefore(year,more);
    const result={hidden:getComputedStyle(year).display==='none',scroll:document.documentElement.scrollWidth,viewport:innerWidth};
    const {layoutPeriodMore}=await import('/src/chart-periods.js');layoutPeriodMore();
-   return {...result,restored:year.parentElement===more.querySelector('.period-more-list')};
+   return {...result,restored:year.parentElement===list};
   });
   assert.ok(transition.hidden&&transition.restored,'1 J stays bounded before resize handling and remains available in More at '+width);
   assert.ok(transition.scroll<=transition.viewport+1,'no transient page overflow before the resize handler at '+width);

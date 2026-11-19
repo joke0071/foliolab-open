@@ -108,7 +108,7 @@ function eurAxisLabels(values){
  return values.map(value=>formatter.format(value/divisor)+unit);
 }
 
-export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false}){
+export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false,display='auto'}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Ein weiterer belegter Zeitpunkt für den Verlauf fehlt.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const times=samples.map(s=>Date.parse(s.date));
  if(times.some((t,i)=>!Number.isFinite(t)||i>0&&t<times[i-1]))return '<p class="chart-zero">Datumsangaben für das Diagramm nicht verfügbar.</p>';
@@ -146,8 +146,8 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  '<div class="chart-plot" role="group" tabindex="0" aria-label="Interaktiver Vermögensverlauf. Pfeiltasten links und rechts zeigen Stichtage." data-chart-points="'+series+'">'+
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" stroke-dasharray="4 6"/>').join('')+
- (disjoint?'':'<path d="'+fill+'" fill="#e8f2ea"/>')+'<path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
- (disjoint?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" vector-effect="non-scaling-stroke"/>').join(''):'')+
+ (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="#e8f2ea"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
+ (disjoint||display==='points'?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" vector-effect="non-scaling-stroke"/>').join(''):'')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
  '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
  '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+

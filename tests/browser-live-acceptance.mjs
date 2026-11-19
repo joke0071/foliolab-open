@@ -1,6 +1,7 @@
 import {manageList} from './browser-management-mode.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import {observeLiveStartup} from './live-startup-diagnostics.mjs';
+import {seedWealthModelHistory} from './browser-wealth-model-history.mjs';
 // Manual release gate: actual published bytes, isolated synthetic profiles, no API credentials.
 // Run from the matching release checkout: RELEASE_SHA=<sha> node tests/browser-live-acceptance.mjs
 import assert from 'node:assert/strict';
@@ -130,5 +131,24 @@ try{
  assert.equal(await csvTools.evaluate(el=>document.activeElement===el),true);
  assert.deepEqual(await readRecord(),beforeChartTools,'opening chart tools must not persist financial data');
  report.checks.push('controlled offline position chart shows only evidenced periods and accessible read-only CSV menu');
+ await seedWealthModelHistory(p);
+ const beforeModelHistory=await readRecord();
+ await p.reload();
+ await nav(p,'history');
+ const historySource=p.locator('#historySourceStatus');
+ assert.match(await historySource.innerText(),/Erfasste Stichtage/);
+ const historyOptions=p.locator('#chartPeriods .history-period-options>summary');
+ await historyOptions.press('Enter');
+ await p.locator('#historyBasis').selectOption('model');
+ assert.match(await historySource.innerText(),/heutige Stückzahlen angenommen · keine persönliche Rendite/);
+ const modelPlot=p.locator('#historyChart .chart-plot');
+ const chartValues=await modelPlot.evaluate(el=>JSON.parse(el.dataset.chartPoints).map(point=>point.value.match(/[\d.]+,\d{2}/)?.[0]));
+ assert.deepEqual(chartValues,['70,00','79,00','88,00','97,00']);
+ assert.deepEqual((await modelPlot.locator('path[stroke="#3b8659"]').getAttribute('d')).match(/[ML]/g),['M','L','M','L']);
+ await scan(p,'#chartPeriods','controlled offline model history controls');
+ await p.locator('#historyBasis').press('Escape');
+ assert.equal(await historyOptions.evaluate(el=>document.activeElement===el),true);
+ assert.deepEqual(await readRecord(),beforeModelHistory,'model history must not change the exact IndexedDB record');
+ report.checks.push('controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
 }catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}
