@@ -149,8 +149,40 @@ function notify(message,error=false){const box=$('toast');box.textContent=messag
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
-function go(next,{review=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
-function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
+const historySections=$('historySections');
+const historySectionLinks=[...historySections.querySelectorAll('a')];
+function syncHistorySection({jump=false,returnFocus=false}={}){
+ const previous=historySections.querySelector('[aria-current="location"]');
+ const link=page==='history'?historySectionLinks.find(link=>link.hash===location.hash):null;
+ for(const item of historySectionLinks)if(item===link)item.setAttribute('aria-current','location');else item.removeAttribute('aria-current');
+ if(!jump||page!=='history')return;
+ if(!link){
+  if(returnFocus)previous?.focus({preventScroll:true});
+  return;
+ }
+ const target=$(link.hash.slice(1));
+ if(target instanceof HTMLDetailsElement)target.open=true;
+ const focusTarget=target instanceof HTMLDetailsElement?target.querySelector(':scope > summary'):target;
+ focusTarget.scrollIntoView({block:'start'});
+ focusTarget.focus({preventScroll:true});
+}
+historySections.addEventListener('click',event=>{
+ const link=event.target.closest('a');
+ if(!link||event.defaultPrevented||event.button!==0||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
+ event.preventDefault();
+ if(link.hash!==location.hash)history.pushState(null,'',link.href);
+ syncHistorySection({jump:true});
+});
+window.addEventListener('popstate',()=>{
+ const restored=new URLSearchParams(location.search).get('page')||'dashboard';
+ if(restored!==page){
+  go(restored,{section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});
+  requestAnimationFrame(()=>syncHistorySection({jump:true}));
+ }
+});
+window.addEventListener('hashchange',()=>requestAnimationFrame(()=>syncHistorySection({jump:true,returnFocus:!location.hash})));
+function go(next,{review=false,section=''}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'?section:''));syncHistorySection();window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
+function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard',{section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
@@ -2959,6 +2991,7 @@ function updateInstallControls(){
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
+syncHistorySection({jump:true});
 performance.mark('foliolab-interactive');
 window.dispatchEvent(new Event('foliolab:ready'));
 if(!loadFailure&&location.protocol==='https:'&&refreshFrequency(model.settings.autoRefresh)!=='off'){
