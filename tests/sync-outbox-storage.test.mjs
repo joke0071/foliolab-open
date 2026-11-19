@@ -230,14 +230,16 @@ test('restore lifecycle double: PortfolioStorage forwards intent and advances it
  const {db,p,model,api,args}=await fixture();await api.capture(args);
  const local={getItem:key=>key===MODE_KEY?MODE_VALUE:null};
  const controller=new PortfolioStorage(local);controller.mode='idb';controller.db=db;controller.revision=1;
- const before=await readPortfolioSyncRecord(db);
- db.fault='abort-after-put';await assert.rejects(()=>controller.save(model,{intent:'restore'}));
- assert.equal(controller.revision,1);assert.deepEqual(await readPortfolioSyncRecord(db),before);
- await controller.save(model,{intent:'restore'});
- assert.equal(controller.revision,2);assert.equal((await readPortfolioSyncRecord(db)).sync.disabled,'portfolio-restored');
- assert.equal((await readPortfolioSyncRecord(db)).portfolio.raw,p.raw);
- await assert.rejects(()=>controller.save(model,{intent:'unknown'}),/Speichergrund/);
- assert.equal(controller.revision,2);
+ await withFactory(db,async()=>{
+  const before=await readPortfolioSyncRecord(db);
+  db.fault='abort-after-put';await assert.rejects(()=>controller.save(model,{intent:'restore'}));
+  assert.equal(controller.revision,1);assert.deepEqual(await readPortfolioSyncRecord(db),before);
+  await controller.save(model,{intent:'restore'});
+  assert.equal(controller.revision,2);assert.equal((await readPortfolioSyncRecord(db)).sync.disabled,'portfolio-restored');
+  assert.equal((await readPortfolioSyncRecord(db)).portfolio.raw,p.raw);
+  await assert.rejects(()=>controller.save(model,{intent:'unknown'}),/Speichergrund/);
+  assert.equal(controller.revision,2);
+ });
 });
 
 test('installation lifecycle double: missing record cannot rebind old frames at restarted CAS1',async()=>{
@@ -269,6 +271,8 @@ test('installation lifecycle double: reinitialization invalidation failure prese
 // Factory orchestration DOUBLE, not a browser/IDB/cutover/installation PASS.
 async function withFactory(db,run){
  const owned=Object.hasOwn(globalThis,'indexedDB'),previous=globalThis.indexedDB;
+ db.version=1;
+ db.objectStoreNames={contains:name=>name==='records'};
  db.close=()=>{};
  globalThis.indexedDB={open(){const request={};setImmediate(()=>{request.result=db;request.onsuccess?.();});return request;}};
  try{return await run();}finally{if(owned)globalThis.indexedDB=previous;else delete globalThis.indexedDB;}
@@ -439,4 +443,28 @@ test('atomic adoption double: caller mutation cannot change preimages, preferenc
  expected.updatedAt='caller-change';settings.theme='caller-change';const committed=await pending;
  assert.deepEqual(committed.settings,p.settings);
  assert.equal(committed.raw,p.raw);assert.equal(committed.syncEnrollmentRequired,true);
+});
+
+test('reopening and retry refuse an uncertain successor behind another outstanding frame',async()=>{
+ const {db,api,args,model}=await fixture();
+ await api.capture(args);
+ const second=await commitPortfolioRecord(db,{expectedRevision:1,raw:backup(model,{includeHistory:true}),settings:model.settings});
+ const receipt=await verify(frame(second.raw,'S','R','2','56'.repeat(32)));
+ const queued=await api.capture({...args,receipt,expectedLocalRevision:2,expectedSyncVersion:1});
+ for(const predecessor of ['pending','uncertain']){
+  const damaged=structuredClone(queued);
+  damaged.entries[0].status=predecessor;
+  damaged.entries[1].status='uncertain';
+  db.data.set('sync-outbox-v1',damaged);
+  const before=await readPortfolioSyncRecord(db);
+  const reopened=createSyncOutboxStorage(db,verify);
+  await assert.rejects(()=>reopened.recover(),/attempt-order/);
+  await assert.rejects(()=>reopened.begin({expectedLocalRevision:2,expectedSyncVersion:queued.version,revisionId:'S'}),/attempt-order/);
+  assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ }
+ db.data.set('sync-outbox-v1',queued);
+ await matchForModel(db,{revisionId:'R',readback:args.receipt});
+ const allowed=await api.begin({expectedLocalRevision:2,expectedSyncVersion:queued.version+1,revisionId:'S'});
+ assert.deepEqual(allowed.state.entries.map(entry=>entry.status),['confirmed','uncertain']);
+ assert.deepEqual((await api.recover()).state,allowed.state);
 });

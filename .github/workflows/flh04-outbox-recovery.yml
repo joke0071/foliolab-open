@@ -1,0 +1,38 @@
+name: FLH04 local outbox recovery
+on:
+  pull_request:
+    branches: [feature/flh04-revisions-20261113-b5ddfe1c]
+permissions:
+  contents: read
+jobs:
+  outbox:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check sync contracts and storage lifecycle
+        run: |
+          npm run check
+          node --test tests/sync-*.test.mjs tests/flh04-*.test.mjs
+      - name: Install pinned Chromium harness
+        run: |
+          npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1
+          npx --no-install playwright install chromium --only-shell
+      - name: Exercise IndexedDB recovery across renderer crashes
+        env:
+          ENGINE: chromium
+          FLH04_SOURCE_LIFECYCLE: '1'
+          FLH04_RENDERER_TERMINATION: '1'
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/flh04-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          curl --fail --silent --show-error --retry 8 --retry-connrefused --retry-delay 1 \
+            http://127.0.0.1:4173/tests/storage-origin.html | cmp - tests/storage-origin.html
+          kill -0 "$server"
+          ulimit -c 0
+          timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
