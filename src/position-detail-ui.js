@@ -1,7 +1,7 @@
-import {calendarDateLabel,exactQuantityLabel} from './format.js';
+import {calendarDateLabel,exactQuantityLabel,svg} from './format.js';
 import {projectHistoricalPosition} from './historical-position-value.js';
-import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeriods} from './position-history.js';
-import {renderChartPeriodButtons} from './chart-periods.js';
+import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeriods,observedPositionPeriods,filterHistoryByDays} from './position-history.js';
+import {renderChartPeriodButtons,syncChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {positionBookingTimeline} from './position-bookings.js';
@@ -28,7 +28,22 @@ function collapsedHistory(message,{esc,id='',retry=false}){
 }
 
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
-export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
+const securityKind=p=>['etf','stock','fund'].includes(p.kind);
+const positionCharts=new WeakMap();
+function positionChartTools(p,model,esc){
+ if(!securityKind(p)&&p.kind!=='crypto')return '';
+ const imported=model.priceHistories?.[p.id];
+ const csv=securityKind(p)?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+
+  svg('folder',14)+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
+  (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'">'+svg('trash',14)+'CSV-Kursverlauf entfernen</button>':'')+
+  '</div><p class="position-csv-help">Datum und Schlusskurs in der Handelswährung dieser Position. Die Datei bleibt lokal.</p>':'';
+ return '<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
+  '<div class="position-period-presets"></div><details class="position-period-more"'+(csv?'':' hidden')+
+  '><summary aria-label="Weitere Zeiträume und Kursdaten" title="Weitere Zeiträume und Kursdaten">⋯</summary>'+
+  '<div class="position-period-popover"><div class="position-period-extended"></div>'+csv+'</div></details></div>';
+}
+
+export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR}){
  // Provider allocation reflects the provider heading above all its accounts.
  // Account allocation would show a misleading 100% for every single-holding
  // savings or term-deposit account at the same provider.
@@ -49,28 +64,15 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
    '<div class="position-share"><div class="position-share-label"><span>Anteil am Anbieter</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
    '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
- const isSecurity=['etf','stock','fund'].includes(p.kind);
+ const isSecurity=securityKind(p);
  const imported=model.priceHistories?.[p.id];
- const csvTool=(isSecurity||p.kind==='crypto')?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
-  (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'" aria-label="Importierten Kursverlauf entfernen">Entfernen</button>':'')+
-  '</div><p class="position-csv-help">Ohne API-Schlüssel · lokal gespeichert. Benötigt Datum und Schlusskurs in der Handelswährung dieser Position.</p>':'';
  const nativeAvailable=Boolean(marketHistoryCapability(p,model.settings));
  const needsOwnChart=nativeAvailable||Boolean(imported);
- const periods=availablePositionPeriods(p,model);
- const standard=periods.filter(x=>typeof x==='number'&&x<=365),long=periods.filter(x=>(typeof x==='number'&&x>365)||x==='max');
- const selectedLong=days===1096?'3 J':days===1826?'5 J':'';
- const extra=long.length>1?
-  '<span class="position-period-long">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</span>'+
-  '<details class="position-period-more"><summary aria-label="'+(selectedLong?'Ausgewählter Zeitraum '+selectedLong+'. Weitere Zeiträume auswählen':'Max und weitere Zeiträume auswählen')+'" title="Weitere Zeiträume">'+(selectedLong||'Mehr')+'</summary>'+
-  '<div class="position-period-popover">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</div></details>':
-  renderChartPeriodButtons('market','data-position-range',days,long);
- const controls=needsOwnChart?'<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
-  renderChartPeriodButtons('market','data-position-range',days,standard)+extra+'</div>':'';
  const hasMarketKey=Boolean((model.settings?.eodhdWorkerEndpoint&&model.settings?.eodhdWorkerAccessToken)||model.settings?.alphaVantageKey||model.settings?.marketstackKey);
  const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
-   hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional Alpha Vantage, Marketstack oder einen eigenen EODHD-Worker unter „Mehr“ einrichten und Handelsplatz, Ticker und Währung prüfen.',
+   (hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional Alpha Vantage, Marketstack oder einen eigenen EODHD-Worker unter „Mehr“ einrichten und Handelsplatz, Ticker und Währung prüfen.')+
+   ' Lokale Kurse kannst du über ⋯ importieren.',
    {esc}):'';
- const extraTools=isSecurity?'<div class="position-native-quote-actions">'+csvTool+'</div>':'';
  const timeline=positionBookingTimeline(model,p.id);
  const eventLabels={buy:'Kauf',sell:'Verkauf',deliver_in:'Einlieferung',deliver_out:'Auslieferung',
   split:'Split',swap:'Tausch',merger:'Fusion',isin_change:'ISIN geändert',ticker_change:'Ticker geändert',
@@ -91,16 +93,41 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   '<p class="position-detail-note">Nur dieser Position zugeordnete Buchungen. Ausführungskurse sind kein belegter Nettogewinn. Cash-Dividenden ohne eindeutige Anlagenzuordnung werden nicht hinzugefügt.</p>'+
   '</div></details>';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   quoteCredit+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory+extraTools;
+   quoteCredit+positionChartTools(p,model,esc)+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory;
 }
-export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
+export async function loadPositionDetail(position,model,mount,{days=30,reuse=false,fetcher=globalThis.fetch,esc,money,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
  if(!target)return;
  const token=String(Number(mount.dataset.loadSequence||0)+1);
  mount.dataset.loadSequence=token;
  const isCurrent=()=>mount.isConnected&&target.isConnected&&mount.dataset.loadSequence===token;
- const render=(points,kind,currency='EUR',source='',fxPoints=null)=>{
+ const render=history=>{
   if(!isCurrent())return;
+  let {points,kind,currency='EUR',source='',fxPoints}=history;
+  const crypto=position.kind==='crypto';
+  const now=Date.now();
+  const periods=observedPositionPeriods(points,history.periods,{crypto,now});
+  const selected=periods.includes(days)?days:periods.find(period=>typeof period==='number'&&period>=days)??periods.at(-1);
+  if(selected!==undefined)points=filterHistoryByDays(points,selected,now);
+  const windowStart=points[0].date,windowEnd=points.at(-1).date;
+  const shortCoverage=selected===undefined;
+  const toolbar=mount.querySelector('.position-period');
+  if(toolbar?.querySelector){
+   const presets=toolbar.querySelector('.position-period-presets');
+   const extended=toolbar.querySelector('.position-period-extended');
+   const popup=toolbar.querySelector('.position-period-more');
+   if(!reuse){
+    presets.innerHTML=renderChartPeriodButtons('market','data-position-range',selected,periods.filter(period=>typeof period==='number'&&period<=365));
+    extended.innerHTML=renderChartPeriodButtons('market','data-position-range',selected,periods.filter(period=>period==='max'||period>365));
+    popup.hidden=!securityKind(position)&&!extended.children.length;
+   }
+   syncChartPeriodButtons(toolbar,'data-position-range',selected);
+   const summary=popup.querySelector('summary');
+   const longLabel=extended.querySelector('[aria-pressed="true"]')?.textContent;
+   summary.textContent=longLabel||'⋯';
+   summary.setAttribute('aria-label',(longLabel?longLabel+' ausgewählt. ':'')+'Weitere Zeiträume und Kursdaten');
+  }
+  positionCharts.set(mount,history);
   if(kind==='market'){
    const projection=projectHistoricalPosition(model,position.id,{marketHistory:{points,currency,source,fxPoints,priceType:position.kind==='crypto'?'crypto-daily':'close'}});
    const valued=projection.rows.filter(r=>r.valueEURExact!==null);
@@ -111,11 +138,13 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    style:'currency',currency,notation:Math.abs(x)>=1000?'compact':'standard',
    maximumFractionDigits:Math.abs(x)<0.0001?8:Math.abs(x)<1?6:1
   }).format(x):undefined;
+  const maximumGap=(crypto?2:6)*86400000;
+  points=points.map((point,index)=>index>0&&Date.parse(point.date)-Date.parse(points[index-1].date)>maximumGap?
+   {...point,breakBefore:true}:point);
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':kind==='historical-value'?'Historischer Positionswert (€)':'Gespeicherter Positionswert')+'</div>'+
-   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
+   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat,disjoint:points.some(point=>point.breakBefore)})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):kind==='historical-value'?source+' · damaliger Bestand × damaliger Kurs. Keine Rendite.':'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>'+
-   (days>365||days==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(points[0].date))+' bis '+esc(dateLabel(points.at(-1).date))+'. Fehlende frühere Kurse werden nicht ergänzt.</p>':'');
-  mount.querySelector('.position-period')?.classList.remove('hidden');
+   (shortCoverage||selected>365||selected==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(windowStart))+' bis '+esc(dateLabel(windowEnd))+'. Fehlende Kurse werden nicht ergänzt.</p>':'');
   attachChartInteractions(target);
   if(source.startsWith('CoinPaprika')){
    const credit=document.createElement('a');credit.href='https://coinpaprika.com/';
@@ -126,10 +155,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  };
  const fallback=(message)=>{
   if(!isCurrent())return;
-  // Short histories can be solved with a longer range; provider failures cannot.
-  if(!/längeren Zeitraum|weniger als zwei|nicht genug historische Kurse/i.test(message))
-   mount.querySelector('.position-period')?.classList.add('hidden');
-  target.innerHTML=collapsedHistory(message,{esc,id:position.id,retry:true});
+  target.innerHTML=collapsedHistory(message+(securityKind(position)?' Lokale Kurse kannst du über ⋯ importieren.':''),{esc,id:position.id,retry:true});
   if(position.kind==='crypto'&&/^[a-z0-9-]{2,100}$/.test(position.coinId||'')){
    const link=document.createElement('a');
    link.href='https://www.coingecko.com/en/coins/'+encodeURIComponent(position.coinId);
@@ -139,24 +165,18 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    target.querySelector('.position-history-compact')?.append(link);
   }
  };
- if(!availablePositionPeriods(position,model).includes(days)){
-  target.innerHTML=collapsedHistory('Dieser Zeitraum wird von den verfügbaren Kursquellen nicht unterstützt.');return;
- }
- const imported=importedHistoryForPeriod(model,position,days);
- const capability=days==='max'?null:marketHistoryCapability(position,model.settings);
- if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
- if(capability){
-  try{
-   // Prefer a real, provider-backed market chart over locally imported CSV.
-   const history=await fetchPositionMarketHistory(position,model.settings,days,fetcher);
-   render(history.points,history.kind,history.currency,history.source,history.fxPoints);
-   return;
-  }catch(error){
-   if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
-   fallback(safeHistoryError(error,{security:['etf','stock','fund'].includes(position.kind)}));
+ try{
+  if(reuse&&positionCharts.has(mount)){render(positionCharts.get(mount));return;}
+  positionCharts.delete(mount);
+  const periods=availablePositionPeriods(position,model);
+  const imported=importedHistoryForPeriod(model,position,'max');
+  if(imported?.points.length>=2){render({...imported,periods});return;}
+  if(marketHistoryCapability(position,model.settings)){
+   const widest=periods.includes(1826)?1826:365;
+   const history=await fetchPositionMarketHistory(position,model.settings,widest,fetcher);
+   render({...history,periods:periods.filter(period=>period!=='max')});
    return;
   }
- }
- if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
- fallback(imported?'Für diesen Zeitraum liegen weniger als zwei CSV-Kurstage vor. Bitte einen längeren Zeitraum wählen.':'Keine bestätigte Kursquelle eingerichtet.');
+  fallback('Keine bestätigte Kursquelle eingerichtet.');
+ }catch(error){fallback(safeHistoryError(error,{security:securityKind(position)}));}
 }

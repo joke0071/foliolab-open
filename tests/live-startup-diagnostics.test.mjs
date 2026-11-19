@@ -44,6 +44,10 @@ function assertHistoricalLiveContract(source){
  assert.equal(sectionNavigationGate?.length,1);
  assert.equal(createHash('sha256').update(sectionNavigationGate[0]).digest('hex'),'fd4e5755a4d97c549e10d8772cc620808ed86a75c419dc3ab062b1af3600f656');
  source=source.replace(sectionNavigationGate[0],'');
+ const positionPeriodGate=source.match(/^ const shortHistoryId=h\.ids\[0\];\n[\s\S]*?^ report\.checks\.push\('controlled offline position chart shows only evidenced periods and accessible read-only CSV menu'\);\n/gm);
+ assert.equal(positionPeriodGate?.length,1);
+ assert.equal(createHash('sha256').update(positionPeriodGate[0]).digest('hex'),'4c6571a74b010b110d65c4586f90604d433da1da91424103d451d4b0976e5ae5');
+ source=source.replace(positionPeriodGate[0],'');
  // Reverse only the two exact asset-observation deltas; keep every gate byte.
  const assetDiagnosticDeltas=[
   ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
@@ -66,6 +70,7 @@ test('asset observation contract rejects missing or duplicated diagnostics and u
  for(const changed of [
   liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
   liveSource.replace("name:'Stichtage'","name:'Rendite'"),
+  liveSource.replace('data-position-range="365"','data-position-range="30"'),
   liveSource.replace('assetResponses:[],',''),
   liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
   liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),

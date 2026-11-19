@@ -28,7 +28,8 @@ try{
  await page.route('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart**',route=>{
   calls++;
   const now=Date.now();
-  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({prices:[[now-3*864e5,70000],[now-2*864e5,71000],[now-864e5,72000],[now,73000]]})});
+  const prices=Array.from({length:365},(_,index)=>[now-(364-index)*864e5,index===364?73000:70000]);
+  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({prices})});
  });
  await btc.locator('summary.provider-holding').click();
  assert.equal(await btc.getAttribute('open'),'');
@@ -66,7 +67,9 @@ try{
  await etf.locator('.position-history-compact>summary').click();
  assert.match(await etf.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  assert.equal(await etf.locator('[data-action="load-tradingview"]').count(),0,'No external TradingView control');
- assert.equal(await etf.locator('[data-action="import-price-history"]').count(),1,'Local CSV action remains visible and reachable');
+ await etf.locator('.position-period-more > summary').click();
+ assert.equal(await etf.locator('[data-action="import-price-history"]').isVisible(),true,'Local CSV action remains reachable in the chart tools');
+ await etf.locator('.position-period-more > summary').click();
  assert.equal(await etf.locator('.position-chart-options').count(),0,'Single CSV action no longer needs nested disclosure');
  const cash=page.locator('#providerOverview [data-position-id="cash-test"]');
  await cash.locator('summary.provider-holding').click();
