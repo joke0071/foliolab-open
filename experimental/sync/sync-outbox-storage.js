@@ -1,3 +1,4 @@
+import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
 import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,previewSyncRestore} from './sync-snapshot.js';
@@ -37,10 +38,10 @@ function readArchivePin(db){
 
 // Only the already verified archive path supplies the detached IDB preimage.
 // A read after restart checks the pin and both records in one consistent transaction.
-function finishArchivePin(db,current,binding,options){
+function finishArchivePin(db,current,binding,options,restoreRaw){
  const {version:expectedVersion,write,recordSelection,selectedHead}=options;
  return new Promise((resolve,reject)=>{
-  const tx=(write||recordSelection)?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
+  const tx=(write||recordSelection||restoreRaw!==undefined)?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
   const portfolio=store.get('portfolio'),sync=store.get('sync-outbox-v1'),anchor=store.count('sync-local-anchor-v1');
   const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
   let pin,failure;
@@ -62,7 +63,16 @@ function finishArchivePin(db,current,binding,options){
     if(options.readSelection&&pin?.selectedHead!==selectedHead)throw Error('sync-archive-selection-changed');
     if(write&&matches&&(version===expectedVersion||version===expectedVersion+1))return;
     if(version!==expectedVersion)throw Error('sync-archive-pin-version');
-    if(!write){if(!matches)throw Error('sync-archive-pin-binding');return;}
+    if(!write){
+     if(!matches)throw Error('sync-archive-pin-binding');
+     if(restoreRaw!==undefined){
+      if(current.portfolio.revision===Number.MAX_SAFE_INTEGER)throw Error('sync-restore-revision-limit');
+      store.put({...current.portfolio,raw:restoreRaw,revision:current.portfolio.revision+1,
+       syncEnrollmentRequired:true,updatedAt:new Date().toISOString()},'portfolio');
+      store.put({...current.sync,disabled:'portfolio-restored'},'sync-outbox-v1');
+     }
+     return;
+    }
     if(version===Number.MAX_SAFE_INTEGER)throw Error('sync-archive-pin-version');
     pin={version:version+1,...binding};store.put(pin,archivePinSlot);
    }catch(error){failure=error;tx.abort();}
@@ -143,6 +153,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(archive?.pin){
    const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
+   let restoreRaw;
    if(archive.pin.selectedHead!==undefined){
     const id=archive.pin.selectedHead;
     if(!result.heads.includes(id))throw Error('sync-archive-preview-head');
@@ -151,14 +162,23 @@ export function createSyncOutboxStorage(db,verifyFrame) {
     // Only the explicit export returns financial values, after the final IDB check below.
     if(archive.pin.exportCopy){
      const financialCopy=JSON.stringify(JSON.parse(plain).data);
-     if(archive.pin.exportCopy==='recovery'){
+     if(archive.pin.exportCopy==='recovery'||archive.pin.exportCopy==='restore'){
       const localCopy=JSON.stringify(JSON.parse(portfolio.raw).data);
       Object.assign(result,await prepareRecoveryFiles(localCopy,financialCopy,archive.pin.readback));
+      if(archive.pin.exportCopy==='restore'){
+       const localHead=last.revision.revisionId;
+       if(result.heads.length!==2||!result.heads.includes(localHead)||id===localHead)
+        throw Error('sync-restore-needs-local-and-selected-heads');
+       if(!result.recoveryFilesVerified)throw Error('sync-restore-needs-file-readback');
+       restoreRaw=backup(safeImport(JSON.parse(financialCopy)),{includeHistory:true});
+      }
      }else if(archive.pin.exportCopy==='encrypted')result.encryptedCopy=await encryptWithBackupPassword(financialCopy);
      else result.financialCopy=financialCopy;
     }
    }
-   const pin=await finishArchivePin(db,current,binding,archive.pin);
+   const pin=await finishArchivePin(db,current,binding,archive.pin,restoreRaw);
+   if(restoreRaw!==undefined)return {status:'restored-local-copy',selectedHead:pin.selectedHead,
+    localRevision:current.portfolio.revision+1,applyAuthorized:false};
    return {...result,pinVersion:pin.version,applyAuthorized:false};
   }
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -214,10 +234,11 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   }
  async function selectedRestore({text,selectedHead,expectedPinVersion},mode,readback){
   const pin=await readArchivePin(db);
-  const exportCopy=mode==='export'||mode==='encrypted'||mode==='recovery';
+  const exportCopy=mode==='export'||mode==='encrypted'||mode==='recovery'||mode==='restore';
   const readSelection=mode==='reopen'||exportCopy;
   if(readSelection){
    if(!pin?.selectedHead)throw Error('sync-archive-selection-missing');
+   if(mode==='restore'&&selectedHead!==pin.selectedHead)throw Error('sync-restore-confirmed-head');
    selectedHead=pin.selectedHead;
    if(mode==='reopen')expectedPinVersion=pin.version;
   }
@@ -287,6 +308,9 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   exportPinnedRecoveryFiles({text,expectedPinVersion}){return selectedRestore({text,expectedPinVersion},'recovery');},
   verifyPinnedRecoveryFiles({text,expectedPinVersion,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion},'recovery',{localFile,selectedFile,password});
+  },
+  restorePinnedLocalCopy({text,expectedPinVersion,confirmedHead,localFile,selectedFile,password}){
+   return selectedRestore({text,expectedPinVersion,selectedHead:confirmedHead},'restore',{localFile,selectedFile,password});
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
