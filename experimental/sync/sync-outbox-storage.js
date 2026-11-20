@@ -3,7 +3,7 @@ import {readConflictSource,checkConflictSource,CONFLICT_ARCHIVE_LIMIT} from './s
 import {describeConflictSuccessor} from './sync-conflict-successor.js';
 import {archiveDigest,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback,rollbackPinnedLocalCopy,reopenLocalRecoveryCase} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
-import {prepareRecoveryFiles} from './sync-recovery-files.js';
+import {prepareRecoveryFiles,prepareRecoverySet} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
 import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,changedFinancialSections,previewSyncRestore} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
@@ -129,6 +129,15 @@ export function createSyncOutboxStorage(db,verifyFrame) {
      throw Error('sync-archive-successor-portfolio-changed');
    }
    if(archive.pin.includeOverview)result.overview=await conflictOverview(current,revisions,result.heads,frames);
+   if(archive.pin.allHeads){
+    const localHead=last.revision.revisionId;
+    const readCopy=async slot=>{
+     const plain=slot.role==='local'?portfolio.raw:await verifiedHeadPlain(current,frames,slot.revisionId);
+     return JSON.stringify(JSON.parse(plain).data);
+    };
+    Object.assign(result,await prepareRecoverySet({heads:result.heads,localHead,readCopy,readback:archive.pin.readback,
+     binding:{...binding,pinVersion:archive.pin.version,selectedHead:archive.pin.savedSelection}}));
+   }
    let restore;
    if(archive.pin.selectedHead!==undefined){
     const id=archive.pin.selectedHead;
@@ -314,6 +323,13 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:expectedPinVersion,selectedHead,
    recordSelection:mode==='record',readSelection,readback,exportCopy:exportCopy?mode:null});
  }
+ async function pinnedRecoverySet({text,expectedPinVersion},readback){
+  const pin=await readArchivePin(db);
+  if(!pin||pin.version!==expectedPinVersion)throw Error('sync-archive-pin-version');
+  return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
+   expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:pin.version,
+   allHeads:true,savedSelection:pin.selectedHead??null,readback});
+ }
  return Object.freeze({
   async recover() {
    const {portfolio,sync}=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -382,6 +398,11 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   exportPinnedRecoveryFiles({text,expectedPinVersion}){return selectedRestore({text,expectedPinVersion},'recovery');},
   verifyPinnedRecoveryFiles({text,expectedPinVersion,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion},'recovery',{localFile,selectedFile,password});
+  },
+  exportPinnedRecoverySet(request){return pinnedRecoverySet(request);},
+  async verifyPinnedRecoverySet({text,expectedPinVersion,indexFile,copies,password}){
+   if(!Array.isArray(copies)||copies.length>SYNC_GRAPH_LIMIT+1)throw Error('sync-recovery-set-count');
+   return pinnedRecoverySet({text,expectedPinVersion},{indexFile,copies:[...copies],password});
   },
   async reopenLocalRecoveryCase({text,localFile,selectedFile,password}={}){
    const files={text,localFile,selectedFile};

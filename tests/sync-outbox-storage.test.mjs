@@ -897,3 +897,34 @@ test('source archive must independently contain a canonical closed conflict even
  assert.equal(pinned.pinVersion,selected.pinVersion+1);assert.equal(pinned.applyAuthorized,false);
  assert.deepEqual(await readPortfolioSyncRecord(db),state);
 });
+
+test('recovery set binds four byte-identical heads and a separate local ancestor to one pin',async t=>{
+ const {backupVaultDB}=await import('./backup-vault-fixture.mjs');
+ const {configureBackupPassword,decryptPasswordBackup}=await import('../src/backup-vault.js');
+ const previous=globalThis.indexedDB;
+ globalThis.indexedDB=backupVaultDB().indexedDB;
+ t.after(()=>{if(previous===undefined)delete globalThis.indexedDB;else globalThis.indexedDB=previous;});
+ const password='Synthetic four-way backup';await configureBackupPassword(password,password);
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const before=await readPortfolioSyncRecord(db);
+ const heads=['A','B','C','D'],cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const {archive}=await api.createConflictArchive({...cas,observationComplete:true,
+  frameTexts:heads.map((id,i)=>frame(p.raw,id,'R','2',('c'+i).repeat(32)))});
+ await api.pinConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0});
+ const req={text:archive.text,expectedPinVersion:1};
+ const {recoverySet,applyAuthorized}=await api.exportPinnedRecoverySet(req);
+ assert.equal(applyAuthorized,false);
+ const verifySet=files=>api.verifyPinnedRecoverySet({...req,...files,password});
+ const result=await verifySet(recoverySet);
+ assert.deepEqual(result.verifiedCopies,[{role:'local',revisionId:'R'},...heads.map(revisionId=>({role:'head',revisionId}))]);
+ const index=JSON.parse(await decryptPasswordBackup(JSON.parse(recoverySet.indexFile),password));
+ assert.equal(index.selectedHead,null);assert.equal(index.digest,archive.digest);
+ const copies=[...recoverySet.copies];[copies[1],copies[2]]=[copies[2],copies[1]];
+ await assert.rejects(()=>verifySet({...recoverySet,copies}),/recovery-set-file/);
+ const other=await api.exportPinnedRecoverySet(req);
+ await assert.rejects(()=>verifySet({...recoverySet,indexFile:other.recoverySet.indexFile}),/recovery-set-file/);
+ await api.recordPinnedSelection({...req,selectedHead:'D'});
+ await assert.rejects(()=>verifySet(recoverySet),/pin-version/);
+ await assert.rejects(()=>api.verifyPinnedRecoverySet({...req,expectedPinVersion:2,...recoverySet,password}),/recovery-set-index/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});

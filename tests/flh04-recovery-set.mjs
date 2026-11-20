@@ -1,0 +1,78 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
+
+async function show(page,text){
+ await page.evaluate(async text=>{
+  const {showPinnedConflict}=await import('/experimental/sync/sync-conflict-view.js');
+  await showPinnedConflict(document.body,window.syncTest.api,text);
+ },text);
+}
+
+export async function saveConflictSet(page,request,directory,profiles){
+ await show(page,request.text);
+ await page.getByRole('button',{name:'Alle Stände sichern'}).click();
+ const paths=[],labels=['Verzeichnis','Lokaler Stand',...profiles.map(p=>'Revision '+p.id)];
+ for(const label of labels){
+  const [event]=await Promise.all([page.waitForEvent('download'),page.getByRole('link',{name:label+' speichern'}).click()]);
+  const path=join(directory,event.suggestedFilename());await event.saveAs(path);paths.push(path);
+ }
+ assert.equal(new Set(paths).size,paths.length);
+ const [indexFile,...copies]=await Promise.all(paths.map(path=>readFile(path,'utf8')));
+ const decoded=await page.evaluate(async({copies,indexFile,password})=>{
+  const {decryptPasswordBackup}=await import('/src/backup-vault.js');
+  const decrypt=async text=>JSON.parse(await decryptPasswordBackup(JSON.parse(text),password));
+  return {index:await decrypt(indexFile),data:await Promise.all(copies.map(decrypt))};
+ },{copies,indexFile,password:request.password});
+ assert.deepEqual(decoded.data,[profiles[0].data,...profiles.map(p=>p.data)]);
+ assert.deepEqual(decoded.index.entries.map(({role,revisionId})=>[role,revisionId]),
+  [['local','A'],['head','A'],['head','B'],['head','C']]);
+ assert.equal(decoded.index.selectedHead,request.confirmedHead);
+ assert.equal(decoded.data[2].positions[0].quantityExact,decoded.data[3].positions[0].quantityExact);
+ assert.notDeepEqual(decoded.data[2],decoded.data[3]);
+ return {paths,labels,copies,indexFile};
+}
+
+export async function checkSavedSet(page,request,set){
+ const {text,expectedPinVersion,password}=request;
+ await show(page,text);
+ const {paths,labels,indexFile,copies}=set;
+ for(const [i,label] of labels.entries())await page.getByLabel(label+' zurücklesen').setInputFiles(paths[i]);
+ await page.getByLabel('Backup-Passwort').fill(password);
+ await page.getByRole('button',{name:'Sicherungssatz prüfen'}).click();
+ await page.getByRole('status').filter({hasText:'Lokaler Stand und 3 Revisionen geprüft'}).waitFor();
+ const req={text,expectedPinVersion,indexFile,copies,password};
+ const verify=changes=>page.evaluate(req=>window.syncTest.api.verifyPinnedRecoverySet(req),{...req,...changes});
+ await assert.rejects(()=>verify({indexFile:undefined}),/file-missing/);
+ await assert.rejects(()=>verify({copies:copies.slice(1)}),/set-count/);
+ await assert.rejects(()=>verify({copies:[copies[0],copies[0],...copies.slice(2)]}),/set-file/);
+ await assert.rejects(()=>verify({copies:[copies[1],copies[0],...copies.slice(2)]}),/set-file/);
+ await assert.rejects(()=>verify({copies:[copies[0],copies[1],copies[3],copies[2]]}),/set-file/);
+ await assert.rejects(()=>verify({password:'another synthetic password'}),/Passwort/);
+ const selected=await page.evaluate(req=>window.syncTest.api.exportPinnedFinancialCopy(req),{text,expectedPinVersion});
+ assert.equal(selected.restorePreview.selectedHead,request.confirmedHead);assert.equal(selected.pinVersion,expectedPinVersion);
+ return req;
+}
+
+// Pause actual backup crypto after its first v2 operation, while another tab
+// commits. The adapter must reject before releasing either files or a receipt.
+export async function pauseRecoverySet(page,request,verify){
+ await page.evaluate(({req,verify})=>{
+  const method=verify?'decrypt':'encrypt',subtle=crypto.subtle,original=subtle[method].bind(subtle);
+  subtle[method]=async function(algorithm,...rest){
+   const value=await original(algorithm,...rest);
+   if(algorithm.additionalData&&new TextDecoder().decode(algorithm.additionalData)==='FolioLab Open password backup v2'){
+    delete subtle[method];await new Promise(resolve=>{window.resumeRecoverySet=resolve;});
+   }
+   return value;
+  };
+  const api=window.syncTest.api;
+  window.pendingRecoverySet=(verify?api.verifyPinnedRecoverySet(req):api.exportPinnedRecoverySet(req))
+   .then(()=>null,e=>e.message);
+ },{req:request,verify});
+ await page.waitForFunction(()=>typeof window.resumeRecoverySet==='function');
+}
+
+export function resumeRecoverySet(page){
+ return page.evaluate(()=>{window.resumeRecoverySet();return window.pendingRecoverySet;});
+}

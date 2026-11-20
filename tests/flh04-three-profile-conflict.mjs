@@ -1,3 +1,4 @@
+import {saveConflictSet,checkSavedSet,pauseRecoverySet,resumeRecoverySet} from './flh04-recovery-set.mjs';
 import {checkPreviousArchiveClient} from './flh04-previous-archive-client.mjs';
 import {checkPendingBooking} from './flh04-pending-booking.mjs';
 import assert from 'node:assert/strict';
@@ -91,7 +92,16 @@ export async function checkThreeProfileConflict(browser,setup,operation){
    await assert.rejects(()=>page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request),/restore-needs-local-and-selected-heads/);
    assert.deepEqual(await operation(page,'read'),profile.before);
    assert.equal(await page.evaluate(()=>window.syncTest.api.archivePinVersion()),request.expectedPinVersion);
-   if(index===0)successorRequest=request;
+   if(index===0){
+    successorRequest=request;profile.backupSet=await saveConflictSet(page,request,directory,profiles);
+   }
+   if(index===1){
+    await pauseRecoverySet(page,request,false);
+    const writer=await profile.context.newPage();await setup(writer);
+    await writer.evaluate(req=>window.syncTest.api.recordPinnedSelection(req),{...request,selectedHead:'A'});
+    assert.match(await resumeRecoverySet(page),/pin-version|selection-changed/);
+    assert.deepEqual(await operation(writer,'read'),profile.before);await writer.close();
+   }
    if(index===2)await checkPreviousArchiveClient({profile,open,operation,request,directory});
    await profile.context.close();
   }
@@ -148,9 +158,12 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
   window.oldSelection=window.syncTest.api.recordPinnedSelection(req).then(()=>null,e=>e.message);
  },{text,expectedPinVersion:request.expectedPinVersion,selectedHead:'A'});
  await reader.waitForFunction(()=>typeof window.resumeOldSelection==='function');
+ const setRequest=await checkSavedSet(reader,request,profile.backupSet);
+ await pauseRecoverySet(reader,setRequest,true);
  const before=profile.before;
  const saved=await operation(writer,'save',{revision:before.portfolio.revision,
   raw:await appendBookings(writer,before.portfolio.raw,'next',['0.75'])});
+ assert.match(await resumeRecoverySet(reader),/pin-preimage/);
  const frameText=snapshotFrame(saved.raw,'A2','A','3','b9'.repeat(32),undefined,'device-A');
  const queue=await operation(writer,'capture',{expectedLocalRevision:saved.revision,expectedSyncVersion:before.sync.version,frameText});
  const args={previousText:text,expectedPinVersion:request.expectedPinVersion,expectedLocalRevision:saved.revision,
