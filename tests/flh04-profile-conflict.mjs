@@ -30,7 +30,7 @@ async function appendBookings(page,raw,id,amounts){
 
 async function checkArchivedHead(page,text,id,expected,history,local){
  const preview=await page.evaluate(request=>window.syncTest.api.previewPinnedRestore(request),
-  {text,expectedPinVersion:1,selectedHead:id});
+  {text,expectedPinVersion:2,selectedHead:id});
  assert.deepEqual(preview.heads,['L','R2']);assert.equal(preview.applyAuthorized,false);
  assert.equal(preview.restorePreview.selectedHead,id);assert.equal(preview.restorePreview.positions,1);
  assert.equal(preview.restorePreview.bookings,expected.ids.length);
@@ -87,6 +87,8 @@ export async function checkProfileConflict({setup,operation}){
    await writeFile(profile.file,archive.text);
    await profile.page.evaluate(request=>window.syncTest.api.pinConflictArchive(request),
     {...profile.cas,text:await readFile(profile.file,'utf8'),expectedDigest:archive.digest,expectedPinVersion:0});
+   await profile.page.evaluate(request=>window.syncTest.api.recordPinnedSelection(request),
+    {text:archive.text,selectedHead:sibling.id,expectedPinVersion:1});
    await profile.context.close();
   }
   for(const profile of profiles){
@@ -96,10 +98,12 @@ export async function checkProfileConflict({setup,operation}){
    assert.deepEqual(profile.cas,sibling.cas);
    const otherArchive=await readFile(sibling.file,'utf8');
    await assert.rejects(()=>profile.page.evaluate(request=>window.syncTest.api.previewPinnedRestore(request),
-    {text:otherArchive,expectedPinVersion:1,selectedHead:profile.id}),/archive-digest/);
+    {text:otherArchive,expectedPinVersion:2,selectedHead:profile.id}),/archive-digest/);
    for(const head of profiles)await checkArchivedHead(profile.page,text,head.id,head,history,profile===head);
    const reopened=await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text}),text);
-   assert.deepEqual(reopened.heads,['L','R2']);assert.equal(reopened.pinVersion,1);
+   assert.deepEqual(reopened.heads,['L','R2']);assert.equal(reopened.pinVersion,2);
+   const choice=await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text);
+   assert.equal(choice.restorePreview.selectedHead,sibling.id);assert.equal(choice.applyAuthorized,false);
    assert.deepEqual(await operation(profile.page,'read'),profile.before);
   }
   console.log(JSON.stringify({kind:'FLH04ProfileConflictPreview',status:'PASS',persistentProfiles:2,verifiedSelections:4}));

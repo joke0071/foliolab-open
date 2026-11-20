@@ -711,3 +711,39 @@ test('restore preview binds the explicit head to the pinned archive and current 
  await assert.rejects(()=>racing.previewPinnedRestore(request),/pin-preimage/);
  assert.equal(passes,2);
 });
+
+test('a pinned choice is versioned, retryable and invalidated by replacement of its archive',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const make=async(id,salt)=>(await api.createConflictArchive({...cas,observationComplete:true,frameTexts:[
+  frame(p.raw,'B','R','2','a1'.repeat(32)),frame(p.raw,id,'R','2',salt.repeat(32))]})).archive;
+ const archive=await make('C','a2'),text=archive.text;
+ const pin=(a,n)=>api.pinConflictArchive({...cas,text:a.text,expectedDigest:a.digest,expectedPinVersion:n});
+ await pin(archive,0);
+ const before=await readPortfolioSyncRecord(db);
+ const choose=(selectedHead,expectedPinVersion)=>api.recordPinnedSelection({text,selectedHead,expectedPinVersion});
+ const reopen=()=>createSyncOutboxStorage(db,verify).reopenPinnedSelection({text});
+ await assert.rejects(reopen,/selection-missing/);
+ await assert.rejects(()=>choose('R',1),/preview-head/);
+ assert.equal((await choose('B',1)).pinVersion,2);assert.equal((await choose('B',1)).pinVersion,2);
+ await assert.rejects(()=>choose('C',1),/pin-version/);
+ db.fault='abort-after-put';await assert.rejects(()=>choose('C',2));
+ const old=await reopen();assert.equal(old.restorePreview.selectedHead,'B');assert.equal(old.pinVersion,2);
+ assert.equal(old.applyAuthorized,false);
+ assert.equal((await choose('C',2)).pinVersion,3);
+ await assert.rejects(()=>choose('B',1),/pin-version/);
+ assert.equal((await reopen()).restorePreview.selectedHead,'C');
+ const replacement=await make('D','a3');await pin(replacement,3);
+ await assert.rejects(()=>api.reopenPinnedSelection({text:replacement.text}),/selection-missing/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ const stablePin=structuredClone(db.data.get('sync-conflict-archive-pin-v1'));
+ const selectedFrame=frame(p.raw,'D','R','2','a3'.repeat(32));
+ let reads=0;
+ const racing=createSyncOutboxStorage(db,async ciphertext=>{
+  if(ciphertext===selectedFrame&&++reads===2)
+   await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+  return verify(ciphertext);
+ });
+ await assert.rejects(()=>racing.recordPinnedSelection({text:replacement.text,selectedHead:'D',expectedPinVersion:4}),/pin-preimage/);
+ assert.deepEqual(db.data.get('sync-conflict-archive-pin-v1'),stablePin);
+});

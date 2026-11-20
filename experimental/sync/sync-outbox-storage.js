@@ -17,7 +17,9 @@ const hash=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 const positive=value=>Number.isSafeInteger(value)&&value>0;
 function storedPin(value,count){
  if(count===0)return null;
- if(!value||Object.keys(value).length!==5||!positive(value.version)||!positive(value.localRevision)||
+ const selected=value&&Object.hasOwn(value,'selectedHead');
+ if(!value||Object.getPrototypeOf(value)!==Object.prototype||Object.keys(value).length!==(selected?6:5)||
+    (selected&&(typeof value.selectedHead!=='string'||!/^[A-Za-z0-9_-]{1,128}$/.test(value.selectedHead)))||!positive(value.version)||!positive(value.localRevision)||
     !positive(value.syncVersion)||!hash(value.digest)||!hash(value.portfolioDigest))throw Error('sync-archive-pin-malformed');
  return value;
 }
@@ -33,9 +35,10 @@ function readArchivePin(db){
 
 // Only the already verified archive path supplies the detached IDB preimage.
 // A read after restart checks the pin and both records in one consistent transaction.
-function finishArchivePin(db,current,binding,expectedVersion,write){
+function finishArchivePin(db,current,binding,options){
+ const {version:expectedVersion,write,recordSelection,selectedHead}=options;
  return new Promise((resolve,reject)=>{
-  const tx=write?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
+  const tx=(write||recordSelection)?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
   const portfolio=store.get('portfolio'),sync=store.get('sync-outbox-v1'),anchor=store.count('sync-local-anchor-v1');
   const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
   let pin,failure;
@@ -46,6 +49,15 @@ function finishArchivePin(db,current,binding,expectedVersion,write){
     pin=storedPin(value.result,count.result);
     const matches=pin&&Object.entries(binding).every(([key,v])=>pin[key]===v);
     const version=pin?.version??0;
+    if(recordSelection){
+     if(!matches)throw Error('sync-archive-pin-binding');
+     if(pin.selectedHead===selectedHead&&(version===expectedVersion||version===expectedVersion+1))return;
+     if(version!==expectedVersion||version===Number.MAX_SAFE_INTEGER)throw Error('sync-archive-pin-version');
+     pin={...pin,selectedHead,version:version+1};
+     store.put(pin,archivePinSlot);
+     return;
+    }
+    if(options.readSelection&&pin?.selectedHead!==selectedHead)throw Error('sync-archive-selection-changed');
     if(write&&matches&&(version===expectedVersion||version===expectedVersion+1))return;
     if(version!==expectedVersion)throw Error('sync-archive-pin-version');
     if(!write){if(!matches)throw Error('sync-archive-pin-binding');return;}
@@ -135,7 +147,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
     const plain=await verifiedHeadPlain(current,frames,id);
     result.restorePreview={selectedHead:id,...await previewSyncRestore(current.portfolio.raw,plain)};
    }
-   const pin=await finishArchivePin(db,current,binding,archive.pin.version,archive.pin.write);
+   const pin=await finishArchivePin(db,current,binding,archive.pin);
    return {...result,pinVersion:pin.version,applyAuthorized:false};
   }
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -189,6 +201,19 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
     {mode:'reopen',original:text,pin});
   }
+ async function selectedRestore({text,selectedHead,expectedPinVersion},mode){
+  const pin=await readArchivePin(db);
+  if(mode==='reopen'){
+   if(!pin?.selectedHead)throw Error('sync-archive-selection-missing');
+   selectedHead=pin.selectedHead;expectedPinVersion=pin.version;
+  }
+  if(typeof selectedHead!=='string'||!positive(expectedPinVersion))throw Error('sync-archive-preview-selection');
+  const retry=mode==='record'&&pin?.selectedHead===selectedHead&&pin.version===expectedPinVersion+1;
+  if(pin?.version!==expectedPinVersion&&!retry)throw Error('sync-archive-pin-version');
+  return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
+   expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:expectedPinVersion,selectedHead,
+   recordSelection:mode==='record',readSelection:mode==='reopen'});
+ }
  return Object.freeze({
   async recover() {
    const {portfolio,sync}=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -240,14 +265,9 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
     expectedSyncVersion:pin.syncVersion,comparisonHeads:pair},{digest:pin.digest,version:pin.version,write:false});
   },
-  async previewPinnedRestore({text,selectedHead,expectedPinVersion}){
-   if(typeof selectedHead!=='string'||!Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1)
-    throw Error('sync-archive-preview-selection');
-   const pin=await readArchivePin(db);
-   if(pin?.version!==expectedPinVersion)throw Error('sync-archive-pin-version');
-   return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
-    expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:pin.version,write:false,selectedHead});
-  },
+  previewPinnedRestore(request){return selectedRestore(request,'preview');},
+  recordPinnedSelection(request){return selectedRestore(request,'record');},
+  reopenPinnedSelection({text}){return selectedRestore({text},'reopen');},
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
    // No remote transport/provenance issuer exists yet. Fail closed, including
