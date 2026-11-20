@@ -21,8 +21,10 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.56.1
           image='system-images;android-35;google_apis_playstore;x86_64'
           sdkmanager "$image" > "$RUNNER_TEMP/sdk-image.log"
-          echo no | avdmanager create avd --force --name folio216 --package "$image" --device pixel_6
-          echo 'hw.keyboard=no' >> "$HOME/.android/avd/folio216.avd/config.ini"
+          export ANDROID_AVD_HOME="$RUNNER_TEMP/folio-avds"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo no | avdmanager create avd --force --name folio216 --path "$ANDROID_AVD_HOME/folio216.avd" --package "$image" --device pixel_6
+          echo 'hw.keyboard=no' >> "$ANDROID_AVD_HOME/folio216.avd/config.ini"
           sudo setfacl -m "u:$(id -un):rw" /dev/kvm
           "$ANDROID_HOME/emulator/emulator" -avd folio216 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -cores 2 -memory 2048 > "$RUNNER_TEMP/emulator.log" 2>&1 &
           timeout 240 adb wait-for-device
