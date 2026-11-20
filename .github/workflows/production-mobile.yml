@@ -1,0 +1,31 @@
+name: Production mobile layout and persisted portfolio
+on:
+  push:
+    branches: [qa/sw330-production-mobile]
+permissions:
+  contents: read
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare the same browser package as release
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1 axe-core@4.10.3
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify production assets and all mobile navigation widths
+        run: |
+          mkdir -p artifacts/mobile
+          for engine in chromium firefox webkit; do
+            node tests/mobile/production-mobile.mjs https://foliolab.unperfekt.at/ "$engine" "artifacts/mobile/$engine.json"
+          done
+      - name: Keep exact measurements and asset hashes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-mobile-measurements
+          path: artifacts/mobile/
