@@ -1,0 +1,33 @@
+{
+  "origin": "https://foliolab.unperfekt.at",
+  "checked": "2026-11-20T21:39:23.981Z",
+  "rows": [
+    {
+      "source": "CoinMarketCap",
+      "url": "https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest",
+      "result": {
+        "error": "TypeError: Load failed"
+      },
+      "diagnostic": [
+        "Origin https://foliolab.unperfekt.at is not allowed by Access-Control-Allow-Origin. Status code: 200",
+        "Failed to load resource: Origin https://foliolab.unperfekt.at is not allowed by Access-Control-Allow-Origin. Status code: 200"
+      ]
+    },
+    {
+      "source": "Alternative.me",
+      "url": "https://api.alternative.me/fng/?limit=1",
+      "result": {
+        "status": 200,
+        "hasValue": true
+      },
+      "diagnostic": []
+    }
+  ],
+  "browser": "Playwright WebKit, checked at production origin with normal TLS validation",
+  "sourceTerms": {
+    "CoinMarketCap": "https://coinmarketcap.com/api/resources/coinmarketcap-keyless-public-api-guide-developers-guide/",
+    "CNN": "https://commercial.cnn.com/contact-us/",
+    "Alternative.me": "https://alternative.me/crypto/fear-and-greed-index/#api"
+  },
+  "scope": "CMC browser read refused by CORS. Alternative.me is a differently defined Bitcoin-focused index; attribution adjacent to the value is required for commercial use. No source substitution selected. A documented public stock feed and display terms for CNN remain outstanding."
+}

@@ -1,0 +1,121 @@
+{
+  "issue": 216,
+  "before": {
+    "run": 44816336324,
+    "artifact": 14668844042,
+    "sha256": "51c50a825bb98bc3b0629dd84fc9f1320d16c430b14d1007ec24736af09586a3",
+    "reports": [
+      {
+        "target": "f484bf7ec10d866409cd1154582772cf5595a945",
+        "platform": "Android SDK emulator, x86_64",
+        "physical": false,
+        "android": "15",
+        "ime": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+        "scenarios": [
+          {
+            "width": 412,
+            "height": 474.28570556640625,
+            "offset": 0,
+            "field": {
+              "top": 300.0059509277344,
+              "bottom": 344.0059509277344,
+              "height": 44,
+              "visible": true
+            },
+            "action": {
+              "top": 680.0595092773438,
+              "bottom": 724.0595092773438,
+              "height": 44,
+              "visible": false
+            },
+            "focus": "scanAddress",
+            "overflow": false,
+            "dialog": "wallet",
+            "closedHeight": 786.2857055664062,
+            "keyboardShown": true,
+            "cancelledWithoutMutation": true
+          }
+        ],
+        "browser": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+        "failure": "AssertionError [ERR_ASSERTION]: footer action must remain visible with the IME open"
+      }
+    ]
+  },
+  "candidate": {
+    "run": 44821249516,
+    "artifact": 14672521121,
+    "sha256": "ac4b15ede949715900ce7b2002ea90dd8214c131b1245781093af301e87bfb93",
+    "reports": [
+      {
+        "target": "fe7971c6a2fc6427062cbdd979c25afb00b65d1e",
+        "platform": "Android SDK emulator, x86_64",
+        "physical": false,
+        "android": "15",
+        "ime": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+        "scenarios": [
+          {
+            "width": 412,
+            "height": 474.28570556640625,
+            "offset": 0,
+            "field": {
+              "top": 214.8095245361328,
+              "bottom": 258.8095245361328,
+              "height": 44,
+              "visible": true
+            },
+            "action": {
+              "top": 402.2857360839844,
+              "bottom": 446.2857360839844,
+              "height": 44,
+              "visible": true
+            },
+            "focus": "wizardName",
+            "overflow": false,
+            "dialog": "asset",
+            "closedHeight": 786.2857055664062,
+            "keyboardShown": true,
+            "cancelledWithoutMutation": true
+          }
+        ],
+        "browser": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+        "result": "PASS"
+      },
+      {
+        "target": "fe7971c6a2fc6427062cbdd979c25afb00b65d1e",
+        "platform": "Android SDK emulator, x86_64",
+        "physical": false,
+        "android": "15",
+        "ime": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+        "scenarios": [
+          {
+            "width": 412,
+            "height": 474.28570556640625,
+            "offset": 0,
+            "field": {
+              "top": 265.7797546386719,
+              "bottom": 309.7797546386719,
+              "height": 44,
+              "visible": true
+            },
+            "action": {
+              "top": 402.2857360839844,
+              "bottom": 446.2857360839844,
+              "height": 44,
+              "visible": true
+            },
+            "focus": "scanAddress",
+            "overflow": false,
+            "dialog": "wallet",
+            "closedHeight": 786.2857055664062,
+            "keyboardShown": true,
+            "cancelledWithoutMutation": true
+          }
+        ],
+        "browser": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+        "result": "PASS"
+      }
+    ]
+  },
+  "candidateHead": "6c5bce46aca2f2f03e4132b8f4704380407d4d9a",
+  "htmlSha256": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0"
+}
