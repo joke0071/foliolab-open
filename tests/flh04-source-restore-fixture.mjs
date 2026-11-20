@@ -50,7 +50,7 @@ export async function prepareSourceRestore(page,operation){
  return {request,local,queue,selectedRaw};
 }
 
-export async function verifyRestoredSource(page,operation,{request,local,queue,selectedRaw}){
+export async function verifyRestoredSource(page,operation,{request,local,queue,selectedRaw},setup){
  const state=await operation(page,'read');
  assert.equal(JSON.parse(local.raw).positions[0].quantityExact,'12.25');
  assert.equal(JSON.parse(state.portfolio.raw).positions[0].quantityExact,'13.125');
@@ -71,8 +71,38 @@ export async function verifyRestoredSource(page,operation,{request,local,queue,s
   assert.deepEqual(await inspect({...evidence,...changed}),{status:'undetermined',applyAuthorized:false});
  }
  assert.deepEqual(await operation(page,'read'),state);
- const edited=await operation(page,'save',{revision:state.portfolio.revision,
-  raw:await appendBookings(page,selectedRaw,'after-restart',['0.5'])});
+ const preview=input=>page.evaluate(req=>window.syncTest.api.previewPinnedLocalRollback(req),input);
+ const localData=JSON.parse(local.raw),selectedData=JSON.parse(selectedRaw);
+ const changedSections=Object.keys(localData).filter(key=>key!=='settings'&&
+  JSON.stringify(localData[key])!==JSON.stringify(selectedData[key])).sort();
+ assert.deepEqual(await preview(request),{status:'matches-restored-state',applyAuthorized:false,
+  rollbackPreview:{changedSections,positions:1,bookings:1,journalEntries:1}});
+ const unknown={status:'undetermined',applyAuthorized:false};
+ assert.deepEqual(await preview({...request,password:'unrelated password'}),unknown);
+ assert.deepEqual(await preview({...request,localFile:selectedFile}),unknown);
+ assert.deepEqual(await operation(page,'read'),state);
+
+ const writer=await page.context().newPage();await setup(writer);
+ // Pause password decryption after verifying the receipt. Commit a real edit from another tab.
+ await page.evaluate(req=>{
+  const decrypt=SubtleCrypto.prototype.decrypt;
+  let resume;
+  const gate=new Promise(resolve=>{resume=resolve;});
+  SubtleCrypto.prototype.decrypt=async function(...args){
+   window.releaseRollbackPreview=resume;
+   await gate;
+   return decrypt.apply(this,args);
+  };
+  window.pendingRollbackPreview=window.syncTest.api.previewPinnedLocalRollback(req)
+   .finally(()=>{SubtleCrypto.prototype.decrypt=decrypt;});
+ },request);
+ await page.waitForFunction(()=>typeof window.releaseRollbackPreview==='function');
+ const edited=await operation(writer,'save',{revision:state.portfolio.revision,
+  raw:await appendBookings(writer,selectedRaw,'after-restart',['0.5'])});
+ assert.deepEqual(await page.evaluate(()=>{window.releaseRollbackPreview();return window.pendingRollbackPreview;}),unknown);
+ await writer.close();
+ assert.deepEqual(await preview(request),{status:'later-local-revision',applyAuthorized:false});
+ console.log(JSON.stringify({kind:'FLH04RollbackPreview',status:'PASS',engine:process.env.ENGINE}));
  assert.equal(JSON.parse(edited.raw).positions[0].quantityExact,'13.625');
  assert.deepEqual(await inspect(evidence),{status:'later-local-revision',applyAuthorized:false});
  assert.deepEqual(await operation(page,'read'),{portfolio:edited,sync:state.sync});

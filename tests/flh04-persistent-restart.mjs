@@ -122,7 +122,7 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
   await page.waitForFunction(()=>window.sourceRestore.snapshot().settled||window.sourceRestore.snapshot().events.some(e=>e.name==='barrier-held'));
   assertCrashBarrier(await page.evaluate(()=>window.sourceRestore.snapshot()),'readwrite',0);
   const {reopened,crash}=await restart();await setup(reopened);
-  await verifyRestoredSource(reopened,operation,fixture);
+  await verifyRestoredSource(reopened,operation,fixture,setup);
   console.log(JSON.stringify({kind:'FLH04SourceRestoreCrash',status:'PASS',crash}));
  });
 }

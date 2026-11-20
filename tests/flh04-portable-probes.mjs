@@ -166,7 +166,7 @@ export async function runPortableProbes(browser,setup,operation){
   assert.deepEqual(result,{status:'restored-local-copy',selectedHead:'S',localRevision:fixture.local.revision+1,applyAuthorized:false});
   await page.close();
   const reopened=await context.newPage();await setup(reopened);
-  await verifyRestoredSource(reopened,operation,fixture);
+  await verifyRestoredSource(reopened,operation,fixture,setup);
   console.log(JSON.stringify({kind:'FLH04PortableSourceRestore',status:'PASS',engine:browser.browserType().name()}));
  }finally{await context.close();}
 }
