@@ -1,0 +1,64 @@
+name: Windows Chrome Edge K4 evidence
+on:
+  pull_request:
+    branches: [feature/flh05-import-foundation]
+    paths:
+      - '.github/workflows/windows-k4-evidence.yml'
+      - 'tests/windows-k4-evidence.mjs'
+      - 'tests/fixtures/windows-k4-originals.json'
+permissions:
+  contents: read
+jobs:
+  windows-k4:
+    runs-on: windows-2025
+    timeout-minutes: 25
+    env:
+      FOLIOLAB_PRODUCT_SHA: e272297ab1ba855a2922c1faa4010b83c558a796
+    steps:
+      - name: Preserve exact Git blob line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+          path: qa
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: e272297ab1ba855a2922c1faa4010b83c558a796
+          path: app
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify installed branded browsers and original synthetic fixture
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $chrome = Join-Path $env:ProgramFiles 'Google\Chrome\Application\chrome.exe'
+          $edge = Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe'
+          if (!(Test-Path $chrome)) { throw 'Installed Google Chrome missing' }
+          if (!(Test-Path $edge)) { throw 'Installed Microsoft Edge missing' }
+          "FOLIOLAB_CHROME=$chrome" | Out-File $env:GITHUB_ENV -Append
+          "FOLIOLAB_EDGE=$edge" | Out-File $env:GITHUB_ENV -Append
+          python -c "import json,lzma,base64,hashlib,pathlib; p=pathlib.Path('qa/tests/fixtures'); f=json.loads((p/'windows-k4-originals.json').read_text()); b=lzma.decompress(base64.b64decode(f['original10k']['xzBase64'])); assert len(b)==f['original10k']['bytes'] and hashlib.sha256(b).hexdigest()==f['original10k']['sha256']; (p/'k4-fixture.json').write_bytes(b)"
+          if ((git -C app rev-parse HEAD) -ne $env:FOLIOLAB_PRODUCT_SHA) { throw 'Product SHA mismatch' }
+      - name: Install pinned automation client only
+        working-directory: qa
+        run: npm install --no-save playwright@1.56.1
+      - name: Actual Chrome Edge UI exports restores and process reopens
+        shell: pwsh
+        run: |
+          $env:FOLIOLAB_PRODUCT_ROOT = Join-Path $env:GITHUB_WORKSPACE 'app'
+          $env:FOLIOLAB_OUTPUT = Join-Path $env:GITHUB_WORKSPACE 'windows-evidence'
+          node qa/tests/windows-k4-evidence.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Preserve synthetic evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-chrome-edge-k4-${{ github.run_id }}-${{ github.run_attempt }}
+          path: windows-evidence/
+          if-no-files-found: error
+          retention-days: 30
