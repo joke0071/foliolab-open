@@ -193,6 +193,8 @@ export async function runRendererTerminationCandidate({browser,setup,operation,u
   await checkPersistentRestart({setup,operation,checkUncertainRetry,assertCrashBarrier});
   const {checkProfileRestore}=await import('./flh04-profile-restore.mjs');
   await checkProfileRestore({setup,operation});
+  const {checkProfileConflict}=await import('./flh04-profile-conflict.mjs');
+  await checkProfileConflict({setup,operation});
   const {runPortableProbes}=await import('./flh04-portable-probes.mjs');
   await runPortableProbes(browser,setup,operation);
  }
