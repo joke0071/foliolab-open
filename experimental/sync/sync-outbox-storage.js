@@ -1,4 +1,4 @@
-import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections} from './sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,previewSyncRestore} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText,strictSyncTransaction} from '../../src/atomic-storage.js';
@@ -89,6 +89,13 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   return commitPortfolioSyncRecord(db,{expectedLocalRevision:current.portfolio.revision,
    expectedPortfolio:current.portfolio,expectedState:current.sync,nextState});
  }
+ async function verifiedHeadPlain(current,frames,id){
+   const text=frames.get(id);
+   const frame=readVerifiedSyncFrame(await verifyFrame(text));
+   if(frame.frameText!==text||frame.descriptor.revisionId!==id||frame.epochId!==current.sync.epochId||
+      frame.descriptor.portfolioId!==current.sync.portfolioId)throw Error('sync-outbox-frame-binding');
+   return frame.plain;
+ }
  async function compareBranches(current,revisions,plan,frames,[leftId,rightId]){
   if(plan.status!=='conflict'||!plan.heads.includes(leftId)||!plan.heads.includes(rightId))
    throw Error('sync-outbox-comparison-needs-conflicting-heads');
@@ -100,11 +107,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(baseId===null)return {status:'no-common-ancestor',leftId,rightId};
   const plain=[];
   for(const id of [baseId,leftId,rightId]){
-   const text=frames.get(id);
-   const frame=readVerifiedSyncFrame(await verifyFrame(text));
-   if(frame.frameText!==text||frame.descriptor.revisionId!==id||frame.epochId!==current.sync.epochId||
-      frame.descriptor.portfolioId!==current.sync.portfolioId)throw Error('sync-outbox-frame-binding');
-   plain.push(frame.plain);
+   plain.push(await verifiedHeadPlain(current,frames,id));
   }
   return {status:'compared',baseId,leftId,rightId,sections:await compareSyncSnapshotSections(...plain)};
  }
@@ -126,6 +129,12 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(archive?.pin){
    const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
+   if(archive.pin.selectedHead!==undefined){
+    const id=archive.pin.selectedHead;
+    if(!result.heads.includes(id))throw Error('sync-archive-preview-head');
+    const plain=await verifiedHeadPlain(current,frames,id);
+    result.restorePreview={selectedHead:id,...await previewSyncRestore(current.portfolio.raw,plain)};
+   }
    const pin=await finishArchivePin(db,current,binding,archive.pin.version,archive.pin.write);
    return {...result,pinVersion:pin.version,applyAuthorized:false};
   }
@@ -230,6 +239,14 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(!pin)throw Error('sync-archive-pin-missing');
    return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
     expectedSyncVersion:pin.syncVersion,comparisonHeads:pair},{digest:pin.digest,version:pin.version,write:false});
+  },
+  async previewPinnedRestore({text,selectedHead,expectedPinVersion}){
+   if(typeof selectedHead!=='string'||!Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1)
+    throw Error('sync-archive-preview-selection');
+   const pin=await readArchivePin(db);
+   if(pin?.version!==expectedPinVersion)throw Error('sync-archive-pin-version');
+   return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
+    expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:pin.version,write:false,selectedHead});
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.

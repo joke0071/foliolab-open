@@ -1,4 +1,4 @@
-import {safeImport,assertDataVersion} from '../../src/model.js';
+import {backup,safeImport,assertDataVersion} from '../../src/model.js';
 import {syncPayloadDigest} from './sync-payload-integrity.js';
 import {validateLedgerOnlyBitcoinSnapshot} from '../../src/unified-bitcoin.js';
 import {units,exact} from '../../src/decimal.js';
@@ -364,4 +364,20 @@ export async function compareSyncSnapshotSections(basePlain,leftPlain,rightPlain
   sections.push({section,change});
  }
  return sections;
+}
+
+
+/** Exercise the ordinary restore and full-history export on detached financial data. */
+export async function previewSyncRestore(localRaw,selectedPlain){
+ const {data:selected}=await validateSyncSnapshot(selectedPlain);
+ const restored=safeImport(selected);
+ const exported=JSON.parse(backup(restored,{includeHistory:true}));
+ delete exported.settings;
+ if(!same(selected,exported))fail('restore-roundtrip');
+ const localPlain=await createSyncSnapshot(localRaw);
+ const local=JSON.parse(localPlain).data;
+ const changedSections=[...new Set([...Object.keys(local),...Object.keys(selected)])]
+  .filter(key=>!same(local[key],selected[key])).sort();
+ return {changedSections,positions:selected.positions.length,bookings:selected.bookings.length,
+  journalEntries:selected.journalEntries.length};
 }
