@@ -99,10 +99,18 @@ export async function checkThreeProfileConflict(browser,setup,operation){
   const lateFrame=snapshotFrame(remoteSaved.raw,'B2','B','3','b8'.repeat(32),undefined,'device-B');
   const captured=await operation(remote.page,'capture',{expectedLocalRevision:remoteSaved.revision,
    expectedSyncVersion:remote.cas.expectedSyncVersion,frameText:lateFrame});
+  const sourceRequest={previousText:await readFile(remote.file,'utf8'),
+   expectedPinVersion:await remote.page.evaluate(()=>window.syncTest.api.archivePinVersion()),
+   expectedLocalRevision:remoteSaved.revision,expectedSyncVersion:captured.version};
+  const source=await remote.page.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),sourceRequest);
+  const sourceFile=join(directory,'B-next.flh');await writeFile(sourceFile,source.archive.text);
+  const sourceArchive={text:await readFile(sourceFile,'utf8'),expectedDigest:source.archive.digest};
+  await remote.page.evaluate(req=>window.syncTest.api.pinSuccessorConflictArchive(req),
+   {...sourceRequest,text:sourceArchive.text,expectedPortfolioDigest:source.successorPortfolioDigest});
   await remote.context.close();
   await open(local);
   await checkSuccessor({profile:local,open,setup,operation,text:await readFile(local.file,'utf8'),
-   request:successorRequest,directory,lateFrame:captured.entries.at(-1).frameText,remoteRaw:remoteSaved.raw});
+   request:successorRequest,directory,sourceArchive,remoteRaw:remoteSaved.raw});
   await local.context.close();
   console.log(JSON.stringify({kind:'FLH04ThreeProfileConflict',status:'PASS',engine:browser.browserType().name(),
    persistentProfiles:3,verifiedFinancialCopies:9,blockedSourceRestores:3}));
@@ -112,8 +120,13 @@ export async function checkThreeProfileConflict(browser,setup,operation){
  }
 }
 
-async function checkSuccessor({profile,open,setup,operation,text,request,directory,lateFrame,remoteRaw}){
+async function checkSuccessor({profile,open,setup,operation,text,request,directory,sourceArchive,remoteRaw}){
  const reader=profile.page,writer=await profile.context.newPage();await setup(writer);
+ const damaged={...sourceArchive,text:sourceArchive.text.slice(0,-1)};
+ await assert.rejects(()=>writer.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),
+  {...profile.cas,previousText:text,expectedPinVersion:request.expectedPinVersion,sourceArchive:damaged}),/source-digest/);
+ const retained=await writer.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text);
+ assert.equal(retained.restorePreview.selectedHead,'B');assert.equal(retained.pinVersion,request.expectedPinVersion);
  // Suspend an old selection after it has read the pin. The other tab records a
  // booking, captures it and binds the new file while this operation is pending.
  await reader.evaluate(async req=>{
@@ -134,15 +147,18 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
  const frameText=snapshotFrame(saved.raw,'A2','A','3','b9'.repeat(32),undefined,'device-A');
  const queue=await operation(writer,'capture',{expectedLocalRevision:saved.revision,expectedSyncVersion:before.sync.version,frameText});
  const args={previousText:text,expectedPinVersion:request.expectedPinVersion,expectedLocalRevision:saved.revision,
-  expectedSyncVersion:queue.version,frameTexts:[lateFrame]};
+  expectedSyncVersion:queue.version,sourceArchive};
  const next=await writer.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),args);
  assert.deepEqual(next.transition,{previousSelection:'B',additionalHeads:[],branches:[
   {previousHead:'A',currentHeads:['A2']},{previousHead:'B',currentHeads:['B2']},{previousHead:'C',currentHeads:['C']}]});
  assert.equal(next.pinVersion,request.expectedPinVersion);assert.deepEqual(next.heads,['A2','B2','C']);
+ assert.notEqual(next.archive.text.split('\n',1)[0],sourceArchive.text.split('\n',1)[0]);
  const file=join(directory,'A-next.flh');await writeFile(file,next.archive.text);
  const readback=await readFile(file,'utf8');
  args.expectedPortfolioDigest=next.successorPortfolioDigest;
  const pin=req=>writer.evaluate(req=>window.syncTest.api.pinSuccessorConflictArchive(req),req);
+ await assert.rejects(()=>pin({...args,text:readback,sourceArchive:damaged}),/source-digest/);
+ assert.equal(await writer.evaluate(()=>window.syncTest.api.archivePinVersion()),request.expectedPinVersion);
  await assert.rejects(()=>pin({...args,text:readback.slice(0,-1)}),/successor-readback/);
  const pinned=await pin({...args,text:readback});
  assert.equal(pinned.pinVersion,request.expectedPinVersion+1);assert.equal(pinned.applyAuthorized,false);
