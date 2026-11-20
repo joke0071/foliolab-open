@@ -16,12 +16,22 @@ function normalizeUbuntuMirrorSetup(source) {
 const pagesArtifactName='github-pages-attempt-${{ github.run_attempt }}';
 const originalPagesUpload='      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: _site\n';
 const originalPagesDeploy='      - id: deployment\n        uses: actions/deploy-pages@v4\n';
-const retryPagesUpload=originalPagesUpload.replace('          path:',`          name: ${pagesArtifactName}\n          path:`);
 const retryPagesDeploy=originalPagesDeploy+`        with:\n          artifact_name: ${pagesArtifactName}\n`;
+const qualifiedUpload = "      - name: Prepare static site\n        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'\n        run: |\n          mkdir -p _site\n          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/\n      - id: pages_upload\n        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'\n        uses: actions/upload-pages-artifact@v3\n        with:\n          name: github-pages-attempt-${{ github.run_attempt }}\n          path: _site\n";
+const pagesOutputs = "    outputs:\n      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}\n      pages_artifact_attempt: ${{ github.run_attempt }}\n";
+const verifyPagesReceipt = "      - name: Verify the Pages upload for this tested commit\n        id: pages_receipt\n        env:\n          GH_TOKEN: ${{ github.token }}\n          ARTIFACT_ID: ${{ needs.test.outputs.pages_artifact_id }}\n          PRODUCER_ATTEMPT: ${{ needs.test.outputs.pages_artifact_attempt }}\n        run: |\n          set -euo pipefail\n          name=$(gh api \"repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID\" | node tools/pages-artifact-receipt.mjs \"$GITHUB_RUN_ID\" \"$GITHUB_SHA\" \"$PRODUCER_ATTEMPT\" \"$ARTIFACT_ID\")\n          echo \"Verified Pages artifact $ARTIFACT_ID ($name) on $GITHUB_SHA\"\n          echo \"name=$name\" >> \"$GITHUB_OUTPUT\"\n";
 function normalizePagesArtifactName(source){
- assert.equal(source.split(retryPagesUpload).length,2,'Exactly one attempt-specific Pages artifact upload required');
- assert.equal(source.split(retryPagesDeploy).length,2,'Deploy must resolve only the Pages artifact for that attempt');
- return source.replace(retryPagesUpload,originalPagesUpload).replace(retryPagesDeploy,originalPagesDeploy);
+ const verifiedDeploy=retryPagesDeploy.replace(pagesArtifactName,'${{ steps.pages_receipt.outputs.name }}');
+ const configure='      - uses: actions/configure-pages@v5\n';
+ const prepare=qualifiedUpload.slice(0,qualifiedUpload.indexOf('      - id: pages_upload')).replace(/^        if:.*\n/m,'');
+ const oldPermission='    permissions:\n      contents: read\n      pages: write';
+ const receiptPermission=oldPermission.replace('      pages:', '      actions: read\n      pages:');
+ for(const block of [qualifiedUpload,pagesOutputs,configure+verifyPagesReceipt,verifiedDeploy,receiptPermission]){
+  assert.equal(source.split(block).length,2,'Pages producer, verification and deploy must each occur exactly once');
+ }
+ assert.ok(source.includes(qualifiedUpload+'      - name: Verify standalone application\n'));
+ return source.replace(qualifiedUpload,'').replace(pagesOutputs,'').replace(receiptPermission,oldPermission)
+  .replace(configure+verifyPagesReceipt,prepare+configure+originalPagesUpload).replace(verifiedDeploy,originalPagesDeploy);
 }
 const pinnedCacheSteps = [
  [
@@ -175,16 +185,13 @@ test('superseded PR runs share one concurrency group while main remains separate
   assert.match(source, /cancel-in-progress: true/);
 });
 
-test('a Pages retry uses the artifact produced by its own attempt and retains prior uploads',()=>{
- const artifactName=attempt=>pagesArtifactName.replace('${{ github.run_attempt }}',String(attempt));
- const available=[1,2,3].map(artifactName);
- for(const attempt of [1,2,3])assert.deepEqual(available.filter(name=>name===artifactName(attempt)),[artifactName(attempt)]);
+test('Pages is packaged before browser tests and deploy verifies the exact producer receipt',()=>{
  for(const changed of [
-  source.replace(retryPagesUpload,originalPagesUpload),
-  source.replace(retryPagesDeploy,originalPagesDeploy),
-  source.replace('artifact_name: '+pagesArtifactName,'artifact_name: github-pages'),
-  source.replace(retryPagesUpload,retryPagesUpload+retryPagesUpload),
-  source.replaceAll('github.run_attempt','github.run_number')
+  source.replace(qualifiedUpload,''),source.replace(qualifiedUpload,qualifiedUpload+qualifiedUpload),
+  source.replace('steps.pages_upload.outputs.artifact_id','github.run_id'),
+  source.replace('needs.test.outputs.pages_artifact_attempt','github.run_attempt'),
+  source.replace('artifact_name: ${{ steps.pages_receipt.outputs.name }}','artifact_name: github-pages'),
+  source.replace('      actions: read\n',''),source.replace('node tools/pages-artifact-receipt.mjs','echo')
  ]) {assert.notEqual(changed,source);assert.throws(()=>validate(changed));}
 });
 
