@@ -10,7 +10,11 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
    const {blankModel,backup}=await import('/src/model.js');
    const model=blankModel(),before=backup(model),storage=JSON.stringify(Object.entries(localStorage)),db=JSON.stringify(await indexedDB.databases());
    const opts={wallets,tokens,openings,observedAt:now,retryDelayMs:0};
-   const p=provider({pages:true}),first=await fetchEthereumHistory({...opts,fetcher:p.fetcher,maxPages:1});
+   const cursor={index:4,block_number:10,transaction_index:142,include_zero_value:true};
+   const p=provider({pages:true,cursors:{'internal-transactions':cursor}});
+   const first=await fetchEthereumHistory({...opts,fetcher:p.fetcher,maxPages:4});
+   const internalCursor=first.resume?.jobs.find(job=>job.kind==='internal-transactions')?.cursor;
+   if(internalCursor?.include_zero_value!==true)throw Error('Blockscout cursor not retained');
    const result=await fetchEthereumHistory({...opts,fetcher:p.fetcher,resume:first.resume});
    const bad=await fetchEthereumHistory({...opts,fetcher:provider({reorg:true}).fetcher});
    const c=new AbortController();c.abort();const cancel=await fetchEthereumHistory({...opts,fetcher:p.fetcher,signal:c.signal});
