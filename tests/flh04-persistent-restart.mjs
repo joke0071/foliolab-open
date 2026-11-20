@@ -1,4 +1,4 @@
-import {prepareSourceRestore,verifyRestoredSource} from './flh04-source-restore-fixture.mjs';
+import {prepareSourceRestore,verifyRestoredSource,recoveryFiles,verifyRollbackRecovery} from './flh04-source-restore-fixture.mjs';
 import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
@@ -124,5 +124,27 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
   const {reopened,crash}=await restart();await setup(reopened);
   await verifyRestoredSource(reopened,operation,fixture,setup);
   console.log(JSON.stringify({kind:'FLH04SourceRestoreCrash',status:'PASS',crash}));
+ });
+ await withCrashedProfile(async(context,restart)=>{
+  const dir=await mkdtemp(join(tmpdir(),'foliolab-rollback-files-'));
+  try{
+   const page=await context.newPage();await setup(page);
+   const {request,local}=await prepareSourceRestore(page,operation);
+   const keys=Object.keys(recoveryFiles(request));
+   for(const key of keys)await writeFile(join(dir,key),request[key],'utf8');
+   const result=await page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request);
+   await page.evaluate(async model=>{
+    const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+    window.rollback=installLifecycleHarness({controller:window.syncTest.api,action:'rollbackPinnedLocalCopy',
+     model,barrierMode:'readwrite'});
+   },{...request,confirmedRollbackRevision:result.localRevision});
+   await page.waitForFunction(()=>window.rollback.snapshot().settled||window.rollback.snapshot().events.some(e=>e.name==='barrier-held'));
+   assertCrashBarrier(await page.evaluate(()=>window.rollback.snapshot()),'readwrite',0);
+   const {reopened,crash}=await restart();await setup(reopened);
+   const files={};
+   for(const key of keys)files[key]=await readFile(join(dir,key),'utf8');
+   await verifyRollbackRecovery(reopened,operation,files,local,result.localRevision);
+   console.log(JSON.stringify({kind:'FLH04RollbackRecoveryCrash',status:'PASS',crash}));
+  }finally{await rm(dir,{recursive:true,force:true});}
  });
 }

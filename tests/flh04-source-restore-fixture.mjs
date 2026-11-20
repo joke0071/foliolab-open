@@ -109,3 +109,31 @@ export async function verifyRestoredSource(page,operation,{request,local,queue,s
  assert.deepEqual(await operation(page,'read'),{portfolio:edited,sync:state.sync});
  console.log(JSON.stringify({kind:'FLH04RestoreStatus',status:'PASS',engine:process.env.ENGINE}));
 }
+
+export function recoveryFiles({text,localFile,selectedFile}){
+ return {text,localFile,selectedFile};
+}
+
+export async function verifyRollbackRecovery(page,operation,files,local,restoreRevision){
+ const open=input=>page.evaluate(input=>window.syncTest.api.reopenLocalRecoveryCase(input),input);
+ const revision=restoreRevision+1;
+ const expected={status:'matches-rolled-back-state',selectedHead:'S',expectedPinVersion:2,
+  localRevision:revision,rollbackAvailable:false,applyAuthorized:false};
+ assert.deepEqual(await open(files),expected);
+ const before=await operation(page,'read');
+ assert.equal(before.portfolio.raw,local.raw);
+ assert.equal(before.portfolio.revision,revision);
+ assert.deepEqual(before.portfolio.settings,local.settings);
+ assert.equal(before.portfolio.syncEnrollmentRequired,true);
+ assert.equal(before.sync.disabled,'portfolio-restored');
+ const replay=await page.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),
+  {...files,expectedPinVersion:expected.expectedPinVersion,confirmedHead:expected.selectedHead,confirmedRollbackRevision:restoreRevision});
+ assert.deepEqual(replay,{status:'matches-rolled-back-state',applyAuthorized:false});
+ assert.deepEqual(await open({...files,selectedFile:files.localFile}),{status:'undetermined',applyAuthorized:false});
+ assert.deepEqual(await operation(page,'read'),before);
+ const edited=await operation(page,'save',{revision,raw:await appendBookings(page,local.raw,'after-rollback',['0.25'])});
+ assert.deepEqual(await open(files),{...expected,status:'later-local-revision-after-rollback',localRevision:revision+1});
+ assert.equal(JSON.parse(edited.raw).positions[0].quantityExact,'12.5');
+ assert.deepEqual(await operation(page,'read'),{portfolio:edited,sync:before.sync});
+ await assert.rejects(()=>operation(page,'recover'),/enrollment-required/);
+}
