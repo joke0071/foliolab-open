@@ -1,0 +1,43 @@
+name: Android dialog keyboard evidence
+on:
+  push:
+    branches: [qa/android-dialog-ime-216]
+permissions:
+  contents: read
+jobs:
+  keyboard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare an isolated Android emulator and browser test
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+          npm install --no-save --package-lock=false playwright@1.56.1
+          image='system-images;android-35;google_apis_playstore;x86_64'
+          sdkmanager "$image" > "$RUNNER_TEMP/sdk-image.log"
+          echo no | avdmanager create avd --force --name folio216 --package "$image" --device pixel_6
+          echo 'hw.keyboard=no' >> "$HOME/.android/avd/folio216.avd/config.ini"
+          sudo setfacl -m "u:$(id -un):rw" /dev/kvm
+          "$ANDROID_HOME/emulator/emulator" -avd folio216 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -cores 2 -memory 2048 > "$RUNNER_TEMP/emulator.log" 2>&1 &
+          timeout 240 adb wait-for-device
+          timeout 360 bash -c 'until [ "$(adb shell getprop sys.boot_completed | tr -d "\r")" = 1 ]; do sleep 2; done'
+          adb shell input keyevent 82
+          adb shell settings put secure show_ime_with_hard_keyboard 1
+          adb shell am set-debug-app --persistent com.android.chrome
+          adb shell pm path com.android.chrome | grep 'package:'
+          adb reverse tcp:4173 tcp:4173
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/folio-http.log" 2>&1 &
+          node tests/mobile/android-dialog-ime.mjs
+      - name: Retain synthetic screenshots and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-dialog-ime-${{ github.sha }}
+          path: artifacts/ime216/
+          if-no-files-found: ignore
