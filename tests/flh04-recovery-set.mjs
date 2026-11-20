@@ -85,12 +85,19 @@ function assertRestored(reopened,before,expected,label){
  assert.equal(reopened.sync,null,label);
 }
 
-async function restoreDownload({browserType,target,origin,file,password,expected,label,rejectedPassword}){
+async function restoreDownload({browserType,target,origin,file,password,expected,label,rejectedPassword,initialPassword}){
  let context=await browserType.launchPersistentContext(target);
  try{
   const page=await openApp(context,origin),before=await readAppState(page);
   assert.deepEqual(JSON.parse(before.portfolio.raw),JSON.parse(backup(blankModel(),{includeHistory:true})),label);
   assert.equal(before.sync,null);
+  if(initialPassword!==undefined){
+   await openBackupControls(page);
+   await page.locator('#backupPassword').fill(initialPassword);
+   await page.locator('#backupPasswordConfirm').fill(initialPassword);
+   await page.locator('#saveBackupPassword').click();
+   await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
+  }
   if(rejectedPassword!==undefined){
    await importPasswordFile(page,file,rejectedPassword,{error:'Backup-Passwort falsch'});
    assert.deepEqual(await readAppState(page),before,label);
@@ -115,8 +122,7 @@ async function saveTargetBackup(page,file){
  await download.saveAs(file);
 }
 
-async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected,directory}){
- const targetPassword='Independent synthetic target password';
+async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected,directory,targetPassword}){
  assert.notEqual(targetPassword,password);
  const original=JSON.parse(before.portfolio.raw);
  delete original.settings;
@@ -137,14 +143,7 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
  try{
   let page=await openApp(context,origin);
   assert.deepEqual(await readAppState(page),before);
-  // Importing B into an empty profile adopted the source password. Give this populated target its own vault password.
   await openBackupControls(page);
-  await page.locator('#backupChangeToggle').click();
-  await page.locator('#backupOldPassword').fill(password);
-  await page.locator('#backupPassword').fill(targetPassword);
-  await page.locator('#backupPasswordConfirm').fill(targetPassword);
-  await page.locator('#saveBackupPassword').click();
-  await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
   await saveTargetBackup(page,beforeFile);
   for(const attempt of attempts){
    await importPasswordFile(page,attempt.file,attempt.password,attempt);
@@ -163,6 +162,9 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
   await openBackupControls(page);
   await saveTargetBackup(page,afterFile);
   for(const [label,file,oracle] of [['B',beforeFile,original],['C',afterFile,expected]]){
+   const exported=JSON.parse(await readFile(file,'utf8'));
+   assert.ok(exported.keyId);
+   assert.notEqual(exported.keyId,envelope.keyId,'independent target vault');
    await restoreDownload({browserType,origin,target:join(directory,'readback-'+label),file,
     password:targetPassword,rejectedPassword:password,expected:oracle,label:'Zielexport '+label});
   }
@@ -182,9 +184,11 @@ export async function checkRecoverySetRestore({browserType,directory,source,prof
   const file=paths[labels.indexOf(label)];
   assert.ok(file,label);
   const target=join(directory,'restore-'+label),password=request.password;
-  const before=await restoreDownload({browserType,target,origin,file,password,expected:profile.data,label});
+  const targetPassword=label==='Revision B'?'Independent synthetic target password':undefined;
+  const before=await restoreDownload({browserType,target,origin,file,password,expected:profile.data,label,
+   initialPassword:targetPassword});
   if(label==='Revision B'){
-   await checkPopulatedRestore({browserType,target,origin,before,password,directory,indexFile:paths[labels.indexOf('Verzeichnis')],
+   await checkPopulatedRestore({browserType,target,origin,before,password,directory,targetPassword,indexFile:paths[labels.indexOf('Verzeichnis')],
     headFile:paths[labels.indexOf('Revision C')],expected:profiles.find(p=>p.id==='C').data});
   }
  }
