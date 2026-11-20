@@ -1,3 +1,4 @@
+import {describeConflictSuccessor} from './sync-conflict-successor.js';
 import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback,rollbackPinnedLocalCopy,reopenLocalRecoveryCase} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
@@ -44,6 +45,10 @@ function finishArchivePin(db,current,binding,options,restore){
     if(anchor.result||syncPreimageText(portfolio.result)!==syncPreimageText(current.portfolio)||
        syncPreimageText(sync.result)!==syncPreimageText(current.sync))throw Error('sync-archive-pin-preimage');
     pin=storedPin(value.result,count.result);
+    if(options.previous){
+     if(syncPreimageText(pin)!==syncPreimageText(options.previous))throw Error('sync-archive-successor-pin-changed');
+     if(!write)return;
+    }
     const matches=pin&&Object.entries(binding).every(([key,v])=>pin[key]===v);
     const version=pin?.version??0;
     if(recordSelection){
@@ -156,12 +161,21 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(ordered.reduce((size,text)=>size+text.length,0)>SYNC_OUTBOX_TEXT_LIMIT)throw Error('sync-outbox-frame-batch-limit');
    const binding=await archiveDigest(syncPreimageText(current.sync));
    const text=[archiveHeader(current.portfolio.revision,current.sync.version)+' '+binding,...ordered].join('\n');
-   if(archive.mode==='create')result.archive={text,digest:await archiveDigest(text)};
+   if(archive.previous){
+    result.transition=await describeConflictSuccessor(archive.previous,current,revisions,frames,result.heads);
+    if(archive.pin.write&&text!==archive.original)throw Error('sync-archive-successor-readback');
+    result.archive={text,digest:await archiveDigest(text)};
+   }else if(archive.mode==='create')result.archive={text,digest:await archiveDigest(text)};
    else if(text!==archive.original)throw Error('sync-outbox-incomplete-or-noncanonical-archive');
   }
   if(archive?.pin){
-   const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
+   const binding={digest:result.archive?.digest??archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
+   if(archive.previous){
+    result.successorPortfolioDigest=binding.portfolioDigest;
+    if(archive.pin.write&&archive.expectedPortfolioDigest!==binding.portfolioDigest)
+     throw Error('sync-archive-successor-portfolio-changed');
+   }
    if(archive.pin.includeOverview)result.overview=await conflictOverview(current,revisions,result.heads,frames);
    let restore;
    if(archive.pin.selectedHead!==undefined){
@@ -243,6 +257,21 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
     {mode:'reopen',original:text,pin});
   }
+ async function successorArchive({previousText,text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},write){
+  if(!positive(expectedPinVersion)||typeof previousText!=='string'||
+     previousText.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
+     (write&&(!hash(expectedPortfolioDigest)||typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100)))
+   throw Error('sync-archive-invalid-successor');
+  const pin=await readArchivePin(db);
+  if(pin?.version!==expectedPinVersion||pin.digest!==await archiveDigest(previousText))
+   throw Error('sync-archive-successor-pin-changed');
+  if(!positive(expectedLocalRevision)||expectedLocalRevision<=pin.localRevision||
+     !positive(expectedSyncVersion)||expectedSyncVersion<=pin.syncVersion)throw Error('sync-archive-successor-needs-capture');
+  const [header,...frameTexts]=previousText.split('\n',SYNC_GRAPH_LIMIT+2);
+  return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true},
+   {previous:{pin,header,oldFrames:new Set(frameTexts)},original:text,expectedPortfolioDigest,
+    pin:{previous:pin,version:expectedPinVersion,write}});
+ }
  async function selectedRestore({text,selectedHead,expectedPinVersion},mode,readback){
   const pin=await readArchivePin(db);
   const exportCopy=mode==='export'||mode==='encrypted'||mode==='recovery'||mode==='restore';
@@ -297,6 +326,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return finishPlan(current,remoteDescriptors,observationComplete);
   },
   planFrameApply(request){return planFrames(request);},
+  createSuccessorConflictArchive(request){return successorArchive(request,false);},
+  pinSuccessorConflictArchive(request){return successorArchive(request,true);},
   createConflictArchive(request){return planFrames(request,{mode:'create'});},
   reopenConflictArchive(request){return reopenArchive(request);},
   async archivePinVersion(){return (await readArchivePin(db))?.version??0;},

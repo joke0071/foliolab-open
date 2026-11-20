@@ -787,3 +787,36 @@ test('financial copy exports only the confirmed choice and refuses a choice chan
  await assert.rejects(()=>racing.exportPinnedFinancialCopy({text,expectedPinVersion:2}),/selection-changed|pin-version/);
  assert.deepEqual(await readPortfolioSyncRecord(db),before);
 });
+
+test('conflict successor preserves old heads and distinguishes a new local fork; readback and prior queue are bound',async()=>{
+ const {api,db,p,args}=await fixture();await api.capture(args);
+ const prior={expectedLocalRevision:1,expectedSyncVersion:1};
+ const frames=['B','C'].map((id,i)=>frame(p.raw,id,'R','2',('9'+i).repeat(32)));
+ const {archive}=await api.createConflictArchive({...prior,frameTexts:frames,observationComplete:true});
+ await api.pinConflictArchive({...prior,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0});
+ const request={previousText:archive.text,expectedPinVersion:1,expectedLocalRevision:2,expectedSyncVersion:2};
+ await assert.rejects(()=>api.createSuccessorConflictArchive({...request,previousText:archive.text+' '}),/pin-changed/);
+ await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+ await assert.rejects(()=>api.createSuccessorConflictArchive(request),/stale-preimage/);
+ const child=frame(p.raw,'L','R','2','93'.repeat(32));
+ await api.capture({...args,expectedLocalRevision:2,expectedSyncVersion:1,receipt:await verify(child)});
+ const state=await readPortfolioSyncRecord(db);
+ const result=await api.createSuccessorConflictArchive(request);
+ assert.deepEqual(result.transition,{previousSelection:null,branches:[
+  {previousHead:'B',currentHeads:['B']},{previousHead:'C',currentHeads:['C']}],additionalHeads:['L']});
+ assert.equal(await api.archivePinVersion(),1);
+ const input={...request,text:result.archive.text,expectedPortfolioDigest:result.successorPortfolioDigest};
+ db.data.set('portfolio',{...state.portfolio,updatedAt:'changed after preview'});
+ await assert.rejects(()=>api.pinSuccessorConflictArchive(input),/portfolio-changed/);
+ db.data.set('portfolio',state.portfolio);
+ db.fault='abort-after-put';
+ await assert.rejects(()=>api.pinSuccessorConflictArchive(input));assert.equal(await api.archivePinVersion(),1);
+ // A queue metadata change with the same counters must not prove historical continuity.
+ const mutated=structuredClone(state.sync);mutated.entries[0].status='uncertain';
+ db.data.set('sync-outbox-v1',mutated);
+ await assert.rejects(()=>api.pinSuccessorConflictArchive(input),/successor-lineage/);
+ db.data.set('sync-outbox-v1',state.sync);
+ const race=await Promise.allSettled([api.pinSuccessorConflictArchive(input),api.pinSuccessorConflictArchive(input)]);
+ assert.deepEqual(race.map(r=>r.status).sort(),['fulfilled','rejected']);
+ assert.deepEqual(await readPortfolioSyncRecord(db),state);assert.equal(await api.archivePinVersion(),2);
+});
