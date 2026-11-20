@@ -1,0 +1,60 @@
+name: Pages upload receipt canary
+on:
+  push:
+    branches: [qa/pages-artifact-visibility-229]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    outputs:
+      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}
+      pages_artifact_attempt: ${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare static site
+        run: |
+          mkdir -p _site
+          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/
+      - id: pages_upload
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages-attempt-${{ github.run_attempt }}
+          path: _site
+      - name: Validate the new and preserved workflow contracts
+        run: node --test tests/pages-artifact-receipt.test.mjs tests/ci-stage-workflow.test.mjs
+  consume:
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify the Pages upload for this tested commit
+        id: pages_receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.test.outputs.pages_artifact_id }}
+          PRODUCER_ATTEMPT: ${{ needs.test.outputs.pages_artifact_attempt }}
+        run: |
+          set -euo pipefail
+          name=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" | node tools/pages-artifact-receipt.mjs "$GITHUB_RUN_ID" "$GITHUB_SHA" "$PRODUCER_ATTEMPT" "$ARTIFACT_ID")
+          echo "Verified Pages artifact $ARTIFACT_ID ($name) on $GITHUB_SHA"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.pages_receipt.outputs.name }}
+          path: _receiver
+      - name: Verify every packaged byte against the checkout
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import tarfile
+          expected = {p.as_posix() for d in ['src','icons'] for p in Path(d).rglob('*') if p.is_file()}
+          expected.update(['index.html','styles.css','manifest.webmanifest','sw.js'])
+          with tarfile.open('_receiver/artifact.tar') as tar:
+              files = {m.name.removeprefix('./'):m for m in tar if m.isfile()}
+              assert files.keys() == expected
+              for name, member in files.items():
+                  assert Path(name).read_bytes() == tar.extractfile(member).read(), name
+          print(f'{len(files)} packaged files match the tested commit')
+          PYTHON
