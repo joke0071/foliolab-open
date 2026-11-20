@@ -6,8 +6,8 @@ export const verify=createSyncFrameVerifier({portfolioId,epochId,key});
 const hash=s=>createHash('sha256').update(s).digest('hex');
 const fields=['format','portfolioId','revisionId','deviceId','parentId','generation','payloadDigest'];
 // Independent OpenSSL oracle. Fixed secrets/nonces ONLY for synthetic tests.
-export function frame(plain,revisionId='R',parentId=null,generation='1',salt='23'.repeat(32),epochSecret=secret) {
- const d={format:1,portfolioId,revisionId,deviceId:'D',parentId,generation,payloadDigest:hash(plain)},nonce='34'.repeat(12);
+export function frame(plain,revisionId='R',parentId=null,generation='1',salt='23'.repeat(32),epochSecret=secret,deviceId='D') {
+ const d={format:1,portfolioId,revisionId,deviceId,parentId,generation,payloadDigest:hash(plain)},nonce='34'.repeat(12);
  const k=hkdfSync('sha256',epochSecret,Buffer.from(salt,'hex'),Buffer.from(JSON.stringify(['foliolab-sync-key',1,suite,portfolioId,epochId])),32);
  const c=createCipheriv('aes-256-gcm',k,Buffer.from(nonce,'hex'));
  c.setAAD(Buffer.from(JSON.stringify(['foliolab-sync',1,suite,portfolioId,epochId,salt,nonce])));
