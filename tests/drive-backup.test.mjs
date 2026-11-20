@@ -386,7 +386,7 @@ async function restoreSetup(bytes,route,fault){
  const ctx=createContext({model:initial,loadFailure:null,saving:false,otherTabChangedPortfolio:false,
   isPasswordBackup,decryptPasswordBackup,assertLocalBackupFileSize,COMPLETE_BACKUP_KIND,
   unpackCompleteBackup,safeImport,defaultSettings,prompt:()=>'SYNTHETIC_PASSWORD',confirm:()=>true,
-  $:id=>id==='backupFile'?{addEventListener(type,fn){fileHandler=fn;}}:{},
+  $:id=>id==='backupFile'?{addEventListener(type,fn){fileHandler=fn;}}:{classList:{contains:()=>false},showModal(){},close(){}},
   decideImportedConfiguration:()=>null,notify:msg=>notices.push(msg),setLoading(){},renderBackupStatus(){},
   hasBackupPassword:async()=>false,downloadBackup(){},backupDone(){},unresolvedListings:()=>[],
   syncPortfolioState(){},render(){},localStorage:{setItem(){}},backupCounter:()=>0,page:'more',
@@ -403,7 +403,8 @@ async function restoreSetup(bytes,route,fault){
   }
  });
  const section=(a,b)=>{const start=app.indexOf(a),end=app.indexOf(b,start);assert.ok(start>=0&&end>start);return app.slice(start,end);};
- runInContext(section('async function save(){','function notify('),ctx);
+ runInContext(section('const restoreReadbackHint=', 'let headerStatus='),ctx);
+ runInContext(section('async function save(','function notify('),ctx);
  runInContext(section("$('backupFile').addEventListener('change'",'  // Drive only receives'),ctx);
  Object.assign(t.backend,{validateData:safeImport,unpackCompleteBackup,decryptPasswordBackup,
   restoreData:runInContext('({'+section('      async restoreData(data,configuration=null){','      onBackedUp()')+'}).restoreData',ctx),
@@ -441,7 +442,7 @@ test('file and Drive restore identical encrypted position bytes through commit a
      const p=m.positions[0];assert.deepEqual([p.quantity,p.quantityExact,p.price,p.priceExact],scenario==='unknown'?[17,'17.000000000000000005',123.45,'123.45']:[2,'2',123.45,'123.45']);
      assert.deepEqual([p.currency,p.fxRateExact,totalExactEUR(m)],scenario==='unknown'?['USD','UNKNOWN',null]:['EUR','1','246.9']);
     }
-    if(scenario==='vault')assert.match(h.notice,/Portfolio wiederhergestellt.*Passwort.*nicht erneut importieren/i);
+    if(scenario==='vault')assert.match(h.notice,route==='file'?/Finanzdaten wiederhergestellt.*Passwort.*nicht erneut importieren/i:/Portfolio wiederhergestellt.*Passwort.*nicht erneut importieren/i);
     else assert.match(h.notice,/wiederhergestellt/i);
    });
   }

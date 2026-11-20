@@ -11,12 +11,12 @@ function harness({accept=true,fail=false,cacheFail=false,configuration=true,vaul
  const elements=Object.fromEntries(keys.map(key=>[key,{value:settings[key]||'',type:key.endsWith('Key')||key.endsWith('Token')?'text':'text'}]));
  for(const field of Object.values(elements))field.closest=()=>({querySelector:()=>({click(){field.type='password';}})});
  elements.namedItem=key=>elements[key]||null;
- const nodes={apiSettings:{elements},optionalConnectionStatus:{},solanaRpc:{type:'password'},backupStatus:{},backupFile:{addEventListener(type,handler){context.fileHandler=handler;}},deleteAll:{addEventListener(type,handler){context.resetHandler=handler;}}};
+ const nodes={apiSettings:{elements},optionalConnectionStatus:{},solanaRpc:{type:'password'},backupStatus:{classList:{contains:()=>false}},restoreProgress:{showModal(){},close(){}},backupFile:{addEventListener(type,handler){context.fileHandler=handler;}},deleteAll:{addEventListener(type,handler){context.resetHandler=handler;}}};
  let committed={...blankModel(),settings},removed=false;
  const imported=blankModel();imported.settings={...defaultSettings(),coinGeckoKey:'SYNTHETIC_NEW'};
  const config=configuration?{settings:imported.settings,drive:{}}:null;
  const context=vm.createContext({model:structuredClone(committed),$:id=>nodes[id],blankModel,defaultSettings,safeImport,validatedPublicEndpoint,
-  confirm:()=>accept,prompt:()=>'SYNTHETIC_PASSWORD',notify(){},setLoading(){},renderBackupStatus(){},render(){},syncPortfolioState(){},
+  confirm:()=>accept,prompt:()=>'SYNTHETIC_PASSWORD',notify(message,error){context.notice={message,error};},setLoading(){},renderBackupStatus(){},render(){},syncPortfolioState(){},
   saving:false,busy:false,otherTabChangedPortfolio:false,loadFailure:null,filter:'all',lastStorageError:'',page:'more',
   backupCounter:()=>0,localStorage:{setItem(){}},
   portfolioStore:{async save(model){if(fail)throw Error('SYNTHETIC_COMMIT_FAILURE');committed=structuredClone(model);},async reload(){return structuredClone(committed);},async removeAll(){if(fail)throw Error('SYNTHETIC_REMOVE_FAILURE');removed=true;}},
@@ -28,7 +28,8 @@ function harness({accept=true,fail=false,cacheFail=false,configuration=true,vaul
   window:{FolioDriveBackup:{}},location:{reload(){throw Error('unexpected reload');}}
  });
  const run=(a,b)=>vm.runInContext(source.slice(source.indexOf(a),source.indexOf(b,source.indexOf(a))),context);
- run('async function save(){','function notify(');
+ run('const restoreReadbackHint=', 'let headerStatus=');
+ run('async function save(','function notify(');
  run('function decideImportedConfiguration(','function applyImportedDriveConfiguration(');
  if(source.includes('function syncApiSettingsForm('))run('function syncApiSettingsForm(','function initEvents(');
  run("$('backupFile').addEventListener('change'",'  // Drive only receives');
@@ -63,10 +64,16 @@ for(const path of ['file','drive']){
  });
  test(path+' failed post-commit preferences keep the draft while retaining the committed model',async()=>{
   const h=harness({preferencesFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';if(path==='drive')await assert.rejects(h.drive(),/SYNTHETIC_PREFERENCES_FAILURE/);else await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.elements.coinGeckoKey.type,'text');assert.equal(h.dirty(),true);
+  if(path==='file'){
+   assert.match(h.context.notice.message,/Finanzdaten wiederhergestellt.*Drive-Einstellungen.*SYNTHETIC_PREFERENCES_FAILURE/);
+   assert.equal(h.context.notice.error,true);
+  }
  });
 }
 test('file vault adoption failure preserves a visible draft after portfolio commit',async()=>{
  const h=harness({vaultFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.elements.coinGeckoKey.type,'text');assert.equal(h.dirty(),true);
+ assert.match(h.context.notice.message,/Finanzdaten wiederhergestellt.*Backup-Passwort.*SYNTHETIC_VAULT_FAILURE/);
+ assert.equal(h.context.notice.error,true);
 });
 test('Drive backend marks only a confirmed portfolio commit before preference failure',async()=>{
  const h=harness({preferencesFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';
