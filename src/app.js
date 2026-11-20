@@ -97,6 +97,12 @@ const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 document.getElementById('appStartupText').textContent='Lokale Daten werden vorbereitet …';
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
+const restoreReadbackHint='Import gespeichert. Um den aktuellen Stand zu prüfen, diesen Tab neu laden.';
+class RestoreReadbackError extends Error{
+ constructor(cause,warning){
+  super([restoreReadbackHint,warning,cause?.message||String(cause)].filter(Boolean).join(' '),{cause});
+ }
+}
 let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
@@ -145,9 +151,11 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next,{review=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
-function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
+function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
+ const readbackFailed=loadFailure instanceof RestoreReadbackError;
+ document.body.classList.toggle('restore-readback-failed',readbackFailed);
  document.body.classList.toggle('portfolio-unavailable',unavailable);
  document.body.classList.toggle('portfolio-conflict',conflict);
  const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Portfolio lokal gespeichert';
@@ -156,7 +164,7 @@ function syncPortfolioState(){
  $('localPortfolioStatus').textContent=status;
  $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Lokal gespeichert';
  headerStatus?.refresh();
- $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
+ $('portfolioStorageState').textContent=readbackFailed?restoreReadbackHint:unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
   $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardChange').textContent='–';$('dashboardChangeHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardReview').hidden=true;
   $('onboarding').classList.add('hidden');$('onboarding').replaceChildren();
@@ -164,7 +172,7 @@ function syncPortfolioState(){
   for(const id of ['dashboardPage','historyPage','positionsPage','bookingsPage']){
    const pageNode=$(id);if(!pageNode.querySelector('.portfolio-unavailable-message')){
     const message=document.createElement('p');message.className='empty portfolio-unavailable-message';
-    message.textContent='Portfolio derzeit nicht lesbar. Sichere zuerst die Originaldaten und verwende dann die kontrollierte Wiederherstellung oben.';pageNode.prepend(message);
+    message.textContent=readbackFailed?restoreReadbackHint:'Portfolio derzeit nicht lesbar. Sichere zuerst die Originaldaten und verwende dann die kontrollierte Wiederherstellung oben.';pageNode.prepend(message);
    }
   }
   showRecoveryNotice();
@@ -2529,7 +2537,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   // Another tab can save after our commit, even while the vault is finishing.
   // Publish its canonical model and matching revision together before enabling exports.
   try{model=await portfolioStore.reload();}
-  catch(error){loadFailure=error;throw error;}
+  catch(error){loadFailure=new RestoreReadbackError(error,warning);throw loadFailure;}
   finally{render();}
   const advanced=revision!==portfolioStore.revision||legacyRaw!==portfolioStore.legacyRaw;
   const changes=advanced?' Spätere Änderungen aus einem anderen Tab sind enthalten.':'';
@@ -2800,7 +2808,7 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
 initNav();initEvents();installCredentialVisibility();
 headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
- readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,indexedDB:portfolioStore.isIndexedDB}),
+ readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure instanceof RestoreReadbackError?restoreReadbackHint:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,indexedDB:portfolioStore.isIndexedDB}),
  onStorageHelp:()=>{if(!loadFailure){go('more');$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
  onDriveSettings:()=>{go('more');const panel=$('googleDriveBackupSetup');for(let parent=panel;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;panel.scrollIntoView({block:'start'});panel.querySelector('summary').focus();}
 });
@@ -2827,11 +2835,14 @@ window.addEventListener('storage',event=>{
 function showRecoveryNotice(){
  if($('downloadRaw'))return;
  const notice=$('notice');notice.setAttribute('role','alert');notice.classList.remove('hidden');
- notice.innerHTML='<strong>Gespeicherter Datenstand nicht lesbar.</strong> Änderungen sind gesperrt. '+
-  'Zuerst Originaldaten sichern, dann ein geprüftes Backup wiederherstellen. '+
+ const readbackFailed=loadFailure instanceof RestoreReadbackError;
+ const help=readbackFailed?'<strong>'+restoreReadbackHint+'</strong> <button class="btn outline" type="button" id="reloadPortfolio">Neu laden</button> ':
+  '<strong>Gespeicherter Datenstand nicht lesbar.</strong> Änderungen sind gesperrt. Zuerst Originaldaten sichern, dann ein geprüftes Backup wiederherstellen. ';
+ notice.innerHTML=help+
   (portfolioStore.isIndexedDB?'<strong>Hinweis: Die IDB-Originaldatei kann lokale API-Schlüssel enthalten!</strong> ':'')+
   '<button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button> '+
   '<button class="btn outline" type="button" id="recoverBackup">Backup auswählen</button>';
+ $('reloadPortfolio')?.addEventListener('click',()=>location.reload());
  $('downloadRaw').addEventListener('click',async()=>{
   try{
    const data=portfolioStore.isIndexedDB?await portfolioStore.unverifiedBackup():localStorage.getItem('foliolab-open-v1')||'';

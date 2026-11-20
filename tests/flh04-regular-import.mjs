@@ -171,21 +171,61 @@ export async function checkInterruptedImports({browserType,target,origin,beforeF
  }finally{await context.close();}
 }
 
-// Abort exactly one native read in the importer's password vault. The portfolio
-// transaction and the writer's independent vault are already confirmed.
-async function abortNextVaultRead(page){
- await page.evaluate(()=>{
-  const get=IDBObjectStore.prototype.get;
-  IDBObjectStore.prototype.get=function(key){
-   const request=get.call(this,key);
-   if(this.transaction.db.name==='foliolab-open-backup-password-v1'&&this.name==='vault'&&key==='active'){
-    IDBObjectStore.prototype.get=get;
-    this.transaction.abort();
-    window.restoreVaultReadAborted=true;
-   }
-   return request;
+// Abort one native read, scoped to the importing tab and the selected record.
+async function abortRestoreRead(page,end){
+ await page.evaluate(async end=>{
+  function abortNextRead(dbName,storeName,recordKey){
+   const get=IDBObjectStore.prototype.get;
+   IDBObjectStore.prototype.get=function(key){
+    const request=get.call(this,key);
+    if(this.transaction.db.name===dbName&&this.name===storeName&&key===recordKey&&this.transaction.mode==='readonly'){
+     IDBObjectStore.prototype.get=get;
+     this.transaction.abort();
+     window.abortedRestoreRead=end;
+    }
+    return request;
+   };
+  }
+  if(end==='vault-read-abort'){
+   abortNextRead('foliolab-open-backup-password-v1','vault','active');
+   return;
+  }
+  const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+  const reload=PortfolioStorage.prototype.reload;
+  PortfolioStorage.prototype.reload=function(){
+   PortfolioStorage.prototype.reload=reload;
+   abortNextRead('foliolab-open-portfolio','records','portfolio');
+   return reload.call(this);
   };
- });
+ },end);
+}
+
+async function checkFailedReadback(page,state,directory,feedback){
+ assert.equal(await page.evaluate(()=>window.abortedRestoreRead),'portfolio-read-abort');
+ const status=await page.locator('#portfolioStorageState').textContent();
+ const notice=await page.locator('#notice').innerText();
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
+ assert.equal(await page.locator('#totalValue').isVisible(),false);
+ await page.locator('#sidebarNav [data-page="bookings"]').click();
+ assert.equal(await page.locator('#bookingList').isVisible(),false);
+ await page.locator('#sidebarNav [data-page="more"]').click();
+ for(const id of ['exportBackup','exportEncryptedBackup']){
+  const button=page.locator('#'+id);
+  assert.equal(await button.isVisible(),false);
+  assert.ok(await button.isDisabled());
+ }
+ assert.equal(await page.locator('#morePage .settings-grid').isVisible(),false);
+ const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#downloadRaw').click()]);
+ const path=join(directory,'portfolio-read-abort-original.json');
+ await download.saveAs(path);
+ assert.deepEqual(JSON.parse(await readFile(path,'utf8')),state.portfolio,'Originaldatei samt Revision und Folgebuchung');
+ assert.deepEqual(await readAppState(page),state);
+ assert.match(feedback,/Import gespeichert/i);
+ assert.match(status,/neu laden/i);
+ assert.match(notice,/Import gespeichert.*aktuellen Stand.*neu laden/is);
+ await Promise.all([page.waitForEvent('domcontentloaded'),page.getByRole('button',{name:'Neu laden',exact:true}).click()]);
+ await page.waitForFunction(()=>document.querySelector('#portfolioStorageState').textContent.includes('IndexedDB aktiv'));
+ assert.deepEqual(await readAppState(page),state,'Neuladen ohne erneuten Import');
 }
 
 export async function checkPostCommitDeposits({browserType,target,origin,beforeFile,original,headFile,password,targetPassword,expected,directory}){
@@ -199,6 +239,7 @@ export async function checkPostCommitDeposits({browserType,target,origin,beforeF
   const variants=[{end:'complete',amount:'6.35',balance:'16.35'}];
   if(browserType.name()==='chromium')variants.push({end:'kill',amount:'8.65',balance:'18.65'});
   variants.push({end:'vault-read-abort',amount:'3.45',balance:'13.45'});
+  variants.push({end:'portfolio-read-abort',amount:'5.85',balance:'15.85'});
   for(const {end,amount,balance} of variants){
    // A fresh importer also rules out a success message from returning to B.
    await page.close();
@@ -223,18 +264,22 @@ export async function checkPostCommitDeposits({browserType,target,origin,beforeF
    await page.keyboard.press('Escape');
    assert.ok(await progress.isVisible(),'Import bleibt modal, beide Zielexporte sind bis zur Rückmeldung gesperrt');
    if(end!=='kill'){
-    if(end==='vault-read-abort')await abortNextVaultRead(page);
+    if(end!=='complete')await abortRestoreRead(page,end);
     await page.evaluate(()=>window.restoreBarrier.release());
     await page.waitForFunction(()=>!document.querySelector('#backupStatus').classList.contains('lab-loading'));
     const feedback=await page.locator('#toast').innerText();
+    if(end==='portfolio-read-abort'){
+     await checkFailedReadback(page,state,directory,feedback);
+    }else{
+     if(end==='vault-read-abort'){
+      assert.equal(await page.evaluate(()=>window.abortedRestoreRead),end);
+      assert.match(feedback,/Finanzdaten wiederhergestellt/i);
+      assert.match(feedback,/Backup-Passwort.*prüfen/i);
+      assert.doesNotMatch(feedback,/^Backup wiederhergestellt/);
+     }else assert.match(feedback,/^Backup wiederhergestellt/);
+     assert.match(feedback,/spätere Änderungen/i);
+    }
     await visibleDeposit(page,advanced,amount,balance);
-    if(end==='vault-read-abort'){
-     assert.equal(await page.evaluate(()=>window.restoreVaultReadAborted),true);
-     assert.match(feedback,/Finanzdaten wiederhergestellt/i);
-     assert.match(feedback,/Backup-Passwort.*prüfen/i);
-     assert.doesNotMatch(feedback,/^Backup wiederhergestellt/);
-    }else assert.match(feedback,/^Backup wiederhergestellt/);
-    assert.match(feedback,/spätere Änderungen/i);
     await checkTargetExports(page,directory,end+'-importer',targetPassword,advanced);
     assert.deepEqual(await readAppState(page),state);
     await context.close();
