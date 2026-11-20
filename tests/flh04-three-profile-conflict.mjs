@@ -50,6 +50,7 @@ export async function checkThreeProfileConflict(browser,setup,operation){
     {...profile.cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0});
    await profile.context.close();
   }
+  let successorRequest;
   for(const [index,profile] of profiles.entries()){
    await open(profile);
    const {page}=profile,text=await readFile(profile.file,'utf8');
@@ -88,9 +89,21 @@ export async function checkThreeProfileConflict(browser,setup,operation){
    await assert.rejects(()=>page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request),/restore-needs-local-and-selected-heads/);
    assert.deepEqual(await operation(page,'read'),profile.before);
    assert.equal(await page.evaluate(()=>window.syncTest.api.archivePinVersion()),request.expectedPinVersion);
-   if(index===0)await checkSuccessor({profile,open,setup,operation,text,request,directory});
+   if(index===0)successorRequest=request;
    await profile.context.close();
   }
+  const [local,remote]=profiles;
+  await open(remote);
+  const remoteSaved=await operation(remote.page,'save',{revision:remote.cas.expectedLocalRevision,
+   raw:await appendBookings(remote.page,remote.before.portfolio.raw,'later-B',['1.375'])});
+  const lateFrame=snapshotFrame(remoteSaved.raw,'B2','B','3','b8'.repeat(32),undefined,'device-B');
+  const captured=await operation(remote.page,'capture',{expectedLocalRevision:remoteSaved.revision,
+   expectedSyncVersion:remote.cas.expectedSyncVersion,frameText:lateFrame});
+  await remote.context.close();
+  await open(local);
+  await checkSuccessor({profile:local,open,setup,operation,text:await readFile(local.file,'utf8'),
+   request:successorRequest,directory,lateFrame:captured.entries.at(-1).frameText,remoteRaw:remoteSaved.raw});
+  await local.context.close();
   console.log(JSON.stringify({kind:'FLH04ThreeProfileConflict',status:'PASS',engine:browser.browserType().name(),
    persistentProfiles:3,verifiedFinancialCopies:9,blockedSourceRestores:3}));
  }finally{
@@ -99,7 +112,7 @@ export async function checkThreeProfileConflict(browser,setup,operation){
  }
 }
 
-async function checkSuccessor({profile,open,setup,operation,text,request,directory}){
+async function checkSuccessor({profile,open,setup,operation,text,request,directory,lateFrame,remoteRaw}){
  const reader=profile.page,writer=await profile.context.newPage();await setup(writer);
  // Suspend an old selection after it has read the pin. The other tab records a
  // booking, captures it and binds the new file while this operation is pending.
@@ -121,11 +134,11 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
  const frameText=snapshotFrame(saved.raw,'A2','A','3','b9'.repeat(32),undefined,'device-A');
  const queue=await operation(writer,'capture',{expectedLocalRevision:saved.revision,expectedSyncVersion:before.sync.version,frameText});
  const args={previousText:text,expectedPinVersion:request.expectedPinVersion,expectedLocalRevision:saved.revision,
-  expectedSyncVersion:queue.version};
+  expectedSyncVersion:queue.version,frameTexts:[lateFrame]};
  const next=await writer.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),args);
  assert.deepEqual(next.transition,{previousSelection:'B',additionalHeads:[],branches:[
-  {previousHead:'A',currentHeads:['A2']},{previousHead:'B',currentHeads:['B']},{previousHead:'C',currentHeads:['C']}]});
- assert.equal(next.pinVersion,request.expectedPinVersion);assert.deepEqual(next.heads,['A2','B','C']);
+  {previousHead:'A',currentHeads:['A2']},{previousHead:'B',currentHeads:['B2']},{previousHead:'C',currentHeads:['C']}]});
+ assert.equal(next.pinVersion,request.expectedPinVersion);assert.deepEqual(next.heads,['A2','B2','C']);
  const file=join(directory,'A-next.flh');await writeFile(file,next.archive.text);
  const readback=await readFile(file,'utf8');
  args.expectedPortfolioDigest=next.successorPortfolioDigest;
@@ -140,13 +153,17 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
  await assert.rejects(()=>page.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text}),text),/archive-digest/);
  await assert.rejects(()=>page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),readback),/selection-missing/);
  const reopened=await page.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text,includeOverview:true}),readback);
- assert.deepEqual(reopened.heads,['A2','B','C']);assert.equal(reopened.pinVersion,pinned.pinVersion);
- const selected=await page.evaluate(req=>window.syncTest.api.recordPinnedSelection(req),
-  {text:readback,selectedHead:'A2',expectedPinVersion:pinned.pinVersion});
- const copy=await page.evaluate(req=>window.syncTest.api.exportPinnedFinancialCopy(req),
-  {text:readback,expectedPinVersion:selected.pinVersion});
- const data=JSON.parse(saved.raw);delete data.settings;
- assert.deepEqual(JSON.parse(copy.financialCopy),data);assert.equal(data.positions[0].quantityExact,'13');
+ assert.deepEqual(reopened.heads,['A2','B2','C']);assert.equal(reopened.pinVersion,pinned.pinVersion);
+ let version=pinned.pinVersion;
+ for(const [selectedHead,raw,quantity] of [['A2',saved.raw,'13'],['B2',remoteRaw,'11.375']]){
+  const choice=await page.evaluate(req=>window.syncTest.api.recordPinnedSelection(req),
+   {text:readback,selectedHead,expectedPinVersion:version});
+  version=choice.pinVersion;
+  const copy=await page.evaluate(req=>window.syncTest.api.exportPinnedFinancialCopy(req),
+   {text:readback,expectedPinVersion:version});
+  const data=JSON.parse(raw);delete data.settings;
+  assert.deepEqual(JSON.parse(copy.financialCopy),data);assert.equal(data.positions[0].quantityExact,quantity);
+ }
  assert.deepEqual(await operation(page,'read'),{portfolio:saved,sync:queue});
  console.log(JSON.stringify({kind:'FLH04ConflictSuccessor',status:'PASS',engine:process.env.ENGINE}));
 }

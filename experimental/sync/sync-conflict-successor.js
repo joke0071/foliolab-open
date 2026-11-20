@@ -6,7 +6,7 @@ import {archiveDigest} from './sync-restore-status.js';
 export async function describeConflictSuccessor(previous,current,remote,frames,heads){
  const {pin,header,oldFrames}=previous;
  const entries=current.sync.entries.filter(entry=>entry.capturedLocalRevision<=pin.localRevision);
- if(entries.at(-1)?.capturedLocalRevision!==pin.localRevision||entries.length===current.sync.entries.length)
+ if(entries.at(-1)?.capturedLocalRevision!==pin.localRevision)
   throw Error('sync-archive-successor-lineage');
  const prefix={...current.sync,version:pin.syncVersion,entries};
  if(header!=='FolioLabConflict/1 '+pin.localRevision+' '+pin.syncVersion+' '+await archiveDigest(syncPreimageText(prefix)))
