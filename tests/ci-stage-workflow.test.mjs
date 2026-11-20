@@ -17,9 +17,37 @@ const pagesArtifactName='github-pages-attempt-${{ github.run_attempt }}';
 const originalPagesUpload='      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: _site\n';
 const originalPagesDeploy='      - id: deployment\n        uses: actions/deploy-pages@v4\n';
 const retryPagesDeploy=originalPagesDeploy+`        with:\n          artifact_name: ${pagesArtifactName}\n`;
-const qualifiedUpload = "      - name: Prepare static site\n        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'\n        run: |\n          mkdir -p _site\n          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/\n      - id: pages_upload\n        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'\n        uses: actions/upload-pages-artifact@v3\n        with:\n          name: github-pages-attempt-${{ github.run_attempt }}\n          path: _site\n";
-const pagesOutputs = "    outputs:\n      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}\n      pages_artifact_attempt: ${{ github.run_attempt }}\n";
-const verifyPagesReceipt = "      - name: Verify the Pages upload for this tested commit\n        id: pages_receipt\n        env:\n          GH_TOKEN: ${{ github.token }}\n          ARTIFACT_ID: ${{ needs.test.outputs.pages_artifact_id }}\n          PRODUCER_ATTEMPT: ${{ needs.test.outputs.pages_artifact_attempt }}\n        run: |\n          set -euo pipefail\n          name=$(gh api \"repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID\" | node tools/pages-artifact-receipt.mjs \"$GITHUB_RUN_ID\" \"$GITHUB_SHA\" \"$PRODUCER_ATTEMPT\" \"$ARTIFACT_ID\")\n          echo \"Verified Pages artifact $ARTIFACT_ID ($name) on $GITHUB_SHA\"\n          echo \"name=$name\" >> \"$GITHUB_OUTPUT\"\n";
+const qualifiedUpload = [
+ "      - name: Prepare static site",
+ "        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'",
+ "        run: |",
+ "          mkdir -p _site",
+ "          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/",
+ "      - id: pages_upload",
+ "        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'",
+ "        uses: actions/upload-pages-artifact@v3",
+ "        with:",
+ "          name: github-pages-attempt-${{ github.run_attempt }}",
+ "          path: _site"
+].join('\n')+'\n';
+const pagesOutputs = [
+ "    outputs:",
+ "      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}",
+ "      pages_artifact_attempt: ${{ github.run_attempt }}"
+].join('\n')+'\n';
+const verifyPagesReceipt = [
+ "      - name: Verify the Pages upload for this tested commit",
+ "        id: pages_receipt",
+ "        env:",
+ "          GH_TOKEN: ${{ github.token }}",
+ "          ARTIFACT_ID: ${{ needs.test.outputs.pages_artifact_id }}",
+ "          PRODUCER_ATTEMPT: ${{ needs.test.outputs.pages_artifact_attempt }}",
+ "        run: |",
+ "          set -euo pipefail",
+ "          name=$(gh api \"repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID\" | node tools/pages-artifact-receipt.mjs \"$GITHUB_RUN_ID\" \"$GITHUB_SHA\" \"$PRODUCER_ATTEMPT\" \"$ARTIFACT_ID\")",
+ "          echo \"Verified Pages artifact $ARTIFACT_ID ($name) on $GITHUB_SHA\"",
+ "          echo \"name=$name\" >> \"$GITHUB_OUTPUT\""
+].join('\n')+'\n';
 function normalizePagesArtifactName(source){
  const verifiedDeploy=retryPagesDeploy.replace(pagesArtifactName,'${{ steps.pages_receipt.outputs.name }}');
  const configure='      - uses: actions/configure-pages@v5\n';
