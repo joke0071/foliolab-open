@@ -1,0 +1,46 @@
+{
+  "version": "SW327",
+  "scope": "D/P2 native reload and local discard for provider, wizard and CSV preview",
+  "main": "b9f6ae842ab445a2b165e07c8ac178ab9eb049d3",
+  "tree": "77396a2025f8584cba37d571d5e34cbfd8917bad",
+  "pullRequest": 363,
+  "candidate": "5df2ffb84a26bd106bf1c6f6dbb5b9f68d612d1d",
+  "run": 44597559290,
+  "attempt": 2,
+  "deployJob": 135855547451,
+  "liveJob": 135855729188,
+  "liveArtifact": 14574052801,
+  "archive": "FolioLab-SW327-Live-Accepted.zip",
+  "archiveCRC": "PASS",
+  "pinnedByteReadback": "PASS",
+  "byteSize": 153249305,
+  "entries": 1952,
+  "sha256": "299c9b0df6dc238bba8e8f7bbb5eafc7fa9d76fd2a6fc32de6e3d993d6639469",
+  "assetMatches": 159,
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu",
+    "controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record",
+    "controlled offline opt-in estimate is graphically distinct and never persists values"
+  ],
+  "axeScans": 22,
+  "origin": "https://foliolab.unperfekt.at/",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "forms": [
+    "provider",
+    "wizard",
+    "CSV preview"
+  ],
+  "errors": []
+}
