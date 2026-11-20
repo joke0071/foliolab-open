@@ -1,3 +1,4 @@
+import {checkThreeProfileConflict} from "./flh04-three-profile-conflict.mjs";
 import {prepareSourceRestore,verifyRestoredSource,recoveryFiles,verifyRollbackRecovery} from './flh04-source-restore-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,rm,writeFile} from 'node:fs/promises';
@@ -213,6 +214,7 @@ async function checkLocalRollback(browser,setup,operation){
 }
 
 export async function runPortableProbes(browser,setup,operation){
+ await checkThreeProfileConflict(browser,setup,operation);
  await checkLocalRollback(browser,setup,operation);
  await checkCrossTabFramePlan(browser,setup,operation);
  await checkMalformedSyncSlots(browser,setup,operation);

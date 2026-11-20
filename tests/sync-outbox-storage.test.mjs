@@ -591,6 +591,21 @@ test('selected conflict heads are compared to the nearest shared ancestor withou
  assert.deepEqual(result.comparison,{status:'compared',baseId:'M',leftId:'L',rightId:'S',sections:[
   {section:'performanceFlowTrackingSince',change:'left-only'},{section:'providers',change:'both-different'},{section:'snapshots',change:'right-only'}]});
  assert.doesNotMatch(JSON.stringify(result),/Sensitive|private-broker|2026-11-01/);
+ async function overview(frameTexts,expectedPinVersion){
+  const cas={expectedLocalRevision:1,expectedSyncVersion:1,observationComplete:true};
+  const {archive}=await api.createConflictArchive({...cas,frameTexts});
+  await api.pinConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion});
+  return (await api.reopenPinnedConflictArchive({text:archive.text,includeOverview:true})).overview;
+ }
+ const all=await overview(request.frameTexts,0);
+ assert.equal(all.baseId,'R');assert.deepEqual(all.heads.map(h=>h.id),['L','S','T']);
+ assert.deepEqual(all.heads[2].changedSections,[]);
+ assert.ok(all.heads[0].changedSections.includes('providers'));
+ assert.ok(all.heads[1].changedSections.includes('snapshots'));
+ assert.doesNotMatch(JSON.stringify(all),/Sensitive|private-broker/);
+ const split=await overview([middle,l,r,frame(p.raw,'Z',null,'1','50'.repeat(32))],1);
+ assert.deepEqual(split,{status:'no-common-ancestor',baseId:null,
+  heads:['L','S','Z'].map(id=>({id,changedSections:null}))});
  const equal=await api.planFrameApply({...request,frameTexts:[middle,l,frame(JSON.stringify(left),'S','M','3','48'.repeat(32))]});
  assert.equal(equal.status,'conflict');assert.deepEqual(equal.comparison.sections,[
   {section:'performanceFlowTrackingSince',change:'both-equal'},{section:'providers',change:'both-equal'}]);

@@ -350,6 +350,11 @@ export async function validateSyncSnapshot(plain){
  return freeze({plain,data:envelope.data});
 }
 
+export function changedFinancialSections(base,head){
+ return [...new Set([...Object.keys(base),...Object.keys(head)])].sort()
+  .filter(key=>!same(base[key],head[key]));
+}
+
 /** Compare validated financial sections without exposing values or inferring a merge. */
 export async function compareSyncSnapshotSections(basePlain,leftPlain,rightPlain){
  const {data:base}=await validateSyncSnapshot(basePlain);
@@ -376,8 +381,7 @@ export async function previewSyncRestore(localRaw,selectedPlain){
  if(!same(selected,exported))fail('restore-roundtrip');
  const localPlain=await createSyncSnapshot(localRaw);
  const local=JSON.parse(localPlain).data;
- const changedSections=[...new Set([...Object.keys(local),...Object.keys(selected)])]
-  .filter(key=>!same(local[key],selected[key])).sort();
+ const changedSections=changedFinancialSections(local,selected);
  return {changedSections,positions:selected.positions.length,bookings:selected.bookings.length,
   journalEntries:selected.journalEntries.length};
 }
