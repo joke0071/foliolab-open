@@ -16,7 +16,7 @@ const canonical=v=>JSON.stringify(v,(_,x)=>x&&typeof x==='object'&&!Array.isArra
 const cursorFields=Object.freeze({
  transactions:['block_number','index','items_count','fee','value','inserted_at','hash'],
  'token-transfers':['block_number','index','items_count','log_index','batch_log_index','batch_block_hash','batch_transaction_hash','index_in_batch'],
- 'internal-transactions':['block_number','index','items_count','transaction_index']
+ 'internal-transactions':['block_number','index','items_count','transaction_index','include_zero_value']
 });
 /** Exact endpoint cursor values, never an arbitrary query map or URL. */
 export function validateEthereumCursor(cursor,kind){
@@ -28,7 +28,9 @@ export function validateEthereumCursor(cursor,kind){
   const nullable=kind==='transactions'&&['fee','value','block_number','index'].includes(key)||kind==='token-transfers'&&key.startsWith('batch_')||key==='index_in_batch';
   if(value===null&&nullable)continue;
   let valid;
-  if(key==='hash'||key.endsWith('_hash'))valid=typeof value==='string'&&/^0x[0-9a-f]{64}$/i.test(value);
+  // Blockscout echoes the default scope. A cursor cannot change that scope.
+  if(key==='include_zero_value')valid=value===true;
+  else if(key==='hash'||key.endsWith('_hash'))valid=typeof value==='string'&&/^0x[0-9a-f]{64}$/i.test(value);
   else if(key==='inserted_at')valid=typeof value==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?Z$/.test(value)&&Number.isFinite(Date.parse(value));
   else if(['fee','value'].includes(key))valid=numeric(value)||typeof value==='string'&&/^\d{1,80}\.\d{1,18}$/.test(value);
   else valid=numeric(value);

@@ -36,7 +36,11 @@ export function provider({pages=false,status=null,reorg=false,mismatch=false,int
    if(p.includes('/tokens/'))data={address_hash:T,type:'ERC-20',decimals:'18'};
    else if(p.endsWith('/token-balances'))data=[{token:{address_hash:T,decimals:'18'},value:mismatch?'8':'7'}];
    else if(p.endsWith('/token-transfers'))data={items:(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transfers,next_page_params:(pages||cursors['token-transfers'])&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors['token-transfers']||{index:1,block_number:10}:null};
-   else if(p.endsWith('/internal-transactions'))data={items:[],next_page_params:null};
+   else if(p.endsWith('/internal-transactions')){
+    const cursor=cursors['internal-transactions'],second=u.searchParams.has('index');
+    const trace={type:'call',index:second?5:4,transaction_hash:H(1),block_number:10,timestamp:'2023-11-14T22:13:20.000Z',success:true,value:'0',from:{hash:B},to:{hash:A}};
+    data={items:cursor?[trace]:[],next_page_params:cursor&&!second?cursor:null};
+   }
    else if(p.endsWith('/transactions'))data={items:cursors.transactions&&(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transactions,next_page_params:cursors.transactions&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors.transactions:null};
    else if(p.includes('/transactions/'))data=f.transactions[0];
    else if(p.includes('/addresses/'))data={coin_balance:'100'};
