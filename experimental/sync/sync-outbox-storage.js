@@ -1,7 +1,7 @@
 import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
-import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText} from '../../src/atomic-storage.js';
+import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText,strictSyncTransaction} from '../../src/atomic-storage.js';
 import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendSyncOutboxState,advanceSyncOutboxState,syncOutboxHeadMatches,syncOutboxSummary,planSyncOutboxApply} from './sync-outbox-state.js';
 
 // Canonical group frames are single-line ASCII. Keep exact ciphertext, including all local ancestors.
@@ -9,6 +9,53 @@ const archiveHeader=(revision,version)=>'FolioLabConflict/1 '+revision+' '+versi
 async function archiveDigest(text){
  const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
  return Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
+}
+
+
+const archivePinSlot='sync-conflict-archive-pin-v1';
+const hash=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
+const positive=value=>Number.isSafeInteger(value)&&value>0;
+function storedPin(value,count){
+ if(count===0)return null;
+ if(!value||Object.keys(value).length!==5||!positive(value.version)||!positive(value.localRevision)||
+    !positive(value.syncVersion)||!hash(value.digest)||!hash(value.portfolioDigest))throw Error('sync-archive-pin-malformed');
+ return value;
+}
+
+function readArchivePin(db){
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction('records','readonly'),store=tx.objectStore('records');
+  const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
+  tx.oncomplete=()=>{try{resolve(storedPin(value.result,count.result));}catch(error){reject(error);}};
+  tx.onabort=()=>reject(tx.error||Error('sync-archive-pin-read-aborted'));
+ });
+}
+
+// Only the already verified archive path supplies the detached IDB preimage.
+// A read after restart checks the pin and both records in one consistent transaction.
+function finishArchivePin(db,current,binding,expectedVersion,write){
+ return new Promise((resolve,reject)=>{
+  const tx=write?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
+  const portfolio=store.get('portfolio'),sync=store.get('sync-outbox-v1'),anchor=store.count('sync-local-anchor-v1');
+  const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
+  let pin,failure;
+  count.onsuccess=()=>{
+   try{
+    if(anchor.result||syncPreimageText(portfolio.result)!==syncPreimageText(current.portfolio)||
+       syncPreimageText(sync.result)!==syncPreimageText(current.sync))throw Error('sync-archive-pin-preimage');
+    pin=storedPin(value.result,count.result);
+    const matches=pin&&Object.entries(binding).every(([key,v])=>pin[key]===v);
+    const version=pin?.version??0;
+    if(write&&matches&&(version===expectedVersion||version===expectedVersion+1))return;
+    if(version!==expectedVersion)throw Error('sync-archive-pin-version');
+    if(!write){if(!matches)throw Error('sync-archive-pin-binding');return;}
+    if(version===Number.MAX_SAFE_INTEGER)throw Error('sync-archive-pin-version');
+    pin={version:version+1,...binding};store.put(pin,archivePinSlot);
+   }catch(error){failure=error;tx.abort();}
+  };
+  tx.oncomplete=()=>resolve(pin);
+  tx.onabort=()=>reject(failure||tx.error||Error('sync-archive-pin-aborted'));
+ });
 }
 
 /** Isolated local adapter; NOT imported by the app. Metadata in the SAME IDB
@@ -76,6 +123,12 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(archive.mode==='create')result.archive={text,digest:await archiveDigest(text)};
    else if(text!==archive.original)throw Error('sync-outbox-incomplete-or-noncanonical-archive');
   }
+  if(archive?.pin){
+   const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
+    portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
+   const pin=await finishArchivePin(db,current,binding,archive.pin.version,archive.pin.write);
+   return {...result,pinVersion:pin.version,applyAuthorized:false};
+  }
   const after=await readPortfolioSyncRecord(db,{forOutbox:true});
   if(syncPreimageText(after.portfolio)!==syncPreimageText(current.portfolio)||syncPreimageText(after.sync)!==syncPreimageText(current.sync))
    throw Error('sync-outbox-apply-plan-race');
@@ -115,6 +168,18 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    }
    return finishPlan(current,revisions,observationComplete,known,pair,archive);
   }
+  async function reopenArchive({text,expectedDigest,expectedLocalRevision,expectedSyncVersion,comparisonHeads},pin){
+   // The expected digest is retained separately by the caller; it is not writer authority.
+   if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
+      typeof expectedDigest!=='string'||!/^[0-9a-f]{64}$/.test(expectedDigest))
+    throw Error('sync-outbox-invalid-archive');
+   const pair=comparisonHeads===undefined?undefined:structuredClone(comparisonHeads);
+   if(await archiveDigest(text)!==expectedDigest)throw Error('sync-outbox-archive-digest');
+   const [header,...frameTexts]=text.split('\n',SYNC_GRAPH_LIMIT+2);
+   if(!header.startsWith(archiveHeader(expectedLocalRevision,expectedSyncVersion)+' '))throw Error('sync-outbox-archive-local-binding');
+   return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
+    {mode:'reopen',original:text,pin});
+  }
  return Object.freeze({
   async recover() {
    const {portfolio,sync}=await readPortfolioSyncRecord(db,{forOutbox:true});
@@ -153,17 +218,18 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   },
   planFrameApply(request){return planFrames(request);},
   createConflictArchive(request){return planFrames(request,{mode:'create'});},
-  async reopenConflictArchive({text,expectedDigest,expectedLocalRevision,expectedSyncVersion,comparisonHeads}){
-   // The expected digest is retained separately by the caller; it is not writer authority.
-   if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
-      typeof expectedDigest!=='string'||!/^[0-9a-f]{64}$/.test(expectedDigest))
-    throw Error('sync-outbox-invalid-archive');
+  reopenConflictArchive(request){return reopenArchive(request);},
+  async archivePinVersion(){return (await readArchivePin(db))?.version??0;},
+  async pinConflictArchive({expectedPinVersion:version,expectedDigest,...request}){
+   if(!Number.isSafeInteger(version)||version<0)throw Error('sync-archive-pin-version');
+   return reopenArchive({...request,expectedDigest},{digest:expectedDigest,version,write:true});
+  },
+  async reopenPinnedConflictArchive({text,comparisonHeads}){
    const pair=comparisonHeads===undefined?undefined:structuredClone(comparisonHeads);
-   if(await archiveDigest(text)!==expectedDigest)throw Error('sync-outbox-archive-digest');
-   const [header,...frameTexts]=text.split('\n',SYNC_GRAPH_LIMIT+2);
-   if(!header.startsWith(archiveHeader(expectedLocalRevision,expectedSyncVersion)+' '))throw Error('sync-outbox-archive-local-binding');
-   return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
-    {mode:'reopen',original:text});
+   const pin=await readArchivePin(db);
+   if(!pin)throw Error('sync-archive-pin-missing');
+   return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
+    expectedSyncVersion:pin.syncVersion,comparisonHeads:pair},{digest:pin.digest,version:pin.version,write:false});
   },
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
