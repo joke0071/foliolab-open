@@ -155,7 +155,52 @@ async function checkMalformedSyncSlots(browser,setup,operation){
  }finally{await context.close();}
 }
 
+async function checkLocalRollback(browser,setup,operation){
+ const context=await browser.newContext();
+ try{
+  const page=await context.newPage();await setup(page);
+  const {request,local}=await prepareSourceRestore(page,operation);
+  const restore=await page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request);
+  const before=await operation(page,'read');
+  const rollback=req=>page.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),req);
+  const confirmed={...request,confirmedRollbackRevision:restore.localRevision};
+  const unknown={status:'undetermined',applyAuthorized:false};
+  for(const invalid of [request,{...confirmed,confirmedRollbackRevision:local.revision},
+   {...confirmed,password:'wrong password'},{...confirmed,localFile:request.selectedFile}]){
+   assert.deepEqual(await rollback(invalid),unknown);
+  }
+  // A failure after the put must preserve the full original record.
+  assert.deepEqual(await page.evaluate(async req=>{
+   const put=IDBObjectStore.prototype.put;
+   IDBObjectStore.prototype.put=function(value,key){
+    const result=put.call(this,value,key);
+    if(key==='portfolio')this.transaction.abort();
+    return result;
+   };
+   try{return await window.syncTest.api.rollbackPinnedLocalCopy(req);}
+   finally{IDBObjectStore.prototype.put=put;}
+  },confirmed),unknown);
+  assert.deepEqual(await operation(page,'read'),before);
+  const second=await context.newPage();await setup(second);
+  const results=await Promise.all([rollback(confirmed),
+   second.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),confirmed)]);
+  const revision=restore.localRevision+1;
+  assert.deepEqual(results.filter(r=>r.status==='rolled-back-local-copy'),
+   [{status:'rolled-back-local-copy',localRevision:revision,applyAuthorized:false}]);
+  await page.close();await second.close();
+  const reopened=await context.newPage();await setup(reopened);
+  const after=await operation(reopened,'read');
+  assert.deepEqual(after,{portfolio:{...before.portfolio,raw:local.raw,revision,updatedAt:after.portfolio.updatedAt},sync:before.sync});
+  await assert.rejects(()=>operation(reopened,'recover'),/enrollment-required/);
+  const replay=await reopened.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),confirmed);
+  assert.equal(replay.status,'later-local-revision');
+  assert.deepEqual(await operation(reopened,'read'),after);
+  console.log(JSON.stringify({kind:'FLH04LocalRollback',status:'PASS',engine:browser.browserType().name()}));
+ }finally{await context.close();}
+}
+
 export async function runPortableProbes(browser,setup,operation){
+ await checkLocalRollback(browser,setup,operation);
  await checkCrossTabFramePlan(browser,setup,operation);
  await checkMalformedSyncSlots(browser,setup,operation);
  const context=await browser.newContext();

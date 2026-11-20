@@ -1,6 +1,7 @@
+import {backup,safeImport} from '../../src/model.js';
 import {decryptPasswordBackup} from '../../src/backup-vault.js';
 import {createSyncSnapshot,previewSyncRestore} from './sync-snapshot.js';
-import {readPortfolioRecord,syncPreimageText} from '../../src/atomic-storage.js';
+import {readPortfolioRecord,syncPreimageText,strictSyncTransaction} from '../../src/atomic-storage.js';
 import {LOCAL_BACKUP_FILE_BYTES} from '../../src/backup-limits.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_OUTBOX_TEXT_LIMIT} from './sync-outbox-state.js';
@@ -32,16 +33,38 @@ export async function prepareRestore(current,raw,pin,files){
  return {portfolio,sync,receipt:{portfolioDigest,proof}};
 }
 
+function requestSnapshot(store,accept){
+ const slots=['portfolio','sync-outbox-v1',archivePinSlot,restoreReceiptSlot].map(key=>store.get(key));
+ const anchor=store.count('sync-local-anchor-v1');
+ anchor.onsuccess=()=>{
+  const [portfolio,sync,pin,receipt]=slots.map(request=>request.result??null);
+  accept({portfolio,sync,pin,receipt,anchors:anchor.result});
+ };
+}
+
 function readSnapshot(db){
  return new Promise((resolve,reject)=>{
-  const tx=db.transaction('records','readonly'),store=tx.objectStore('records');
-  const slots=['portfolio','sync-outbox-v1',archivePinSlot,restoreReceiptSlot].map(key=>store.get(key));
-  const anchor=store.count('sync-local-anchor-v1');
-  tx.oncomplete=()=>{
-   const [portfolio,sync,pin,receipt]=slots.map(request=>request.result??null);
-   resolve({portfolio,sync,pin,receipt,anchors:anchor.result});
-  };
+  const tx=db.transaction('records','readonly');
+  let state;
+  requestSnapshot(tx.objectStore('records'),snapshot=>{state=snapshot;});
+  tx.oncomplete=()=>resolve(state);
   tx.onabort=()=>reject(tx.error||Error('sync-restore-status-read-aborted'));
+ });
+}
+
+function commitRollback(db,expected,raw){
+ const before=syncPreimageText(expected);
+ return new Promise((resolve,reject)=>{
+  const tx=strictSyncTransaction(db),store=tx.objectStore('records');
+  const revision=expected.portfolio.revision+1;
+  requestSnapshot(store,current=>{
+   try{
+    if(syncPreimageText(current)!==before){tx.abort();return;}
+    store.put({...current.portfolio,raw,revision,updatedAt:new Date().toISOString()},'portfolio');
+   }catch{tx.abort();}
+  });
+  tx.oncomplete=()=>resolve({status:'rolled-back-local-copy',localRevision:revision,applyAuthorized:false});
+  tx.onabort=()=>reject(tx.error||Error('sync-local-rollback-aborted'));
  });
 }
 
@@ -50,14 +73,19 @@ const boundedFile=value=>typeof value==='string'&&value.length>0&&value.length<=
  new Blob([value]).size<=LOCAL_BACKUP_FILE_BYTES;
 
 export function inspectPinnedLocalRestore(db,request){
- return inspectRestore(db,request,false);
+ return inspectRestore(db,request,'inspect');
 }
 
 export function previewPinnedLocalRollback(db,request){
- return inspectRestore(db,request,true);
+ return inspectRestore(db,request,'preview');
 }
 
-async function inspectRestore(db,{text,expectedPinVersion,confirmedHead,localFile,selectedFile,password}={},preview){
+export function rollbackPinnedLocalCopy(db,request){
+ return inspectRestore(db,request,'rollback');
+}
+
+async function inspectRestore(db,{text,expectedPinVersion,confirmedHead,localFile,selectedFile,password,
+ confirmedRollbackRevision}={},mode){
  if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
     !Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1||typeof confirmedHead!=='string'||
     !boundedFile(localFile)||!boundedFile(selectedFile))return unknown();
@@ -73,10 +101,16 @@ async function inspectRestore(db,{text,expectedPinVersion,confirmedHead,localFil
   let status='matches-restored-state',rollbackPreview;
   if(portfolio.revision===pin.localRevision+1){
    if(await archiveDigest(syncPreimageText(portfolio))!==receipt.portfolioDigest)return unknown();
-   if(preview){
+   if(mode!=='inspect'){
+    if(mode==='rollback'&&(confirmedRollbackRevision!==portfolio.revision||
+       portfolio.revision===Number.MAX_SAFE_INTEGER))return unknown();
     if(typeof password!=='string'||!password.length)return unknown();
     const raw=await decryptPasswordBackup(JSON.parse(localFile),password);
     rollbackPreview=await previewSyncRestore(portfolio.raw,await createSyncSnapshot(raw));
+    if(mode==='rollback'){
+     const canonical=backup(safeImport(JSON.parse(raw)),{includeHistory:true});
+     return await commitRollback(db,state,canonical);
+    }
    }
   }else{
    // The normal storage reader validates the later financial model and local settings.

@@ -86,20 +86,21 @@ export async function verifyRestoredSource(page,operation,{request,local,queue,s
  // Pause password decryption after verifying the receipt. Commit a real edit from another tab.
  await page.evaluate(req=>{
   const decrypt=SubtleCrypto.prototype.decrypt;
-  let resume;
+  let resume,waiting=0;
   const gate=new Promise(resolve=>{resume=resolve;});
   SubtleCrypto.prototype.decrypt=async function(...args){
-   window.releaseRollbackPreview=resume;
+   if(++waiting===2)window.releaseRollbackPreview=resume;
    await gate;
    return decrypt.apply(this,args);
   };
-  window.pendingRollbackPreview=window.syncTest.api.previewPinnedLocalRollback(req)
+  window.pendingRollbackPreview=Promise.all([window.syncTest.api.previewPinnedLocalRollback(req),
+   window.syncTest.api.rollbackPinnedLocalCopy(req)])
    .finally(()=>{SubtleCrypto.prototype.decrypt=decrypt;});
- },request);
+ },{...request,confirmedRollbackRevision:state.portfolio.revision});
  await page.waitForFunction(()=>typeof window.releaseRollbackPreview==='function');
  const edited=await operation(writer,'save',{revision:state.portfolio.revision,
   raw:await appendBookings(writer,selectedRaw,'after-restart',['0.5'])});
- assert.deepEqual(await page.evaluate(()=>{window.releaseRollbackPreview();return window.pendingRollbackPreview;}),unknown);
+ assert.deepEqual(await page.evaluate(()=>{window.releaseRollbackPreview();return window.pendingRollbackPreview;}),[unknown,unknown]);
  await writer.close();
  assert.deepEqual(await preview(request),{status:'later-local-revision',applyAuthorized:false});
  console.log(JSON.stringify({kind:'FLH04RollbackPreview',status:'PASS',engine:process.env.ENGINE}));
