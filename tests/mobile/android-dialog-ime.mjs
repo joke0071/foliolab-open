@@ -42,9 +42,15 @@ async function nativeFieldTap(page,field){
  }
  const view=nodes.find(n=>n.class==='android.webkit.WebView')??nodes.find(n=>n['resource-id']==='com.android.chrome:id/compositor_view_holder');
  assert.ok(view,'Chrome content area must be visible in the Android foreground');
- const [left,top,right]=view.bounds.match(/-?\d+/g).map(Number);
- const point=await field.evaluate(el=>{const r=el.getBoundingClientRect(),v=visualViewport;return {x:r.left+r.width/2-v.offsetLeft,y:r.top+r.height/2-v.offsetTop,width:v.width};});
- const scale=(right-left)/point.width;adb('shell','input','tap',String(Math.round(left+point.x*scale)),String(Math.round(top+point.y*scale)));
+ const [left,top,right,bottom]=view.bounds.match(/-?\d+/g).map(Number);
+ const point=await field.evaluate(el=>{const r=el.getBoundingClientRect(),v=visualViewport;return {x:r.left+r.width/2-v.offsetLeft,y:r.top+r.height/2-v.offsetTop,width:v.width,height:v.height};});
+ const scale=(right-left)/point.width;
+ // The compositor holder starts behind Chrome’s address bar. Anchor the visual viewport at its bottom.
+ const contentTop=Math.max(top,bottom-point.height*scale);
+ const x=Math.round(left+point.x*scale),y=Math.round(contentTop+point.y*scale);
+ console.log('Native input tap',JSON.stringify({bounds:view.bounds,point,scale,x,y}));
+ adb('shell','input','tap',String(x),String(y));
+ const id=await field.getAttribute('id');await page.waitForFunction(id=>document.activeElement?.id===id,id,{timeout:3500});
 }
 const report={target:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_64',physical:false,android:adb('shell','getprop','ro.build.version.release').toString().trim(),ime:adb('shell','settings','get','secure','default_input_method').toString().trim(),scenarios:[]};
 const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000});
