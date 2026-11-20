@@ -24,6 +24,19 @@ async function fixtureBrowserPid(context,profile){
  }finally{await session.detach();}
 }
 
+export async function restartAfterKill(context,profile){
+ const browser=context.browser(),pid=await fixtureBrowserPid(context,profile);
+ const disconnected=once(browser,'disconnected',{signal:AbortSignal.timeout(15000)});
+ process.kill(pid,'SIGKILL');
+ await disconnected;
+ assert.equal(browser.isConnected(),false);
+ const fresh=await chromium.launchPersistentContext(profile);
+ try{
+  assert.notEqual(await fixtureBrowserPid(fresh,profile),pid);
+  return fresh;
+ }catch(error){await fresh.close();throw error;}
+}
+
 async function withCrashedProfile(run){
  assert.equal(process.platform,'linux');
  const profile=await mkdtemp(join(tmpdir(),'foliolab-outbox-restart-'));
@@ -31,13 +44,7 @@ async function withCrashedProfile(run){
  try{
   context=await chromium.launchPersistentContext(profile);
   await run(context,async()=>{
-   const browser=context.browser(),pid=await fixtureBrowserPid(context,profile);
-   const disconnected=once(browser,'disconnected',{signal:AbortSignal.timeout(15000)});
-   process.kill(pid,'SIGKILL');
-   await disconnected;
-   assert.equal(browser.isConnected(),false);
-   context=await chromium.launchPersistentContext(profile);
-   assert.notEqual(await fixtureBrowserPid(context,profile),pid);
+   context=await restartAfterKill(context,profile);
    return {reopened:await context.newPage(),crash:{mechanism:'SIGKILL',target:'browser',freshProcess:true,sameProfile:true}};
   });
  }finally{

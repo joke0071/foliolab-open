@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
-import {blankModel,backup} from '../src/model.js';
+import {openApp,readAppState,importPasswordFile,assertRestored,restoreDownload,openBackupControls,saveTargetBackup} from './flh04-backup-app.mjs';
+import {checkConcurrentImport,checkReturnAndBook,checkInterruptedImports} from './flh04-regular-import.mjs';
 
 async function show(page,text){
  await page.evaluate(async text=>{
@@ -32,94 +33,6 @@ export async function saveConflictSet(page,request,directory,profiles){
  assert.equal(decoded.data[2].positions[0].quantityExact,decoded.data[3].positions[0].quantityExact);
  assert.notDeepEqual(decoded.data[2],decoded.data[3]);
  return {paths,labels,copies,indexFile};
-}
-
-async function openApp(context,origin){
- const page=await context.newPage();
- await page.goto(origin);
- await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- return page;
-}
-
-async function readAppState(page){
- return page.evaluate(async()=>{
-  const {openPortfolioDB,readPortfolioSyncRecord}=await import('/src/atomic-storage.js');
-  const db=await openPortfolioDB();
-  try{return await readPortfolioSyncRecord(db);}finally{db.close();}
- });
-}
-
-async function importPasswordFile(page,file,password,{replacement,error}){
- const dialogs=[];
- async function respond(dialog){
-  if(dialog.type()==='prompt'&&dialog.message().includes('Backup-Passwort')){
-   dialogs.push('password');
-   await dialog.accept(password);
-  }else if(dialog.type()==='confirm'&&dialog.message().includes('Der aktuelle Datenbestand wird ersetzt.')){
-   dialogs.push('replace');
-   if(replacement==='accept')await dialog.accept();
-   else await dialog.dismiss();
-  }else{
-   dialogs.push(dialog.message());
-   await dialog.dismiss();
-  }
- }
- page.on('dialog',respond);
- try{
-  const completion=replacement==='cancel'?page.waitForEvent('dialog',{predicate:d=>d.type()==='confirm'}):
-   page.locator('#toast').filter({hasText:error||'Backup wiederhergestellt'}).waitFor();
-  await Promise.all([completion,page.locator('#backupFile').setInputFiles(file)]);
-  // Cancellation has no toast. Wait for the import handler's finally block on every path.
-  await page.waitForFunction(()=>!document.getElementById('backupStatus').classList.contains('lab-loading'));
-  assert.deepEqual(dialogs,error?['password']:['password','replace']);
- }finally{page.off('dialog',respond);}
-}
-
-function assertRestored(reopened,before,expected,label){
- const finance=JSON.parse(reopened.portfolio.raw);
- delete finance.settings;
- assert.deepEqual(finance,expected,label);
- assert.equal(reopened.portfolio.revision,before.portfolio.revision+1,label);
- assert.deepEqual(reopened.portfolio.settings,before.portfolio.settings,label);
- assert.equal(reopened.portfolio.syncEnrollmentRequired,true,label);
- assert.equal(reopened.sync,null,label);
-}
-
-async function restoreDownload({browserType,target,origin,file,password,expected,label,rejectedPassword,initialPassword}){
- let context=await browserType.launchPersistentContext(target);
- try{
-  const page=await openApp(context,origin),before=await readAppState(page);
-  assert.deepEqual(JSON.parse(before.portfolio.raw),JSON.parse(backup(blankModel(),{includeHistory:true})),label);
-  assert.equal(before.sync,null);
-  if(initialPassword!==undefined){
-   await openBackupControls(page);
-   await page.locator('#backupPassword').fill(initialPassword);
-   await page.locator('#backupPasswordConfirm').fill(initialPassword);
-   await page.locator('#saveBackupPassword').click();
-   await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
-  }
-  if(rejectedPassword!==undefined){
-   await importPasswordFile(page,file,rejectedPassword,{error:'Backup-Passwort falsch'});
-   assert.deepEqual(await readAppState(page),before,label);
-  }
-  await importPasswordFile(page,file,password,{replacement:'accept'});
-  await context.close();
-  context=await browserType.launchPersistentContext(target);
-  const reopened=await readAppState(await openApp(context,origin));
-  assertRestored(reopened,before,expected,label);
-  return reopened;
- }finally{await context.close();}
-}
-
-async function openBackupControls(page){
- await page.locator('#sidebarNav [data-page="more"]').click();
- await page.locator('#backupPasswordSetup > summary').click();
-}
-
-async function saveTargetBackup(page,file){
- await page.locator('#fullBackupIncludeHistory').check();
- const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#exportEncryptedBackup').click()]);
- await download.saveAs(file);
 }
 
 async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected,directory,targetPassword}){
@@ -153,12 +66,15 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
   context=await browserType.launchPersistentContext(target);
   page=await openApp(context,origin);
   assert.deepEqual(await readAppState(page),before,'Profilneustart nach den vier Fehlversuchen');
+  const booked=await checkConcurrentImport({page,before,original,headFile,password,targetPassword,directory,origin});
+  await page.reload();
+  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   await importPasswordFile(page,headFile,password,{replacement:'accept'});
   await context.close();
   context=await browserType.launchPersistentContext(target);
   page=await openApp(context,origin);
   const reopened=await readAppState(page);
-  assertRestored(reopened,before,expected,'Kopf C nach Ersetzung und Profilneustart');
+  assertRestored(reopened,booked,expected,'Kopf C nach Ersetzung und Profilneustart');
   await openBackupControls(page);
   await saveTargetBackup(page,afterFile);
   for(const [label,file,oracle] of [['B',beforeFile,original],['C',afterFile,expected]]){
@@ -173,6 +89,16 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
   console.log(JSON.stringify({kind:'FLH04PopulatedRestore',status:'PASS',engine:browserType.name(),
    originalHead:'B',restoredHead:'C',preservedAfter:['index','damaged','wrong-password','cancel','restart'],
    originalRevision:before.portfolio.revision,restoredRevision:reopened.portfolio.revision}));
+  await importPasswordFile(page,beforeFile,targetPassword,{replacement:'accept'});
+  await context.close();
+  context=await browserType.launchPersistentContext(target);
+  page=await openApp(context,origin);
+  assertRestored(await readAppState(page),reopened,original,'B im ursprünglichen Zielprofil');
+  await checkReturnAndBook({page,original,browserType,directory,origin,targetPassword});
+  if(browserType.name()==='chromium'){
+   await context.close();
+   await checkInterruptedImports({target,browserType,origin,beforeFile,original,headFile,password,targetPassword,expected,directory});
+  }
  }finally{await context.close();}
 }
 
