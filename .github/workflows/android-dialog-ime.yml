@@ -29,6 +29,11 @@ jobs:
           "$ANDROID_HOME/emulator/emulator" -avd folio216 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -cores 2 -memory 2048 > "$RUNNER_TEMP/emulator.log" 2>&1 &
           timeout 240 adb wait-for-device
           timeout 360 bash -c 'until [ "$(adb shell getprop sys.boot_completed | tr -d "\r")" = 1 ]; do sleep 2; done'
+          adb shell settings put global device_provisioned 1
+          adb shell settings put secure user_setup_complete 1
+          adb shell settings put system screen_off_timeout 600000
+          adb shell input keyevent KEYCODE_WAKEUP
+          adb shell wm dismiss-keyguard
           adb shell input keyevent 82
           adb shell settings put secure show_ime_with_hard_keyboard 1
           adb shell am set-debug-app --persistent com.android.chrome
