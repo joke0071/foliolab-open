@@ -161,7 +161,7 @@ async function checkSourceRestore({directory,profiles,setup,operation}){
   const put=IDBObjectStore.prototype.put;
   IDBObjectStore.prototype.put=function(value,key){
    const result=put.call(this,value,key);
-   if(key==='sync-outbox-v1'&&value.disabled==='portfolio-restored')this.transaction.abort();
+   if(key==='sync-local-restore-receipt-v1')this.transaction.abort();
    return result;
   };
   try{
@@ -173,6 +173,8 @@ async function checkSourceRestore({directory,profiles,setup,operation}){
   }finally{IDBObjectStore.prototype.put=put;}
  },request);
  assert.deepEqual(await operation(source.page,'read'),source.before);
+ assert.deepEqual(await source.page.evaluate(input=>window.syncTest.api.inspectPinnedLocalRestore(input),request),
+  {status:'undetermined',applyAuthorized:false});
  const result=await restore(request);
  assert.deepEqual(result,{status:'restored-local-copy',selectedHead:other.id,
   localRevision:source.before.portfolio.revision+1,applyAuthorized:false});
