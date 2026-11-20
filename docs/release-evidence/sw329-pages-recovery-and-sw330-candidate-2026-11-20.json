@@ -1,0 +1,52 @@
+{
+  "sw328FullSeconds": 3676,
+  "sw329PreservedHeavyRunnerSeconds": 2494,
+  "sw329FailedShardSeconds": 418,
+  "sw329UntilFailedShardFinishedSeconds": 440,
+  "sw329TimeFromShardFailureToEndOfRemainingJobsSeconds": 652,
+  "mobileUpdatedAfterSeconds": 573,
+  "ethPRQualificationSeconds": 1471,
+  "initialWebKitFailure": {
+    "run": 44807760963,
+    "job": 136536293704,
+    "firstFailedTest": "nativeReload(false) in WebKit: document identity comparison using performance.timeOrigin",
+    "qualifiedTargetedRetryJob": 136545905348,
+    "localDiagnostic": {
+      "webkit": "26.0, Linux",
+      "independentDocumentMarkerDecisions": 108,
+      "rejected": 72,
+      "confirmed": 36,
+      "observation": "all document identities and expected dialog visibility matched; initial CI cause undetermined"
+    }
+  },
+  "discoveryFailure": {
+    "job": 136555935378,
+    "finalizedAtUTC": "2026-11-20T20:41:08.188Z",
+    "listingAtUTC": "2026-11-20T20:41:08.929Z",
+    "listedCount": 7,
+    "matchingCount": 0,
+    "id": 14668397287,
+    "bytes": 591836,
+    "sha256": "46aee1eada4f0b487375cd12e791899b3063b9541000462d0f44fd1fa648d84c",
+    "equalTarMembers": 158,
+    "tree": "d478e57b2d1ada2840d779f13ce226a6512c321c"
+  },
+  "correctiveCanary": {
+    "run": 44814677034,
+    "sha": "399bcfbaebba1a5605be36e4107d7a4770a07248",
+    "firstConsumer": 136559888934,
+    "retriedConsumer": 136560119389,
+    "producerAttempt": 1,
+    "bothVerifiedArtifactId": 14667578825,
+    "eachMatchedTarMembers": 158,
+    "deploymentPermission": false
+  },
+  "candidate": {
+    "pull": 408,
+    "processPull": 409,
+    "head": "5512f0c57a68cad5b12edd3b3c015a50a0321c61",
+    "tree": "539dfb82da63eb560054e74ba54f8a019f40e1de",
+    "integrationRun": 44814918337,
+    "walletRun": 44814918342
+  }
+}
