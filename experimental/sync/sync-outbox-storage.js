@@ -2,7 +2,7 @@ import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPi
 import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
-import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,previewSyncRestore} from './sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,changedFinancialSections,previewSyncRestore} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
 import {readPortfolioSyncRecord,commitPortfolioSyncRecord,syncPreimageText,strictSyncTransaction} from '../../src/atomic-storage.js';
@@ -113,14 +113,30 @@ export function createSyncOutboxStorage(db,verifyFrame) {
       frame.descriptor.portfolioId!==current.sync.portfolioId)throw Error('sync-outbox-frame-binding');
    return frame.plain;
  }
+ // Called only on the closed, validated single-parent graph from planSyncOutboxApply.
+ function commonAncestor(current,revisions,heads){
+  const parents=new Map([...current.sync.entries.map(e=>e.revision),...revisions].map(r=>[r.revisionId,r.parentId]));
+  let base=heads[0];
+  for(const head of heads.slice(1)){
+   const ancestors=new Set();
+   for(let id=head;id!==null;id=parents.get(id))ancestors.add(id);
+   while(base!==null&&!ancestors.has(base))base=parents.get(base);
+   if(base===null)break;
+  }
+  return base;
+ }
+ async function conflictOverview(current,revisions,heads,frames){
+  const baseId=commonAncestor(current,revisions,heads);
+  if(baseId===null)return {status:'no-common-ancestor',baseId,heads:heads.map(id=>({id,changedSections:null}))};
+  const readData=async id=>(await validateSyncSnapshot(await verifiedHeadPlain(current,frames,id))).data;
+  const base=await readData(baseId),rows=[];
+  for(const id of heads)rows.push({id,changedSections:changedFinancialSections(base,await readData(id))});
+  return {status:'compared',baseId,heads:rows};
+ }
  async function compareBranches(current,revisions,plan,frames,[leftId,rightId]){
   if(plan.status!=='conflict'||!plan.heads.includes(leftId)||!plan.heads.includes(rightId))
    throw Error('sync-outbox-comparison-needs-conflicting-heads');
-  const parents=new Map([...current.sync.entries.map(e=>e.revision),...revisions].map(r=>[r.revisionId,r.parentId]));
-  const ancestors=new Set();
-  for(let id=leftId;id!==null;id=parents.get(id))ancestors.add(id);
-  let baseId=rightId;
-  while(baseId!==null&&!ancestors.has(baseId))baseId=parents.get(baseId);
+  const baseId=commonAncestor(current,revisions,[leftId,rightId]);
   if(baseId===null)return {status:'no-common-ancestor',leftId,rightId};
   const plain=[];
   for(const id of [baseId,leftId,rightId]){
@@ -146,10 +162,14 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(archive?.pin){
    const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
+   if(archive.pin.includeOverview)result.overview=await conflictOverview(current,revisions,result.heads,frames);
    let restore;
    if(archive.pin.selectedHead!==undefined){
     const id=archive.pin.selectedHead;
     if(!result.heads.includes(id))throw Error('sync-archive-preview-head');
+    if(archive.pin.exportCopy==='restore'&&(result.heads.length!==2||
+       !result.heads.includes(last.revision.revisionId)||id===last.revision.revisionId))
+     throw Error('sync-restore-needs-local-and-selected-heads');
     const plain=await verifiedHeadPlain(current,frames,id);
     result.restorePreview={selectedHead:id,...await previewSyncRestore(current.portfolio.raw,plain)};
     // Only the explicit export returns financial values, after the final IDB check below.
@@ -159,9 +179,6 @@ export function createSyncOutboxStorage(db,verifyFrame) {
       const localCopy=JSON.stringify(JSON.parse(portfolio.raw).data);
       Object.assign(result,await prepareRecoveryFiles(localCopy,financialCopy,archive.pin.readback));
       if(archive.pin.exportCopy==='restore'){
-       const localHead=last.revision.revisionId;
-       if(result.heads.length!==2||!result.heads.includes(localHead)||id===localHead)
-        throw Error('sync-restore-needs-local-and-selected-heads');
        if(!result.recoveryFilesVerified)throw Error('sync-restore-needs-file-readback');
        const raw=backup(safeImport(JSON.parse(financialCopy)),{includeHistory:true});
        restore=await prepareRestore(current,raw,{...binding,version:archive.pin.version,selectedHead:id},archive.pin.readback);
@@ -287,12 +304,12 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(!Number.isSafeInteger(version)||version<0)throw Error('sync-archive-pin-version');
    return reopenArchive({...request,expectedDigest},{digest:expectedDigest,version,write:true});
   },
-  async reopenPinnedConflictArchive({text,comparisonHeads}){
+  async reopenPinnedConflictArchive({text,comparisonHeads,includeOverview=false}){
    const pair=comparisonHeads===undefined?undefined:structuredClone(comparisonHeads);
    const pin=await readArchivePin(db);
    if(!pin)throw Error('sync-archive-pin-missing');
    return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
-    expectedSyncVersion:pin.syncVersion,comparisonHeads:pair},{digest:pin.digest,version:pin.version,write:false});
+    expectedSyncVersion:pin.syncVersion,comparisonHeads:pair},{digest:pin.digest,version:pin.version,write:false,includeOverview:includeOverview===true});
   },
   previewPinnedRestore(request){return selectedRestore(request,'preview');},
   recordPinnedSelection(request){return selectedRestore(request,'record');},
