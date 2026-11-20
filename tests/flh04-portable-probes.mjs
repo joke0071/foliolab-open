@@ -34,6 +34,11 @@ async function checkCrossTabFramePlan(browser,setup,operation){
    const reopened=await fresh.evaluate(request=>window.syncTest.api.reopenPinnedConflictArchive(request),
     {text:await readFile(file,'utf8'),comparisonHeads:['L','B']});
    assert.deepEqual(reopened.comparison,fork.comparison);assert.equal(reopened.applyAuthorized,false);
+   const selected=await fresh.evaluate(request=>window.syncTest.api.previewPinnedRestore(request),
+    {text:await readFile(file,'utf8'),expectedPinVersion:pin.pinVersion,selectedHead:'L'});
+   assert.deepEqual(selected.restorePreview,{selectedHead:'L',changedSections:['performanceFlowTrackingSince'],
+    positions:0,bookings:0,journalEntries:0});
+   assert.equal(selected.applyAuthorized,false);
    await fresh.close();
   }finally{await rm(directory,{recursive:true,force:true});}
   await a.evaluate(async request=>{

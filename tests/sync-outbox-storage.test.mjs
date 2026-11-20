@@ -685,3 +685,29 @@ test('present malformed archive pins are retained and cannot be adopted as an em
   assert.ok(db.data.has('sync-conflict-archive-pin-v1'));assert.deepEqual(db.data.get('sync-conflict-archive-pin-v1'),bad);
  }
 });
+
+test('restore preview binds the explicit head to the pinned archive and current portfolio until return',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const edited=JSON.parse(p.raw);edited.performanceFlowTrackingSince='2026-11-01';
+ const left=frame(JSON.stringify(edited),'L','R','2','91'.repeat(32)),right=frame(p.raw,'S','R','2','92'.repeat(32));
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const {archive}=await api.createConflictArchive({...cas,observationComplete:true,frameTexts:[left,right]});
+ await api.pinConflictArchive({...cas,expectedPinVersion:0,expectedDigest:archive.digest,text:archive.text});
+ const request={text:archive.text,selectedHead:'L',expectedPinVersion:1};
+ const before=await readPortfolioSyncRecord(db);
+ const selected=await api.previewPinnedRestore(request);
+ assert.deepEqual(selected.restorePreview,{selectedHead:'L',changedSections:['performanceFlowTrackingSince'],
+  positions:0,bookings:0,journalEntries:0});
+ assert.equal(selected.applyAuthorized,false);
+ assert.deepEqual((await api.previewPinnedRestore({...request,selectedHead:'S'})).restorePreview.changedSections,[]);
+ for(const selectedHead of ['R',null,'missing'])await assert.rejects(()=>api.previewPinnedRestore({...request,selectedHead}),/preview/);
+ await assert.rejects(()=>api.previewPinnedRestore({...request,expectedPinVersion:2}),/pin-version/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+ let passes=0;
+ const racing=createSyncOutboxStorage(db,async text=>{
+  if(text===left&&++passes===2)await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+  return verify(text);
+ });
+ await assert.rejects(()=>racing.previewPinnedRestore(request),/pin-preimage/);
+ assert.equal(passes,2);
+});

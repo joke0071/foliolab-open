@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,backup,createProvider,createAccount,createPosition} from '../src/model.js';
 import {executeTransaction} from '../src/transactions.js';
-import {createSyncSnapshot,validateSyncSnapshot,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
+import {createSyncSnapshot,validateSyncSnapshot,previewSyncRestore,SYNC_SNAPSHOT_KIND} from '../experimental/sync/sync-snapshot.js';
 
 function model(){
  const m=blankModel();
@@ -36,6 +36,10 @@ test('simple journal retains balanced postings, exact amounts, ordering and link
  assert.deepEqual(result.bookings,source.bookings);assert.deepEqual(result.journalEntries,source.journalEntries);
  assert.deepEqual(result.openingPositions,source.openingPositions);assert.equal(result.bookings[0].journalEntryId,'buy-1');
  assert.equal(result.positions[0].quantityExact,'1.000000000000000002');
+ const preview=await previewSyncRestore(raw(model()),envelope(result));
+ assert.equal(preview.positions,1);assert.equal(preview.bookings,1);assert.equal(preview.journalEntries,1);
+ for(const key of ['positions','bookings','journalEntries'])assert.ok(preview.changedSections.includes(key));
+ assert.deepEqual((await previewSyncRestore(raw(m),envelope(result))).changedSections,[]);
 });
 test('empty history is retained; malformed accepted sessions and any pending history reject',async()=>{
  const m=model();m.walletHistory={schema:1,sessions:[],pending:[]};
