@@ -1,6 +1,7 @@
+import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
-import {mkdtemp,readFile,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
@@ -86,5 +87,27 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
   await assert.rejects(()=>operation(reopened,'prepare-anchor'),/existing-anchor/);
   await assert.rejects(()=>operation(reopened,'recover'),/enrollment-required/);
   console.log(JSON.stringify({kind:'FLH04PersistentAnchorRestart',status:'PASS',crash}));
+ });
+ await withCrashedProfile(async(context,restart)=>{
+  const a=await context.newPage();await setup(a);
+  const root=await operation(a,'initialize');
+  await operation(a,'capture',{expectedLocalRevision:root.revision,expectedSyncVersion:null,frameText:frame(root.raw)});
+  const cas={expectedLocalRevision:root.revision,expectedSyncVersion:1};
+  const result=await a.evaluate(req=>window.syncTest.api.createConflictArchive(req),{...cas,observationComplete:true,
+   frameTexts:[frame(root.raw,'B','R','2','91'.repeat(32)),frame(root.raw,'C','R','2','92'.repeat(32))]});
+  const dir=await mkdtemp(join(tmpdir(),'foliolab-pin-restart-'));
+  try{
+   const file=join(dir,'conflict.flh');await writeFile(file,result.archive.text);
+   await a.evaluate(async request=>{
+    const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+    window.pinWrite=installLifecycleHarness({controller:window.syncTest.api,action:'pinConflictArchive',model:request,barrierMode:'readwrite'});
+   },{...cas,text:await readFile(file,'utf8'),expectedDigest:result.archive.digest,expectedPinVersion:0});
+   await a.waitForFunction(()=>window.pinWrite.snapshot().settled||window.pinWrite.snapshot().events.some(e=>e.name==='barrier-held'));
+   assertCrashBarrier(await a.evaluate(()=>window.pinWrite.snapshot()),'readwrite',0);
+   const {reopened,crash}=await restart();await setup(reopened);
+   const verified=await reopened.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text}),await readFile(file,'utf8'));
+   assert.equal(verified.pinVersion,1);assert.deepEqual(verified.heads,result.heads);assert.equal(verified.applyAuthorized,false);
+   console.log(JSON.stringify({kind:'FLH04PersistentArchivePin',status:'PASS',crash}));
+  }finally{await rm(dir,{recursive:true,force:true});}
  });
 }

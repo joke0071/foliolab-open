@@ -27,9 +27,12 @@ async function checkCrossTabFramePlan(browser,setup,operation){
    const file=join(directory,'conflict.flh');
    await writeFile(file,fork.archive.text,'utf8');
    const fresh=await context.newPage();await setup(fresh);
-   const reopened=await fresh.evaluate(request=>window.syncTest.api.reopenConflictArchive(request),{
+   const pin=await a.evaluate(request=>window.syncTest.api.pinConflictArchive(request),{expectedPinVersion:0,
     expectedLocalRevision:root.revision,expectedSyncVersion:queue.version,comparisonHeads:['L','B'],
     expectedDigest:fork.archive.digest,text:await readFile(file,'utf8')});
+   assert.equal(pin.pinVersion,1);
+   const reopened=await fresh.evaluate(request=>window.syncTest.api.reopenPinnedConflictArchive(request),
+    {text:await readFile(file,'utf8'),comparisonHeads:['L','B']});
    assert.deepEqual(reopened.comparison,fork.comparison);assert.equal(reopened.applyAuthorized,false);
    await fresh.close();
   }finally{await rm(directory,{recursive:true,force:true});}

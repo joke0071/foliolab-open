@@ -647,3 +647,41 @@ test('conflict archive is bound to the actual local queue even if the revision c
  const {archive}=await first.api.createConflictArchive({...cas,frameTexts:[other],observationComplete:true});
  await assert.rejects(()=>second.api.reopenConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest}),/noncanonical/);
 });
+
+test('durable archive pin serializes competing observations, preserves prior pin on abort, and rejects stale local records',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const make=async(id,salt)=>(await api.createConflictArchive({...cas,observationComplete:true,frameTexts:[
+  frame(p.raw,'B','R','2','81'.repeat(32)),frame(p.raw,id,'R','2',salt.repeat(32))]})).archive;
+ const variants=[await make('C','82'),await make('D','83')];
+ const pin=(a,n)=>api.pinConflictArchive({...cas,text:a.text,expectedDigest:a.digest,expectedPinVersion:n});
+ const reopen=a=>createSyncOutboxStorage(db,verify).reopenPinnedConflictArchive({text:a.text});
+ await assert.rejects(()=>reopen(variants[0]),/pin-missing/);
+ const both=await Promise.allSettled(variants.map(a=>pin(a,0)));
+ assert.deepEqual(both.map(x=>x.status).sort(),['fulfilled','rejected']);
+ const i=both.findIndex(x=>x.status==='fulfilled'),first=variants[i],second=variants[1-i];
+ assert.equal((await pin(first,0)).pinVersion,1);
+ db.fault='abort-after-put';await assert.rejects(()=>pin(second,1));
+ assert.equal((await reopen(first)).pinVersion,1);await assert.rejects(()=>reopen(second),/archive-digest/);
+ assert.equal((await pin(second,await api.archivePinVersion())).pinVersion,2);
+ await assert.rejects(()=>pin(first,0),/pin-version/);
+ await assert.rejects(()=>reopen(first),/archive-digest/);
+ const record=db.data.get('portfolio');db.data.set('portfolio',{...record,updatedAt:'changed'});
+ await assert.rejects(()=>reopen(second),/pin-binding/);
+ db.data.set('portfolio',record);
+ await commitPortfolioRecord(db,{expectedRevision:1,raw:p.raw,settings:p.settings});
+ await assert.rejects(()=>reopen(second),/stale-preimage/);
+});
+
+test('present malformed archive pins are retained and cannot be adopted as an empty slot',async()=>{
+ const {api,db,p,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const {archive}=await api.createConflictArchive({...cas,observationComplete:true,frameTexts:[
+  frame(p.raw,'C','R','2','84'.repeat(32)),frame(p.raw,'D','R','2','85'.repeat(32))]});
+ for(const bad of [null,undefined,{version:1,digest:archive.digest}]){
+  db.data.set('sync-conflict-archive-pin-v1',bad);
+  await assert.rejects(()=>api.archivePinVersion(),/pin-malformed/);
+  await assert.rejects(()=>api.pinConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0}),/pin-malformed/);
+  assert.ok(db.data.has('sync-conflict-archive-pin-v1'));assert.deepEqual(db.data.get('sync-conflict-archive-pin-v1'),bad);
+ }
+});
