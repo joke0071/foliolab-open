@@ -6,7 +6,7 @@ import {blankModel,createProvider,createAccount,createPosition,backup,safeImport
 import {storagePresentation} from '../src/header-status.js';
 import {aggregateValuePresentation} from '../src/quote-quality.js';
 const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
-const saveSource=app.slice(app.indexOf('async function save(){'),app.indexOf('function notify('));
+const saveSource=app.slice(app.indexOf('async function save('),app.indexOf('function notify('));
 const a=app.indexOf('      async restoreData(data,configuration=null){'),b=app.indexOf('      onBackedUp()',a),restoreSource=app.slice(a,b);
 function candidate(){const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'Cash'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',kind:'cash',name:'Cash',quantity:123.45,price:1},m));return m;}
 function harness({renderFailures=0,syncFailureAt=0,storeFailure=false,notifyFailure=false,page='more',managementFailure=false}={}){
@@ -53,6 +53,7 @@ test('Actual shared desktop and mobile status keep the saved boundary visible af
  const nodes=new Map(),$=id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',hidden:false});return nodes.get(id);};
  let refreshes=0;
  const ctx=vm.createContext({model:candidate(),$,loadFailure:null,otherTabChangedPortfolio:false,saving:false,lastStorageError:'',lastDisplayError:'Daten gespeichert. Anzeige prüfen.',headerStatus:{refresh(){refreshes++;}},portfolioStore:{isIndexedDB:true},document:{body:{classList:{toggle(){}}},querySelectorAll:()=>[]},aggregateValuePresentation,totalEUR,money});
+ vm.runInContext(app.slice(app.indexOf('const restoreReadbackHint='),app.indexOf('let headerStatus=')),ctx);
  vm.runInContext(src+'\nsyncPortfolioState()',ctx);
  for(const id of ['localPortfolioStatus','mobilePortfolioStatus']){assert.equal($(id).textContent,'Daten gespeichert · Anzeige prüfen');assert.doesNotMatch($(id).textContent,/nicht gespeichert/);}
  assert.equal($('sidebarPortfolioStatus').hidden,false);assert.equal($('totalValue').textContent.replace(/\s/g,''),'€123,45');assert.equal(refreshes,1);

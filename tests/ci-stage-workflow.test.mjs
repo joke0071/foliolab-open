@@ -63,6 +63,10 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  '          node tests/browser-restore-deposits.mjs\n',
+  '            RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs\n',
+  '          RESTORE_TEST_ORIGIN="$ACCEPTANCE_BASE" node tests/browser-restore-deposits.mjs 2>&1 | tee artifacts/gates/production-restore-deposits-chromium.log\n',
+  '          RESTORE_TEST_ORIGIN="$ACCEPTANCE_BASE" RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs 2>&1 | tee artifacts/gates/production-restore-deposits-cross.log\n',
   '          node tests/browser-dialog-native-navigation.mjs\n',
   '            DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs\n',
   '          DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-chromium.log\n',
