@@ -75,6 +75,19 @@ async function checkCrossTabFramePlan(browser,setup,operation){
    await b.evaluate(request=>window.syncTest.api.recordPinnedSelection(request),
     {text,expectedPinVersion:2,selectedHead:winner.restorePreview.selectedHead==='L'?'B':'L'});
    assert.match(await fresh.evaluate(()=>{window.resumeBackupEncryption();return window.pendingBackup;}),/selection-changed|pin-version/);
+   // Pause the second file after encryption but before the final portfolio/queue check.
+   await a.evaluate(text=>{
+    const subtle=crypto.subtle,encrypt=subtle.encrypt.bind(subtle);
+    let count=0;
+    subtle.encrypt=async(...args)=>{
+     const ciphertext=await encrypt(...args);
+     if(++count===2)await new Promise(resolve=>{window.resumePair=resolve;});
+     return ciphertext;
+    };
+    window.pendingPair=window.syncTest.api.exportPinnedRecoveryFiles({text,expectedPinVersion:3})
+     .then(()=>null,error=>error.message).finally(()=>{delete subtle.encrypt;});
+   },text);
+   await a.waitForFunction(()=>typeof window.resumePair==='function');
    await fresh.close();
   }finally{await rm(directory,{recursive:true,force:true});}
   await a.evaluate(async request=>{
@@ -89,6 +102,7 @@ async function checkCrossTabFramePlan(browser,setup,operation){
   },request);
   await a.waitForFunction(()=>typeof window.releaseFramePlan==='function');
   const updated=await operation(b,'save',{revision:root.revision,raw:root.raw});
+  assert.match(await a.evaluate(()=>{window.resumePair();return window.pendingPair;}),/pin-preimage/);
   const result=await a.evaluate(()=>{window.releaseFramePlan();return window.framePlan;});
   assert.deepEqual(result,{error:'sync-outbox-apply-plan-race'});
   assert.deepEqual(await operation(a,'read'),{portfolio:updated,sync:queue});
