@@ -1,3 +1,4 @@
+import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
@@ -9,13 +10,6 @@ import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendS
 
 // Canonical group frames are single-line ASCII. Keep exact ciphertext, including all local ancestors.
 const archiveHeader=(revision,version)=>'FolioLabConflict/1 '+revision+' '+version;
-async function archiveDigest(text){
- const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
- return Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
-}
-
-
-const archivePinSlot='sync-conflict-archive-pin-v1';
 const hash=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 const positive=value=>Number.isSafeInteger(value)&&value>0;
 function storedPin(value,count){
@@ -38,10 +32,10 @@ function readArchivePin(db){
 
 // Only the already verified archive path supplies the detached IDB preimage.
 // A read after restart checks the pin and both records in one consistent transaction.
-function finishArchivePin(db,current,binding,options,restoreRaw){
+function finishArchivePin(db,current,binding,options,restore){
  const {version:expectedVersion,write,recordSelection,selectedHead}=options;
  return new Promise((resolve,reject)=>{
-  const tx=(write||recordSelection||restoreRaw!==undefined)?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
+  const tx=(write||recordSelection||restore)?strictSyncTransaction(db):db.transaction('records','readonly'),store=tx.objectStore('records');
   const portfolio=store.get('portfolio'),sync=store.get('sync-outbox-v1'),anchor=store.count('sync-local-anchor-v1');
   const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
   let pin,failure;
@@ -65,11 +59,10 @@ function finishArchivePin(db,current,binding,options,restoreRaw){
     if(version!==expectedVersion)throw Error('sync-archive-pin-version');
     if(!write){
      if(!matches)throw Error('sync-archive-pin-binding');
-     if(restoreRaw!==undefined){
-      if(current.portfolio.revision===Number.MAX_SAFE_INTEGER)throw Error('sync-restore-revision-limit');
-      store.put({...current.portfolio,raw:restoreRaw,revision:current.portfolio.revision+1,
-       syncEnrollmentRequired:true,updatedAt:new Date().toISOString()},'portfolio');
-      store.put({...current.sync,disabled:'portfolio-restored'},'sync-outbox-v1');
+     if(restore){
+      store.put(restore.portfolio,'portfolio');
+      store.put(restore.sync,'sync-outbox-v1');
+      store.put(restore.receipt,restoreReceiptSlot);
      }
      return;
     }
@@ -153,7 +146,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(archive?.pin){
    const binding={digest:archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
-   let restoreRaw;
+   let restore;
    if(archive.pin.selectedHead!==undefined){
     const id=archive.pin.selectedHead;
     if(!result.heads.includes(id))throw Error('sync-archive-preview-head');
@@ -170,14 +163,15 @@ export function createSyncOutboxStorage(db,verifyFrame) {
        if(result.heads.length!==2||!result.heads.includes(localHead)||id===localHead)
         throw Error('sync-restore-needs-local-and-selected-heads');
        if(!result.recoveryFilesVerified)throw Error('sync-restore-needs-file-readback');
-       restoreRaw=backup(safeImport(JSON.parse(financialCopy)),{includeHistory:true});
+       const raw=backup(safeImport(JSON.parse(financialCopy)),{includeHistory:true});
+       restore=await prepareRestore(current,raw,{...binding,version:archive.pin.version,selectedHead:id},archive.pin.readback);
       }
      }else if(archive.pin.exportCopy==='encrypted')result.encryptedCopy=await encryptWithBackupPassword(financialCopy);
      else result.financialCopy=financialCopy;
     }
    }
-   const pin=await finishArchivePin(db,current,binding,archive.pin,restoreRaw);
-   if(restoreRaw!==undefined)return {status:'restored-local-copy',selectedHead:pin.selectedHead,
+   const pin=await finishArchivePin(db,current,binding,archive.pin,restore);
+   if(restore)return {status:'restored-local-copy',selectedHead:pin.selectedHead,
     localRevision:current.portfolio.revision+1,applyAuthorized:false};
    return {...result,pinVersion:pin.version,applyAuthorized:false};
   }
@@ -309,6 +303,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   verifyPinnedRecoveryFiles({text,expectedPinVersion,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion},'recovery',{localFile,selectedFile,password});
   },
+  inspectPinnedLocalRestore(request){return inspectPinnedLocalRestore(db,request);},
   restorePinnedLocalCopy({text,expectedPinVersion,confirmedHead,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion,selectedHead:confirmedHead},'restore',{localFile,selectedFile,password});
   },

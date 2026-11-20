@@ -45,6 +45,8 @@ export async function prepareSourceRestore(page,operation){
   return {...selection,...recoveryFiles,confirmedHead:'S',password};
  },{cas:{expectedLocalRevision:local.revision,expectedSyncVersion:queue.version},
   remote:snapshotFrame(selectedRaw,'S','R','2','a2'.repeat(32),undefined,'device-S')});
+ assert.deepEqual(await page.evaluate(req=>window.syncTest.api.inspectPinnedLocalRestore(req),request),
+  {status:'undetermined',applyAuthorized:false});
  return {request,local,queue,selectedRaw};
 }
 
@@ -60,4 +62,19 @@ export async function verifyRestoredSource(page,operation,{request,local,queue,s
  await assert.rejects(()=>operation(page,'recover'),/enrollment-required/);
  await assert.rejects(()=>page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request),/stale-preimage/);
  assert.deepEqual(await operation(page,'read'),state);
+ const {text,expectedPinVersion,confirmedHead,localFile,selectedFile}=request;
+ const evidence={text,expectedPinVersion,confirmedHead,localFile,selectedFile};
+ const inspect=input=>page.evaluate(input=>window.syncTest.api.inspectPinnedLocalRestore(input),input);
+ assert.deepEqual(await inspect(evidence),{status:'matches-restored-state',applyAuthorized:false});
+ for(const changed of [{text:text+' '},{expectedPinVersion:expectedPinVersion-1},{confirmedHead:'L'},
+  {localFile:selectedFile,selectedFile:localFile},{selectedFile:selectedFile+' '}]){
+  assert.deepEqual(await inspect({...evidence,...changed}),{status:'undetermined',applyAuthorized:false});
+ }
+ assert.deepEqual(await operation(page,'read'),state);
+ const edited=await operation(page,'save',{revision:state.portfolio.revision,
+  raw:await appendBookings(page,selectedRaw,'after-restart',['0.5'])});
+ assert.equal(JSON.parse(edited.raw).positions[0].quantityExact,'13.625');
+ assert.deepEqual(await inspect(evidence),{status:'later-local-revision',applyAuthorized:false});
+ assert.deepEqual(await operation(page,'read'),{portfolio:edited,sync:state.sync});
+ console.log(JSON.stringify({kind:'FLH04RestoreStatus',status:'PASS',engine:process.env.ENGINE}));
 }
