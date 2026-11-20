@@ -1,0 +1,456 @@
+{
+  "production": {
+    "SW226": "41143056998",
+    "SW228": "41145529388",
+    "SW328": "44797786214",
+    "SW328Artifact": 14663272026,
+    "readback": "sw328-live-accepted-2026-11-20.json",
+    "originalMembers": {
+      "reference-management/report.json": {
+        "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+        "storedEngines": [
+          "firefox",
+          "webkit"
+        ],
+        "results": 2
+      },
+      "ui-audit-controls/report.json": {
+        "scope": "synthetic presentation controls; exact IndexedDB nonmutation",
+        "storedEngines": [
+          "firefox",
+          "webkit"
+        ],
+        "results": 2
+      },
+      "ui-textscale/report.json": {
+        "scope": "Synthetic computed font-size doubling, not OS/physical hardware or browser zoom",
+        "storedEngines": [
+          "firefox",
+          "webkit"
+        ],
+        "results": 28
+      },
+      "production-ui-logs": {
+        "chromium": "chromium: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS",
+        "firefox": "firefox: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS",
+        "webkit": "webkit: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS"
+      }
+    }
+  },
+  "historicalScreenshots": {
+    "211": {
+      "url": "https://github.com/joke0071/foliolab-open/tree/2fd1881d05907d5b600565b049f8d7a63113ba6c/docs/ui-visual03",
+      "before": 6,
+      "after": 6
+    },
+    "224": {
+      "url": "https://github.com/joke0071/foliolab-open/tree/2fd1881d05907d5b600565b049f8d7a63113ba6c/docs/ui-visual08",
+      "before": 15,
+      "after": 15
+    },
+    "226": {
+      "url": "https://github.com/joke0071/foliolab-open/tree/2fd1881d05907d5b600565b049f8d7a63113ba6c/docs/ui-visual09",
+      "before": 12,
+      "after": 12
+    }
+  },
+  "localAdditionalCheck": {
+    "sourceTree": "ef0b153189e5185ff8a7147ce00993a2a454d256",
+    "browser": "Chromium",
+    "data": "synthetic populated portfolio",
+    "scope": "Open visible controls in history accordions, selected position filters/actions, booking filters/actions/income and More. 44×44 target boxes and document width. Font doubling on the individual checked sections.",
+    "stateDataColumns": [
+      "fontFactor",
+      "viewportWidth",
+      "tab",
+      "visibleTargets"
+    ],
+    "states": [
+      [
+        1,
+        320,
+        "history",
+        7
+      ],
+      [
+        1,
+        320,
+        "positions",
+        8
+      ],
+      [
+        1,
+        320,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        320,
+        "more",
+        74
+      ],
+      [
+        1,
+        360,
+        "history",
+        7
+      ],
+      [
+        1,
+        360,
+        "positions",
+        8
+      ],
+      [
+        1,
+        360,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        360,
+        "more",
+        74
+      ],
+      [
+        1,
+        390,
+        "history",
+        7
+      ],
+      [
+        1,
+        390,
+        "positions",
+        8
+      ],
+      [
+        1,
+        390,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        390,
+        "more",
+        74
+      ],
+      [
+        1,
+        412,
+        "history",
+        7
+      ],
+      [
+        1,
+        412,
+        "positions",
+        8
+      ],
+      [
+        1,
+        412,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        412,
+        "more",
+        74
+      ],
+      [
+        1,
+        430,
+        "history",
+        7
+      ],
+      [
+        1,
+        430,
+        "positions",
+        8
+      ],
+      [
+        1,
+        430,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        430,
+        "more",
+        74
+      ],
+      [
+        1,
+        768,
+        "history",
+        7
+      ],
+      [
+        1,
+        768,
+        "positions",
+        8
+      ],
+      [
+        1,
+        768,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        768,
+        "more",
+        74
+      ],
+      [
+        1,
+        1024,
+        "history",
+        7
+      ],
+      [
+        1,
+        1024,
+        "positions",
+        8
+      ],
+      [
+        1,
+        1024,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        1024,
+        "more",
+        74
+      ],
+      [
+        1,
+        1440,
+        "history",
+        7
+      ],
+      [
+        1,
+        1440,
+        "positions",
+        8
+      ],
+      [
+        1,
+        1440,
+        "bookings",
+        10
+      ],
+      [
+        1,
+        1440,
+        "more",
+        74
+      ],
+      [
+        2,
+        320,
+        "history",
+        7
+      ],
+      [
+        2,
+        320,
+        "positions",
+        8
+      ],
+      [
+        2,
+        320,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        320,
+        "more",
+        74
+      ],
+      [
+        2,
+        360,
+        "history",
+        7
+      ],
+      [
+        2,
+        360,
+        "positions",
+        8
+      ],
+      [
+        2,
+        360,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        360,
+        "more",
+        74
+      ],
+      [
+        2,
+        390,
+        "history",
+        7
+      ],
+      [
+        2,
+        390,
+        "positions",
+        8
+      ],
+      [
+        2,
+        390,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        390,
+        "more",
+        74
+      ],
+      [
+        2,
+        412,
+        "history",
+        7
+      ],
+      [
+        2,
+        412,
+        "positions",
+        8
+      ],
+      [
+        2,
+        412,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        412,
+        "more",
+        74
+      ],
+      [
+        2,
+        430,
+        "history",
+        7
+      ],
+      [
+        2,
+        430,
+        "positions",
+        8
+      ],
+      [
+        2,
+        430,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        430,
+        "more",
+        74
+      ],
+      [
+        2,
+        768,
+        "history",
+        7
+      ],
+      [
+        2,
+        768,
+        "positions",
+        8
+      ],
+      [
+        2,
+        768,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        768,
+        "more",
+        74
+      ],
+      [
+        2,
+        1024,
+        "history",
+        7
+      ],
+      [
+        2,
+        1024,
+        "positions",
+        8
+      ],
+      [
+        2,
+        1024,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        1024,
+        "more",
+        74
+      ],
+      [
+        2,
+        1440,
+        "history",
+        7
+      ],
+      [
+        2,
+        1440,
+        "positions",
+        8
+      ],
+      [
+        2,
+        1440,
+        "bookings",
+        10
+      ],
+      [
+        2,
+        1440,
+        "more",
+        74
+      ]
+    ],
+    "findings": []
+  }
+}

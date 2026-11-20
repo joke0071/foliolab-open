@@ -1,6 +1,6 @@
 # UI-VISUAL · Abgleich der offenen Issues mit der 1.0-Basis · 19.11.2026
 
-Geprüft sind aktueller Issue-Text und Nachträge, GitHub-Mergestatus, Merge-Ancestry und vorhandener Versandcode am vollständig akzeptierten Main `4317cf8bd2460a144731c13ba651a8fd3db6bdf9`. Der [erfolgreiche 1.0-Lauf](https://github.com/joke0071/foliolab-open/actions/runs/44394422744) und seine [Abnahmebelege](FOLIOLAB_1_0_RELEASE_ACCEPTANCE_2026-11-18.md) gelten für die jeweils ausgeführten Prüfumfänge. Die ursprünglichen Draft-Aufträge sind historisch. Offene Issue-Nummern bleiben Bezugspunkte für neue belegte Deltas.
+Geprüft sind aktueller Issue-Text und Nachträge, GitHub-Mergestatus, Merge-Ancestry und vorhandener Versandcode am vollständig akzeptierten Main `4317cf8bd2460a144731c13ba651a8fd3db6bdf9`. Der [erfolgreiche 1.0-Lauf](https://github.com/joke0071/foliolab-open/actions/runs/44394422744) und seine [Abnahmebelege](FOLIOLAB_1_0_RELEASE_ACCEPTANCE_2026-11-18.md) gelten für die jeweils ausgeführten Prüfumfänge. Die ursprünglichen Draft-Aufträge sind historisch. Der Abgleich vom 20.11. unter den einzelnen Zeilen geht dem damaligen Status vor.
 
 | Auftrag | Nachweis vorhandener Umsetzung | Aktueller Rest |
 | --- | --- | --- |
@@ -13,3 +13,7 @@ Geprüft sind aktueller Issue-Text und Nachträge, GitHub-Mergestatus, Merge-Anc
 | [VISUAL09 · Filter/Aktionen #226](https://github.com/joke0071/foliolab-open/issues/226) | [#227](https://github.com/joke0071/foliolab-open/pull/227), Merge `3b03f4d`. Filter, Suche, Aktionen und aufklappbare Erträge im Versand. Der Transferzugang unter Buchungsverwaltung ersetzt das alte eigene Akkordeon. Aktueller Browservertrag prüft Ort und Sichtbarkeit der Aktion, geöffneten Ertragsblock und fehlenden Undo-Platzhalter. | Konkrete neue Bedien- oder Darstellungsfehler nach Nutzerpriorität. |
 
 VISUAL01 wurde über [#209](https://github.com/joke0071/foliolab-open/pull/209), Merge `ecf775f`, ausgeliefert. Dessen allgemeine Zeitraumgestaltung und die aktuelle Anforderung an verfügbare Positionskursfenster sind getrennte Arbeitsstände.
+
+## Nachtrag 20.11.2026
+
+VISUAL03, VISUAL08 und VISUAL09 sind im ursprünglichen Darstellungsumfang abgenommen. Originalreleases SW226 und SW228, Bildverzeichnisse, drei produktive Browser auf SW328 und ergänzende lokale Zielgrößenmessung sind im [Prüfbericht](release-evidence/visual03-08-09-2026-11-20.json) aufgeschlüsselt. VISUAL02 und VISUAL04 teilen den [Releasekandidaten #408](https://github.com/joke0071/foliolab-open/pull/408). Für VISUAL05 bleibt die echte Mobil-Tastatur als Gerätefall ausgewiesen.
