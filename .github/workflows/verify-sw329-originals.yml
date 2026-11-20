@@ -1,0 +1,54 @@
+name: Inspect accepted release originals
+on:
+  push:
+    branches: [qa/sw329-original-readback]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 2fd1881d05907d5b600565b049f8d7a63113ba6c
+          persist-credentials: false
+      - name: Download the published Pages and live originals
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14671157606/zip" > "$RUNNER_TEMP/live.zip"
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14667972107/zip" > "$RUNNER_TEMP/pages.zip"
+      - name: Verify digests, archive CRCs and Pages content against the release tree
+        shell: python
+        run: |
+          import hashlib
+          import io
+          import json
+          import os
+          import pathlib
+          import tarfile
+          import zipfile
+
+          temp = pathlib.Path(os.environ["RUNNER_TEMP"])
+          for name, size, digest in [
+              ("live", 153068729, "56bbff1adb48f7b2d78d412b2126034e0f14f78750aa00cd49b04d964f99558a"),
+              ("pages", 591841, "50a9f1bffc6fef6b8ab1c7a29c7b58e2acb3c2d6f17423d0170aaac42e70ce5b"),
+          ]:
+              with (temp / (name + ".zip")).open("rb") as archive:
+                  assert os.fstat(archive.fileno()).st_size == size
+                  assert hashlib.file_digest(archive, "sha256").hexdigest() == digest
+              with zipfile.ZipFile(temp / (name + ".zip")) as archive:
+                  assert archive.testzip() is None
+                  print(name, "CRC OK", len(archive.infolist()), "entries", digest)
+                  if name == "live":
+                      print("Reports", [p for p in archive.namelist() if p.endswith(".json") and "production" in p][:20])
+                  if name == "pages":
+                      with tarfile.open(fileobj=io.BytesIO(archive.read("artifact.tar"))) as site:
+                          files = [entry for entry in site if entry.isfile()]
+                          assert len(files) == 158
+                          for entry in files:
+                              path = pathlib.Path(entry.name)
+                              assert not path.is_absolute() and ".." not in path.parts
+                              assert site.extractfile(entry).read() == path.read_bytes(), entry.name
+                          print("158/158 Pages files match checkout")
