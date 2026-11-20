@@ -118,3 +118,58 @@ test('regeneration recovers a lost target byte-for-byte without binding it; raw 
  const bound=await api.regenerateSuccessorArchive({previousText:raw.previousText,frameTexts:raw.frameTexts});
  assert.equal(bound.status,'target-bound');assert.equal(bound.pinVersion,3);assert.deepEqual(bound.archive,standalone.archive);
 });
+
+async function bookAndCapture(db,api,local,id,parent,generation,salt){
+ const saved=await commitPortfolioRecord(db,{expectedRevision:local.revision,raw:local.raw,settings:local.settings});
+ await api.capture({expectedLocalRevision:saved.revision,expectedSyncVersion:local.revision,expectedPortfolioId:portfolioId,
+  expectedEpochId:epochId,receipt:await verify(snapshotFrame(saved.raw,id,parent,generation,salt.repeat(32)))});
+ return saved;
+}
+
+test('refresh carries a pending remote branch across later local captures; its saved candidate becomes the next source',async()=>{
+ const {db,api,raw,local}=await setup();
+ const first=await api.prepareSuccessorConflictArchive(raw);
+ const intermediate={previousText:raw.previousText,text:first.archive.text};
+ await assert.rejects(()=>api.refreshPreparedSuccessorArchive(intermediate),/refresh-needs-capture/);
+ const second=await bookAndCapture(db,api,local,'L','R','2','85');
+ await assert.rejects(()=>api.confirmSuccessorHandoff(intermediate),/stale-preimage/);
+ await assert.rejects(()=>api.refreshPreparedSuccessorArchive({...intermediate,text:intermediate.text.slice(0,-1)}),/source-digest/);
+ const renewed=await api.refreshPreparedSuccessorArchive(intermediate);
+ assert.equal(renewed.pinVersion,2);assert.deepEqual(renewed.heads,['B','C2','L']);
+ assert.deepEqual(renewed.preparedTransition.branches,[{previousHead:'B',currentHeads:['B']},
+  {previousHead:'C2',currentHeads:['C2']}]);assert.deepEqual(renewed.preparedTransition.additionalHeads,['L']);
+ const third=await bookAndCapture(db,api,second,'L2','L','3','86');
+ await assert.rejects(()=>api.refreshPreparedSuccessorArchive(intermediate),/source-digest/);
+ const latest=await api.refreshPreparedSuccessorArchive({previousText:raw.previousText,text:renewed.archive.text});
+ const files={previousText:raw.previousText,text:latest.archive.text,sourceText:renewed.archive.text};
+ const fresh=createSyncOutboxStorage(db,verify);
+ assert.deepEqual((await fresh.regenerateSuccessorArchive(files)).archive,latest.archive);
+ await assert.rejects(()=>fresh.confirmSuccessorHandoff({...files,sourceText:first.archive.text}),/source-digest/);
+ const bound=await fresh.confirmSuccessorHandoff(files);
+ assert.equal(bound.pinVersion,3);assert.deepEqual(bound.heads,['B','C2','L2']);
+ assert.equal((await readPortfolioSyncRecord(db)).portfolio.raw,third.raw);
+});
+
+test('refresh checks the intermediate queue prefix even when the original queue prefix is intact',async()=>{
+ const {db,api,request,local}=await setup();
+ const gap=await commitPortfolioRecord(db,{expectedRevision:local.revision,raw:local.raw,settings:local.settings});
+ const middleLocal=await commitPortfolioRecord(db,{expectedRevision:gap.revision,raw:local.raw,settings:local.settings});
+ await api.capture({expectedLocalRevision:3,expectedSyncVersion:1,expectedPortfolioId:portfolioId,expectedEpochId:epochId,
+  receipt:await verify(snapshotFrame(local.raw,'L','R','2','87'.repeat(32)))});
+ const middle=await api.prepareSuccessorConflictArchive({...request,expectedLocalRevision:3,expectedSyncVersion:2});
+ const files={previousText:request.previousText,text:middle.archive.text};
+ await commitPortfolioRecord(db,{expectedRevision:middleLocal.revision,raw:local.raw,settings:local.settings});
+ await assert.rejects(()=>api.refreshPreparedSuccessorArchive(files),/refresh-needs-capture/);
+ await api.capture({expectedLocalRevision:4,expectedSyncVersion:2,expectedPortfolioId:portfolioId,expectedEpochId:epochId,
+  receipt:await verify(snapshotFrame(local.raw,'L2','L','3','88'.repeat(32)))});
+ const key='sync-outbox-v1',saved=structuredClone(db.data.get(key)),handoff=structuredClone(db.data.get(slot));
+ // Both graphs and all ciphertext still agree; only the intermediate capture
+ // has moved to another valid CAS between the original and current captures.
+ const changed=structuredClone(saved);changed.entries[1].capturedLocalRevision=gap.revision;
+ db.data.set(key,changed);
+ await assert.rejects(()=>api.refreshPreparedSuccessorArchive(files),/successor-lineage/);
+ assert.deepEqual(db.data.get(slot),handoff);db.data.set(key,saved);
+ db.fault='abort-after-put';await assert.rejects(()=>api.refreshPreparedSuccessorArchive(files));
+ assert.deepEqual(db.data.get(slot),handoff);
+ assert.equal((await api.refreshPreparedSuccessorArchive(files)).handoffStatus,'prepared');
+});

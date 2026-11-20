@@ -21,9 +21,10 @@ export function showArchiveHandoff(container,api){
  const prepare=button(details,'Zielarchiv vorbereiten');
  const rebuild=button(fieldset,'Zielarchiv erneut erstellen');
  const download=doc.createElement('a'),checksum=doc.createElement('output');
- download.download='FolioLab-Konfliktarchiv.flh';download.textContent='Zielarchiv speichern';download.hidden=true;
+ download.textContent='Zielarchiv speichern';download.hidden=true;
  fieldset.append(download,checksum);
  const target=input(fieldset,'Gespeichertes Zielarchiv','file');
+ const refresh=button(fieldset,'Neue lokale Buchungen einbeziehen');
  const inspect=button(fieldset,'Dateien prüfen'),confirm=button(fieldset,'Übernahme bestätigen');
  confirm.disabled=true;
  const status=doc.createElement('output');status.setAttribute('role','status');form.append(status);
@@ -39,10 +40,10 @@ export function showArchiveHandoff(container,api){
  form.addEventListener('submit',event=>{event.preventDefault();});
  async function run(action){
   if(fieldset.disabled||(action==='confirm'&&confirm.disabled))return;
-  const needsTarget=action==='inspect'||action==='confirm';
+  const needsTarget=['refresh','inspect','confirm'].includes(action);
   target.required=needsTarget;digest.required=action==='prepare'&&Boolean(source.files[0]);
   if(!form.reportValidity())return;
-  const selected=[previous.files[0],needsTarget?target.files[0]:undefined,source.files[0]];
+  const selected=[previous.files[0],needsTarget?target.files[0]:undefined,action==='refresh'?undefined:source.files[0]];
   const sourceDigest=source.files[0]?digest.value.trim():undefined;
   reset();fieldset.disabled=true;status.textContent='Dateien werden geprüft …';
   try{
@@ -53,14 +54,17 @@ export function showArchiveHandoff(container,api){
    const files={previousText,text,sourceText};
    let result;
    if(action==='prepare')result=await api.prepareSuccessorFromFiles({previousText,sourceText,sourceDigest});
+   else if(action==='refresh')result=await api.refreshPreparedSuccessorArchive(files);
    else if(action==='regenerate')result=await api.regenerateSuccessorArchive(files);
    else if(action==='confirm')result=await api.confirmSuccessorHandoff(files);
    else result=await api.inspectSuccessorHandoff(files);
    if(!container.contains(form))return;
    if(result.archive){
     url=URL.createObjectURL(new Blob([result.archive.text],{type:'application/octet-stream'}));
+    download.download='FolioLab-Konfliktarchiv-'+result.archive.digest+'.flh';
     download.href=url;download.hidden=false;checksum.textContent='SHA-256 '+result.archive.digest;
-    status.textContent='Zieldatei zum Speichern bereit.';
+    status.textContent=action==='refresh'?'Neue Zieldatei zum Speichern bereit. Wähle zur Bestätigung die bisherige Zieldatei als Quellarchiv.':
+     'Zieldatei zum Speichern bereit.';
    }else if(result.status==='pending-confirmation'){
     status.textContent='Dateien geprüft. Die Bestätigung steht aus.';confirm.disabled=false;
    }else if(result.status==='target-bound')status.textContent='Das Zielarchiv ist bestätigt.';
@@ -70,6 +74,7 @@ export function showArchiveHandoff(container,api){
   }finally{fieldset.disabled=false;}
  }
  prepare.addEventListener('click',()=>void run('prepare'));rebuild.addEventListener('click',()=>void run('regenerate'));
+ refresh.addEventListener('click',()=>void run('refresh'));
  inspect.addEventListener('click',()=>void run('inspect'));confirm.addEventListener('click',()=>void run('confirm'));
  return ()=>{clearDownload();form.remove();};
 }

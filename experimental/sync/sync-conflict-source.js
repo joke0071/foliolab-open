@@ -15,7 +15,7 @@ export async function readConflictSource(source){
  const match=/^FolioLabConflict\/1 ([1-9][0-9]{0,15}) ([1-9][0-9]{0,15}) [0-9a-f]{64}$/.exec(header);
  if(!match||!Number.isSafeInteger(Number(match[1]))||!Number.isSafeInteger(Number(match[2]))||
     frameTexts.length<2||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-archive-invalid-source');
- return {localRevision:Number(match[1]),frameTexts,digest:expectedDigest};
+ return {localRevision:Number(match[1]),header,frameTexts,digest:expectedDigest};
 }
 
 // Every descriptor comes from verification with the recipient's key, including
