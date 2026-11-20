@@ -1,0 +1,66 @@
+{
+  "main": "9c9572b66f8e014e1a9e4f352276f04652ba53f7",
+  "run": 44824565718,
+  "artifact": 14671064969,
+  "archiveSha256": "3b2c2a75ed1df23adca35f591f8ea3ef0d3d8620e39d6fa2848c6729064fadcc",
+  "base": "https://foliolab.unperfekt.at/",
+  "assetHashes": {
+    "sw.js": "84de01efd6c821452e1cdade2dd3fe158117bfc8a7dd65a0b22656512ddba4a4",
+    "index.html": "00d3dc358609f5ed38a4fe160015c9943c8dcd71776b6d78a789d0302d286b51",
+    "styles.css": "6c381ad6b15b118b1966b203ca06b2a9b10012b2a0cc72e907eabc2f74246614",
+    "src/app.js": "7c6f9dbc750f3f1128192603dfb8284e4b5525606e736eebe310b97bd82dc643"
+  },
+  "engines": {
+    "chromium": {
+      "browser": "141.0.7390.37",
+      "integerWidths": [
+        320,
+        430
+      ],
+      "testedWidths": 111,
+      "labelsPerWidth": 5,
+      "horizontalOverflow": false,
+      "helpLinkMeasurements": 28,
+      "minimumLinkWidth": 80.421875,
+      "minimumLinkHeight": 44,
+      "focusedSections": 15,
+      "minGapBelowHeader": 5.53125,
+      "minGapAboveNavigation": 460.75,
+      "exactRecordAfterReload": true
+    },
+    "firefox": {
+      "browser": "142.0.1",
+      "integerWidths": [
+        320,
+        430
+      ],
+      "testedWidths": 111,
+      "labelsPerWidth": 5,
+      "horizontalOverflow": false,
+      "helpLinkMeasurements": 28,
+      "minimumLinkWidth": 80.43333435058594,
+      "minimumLinkHeight": 44,
+      "focusedSections": 15,
+      "minGapBelowHeader": 6.100006103515625,
+      "minGapAboveNavigation": 458.6999969482422,
+      "exactRecordAfterReload": true
+    },
+    "webkit": {
+      "browser": "26.0",
+      "integerWidths": [
+        320,
+        430
+      ],
+      "testedWidths": 111,
+      "labelsPerWidth": 5,
+      "horizontalOverflow": false,
+      "helpLinkMeasurements": 28,
+      "minimumLinkWidth": 80.421875,
+      "minimumLinkHeight": 44,
+      "focusedSections": 15,
+      "minGapBelowHeader": 6,
+      "minGapAboveNavigation": 462,
+      "exactRecordAfterReload": true
+    }
+  }
+}
