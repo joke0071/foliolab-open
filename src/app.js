@@ -2512,23 +2512,33 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   await save({intent:'restore'},imported);
   loadFailure=null;
   const revision=portfolioStore.revision,legacyRaw=portfolioStore.legacyRaw;
+  let stepHint='Backup-Passwort unter „Mehr“ prüfen.',warning='';
   try{
    if(v2Envelope){
     await adoptBackupPassword(v2Envelope,password);
     await refreshBackupPasswordStatus();
     await window.FolioDriveBackup?.refreshVaultStatus?.();
    }
-   if(configuration)applyImportedDriveConfiguration(configuration);
-  }finally{
-   // Another tab can save after our commit, even while the vault is finishing.
-   // Publish its canonical model and matching revision together before enabling exports.
-   try{model=await portfolioStore.reload();}
-   catch(error){loadFailure=error;throw error;}
-   finally{render();}
+   if(configuration){
+    stepHint='Drive-Einstellungen unter „Mehr“ prüfen.';
+    applyImportedDriveConfiguration(configuration);
+   }
+  }catch(error){
+   warning=stepHint+' '+String(error?.message||error);
+  }
+  // Another tab can save after our commit, even while the vault is finishing.
+  // Publish its canonical model and matching revision together before enabling exports.
+  try{model=await portfolioStore.reload();}
+  catch(error){loadFailure=error;throw error;}
+  finally{render();}
+  const advanced=revision!==portfolioStore.revision||legacyRaw!==portfolioStore.legacyRaw;
+  const changes=advanced?' Spätere Änderungen aus einem anderen Tab sind enthalten.':'';
+  if(warning){
+   notify('Finanzdaten wiederhergestellt.'+changes+' '+warning,true);
+   return;
   }
   if(configuration)syncApiSettingsForm();
-  const advanced=revision!==portfolioStore.revision||legacyRaw!==portfolioStore.legacyRaw;
-  notify('Backup wiederhergestellt.'+(advanced?' Spätere Änderungen aus einem anderen Tab sind enthalten.':'')+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
+  notify('Backup wiederhergestellt.'+changes+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
  }catch(err){notify(err.message,true)}finally{$('restoreProgress').close();setLoading(restoreStatus,false);renderBackupStatus();}
 });
   // Drive only receives an encrypted package. API/RPC credentials are added to

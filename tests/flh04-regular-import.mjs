@@ -171,6 +171,23 @@ export async function checkInterruptedImports({browserType,target,origin,beforeF
  }finally{await context.close();}
 }
 
+// Abort exactly one native read in the importer's password vault. The portfolio
+// transaction and the writer's independent vault are already confirmed.
+async function abortNextVaultRead(page){
+ await page.evaluate(()=>{
+  const get=IDBObjectStore.prototype.get;
+  IDBObjectStore.prototype.get=function(key){
+   const request=get.call(this,key);
+   if(this.transaction.db.name==='foliolab-open-backup-password-v1'&&this.name==='vault'&&key==='active'){
+    IDBObjectStore.prototype.get=get;
+    this.transaction.abort();
+    window.restoreVaultReadAborted=true;
+   }
+   return request;
+  };
+ });
+}
+
 export async function checkPostCommitDeposits({browserType,target,origin,beforeFile,original,headFile,password,targetPassword,expected,directory}){
  let context=await browserType.launchPersistentContext(target);
  try{
@@ -181,6 +198,7 @@ export async function checkPostCommitDeposits({browserType,target,origin,beforeF
   assertRestored(base,initial,original,'Ausgangsstand B');
   const variants=[{end:'complete',amount:'6.35',balance:'16.35'}];
   if(browserType.name()==='chromium')variants.push({end:'kill',amount:'8.65',balance:'18.65'});
+  variants.push({end:'vault-read-abort',amount:'3.45',balance:'13.45'});
   for(const {end,amount,balance} of variants){
    // A fresh importer also rules out a success message from returning to B.
    await page.close();
@@ -204,12 +222,19 @@ export async function checkPostCommitDeposits({browserType,target,origin,beforeF
    assert.match(await progress.innerText(),/Sicherung wird wiederhergestellt/);
    await page.keyboard.press('Escape');
    assert.ok(await progress.isVisible(),'Import bleibt modal, beide Zielexporte sind bis zur Rückmeldung gesperrt');
-   if(end==='complete'){
+   if(end!=='kill'){
+    if(end==='vault-read-abort')await abortNextVaultRead(page);
     await page.evaluate(()=>window.restoreBarrier.release());
     await page.waitForFunction(()=>!document.querySelector('#backupStatus').classList.contains('lab-loading'));
     const feedback=await page.locator('#toast').innerText();
     await visibleDeposit(page,advanced,amount,balance);
-    assert.match(feedback,/Backup wiederhergestellt.*spätere Änderungen/i);
+    if(end==='vault-read-abort'){
+     assert.equal(await page.evaluate(()=>window.restoreVaultReadAborted),true);
+     assert.match(feedback,/Finanzdaten wiederhergestellt/i);
+     assert.match(feedback,/Backup-Passwort.*prüfen/i);
+     assert.doesNotMatch(feedback,/^Backup wiederhergestellt/);
+    }else assert.match(feedback,/^Backup wiederhergestellt/);
+    assert.match(feedback,/spätere Änderungen/i);
     await checkTargetExports(page,directory,end+'-importer',targetPassword,advanced);
     assert.deepEqual(await readAppState(page),state);
     await context.close();
