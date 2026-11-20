@@ -21,11 +21,20 @@ function captureDeviceState(){
  writeFileSync(output+'/ime-state.txt',methodState().split('\n').filter(line=>/mInputShown|mIsInputViewShown|mCurFocusedWindow|mServedView|mCurMethodId|mShowRequested|mInputEditorInfo|mWindowVisible|mIsInteractive|mInputViewShown/i.test(line)).join('\n'));
  writeFileSync(output+'/window-state.txt',windowState().split('\n').filter(line=>/mCurrentFocus|mFocusedApp|type=ime |imeVisible/i.test(line)).join('\n'));
 }
-async function nativeFieldTap(page,field){
- await field.scrollIntoViewIfNeeded();
+function chromeNodes(){
  adb('shell','uiautomator','dump','/sdcard/folio-qa-window.xml');
  const xml=adb('exec-out','cat','/sdcard/folio-qa-window.xml');writeFileSync(output+'/window.xml',xml);
- const nodes=JSON.parse(execFileSync('python3',['-c',`import sys,json,xml.etree.ElementTree as E; print(json.dumps([n.attrib for n in E.fromstring(sys.stdin.buffer.read()).iter('node') if n.get('package')=='com.android.chrome']))`],{input:xml}).toString());
+ return JSON.parse(execFileSync('python3',['-c',`import sys,json,xml.etree.ElementTree as E; print(json.dumps([n.attrib for n in E.fromstring(sys.stdin.buffer.read()).iter('node') if n.get('package')=='com.android.chrome']))`],{input:xml}).toString());
+}
+async function nativeFieldTap(page,field){
+ await field.scrollIntoViewIfNeeded();
+ let nodes=chromeNodes();
+ if(nodes.some(n=>n.text==='Chrome notifications make things easier')){
+  const decline=nodes.find(n=>n['resource-id']==='com.android.chrome:id/negative_button'&&n.text==='No thanks');
+  assert.ok(decline,'Expected explicit notification dismissal');
+  const [l,t,r,b]=decline.bounds.match(/-?\d+/g).map(Number);adb('shell','input','tap',String(Math.round((l+r)/2)),String(Math.round((t+b)/2)));
+  nodes=chromeNodes();
+ }
  const view=nodes.find(n=>n.class==='android.webkit.WebView')??nodes.find(n=>n['resource-id']==='com.android.chrome:id/compositor_view_holder');
  assert.ok(view,'Chrome content area must be visible in the Android foreground');
  const [left,top,right]=view.bounds.match(/-?\d+/g).map(Number);
