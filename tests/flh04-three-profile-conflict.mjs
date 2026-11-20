@@ -1,3 +1,4 @@
+import {checkPendingBooking} from './flh04-pending-booking.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -215,6 +216,7 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
   assert.deepEqual(JSON.parse(copy.financialCopy),data);assert.equal(data.positions[0].quantityExact,quantity);
  }
  assert.deepEqual(await operation(page,'read'),{portfolio:saved,sync:queue});
+ await checkPendingBooking({profile,open,operation,directory,file,readback,saved,queue,version});
  console.log(JSON.stringify({kind:'FLH04ArchiveHandoffFiles',status:'PASS',engine:process.env.ENGINE}));
  console.log(JSON.stringify({kind:'FLH04ConflictSuccessor',status:'PASS',engine:process.env.ENGINE}));
 }
