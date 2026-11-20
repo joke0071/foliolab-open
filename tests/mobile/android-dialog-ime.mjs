@@ -70,7 +70,7 @@ try{
  await page.reload({waitUntil:'commit'});await ready();
  const read=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const original=await read();await page.locator('#mobileNav [data-page="positions"]').tap();
- for(const spec of [{name:'asset',opener:'#addWizard',field:'#wizardName',action:'#wizardPrev',dialog:'#wizardDialog'},{name:'wallet',opener:'#addWallet',field:'#scanAddress',action:'#cancelDialog',dialog:'#editDialog'}]){
+ for(const spec of [{name:'asset',opener:'#addWizard',field:'#wizardName',action:'#wizardPrev',dialog:'#wizardDialog'},{name:'wallet',opener:'#addWallet',field:'#scanAddress',action:'#cancelDialog',dialog:'#editDialog'}].filter(s=>!process.env.DIALOG_CASE||s.name===process.env.DIALOG_CASE)){
   await page.locator(spec.opener).tap();await waitKeyboard(false);
   const closedHeight=await page.evaluate(()=>visualViewport.height);
   const field=page.locator(spec.field);await nativeFieldTap(page,field);await waitKeyboard(true);
@@ -88,10 +88,13 @@ try{
   page.once('dialog',dialog=>dialog.accept());await page.locator(spec.action).tap();await page.locator(spec.dialog).waitFor({state:'hidden'});
   assert.deepEqual(await read(),original);row.cancelledWithoutMutation=true;
  }
+ assert.equal(report.scenarios.length,process.env.DIALOG_CASE?1:2);
  for(const r of report.scenarios){assert.ok(r.keyboardShown&&r.height<r.closedHeight-80,'keyboard must occupy screen');assert.ok(!r.overflow&&r.field.visible,'focused entry must remain on screen');assert.ok(r.action.visible,'footer action must remain visible with the IME open');}
  report.result='PASS';
 }catch(error){
- captureDeviceState();throw error;
+ report.failure=String(error);console.error(report.failure);
+ try{captureDeviceState();}catch(diagnostic){console.error('Device diagnostics unavailable:',diagnostic.message.split('\n')[0]);}
+ throw error;
 }finally{
  writeFileSync(output+'/report.json',JSON.stringify(report,null,2)+'\n');
  await ctx.close();await device.close();
