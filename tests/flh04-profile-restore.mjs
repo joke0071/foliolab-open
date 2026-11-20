@@ -4,7 +4,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
 
-async function openInstallation(profile,setup){
+export async function openInstallation(profile,setup){
  const context=await chromium.launchPersistentContext(profile);
  try{
   const page=await context.newPage();
