@@ -857,3 +857,43 @@ test('late encrypted revisions extend a pinned archive with no local change, onl
  assert.deepEqual(reopened.heads,['B3','C','F']);assert.equal(reopened.pinVersion,selected.pinVersion+1);
  assert.equal(pinned.applyAuthorized,false);assert.deepEqual(await readPortfolioSyncRecord(db),state);
 });
+
+test('source archive must independently contain a canonical closed conflict even when the target supplies its missing nodes',async()=>{
+ const {api,db,p,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const root=frame(p.raw),b=frame(p.raw,'B','R','2','81'.repeat(32)),c=frame(p.raw,'C','R','2','82'.repeat(32));
+ const b2=frame(p.raw,'B2','B','3','83'.repeat(32));
+ const {archive}=await api.createConflictArchive({...cas,frameTexts:[b,c],observationComplete:true});
+ await api.pinConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0});
+ const selected=await api.recordPinnedSelection({text:archive.text,expectedPinVersion:1,selectedHead:'C'});
+ const req={...cas,previousText:archive.text,expectedPinVersion:selected.pinVersion};
+ const {createHash}=await import('node:crypto');
+ const header='FolioLabConflict/1 17 24 '+'f'.repeat(64);
+ function source(lines,first=header){
+  const text=[first,...lines].join('\n');
+  return {text,expectedDigest:createHash('sha256').update(text).digest('hex')};
+ }
+ const complete=source([b,b2,c,root]);
+ const preview=await api.createSuccessorConflictArchive({...req,sourceArchive:complete});
+ assert.deepEqual(preview.heads,['B2','C']);
+ const input={...req,text:preview.archive.text,expectedPortfolioDigest:preview.successorPortfolioDigest};
+ const state=await readPortfolioSyncRecord(db);
+ for(const [invalid,error] of [
+  [{...complete,text:complete.text.slice(0,-1)},/source-digest/],
+  [source([b,b2,c,root],header.replace(' 17 ',' 017 ')),/invalid-source/],
+  [source([b,b2,c,root],header.replace(' 24 ',' 9007199254740992 ')),/invalid-source/],
+  [source([b2,c,root]),/source-missing-parent/],[source([b,b2,root]),/source-needs-conflict/],
+  [source([b,b2,c,c,root]),/source-order/],[source([b2,b,c,root]),/source-order/],
+  [source([b,b2,c,root.slice(0,-1)]),/sync-frame-/],
+  [source([frame(p.raw,'B','R','2','84'.repeat(32)),b2,c,root]),/identity-collision/]
+ ]){
+  await assert.rejects(()=>api.createSuccessorConflictArchive({...req,sourceArchive:invalid}),error);
+  await assert.rejects(()=>api.pinSuccessorConflictArchive({...input,sourceArchive:invalid}),error);
+ }
+ const retained=await api.reopenPinnedSelection({text:archive.text});
+ assert.equal(retained.pinVersion,selected.pinVersion);assert.equal(retained.restorePreview.selectedHead,'C');
+ assert.deepEqual(await readPortfolioSyncRecord(db),state);
+ const pinned=await api.pinSuccessorConflictArchive({...input,sourceArchive:complete});
+ assert.equal(pinned.pinVersion,selected.pinVersion+1);assert.equal(pinned.applyAuthorized,false);
+ assert.deepEqual(await readPortfolioSyncRecord(db),state);
+});

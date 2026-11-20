@@ -1,3 +1,4 @@
+import {readConflictSource,checkConflictSource} from './sync-conflict-source.js';
 import {describeConflictSuccessor} from './sync-conflict-successor.js';
 import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback,rollbackPinnedLocalCopy,reopenLocalRecoveryCase} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
@@ -239,17 +240,18 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    if(archive&&!current.ticket)throw Error('sync-outbox-archive-needs-conflict');
    if(!current.ticket)return finishPlan(current,[],observationComplete);
    const known=new Map(current.sync.entries.map(e=>[e.revision.revisionId,e.frameText]));
-   const seen=new Set(known.values()),revisions=[];
+   const verified=new Map(current.sync.entries.map(e=>[e.frameText,e.revision])),revisions=[];
    for(const text of frames){
-    if(seen.has(text))continue;
+    if(verified.has(text))continue;
     const frame=readVerifiedSyncFrame(await verifySnapshotFrame(text));
     if(frame.frameText!==text||frame.epochId!==current.sync.epochId||frame.descriptor.portfolioId!==current.sync.portfolioId)
      throw Error('sync-outbox-frame-binding');
     if(known.has(frame.descriptor.revisionId))throw Error('sync-outbox-frame-identity-collision');
     if(known.size>=SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
     known.set(frame.descriptor.revisionId,text);
-    seen.add(text);revisions.push(frame.descriptor);
+    verified.set(text,frame.descriptor);revisions.push(frame.descriptor);
    }
+   if(archive?.source)checkConflictSource(archive.source,current.sync.portfolioId,verified);
    return finishPlan(current,revisions,observationComplete,known,pair,archive);
   }
   async function reopenArchive({text,expectedDigest,expectedLocalRevision,expectedSyncVersion,comparisonHeads},pin){
@@ -264,12 +266,13 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
     {mode:'reopen',original:text,pin});
   }
- async function successorArchive({previousText,frameTexts=[],text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},write){
+ async function successorArchive({previousText,frameTexts=[],sourceArchive,text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},write){
   if(!positive(expectedPinVersion)||typeof previousText!=='string'||
      previousText.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
      (write&&(!hash(expectedPortfolioDigest)||typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100)))
    throw Error('sync-archive-invalid-successor');
   const incoming=boundedFrameBatch(frameTexts);
+  const source=sourceArchive===undefined?null:await readConflictSource(sourceArchive);
   const pin=await readArchivePin(db);
   if(pin?.version!==expectedPinVersion||pin.digest!==await archiveDigest(previousText))
    throw Error('sync-archive-successor-pin-changed');
@@ -278,10 +281,10 @@ export function createSyncOutboxStorage(db,verifyFrame) {
      !positive(expectedSyncVersion)||expectedSyncVersion<=pin.syncVersion))throw Error('sync-archive-successor-needs-capture');
   const [header,...previousFrames]=previousText.split('\n',SYNC_GRAPH_LIMIT+2);
   const oldFrames=new Set(previousFrames);
-  const combined=[...new Set([...previousFrames,...incoming])];
+  const combined=[...new Set([...previousFrames,...incoming,...(source?.frameTexts??[])])];
   if(unchanged&&combined.length===oldFrames.size)throw Error('sync-archive-successor-no-new-frames');
   return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts:combined,observationComplete:true},
-   {previous:{pin,header,oldFrames},original:text,expectedPortfolioDigest,
+   {source,previous:{pin,header,oldFrames},original:text,expectedPortfolioDigest,
     pin:{previous:pin,version:expectedPinVersion,write}});
  }
  async function selectedRestore({text,selectedHead,expectedPinVersion},mode,readback){
