@@ -59,14 +59,31 @@ async function checkArchivedHead(page,text,id,expected,history,local){
  assert.deepEqual(data.walletHistory,history);
 }
 
-async function checkRestoredCopy({directory,setup,operation,source,text,expected}){
+async function checkRestoredCopy({directory,setup,operation,source,text,expected,encrypted}){
  const copy=await source.page.evaluate(text=>window.syncTest.api.exportPinnedFinancialCopy({text,expectedPinVersion:2}),text);
  assert.equal(copy.restorePreview.selectedHead,expected.id);
  const data=JSON.parse(copy.financialCopy);
  assert.equal(Object.hasOwn(data,'settings'),false);
- const file=join(directory,'selected-finances.json');
- await writeFile(file,copy.financialCopy);
- const profile=join(directory,'restore-target');
+ const password='Source financial fixture 2026';
+ const file=join(directory,encrypted?'selected-password.json':'selected-finances.json');
+ let damagedFile;
+ if(encrypted){
+  const request={text,expectedPinVersion:2};
+  await assert.rejects(()=>source.page.evaluate(request=>window.syncTest.api.exportEncryptedPinnedFinancialCopy(request),request),/Backup-Passwort einrichten/);
+  await source.page.evaluate(async password=>{
+   const {configureBackupPassword}=await import('/src/backup-vault.js');
+   await configureBackupPassword(password,password);
+  },password);
+  const sealed=await source.page.evaluate(request=>window.syncTest.api.exportEncryptedPinnedFinancialCopy(request),request);
+  assert.equal(Object.hasOwn(sealed,'financialCopy'),false);assert.equal(sealed.applyAuthorized,false);
+  const envelope=JSON.parse(sealed.encryptedCopy);
+  assert.equal(envelope.format,'foliolab-open-encrypted-v2');
+  await writeFile(file,sealed.encryptedCopy);
+  envelope.data=(envelope.data.startsWith('A')?'B':'A')+envelope.data.slice(1);
+  damagedFile=join(directory,'damaged-password.json');
+  await writeFile(damagedFile,JSON.stringify(envelope));
+ }else await writeFile(file,copy.financialCopy);
+ const profile=join(directory,encrypted?'password-target':'restore-target');
  let target=await openInstallation(profile,setup);
  try{
   await target.page.evaluate(async()=>{
@@ -78,12 +95,32 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
   const app=await target.context.newPage();
   await app.goto(new URL('/',target.page.url()).href);
   await app.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  const targetPassword='Recipient fixture vault 2026';
+  if(encrypted)await target.page.evaluate(async password=>{
+   const {configureBackupPassword}=await import('/src/backup-vault.js');
+   await configureBackupPassword(password,password);
+  },targetPassword);
+  let suppliedPassword=password;
   const confirmations=[];
   app.on('dialog',async dialog=>{
+   if(encrypted&&dialog.type()==='prompt'&&dialog.message().includes('Backup-Passwort')){
+    await dialog.accept(suppliedPassword);return;
+   }
    confirmations.push(dialog.message());
    if(dialog.type()==='confirm'&&dialog.message().includes('wiederherstellen?'))await dialog.accept();
    else await dialog.dismiss();
   });
+  if(encrypted){
+   for(const [candidate,pass,errorText] of [[file,'Incorrect fixture password','Backup-Passwort falsch'],
+    [damagedFile,password,'Backup ist beschädigt']]){
+    suppliedPassword=pass;
+    await app.locator('#backupFile').setInputFiles(candidate);
+    await app.waitForFunction(message=>document.getElementById('toast')?.textContent.includes(message),errorText);
+    assert.deepEqual(await operation(target.page,'read'),before);
+    assert.deepEqual(await operation(target.page,'anchor-proof'),identity);
+    assert.deepEqual(confirmations,[]);
+   }
+  }
   await app.locator('#backupFile').setInputFiles(file);
   await app.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('Backup wiederhergestellt'));
   assert.equal(confirmations.length,1);
@@ -98,7 +135,15 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
   assert.equal(restored.portfolio.revision,before.portfolio.revision+1);
   assert.equal(restored.portfolio.syncEnrollmentRequired,true);assert.equal(restored.sync,null);
   assert.deepEqual(await operation(target.page,'anchor-proof'),identity);
-  console.log(JSON.stringify({kind:'FLH04SelectedFinancialCopy',status:'PASS',fileRestore:true,recipientRestart:true}));
+  if(encrypted){
+   const challenge=await target.page.evaluate(async password=>{
+    const {encryptWithBackupPassword,decryptPasswordBackup}=await import('/src/backup-vault.js');
+    const envelope=JSON.parse(await encryptWithBackupPassword('recipient-vault'));
+    return decryptPasswordBackup(envelope,password);
+   },targetPassword);
+   assert.equal(challenge,'recipient-vault');
+  }
+  console.log(JSON.stringify({kind:encrypted?'FLH04EncryptedFinancialCopy':'FLH04SelectedFinancialCopy',status:'PASS',fileRestore:true,recipientRestart:true}));
  }finally{await target.context.close();}
 }
 
@@ -149,7 +194,8 @@ export async function checkProfileConflict({setup,operation}){
    const choice=await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text);
    assert.equal(choice.restorePreview.selectedHead,sibling.id);assert.equal(choice.applyAuthorized,false);
    if(profile===profiles[0]){
-    await checkRestoredCopy({directory,setup,operation,source:profile,text,expected:sibling});
+    for(const encrypted of [false,true])
+     await checkRestoredCopy({directory,setup,operation,source:profile,text,expected:sibling,encrypted});
     assert.deepEqual(await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text),choice);
    }
    assert.deepEqual(await operation(profile.page,'read'),profile.before);
