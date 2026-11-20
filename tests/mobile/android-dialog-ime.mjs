@@ -11,7 +11,12 @@ const adb=(...args)=>execFileSync('adb',['-s',device.serial(),...args]);
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const methodState=()=>adb('shell','dumpsys','input_method').toString();
 const windowState=()=>adb('shell','dumpsys','window').toString();
-const shown=()=>/\bmInputShown=true\b|\bisInputViewShown=true\b|\bmIsInputViewShown=true\b/.test(methodState())||/\btype=ime\b[^\n]*\bvisible=true\b/i.test(windowState());
+function shown(){
+ const match=methodState().match(/^\s*mInputShown=(true|false)\s*$/m);
+ const visible=/\btype=ime\b[^\n]*\bvisible=true\b/i.test(windowState());
+ if(!match||(match[1]==='true')!==visible)return null;
+ return visible;
+}
 async function waitKeyboard(expected){
  for(let i=0;i<25;i++){if(shown()===expected)return;await wait(250);}
  throw Error('Android IME visibility did not reach '+expected);
