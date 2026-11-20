@@ -42,7 +42,9 @@ jobs:
           adb shell pm path com.android.chrome | grep 'package:'
           adb reverse tcp:4173 tcp:4173
           python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/folio-http.log" 2>&1 &
-          DIALOG_CASE=wallet node tests/mobile/android-dialog-ime.mjs
+          for scenario in wallet asset; do
+            DIALOG_CASE="$scenario" node tests/mobile/android-dialog-ime.mjs
+          done
       - name: Retain synthetic screenshots and measurements
         if: always()
         uses: actions/upload-artifact@v4

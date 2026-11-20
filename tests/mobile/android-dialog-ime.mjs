@@ -3,7 +3,7 @@ import {execFileSync} from 'node:child_process';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {_android as android} from 'playwright';
 
-const output='artifacts/ime216';
+const output='artifacts/ime216/'+(process.env.DIALOG_CASE || 'combined');
 mkdirSync(output,{recursive:true});
 const [device]=await android.devices();
 assert.ok(device,'Android emulator must be visible over ADB');

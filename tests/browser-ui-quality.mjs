@@ -32,7 +32,7 @@ for(const check of [
  './browser-flatex-native-simulation-ui.mjs',
  './browser-flatex-native-commit.mjs'
 ]){const finish=browserGateDeadline('ui-quality import '+check);try{await import(check);console.log('BROWSER_GATE_PASS '+check);}finally{finish();}}
-import {clickDisclosed} from './browser-disclosures.mjs';
+import {clickDisclosed,revealAction} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -86,6 +86,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      for(const id of ['marketSettings','blockchainSettings','optionalConnections','publicSearchSetup','marketWorkerSetup'])if(!await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
      await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});
      assert.equal(await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open),false,'technical help starts closed');await p.locator('#optionalConnections>.more-panel-help>summary').click();
+     await revealAction(p.locator('#driveOAuthHelp a'));
+     for(const selector of ['#driveOAuthHelp a','#optionalConnections>.more-panel-help a']){
+      const link=p.locator(selector);
+      await link.scrollIntoViewIfNeeded();
+      const box=await link.boundingBox();
+      assert.ok(box && box.height>=44 && box.width>=44,selector+' touch target at '+width);
+      assert.ok(box.x>=0 && box.x+box.width<=width+1,selector+' fits at '+width);
+     }
+     await p.locator('#driveOAuthHelp>summary').click();
+     await p.locator('#googleDriveBackupSetup>summary').click();
      const arrows=await p.locator('#marketSettings>summary,#optionalConnections>summary,#blockchainSettings>summary,#publicSearchSetup>summary,#marketWorkerSetup>summary').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e,'::after');return [c.width,c.borderRightColor,c.transform];}));for(const arrow of arrows)assert.deepEqual(arrow,arrows[0],'shared settings chevron');
      const buttons=await p.locator('#apiSettings button[type=submit],#optionalConnections>button[type=submit]').evaluateAll(els=>els.map(e=>e.getBoundingClientRect().x));assert.equal(buttons.length,2);assert.ok(Math.abs(buttons[0]-buttons[1])<=1,'connection save aligned with API save');
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#optionalConnections').screenshot({path:'artifacts/gates/c5-connections-'+width+'.png'});
