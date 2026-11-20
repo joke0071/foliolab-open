@@ -4,6 +4,14 @@ Entwicklungsleitung `hnd01-20261120-root-18e5473bd018` nach Auftrag vom 20.11.20
 
 ## Aktive Fortsetzung
 
+Entwicklungsleitung ab SW330: `hnd01-20261120-fe4bdd8134a3`.
+
+**SW329 LIVE_ACCEPTED.** Der [Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/44807760963/attempts/3) veröffentlichte auf `2fd1881d` das Pages-Original 14667972107. Alle 158 Paketdateien stimmen mit Main überein. Die Produktivprüfung bestätigt 159 Pfade, elf Prüfgruppen, 22 Axe-Scans und zehn Restore-Fälle. Das [Live-Original 14671157606](release-evidence/sw329-live-accepted-2026-11-20.json) wurde anhand von SHA-256, 153068729 Byte und CRC aller 1954 ZIP-Einträge geprüft. Die getrennt aus der gepinnten Sicherung zurückgelesene Version ist bytegleich. Der öffentliche ETH-Fall ist belegt. Für den privaten Fall fehlen der Originalcursor und die Providerantwort.
+
+**SW330 integriert.** [#408](https://github.com/joke0071/foliolab-open/pull/408) ist auf Main `9c9572b66f8e014e1a9e4f352276f04652ba53f7`. Head `5512f0c5`, geprüfter PR-Merge `49e8d3cc` und tatsächlicher Main haben den Tree `539dfb82da63eb560054e74ba54f8a019f40e1de`. Beide Pflichtläufe bestanden. [Main, Pages und Produktion](https://github.com/joke0071/foliolab-open/actions/runs/44820976562) laufen.
+
+**#216.** Im Android-15-Emulator belegte der [Wallet-Test auf SW329](https://github.com/joke0071/foliolab-open/actions/runs/44816336324) einen verdeckten Dialogfuß. Der [getrennte Versuch auf dem SW330-Produktstand](https://github.com/joke0071/foliolab-open/actions/runs/44821249516) prüft die Verkleinerung des Layout-Viewports mit der Systemtastatur für beide Dialoge.
+
 **SW328 LIVE_ACCEPTED.** SW328 ist auf `4b9d676a` produktiv abgenommen. [Main, Pages und Produktion](https://github.com/joke0071/foliolab-open/actions/runs/44797786214) erfolgreich. 159 veröffentlichte Pfade bytegleich, 11 Kernprüfgruppen und 22 Axe-Prüfungen im Kernbericht. [Original und Byte-Readback](release-evidence/sw328-live-accepted-2026-11-20.json) für Archiv 14663272026 mit 153475391 Byte und 1954 ZIP-Einträgen. SHA-256, Größe und CRC geprüft, separat zurückgelesene Kopie bytegleich. Alle zehn produktiven Restore-Abläufe bestanden. Regulärer Abschluss, Tresor- und Portfolio-Lesefehler sind für Chromium, Firefox und WebKit belegt, der Prozessabbruch zusätzlich für Chromium. Bei 15,85 EUR behielt „Neu laden“ die gebuchte Revision. Die Rückkehr zu B erfolgte erst durch den ausdrücklichen Import. Die Dreikopf-Sperre bleibt Bestandteil der lokalen Fachabnahme.
 
 **Vorrelease SW327.** Release/Pages/Produktion im [zweiten Versuch](https://github.com/joke0071/foliolab-open/actions/runs/44597559290/attempts/2) grün. Das Original-ZIP 14574052801 enthält die positiven D/P2-Protokolle aus Chromium, Firefox und WebKit sowie 159 Bytevergleiche, elf Kernblöcke und 22 Axe-Prüfungen im Kernbericht. [Maschinenbeleg samt gepinntem Byte-Readback](release-evidence/sw327-live-accepted-2026-11-20.json).
