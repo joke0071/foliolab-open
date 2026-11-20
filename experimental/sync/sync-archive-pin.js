@@ -49,6 +49,7 @@ function finishHandoff(store,pin,binding,options,stored){
   const next={format:1,previous,target:binding,sourceDigest:handoff.sourceDigest};
   storedHandoff(next,1);
   if(!same(stored,next)){
+   if(handoff.preservePending&&stored&&same(stored.previous,pin))throw Error('sync-archive-handoff-active');
    if(!same(stored,handoff.expected))throw Error('sync-archive-handoff-changed');
    store.put(next,handoffSlot);
   }
@@ -75,12 +76,13 @@ export function finishArchivePin(db,current,binding,options,restore){
   const portfolio=store.get('portfolio'),sync=store.get('sync-outbox-v1'),anchor=store.count('sync-local-anchor-v1');
   const value=store.get(archivePinSlot),count=store.count(archivePinSlot);
   const handoff=options.handoff&&store.get(handoffSlot);
-  const last=options.handoff?store.count(handoffSlot):count;
+  const last=(options.handoff||options.requireNoHandoff)?store.count(handoffSlot):count;
   let pin,status,failure;
   last.onsuccess=()=>{
    try{
     if(anchor.result||syncPreimageText(portfolio.result)!==syncPreimageText(current.portfolio)||
        syncPreimageText(sync.result)!==syncPreimageText(current.sync))throw Error('sync-archive-pin-preimage');
+    if(options.requireNoHandoff&&last.result!==0)throw Error('sync-archive-handoff-changed');
     pin=storedPin(value.result,count.result);
     if(options.handoff){
      ({pin,status}=finishHandoff(store,pin,binding,options,storedHandoff(handoff.result,last.result)));

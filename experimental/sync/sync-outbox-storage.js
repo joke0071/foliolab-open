@@ -210,10 +210,10 @@ export function createSyncOutboxStorage(db,verifyFrame) {
     {mode:'reopen',original:text,pin});
   }
  async function successorArchive({previousText,frameTexts=[],sourceArchive,text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},mode){
-  const write=mode==='pin',prepare=mode==='prepare';
+  const write=mode==='pin',adopt=mode==='adopt',prepare=adopt||mode==='prepare';
   if(!positive(expectedPinVersion)||typeof previousText!=='string'||
      previousText.length>CONFLICT_ARCHIVE_LIMIT||
-     (write&&(!hash(expectedPortfolioDigest)||typeof text!=='string'||text.length>CONFLICT_ARCHIVE_LIMIT)))
+     (write&&!hash(expectedPortfolioDigest))||((write||adopt)&&(typeof text!=='string'||text.length>CONFLICT_ARCHIVE_LIMIT)))
    throw Error('sync-archive-invalid-successor');
   const incoming=boundedFrameBatch(frameTexts);
   const sourceRead=sourceArchive===undefined?null:readConflictSource(sourceArchive);
@@ -221,8 +221,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(pin?.version!==expectedPinVersion||pin.digest!==await archiveDigest(previousText))
    throw Error('sync-archive-successor-pin-changed');
   return planSuccessor(pin,{previousText,incoming,source,expectedLocalRevision,expectedSyncVersion,
-   text:write?text:undefined,expectedPortfolioDigest},{previous:pin,version:expectedPinVersion,write,
-   handoff:prepare?{mode:'prepare',expected:originalHandoff,sourceDigest:source?.digest??null}:null});
+   text:write||adopt?text:undefined,expectedPortfolioDigest},{previous:pin,version:expectedPinVersion,write,
+   handoff:prepare?{mode:'prepare',preservePending:adopt,expected:originalHandoff,sourceDigest:source?.digest??null}:null});
  }
  function planSuccessor(pin,{previousText,incoming,source,expectedLocalRevision,expectedSyncVersion,text,expectedPortfolioDigest,verifiedDigest,intermediate},options){
   const unchanged=expectedLocalRevision===pin.localRevision&&expectedSyncVersion===pin.syncVersion;
@@ -240,7 +240,18 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   const regenerate=mode==='regenerate';
   const supplied=regenerate?boundedFrameBatch(frameTexts):null;
   const expected=await readArchiveHandoff(db);
-  if(!expected)throw Error('sync-archive-handoff-missing');
+  if(!expected){
+   if(mode!=='inspect')throw Error('sync-archive-handoff-missing');
+   // Older profiles may have the final pin but no preparation. Only the
+   // target's current binding can be established, independently of other files.
+   const pin=await readArchivePin(db);
+   if(!pin||typeof text!=='string'||text.length>CONFLICT_ARCHIVE_LIMIT)throw Error('sync-archive-handoff-missing');
+   let opened;
+   try{opened=await reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
+    expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:pin.version,requireNoHandoff:true});}
+   catch(error){if(error.message==='sync-outbox-archive-digest')throw Error('sync-archive-handoff-missing');throw error;}
+   return {status:'current-binding-only',pinVersion:opened.pinVersion,heads:opened.heads,applyAuthorized:false};
+  }
   const {previous,target,sourceDigest}=expected;
   if(typeof previousText!=='string'||previousText.length>CONFLICT_ARCHIVE_LIMIT||
      (!regenerate&&(typeof text!=='string'||text.length>CONFLICT_ARCHIVE_LIMIT))||
@@ -254,6 +265,22 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   return planSuccessor(previous,{previousText,incoming,source,text:regenerate?undefined:text,
    verifiedDigest:newDigest,expectedLocalRevision:target.localRevision,expectedSyncVersion:target.syncVersion},
    {handoff:{mode,expected}});
+ }
+ async function prepareFromFiles({previousText,sourceText,sourceDigest,text,expectedTargetDigest},adopt){
+  if(sourceText===undefined&&sourceDigest!==undefined)throw Error('sync-archive-handoff-file');
+  if(adopt&&(typeof text!=='string'||text.length>CONFLICT_ARCHIVE_LIMIT))throw Error('sync-archive-handoff-file');
+  let frameTexts=[];
+  if(adopt&&expectedTargetDigest!==undefined){
+   if(!hash(expectedTargetDigest)||await archiveDigest(text)!==expectedTargetDigest)throw Error('sync-archive-handoff-target-digest');
+   // An independently retained digest can identify a target that also contains
+   // older raw deliveries. Without it, reconstruct only from independent inputs.
+   frameTexts=text.split('\n',SYNC_GRAPH_LIMIT+2).slice(1);
+  }
+  const [local,pin]=await Promise.all([readPortfolioSyncRecord(db,{forOutbox:true}),readArchivePin(db)]);
+  if(!pin||!local.portfolio||!local.sync)throw Error('sync-archive-handoff-missing');
+  const sourceArchive=sourceText===undefined?undefined:{text:sourceText,expectedDigest:sourceDigest};
+  return successorArchive({previousText,sourceArchive,text,frameTexts,expectedLocalRevision:local.portfolio.revision,
+   expectedSyncVersion:local.sync.version,expectedPinVersion:pin.version},adopt?'adopt':'prepare');
  }
  async function refreshPreparedSuccessor({previousText,text}){
   if(typeof previousText!=='string'||previousText.length>CONFLICT_ARCHIVE_LIMIT)throw Error('sync-archive-handoff-file');
@@ -325,14 +352,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   },
   planFrameApply(request){return planFrames(request);},
   createSuccessorConflictArchive(request){return successorArchive(request,'preview');},
-  async prepareSuccessorFromFiles({previousText,sourceText,sourceDigest}){
-   const [local,pin]=await Promise.all([readPortfolioSyncRecord(db,{forOutbox:true}),readArchivePin(db)]);
-   if(!pin||!local.portfolio||!local.sync)throw Error('sync-archive-handoff-missing');
-   if(sourceText===undefined&&sourceDigest!==undefined)throw Error('sync-archive-handoff-file');
-   const sourceArchive=sourceText===undefined?undefined:{text:sourceText,expectedDigest:sourceDigest};
-   return successorArchive({previousText,sourceArchive,expectedLocalRevision:local.portfolio.revision,
-    expectedSyncVersion:local.sync.version,expectedPinVersion:pin.version},'prepare');
-  },
+  prepareSuccessorFromFiles(request){return prepareFromFiles(request,false);},
+  prepareSavedSuccessorFromFiles(request){return prepareFromFiles(request,true);},
   prepareSuccessorConflictArchive(request){return successorArchive(request,'prepare');},
   refreshPreparedSuccessorArchive(files){return refreshPreparedSuccessor(files);},
   regenerateSuccessorArchive(files){return resumeSuccessor(files,'regenerate');},

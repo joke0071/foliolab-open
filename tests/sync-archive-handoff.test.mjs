@@ -173,3 +173,46 @@ test('refresh checks the intermediate queue prefix even when the original queue 
  assert.deepEqual(db.data.get(slot),handoff);
  assert.equal((await api.refreshPreparedSuccessorArchive(files)).handoffStatus,'prepared');
 });
+
+test('an older completed binding can be verified from the target alone and never acquires a retrospective preparation',async()=>{
+ const {db,api,request}=await setup(),preview=await api.createSuccessorConflictArchive(request);
+ await api.pinSuccessorConflictArchive({...request,text:preview.archive.text,expectedPortfolioDigest:preview.successorPortfolioDigest});
+ const files={text:preview.archive.text};
+ const status={status:'current-binding-only',pinVersion:3,heads:['B2','C'],applyAuthorized:false};
+ assert.deepEqual(await api.inspectSuccessorHandoff(files),status);
+ await assert.rejects(()=>api.confirmSuccessorHandoff(files),/handoff-missing/);
+ await assert.rejects(()=>api.inspectSuccessorHandoff({text:files.text.slice(0,-1)}));
+ assert.equal(db.data.has(slot),false);
+});
+
+test('explicit adoption reconstructs old targets from independent inputs or their retained digest, preserves active preparations',async()=>{
+ const {db,api,raw,request}=await setup();
+ const legacy=await api.createSuccessorConflictArchive(request),other=await api.createSuccessorConflictArchive(raw);
+ const files={previousText:request.previousText,text:legacy.archive.text,sourceText:request.sourceArchive.text};
+ const adopt={...files,sourceDigest:request.sourceArchive.expectedDigest};
+ const rawFiles={previousText:raw.previousText,text:other.archive.text};
+ await assert.rejects(()=>api.prepareSavedSuccessorFromFiles(rawFiles),/no-new-frames/);
+ await assert.rejects(()=>api.prepareSavedSuccessorFromFiles({...rawFiles,expectedTargetDigest:legacy.archive.digest}),/target-digest/);
+ await assert.rejects(()=>api.prepareSavedSuccessorFromFiles({...adopt,text:other.archive.text}),/successor-readback/);
+ assert.equal(db.data.has(slot),false);
+ assert.deepEqual((await api.prepareSavedSuccessorFromFiles(adopt)).archive,legacy.archive);
+ assert.equal((await api.prepareSavedSuccessorFromFiles(adopt)).pinVersion,2);
+ await assert.rejects(()=>api.prepareSavedSuccessorFromFiles({...rawFiles,expectedTargetDigest:other.archive.digest}),/handoff-active/);
+ assert.equal((await api.confirmSuccessorHandoff(files)).pinVersion,3);
+ const second=await setup();
+ const old=await second.api.createSuccessorConflictArchive(second.raw);
+ const standalone={previousText:second.raw.previousText,text:old.archive.text};
+ assert.equal((await second.api.prepareSavedSuccessorFromFiles({...standalone,expectedTargetDigest:old.archive.digest})).handoffStatus,'prepared');
+ assert.equal((await second.api.confirmSuccessorHandoff(standalone)).status,'target-bound');
+});
+
+test('older binding inspection discards a result if a preparation appears during file verification',async()=>{
+ const {db,api,request}=await setup();
+ let first=true;
+ const racing=createSyncOutboxStorage(db,async ciphertext=>{
+  if(first){first=false;await api.prepareSuccessorConflictArchive(request);}
+  return verify(ciphertext);
+ });
+ await assert.rejects(()=>racing.inspectSuccessorHandoff({text:request.previousText}),/handoff-changed/);
+ assert.equal(await api.archivePinVersion(),2);
+});

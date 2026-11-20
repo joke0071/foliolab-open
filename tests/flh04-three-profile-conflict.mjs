@@ -1,3 +1,4 @@
+import {checkPreviousArchiveClient} from './flh04-previous-archive-client.mjs';
 import {checkPendingBooking} from './flh04-pending-booking.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
@@ -91,6 +92,7 @@ export async function checkThreeProfileConflict(browser,setup,operation){
    assert.deepEqual(await operation(page,'read'),profile.before);
    assert.equal(await page.evaluate(()=>window.syncTest.api.archivePinVersion()),request.expectedPinVersion);
    if(index===0)successorRequest=request;
+   if(index===2)await checkPreviousArchiveClient({profile,open,operation,request,directory});
    await profile.context.close();
   }
   const [local,remote]=profiles;

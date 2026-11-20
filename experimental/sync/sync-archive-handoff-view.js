@@ -19,6 +19,8 @@ export function showArchiveHandoff(container,api){
  summary.textContent='Neue Übernahme vorbereiten';details.append(summary);fieldset.append(details);
  const digest=input(details,'Prüfsumme des Quellarchivs (SHA-256)','text');
  const prepare=button(details,'Zielarchiv vorbereiten');
+ const targetDigest=input(details,'Frühere Prüfsumme der Zieldatei (falls vorhanden)','text');
+ const adopt=button(details,'Vorhandene Zieldatei neu vorbereiten');
  const rebuild=button(fieldset,'Zielarchiv erneut erstellen');
  const download=doc.createElement('a'),checksum=doc.createElement('output');
  download.textContent='Zielarchiv speichern';download.hidden=true;
@@ -40,11 +42,13 @@ export function showArchiveHandoff(container,api){
  form.addEventListener('submit',event=>{event.preventDefault();});
  async function run(action){
   if(fieldset.disabled||(action==='confirm'&&confirm.disabled))return;
-  const needsTarget=['refresh','inspect','confirm'].includes(action);
-  target.required=needsTarget;digest.required=action==='prepare'&&Boolean(source.files[0]);
+  const needsTarget=['adopt','refresh','inspect','confirm'].includes(action);
+  target.required=needsTarget;previous.required=action!=='inspect';
+  digest.required=(action==='prepare'||action==='adopt')&&Boolean(source.files[0]);
   if(!form.reportValidity())return;
   const selected=[previous.files[0],needsTarget?target.files[0]:undefined,action==='refresh'?undefined:source.files[0]];
   const sourceDigest=source.files[0]?digest.value.trim():undefined;
+  const expectedTargetDigest=targetDigest.value.trim()||undefined;
   reset();fieldset.disabled=true;status.textContent='Dateien werden geprüft …';
   try{
    if(selected.some(file=>file&&file.size>CONFLICT_ARCHIVE_LIMIT))throw Error('file-limit');
@@ -54,12 +58,14 @@ export function showArchiveHandoff(container,api){
    const files={previousText,text,sourceText};
    let result;
    if(action==='prepare')result=await api.prepareSuccessorFromFiles({previousText,sourceText,sourceDigest});
+   else if(action==='adopt')result=await api.prepareSavedSuccessorFromFiles({...files,sourceDigest,expectedTargetDigest});
    else if(action==='refresh')result=await api.refreshPreparedSuccessorArchive(files);
    else if(action==='regenerate')result=await api.regenerateSuccessorArchive(files);
    else if(action==='confirm')result=await api.confirmSuccessorHandoff(files);
    else result=await api.inspectSuccessorHandoff(files);
    if(!container.contains(form))return;
-   if(result.archive){
+   if(action==='adopt')status.textContent='Die vorhandene Zieldatei ist neu vorbereitet. Prüfe die Dateien vor der Bestätigung.';
+   else if(result.archive){
     url=URL.createObjectURL(new Blob([result.archive.text],{type:'application/octet-stream'}));
     download.download='FolioLab-Konfliktarchiv-'+result.archive.digest+'.flh';
     download.href=url;download.hidden=false;checksum.textContent='SHA-256 '+result.archive.digest;
@@ -68,11 +74,13 @@ export function showArchiveHandoff(container,api){
    }else if(result.status==='pending-confirmation'){
     status.textContent='Dateien geprüft. Die Bestätigung steht aus.';confirm.disabled=false;
    }else if(result.status==='target-bound')status.textContent='Das Zielarchiv ist bestätigt.';
+   else if(result.status==='current-binding-only')status.textContent='Diese Zieldatei ist im Profil gebunden. Zur früheren Übernahme liegt kein Vorbereitungsnachweis vor.';
    else throw Error('unrecognized-handoff');
   }catch{
    status.textContent='Die Prüfung ist fehlgeschlagen. Prüfe die gewählten Dateien und den aktuellen Profilstand.';
   }finally{fieldset.disabled=false;}
  }
+ adopt.addEventListener('click',()=>void run('adopt'));
  prepare.addEventListener('click',()=>void run('prepare'));rebuild.addEventListener('click',()=>void run('regenerate'));
  refresh.addEventListener('click',()=>void run('refresh'));
  inspect.addEventListener('click',()=>void run('inspect'));confirm.addEventListener('click',()=>void run('confirm'));
