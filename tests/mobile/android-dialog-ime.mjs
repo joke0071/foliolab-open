@@ -56,8 +56,8 @@ const report={target:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_
 const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000});
 try{
  const page=await ctx.newPage();await page.bringToFront();page.setDefaultTimeout(12000);
- await page.goto('http://127.0.0.1:4173/');
- const ready=()=>page.waitForFunction(()=>document.querySelector('#portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ await page.goto('http://127.0.0.1:4173/',{waitUntil:'commit'});
+ const ready=()=>page.waitForFunction(()=>document.querySelector('#portfolioStorageState')?.textContent.includes('IndexedDB aktiv'),undefined,{timeout:45000});
  await ready();
  report.browser=await page.evaluate(()=>navigator.userAgent);
  await page.evaluate(async()=>{
@@ -67,7 +67,7 @@ try{
   model.positions.push(createPosition({id:'cash',providerId:'provider',name:'Synthetic cash',kind:'cash',quantity:10,price:1},model));
   const s=new PortfolioStorage();await s.initialize();await s.save(model);s.close();
  });
- await page.reload();await ready();
+ await page.reload({waitUntil:'commit'});await ready();
  const read=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const original=await read();await page.locator('#mobileNav [data-page="positions"]').tap();
  for(const spec of [{name:'asset',opener:'#addWizard',field:'#wizardName',action:'#wizardPrev',dialog:'#wizardDialog'},{name:'wallet',opener:'#addWallet',field:'#scanAddress',action:'#cancelDialog',dialog:'#editDialog'}]){
