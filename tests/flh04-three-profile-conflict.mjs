@@ -102,15 +102,19 @@ export async function checkThreeProfileConflict(browser,setup,operation){
   const sourceRequest={previousText:await readFile(remote.file,'utf8'),
    expectedPinVersion:await remote.page.evaluate(()=>window.syncTest.api.archivePinVersion()),
    expectedLocalRevision:remoteSaved.revision,expectedSyncVersion:captured.version};
-  const source=await remote.page.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),sourceRequest);
+  const source=await remote.page.evaluate(req=>window.syncTest.api.prepareSuccessorConflictArchive(req),sourceRequest);
   const sourceFile=join(directory,'B-next.flh');await writeFile(sourceFile,source.archive.text);
   const sourceArchive={text:await readFile(sourceFile,'utf8'),expectedDigest:source.archive.digest};
-  await remote.page.evaluate(req=>window.syncTest.api.pinSuccessorConflictArchive(req),
-   {...sourceRequest,text:sourceArchive.text,expectedPortfolioDigest:source.successorPortfolioDigest});
+  await remote.context.close();await open(remote);
+  const localFiles={previousText:await readFile(remote.file,'utf8'),text:await readFile(sourceFile,'utf8')};
+  const pending=await remote.page.evaluate(files=>window.syncTest.api.inspectSuccessorHandoff(files),localFiles);
+  assert.equal(pending.status,'pending-confirmation');
+  const done=await remote.page.evaluate(files=>window.syncTest.api.confirmSuccessorHandoff(files),localFiles);
+  assert.equal(done.pinVersion,pending.pinVersion+1);
   await remote.context.close();
   await open(local);
   await checkSuccessor({profile:local,open,setup,operation,text:await readFile(local.file,'utf8'),
-   request:successorRequest,directory,sourceArchive,remoteRaw:remoteSaved.raw});
+   request:successorRequest,directory,sourceArchive,sourceFile,remoteRaw:remoteSaved.raw});
   await local.context.close();
   console.log(JSON.stringify({kind:'FLH04ThreeProfileConflict',status:'PASS',engine:browser.browserType().name(),
    persistentProfiles:3,verifiedFinancialCopies:9,blockedSourceRestores:3}));
@@ -120,7 +124,7 @@ export async function checkThreeProfileConflict(browser,setup,operation){
  }
 }
 
-async function checkSuccessor({profile,open,setup,operation,text,request,directory,sourceArchive,remoteRaw}){
+async function checkSuccessor({profile,open,setup,operation,text,request,directory,sourceArchive,sourceFile,remoteRaw}){
  const reader=profile.page,writer=await profile.context.newPage();await setup(writer);
  const damaged={...sourceArchive,text:sourceArchive.text.slice(0,-1)};
  await assert.rejects(()=>writer.evaluate(req=>window.syncTest.api.createSuccessorConflictArchive(req),
@@ -153,19 +157,49 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
   {previousHead:'A',currentHeads:['A2']},{previousHead:'B',currentHeads:['B2']},{previousHead:'C',currentHeads:['C']}]});
  assert.equal(next.pinVersion,request.expectedPinVersion);assert.deepEqual(next.heads,['A2','B2','C']);
  assert.notEqual(next.archive.text.split('\n',1)[0],sourceArchive.text.split('\n',1)[0]);
- const file=join(directory,'A-next.flh');await writeFile(file,next.archive.text);
- const readback=await readFile(file,'utf8');
+ await writer.evaluate(async()=>{
+  const {showArchiveHandoff}=await import('/experimental/sync/sync-archive-handoff-view.js');
+  showArchiveHandoff(document.body,window.syncTest.api);
+ });
+ const output=writer.locator('output[role=status]'),confirm=writer.getByRole('button',{name:'Übernahme bestätigen'});
+ const inspect=writer.getByRole('button',{name:'Dateien prüfen'}),sourceInput=writer.getByLabel('Quellarchiv (',{exact:false});
+ await writer.getByLabel('Bisheriges Archiv').setInputFiles(profile.file);await sourceInput.setInputFiles(sourceFile);
+ await writer.getByText('Neue Übernahme vorbereiten',{exact:true}).click();
+ await writer.getByLabel('Prüfsumme des Quellarchivs (SHA-256)').fill(sourceArchive.expectedDigest);
+ await writer.getByRole('button',{name:'Zielarchiv vorbereiten'}).click();
+ await output.filter({hasText:'zum Speichern bereit'}).waitFor();
+ const download=writer.getByRole('link',{name:'Zielarchiv speichern'});
+ async function save(path){
+  const [event]=await Promise.all([writer.waitForEvent('download'),download.click()]);
+  await event.saveAs(path);return readFile(path,'utf8');
+ }
+ const file=join(directory,'A-next.flh'),readback=await save(file);
+ assert.equal(readback,next.archive.text);
+ await writer.getByRole('button',{name:'Zielarchiv erneut erstellen'}).click();
+ await output.filter({hasText:'zum Speichern bereit'}).waitFor();
+ assert.equal(await save(join(directory,'regenerated.flh')),readback);
  args.expectedPortfolioDigest=next.successorPortfolioDigest;
  const pin=req=>writer.evaluate(req=>window.syncTest.api.pinSuccessorConflictArchive(req),req);
  await assert.rejects(()=>pin({...args,text:readback,sourceArchive:damaged}),/source-digest/);
  assert.equal(await writer.evaluate(()=>window.syncTest.api.archivePinVersion()),request.expectedPinVersion);
  await assert.rejects(()=>pin({...args,text:readback.slice(0,-1)}),/successor-readback/);
- const pinned=await pin({...args,text:readback});
+ await writer.getByLabel('Gespeichertes Zielarchiv').setInputFiles(file);
+ await inspect.click();
+ await output.filter({hasText:'Bestätigung steht aus'}).waitFor();
+ await sourceInput.setInputFiles(profile.file);assert.equal(await confirm.isDisabled(),true);
+ await inspect.click();await output.filter({hasText:'fehlgeschlagen'}).waitFor();
+ assert.equal(await confirm.isDisabled(),true);
+ await sourceInput.setInputFiles(sourceFile);await inspect.click();
+ await output.filter({hasText:'Bestätigung steht aus'}).waitFor();await confirm.click();
+ await output.filter({hasText:'Zielarchiv ist bestätigt'}).waitFor();
+ const files={previousText:text,text:readback,sourceText:sourceArchive.text};
+ const pinned=await writer.evaluate(files=>window.syncTest.api.inspectSuccessorHandoff(files),files);
  assert.equal(pinned.pinVersion,request.expectedPinVersion+1);assert.equal(pinned.applyAuthorized,false);
  assert.match(await reader.evaluate(()=>{window.resumeOldSelection();return window.oldSelection;}),/stale-preimage|pin-preimage|pin-version|pin-binding/);
  await assert.rejects(()=>reader.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request),/selection-missing/);
  await profile.context.close();await open(profile);
  const page=profile.page;
+ assert.deepEqual(await page.evaluate(files=>window.syncTest.api.confirmSuccessorHandoff(files),files),pinned);
  await assert.rejects(()=>page.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text}),text),/archive-digest/);
  await assert.rejects(()=>page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),readback),/selection-missing/);
  const reopened=await page.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text,includeOverview:true}),readback);
@@ -181,5 +215,6 @@ async function checkSuccessor({profile,open,setup,operation,text,request,directo
   assert.deepEqual(JSON.parse(copy.financialCopy),data);assert.equal(data.positions[0].quantityExact,quantity);
  }
  assert.deepEqual(await operation(page,'read'),{portfolio:saved,sync:queue});
+ console.log(JSON.stringify({kind:'FLH04ArchiveHandoffFiles',status:'PASS',engine:process.env.ENGINE}));
  console.log(JSON.stringify({kind:'FLH04ConflictSuccessor',status:'PASS',engine:process.env.ENGINE}));
 }
