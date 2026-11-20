@@ -2477,10 +2477,12 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
     localStorage.setItem(FULL_BACKUP_OPTION,fullOption.checked?'true':'false');
     notify(fullOption.checked?'Vollständige verschlüsselte Backups enthalten künftig auch Einstellungen und Zugangsschlüssel.':'Einstellungen und API-Schlüssel werden wieder aus neuen Backups ausgeschlossen.');
   });
+  $('restoreProgress').addEventListener('cancel',event=>event.preventDefault());
   void refreshBackupPasswordStatus();$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{
  const file=e.target.files?.[0];e.target.value='';
- if(!file)return;
- const restoreStatus=$('backupStatus');restoreStatus.textContent='Sicherung wird wiederhergestellt …';setLoading(restoreStatus,true);
+ const restoreStatus=$('backupStatus');
+ if(!file||restoreStatus.classList.contains('lab-loading'))return;
+ restoreStatus.textContent='Sicherung wird wiederhergestellt …';setLoading(restoreStatus,true);
  try{
   assertLocalBackupFileSize(file.size);
   let parsed=JSON.parse(await file.text()),v2Envelope=null,password='';
@@ -2497,6 +2499,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   const imported=safeImport(unpacked.data);
   if(!confirm('Backup mit '+imported.positions.length+' Positionen und '+imported.providers.length+' Anbietern wiederherstellen? Der aktuelle Datenbestand wird ersetzt.'))return;
   const configuration=decideImportedConfiguration(unpacked.configuration);
+  $('restoreProgress').showModal();
   if(loadFailure&&portfolioStore.isIndexedDB){
     if(!recoveryDownloaded)throw Error('Zuerst die beschädigte IndexedDB-Originaldatei herunterladen.');
     imported.settings=configuration?configuration.settings:defaultSettings();
@@ -2508,15 +2511,25 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   imported.settings=configuration?configuration.settings:{...defaultSettings(),...model.settings};
   await save({intent:'restore'},imported);
   loadFailure=null;
-  if(v2Envelope){
+  const revision=portfolioStore.revision,legacyRaw=portfolioStore.legacyRaw;
+  try{
+   if(v2Envelope){
     await adoptBackupPassword(v2Envelope,password);
     await refreshBackupPasswordStatus();
     await window.FolioDriveBackup?.refreshVaultStatus?.();
+   }
+   if(configuration)applyImportedDriveConfiguration(configuration);
+  }finally{
+   // Another tab can save after our commit, even while the vault is finishing.
+   // Publish its canonical model and matching revision together before enabling exports.
+   try{model=await portfolioStore.reload();}
+   catch(error){loadFailure=error;throw error;}
+   finally{render();}
   }
-  if(configuration)applyImportedDriveConfiguration(configuration);
   if(configuration)syncApiSettingsForm();
-  notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
- }catch(err){notify(err.message,true)}finally{setLoading(restoreStatus,false);renderBackupStatus();}
+  const advanced=revision!==portfolioStore.revision||legacyRaw!==portfolioStore.legacyRaw;
+  notify('Backup wiederhergestellt.'+(advanced?' Spätere Änderungen aus einem anderen Tab sind enthalten.':'')+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
+ }catch(err){notify(err.message,true)}finally{$('restoreProgress').close();setLoading(restoreStatus,false);renderBackupStatus();}
 });
   // Drive only receives an encrypted package. API/RPC credentials are added to
   // that package exclusively when the user has enabled full backups.
