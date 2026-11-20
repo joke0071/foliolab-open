@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
+import {blankModel,backup} from '../src/model.js';
 
 async function show(page,text){
  await page.evaluate(async text=>{
@@ -31,6 +32,75 @@ export async function saveConflictSet(page,request,directory,profiles){
  assert.equal(decoded.data[2].positions[0].quantityExact,decoded.data[3].positions[0].quantityExact);
  assert.notDeepEqual(decoded.data[2],decoded.data[3]);
  return {paths,labels,copies,indexFile};
+}
+
+async function openApp(context,origin){
+ const page=await context.newPage();
+ await page.goto(origin);
+ await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ return page;
+}
+
+async function readAppState(page){
+ return page.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioSyncRecord}=await import('/src/atomic-storage.js');
+  const db=await openPortfolioDB();
+  try{return await readPortfolioSyncRecord(db);}finally{db.close();}
+ });
+}
+
+async function restoreDownload({browserType,target,origin,file,password,expected,label}){
+ let context=await browserType.launchPersistentContext(target);
+ try{
+  const page=await openApp(context,origin),before=await readAppState(page);
+  assert.deepEqual(JSON.parse(before.portfolio.raw),JSON.parse(backup(blankModel(),{includeHistory:true})),label);
+  assert.equal(before.sync,null);
+  const dialogs=[];
+  page.on('dialog',async dialog=>{
+   dialogs.push(dialog.type());
+   if(dialog.type()==='prompt'&&dialog.message().includes('Backup-Passwort'))await dialog.accept(password);
+   else if(dialog.type()==='confirm'&&dialog.message().includes('wiederherstellen?'))await dialog.accept();
+   else await dialog.dismiss();
+  });
+  await page.locator('#backupFile').setInputFiles(file);
+  await page.locator('#toast').filter({hasText:'Backup wiederhergestellt'}).waitFor();
+  assert.deepEqual(dialogs,['prompt','confirm'],label);
+  await context.close();
+  context=await browserType.launchPersistentContext(target);
+  const reopened=await readAppState(await openApp(context,origin));
+  const finance=JSON.parse(reopened.portfolio.raw);
+  delete finance.settings;
+  assert.deepEqual(finance,expected,label);
+  assert.equal(reopened.portfolio.revision,before.portfolio.revision+1,label);
+  assert.deepEqual(reopened.portfolio.settings,before.portfolio.settings,label);
+  assert.equal(reopened.portfolio.syncEnrollmentRequired,true,label);
+  assert.equal(reopened.sync,null,label);
+ }finally{await context.close();}
+}
+
+export async function checkRecoverySetRestore({browserType,directory,source,profiles,request}){
+ const {paths,labels}=source.backupSet,origin=new URL('/',source.page.url()).href;
+ // Oracles were captured in the individual source profiles before the archive existed.
+ const cases=[['Lokaler Stand',source],...profiles.map(profile=>['Revision '+profile.id,profile])];
+ for(const [label,profile] of cases){
+  const file=paths[labels.indexOf(label)];
+  assert.ok(file,label);
+  await restoreDownload({browserType,target:join(directory,'restore-'+label),origin,file,
+   password:request.password,expected:profile.data,label});
+ }
+ const text=await readFile(source.file,'utf8');
+ const {archive,selected}=await source.page.evaluate(async({text,expectedPinVersion})=>{
+  const {api}=window.syncTest;
+  return {archive:await api.reopenPinnedConflictArchive({text}),
+   selected:await api.exportPinnedFinancialCopy({text,expectedPinVersion})};
+ },{text,expectedPinVersion:request.expectedPinVersion});
+ assert.deepEqual(archive.heads,profiles.map(p=>p.id));
+ assert.equal(archive.pinVersion,request.expectedPinVersion);
+ assert.equal(archive.applyAuthorized,false);
+ assert.equal(selected.restorePreview.selectedHead,request.confirmedHead);
+ assert.deepEqual(JSON.parse(selected.financialCopy),profiles.find(p=>p.id===request.confirmedHead).data);
+ await assert.rejects(()=>source.page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request),
+  /restore-needs-local-and-selected-heads/);
 }
 
 export async function checkSavedSet(page,request,set){
