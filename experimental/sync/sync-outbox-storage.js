@@ -1,3 +1,4 @@
+import {encryptWithBackupPassword} from '../../src/backup-vault.js';
 import {createSyncSnapshot,validateSyncSnapshot,compareSyncSnapshotSections,previewSyncRestore} from './sync-snapshot.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
 import {SYNC_FRAME_TEXT_LIMIT,readVerifiedSyncFrame} from './sync-frame-verifier.js';
@@ -147,7 +148,11 @@ export function createSyncOutboxStorage(db,verifyFrame) {
     const plain=await verifiedHeadPlain(current,frames,id);
     result.restorePreview={selectedHead:id,...await previewSyncRestore(current.portfolio.raw,plain)};
     // Only the explicit export returns financial values, after the final IDB check below.
-    if(archive.pin.exportCopy)result.financialCopy=JSON.stringify(JSON.parse(plain).data);
+    if(archive.pin.exportCopy){
+     const financialCopy=JSON.stringify(JSON.parse(plain).data);
+     if(archive.pin.exportCopy==='encrypted')result.encryptedCopy=await encryptWithBackupPassword(financialCopy);
+     else result.financialCopy=financialCopy;
+    }
    }
    const pin=await finishArchivePin(db,current,binding,archive.pin);
    return {...result,pinVersion:pin.version,applyAuthorized:false};
@@ -205,7 +210,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   }
  async function selectedRestore({text,selectedHead,expectedPinVersion},mode){
   const pin=await readArchivePin(db);
-  const readSelection=mode==='reopen'||mode==='export';
+  const exportCopy=mode==='export'||mode==='encrypted';
+  const readSelection=mode==='reopen'||exportCopy;
   if(readSelection){
    if(!pin?.selectedHead)throw Error('sync-archive-selection-missing');
    selectedHead=pin.selectedHead;
@@ -216,7 +222,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   if(pin?.version!==expectedPinVersion&&!retry)throw Error('sync-archive-pin-version');
   return reopenArchive({text,expectedDigest:pin.digest,expectedLocalRevision:pin.localRevision,
    expectedSyncVersion:pin.syncVersion},{digest:pin.digest,version:expectedPinVersion,selectedHead,
-   recordSelection:mode==='record',readSelection,exportCopy:mode==='export'});
+   recordSelection:mode==='record',readSelection,exportCopy:exportCopy?mode:null});
  }
  return Object.freeze({
   async recover() {
@@ -273,6 +279,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   recordPinnedSelection(request){return selectedRestore(request,'record');},
   reopenPinnedSelection({text}){return selectedRestore({text},'reopen');},
   exportPinnedFinancialCopy({text,expectedPinVersion}){return selectedRestore({text,expectedPinVersion},'export');},
+  exportEncryptedPinnedFinancialCopy({text,expectedPinVersion}){return selectedRestore({text,expectedPinVersion},'encrypted');},
   async confirm() {
    // A2: a verifier receipt authenticates bytes, NOT where they were obtained.
    // No remote transport/provenance issuer exists yet. Fail closed, including

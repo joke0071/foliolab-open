@@ -52,6 +52,29 @@ async function checkCrossTabFramePlan(browser,setup,operation){
    const expected=winner.restorePreview.selectedHead==='L'?left:JSON.parse(root.raw);
    delete expected.settings;
    assert.deepEqual(JSON.parse(copy.financialCopy),expected);
+   const password='Portable synthetic example';
+   const decoded=await fresh.evaluate(async({text,password})=>{
+    const vault=await import('/src/backup-vault.js');
+    await vault.configureBackupPassword(password,password);
+    const copy=await window.syncTest.api.exportEncryptedPinnedFinancialCopy({text,expectedPinVersion:2});
+    return vault.decryptPasswordBackup(JSON.parse(copy.encryptedCopy),password);
+   },{text,password});
+   assert.deepEqual(JSON.parse(decoded),expected);
+   // Pause only the outgoing backup encryption. A newer selection must suppress its result.
+   await fresh.evaluate(text=>{
+    const subtle=crypto.subtle,encrypt=subtle.encrypt.bind(subtle);
+    subtle.encrypt=async(...args)=>{
+     const ciphertext=await encrypt(...args);
+     await new Promise(resolve=>{window.resumeBackupEncryption=resolve;});
+     return ciphertext;
+    };
+    window.pendingBackup=window.syncTest.api.exportEncryptedPinnedFinancialCopy({text,expectedPinVersion:2})
+     .then(()=>null,error=>error.message).finally(()=>{delete subtle.encrypt;});
+   },text);
+   await fresh.waitForFunction(()=>typeof window.resumeBackupEncryption==='function');
+   await b.evaluate(request=>window.syncTest.api.recordPinnedSelection(request),
+    {text,expectedPinVersion:2,selectedHead:winner.restorePreview.selectedHead==='L'?'B':'L'});
+   assert.match(await fresh.evaluate(()=>{window.resumeBackupEncryption();return window.pendingBackup;}),/selection-changed|pin-version/);
    await fresh.close();
   }finally{await rm(directory,{recursive:true,force:true});}
   await a.evaluate(async request=>{
