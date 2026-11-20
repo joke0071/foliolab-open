@@ -119,13 +119,14 @@ const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnun
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
-async function save(options){
+async function save(options,replacement){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
  saving=true;syncPortfolioState();
  try{
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
-  await portfolioStore.save(model,options);
+  await portfolioStore.save(replacement??model,options);
+  if(replacement){model=replacement;filter='all';}
   lastStorageError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
@@ -2505,9 +2506,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
     location.reload();return;
   }
   imported.settings=configuration?configuration.settings:{...defaultSettings(),...model.settings};
-  const previous=model;
-  model=imported;filter='all';
-  try{await save({intent:'restore'})}catch(error){model=previous;throw error}
+  await save({intent:'restore'},imported);
   loadFailure=null;
   if(v2Envelope){
     await adoptBackupPassword(v2Envelope,password);
