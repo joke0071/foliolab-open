@@ -1428,6 +1428,16 @@
 #morePage .advanced-apis details.advanced-apis{margin-left:0;margin-right:0}
 #morePage .drive-setup-help{margin:0 0 10px}
 #morePage .drive-setup-help ol,#morePage .more-panel-help ol{font-size:12px;line-height:1.6;padding-left:20px;margin:6px 0 10px}
+#morePage .drive-setup-help a,
+#morePage .more-panel-help a{
+ display:inline-flex;
+ align-items:center;
+ vertical-align:middle;
+ min-height:44px;
+ min-width:44px;
+ max-width:100%;
+ overflow-wrap:anywhere;
+}
 #morePage .drive-setup-help code,#morePage .more-panel-help code,#morePage .small-help code{white-space:normal;overflow-wrap:anywhere}
 #morePage .danger-zone>summary{color:#7d5a55;font-weight:600}
 #morePage .danger-zone .btn{margin:2px 0 14px}
