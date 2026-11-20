@@ -1,0 +1,163 @@
+{
+  "browser": "141.0.7390.37",
+  "states": [
+    {
+      "name": "empty",
+      "providers": 0,
+      "positions": 0,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "exactIDB": true
+    },
+    {
+      "name": "provider",
+      "providers": 1,
+      "positions": 0,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "exactIDB": true
+    },
+    {
+      "name": "first",
+      "providers": 1,
+      "positions": 1,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "exactIDB": true
+    },
+    {
+      "name": "large",
+      "providers": 1,
+      "positions": 512,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "exactIDB": true
+    }
+  ],
+  "issue": 217,
+  "main": "4b9d676a18a1eeac223979a7874418d68269a893",
+  "fixture": "Local isolated profiles. One synthetic provider from the second profile onward, one account when positions exist. Each position is an ETF with quantity and price 1. No bookings. After reload, compare the complete IndexedDB record around all navigation and display checks.",
+  "pages": [
+    "dashboard",
+    "positions",
+    "bookings"
+  ],
+  "checks": [
+    "four reachable 44 x 44 or larger onboarding buttons with focus and hit testing",
+    "welcome hidden after first provider",
+    "empty positions text only when empty",
+    "empty booking message",
+    "no horizontal page overflow"
+  ],
+  "computedTextScale": {
+    "factor": 2,
+    "scope": "onboarding and both empty list messages",
+    "observations": [
+      {
+        "tab": "dashboard",
+        "width": 320,
+        "card": 290,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "positions",
+        "width": 320,
+        "card": 258,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "bookings",
+        "width": 320,
+        "card": 258,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "dashboard",
+        "width": 390,
+        "card": 360,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "positions",
+        "width": 390,
+        "card": 328,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "bookings",
+        "width": 390,
+        "card": 328,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "dashboard",
+        "width": 1440,
+        "card": 1122,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "positions",
+        "width": 1440,
+        "card": 833,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      },
+      {
+        "tab": "bookings",
+        "width": 1440,
+        "card": 540,
+        "overflow": false,
+        "pageOverflow": false,
+        "clipped": []
+      }
+    ]
+  },
+  "image": "visual06-2026-11-20.webp",
+  "imageScope": "18 actual Chromium component captures from the two historical revisions. Original pixel dimensions retained in a lossless contact sheet.",
+  "before": "6ba5fc5c3ce54a01199d3d2b28fd5d6920954183",
+  "after": "a78fa5a6493bc457c9994abb5b38eb40325f7e67",
+  "physicalDevice": false
+}
