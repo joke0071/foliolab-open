@@ -1,3 +1,4 @@
+import {showRecoverySet} from './sync-recovery-set-view.js';
 // Read-only presentation of a verified pinned archive. A failed or superseded
 // request cannot leave rows from a previously opened archive on screen.
 const sections={
@@ -12,7 +13,7 @@ export async function showPinnedConflict(container,api,text){
  const table=container.ownerDocument.createElement('table');
  container.replaceChildren(table);
  try{
-  const {overview}=await api.reopenPinnedConflictArchive({text,includeOverview:true});
+  const {overview,heads,pinVersion}=await api.reopenPinnedConflictArchive({text,includeOverview:true});
   table.createCaption().textContent=overview.baseId===null?'Kein gemeinsamer Ausgangsstand':
    'Änderungen seit dem gemeinsamen Stand '+overview.baseId;
   const header=table.createTHead().insertRow();
@@ -25,5 +26,7 @@ export async function showPinnedConflict(container,api,text){
    row.insertCell().textContent=changedSections===null?'Vergleich nicht möglich':
     changedSections.map(key=>sections[key]??key).join(', ')||'Keine Änderungen';
   }
+  if(heads.length>=3&&table.parentNode===container)
+   showRecoverySet(container,api,{text,expectedPinVersion:pinVersion},heads);
  }catch(error){table.remove();throw error;}
 }

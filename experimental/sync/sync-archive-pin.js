@@ -102,6 +102,7 @@ export function finishArchivePin(db,current,binding,options,restore){
      store.put(pin,archivePinSlot);
      return;
     }
+    if(options.allHeads&&(pin?.selectedHead??null)!==options.savedSelection)throw Error('sync-archive-selection-changed');
     if(options.readSelection&&pin?.selectedHead!==selectedHead)throw Error('sync-archive-selection-changed');
     if(write&&matches&&(version===expectedVersion||version===expectedVersion+1))return;
     if(version!==expectedVersion)throw Error('sync-archive-pin-version');
