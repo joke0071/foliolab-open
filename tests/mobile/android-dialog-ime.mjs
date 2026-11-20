@@ -15,7 +15,7 @@ async function waitKeyboard(expected){
  throw Error('Android IME visibility did not reach '+expected);
 }
 const report={target:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_64',physical:false,android:adb('shell','getprop','ro.build.version.release').toString().trim(),ime:adb('shell','settings','get','secure','default_input_method').toString().trim(),scenarios:[]};
-const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,timeout:45000});
+const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000});
 try{
  const page=await ctx.newPage();page.setDefaultTimeout(12000);
  await page.goto('http://127.0.0.1:4173/');
@@ -43,6 +43,7 @@ try{
    function measure(selector){const r=document.querySelector(selector).getBoundingClientRect();return {top:r.top,bottom:r.bottom,height:r.height,visible:r.top>=view.offsetTop-1&&r.bottom<=view.offsetTop+view.height+1};}
    return {width:innerWidth,height:view.height,offset:view.offsetTop,field:measure(field),action:measure(action),focus:document.activeElement.id,overflow:document.documentElement.scrollWidth>innerWidth+1};
   },spec);
+  assert.equal(row.focus,spec.field.slice(1));
   Object.assign(row,{dialog:spec.name,closedHeight,keyboardShown:shown()});report.scenarios.push(row);
   writeFileSync(output+'/'+spec.name+'-ime.png',adb('exec-out','screencap','-p'));
   adb('shell','input','keyevent','4');await waitKeyboard(false);assert.equal(await field.inputValue(),draft);
