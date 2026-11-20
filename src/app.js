@@ -2904,6 +2904,15 @@ $('apiSettings').addEventListener('submit',async e=>{
    const r=target.getBoundingClientRect(),delta=r.top<top?r.top-top:r.bottom>bottom?r.bottom-bottom:0;
    if(delta)window.scrollBy({top:delta,left:0,behavior:'auto'});
   };
+  // Enlarged labels can wrap in both mobile bars. Keep focused content clear of their actual heights.
+  const mobileBarObserver=new ResizeObserver(entries=>{
+   for(const {target} of entries){
+    const property=target.id==='mobileNav'?'--mobile-nav-height':'--mobile-header-height';
+    document.documentElement.style.setProperty(property,target.getBoundingClientRect().height+'px');
+   }
+  });
+  mobileBarObserver.observe($('mobileNav'));
+  mobileBarObserver.observe(document.querySelector('.mobile-header'));
   $('miniChartPeriods').addEventListener('focusin',revealMobileControlFocus);
   $('positionValueFilter').addEventListener('focusin',revealMobileControlFocus);
   window.addEventListener('resize',revealMobileControlFocus);

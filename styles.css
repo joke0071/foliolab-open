@@ -509,7 +509,7 @@
 .history-sections a:is(:hover,[aria-current="location"]){color:#24533b;background:#e3ebe0}
 .history-sections a[aria-current="location"]{text-decoration:underline;text-underline-offset:3px}
 .history-sections a:focus-visible,.history-controls:focus-visible{outline:2px solid #327f52;outline-offset:1px}
-#historyPage :is(#historyDiagram,#historyCoverage>summary,#performanceDetails>summary,#snapshotManager>summary,#portfolioProjection>summary){scroll-margin-top:calc(82px + env(safe-area-inset-top))}
+#historyPage :is(#historyDiagram,#historyCoverage>summary,#performanceDetails>summary,#snapshotManager>summary,#portfolioProjection>summary){scroll-margin-top:max(calc(82px + env(safe-area-inset-top)),calc(var(--mobile-header-height,0px) + 6px))}
 @media print{#historyPage .history-sections{display:none}}
 #historyPage .history-panel{min-width:0}
 #historyPage .history-controls{position:relative;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0;margin:0 0 14px}
@@ -1428,6 +1428,16 @@
 #morePage .advanced-apis details.advanced-apis{margin-left:0;margin-right:0}
 #morePage .drive-setup-help{margin:0 0 10px}
 #morePage .drive-setup-help ol,#morePage .more-panel-help ol{font-size:12px;line-height:1.6;padding-left:20px;margin:6px 0 10px}
+#morePage .drive-setup-help a,
+#morePage .more-panel-help a{
+ display:inline-flex;
+ align-items:center;
+ vertical-align:middle;
+ min-height:44px;
+ min-width:44px;
+ max-width:100%;
+ overflow-wrap:anywhere;
+}
 #morePage .drive-setup-help code,#morePage .more-panel-help code,#morePage .small-help code{white-space:normal;overflow-wrap:anywhere}
 #morePage .danger-zone>summary{color:#7d5a55;font-weight:600}
 #morePage .danger-zone .btn{margin:2px 0 14px}
@@ -1533,12 +1543,11 @@
 .sidebar-bottom{overflow-wrap:anywhere}
 @media(max-height:620px) and (min-width:721px){.sidebar{padding:18px 14px}.nav{margin-top:12px;gap:4px}}
 @media(max-width:720px){
- .mobile-header{position:sticky;top:0;z-index:90;gap:10px;padding:8px max(15px,env(safe-area-inset-right)) 8px max(15px,env(safe-area-inset-left));padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(56px + env(safe-area-inset-top))}
- .mobile-header .logo{flex-shrink:0}
+ .mobile-header{position:sticky;flex-wrap:wrap;top:0;z-index:90;gap:10px;padding:8px max(15px,env(safe-area-inset-right)) 8px max(15px,env(safe-area-inset-left));padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(56px + env(safe-area-inset-top))}
  .mobile-header .portfolio-status{flex:1 1 0;min-width:0;max-width:none;line-height:1.3;overflow-wrap:anywhere}
  .mobile-nav button{min-height:52px;font-size:10px;line-height:1.15;gap:3px;padding:5px 2px;overflow-wrap:anywhere;text-align:center}
  .mobile-nav button.active{box-shadow:inset 0 2px 0 #2d6946}
- .content{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+ .content{padding-bottom:max(calc(96px + env(safe-area-inset-bottom)),calc(var(--mobile-nav-height,0px) + 12px))}
 }
 @media(max-width:360px){.mobile-nav{padding-left:max(4px,env(safe-area-inset-left));padding-right:max(4px,env(safe-area-inset-right))}.mobile-nav button{font-size:10px}}
 @media(display-mode:standalone) and (max-width:720px){.mobile-header{padding-top:calc(8px + env(safe-area-inset-top))}}
@@ -1728,7 +1737,7 @@
  #bookingList .booking-main>span:nth-of-type(2){grid-column:1/-1;grid-row:4}
  #bookingList .booking-main>.booking-origin{grid-column:1/-1;grid-row:5}
 }
-@media(max-width:720px){.mobile-nav button{white-space:nowrap}}
+@media(max-width:720px){.mobile-nav button span{max-width:100%;white-space:normal;overflow-wrap:anywhere}}
 
 /* UI-POS02: archive visibility is available before entering selection mode. */
 #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,2fr) minmax(170px,1fr) minmax(110px,.7fr)}
@@ -1760,7 +1769,7 @@
 .header-status-dialog details p{overflow-wrap:anywhere;line-height:1.5}
 @media(max-width:720px){
  .mobile-header{padding-top:calc(5px + env(safe-area-inset-top));padding-bottom:6px}
- .content :is(button,input,select,textarea,summary){scroll-margin-top:calc(72px + env(safe-area-inset-top));scroll-margin-bottom:calc(84px + env(safe-area-inset-bottom))}
+ .content :is(button,input,select,textarea,summary){scroll-margin-top:max(calc(72px + env(safe-area-inset-top)),calc(var(--mobile-header-height,0px) + 6px));scroll-margin-bottom:max(calc(84px + env(safe-area-inset-bottom)),calc(var(--mobile-nav-height,0px) + 6px))}
 }
 .header-status-dialog summary::after{content:'';margin-left:auto;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
 .header-status-dialog details[open]>summary::after{transform:rotate(225deg)}
