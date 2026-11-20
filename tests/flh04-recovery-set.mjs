@@ -85,12 +85,16 @@ function assertRestored(reopened,before,expected,label){
  assert.equal(reopened.sync,null,label);
 }
 
-async function restoreDownload({browserType,target,origin,file,password,expected,label}){
+async function restoreDownload({browserType,target,origin,file,password,expected,label,rejectedPassword}){
  let context=await browserType.launchPersistentContext(target);
  try{
   const page=await openApp(context,origin),before=await readAppState(page);
   assert.deepEqual(JSON.parse(before.portfolio.raw),JSON.parse(backup(blankModel(),{includeHistory:true})),label);
   assert.equal(before.sync,null);
+  if(rejectedPassword!==undefined){
+   await importPasswordFile(page,file,rejectedPassword,{error:'Backup-Passwort falsch'});
+   assert.deepEqual(await readAppState(page),before,label);
+  }
   await importPasswordFile(page,file,password,{replacement:'accept'});
   await context.close();
   context=await browserType.launchPersistentContext(target);
@@ -100,7 +104,24 @@ async function restoreDownload({browserType,target,origin,file,password,expected
  }finally{await context.close();}
 }
 
-async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected}){
+async function openBackupControls(page){
+ await page.locator('#sidebarNav [data-page="more"]').click();
+ await page.locator('#backupPasswordSetup > summary').click();
+}
+
+async function saveTargetBackup(page,file){
+ await page.locator('#fullBackupIncludeHistory').check();
+ const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#exportEncryptedBackup').click()]);
+ await download.saveAs(file);
+}
+
+async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected,directory}){
+ const targetPassword='Independent synthetic target password';
+ assert.notEqual(targetPassword,password);
+ const original=JSON.parse(before.portfolio.raw);
+ delete original.settings;
+ assert.notDeepEqual(original,expected);
+ const beforeFile=join(directory,'target-before.json'),afterFile=join(directory,'target-after.json');
  const envelope=JSON.parse(await readFile(headFile,'utf8'));
  const ciphertext=Buffer.from(envelope.data,'base64');
  ciphertext[0]^=1;
@@ -116,6 +137,15 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
  try{
   let page=await openApp(context,origin);
   assert.deepEqual(await readAppState(page),before);
+  // Importing B into an empty profile adopted the source password. Give this populated target its own vault password.
+  await openBackupControls(page);
+  await page.locator('#backupChangeToggle').click();
+  await page.locator('#backupOldPassword').fill(password);
+  await page.locator('#backupPassword').fill(targetPassword);
+  await page.locator('#backupPasswordConfirm').fill(targetPassword);
+  await page.locator('#saveBackupPassword').click();
+  await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
+  await saveTargetBackup(page,beforeFile);
   for(const attempt of attempts){
    await importPasswordFile(page,attempt.file,attempt.password,attempt);
    assert.deepEqual(await readAppState(page),before,attempt.error||'Ersetzung abgebrochen');
@@ -127,8 +157,17 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
   await importPasswordFile(page,headFile,password,{replacement:'accept'});
   await context.close();
   context=await browserType.launchPersistentContext(target);
-  const reopened=await readAppState(await openApp(context,origin));
+  page=await openApp(context,origin);
+  const reopened=await readAppState(page);
   assertRestored(reopened,before,expected,'Kopf C nach Ersetzung und Profilneustart');
+  await openBackupControls(page);
+  await saveTargetBackup(page,afterFile);
+  for(const [label,file,oracle] of [['B',beforeFile,original],['C',afterFile,expected]]){
+   await restoreDownload({browserType,origin,target:join(directory,'readback-'+label),file,
+    password:targetPassword,rejectedPassword:password,expected:oracle,label:'Zielexport '+label});
+  }
+  console.log(JSON.stringify({kind:'FLH04TargetBackupPassword',status:'PASS',engine:browserType.name(),
+   targetPasswordRestored:['B','C'],sourcePasswordRejected:['B','C']}));
   console.log(JSON.stringify({kind:'FLH04PopulatedRestore',status:'PASS',engine:browserType.name(),
    originalHead:'B',restoredHead:'C',preservedAfter:['index','damaged','wrong-password','cancel','restart'],
    originalRevision:before.portfolio.revision,restoredRevision:reopened.portfolio.revision}));
@@ -145,7 +184,7 @@ export async function checkRecoverySetRestore({browserType,directory,source,prof
   const target=join(directory,'restore-'+label),password=request.password;
   const before=await restoreDownload({browserType,target,origin,file,password,expected:profile.data,label});
   if(label==='Revision B'){
-   await checkPopulatedRestore({browserType,target,origin,before,password,indexFile:paths[labels.indexOf('Verzeichnis')],
+   await checkPopulatedRestore({browserType,target,origin,before,password,directory,indexFile:paths[labels.indexOf('Verzeichnis')],
     headFile:paths[labels.indexOf('Revision C')],expected:profiles.find(p=>p.id==='C').data});
   }
  }
