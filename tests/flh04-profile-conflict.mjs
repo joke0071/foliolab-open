@@ -171,6 +171,71 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
  }finally{await target.context.close();}
 }
 
+async function checkSourceRestore({directory,profiles,setup,operation}){
+ const [source,other]=profiles,password='Source financial fixture 2026';
+ const request={text:await readFile(source.file,'utf8'),expectedPinVersion:2,confirmedHead:other.id,password,
+  localFile:await readFile(join(directory,'local-rollback.json'),'utf8'),
+  selectedFile:await readFile(join(directory,'selected-password.json'),'utf8')};
+ const restore=input=>source.page.evaluate(input=>window.syncTest.api.restorePinnedLocalCopy(input),input);
+ await assert.rejects(()=>restore({...request,confirmedHead:source.id}),/confirmed-head/);
+ await assert.rejects(()=>restore({...request,selectedFile:request.localFile}),/file-pair/);
+ await source.page.evaluate(async input=>{
+  const put=IDBObjectStore.prototype.put;
+  IDBObjectStore.prototype.put=function(value,key){
+   const result=put.call(this,value,key);
+   if(key==='sync-outbox-v1'&&value.disabled==='portfolio-restored')this.transaction.abort();
+   return result;
+  };
+  try{
+   try{await window.syncTest.api.restorePinnedLocalCopy(input);}catch(error){
+    if(/abort/i.test(error.message))return;
+    throw error;
+   }
+   throw Error('injected transaction unexpectedly committed');
+  }finally{IDBObjectStore.prototype.put=put;}
+ },request);
+ assert.deepEqual(await operation(source.page,'read'),source.before);
+ const result=await restore(request);
+ assert.deepEqual(result,{status:'restored-local-copy',selectedHead:other.id,
+  localRevision:source.before.portfolio.revision+1,applyAuthorized:false});
+ await source.context.close();
+ source.context=await chromium.launchPersistentContext(join(directory,source.id));
+ source.page=await source.context.newPage();await setup(source.page);
+ const restored=await operation(source.page,'read');
+ assert.equal(restored.portfolio.raw,other.before.portfolio.raw);
+ assert.equal(restored.portfolio.revision,result.localRevision);
+ assert.equal(restored.portfolio.syncEnrollmentRequired,true);
+ assert.deepEqual(restored.portfolio.settings,source.before.portfolio.settings);
+ assert.deepEqual(restored.sync,{...source.before.sync,disabled:'portfolio-restored'});
+ await assert.rejects(()=>restore(request),/stale-preimage|enrollment-required/);
+ assert.deepEqual(await operation(source.page,'read'),restored);
+
+ const race=await other.page.evaluate(async({text,password,confirmedHead})=>{
+  const {configureBackupPassword}=await import('/src/backup-vault.js');
+  await configureBackupPassword(password,password);
+  const request={text,expectedPinVersion:2};
+  const {recoveryFiles}=await window.syncTest.api.exportPinnedRecoveryFiles(request);
+  return {...request,...recoveryFiles,password,confirmedHead};
+ },{text:await readFile(other.file,'utf8'),password,confirmedHead:source.id});
+ await other.page.evaluate(request=>{
+  const subtle=crypto.subtle,decrypt=subtle.decrypt.bind(subtle);let operations=0;
+  subtle.decrypt=async function(algorithm,...args){
+   const bytes=await decrypt(algorithm,...args);
+   if(new TextDecoder().decode(algorithm.additionalData)==='FolioLab Open password backup v2'&&++operations===4)
+    await new Promise(resolve=>{window.resumeSourceRestore=resolve;});
+   return bytes;
+  };
+  window.racedRestore=window.syncTest.api.restorePinnedLocalCopy(request)
+   .then(()=>null,error=>error.message).finally(()=>{delete subtle.decrypt;});
+ },race);
+ await other.page.waitForFunction(()=>typeof window.resumeSourceRestore==='function');
+ const tab=await other.context.newPage();await setup(tab);
+ const updated=await operation(tab,'save',{revision:other.before.portfolio.revision,raw:other.before.portfolio.raw});
+ assert.match(await other.page.evaluate(()=>{window.resumeSourceRestore();return window.racedRestore;}),/pin-preimage/);
+ assert.deepEqual(await operation(tab,'read'),{portfolio:updated,sync:other.before.sync});
+ console.log(JSON.stringify({kind:'FLH04VerifiedSourceRestore',status:'PASS',rollback:true,concurrentSave:true,restart:true}));
+}
+
 export async function checkProfileConflict({setup,operation}){
  const directory=await mkdtemp(join(tmpdir(),'foliolab-profile-conflict-'));
  const profiles=[{id:'L',salt:'a1',amounts:['2.25'],cash:'12.25',ids:['L0']},
@@ -224,6 +289,7 @@ export async function checkProfileConflict({setup,operation}){
    }
    assert.deepEqual(await operation(profile.page,'read'),profile.before);
   }
+  await checkSourceRestore({directory,profiles,setup,operation});
   console.log(JSON.stringify({kind:'FLH04ProfileConflictPreview',status:'PASS',persistentProfiles:2,verifiedSelections:4}));
  }finally{
   try{await Promise.all(profiles.map(profile=>profile.context?.close()));}
