@@ -49,32 +49,89 @@ async function readAppState(page){
  });
 }
 
+async function importPasswordFile(page,file,password,{replacement,error}){
+ const dialogs=[];
+ async function respond(dialog){
+  if(dialog.type()==='prompt'&&dialog.message().includes('Backup-Passwort')){
+   dialogs.push('password');
+   await dialog.accept(password);
+  }else if(dialog.type()==='confirm'&&dialog.message().includes('Der aktuelle Datenbestand wird ersetzt.')){
+   dialogs.push('replace');
+   if(replacement==='accept')await dialog.accept();
+   else await dialog.dismiss();
+  }else{
+   dialogs.push(dialog.message());
+   await dialog.dismiss();
+  }
+ }
+ page.on('dialog',respond);
+ try{
+  const completion=replacement==='cancel'?page.waitForEvent('dialog',{predicate:d=>d.type()==='confirm'}):
+   page.locator('#toast').filter({hasText:error||'Backup wiederhergestellt'}).waitFor();
+  await Promise.all([completion,page.locator('#backupFile').setInputFiles(file)]);
+  // Cancellation has no toast. Wait for the import handler's finally block on every path.
+  await page.waitForFunction(()=>!document.getElementById('backupStatus').classList.contains('lab-loading'));
+  assert.deepEqual(dialogs,error?['password']:['password','replace']);
+ }finally{page.off('dialog',respond);}
+}
+
+function assertRestored(reopened,before,expected,label){
+ const finance=JSON.parse(reopened.portfolio.raw);
+ delete finance.settings;
+ assert.deepEqual(finance,expected,label);
+ assert.equal(reopened.portfolio.revision,before.portfolio.revision+1,label);
+ assert.deepEqual(reopened.portfolio.settings,before.portfolio.settings,label);
+ assert.equal(reopened.portfolio.syncEnrollmentRequired,true,label);
+ assert.equal(reopened.sync,null,label);
+}
+
 async function restoreDownload({browserType,target,origin,file,password,expected,label}){
  let context=await browserType.launchPersistentContext(target);
  try{
   const page=await openApp(context,origin),before=await readAppState(page);
   assert.deepEqual(JSON.parse(before.portfolio.raw),JSON.parse(backup(blankModel(),{includeHistory:true})),label);
   assert.equal(before.sync,null);
-  const dialogs=[];
-  page.on('dialog',async dialog=>{
-   dialogs.push(dialog.type());
-   if(dialog.type()==='prompt'&&dialog.message().includes('Backup-Passwort'))await dialog.accept(password);
-   else if(dialog.type()==='confirm'&&dialog.message().includes('wiederherstellen?'))await dialog.accept();
-   else await dialog.dismiss();
-  });
-  await page.locator('#backupFile').setInputFiles(file);
-  await page.locator('#toast').filter({hasText:'Backup wiederhergestellt'}).waitFor();
-  assert.deepEqual(dialogs,['prompt','confirm'],label);
+  await importPasswordFile(page,file,password,{replacement:'accept'});
   await context.close();
   context=await browserType.launchPersistentContext(target);
   const reopened=await readAppState(await openApp(context,origin));
-  const finance=JSON.parse(reopened.portfolio.raw);
-  delete finance.settings;
-  assert.deepEqual(finance,expected,label);
-  assert.equal(reopened.portfolio.revision,before.portfolio.revision+1,label);
-  assert.deepEqual(reopened.portfolio.settings,before.portfolio.settings,label);
-  assert.equal(reopened.portfolio.syncEnrollmentRequired,true,label);
-  assert.equal(reopened.sync,null,label);
+  assertRestored(reopened,before,expected,label);
+  return reopened;
+ }finally{await context.close();}
+}
+
+async function checkPopulatedRestore({browserType,target,origin,before,indexFile,headFile,password,expected}){
+ const envelope=JSON.parse(await readFile(headFile,'utf8'));
+ const ciphertext=Buffer.from(envelope.data,'base64');
+ ciphertext[0]^=1;
+ envelope.data=ciphertext.toString('base64');
+ const damaged={name:'damaged-head.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(envelope))};
+ const attempts=[
+  {file:indexFile,password,error:'Datei ist kein unterstütztes FolioLab-Backup.'},
+  {file:damaged,password,error:'Backup ist beschädigt oder kann nicht entschlüsselt werden.'},
+  {file:headFile,password:'Wrong synthetic password',error:'Backup-Passwort falsch'},
+  {file:headFile,password,replacement:'cancel'}
+ ];
+ let context=await browserType.launchPersistentContext(target);
+ try{
+  let page=await openApp(context,origin);
+  assert.deepEqual(await readAppState(page),before);
+  for(const attempt of attempts){
+   await importPasswordFile(page,attempt.file,attempt.password,attempt);
+   assert.deepEqual(await readAppState(page),before,attempt.error||'Ersetzung abgebrochen');
+  }
+  await context.close();
+  context=await browserType.launchPersistentContext(target);
+  page=await openApp(context,origin);
+  assert.deepEqual(await readAppState(page),before,'Profilneustart nach den vier Fehlversuchen');
+  await importPasswordFile(page,headFile,password,{replacement:'accept'});
+  await context.close();
+  context=await browserType.launchPersistentContext(target);
+  const reopened=await readAppState(await openApp(context,origin));
+  assertRestored(reopened,before,expected,'Kopf C nach Ersetzung und Profilneustart');
+  console.log(JSON.stringify({kind:'FLH04PopulatedRestore',status:'PASS',engine:browserType.name(),
+   originalHead:'B',restoredHead:'C',preservedAfter:['index','damaged','wrong-password','cancel','restart'],
+   originalRevision:before.portfolio.revision,restoredRevision:reopened.portfolio.revision}));
  }finally{await context.close();}
 }
 
@@ -85,8 +142,12 @@ export async function checkRecoverySetRestore({browserType,directory,source,prof
  for(const [label,profile] of cases){
   const file=paths[labels.indexOf(label)];
   assert.ok(file,label);
-  await restoreDownload({browserType,target:join(directory,'restore-'+label),origin,file,
-   password:request.password,expected:profile.data,label});
+  const target=join(directory,'restore-'+label),password=request.password;
+  const before=await restoreDownload({browserType,target,origin,file,password,expected:profile.data,label});
+  if(label==='Revision B'){
+   await checkPopulatedRestore({browserType,target,origin,before,password,indexFile:paths[labels.indexOf('Verzeichnis')],
+    headFile:paths[labels.indexOf('Revision C')],expected:profiles.find(p=>p.id==='C').data});
+  }
  }
  const text=await readFile(source.file,'utf8');
  const {archive,selected}=await source.page.evaluate(async({text,expectedPinVersion})=>{
