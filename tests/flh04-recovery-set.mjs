@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {openApp,readAppState,importPasswordFile,assertRestored,restoreDownload,openBackupControls,saveTargetBackup} from './flh04-backup-app.mjs';
-import {checkConcurrentImport,checkReturnAndBook,checkInterruptedImports} from './flh04-regular-import.mjs';
+import {checkConcurrentImport,checkReturnAndBook,checkInterruptedImports,checkPostCommitDeposits} from './flh04-regular-import.mjs';
 
 async function show(page,text){
  await page.evaluate(async text=>{
@@ -95,10 +95,10 @@ async function checkPopulatedRestore({browserType,target,origin,before,indexFile
   page=await openApp(context,origin);
   assertRestored(await readAppState(page),reopened,original,'B im ursprünglichen Zielprofil');
   await checkReturnAndBook({page,original,browserType,directory,origin,targetPassword});
-  if(browserType.name()==='chromium'){
-   await context.close();
-   await checkInterruptedImports({target,browserType,origin,beforeFile,original,headFile,password,targetPassword,expected,directory});
-  }
+  await context.close();
+  const probe={target,browserType,origin,beforeFile,original,headFile,password,targetPassword,expected,directory};
+  if(browserType.name()==='chromium')await checkInterruptedImports(probe);
+  await checkPostCommitDeposits(probe);
  }finally{await context.close();}
 }
 

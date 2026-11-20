@@ -1748,6 +1748,8 @@
 .header-status-mark{position:absolute;right:1px;bottom:1px;min-width:12px;font-size:11px;line-height:12px;font-weight:700;background:#f7f9f6;border-radius:4px}
 .header-status-button[data-state=error],.header-status-button[data-state=conflict]{color:#90463e}
 .header-status-dialog{width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;padding:20px;border:1px solid #d5e1d7;border-radius:16px;color:#20372a}
+#restoreProgress{border:0;border-radius:12px;padding:12px 24px;color:inherit}
+#restoreProgress::backdrop{background:#f7f9f6}
 .header-status-dialog::backdrop{background:rgb(20 42 29 / .25)}
 .header-status-dialog .dialog-head h2{margin:0;font-size:20px}
 #headerStatusBody{white-space:pre-line;overflow-wrap:anywhere;line-height:1.5}

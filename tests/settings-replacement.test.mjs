@@ -11,7 +11,7 @@ function harness({accept=true,fail=false,cacheFail=false,configuration=true,vaul
  const elements=Object.fromEntries(keys.map(key=>[key,{value:settings[key]||'',type:key.endsWith('Key')||key.endsWith('Token')?'text':'text'}]));
  for(const field of Object.values(elements))field.closest=()=>({querySelector:()=>({click(){field.type='password';}})});
  elements.namedItem=key=>elements[key]||null;
- const nodes={apiSettings:{elements},optionalConnectionStatus:{},solanaRpc:{type:'password'},backupStatus:{},backupFile:{addEventListener(type,handler){context.fileHandler=handler;}},deleteAll:{addEventListener(type,handler){context.resetHandler=handler;}}};
+ const nodes={apiSettings:{elements},optionalConnectionStatus:{},solanaRpc:{type:'password'},backupStatus:{classList:{contains:()=>false}},restoreProgress:{showModal(){},close(){}},backupFile:{addEventListener(type,handler){context.fileHandler=handler;}},deleteAll:{addEventListener(type,handler){context.resetHandler=handler;}}};
  let committed={...blankModel(),settings},removed=false;
  const imported=blankModel();imported.settings={...defaultSettings(),coinGeckoKey:'SYNTHETIC_NEW'};
  const config=configuration?{settings:imported.settings,drive:{}}:null;
