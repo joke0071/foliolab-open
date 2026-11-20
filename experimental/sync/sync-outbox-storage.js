@@ -1,4 +1,4 @@
-import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore} from './sync-restore-status.js';
+import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
@@ -303,6 +303,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   verifyPinnedRecoveryFiles({text,expectedPinVersion,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion},'recovery',{localFile,selectedFile,password});
   },
+  previewPinnedLocalRollback(request){return previewPinnedLocalRollback(db,request);},
   inspectPinnedLocalRestore(request){return inspectPinnedLocalRestore(db,request);},
   restorePinnedLocalCopy({text,expectedPinVersion,confirmedHead,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion,selectedHead:confirmedHead},'restore',{localFile,selectedFile,password});

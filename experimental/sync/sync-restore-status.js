@@ -1,3 +1,5 @@
+import {decryptPasswordBackup} from '../../src/backup-vault.js';
+import {createSyncSnapshot,previewSyncRestore} from './sync-snapshot.js';
 import {readPortfolioRecord,syncPreimageText} from '../../src/atomic-storage.js';
 import {LOCAL_BACKUP_FILE_BYTES} from '../../src/backup-limits.js';
 import {SYNC_GRAPH_LIMIT} from './sync-revisions.js';
@@ -47,7 +49,15 @@ const unknown=()=>({status:'undetermined',applyAuthorized:false});
 const boundedFile=value=>typeof value==='string'&&value.length>0&&value.length<=LOCAL_BACKUP_FILE_BYTES&&
  new Blob([value]).size<=LOCAL_BACKUP_FILE_BYTES;
 
-export async function inspectPinnedLocalRestore(db,{text,expectedPinVersion,confirmedHead,localFile,selectedFile}={}){
+export function inspectPinnedLocalRestore(db,request){
+ return inspectRestore(db,request,false);
+}
+
+export function previewPinnedLocalRollback(db,request){
+ return inspectRestore(db,request,true);
+}
+
+async function inspectRestore(db,{text,expectedPinVersion,confirmedHead,localFile,selectedFile,password}={},preview){
  if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
     !Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1||typeof confirmedHead!=='string'||
     !boundedFile(localFile)||!boundedFile(selectedFile))return unknown();
@@ -60,15 +70,20 @@ export async function inspectPinnedLocalRestore(db,{text,expectedPinVersion,conf
     pin.digest!==await archiveDigest(text))return unknown();
  try{
   if(await receiptProof(pin,sync,{localFile,selectedFile},receipt.portfolioDigest)!==receipt.proof)return unknown();
-  let status='matches-restored-state';
+  let status='matches-restored-state',rollbackPreview;
   if(portfolio.revision===pin.localRevision+1){
    if(await archiveDigest(syncPreimageText(portfolio))!==receipt.portfolioDigest)return unknown();
+   if(preview){
+    if(typeof password!=='string'||!password.length)return unknown();
+    const raw=await decryptPasswordBackup(JSON.parse(localFile),password);
+    rollbackPreview=await previewSyncRestore(portfolio.raw,await createSyncSnapshot(raw));
+   }
   }else{
    // The normal storage reader validates the later financial model and local settings.
    if(syncPreimageText(await readPortfolioRecord(db))!==syncPreimageText(portfolio))return unknown();
    status='later-local-revision';
   }
   if(syncPreimageText(await readSnapshot(db))!==syncPreimageText(state))return unknown();
-  return {status,applyAuthorized:false};
+  return rollbackPreview?{status,rollbackPreview,applyAuthorized:false}:{status,applyAuthorized:false};
  }catch{return unknown();}
 }
