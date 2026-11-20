@@ -820,3 +820,40 @@ test('conflict successor preserves old heads and distinguishes a new local fork;
  assert.deepEqual(race.map(r=>r.status).sort(),['fulfilled','rejected']);
  assert.deepEqual(await readPortfolioSyncRecord(db),state);assert.equal(await api.archivePinVersion(),2);
 });
+
+test('late encrypted revisions extend a pinned archive with no local change, only after closed and consistent readback',async()=>{
+ const {api,db,p,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1};
+ const b=frame(p.raw,'B','R','2','91'.repeat(32)),c=frame(p.raw,'C','R','2','92'.repeat(32));
+ const {archive}=await api.createConflictArchive({...cas,frameTexts:[b,c],observationComplete:true});
+ await api.pinConflictArchive({...cas,text:archive.text,expectedDigest:archive.digest,expectedPinVersion:0});
+ const selected=await api.recordPinnedSelection({text:archive.text,selectedHead:'B',expectedPinVersion:1});
+ const req={...cas,previousText:archive.text,expectedPinVersion:selected.pinVersion};
+ const b2=frame(p.raw,'B2','B','3','93'.repeat(32)),b3=frame(p.raw,'B3','B2','4','94'.repeat(32));
+ const fork=frame(p.raw,'F','B','3','95'.repeat(32));
+ const incoming=[b3,b2,b2,c,fork];
+ const preview=api.createSuccessorConflictArchive({...req,frameTexts:incoming});
+ incoming.length=0;
+ const result=await preview;
+ assert.deepEqual(result.transition,{previousSelection:'B',branches:[
+  {previousHead:'B',currentHeads:['B3','F']},{previousHead:'C',currentHeads:['C']}],additionalHeads:[]});
+ const input={...req,text:result.archive.text,expectedPortfolioDigest:result.successorPortfolioDigest};
+ const state=await readPortfolioSyncRecord(db);
+ const different=frame(p.raw,'B2','C','3','96'.repeat(32));
+ for(const [frameTexts,error] of [[[b,c],/no-new-frames/],[[b3],/missing-parent/],
+    [[b2,different],/identity-collision/],[[frame(p.raw,'B','C','3','97'.repeat(32))],/identity-collision/],
+    [[frame(p.raw,'R','C','3','98'.repeat(32))],/identity-collision/]]){
+  await assert.rejects(()=>api.createSuccessorConflictArchive({...req,frameTexts}),error);
+  await assert.rejects(()=>api.pinSuccessorConflictArchive({...input,frameTexts}),error);
+ }
+ await assert.rejects(()=>api.pinSuccessorConflictArchive({...input,frameTexts:[b2]}),/successor-readback/);
+ assert.equal((await api.reopenPinnedSelection({text:archive.text})).restorePreview.selectedHead,'B');
+ assert.equal(await api.archivePinVersion(),selected.pinVersion);
+ db.data.set('portfolio',{...state.portfolio,updatedAt:'same revision but changed record'});
+ await assert.rejects(()=>api.createSuccessorConflictArchive({...req,frameTexts:[b2]}),/portfolio-changed/);
+ db.data.set('portfolio',state.portfolio);
+ const pinned=await api.pinSuccessorConflictArchive({...input,frameTexts:[fork,b2,b3]});
+ const reopened=await createSyncOutboxStorage(db,verify).reopenPinnedConflictArchive({text:result.archive.text});
+ assert.deepEqual(reopened.heads,['B3','C','F']);assert.equal(reopened.pinVersion,selected.pinVersion+1);
+ assert.equal(pinned.applyAuthorized,false);assert.deepEqual(await readPortfolioSyncRecord(db),state);
+});

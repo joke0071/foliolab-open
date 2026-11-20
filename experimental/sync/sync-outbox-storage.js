@@ -13,6 +13,16 @@ import {SYNC_OUTBOX_TEXT_LIMIT,verifySyncOutboxState,readSyncOutboxState,appendS
 const archiveHeader=(revision,version)=>'FolioLabConflict/1 '+revision+' '+version;
 const hash=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 const positive=value=>Number.isSafeInteger(value)&&value>0;
+function boundedFrameBatch(frameTexts){
+ if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
+ const frames=[];let total=0;
+ for(const text of frameTexts){
+  if(typeof text!=='string'||text.length>SYNC_FRAME_TEXT_LIMIT||(total+=text.length)>SYNC_OUTBOX_TEXT_LIMIT)
+   throw Error('sync-outbox-frame-batch-limit');
+  frames.push(text);
+ }
+ return frames;
+}
 function storedPin(value,count){
  if(count===0)return null;
  const selected=value&&Object.hasOwn(value,'selectedHead');
@@ -156,6 +166,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   const result=planSyncOutboxApply({ticket:current.ticket,portfolio,revisions,observationComplete});
   if(comparisonHeads)result.comparison=await compareBranches(current,revisions,result,frames,comparisonHeads);
   if(archive){
+   if(archive.previous&&result.status==='blocked')throw Error('sync-archive-successor-'+result.reason);
    if(result.status!=='conflict')throw Error('sync-outbox-archive-needs-conflict');
    const ordered=[...frames.keys()].sort().map(id=>frames.get(id));
    if(ordered.reduce((size,text)=>size+text.length,0)>SYNC_OUTBOX_TEXT_LIMIT)throw Error('sync-outbox-frame-batch-limit');
@@ -172,6 +183,8 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    const binding={digest:result.archive?.digest??archive.pin.digest,localRevision:current.portfolio.revision,syncVersion:current.sync.version,
     portfolioDigest:await archiveDigest(syncPreimageText(current.portfolio))};
    if(archive.previous){
+    if(binding.localRevision===archive.previous.pin.localRevision&&binding.portfolioDigest!==archive.previous.pin.portfolioDigest)
+     throw Error('sync-archive-successor-portfolio-changed');
     result.successorPortfolioDigest=binding.portfolioDigest;
     if(archive.pin.write&&archive.expectedPortfolioDigest!==binding.portfolioDigest)
      throw Error('sync-archive-successor-portfolio-changed');
@@ -221,13 +234,7 @@ export function createSyncOutboxStorage(db,verifyFrame) {
      throw Error('sync-outbox-invalid-comparison-heads');
     pair=[comparisonHeads[0],comparisonHeads[1]];
    }
-   if(!Array.isArray(frameTexts)||frameTexts.length>SYNC_GRAPH_LIMIT)throw Error('sync-outbox-frame-batch-limit');
-   const frames=[];let total=0;
-   for(const text of frameTexts){
-    if(typeof text!=='string'||text.length>SYNC_FRAME_TEXT_LIMIT||(total+=text.length)>SYNC_OUTBOX_TEXT_LIMIT)
-     throw Error('sync-outbox-frame-batch-limit');
-    frames.push(text);
-   }
+   const frames=boundedFrameBatch(frameTexts);
    const current=await read(expectedLocalRevision,expectedSyncVersion);
    if(archive&&!current.ticket)throw Error('sync-outbox-archive-needs-conflict');
    if(!current.ticket)return finishPlan(current,[],observationComplete);
@@ -257,19 +264,24 @@ export function createSyncOutboxStorage(db,verifyFrame) {
    return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true,comparisonHeads:pair},
     {mode:'reopen',original:text,pin});
   }
- async function successorArchive({previousText,text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},write){
+ async function successorArchive({previousText,frameTexts=[],text,expectedPortfolioDigest,expectedPinVersion,expectedLocalRevision,expectedSyncVersion},write){
   if(!positive(expectedPinVersion)||typeof previousText!=='string'||
      previousText.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
      (write&&(!hash(expectedPortfolioDigest)||typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100)))
    throw Error('sync-archive-invalid-successor');
+  const incoming=boundedFrameBatch(frameTexts);
   const pin=await readArchivePin(db);
   if(pin?.version!==expectedPinVersion||pin.digest!==await archiveDigest(previousText))
    throw Error('sync-archive-successor-pin-changed');
-  if(!positive(expectedLocalRevision)||expectedLocalRevision<=pin.localRevision||
-     !positive(expectedSyncVersion)||expectedSyncVersion<=pin.syncVersion)throw Error('sync-archive-successor-needs-capture');
-  const [header,...frameTexts]=previousText.split('\n',SYNC_GRAPH_LIMIT+2);
-  return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts,observationComplete:true},
-   {previous:{pin,header,oldFrames:new Set(frameTexts)},original:text,expectedPortfolioDigest,
+  const unchanged=expectedLocalRevision===pin.localRevision&&expectedSyncVersion===pin.syncVersion;
+  if(!unchanged&&(!positive(expectedLocalRevision)||expectedLocalRevision<=pin.localRevision||
+     !positive(expectedSyncVersion)||expectedSyncVersion<=pin.syncVersion))throw Error('sync-archive-successor-needs-capture');
+  const [header,...previousFrames]=previousText.split('\n',SYNC_GRAPH_LIMIT+2);
+  const oldFrames=new Set(previousFrames);
+  const combined=[...new Set([...previousFrames,...incoming])];
+  if(unchanged&&combined.length===oldFrames.size)throw Error('sync-archive-successor-no-new-frames');
+  return planFrames({expectedLocalRevision,expectedSyncVersion,frameTexts:combined,observationComplete:true},
+   {previous:{pin,header,oldFrames},original:text,expectedPortfolioDigest,
     pin:{previous:pin,version:expectedPinVersion,write}});
  }
  async function selectedRestore({text,selectedHead,expectedPinVersion},mode,readback){
