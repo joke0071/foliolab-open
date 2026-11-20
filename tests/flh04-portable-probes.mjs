@@ -1,3 +1,4 @@
+import {prepareSourceRestore,verifyRestoredSource} from './flh04-source-restore-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -157,4 +158,15 @@ async function checkMalformedSyncSlots(browser,setup,operation){
 export async function runPortableProbes(browser,setup,operation){
  await checkCrossTabFramePlan(browser,setup,operation);
  await checkMalformedSyncSlots(browser,setup,operation);
+ const context=await browser.newContext();
+ try{
+  const page=await context.newPage();await setup(page);
+  const fixture=await prepareSourceRestore(page,operation);
+  const result=await page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),fixture.request);
+  assert.deepEqual(result,{status:'restored-local-copy',selectedHead:'S',localRevision:fixture.local.revision+1,applyAuthorized:false});
+  await page.close();
+  const reopened=await context.newPage();await setup(reopened);
+  await verifyRestoredSource(reopened,operation,fixture);
+  console.log(JSON.stringify({kind:'FLH04PortableSourceRestore',status:'PASS',engine:browser.browserType().name()}));
+ }finally{await context.close();}
 }

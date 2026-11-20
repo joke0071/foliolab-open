@@ -3,31 +3,9 @@ import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
-import {blankModel,createProvider,createPosition,backup} from '../src/model.js';
-import {validateHistorySession} from '../src/wallet-history-state.js';
-import {event,stream,NOW} from './wallet-history-fixtures.mjs';
+import {commonPortfolio,appendBookings} from './flh04-source-restore-fixture.mjs';
 import {openInstallation} from './flh04-profile-restore.mjs';
 import {snapshotFrame} from './sync-outbox-fixture.mjs';
-
-function commonPortfolio(){
- const model=blankModel();
- model.providers.push(createProvider({id:'broker',name:'Synthetic broker',type:'broker'}));
- model.positions.push(createPosition({id:'cash',providerId:'broker',kind:'cash',name:'EUR',quantity:10,price:1,currency:'EUR'},model));
- const session=validateHistorySession({id:'accepted',chain:'eth',walletKey:'test-wallet',acceptedAt:NOW,
-  events:[event({quantityBaseUnits:'90071992547409930001'})],streams:[stream()],quotes:[],issues:[]});
- model.walletHistory={schema:1,sessions:[session],pending:[]};
- return backup(model,{includeHistory:true});
-}
-
-async function appendBookings(page,raw,id,amounts){
- return page.evaluate(async({raw,id,amounts})=>{
-  const {executeTransaction}=await import('/src/transactions.js');
-  const {safeImport,backup}=window.syncTest.model,model=safeImport(JSON.parse(raw));
-  amounts.forEach((amount,index)=>executeTransaction(model,{id:id+index,type:'deposit',date:'2026-11-01',
-   positionId:'cash',quantity:amount,unitPrice:'1'}));
-  return backup(model,{includeHistory:true});
- },{raw,id,amounts});
-}
 
 async function checkArchivedHead(page,text,id,expected,history,local){
  const preview=await page.evaluate(request=>window.syncTest.api.previewPinnedRestore(request),
