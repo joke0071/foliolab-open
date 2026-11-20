@@ -1,3 +1,4 @@
+import {prepareSourceRestore,verifyRestoredSource} from './flh04-source-restore-fixture.mjs';
 import {snapshotFrame as frame} from './sync-outbox-fixture.mjs';
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
@@ -109,5 +110,19 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
    assert.equal(verified.pinVersion,1);assert.deepEqual(verified.heads,result.heads);assert.equal(verified.applyAuthorized,false);
    console.log(JSON.stringify({kind:'FLH04PersistentArchivePin',status:'PASS',crash}));
   }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ await withCrashedProfile(async(context,restart)=>{
+  const page=await context.newPage();await setup(page);
+  const fixture=await prepareSourceRestore(page,operation);
+  await page.evaluate(async request=>{
+   const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+   window.sourceRestore=installLifecycleHarness({controller:window.syncTest.api,action:'restorePinnedLocalCopy',
+    model:request,barrierMode:'readwrite'});
+  },fixture.request);
+  await page.waitForFunction(()=>window.sourceRestore.snapshot().settled||window.sourceRestore.snapshot().events.some(e=>e.name==='barrier-held'));
+  assertCrashBarrier(await page.evaluate(()=>window.sourceRestore.snapshot()),'readwrite',0);
+  const {reopened,crash}=await restart();await setup(reopened);
+  await verifyRestoredSource(reopened,operation,fixture);
+  console.log(JSON.stringify({kind:'FLH04SourceRestoreCrash',status:'PASS',crash}));
  });
 }
