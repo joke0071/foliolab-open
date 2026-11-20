@@ -66,7 +66,7 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
  assert.equal(Object.hasOwn(data,'settings'),false);
  const password='Source financial fixture 2026';
  const file=join(directory,encrypted?'selected-password.json':'selected-finances.json');
- let damagedFile;
+ let damagedFile,rollbackFile;
  if(encrypted){
   const request={text,expectedPinVersion:2};
   await assert.rejects(()=>source.page.evaluate(request=>window.syncTest.api.exportEncryptedPinnedFinancialCopy(request),request),/Backup-Passwort einrichten/);
@@ -78,7 +78,18 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
   assert.equal(Object.hasOwn(sealed,'financialCopy'),false);assert.equal(sealed.applyAuthorized,false);
   const envelope=JSON.parse(sealed.encryptedCopy);
   assert.equal(envelope.format,'foliolab-open-encrypted-v2');
-  await writeFile(file,sealed.encryptedCopy);
+  const pair=await source.page.evaluate(request=>window.syncTest.api.exportPinnedRecoveryFiles(request),request);
+  assert.equal(pair.applyAuthorized,false);assert.equal(pair.pinVersion,2);
+  rollbackFile=join(directory,'local-rollback.json');
+  await writeFile(rollbackFile,pair.recoveryFiles.localFile);
+  await writeFile(file,pair.recoveryFiles.selectedFile);
+  const readback={...request,localFile:await readFile(rollbackFile,'utf8'),selectedFile:await readFile(file,'utf8'),password};
+  const verify=files=>source.page.evaluate(files=>window.syncTest.api.verifyPinnedRecoveryFiles(files),files);
+  const receipt=await verify(readback);
+  assert.equal(receipt.recoveryFilesVerified,true);assert.equal(receipt.applyAuthorized,false);
+  await assert.rejects(()=>verify({...readback,localFile:readback.selectedFile}),/file-pair/);
+  await assert.rejects(()=>verify({...readback,localFile:readback.selectedFile,selectedFile:readback.localFile}),/file-content/);
+  await assert.rejects(()=>verify({...readback,password:'Incorrect fixture password'}),/Passwort falsch/);
   envelope.data=(envelope.data.startsWith('A')?'B':'A')+envelope.data.slice(1);
   damagedFile=join(directory,'damaged-password.json');
   await writeFile(damagedFile,JSON.stringify(envelope));
@@ -142,6 +153,19 @@ async function checkRestoredCopy({directory,setup,operation,source,text,expected
     return decryptPasswordBackup(envelope,password);
    },targetPassword);
    assert.equal(challenge,'recipient-vault');
+   const rollback=await target.context.newPage();
+   await rollback.goto(new URL('/',target.page.url()).href);
+   await rollback.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+   rollback.on('dialog',dialog=>dialog.type()==='prompt'?dialog.accept(password):dialog.accept());
+   await rollback.locator('#backupFile').setInputFiles(rollbackFile);
+   await rollback.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('Backup wiederhergestellt'));
+   const reverted=await operation(target.page,'read');
+   assert.deepEqual(JSON.parse(reverted.portfolio.raw),JSON.parse(source.before.portfolio.raw));
+   assert.equal(reverted.portfolio.revision,restored.portfolio.revision+1);
+   assert.deepEqual(reverted.portfolio.settings,before.portfolio.settings);
+   assert.deepEqual(await operation(target.page,'anchor-proof'),identity);
+   console.log(JSON.stringify({kind:'FLH04RecoveryFiles',status:'PASS',selectedCash:expected.cash,
+    rollbackCash:JSON.parse(reverted.portfolio.raw).positions[0].quantityExact}));
   }
   console.log(JSON.stringify({kind:encrypted?'FLH04EncryptedFinancialCopy':'FLH04SelectedFinancialCopy',status:'PASS',fileRestore:true,recipientRestart:true}));
  }finally{await target.context.close();}
