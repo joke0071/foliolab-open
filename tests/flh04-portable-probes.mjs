@@ -1,4 +1,4 @@
-import {prepareSourceRestore,verifyRestoredSource} from './flh04-source-restore-fixture.mjs';
+import {prepareSourceRestore,verifyRestoredSource,recoveryFiles,verifyRollbackRecovery} from './flh04-source-restore-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -160,10 +160,19 @@ async function checkLocalRollback(browser,setup,operation){
  try{
   const page=await context.newPage();await setup(page);
   const {request,local}=await prepareSourceRestore(page,operation);
-  const restore=await page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),request);
+  const files=recoveryFiles(request),password=request.password;
+  const open=input=>page.evaluate(input=>window.syncTest.api.reopenLocalRecoveryCase(input),input);
+  assert.deepEqual(await open(files),{status:'undetermined',applyAuthorized:false});
+  const pending=await open({...files,password});
+  assert.deepEqual(pending,{status:'verified-pending-selection',selectedHead:'S',expectedPinVersion:2,
+   localRevision:local.revision,rollbackAvailable:false,applyAuthorized:false});
+  const restore=await page.evaluate(req=>window.syncTest.api.restorePinnedLocalCopy(req),
+   {...files,password,expectedPinVersion:pending.expectedPinVersion,confirmedHead:pending.selectedHead});
   const before=await operation(page,'read');
   const rollback=req=>page.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),req);
-  const confirmed={...request,confirmedRollbackRevision:restore.localRevision};
+  const currentCase=await open(files);
+  assert.deepEqual(currentCase,{...pending,status:'matches-restored-state',rollbackAvailable:true,localRevision:restore.localRevision});
+  const confirmed={...request,confirmedRollbackRevision:currentCase.localRevision};
   const unknown={status:'undetermined',applyAuthorized:false};
   for(const invalid of [request,{...confirmed,confirmedRollbackRevision:local.revision},
    {...confirmed,password:'wrong password'},{...confirmed,localFile:request.selectedFile}]){
@@ -174,13 +183,14 @@ async function checkLocalRollback(browser,setup,operation){
    const put=IDBObjectStore.prototype.put;
    IDBObjectStore.prototype.put=function(value,key){
     const result=put.call(this,value,key);
-    if(key==='portfolio')this.transaction.abort();
+    if(key==='sync-local-restore-receipt-v1'&&value.rollback)this.transaction.abort();
     return result;
    };
    try{return await window.syncTest.api.rollbackPinnedLocalCopy(req);}
    finally{IDBObjectStore.prototype.put=put;}
   },confirmed),unknown);
   assert.deepEqual(await operation(page,'read'),before);
+  assert.deepEqual(await open(files),currentCase);
   const second=await context.newPage();await setup(second);
   const results=await Promise.all([rollback(confirmed),
    second.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),confirmed)]);
@@ -192,9 +202,12 @@ async function checkLocalRollback(browser,setup,operation){
   const after=await operation(reopened,'read');
   assert.deepEqual(after,{portfolio:{...before.portfolio,raw:local.raw,revision,updatedAt:after.portfolio.updatedAt},sync:before.sync});
   await assert.rejects(()=>operation(reopened,'recover'),/enrollment-required/);
-  const replay=await reopened.evaluate(req=>window.syncTest.api.rollbackPinnedLocalCopy(req),confirmed);
-  assert.equal(replay.status,'later-local-revision');
-  assert.deepEqual(await operation(reopened,'read'),after);
+  await verifyRollbackRecovery(reopened,operation,files,local,restore.localRevision);
+  const foreign=await browser.newContext();
+  try{
+   const unrelated=await foreign.newPage();await setup(unrelated);
+   assert.deepEqual(await unrelated.evaluate(req=>window.syncTest.api.reopenLocalRecoveryCase(req),{...files,password}),unknown);
+  }finally{await foreign.close();}
   console.log(JSON.stringify({kind:'FLH04LocalRollback',status:'PASS',engine:browser.browserType().name()}));
  }finally{await context.close();}
 }

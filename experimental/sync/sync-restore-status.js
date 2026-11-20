@@ -52,15 +52,22 @@ function readSnapshot(db){
  });
 }
 
-function commitRollback(db,expected,raw){
- const before=syncPreimageText(expected);
+function rollbackProof(restoreProof,revision,portfolioDigest){
+ return archiveDigest(syncPreimageText(['local-rollback-v1',restoreProof,revision,portfolioDigest]));
+}
+
+async function commitRollback(db,expected,raw){
+ const before=syncPreimageText(expected),revision=expected.portfolio.revision+1;
+ const portfolio={...expected.portfolio,raw,revision,updatedAt:new Date().toISOString()};
+ const portfolioDigest=await archiveDigest(syncPreimageText(portfolio));
+ const rollback={revision,portfolioDigest,proof:await rollbackProof(expected.receipt.proof,revision,portfolioDigest)};
  return new Promise((resolve,reject)=>{
   const tx=strictSyncTransaction(db),store=tx.objectStore('records');
-  const revision=expected.portfolio.revision+1;
   requestSnapshot(store,current=>{
    try{
     if(syncPreimageText(current)!==before){tx.abort();return;}
-    store.put({...current.portfolio,raw,revision,updatedAt:new Date().toISOString()},'portfolio');
+    store.put(portfolio,'portfolio');
+    store.put({...expected.receipt,rollback},restoreReceiptSlot);
    }catch{tx.abort();}
   });
   tx.oncomplete=()=>resolve({status:'rolled-back-local-copy',localRevision:revision,applyAuthorized:false});
@@ -76,6 +83,12 @@ export function inspectPinnedLocalRestore(db,request){
  return inspectRestore(db,request,'inspect');
 }
 
+// Read a case using only the user's archived files. The selection comes from
+// the same local snapshot as the evidence and is never inferred from filenames.
+export function reopenLocalRecoveryCase(db,files){
+ return inspectRestore(db,files,'case');
+}
+
 export function previewPinnedLocalRollback(db,request){
  return inspectRestore(db,request,'preview');
 }
@@ -84,40 +97,57 @@ export function rollbackPinnedLocalCopy(db,request){
  return inspectRestore(db,request,'rollback');
 }
 
+async function recoveryPhase({portfolio,pin,receipt}){
+ const rolledBack=Object.hasOwn(receipt,'rollback');
+ let revision=pin.localRevision+1,digest=receipt.portfolioDigest;
+ if(rolledBack){
+  const mark=receipt.rollback;
+  revision++;
+  if(!mark||Object.keys(mark).length!==3||!Number.isSafeInteger(mark.revision)||mark.revision!==revision||
+     typeof mark.portfolioDigest!=='string'||!/^[a-f0-9]{64}$/.test(mark.portfolioDigest)||
+     mark.proof!==await rollbackProof(receipt.proof,revision,mark.portfolioDigest))return 'undetermined';
+  digest=mark.portfolioDigest;
+ }
+ if(portfolio.revision>revision)return rolledBack?'later-local-revision-after-rollback':'later-local-revision';
+ if(portfolio.revision!==revision||await archiveDigest(syncPreimageText(portfolio))!==digest)return 'undetermined';
+ return rolledBack?'matches-rolled-back-state':'matches-restored-state';
+}
+
 async function inspectRestore(db,{text,expectedPinVersion,confirmedHead,localFile,selectedFile,password,
  confirmedRollbackRevision}={},mode){
  if(typeof text!=='string'||text.length>SYNC_OUTBOX_TEXT_LIMIT+SYNC_GRAPH_LIMIT+100||
-    !Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1||typeof confirmedHead!=='string'||
     !boundedFile(localFile)||!boundedFile(selectedFile))return unknown();
  const state=await readSnapshot(db);
  const {portfolio,sync,pin,receipt,anchors}=state;
+ if(mode==='case'){expectedPinVersion=pin?.version;confirmedHead=pin?.selectedHead;}
+ if(!Number.isSafeInteger(expectedPinVersion)||expectedPinVersion<1||typeof confirmedHead!=='string')return unknown();
+ const hasRollback=receipt!=null&&Object.hasOwn(receipt,'rollback');
  if(anchors||portfolio?.syncEnrollmentRequired!==true||portfolio.deleted!==false||sync?.disabled!=='portfolio-restored'||
     pin?.version!==expectedPinVersion||Object.keys(pin).length!==6||pin.selectedHead!==confirmedHead||!Number.isSafeInteger(pin.localRevision)||
     !Number.isSafeInteger(portfolio.revision)||portfolio.revision<=pin.localRevision||
-    !receipt||Object.keys(receipt).length!==2||typeof receipt.portfolioDigest!=='string'||!/^[0-9a-f]{64}$/.test(receipt.portfolioDigest)||
+    !receipt||Object.keys(receipt).length!==(hasRollback?3:2)||typeof receipt.portfolioDigest!=='string'||!/^[0-9a-f]{64}$/.test(receipt.portfolioDigest)||
     pin.digest!==await archiveDigest(text))return unknown();
  try{
   if(await receiptProof(pin,sync,{localFile,selectedFile},receipt.portfolioDigest)!==receipt.proof)return unknown();
-  let status='matches-restored-state',rollbackPreview;
-  if(portfolio.revision===pin.localRevision+1){
-   if(await archiveDigest(syncPreimageText(portfolio))!==receipt.portfolioDigest)return unknown();
-   if(mode!=='inspect'){
-    if(mode==='rollback'&&(confirmedRollbackRevision!==portfolio.revision||
-       portfolio.revision===Number.MAX_SAFE_INTEGER))return unknown();
-    if(typeof password!=='string'||!password.length)return unknown();
-    const raw=await decryptPasswordBackup(JSON.parse(localFile),password);
-    rollbackPreview=await previewSyncRestore(portfolio.raw,await createSyncSnapshot(raw));
-    if(mode==='rollback'){
-     const canonical=backup(safeImport(JSON.parse(raw)),{includeHistory:true});
-     return await commitRollback(db,state,canonical);
-    }
+  const status=await recoveryPhase(state);
+  if(status==='undetermined')return unknown();
+  let rollbackPreview;
+  if(status==='matches-restored-state'&&(mode==='preview'||mode==='rollback')){
+   if(mode==='rollback'&&(confirmedRollbackRevision!==portfolio.revision||
+      portfolio.revision===Number.MAX_SAFE_INTEGER))return unknown();
+   if(typeof password!=='string'||!password.length)return unknown();
+   const raw=await decryptPasswordBackup(JSON.parse(localFile),password);
+   rollbackPreview=await previewSyncRestore(portfolio.raw,await createSyncSnapshot(raw));
+   if(mode==='rollback'){
+    const canonical=backup(safeImport(JSON.parse(raw)),{includeHistory:true});
+    return await commitRollback(db,state,canonical);
    }
-  }else{
-   // The normal storage reader validates the later financial model and local settings.
-   if(syncPreimageText(await readPortfolioRecord(db))!==syncPreimageText(portfolio))return unknown();
-   status='later-local-revision';
   }
+  if((status==='later-local-revision'||status==='later-local-revision-after-rollback')&&
+     syncPreimageText(await readPortfolioRecord(db))!==syncPreimageText(portfolio))return unknown();
   if(syncPreimageText(await readSnapshot(db))!==syncPreimageText(state))return unknown();
+  if(mode==='case')return {status,selectedHead:confirmedHead,expectedPinVersion,localRevision:portfolio.revision,
+   rollbackAvailable:status==='matches-restored-state'&&portfolio.revision<Number.MAX_SAFE_INTEGER,applyAuthorized:false};
   return rollbackPreview?{status,rollbackPreview,applyAuthorized:false}:{status,applyAuthorized:false};
  }catch{return unknown();}
 }

@@ -1,4 +1,4 @@
-import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback,rollbackPinnedLocalCopy} from './sync-restore-status.js';
+import {archiveDigest,archivePinSlot,restoreReceiptSlot,prepareRestore,inspectPinnedLocalRestore,previewPinnedLocalRollback,rollbackPinnedLocalCopy,reopenLocalRecoveryCase} from './sync-restore-status.js';
 import {backup,safeImport} from '../../src/model.js';
 import {prepareRecoveryFiles} from './sync-recovery-files.js';
 import {encryptWithBackupPassword} from '../../src/backup-vault.js';
@@ -302,6 +302,21 @@ export function createSyncOutboxStorage(db,verifyFrame) {
   exportPinnedRecoveryFiles({text,expectedPinVersion}){return selectedRestore({text,expectedPinVersion},'recovery');},
   verifyPinnedRecoveryFiles({text,expectedPinVersion,localFile,selectedFile,password}){
    return selectedRestore({text,expectedPinVersion},'recovery',{localFile,selectedFile,password});
+  },
+  async reopenLocalRecoveryCase({text,localFile,selectedFile,password}={}){
+   const files={text,localFile,selectedFile};
+   const committed=await reopenLocalRecoveryCase(db,files);
+   if(committed.status!=='undetermined'||typeof password!=='string'||!password.length)return committed;
+   // Before the first restore there is no receipt. Verify the two ordinary
+   // backup files against the pinned conflict again, including its final CAS.
+   try{
+    const pin=await readArchivePin(db);
+    if(!pin?.selectedHead)return committed;
+    const result=await selectedRestore({text,expectedPinVersion:pin.version},'recovery',{localFile,selectedFile,password});
+    if(!result.recoveryFilesVerified)return committed;
+    return {status:'verified-pending-selection',selectedHead:result.restorePreview.selectedHead,
+     expectedPinVersion:result.pinVersion,localRevision:pin.localRevision,rollbackAvailable:false,applyAuthorized:false};
+   }catch{return committed;}
   },
   rollbackPinnedLocalCopy(request){return rollbackPinnedLocalCopy(db,request);},
   previewPinnedLocalRollback(request){return previewPinnedLocalRollback(db,request);},
