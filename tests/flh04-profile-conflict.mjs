@@ -6,6 +6,7 @@ import {chromium} from 'playwright';
 import {blankModel,createProvider,createPosition,backup} from '../src/model.js';
 import {validateHistorySession} from '../src/wallet-history-state.js';
 import {event,stream,NOW} from './wallet-history-fixtures.mjs';
+import {openInstallation} from './flh04-profile-restore.mjs';
 import {snapshotFrame} from './sync-outbox-fixture.mjs';
 
 function commonPortfolio(){
@@ -58,6 +59,49 @@ async function checkArchivedHead(page,text,id,expected,history,local){
  assert.deepEqual(data.walletHistory,history);
 }
 
+async function checkRestoredCopy({directory,setup,operation,source,text,expected}){
+ const copy=await source.page.evaluate(text=>window.syncTest.api.exportPinnedFinancialCopy({text,expectedPinVersion:2}),text);
+ assert.equal(copy.restorePreview.selectedHead,expected.id);
+ const data=JSON.parse(copy.financialCopy);
+ assert.equal(Object.hasOwn(data,'settings'),false);
+ const file=join(directory,'selected-finances.json');
+ await writeFile(file,copy.financialCopy);
+ const profile=join(directory,'restore-target');
+ let target=await openInstallation(profile,setup);
+ try{
+  await target.page.evaluate(async()=>{
+   const store=window.installation,model=await store.reload();
+   model.settings.showSmall=false;await store.save(model);
+  });
+  await operation(target.page,'prepare-anchor');
+  const identity=await operation(target.page,'anchor-proof'),before=await operation(target.page,'read');
+  const app=await target.context.newPage();
+  await app.goto(new URL('/',target.page.url()).href);
+  await app.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  const confirmations=[];
+  app.on('dialog',async dialog=>{
+   confirmations.push(dialog.message());
+   if(dialog.type()==='confirm'&&dialog.message().includes('wiederherstellen?'))await dialog.accept();
+   else await dialog.dismiss();
+  });
+  await app.locator('#backupFile').setInputFiles(file);
+  await app.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('Backup wiederhergestellt'));
+  assert.equal(confirmations.length,1);
+  await target.context.close();target=await openInstallation(profile,setup);
+  const restored=await operation(target.page,'read'),finance=JSON.parse(restored.portfolio.raw);
+  delete finance.settings;assert.deepEqual(finance,data);
+  assert.equal(finance.positions[0].quantityExact,expected.cash);
+  assert.deepEqual(finance.journalEntries.map(entry=>entry.id),expected.ids);
+  assert.deepEqual(finance.walletHistory,JSON.parse(source.before.portfolio.raw).walletHistory);
+  assert.deepEqual(restored.portfolio.settings,before.portfolio.settings);
+  assert.equal(restored.portfolio.settings.showSmall,false);
+  assert.equal(restored.portfolio.revision,before.portfolio.revision+1);
+  assert.equal(restored.portfolio.syncEnrollmentRequired,true);assert.equal(restored.sync,null);
+  assert.deepEqual(await operation(target.page,'anchor-proof'),identity);
+  console.log(JSON.stringify({kind:'FLH04SelectedFinancialCopy',status:'PASS',fileRestore:true,recipientRestart:true}));
+ }finally{await target.context.close();}
+}
+
 export async function checkProfileConflict({setup,operation}){
  const directory=await mkdtemp(join(tmpdir(),'foliolab-profile-conflict-'));
  const profiles=[{id:'L',salt:'a1',amounts:['2.25'],cash:'12.25',ids:['L0']},
@@ -104,6 +148,10 @@ export async function checkProfileConflict({setup,operation}){
    assert.deepEqual(reopened.heads,['L','R2']);assert.equal(reopened.pinVersion,2);
    const choice=await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text);
    assert.equal(choice.restorePreview.selectedHead,sibling.id);assert.equal(choice.applyAuthorized,false);
+   if(profile===profiles[0]){
+    await checkRestoredCopy({directory,setup,operation,source:profile,text,expected:sibling});
+    assert.deepEqual(await profile.page.evaluate(text=>window.syncTest.api.reopenPinnedSelection({text}),text),choice);
+   }
    assert.deepEqual(await operation(profile.page,'read'),profile.before);
   }
   console.log(JSON.stringify({kind:'FLH04ProfileConflictPreview',status:'PASS',persistentProfiles:2,verifiedSelections:4}));

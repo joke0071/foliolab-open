@@ -747,3 +747,28 @@ test('a pinned choice is versioned, retryable and invalidated by replacement of 
  await assert.rejects(()=>racing.recordPinnedSelection({text:replacement.text,selectedHead:'D',expectedPinVersion:4}),/pin-preimage/);
  assert.deepEqual(db.data.get('sync-conflict-archive-pin-v1'),stablePin);
 });
+
+test('financial copy exports only the confirmed choice and refuses a choice changed during verification',async()=>{
+ const {db,p,api,args}=await fixture();await api.capture(args);
+ const cas={expectedLocalRevision:1,expectedSyncVersion:1},changed=JSON.parse(p.raw);
+ changed.performanceFlowTrackingSince='2026-11-01';
+ const left=frame(JSON.stringify(changed),'L','R','2','b1'.repeat(32)),right=frame(p.raw,'S','R','2','b2'.repeat(32));
+ const {archive}=await api.createConflictArchive({...cas,observationComplete:true,frameTexts:[left,right]});
+ const {text,digest}=archive;
+ await api.pinConflictArchive({...cas,text,expectedDigest:digest,expectedPinVersion:0});
+ await assert.rejects(()=>api.exportPinnedFinancialCopy({text,expectedPinVersion:1}),/selection-missing/);
+ const choice=await api.recordPinnedSelection({text,selectedHead:'L',expectedPinVersion:1});
+ assert.equal(Object.hasOwn(choice,'financialCopy'),false);
+ await assert.rejects(()=>api.exportPinnedFinancialCopy({text,expectedPinVersion:1}),/pin-version/);
+ await assert.rejects(()=>api.exportPinnedFinancialCopy({text:text+' ',expectedPinVersion:2}),/archive-digest/);
+ const copy=await api.exportPinnedFinancialCopy({text,expectedPinVersion:2});
+ delete changed.settings;
+ assert.deepEqual(JSON.parse(copy.financialCopy),changed);assert.equal(copy.applyAuthorized,false);
+ const before=await readPortfolioSyncRecord(db);let passes=0;
+ const racing=createSyncOutboxStorage(db,async ciphertext=>{
+  if(ciphertext===left&&++passes===2)await api.recordPinnedSelection({text,selectedHead:'S',expectedPinVersion:2});
+  return verify(ciphertext);
+ });
+ await assert.rejects(()=>racing.exportPinnedFinancialCopy({text,expectedPinVersion:2}),/selection-changed|pin-version/);
+ assert.deepEqual(await readPortfolioSyncRecord(db),before);
+});
