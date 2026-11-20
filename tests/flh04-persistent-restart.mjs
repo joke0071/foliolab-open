@@ -109,6 +109,30 @@ export async function checkPersistentRestart({setup,operation,checkUncertainRetr
    const verified=await reopened.evaluate(text=>window.syncTest.api.reopenPinnedConflictArchive({text}),await readFile(file,'utf8'));
    assert.equal(verified.pinVersion,1);assert.deepEqual(verified.heads,result.heads);assert.equal(verified.applyAuthorized,false);
    console.log(JSON.stringify({kind:'FLH04PersistentArchivePin',status:'PASS',crash}));
+   const staged=await reopened.evaluate(req=>window.syncTest.api.prepareSuccessorConflictArchive(req),
+    {...cas,previousText:await readFile(file,'utf8'),expectedPinVersion:verified.pinVersion,
+     frameTexts:[frame(root.raw,'B2','B','3','93'.repeat(32))]});
+   const target=join(dir,'next.flh');await writeFile(target,staged.archive.text);
+   const evidence=async()=>({previousText:await readFile(file,'utf8'),text:await readFile(target,'utf8')});
+   const before=await operation(reopened,'read');
+   const pendingProcess=await restart();await setup(pendingProcess.reopened);
+   const pending=await pendingProcess.reopened.evaluate(files=>window.syncTest.api.inspectSuccessorHandoff(files),await evidence());
+   assert.deepEqual(pending,{status:'pending-confirmation',pinVersion:1,heads:['B2','C'],applyAuthorized:false});
+   await pendingProcess.reopened.evaluate(async files=>{
+    const {installLifecycleHarness}=await import('/tests/flh04-source-lifecycle-harness.mjs');
+    window.handoff=installLifecycleHarness({controller:window.syncTest.api,action:'confirmSuccessorHandoff',
+     model:files,barrierMode:'readwrite'});
+   },await evidence());
+   await pendingProcess.reopened.waitForFunction(()=>window.handoff.snapshot().settled||window.handoff.snapshot().events.some(e=>e.name==='barrier-held'));
+   assertCrashBarrier(await pendingProcess.reopened.evaluate(()=>window.handoff.snapshot()),'readwrite',0);
+   const boundProcess=await restart();await setup(boundProcess.reopened);
+   const done={...pending,status:'target-bound',pinVersion:2};
+   const check=await boundProcess.reopened.evaluate(files=>window.syncTest.api.inspectSuccessorHandoff(files),await evidence());
+   assert.deepEqual(check,done);
+   const retry=await boundProcess.reopened.evaluate(files=>window.syncTest.api.confirmSuccessorHandoff(files),await evidence());
+   assert.deepEqual(retry,done);assert.deepEqual(await operation(boundProcess.reopened,'read'),before);
+   console.log(JSON.stringify({kind:'FLH04ArchiveHandoffCrash',status:'PASS',beforeConfirmation:pendingProcess.crash,
+    afterCommitBeforeReply:boundProcess.crash,pinVersion:retry.pinVersion}));
   }finally{await rm(dir,{recursive:true,force:true});}
  });
  await withCrashedProfile(async(context,restart)=>{
