@@ -1054,7 +1054,8 @@
 @media(prefers-reduced-motion:reduce){.optional-connections>summary::after,.optional-connection>summary::after,#historyCoverage>summary::after{transition:none}}
 
 /* Recovery exposes safe rescue actions, never a valid empty portfolio. */
-.portfolio-unavailable .page:not(#morePage)>:not(.portfolio-unavailable-message){display:none}
+.portfolio-unavailable .page:not(#morePage)>:not(.portfolio-unavailable-message),
+.restore-readback-failed #morePage>.settings-grid{display:none}
 
 .mobile-header .portfolio-status{font-size:11px;color:#4d6756;margin-left:auto;text-align:right;max-width:50%}
 
