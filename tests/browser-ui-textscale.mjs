@@ -40,6 +40,28 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    }
    if(category){const done={positions:'#positionListHead [data-action=cancel-selection]',bookings:'#bookingListHead [data-booking-manage=cancel]',history:'#manageReferences'}[tab];await p.locator(done).click();}
   }
+  await p.setViewportSize({width:320,height:740});
+  await nav(p,'dashboard');
+  await p.evaluate(()=>{
+   const nodes=document.querySelectorAll('.mobile-header,.mobile-header *,#mobileNav,#mobileNav *');
+   const fonts=Array.from(nodes,el=>[el,parseFloat(getComputedStyle(el).fontSize)]);
+   for(const [el,size] of fonts)el.style.fontSize=2*size+'px';
+  });
+  await p.waitForFunction(()=>parseFloat(getComputedStyle(document.querySelector('.content')).paddingBottom)>=document.querySelector('#mobileNav').getBoundingClientRect().height);
+  const mobileBars=await p.evaluate(()=>{
+   const links=[...document.querySelectorAll('#mobileNav button')];
+   const labelsFit=links.every(button=>{
+    const bounds=button.getBoundingClientRect(),range=document.createRange();
+    range.selectNodeContents(button.querySelector('span'));
+    return bounds.width>=44 && bounds.height>=44 && [...range.getClientRects()].every(rect=>
+     rect.left>=bounds.left-1 && rect.right<=bounds.right+1 && rect.top>=bounds.top-1 && rect.bottom<=bounds.bottom+1);
+   });
+   const header=document.querySelector('.mobile-header').getBoundingClientRect();
+   const status=document.querySelector('.mobile-status-actions').getBoundingClientRect();
+   return {count:links.length,labelsFit,statusFits:status.right<=header.right+1 && status.bottom<=header.bottom+1,overflow:document.documentElement.scrollWidth>innerWidth+1};
+  });
+  assert.deepEqual(mobileBars,{count:5,labelsFit:true,statusFits:true,overflow:false},engine+' enlarged mobile bars');
+  results.push({engine,width:320,tab:'dashboard',mode:'mobile navigation and status',result:'PASS'});
   assert.equal(await record(p),before,'text scaling/navigation/management preserve the exact persisted record');
   console.log(engine+': computed 200% text at 320/768, lists normal/management and Mehr PASS');
  }finally{await browser.close();}
