@@ -1,4 +1,4 @@
-import {saveConflictSet,checkSavedSet,pauseRecoverySet,resumeRecoverySet} from './flh04-recovery-set.mjs';
+import {saveConflictSet,checkRecoverySetRestore,checkSavedSet,pauseRecoverySet,resumeRecoverySet} from './flh04-recovery-set.mjs';
 import {checkPreviousArchiveClient} from './flh04-previous-archive-client.mjs';
 import {checkPendingBooking} from './flh04-pending-booking.mjs';
 import assert from 'node:assert/strict';
@@ -126,6 +126,10 @@ export async function checkThreeProfileConflict(browser,setup,operation){
   assert.equal(done.pinVersion,pending.pinVersion+1);
   await remote.context.close();
   await open(local);
+  await checkRecoverySetRestore({browserType:browser.browserType(),directory,source:local,profiles,request:successorRequest});
+  assert.deepEqual(await operation(local.page,'read'),local.before);
+  console.log(JSON.stringify({kind:'FLH04RecoverySetRestore',status:'PASS',engine:browser.browserType().name(),
+   restored:['local:A','head:A','head:B','head:C'],selectedHead:successorRequest.confirmedHead}));
   await checkSuccessor({profile:local,open,setup,operation,text:await readFile(local.file,'utf8'),
    request:successorRequest,directory,sourceArchive,sourceFile,remoteRaw:remoteSaved.raw});
   await local.context.close();
