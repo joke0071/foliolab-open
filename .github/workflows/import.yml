@@ -117,10 +117,11 @@ jobs:
           fi
           echo "PWA cache revision changed: $previous -> $current"
       - name: Prepare static site
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
+          set -euo pipefail
           mkdir -p _site
-          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/
+          cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/
+          cmp LICENSE _site/LICENSE
       - id: pages_upload
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
