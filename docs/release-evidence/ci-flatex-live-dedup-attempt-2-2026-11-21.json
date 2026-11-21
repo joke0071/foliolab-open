@@ -1,0 +1,65 @@
+{
+  "status": "FAILED_LIVE_TRANSPORT_HTTP_429",
+  "main": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
+  "version": "SW332",
+  "run": 44920930078,
+  "attempt": 2,
+  "liveJob": 136910317431,
+  "chromiumSeconds": 645,
+  "chromiumFlatexBothPassedOnce": true,
+  "previousSuccessfulChromiumSeconds": 858,
+  "firstAttemptChromiumSeconds": 643,
+  "publishedAssetMatches": 160,
+  "coreChecks": 11,
+  "axeScans": 22,
+  "historicalFxCrossPassed": true,
+  "steps": [
+    {
+      "name": "Verify published bytes, core flows and targeted UI in Chromium",
+      "conclusion": "success",
+      "started_at": "2026-11-21T16:35:59Z",
+      "completed_at": "2026-11-21T16:46:44Z"
+    },
+    {
+      "name": "Verify targeted production UI in Firefox and WebKit",
+      "conclusion": "failure",
+      "started_at": "2026-11-21T16:47:32Z",
+      "completed_at": "2026-11-21T17:04:17Z"
+    },
+    {
+      "name": "Preserve actual production acceptance evidence",
+      "conclusion": "success",
+      "started_at": "2026-11-21T17:04:17Z",
+      "completed_at": "2026-11-21T17:04:22Z"
+    }
+  ],
+  "artifact": {
+    "id": 14716148859,
+    "archive": "FolioLab-PR414-Live-Attempt-2.zip",
+    "bytes": 88429705,
+    "entries": 1133,
+    "sha256": "06070e0b0e95c6235999cccad1075cce963b42c55725e30b8e26fb321c4ad8d0",
+    "crc": "PASS",
+    "pinnedByteReadback": "PASS",
+    "pinnedVersion": "0"
+  },
+  "failure": {
+    "engine": "firefox",
+    "context": 4,
+    "source": "tests/browser-navigation-installation.mjs:98",
+    "phase": "fresh browser context did not reach app initialization",
+    "timeoutMilliseconds": 30000,
+    "diagnostic": "worker-diagnostics/firefox-38134-0.jsonl",
+    "firstResponseAt": "2026-11-21T17:03:47.209000+00:00",
+    "http429Responses": 39,
+    "http429JavaScriptModules": 38,
+    "http429SvgFiles": 1,
+    "responseRetryAfter": "0",
+    "exampleUrls": [
+      "https://foliolab.unperfekt.at/src/link-explorer-evidence.js",
+      "https://foliolab.unperfekt.at/src/kraken-ethereum-bridge.js",
+      "https://foliolab.unperfekt.at/src/kraken-solana-bridge.js"
+    ]
+  },
+  "productionComparison": "Two completed Chromium steps and two interrupted cross-engine steps. The full live duration cannot be compared with the successful baseline."
+}
