@@ -4,3 +4,4 @@ await import('./browser-alpha-vantage.mjs');
 await import('./browser-marketstack.mjs');
 await import('./browser-refresh-frequency.mjs');
 await import('./browser-fx-age-release.mjs');
+await import('./browser-booking-reference-fx.mjs');
