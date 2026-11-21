@@ -29,9 +29,18 @@ function captureDeviceState(){
  writeFileSync(output+'/ime-state.txt',methodState().split('\n').filter(line=>/mInputShown|mIsInputViewShown|mCurFocusedWindow|mServedView|mCurMethodId|mShowRequested|mInputEditorInfo|mWindowVisible|mIsInteractive|mInputViewShown/i.test(line)).join('\n'));
  writeFileSync(output+'/window-state.txt',windowState().split('\n').filter(line=>/mCurrentFocus|mFocusedApp|type=ime |imeVisible/i.test(line)).join('\n'));
 }
+let dumpNumber=0;
 function chromeNodes(){
- adb('shell','uiautomator','dump','/sdcard/folio-qa-window.xml');
- const xml=adb('exec-out','cat','/sdcard/folio-qa-window.xml');writeFileSync(output+'/window.xml',xml);
+ const path='/sdcard/folio-qa-'+process.env.GITHUB_RUN_ID+'-'+process.pid+'-'+(++dumpNumber)+'.xml';
+ try{
+  adb('shell','uiautomator','dump',path);
+ }catch(error){
+  // Android can kill the dumper after it has reported writing this new file.
+  // The XML parse below and the foreground Chrome node checks still apply.
+  if(error.status!==137 || !String(error.stdout).includes('dumped to: '+path))throw error;
+  console.log('Reading the completed hierarchy after dumper exit 137:',path);
+ }
+ const xml=adb('exec-out','cat',path);writeFileSync(output+'/window.xml',xml);
  return JSON.parse(execFileSync('python3',['-c',`import sys,json,xml.etree.ElementTree as E; print(json.dumps([n.attrib for n in E.fromstring(sys.stdin.buffer.read()).iter('node') if n.get('package')=='com.android.chrome']))`],{input:xml}).toString());
 }
 async function nativeFieldTap(page,field){
