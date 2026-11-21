@@ -5,6 +5,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 const source = readFileSync(new URL('../.github/workflows/import.yml', import.meta.url), 'utf8');
+const uiSuite = readFileSync(new URL('./browser-ui-quality.mjs', import.meta.url), 'utf8');
+const liveUiFlatexModules = ['./browser-flatex-native-ui.mjs', './browser-flatex-native-commit.mjs'];
 const hashes = {"test": "ff07928ba1afb9b46963a14c07070f667bf11656e3b5d015791371c6c660329c", "cross-engine": "968e44c353136e18f3e108d30ab40a00b54acc4a58ef4e3758704160e44070d9", "deploy": "568af6de8fc542f67cdfb8255b00a38f7e06f0f8ca04d15f314d90fa8b5ac459", "live-acceptance": "650739b764551d00bf7529d17662f8369eddabf38f5473842fe80af2c75f856e"};
 const originalUbuntuMirrorSetup = "          # Keep Ubuntu signatures/TLS verification; avoid the observed stalling Azure mirror.\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
 const boundedUbuntuMirrorSetup = "          # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.\n          archive_mirror=''\n          security_mirror=''\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            archive_mirror=\"$(bash tools/select-ubuntu-mirror.sh archive noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            security_mirror=\"$(bash tools/select-ubuntu-mirror.sh security noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' \"$archive_mirror\" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' \"$security_mirror\" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
@@ -119,10 +121,6 @@ function originalContractWithOnlyPinnedCaches(source) {
   "            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs\n",
   '          UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-chromium.log\n',
   '          UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-cross.log\n',
-  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-chromium.log\n",
-  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-chromium.log\n",
-  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-cross.log\n",
-  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-cross.log\n",
   "          node tests/browser-flatex-native-ui.mjs\n",
   "          node tests/browser-flatex-native-commit.mjs\n",
   "            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs\n",
@@ -199,6 +197,21 @@ function validate(s) {
   assert.match(s, /name: fast-only-not-integration-/);
 }
 test('stage workflow preserves every full regression, deployment and live body byte-for-byte', () => validate(source));
+function validateLiveFlatexImports(suite) {
+ const orderedImports = suite.match(/for\(const check of \[([\s\S]*?)\]\)\{[^\n]*await import\(check\)[^\n]*BROWSER_GATE_PASS/);
+ assert.ok(orderedImports, 'Live UI suite must await and log its ordered browser modules');
+ for (const module of liveUiFlatexModules) {
+  assert.equal(orderedImports[1].split("'"+module+"'").length, 2, module+' is required exactly once in the live UI suite');
+ }
+}
+test('live UI suite runs both Flatex contracts exactly once per configured engine', () => {
+ validateLiveFlatexImports(uiSuite);
+ for (const module of liveUiFlatexModules) {
+  const entry = " '"+module+"'";
+  assert.throws(() => validateLiveFlatexImports(uiSuite.replace(entry, " './different-contract.mjs'")));
+  assert.throws(() => validateLiveFlatexImports(uiSuite.replace(entry, entry+','+entry)));
+ }
+});
 test('worker observation is mandatory only in the two live steps and cannot change sealed commands',()=>{
  const block="          LIVE_WORKER_DIAGNOSTICS: '1'\n          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'\n";
  for(const changed of [source.replace(block,''),source.replace(block,block+block),source.replace("LIVE_WORKER_DIAGNOSTICS: '1'","LIVE_WORKER_DIAGNOSTICS: '0'"),source.replace('--import ./tests/live-worker-diagnostics.mjs','--import ./tests/other.mjs'),source.replace('node tests/browser-kraken-import.mjs 2>&1','echo skipped tests/browser-kraken-import.mjs 2>&1')])assert.throws(()=>validate(changed));
