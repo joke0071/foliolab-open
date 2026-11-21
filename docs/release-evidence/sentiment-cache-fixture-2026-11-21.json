@@ -1,0 +1,429 @@
+{
+  "issue": 405,
+  "status": "FIXTURE_CACHE_VERIFIED",
+  "productMain": "219eccec17a57030c7cdd009357da323d3f95d52",
+  "productTree": "45ce3e6d087828564d67529e5f08f003623bc5dd",
+  "previewBase": "b797187444136665a6b7d66925d055e5c9528816",
+  "origin": "isolated localhost; exact SW332 app checkout, service workers blocked and provider traffic blocked",
+  "offlineMethod": "reload the app and preview while online, then disable the browser network before reading both observations from the preview database",
+  "playwrightVersion": "1.62.0",
+  "axeVersion": "4.10.3",
+  "sourceHashes": {
+    "check.py": "0a1a4cf8081fdac6ef2074dce1377b47370e21e7ce69f2fa7f40497f42b8ac77",
+    "preview.css": "08ae3b8ceaeb230e16dc736493a518b165baab38c6f5ac305cc363771034659c",
+    "preview.js": "119654ea46d908ef377b5121f3bcf1df765c640349e512b5dee27b4dd20933c9"
+  },
+  "reports": [
+    {
+      "engine": "chromium",
+      "version": "150.0.7871.181",
+      "checks": [
+        {
+          "width": 320,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 17,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 320,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 33,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 17,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 33,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 17,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 33,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 17,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 33,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        }
+      ],
+      "scenarios": [
+        "current",
+        "offline",
+        "failed-and-loading",
+        "wrong-source-and-invalid-date",
+        "invalid-value-and-category"
+      ],
+      "cacheChecks": [
+        "empty cache",
+        "independent current values",
+        "partial provider error",
+        "older/wrong-provider/invalid/conflicting deliveries rejected",
+        "offline cache read after page reload"
+      ],
+      "intact": [
+        "whole canonical IndexedDB record across all scenarios and reload",
+        "three allocation rows, ring and total"
+      ],
+      "scope": "Isolated fixture with synthetic inputs on SW332 main, no feed calls or production UI"
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "checks": [
+        {
+          "width": 320,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 320,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        }
+      ],
+      "scenarios": [
+        "current",
+        "offline",
+        "failed-and-loading",
+        "wrong-source-and-invalid-date",
+        "invalid-value-and-category"
+      ],
+      "cacheChecks": [
+        "empty cache",
+        "independent current values",
+        "partial provider error",
+        "older/wrong-provider/invalid/conflicting deliveries rejected",
+        "offline cache read after page reload"
+      ],
+      "intact": [
+        "whole canonical IndexedDB record across all scenarios and reload",
+        "three allocation rows, ring and total"
+      ],
+      "scope": "Isolated fixture with synthetic inputs on SW332 main, no feed calls or production UI"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "checks": [
+        {
+          "width": 320,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 320,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 390,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 430,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 1,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 14,
+          "gaugeHeights": [
+            12,
+            12
+          ],
+          "aligned": true,
+          "fits": true
+        },
+        {
+          "width": 1024,
+          "fontFactor": 2,
+          "axeViolations": [],
+          "positionDelta": null,
+          "allocationRectsUnchanged": true,
+          "pctHeight": 29,
+          "gaugeHeights": [
+            24,
+            24
+          ],
+          "aligned": true,
+          "fits": true
+        }
+      ],
+      "scenarios": [
+        "current",
+        "offline",
+        "failed-and-loading",
+        "wrong-source-and-invalid-date",
+        "invalid-value-and-category"
+      ],
+      "cacheChecks": [
+        "empty cache",
+        "independent current values",
+        "partial provider error",
+        "older/wrong-provider/invalid/conflicting deliveries rejected",
+        "offline cache read after page reload"
+      ],
+      "intact": [
+        "whole canonical IndexedDB record across all scenarios and reload",
+        "three allocation rows, ring and total"
+      ],
+      "scope": "Isolated fixture with synthetic inputs on SW332 main, no feed calls or production UI"
+    }
+  ]
+}

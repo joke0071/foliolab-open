@@ -1,4 +1,4 @@
-// Source-independent preview for #405. No network, persistence or production import.
+// Source-independent preview for #405. No network or production import.
 const markets = {
   crypto: { label: 'Krypto Fear & Greed', source: 'CoinMarketCap' },
   stocks: { label: 'Aktien Fear & Greed', source: 'CNN' }
@@ -20,7 +20,61 @@ function observation(market, sample) {
   if (typeof observedAt !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/.test(observedAt)) return null;
   const date = new Date(observedAt);
   if (!Number.isFinite(date.valueOf()) || date.toISOString().replace('.000Z','Z') !== observedAt.replace('.000Z','Z')) return null;
-  return { value, label: labels[key], date, observedAt };
+  return { value, category: key, source: sample.source, label: labels[key], date, observedAt };
+}
+
+// The preview uses its own DB so these writes never take a portfolio lock.
+function openPreviewCache() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('foliolab-sentiment-preview', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('observations');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function resolveFeeds(db, feeds) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('observations', 'readwrite');
+    const store = transaction.objectStore('observations');
+    const result = {};
+    for (const market of Object.keys(markets)) {
+      const incoming = feeds[market];
+      const current = incoming?.state === 'fresh' && observation(market, incoming.observation);
+      const read = store.get(market);
+      read.onsuccess = () => {
+        const previous = observation(market, read.result);
+        if (current && (!previous || current.date > previous.date)) {
+          const { source, value, category, observedAt } = current;
+          const sample = { source, value, category, observedAt };
+          store.put(sample, market);
+          result[market] = { state: 'fresh', observation: sample };
+        } else if (current && +current.date === +previous.date &&
+                   current.value === previous.value && current.category === previous.category) {
+          result[market] = { state: 'fresh', observation: read.result };
+        } else {
+          result[market] = { state: 'stale', previous: read.result };
+        }
+      };
+    }
+    transaction.oncomplete = () => resolve(result);
+    transaction.onabort = () => reject(transaction.error);
+  });
+}
+
+export async function renderCachedSentimentPreview(host, feeds = {}) {
+  let db;
+  let resolved;
+  try {
+    db = await openPreviewCache();
+    resolved = await resolveFeeds(db, feeds);
+  } catch {
+    // A private browsing or storage error should still let a live sample render.
+    resolved = feeds;
+  } finally {
+    db?.close();
+  }
+  renderSentimentPreview(host, resolved);
 }
 
 function node(tag, className, content) {

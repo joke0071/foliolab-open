@@ -78,8 +78,9 @@ ready = "() => document.querySelector('#portfolioStorageState')?.textContent.inc
 prepare = """async () => {
   const legend=document.querySelector('#allocationLegend'), host=document.createElement('div');
   legend.closest('.allocation-layout').after(host);
-  const {renderSentimentPreview}=await import('/__qa/preview.js');
+  const {renderSentimentPreview,renderCachedSentimentPreview}=await import('/__qa/preview.js');
   window.draw = data => renderSentimentPreview(host,data);
+  window.drawCached = data => renderCachedSentimentPreview(host,data);
 }"""
 font_scale = """factor => {
   const nodes=[...document.querySelectorAll('#allocationLegend, #allocationLegend *, .qa-sentiment, .qa-sentiment *')].filter(e=>e instanceof HTMLElement);
@@ -107,6 +108,53 @@ geometry = """() => {
     fits:card.left>=-1 && card.right<=innerWidth+1 && document.documentElement.scrollWidth<=innerWidth+1 &&
       rows.every(r=>r.scrollWidth<=r.clientWidth+1 && r.querySelector('.qa-copy').getBoundingClientRect().right<=r.querySelector('.qa-reading').getBoundingClientRect().left+1)};
 }"""
+
+
+def check_cache(page, context, baseline, original):
+    values = page.locator(".qa-value")
+    metadata = page.locator(".qa-meta")
+    dates = page.locator(".qa-date")
+    newer = {**a, "value": 25, "category": "Fear", "observedAt": "2026-11-20T12:00:00Z"}
+    mismatch = {**b, "observedAt": newer["observedAt"]}
+    page.evaluate(prepare)
+    page.evaluate("() => drawCached({})")
+    assert values.count() == 0
+    assert all("nicht verfügbar" in label for label in metadata.all_text_contents())
+
+    page.evaluate("d => drawCached(d)", fresh)
+    assert values.all_text_contents() == ["0", "100"]
+    assert all("veraltet" not in label for label in metadata.all_text_contents())
+    page.evaluate("d => drawCached(d)", {
+        "crypto": {"state": "fresh", "observation": newer}, "stocks": {"state": "error"}
+    })
+    assert values.all_text_contents() == ["25", "100"]
+    assert "veraltet" not in metadata.nth(0).text_content()
+    assert "veraltet" in metadata.nth(1).text_content()
+
+    for bad in [a, mismatch, {**newer, "value": 101}, {**newer, "value": 26}]:
+        page.evaluate("d => drawCached(d)", {"crypto": {"state": "fresh", "observation": bad}})
+        assert values.all_text_contents() == ["25", "100"]
+        assert all("veraltet" in label for label in metadata.all_text_contents())
+        assert dates.nth(0).get_attribute("datetime") == newer["observedAt"]
+        assert dates.nth(1).get_attribute("datetime") == b["observedAt"]
+        assert page.evaluate(record) == baseline
+
+    page.reload()
+    page.wait_for_function(ready)
+    page.evaluate(prepare)
+    context.set_offline(True)
+    try:
+        page.evaluate("() => drawCached({crypto:{state:'offline'}, stocks:{state:'offline'}})")
+        assert values.all_text_contents() == ["25", "100"]
+        assert all("veraltet" in label for label in metadata.all_text_contents())
+        assert dates.nth(0).get_attribute("datetime") == newer["observedAt"]
+        assert dates.nth(1).get_attribute("datetime") == b["observedAt"]
+        assert page.evaluate(record) == baseline
+        assert page.evaluate(allocation) == original
+    finally:
+        context.set_offline(False)
+    return ["empty cache", "independent current values", "partial provider error",
+            "older/wrong-provider/invalid/conflicting deliveries rejected", "offline cache read after page reload"]
 
 server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Handler, directory=args.checkout.resolve()))
 threading.Thread(target=server.serve_forever, daemon=True).start()
@@ -171,10 +219,12 @@ try:
                 page.reload()
                 page.wait_for_function(ready)
                 assert page.locator(".qa-sentiment").count()==0 and page.evaluate(record)==baseline
+                cache_checks = check_cache(page, context, baseline, original)
                 report=dict(engine=name,version=browser.version,checks=checks,scenarios=[s[0] for s in scenarios],
+                    cacheChecks=cache_checks,
                     intact=["whole canonical IndexedDB record across all scenarios and reload","three allocation rows, ring and total"],scope="Isolated fixture with synthetic inputs on SW332 main, no feed calls or production UI")
                 (args.out/f"{name}.json").write_text(json.dumps(report,indent=2)+"\n")
-                print(name, "PASS", len(checks), "layout/Axe cases", flush=True)
+                print(name, "PASS", len(checks), "layout/Axe cases and", len(cache_checks), "cache scenarios", flush=True)
             finally:
                 browser.close()
 finally:
