@@ -1,0 +1,137 @@
+{
+  "status": "LOCAL_CONTROLLED_COMPARISON_PASS",
+  "issue": 229,
+  "pr": 414,
+  "main": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
+  "candidate": "3dc883ce486f288be0d469f17a7bb59ea9c3aed9",
+  "candidateTree": "51bf657f3d3131d94349fce530b17f479654a935",
+  "modulePaths": [
+    "tests/browser-flatex-native-ui.mjs",
+    "tests/browser-flatex-native-commit.mjs"
+  ],
+  "nodeTests": {
+    "passed": 1532,
+    "failed": 0,
+    "skipped": 0
+  },
+  "setup": {
+    "origin": "One loopback HTTP server per lane serving the exact SW332 checkout",
+    "os": "Debian 13 local executor",
+    "node": "24.22.3",
+    "playwright": {
+      "chromium": "1.56.1",
+      "firefoxAndWebKit": "1.64.1"
+    },
+    "axeCore": "4.10.3",
+    "localWebKit": "Packaged WebKit 27.2, additional Debian libraries in the browser bundle and local runtime library path. Host dependency discovery via ldconfig skipped for these trials. WebKit browser and all application assertions executed.",
+    "sequence": [
+      "before",
+      "after",
+      "after",
+      "before"
+    ],
+    "scenario": "Before runs UI then commit in standalone Node processes and both again through awaited imports in one Node process. After runs only the two awaited imports, in the original order. Other live browser modules are outside this timed subset. Each module opens its original isolated profiles.",
+    "requestCounting": "Completed requests to the loopback origin, counted in its HTTP request handler.",
+    "timing": "Monotonic elapsed wall time from starting the first Node process through all selected test processes and local report reads."
+  },
+  "historicalLiveStandaloneWorkload": {
+    "run": 44902530973,
+    "attempt": 1,
+    "browserSeconds": 65.8,
+    "contextRequests": 4405
+  },
+  "measurements": {
+    "cross": {
+      "engines": [
+        "firefox",
+        "webkit"
+      ],
+      "samples": [
+        {
+          "variant": "before",
+          "seconds": 117.817,
+          "requests": 3836
+        },
+        {
+          "variant": "after",
+          "seconds": 57.023,
+          "requests": 1991
+        },
+        {
+          "variant": "after",
+          "seconds": 56.572,
+          "requests": 1991
+        },
+        {
+          "variant": "before",
+          "seconds": 116.823,
+          "requests": 3982
+        }
+      ],
+      "median": {
+        "before": {
+          "seconds": 117.32,
+          "requests": 3909.0
+        },
+        "after": {
+          "seconds": 56.7975,
+          "requests": 1991.0
+        }
+      },
+      "reportsByteIdentical": true,
+      "artifactPathsIdentical": 76,
+      "reportSha256": {
+        "flatex-native-ui/report.json": "87276a69265e782fdf1816d29b2b29c4e85f6844fc931ed689690d4cb6883b81",
+        "flatex-native-commit/report.json": "a08fc3777aa2be53a91df8b4fd3ec02e8e537e76d59240ffde6c72d4bde58bd0"
+      }
+    },
+    "chromium": {
+      "engines": [
+        "chromium"
+      ],
+      "samples": [
+        {
+          "variant": "before",
+          "seconds": 44.722,
+          "requests": 1836
+        },
+        {
+          "variant": "after",
+          "seconds": 20.723,
+          "requests": 918
+        },
+        {
+          "variant": "after",
+          "seconds": 21.126,
+          "requests": 918
+        },
+        {
+          "variant": "before",
+          "seconds": 41.542,
+          "requests": 1836
+        }
+      ],
+      "median": {
+        "before": {
+          "seconds": 43.132,
+          "requests": 1836.0
+        },
+        "after": {
+          "seconds": 20.9245,
+          "requests": 918.0
+        }
+      },
+      "reportsByteIdentical": true,
+      "artifactPathsIdentical": 39,
+      "reportSha256": {
+        "flatex-native-ui/report.json": "e420a6caa06858ac780cec3521c4be8d0902af6d00248f2f642b1756ac6e163a",
+        "flatex-native-commit/report.json": "2322a9941b1fe87f4def67cfbc1f7df664d6948d9a2a48703619cee6ed436d5f"
+      }
+    }
+  },
+  "githubCi": {
+    "integrationRun": 44915772766,
+    "walletRun": 44915772646
+  },
+  "productionSavings": "Unmeasured. Draft PR does not deploy or run production live acceptance."
+}
