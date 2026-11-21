@@ -1,0 +1,68 @@
+{
+  "scope": "TRUST01 C — project MIT license in GitHub Pages",
+  "result": "LIVE_ACCEPTED_PAGES_LICENSE",
+  "serviceWorker": "foliolab-open-v332",
+  "main": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
+  "releaseRun": 44902530973,
+  "releaseAcceptanceAttempt": 2,
+  "liveJob": 136853664931,
+  "initialJob": {
+    "id": 136846290815,
+    "result": "failure",
+    "reason": "30-second navigation startup timeout after 33 Firefox HTTP 429 responses",
+    "artifactId": 14707918595,
+    "detail": "sw332-pages-license-attempt-1-2026-11-21.json"
+  },
+  "pullRequests": [
+    {
+      "number": 412,
+      "head": "f2120690788d21391a1fc6ddb4c2afe9cfc581ca",
+      "ci": 44896961687,
+      "wallet": 44896961695
+    },
+    {
+      "number": 413,
+      "head": "7d3995b8ba01ff6246ae155f7fbb12e63fec7b48",
+      "ci": 44900838770,
+      "wallet": 44900838804
+    }
+  ],
+  "verifiedMergeTree": "84f13c1e3adc6f63b2815dec5288f001e35c6b1e",
+  "pages": {
+    "id": 14706238797,
+    "createdAt": "2026-11-21T12:10:21Z",
+    "size": 589526,
+    "sha256": "358b623a6de0e7e83f9a1953502cea3bd0f2288a7ec2d44ed46e0215b8af1ded",
+    "crcVerified": true,
+    "filesCompared": 159
+  },
+  "publishedLicense": {
+    "url": "https://foliolab.unperfekt.at/LICENSE",
+    "status": 200,
+    "bytes": 1065,
+    "sha256": "1876bab16148708a12229ec65c5a019bbb4c7a846b8d0622118008daa40232b0"
+  },
+  "production": {
+    "publishedPathsCompared": 160,
+    "coreGroups": 11,
+    "axeScans": 22,
+    "successfulFXEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "navigationInstallation": "PASS after retry"
+  },
+  "liveArchive": {
+    "id": 14709927137,
+    "createdAt": "2026-11-21T13:53:23Z",
+    "size": 153192920,
+    "sha256": "76cdcbb025effcc313bee8fc174614110d10a0825ea518ac18ef095820e71389",
+    "metadataMatchedUploadLog": true,
+    "independentByteReadback": "pending"
+  },
+  "packageMatrix": {
+    "accepted": 10,
+    "total": 29
+  }
+}
