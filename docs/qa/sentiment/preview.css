@@ -1,0 +1,27 @@
+.qa-sentiment {
+  margin-block-start: .25rem;
+  padding-block-start: .25rem;
+  border-block-start: 1px solid #dbe4dc;
+  color: #254733;
+  font-size: 12px;
+}
+.qa-market {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: .4em;
+  padding: .3em 5px;
+}
+.qa-copy { display: grid; min-width: 0; gap: .1em; overflow-wrap: anywhere; }
+.qa-label { font-size: 1em; line-height: 1.25; }
+.qa-meta { font-size: .92em; line-height: 1.3; color: #486051; }
+.qa-reading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: end;
+  gap: .25em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.qa-reading svg { display: block; height: 1em; width: auto; flex: none; }
+.qa-value { font-size: 1em; }
