@@ -10,7 +10,7 @@ const output='artifacts/ime216/'+(process.env.DIALOG_CASE || 'combined');
 mkdirSync(output,{recursive:true});
 const [device]=await android.devices();
 assert.ok(device,'Android emulator must be visible over ADB');
-const adb=(...args)=>execFileSync('adb',['-s',device.serial(),...args]);
+const adb=(...args)=>execFileSync('adb',['-s',device.serial(),...args],{timeout:45000});
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const methodState=()=>adb('shell','dumpsys','input_method').toString();
 const windowState=()=>adb('shell','dumpsys','window').toString();
@@ -75,6 +75,10 @@ const report={target:release.main,probe:process.env.GITHUB_SHA,platform:'Android
 // its TLS stream over ADB; Chrome verifies the production certificate itself.
 const host = new URL(release.origin).hostname;
 const tunnel = createServer((req,res)=>res.writeHead(403).end());
+const connections=new Set();
+tunnel.on('connection',client=>{
+ connections.add(client);client.once('close',()=>connections.delete(client));
+});
 tunnel.on('connect',(req,client,head)=>{
  if(req.url!==host+':443'){client.end('HTTP/1.1 403 Forbidden\r\n\r\n');return;}
  const upstream=connect(443,host,()=>{
@@ -146,5 +150,11 @@ try{
  throw error;
 }finally{
  writeFileSync(output+'/report.json',JSON.stringify(report,null,2)+'\n');
- await ctx.close();adb('reverse','--remove','tcp:'+port);tunnel.close();await device.close();
+ console.log('Recorded',process.env.DIALOG_CASE,report.result??report.failure);
+ tunnel.close();
+ for(const connection of connections)connection.destroy();
+ await ctx.close();
+ console.log('Chrome context closed');
+ adb('reverse','--remove','tcp:'+port);
+ await device.close();
 }
