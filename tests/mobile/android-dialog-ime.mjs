@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
+import {createServer} from 'node:http';
+import {connect} from 'node:net';
 import {execFileSync} from 'node:child_process';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {_android as android} from 'playwright';
@@ -60,7 +62,26 @@ const release = {
  workerSha256: '55ffc7fa3bb8ac146cf0faa86c32e76e4fedd659a5b3cd834fa97ac30a39b82f',
 };
 const report={target:release.main,probe:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_64',physical:false,android:adb('shell','getprop','ro.build.version.release').toString().trim(),ime:adb('shell','settings','get','secure','default_input_method').toString().trim(),scenarios:[]};
-const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000});
+// The hosted emulator could not resolve the production hostname. Carry only
+// its TLS stream over ADB; Chrome verifies the production certificate itself.
+const host = new URL(release.origin).hostname;
+const tunnel = createServer((req,res)=>res.writeHead(403).end());
+tunnel.on('connect',(req,client,head)=>{
+ if(req.url!==host+':443'){client.end('HTTP/1.1 403 Forbidden\r\n\r\n');return;}
+ const upstream=connect(443,host,()=>{
+  client.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+  if(head.length)upstream.write(head);
+  client.pipe(upstream).pipe(client);
+ });
+ client.on('error',()=>upstream.destroy());client.on('close',()=>upstream.destroy());
+ upstream.on('error',()=>client.destroy());upstream.on('close',()=>client.destroy());
+});
+await new Promise((resolve,reject)=>{tunnel.once('error',reject);tunnel.listen(0,'127.0.0.1',resolve);});
+tunnel.unref();
+const port=tunnel.address().port;
+adb('reverse','tcp:'+port,'tcp:'+port);
+report.transport='Production HTTPS via fixed-origin CONNECT over ADB; regular Chrome TLS verification';
+const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000,proxy:{server:'http://127.0.0.1:'+port}});
 try{
  const page=await ctx.newPage();await page.bringToFront();page.setDefaultTimeout(12000);
  const navigation = await page.goto(release.origin, {waitUntil:'domcontentloaded'});
@@ -116,5 +137,5 @@ try{
  throw error;
 }finally{
  writeFileSync(output+'/report.json',JSON.stringify(report,null,2)+'\n');
- await ctx.close();await device.close();
+ await ctx.close();adb('reverse','--remove','tcp:'+port);tunnel.close();await device.close();
 }
