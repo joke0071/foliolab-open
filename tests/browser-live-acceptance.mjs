@@ -39,8 +39,8 @@ try{
  const observed=[];p.on('response',r=>{if(r.url().startsWith(base))observed.push(r);});
  diagnoseStartup=await observeLiveStartup(p,base);
  assert.equal((await p.goto(base,{waitUntil:'networkidle'})).status(),200);
- // Independent HTTP requests bypass browser/SW caches and compare every deployed precache byte.
- const paths=[...assets,'./sw.js'];let next=0;
+ // Independent HTTP requests bypass browser/SW caches and compare deployed files.
+ const paths=[...assets,'./sw.js','./LICENSE'];let next=0;
  await Promise.all(Array.from({length:8},async()=>{while(next<paths.length){const path=paths[next++],url=new URL(path,base);url.searchParams.set('release-check',sha);const observation={path,url:url.href,requestedAt:Date.now()};report.assetResponses.push(observation);let r;try{r=await c.request.get(url.href);observation.status=r.status();observation.headers=r.headers();if(r.status()!==200)observation.body=(await r.text()).slice(0,2048);}catch(error){observation.networkError=String(error);throw error;}assert.equal(r.status(),200,path);const actual=hash(await r.body()),expected=hash(await local(path));assert.equal(actual,expected,'published bytes '+path);report.assetHashes.push({path,sha256:actual});if(report.assetHashes.length%25===0)console.log('Asset hashes verified: '+report.assetHashes.length+'/'+paths.length);}}));
  console.log('LIVE published bytes: '+paths.length+' exact SHA-256 matches, '+cache);
  for(const r of observed){const url=new URL(r.url()),path='./'+url.pathname.slice(new URL(base).pathname.length);if(paths.includes(path)){assert.equal(hash(await r.body()),hash(await local(path)),'loaded '+path);report.loadedAssets.push(path);}}

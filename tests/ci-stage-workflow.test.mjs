@@ -17,12 +17,19 @@ const pagesArtifactName='github-pages-attempt-${{ github.run_attempt }}';
 const originalPagesUpload='      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: _site\n';
 const originalPagesDeploy='      - id: deployment\n        uses: actions/deploy-pages@v4\n';
 const retryPagesDeploy=originalPagesDeploy+`        with:\n          artifact_name: ${pagesArtifactName}\n`;
-const qualifiedUpload = [
+const originalPagesPreparation = [
  "      - name: Prepare static site",
- "        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'",
  "        run: |",
  "          mkdir -p _site",
- "          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/",
+ "          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/"
+].join('\n')+'\n';
+const qualifiedUpload = [
+ "      - name: Prepare static site",
+ "        run: |",
+ "          set -euo pipefail",
+ "          mkdir -p _site",
+ "          cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/",
+ "          cmp LICENSE _site/LICENSE",
  "      - id: pages_upload",
  "        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'",
  "        uses: actions/upload-pages-artifact@v3",
@@ -51,7 +58,6 @@ const verifyPagesReceipt = [
 function normalizePagesArtifactName(source){
  const verifiedDeploy=retryPagesDeploy.replace(pagesArtifactName,'${{ steps.pages_receipt.outputs.name }}');
  const configure='      - uses: actions/configure-pages@v5\n';
- const prepare=qualifiedUpload.slice(0,qualifiedUpload.indexOf('      - id: pages_upload')).replace(/^        if:.*\n/m,'');
  const oldPermission='    permissions:\n      contents: read\n      pages: write';
  const receiptPermission=oldPermission.replace('      pages:', '      actions: read\n      pages:');
  for(const block of [qualifiedUpload,pagesOutputs,configure+verifyPagesReceipt,verifiedDeploy,receiptPermission]){
@@ -59,7 +65,7 @@ function normalizePagesArtifactName(source){
  }
  assert.ok(source.includes(qualifiedUpload+'      - name: Verify standalone application\n'));
  return source.replace(qualifiedUpload,'').replace(pagesOutputs,'').replace(receiptPermission,oldPermission)
-  .replace(configure+verifyPagesReceipt,prepare+configure+originalPagesUpload).replace(verifiedDeploy,originalPagesDeploy);
+  .replace(configure+verifyPagesReceipt,originalPagesPreparation+configure+originalPagesUpload).replace(verifiedDeploy,originalPagesDeploy);
 }
 const pinnedCacheSteps = [
  [
@@ -216,6 +222,8 @@ test('superseded PR runs share one concurrency group while main remains separate
 test('Pages is packaged before browser tests and deploy verifies the exact producer receipt',()=>{
  for(const changed of [
   source.replace(qualifiedUpload,''),source.replace(qualifiedUpload,qualifiedUpload+qualifiedUpload),
+  source.replace('sw.js LICENSE src icons','sw.js src icons'),
+  source.replace('          cmp LICENSE _site/LICENSE\n',''),
   source.replace('steps.pages_upload.outputs.artifact_id','github.run_id'),
   source.replace('needs.test.outputs.pages_artifact_attempt','github.run_attempt'),
   source.replace('artifact_name: ${{ steps.pages_receipt.outputs.name }}','artifact_name: github-pages'),

@@ -60,6 +60,10 @@ function assertHistoricalLiveContract(source){
  assert.equal(source.split(estimateImport).length,2);
  assert.equal(createHash('sha256').update(estimateGate[0]).digest('hex'),'6ee1b54c2c8bda9d5739802b8f96078f01ec7c823cbc68bbd78a96ff460c246a');
  source=source.replace(estimateGate[0],'').replace(estimateImport,'');
+ const licenseCheck=" // Independent HTTP requests bypass browser/SW caches and compare deployed files.\n const paths=[...assets,'./sw.js','./LICENSE'];";
+ const originalAssetCheck=" // Independent HTTP requests bypass browser/SW caches and compare every deployed precache byte.\n const paths=[...assets,'./sw.js'];";
+ assert.equal(source.split(licenseCheck).length,2,'Require the exact deployed license check');
+ source=source.replace(licenseCheck,originalAssetCheck);
  // Reverse only the two exact asset-observation deltas; keep every gate byte.
  const assetDiagnosticDeltas=[
   ['assetHashes:[],assetResponses:[],loadedAssets:[]','assetHashes:[],loadedAssets:[]'],
@@ -87,6 +91,7 @@ test('asset observation contract rejects missing or duplicated diagnostics and u
   liveSource.replace("await verifyHistoryEstimate(p,{scan:()=>scan(p,'#chartPeriods','controlled offline estimated chart overlay')});",''),
   liveSource.replace('assetResponses:[],',''),
   liveSource.replace('assetResponses:[],','assetResponses:[],assetResponses:[],'),
+  liveSource.replace(",'./LICENSE'",""),
   liveSource.replace('assert.equal(r.status(),200,path);','assert.equal(r.status(),503,path);'),
   liveSource.replace("assert.equal(actual,expected,'published bytes '+path);","assert.equal(actual,actual,'published bytes '+path);")
  ])assert.throws(()=>assertHistoricalLiveContract(changed));
