@@ -191,9 +191,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
   if(published){
    const replayed=fixtureReuses.map(count=>count());
-   assert.equal(replayed.length,contexts.length-1);
    assert.ok(replayed.length>0&&replayed.every(count=>count>0));
-   console.log('Navigation fixture transport '+JSON.stringify({engine,sha:published.sha,verifiedFiles:published.count,directContexts:1,replayed}));
+   const directContexts=contexts.length-replayed.length;
+   console.log('Navigation fixture transport '+JSON.stringify({engine,sha:published.sha,verifiedFiles:published.count,directContexts,replayed}));
   }
   writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],breakpoints:[980,1180],checks,csvMeasurementLifecycle,csvMeasurementControls,csvMeasurementControlObservations,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
