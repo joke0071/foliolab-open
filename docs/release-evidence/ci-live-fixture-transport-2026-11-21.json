@@ -1,0 +1,66 @@
+{
+  "status": "PREPARED",
+  "origin": "https://foliolab.unperfekt.at/",
+  "previousLiveAccepted": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
+  "main": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
+  "checkpointBase": "61775451a980805015e5d7e4ecec83b15a24c1eb",
+  "workflow": 44920930078,
+  "pages": {
+    "original": 14713672406,
+    "entryCount": 1,
+    "packageFilesMatchingBothMainCommits": 159,
+    "sha256": "79e619a4ec61e5ffa4c8022090921ef399f3843e8de34ffa2c126b6a7775df70",
+    "zipCRC": "PASS"
+  },
+  "attempts": [
+    {
+      "id": 14715063911,
+      "bytes": 87984400,
+      "entries": 1113,
+      "sha256": "4e432a4988a04a1f54da4b79df44b183a3cd756ce0ce96d0b378b7d72a3e5059",
+      "zipCRC": "PASS",
+      "engine": "webkit",
+      "scope": "refresh-frequency reload",
+      "http429": {
+        "js": 29,
+        "svg": 0,
+        "spanMs": 20,
+        "edge": "cache-iad-khef600038-IAD",
+        "retryAfter": "0"
+      }
+    },
+    {
+      "id": 14716148859,
+      "bytes": 88429705,
+      "entries": 1133,
+      "sha256": "06070e0b0e95c6235999cccad1075cce963b42c55725e30b8e26fb321c4ad8d0",
+      "zipCRC": "PASS",
+      "engine": "firefox",
+      "scope": "navigation-installation start",
+      "http429": {
+        "js": 38,
+        "svg": 1,
+        "spanMs": 33,
+        "edge": "cache-iad-kiad7000116-IAD",
+        "retryAfter": "0"
+      }
+    }
+  ],
+  "diagnosis": "Varnish responses demonstrate an HTTP delivery-path failure before readiness. Browser diagnostics include cached and fulfilled requests, so counts from Playwright events do not establish an edge quota or causation by cross-engine parallelism.",
+  "isolatedProductionNavigation": [
+    "firefox",
+    "webkit"
+  ],
+  "candidate": {
+    "pr": 415,
+    "head": "7c60ab6d3e7045552b6b124dfa105b1982354414",
+    "tree": "4bf32eddaf9b3162f84fc7c722574be311b96b53",
+    "node": {
+      "passed": 1532,
+      "failed": 0
+    },
+    "syntax": "PASS",
+    "prIntegrationRun": 44947312347,
+    "walletRun": 44947312342
+  }
+}

@@ -36,6 +36,15 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 | Benchmark/Roadmap [#124](https://github.com/joke0071/foliolab-open/issues/124) | Der vereinbarte 1.0-Umfang ist mit 6/6 abgeschlossen. Für PORT-COMP01 fehlen Auswahl der benchmarkfähigen Zeitreihe, Währung und Gewichtung. Danach Überlappungszeitraum und vergleichbare Renditen mit einer unabhängigen Referenz prüfen. |
 | Produktmaster [#149](https://github.com/joke0071/foliolab-open/issues/149) | Kursdetails, CSV-Bedienung und Historienansichten bis SW326 sind ausgeliefert. Neue Konten-/Finanz- und UX-Deltas sind oben ihren Fachpaketen zugeordnet. Ein öffentlicher Produktauftritt benötigt getrennte Freigabe. [1.0-Abnahme](FOLIOLAB_1_0_RELEASE_ACCEPTANCE_2026-11-18.md). |
 
+### Abschlussbedingungen der 19 offenen Zeilen
+
+| Stand | Paket und kleinster noch benötigter Eingang |
+| --- | --- |
+| PREPARED · direkt ausführbar | **CI-Effizienz** · Kandidat #415 gegen den gemeinsamen PR-Stand qualifizieren. Danach regulärer Drei-Browser-Produktionslauf mit Originalarchiven, Datenintegrität und End-to-End-Zeit. |
+| QUALIFIED / BLOCKED_EXTERNAL · Originale | **ETH-HISTORY-CURSOR01** · private erste Antwort mit Cursor und nächste echte Providerantwort. **FLH03** · zusammenhängender Trade-Republic-Zeitraum und separat Bitpanda-Stichtagsbelege. **FLH03-18** · eine datierte Ledger-/Stakingposition mit Kontozuordnung. **FLH05** · zusammengehörige Gebühren-/FX-/Teilfüllungszeilen und unabhängiges Nettosoll. **FIN-E2E01** · Herkunfts- und Gegenbuchung mit Journal-, Kostenbasis- und Cash-Soll. **Weitere Wallet-Abdeckung** · nachweisbare eigene Position mit Datum, Menge und Finalität. **AT03** · derselbe belegte Brokerzeitraum mit Anfangs- und Endsaldo. **AT05** · Jahresabrechnung, zugehörige OeKB-Daten und Fachgegenprüfung. **Barausgleich** · ein Settlement mit Bruchteil, Auszahlungswährung, Kosten und Steuerbasis. **Verwaltung** · ein dokumentierter Herkunftsfall mit Journal-, Gegenbuchungs-, Kosten- und Flow-Soll. |
+| QUALIFIED / BLOCKED_EXTERNAL · Anbieter und Geräte | **Drive/FLH04** · gebundene Geräteschlüssel, unabhängiges Kryptoreview, autorisierte Testorigin und zweites echtes Gerät. **UI-SENTIMENT01** · zugelassener FolioLab-CMC-Zugang sowie CNN-Feed mit Anzeigerechten. **TRUST01** · Safari/VoiceOver/ITP und Original/Rechtekette der PWA-Grafiken, CSP-Kandidat erst mit belegtem Schutzgewinn. **Speicher/Migration** · passendes natives Gerät, Altbestand und zweites autorisiertes Gerät für die jeweilige offene Variante. **Startperformance** · benannte physische Android-Hardware, derselbe Datenbestand und fünf Kalt-/Warm-/Offline-Starts. |
+| BLOCKED_EXTERNAL · Produktentscheidung | **UI-Refresh** · Entscheidung über drei Sprunglinks in „Mehr“. **Benchmark/Roadmap** · Vergleichsreihe, Währung und Gewichtung. **Produktmaster** · Freigabe des öffentlichen Produktauftritts. |
+
 ### Reihenfolge ab SW332
 
 | Vorrang | Kleinster Eingang und anschließender Schritt |
