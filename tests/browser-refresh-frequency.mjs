@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+import {replayVerifiedFixtureAssets,verifiedFixtureRelease} from './verified-fx-release.mjs';
 const base=process.env.ETF_SOURCE_BASE||'http://127.0.0.1:4173/';
 const origin=new URL(base).protocol==='https:'?new URL(base).origin:'https://frequency.example.test';
+const published=verifiedFixtureRelease(base);
 const stateKey='foliolab-open-auto-refresh-v2',results=[];
 mkdirSync('artifacts/gates/refresh-frequency',{recursive:true});
 const deadline=setTimeout(()=>{console.error('Refresh-frequency browser deadline exceeded');process.exit(1);},240000);deadline.unref();
@@ -57,6 +59,9 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    const before=await record(page);await page.reload();await ready(page);await more();
    assert.equal(await page.locator('#autoRefresh').inputValue(),want);assert.deepEqual(await record(page),before);
   }
+  // Keep the cold boot and legacy reloads live. Subsequent fixtures test the
+  // refresh scheduler with synthetic provider traffic and real IDB.
+  const reused=await replayVerifiedFixtureAssets(context,base,published);
   for(const value of ['off','daily','6h','30m']){
    await page.locator('#autoRefresh').selectOption(value);
    await page.waitForFunction(value=>document.getElementById('autoRefresh').value===value&&!document.getElementById('autoRefresh').disabled&&document.getElementById('toast').textContent.includes(value==='off'?'deaktiviert':'gespeichert'),value);
@@ -128,6 +133,10 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    if(failure==='save')break;
   }
   assert.deepEqual(errors,[]);results.push({engine,result:'PASS',legacyReadOnly:true,frequencies:4,widths:[320,360,390,412,430,768,1440],axe:true,quota:true,multitab:true,partialNoRepeat:true,stalePreferenceNonmutation:true,walletWithAndWithoutQuote:true,offlineDenialNetworkSaveFailure:true,textScale200:true});
+  if(published){
+   assert.ok(reused()>0);
+   console.log('Refresh frequency fixture transport '+JSON.stringify({engine,sha:published.sha,verifiedFiles:published.count,replayed:reused()}));
+  }
   writeFileSync('artifacts/gates/refresh-frequency/'+engine+'.json',JSON.stringify(results.at(-1),null,2));
   console.log('K2 '+engine+' assertions PASS');
  }finally{await context.unrouteAll({behavior:'ignoreErrors'});await context.close();await browser.close();}
