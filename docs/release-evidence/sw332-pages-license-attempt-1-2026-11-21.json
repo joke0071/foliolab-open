@@ -1,0 +1,108 @@
+{
+  "version": "SW332",
+  "main": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
+  "tree": "84f13c1e3adc6f63b2815dec5288f001e35c6b1e",
+  "run": 44902530973,
+  "attempt": 1,
+  "liveJob": 136846290815,
+  "conclusion": "failure",
+  "pagesArtifact": {
+    "id": 14706238797,
+    "bytes": 589526,
+    "sha256": "358b623a6de0e7e83f9a1953502cea3bd0f2288a7ec2d44ed46e0215b8af1ded",
+    "archiveCRC": "PASS",
+    "fileMatchesMain": 159
+  },
+  "license": {
+    "path": "/LICENSE",
+    "httpStatus": 200,
+    "bytes": 1065,
+    "sha256": "1876bab16148708a12229ec65c5a019bbb4c7a846b8d0622118008daa40232b0"
+  },
+  "independentProductionPathMatches": 160,
+  "partialLiveArtifact": {
+    "id": 14707918595,
+    "bytes": 96204773,
+    "sha256": "282f4ddf14c6e8fad75757dd30eea80c52b4eb8d447ca03a5921d80ee6f05a63",
+    "archiveCRC": "PASS",
+    "entries": 1217,
+    "chromiumReport": "live/report.json",
+    "chromiumCoreGroups": 11,
+    "chromiumAxeScans": 22,
+    "archive": "FolioLab-SW332-Pages-License-Live-Attempt-1.zip",
+    "pinnedVersion": "0",
+    "pinnedByteReadback": "PASS",
+    "readbackSha256": "282f4ddf14c6e8fad75757dd30eea80c52b4eb8d447ca03a5921d80ee6f05a63"
+  },
+  "navigationFailure": {
+    "log": "production-ui-cross.log",
+    "networkDiagnostic": "worker-diagnostics/firefox-39143-0.jsonl",
+    "engine": "firefox",
+    "browserContext": 2,
+    "phase": "fresh context with synthetic installation preference storage blocked",
+    "source": "tests/browser-navigation-installation.mjs",
+    "readyTimeoutMilliseconds": 30000,
+    "http429Responses": 33,
+    "http429JavaScriptModules": 32,
+    "networkFailures": {
+      "NS_ERROR_CORRUPTED_CONTENT": 32
+    },
+    "exampleModule": "/src/fx-state.js",
+    "responseContentType": "text/html; charset=utf-8",
+    "responseRetryAfter": "0",
+    "lastHttp429Utc": "2026-11-21T12:58:57.488Z"
+  },
+  "ciBaseline": {
+    "unitTests": {
+      "passed": 1531,
+      "failed": 0,
+      "skipped": 0
+    },
+    "standaloneLiveCallsAlsoInvokedByUiQuality": [
+      {
+        "script": "browser-flatex-native-ui.mjs",
+        "engines": [
+          "chromium"
+        ],
+        "browserSeconds": 9.0,
+        "contextRequests": 584
+      },
+      {
+        "script": "browser-flatex-native-commit.mjs",
+        "engines": [
+          "chromium"
+        ],
+        "browserSeconds": 9.9,
+        "contextRequests": 878
+      },
+      {
+        "script": "browser-flatex-native-ui.mjs",
+        "engines": [
+          "firefox",
+          "webkit"
+        ],
+        "browserSeconds": 21.7,
+        "contextRequests": 1175
+      },
+      {
+        "script": "browser-flatex-native-commit.mjs",
+        "engines": [
+          "firefox",
+          "webkit"
+        ],
+        "browserSeconds": 25.2,
+        "contextRequests": 1768
+      }
+    ],
+    "measurement": "First and last worker diagnostic event per standalone process, with all its engines. Context requests include all observed destinations."
+  },
+  "prQualification": {
+    "number": 413,
+    "head": "7d3995b8ba01ff6246ae155f7fbb12e63fec7b48",
+    "testedMerge": "e2f9474b35a97d2ef0e8f9551c9c7b6029976d1a",
+    "testedTree": "84f13c1e3adc6f63b2815dec5288f001e35c6b1e",
+    "prRun": 44900838770,
+    "walletRun": 44900838804,
+    "conclusion": "success"
+  }
+}
