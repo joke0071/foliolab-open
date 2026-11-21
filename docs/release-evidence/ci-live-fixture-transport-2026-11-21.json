@@ -27,6 +27,17 @@
         "spanMs": 20,
         "edge": "cache-iad-khef600038-IAD",
         "retryAfter": "0"
+      },
+      "restorePasses": {
+        "postCommit": 10,
+        "concurrentImport": 3,
+        "returnToOriginal": 3,
+        "interruptedImport": 2,
+        "engines": [
+          "chromium",
+          "firefox",
+          "webkit"
+        ]
       }
     },
     {
@@ -43,6 +54,17 @@
         "spanMs": 33,
         "edge": "cache-iad-kiad7000116-IAD",
         "retryAfter": "0"
+      },
+      "restorePasses": {
+        "postCommit": 10,
+        "concurrentImport": 3,
+        "returnToOriginal": 3,
+        "interruptedImport": 2,
+        "engines": [
+          "chromium",
+          "firefox",
+          "webkit"
+        ]
       }
     }
   ],
@@ -62,7 +84,10 @@
     "syntax": "PASS",
     "prIntegrationRun": 44947312347,
     "walletRun": 44947312342,
-    "walletConclusion": "success"
+    "walletConclusion": "success",
+    "testedPullRequestMerge": "60a2a916c941260402cee16b7d85666c06146212",
+    "testedMergeTree": "4bf32eddaf9b3162f84fc7c722574be311b96b53",
+    "base": "e0a6637a99e387d0925c287443a12e20c0b6b9df"
   },
   "productionByteCheck": {
     "matches": 160,
