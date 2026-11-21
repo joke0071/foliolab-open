@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+import {replayVerifiedFixtureAssets,verifiedFixtureRelease} from './verified-fx-release.mjs';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/';
 const proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
+const published=verifiedFixtureRelease(base);
 const key='foliolab-open-install-hint-dismissed-v1';
 mkdirSync('artifacts/gates/navigation-installation',{recursive:true});
 // A queued details toggle can replace a resolved Playwright element before its
@@ -22,9 +24,13 @@ function measureCsvImportTarget(){
 }
 for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
- const contexts=[],checks=[];let csvMeasurementLifecycle=null,csvMeasurementControls=null,csvMeasurementControlObservations=null;
+ const contexts=[],checks=[],fixtureReuses=[];let csvMeasurementLifecycle=null,csvMeasurementControls=null,csvMeasurementControlObservations=null;
  const fresh=async(blocked='none',standalone=false)=>{
+  // The complete first installation scenario uses live responses in this engine.
+  // Additional worker-blocked UI fixtures can reuse only audited static bytes.
+  const replay=contexts.length>0&&published;
   const c=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'block',ignoreHTTPSErrors:Boolean(proxy)});contexts.push(c);
+  if(replay)fixtureReuses.push(await replayVerifiedFixtureAssets(c,base,published));
   await c.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
   await c.addInitScript(({key,blocked,standalone})=>{
    const originalMedia=window.matchMedia.bind(window),listeners=new Set();let installed=standalone;
@@ -183,6 +189,12 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();await last.locator('[data-position-id=nav-large-11-7] .position-period-more>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});assert.ok(await lastCsv.isVisible());await scan(layout);
   await layout.locator('#dashboardPage').evaluate(root=>{const sizes=[...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const[e,size]of sizes)e.style.fontSize=size*1.5+'px';});await scan(layout);assert.ok(await layout.locator('.donut-inner').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+1),'large amount remains inside the scaled donut centre');assert.deepEqual(await record(layout),large,'large list, actual disclosures and synthetic text scale preserve canonical record');
   checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
+  if(published){
+   const replayed=fixtureReuses.map(count=>count());
+   assert.equal(replayed.length,contexts.length-1);
+   assert.ok(replayed.length>0&&replayed.every(count=>count>0));
+   console.log('Navigation fixture transport '+JSON.stringify({engine,sha:published.sha,verifiedFiles:published.count,directContexts:1,replayed}));
+  }
   writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],breakpoints:[980,1180],checks,csvMeasurementLifecycle,csvMeasurementControls,csvMeasurementControlObservations,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
 }
