@@ -1,0 +1,62 @@
+{
+  "issue": 266,
+  "pull": 411,
+  "releaseCandidate": "SW332",
+  "base": "321d33e8ce45511e7611a7f33607b79ce0fc3af1",
+  "candidate": "f5ac3ac241cfe150d9c88024d504d6bcdd846d9f",
+  "sourceResponses": {
+    "first": {
+      "url": "https://api.frankfurter.dev/v1/1999-01-04?base=USD&symbols=EUR",
+      "responseUrl": "https://api.frankfurter.dev/v1/1999-01-04?base=USD&symbols=EUR",
+      "status": 200,
+      "sha256": "4713a1914f0579885b7f3af5b77247a5f3c75967487e47f1d36d9e229a9c162c",
+      "bytes": 71,
+      "body": "{\"amount\":1.0,\"base\":\"USD\",\"date\":\"1999-01-04\",\"rates\":{\"EUR\":0.84825}}"
+    },
+    "start": {
+      "url": "https://api.frankfurter.dev/v1/1999-01-01?base=USD&symbols=EUR",
+      "responseUrl": "https://api.frankfurter.dev/v1/1999-01-01?base=USD&symbols=EUR",
+      "status": 404,
+      "sha256": "aef2ed8a2ebaf652f0f07cf0c47ece26e78c0f712ecb47ce91f2b53530173a79",
+      "bytes": 23,
+      "body": "{\"message\":\"not found\"}"
+    },
+    "reference": {
+      "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?startPeriod=1999-01-01&endPeriod=1999-01-04&format=csvdata",
+      "responseUrl": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?startPeriod=1999-01-01&endPeriod=1999-01-04&format=csvdata",
+      "status": 200,
+      "sha256": "7883dd667419f68f8f9a186a3321bffe1478a2a222a44d46494c13cdc8f7dbc9",
+      "bytes": 533,
+      "observations": [
+        {
+          "date": "1999-01-04",
+          "usdPerEUR": "1.1789"
+        }
+      ]
+    }
+  },
+  "localProbe": "Isolated DOM, existing openBooking handler, historicalExchangeRate, executeTransaction and original provider responses. Synthetic 10 USD deposit.",
+  "before": {
+    "date": "1999-01-01",
+    "fxRateDate": "1999-01-04",
+    "rate": 0.84825,
+    "amountExactEUR": "8.4825",
+    "valid": true
+  },
+  "after": {
+    "date": "1999-01-01",
+    "rate": "",
+    "fxRateDate": "",
+    "valid": false,
+    "providerErrorVisible": "HTTP 404"
+  },
+  "node": {
+    "passed": 1530,
+    "failed": 0,
+    "skipped": 0
+  },
+  "prRuns": [
+    44859062774,
+    44859062693
+  ]
+}
