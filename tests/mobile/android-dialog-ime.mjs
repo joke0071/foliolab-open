@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {_android as android} from 'playwright';
@@ -52,11 +53,29 @@ async function nativeFieldTap(page,field){
  adb('shell','input','tap',String(x),String(y));
  const id=await field.getAttribute('id');await page.waitForFunction(id=>document.activeElement?.id===id,id,{timeout:3500});
 }
-const report={target:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_64',physical:false,android:adb('shell','getprop','ro.build.version.release').toString().trim(),ime:adb('shell','settings','get','secure','default_input_method').toString().trim(),scenarios:[]};
+const release = {
+ main: '321d33e8ce45511e7611a7f33607b79ce0fc3af1',
+ origin: 'https://foliolab.unperfekt.at/',
+ indexSha256: 'bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0',
+ workerSha256: '55ffc7fa3bb8ac146cf0faa86c32e76e4fedd659a5b3cd834fa97ac30a39b82f',
+};
+const report={target:release.main,probe:process.env.GITHUB_SHA,platform:'Android SDK emulator, x86_64',physical:false,android:adb('shell','getprop','ro.build.version.release').toString().trim(),ime:adb('shell','settings','get','secure','default_input_method').toString().trim(),scenarios:[]};
 const ctx=await device.launchBrowser({pkg:'com.android.chrome',viewport:null,hasTouch:true,timeout:45000});
 try{
  const page=await ctx.newPage();await page.bringToFront();page.setDefaultTimeout(12000);
- await page.goto('http://127.0.0.1:4173/',{waitUntil:'commit'});
+ const navigation = await page.goto(release.origin, {waitUntil:'domcontentloaded'});
+ assert.equal(navigation?.status(), 200);
+ assert.equal(page.url(), release.origin);
+ const indexSha256 = createHash('sha256').update(await navigation.body()).digest('hex');
+ assert.equal(indexSha256, release.indexSha256, 'Unexpected production HTML');
+ const workerSha256 = await page.evaluate(async () => {
+  const response = await fetch('/sw.js', {cache:'no-store'});
+  if (!response.ok) throw new Error('Service worker HTTP ' + response.status);
+  const digest = await crypto.subtle.digest('SHA-256', await response.arrayBuffer());
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+ });
+ assert.equal(workerSha256, release.workerSha256, 'Unexpected production service worker');
+ report.deployment = {origin:page.url(), indexSha256, workerSha256};
  const ready=()=>page.waitForFunction(()=>document.querySelector('#portfolioStorageState')?.textContent.includes('IndexedDB aktiv'),undefined,{timeout:45000});
  await ready();
  report.browser=await page.evaluate(()=>navigator.userAgent);
