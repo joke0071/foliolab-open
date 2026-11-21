@@ -153,8 +153,11 @@
     "mergeTree": "51bf657f3d3131d94349fce530b17f479654a935",
     "previousMain": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
     "mainRun": 44920930078,
-    "state": "IN_PROGRESS",
+    "state": "LIVE_RETRY_IN_PROGRESS",
     "readyForReviewRun": 44920837946,
-    "qualification": "The complete green PR integration and Wallet CI were verified on the exact tree before squash merge. The ready-for-review event started a separate replay of the same PR tree."
+    "qualification": "The complete green PR integration and Wallet CI were verified on the exact tree before squash merge. The ready-for-review event started a separate replay of the same PR tree.",
+    "failedAttempt": "ci-flatex-live-dedup-attempt-1-2026-11-21.json",
+    "retryAttempt": 2,
+    "retryJob": 136910317431
   }
 }

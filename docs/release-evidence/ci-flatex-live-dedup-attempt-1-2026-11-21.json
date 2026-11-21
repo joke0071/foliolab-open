@@ -1,0 +1,50 @@
+{
+  "status": "FAILED_LIVE_TRANSPORT_HTTP_429",
+  "main": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
+  "run": 44920930078,
+  "attempt": 1,
+  "liveJob": 136902161334,
+  "crossStartedAt": "2026-11-21T16:18:49Z",
+  "timeoutAt": "2026-11-21T16:34:18Z",
+  "chromiumSeconds": 643,
+  "publishedAssetMatches": 160,
+  "pages": {
+    "id": 14713672406,
+    "byteSize": 589535,
+    "sha256": "79e619a4ec61e5ffa4c8022090921ef399f3843e8de34ffa2c126b6a7775df70",
+    "archiveCRC": "PASS",
+    "matchesMain": 159,
+    "matchesPreviousPages": 159
+  },
+  "artifact": {
+    "id": 14715063911,
+    "archive": "FolioLab-PR414-Live-Attempt-1.zip",
+    "bytes": 87984400,
+    "entries": 1113,
+    "sha256": "4e432a4988a04a1f54da4b79df44b183a3cd756ce0ce96d0b378b7d72a3e5059",
+    "crc": "PASS",
+    "pinnedByteReadback": "PASS",
+    "pinnedVersion": "0"
+  },
+  "failure": {
+    "engine": "webkit",
+    "context": 0,
+    "source": "tests/browser-refresh-frequency.mjs:70",
+    "caller": "tests/browser-etf-source-recovery.mjs",
+    "phase": "reload then await the app initialization predicate",
+    "timeoutMilliseconds": 30000,
+    "diagnostic": "worker-diagnostics/webkit-35161-7.jsonl",
+    "firstResponseAt": "2026-11-21T16:33:48.791Z",
+    "http429JavaScriptModules": 29,
+    "exampleUrls": [
+      "https://foliolab.unperfekt.at/src/interest-scenario.js",
+      "https://foliolab.unperfekt.at/src/fx-state.js",
+      "https://foliolab.unperfekt.at/src/kraken-withdrawal-evidence.js"
+    ]
+  },
+  "followUp": {
+    "attempt": 2,
+    "liveJob": 136910317431,
+    "kind": "Targeted live job retry on the same Main commit after transport evidence"
+  }
+}
