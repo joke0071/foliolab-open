@@ -61,6 +61,46 @@
     },
     "syntax": "PASS",
     "prIntegrationRun": 44947312347,
-    "walletRun": 44947312342
+    "walletRun": 44947312342,
+    "walletConclusion": "success"
+  },
+  "productionByteCheck": {
+    "matches": 160,
+    "parallelRequests": 3,
+    "elapsedSeconds": 186.634,
+    "manifest": "ci-live-fixture-e0a6637a-production-paths.json",
+    "samePublishedVersion": "SW332"
+  },
+  "controlledComparison": {
+    "origin": "Dedicated TLS loopback serving deployed SW332 bytes. Receipt copied from successful production Chromium partial report; only loopback origin substituted. Test-only loopback certificate exception. Pinned Chromium 1.56.1 executable and Firefox/WebKit 1.64.1 executables. One baseline and one candidate run per suite, all three engines and isolated profiles; counts obtained from completed HTTP server requests.",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "navigationInstallation": {
+      "before": {
+        "requests": 2212,
+        "seconds": 37.459
+      },
+      "after": {
+        "requests": 464,
+        "seconds": 36.147
+      },
+      "stableArtifactPaths": 36,
+      "equalPerEngineReports": 3
+    },
+    "refreshFrequency": {
+      "before": {
+        "requests": 10560,
+        "seconds": 80.728
+      },
+      "after": {
+        "requests": 1820,
+        "seconds": 78.119
+      },
+      "stableArtifactPaths": 10,
+      "equalPerEngineReports": 3
+    }
   }
 }
