@@ -2028,6 +2028,7 @@ function openBooking(){
  const today=new Date().toISOString().slice(0,10);
  // Only an explicit previous choice or a single available position can be preselected.
  const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||(list.length===1?list[0]:null);
+ let referenceRequest=null, appliedReference=null;
  const commonTypes=['buy','sell','deposit','withdraw','dividend','interest','reward','fee','tax','transfer'];
  const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred?.kind==='cash'?'deposit':'buy')+'</optgroup>'+
    '<optgroup label="Weitere Vorgänge & Kapitalmaßnahmen">'+options(Object.entries(TX_TYPES).filter(([k])=>!commonTypes.includes(k)),null)+'</optgroup>';
@@ -2063,13 +2064,30 @@ function openBooking(){
   '<details class="advanced-apis booking-notes"><summary>Notiz hinzufügen (optional)</summary>'+
     field('Notiz','notes','','text','maxlength="180"')+'</details>',
   async v=>{
+   if(appliedReference && (v.date!==appliedReference.date || v.positionId!==appliedReference.positionId))
+    throw Error('Bitte den Wechselkurs für dieses Buchungsdatum und diese Anlage erneut bestätigen.');
    if(v.type==='correction')v.targetQuantity=$('bookingCorrectWrap').querySelector('input').value;
    const event=executeTransaction(model,v);
    if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);
    await save();notify('Buchung gespeichert: '+TX_TYPES[event.type]+'.');
   });
  const form=$('editorForm'),fee=form.elements.feeEUR,tax=form.elements.taxEUR,fx=form.elements.fxRate,price=form.elements.unitPrice;
+ const bookingEditor=editor, loadFx=$('loadHistoricalFx'), fxNote=$('historicalFxNote');
+ const fxHint=fxNote.textContent;
  let lastType='',lastPosition='';
+ function invalidateRequest(){
+  referenceRequest=null;
+  loadFx.disabled=false;
+ }
+ function resetFx(){
+  invalidateRequest();
+  appliedReference=null;
+  const foreign=list.find(p=>p.id===$('bookingPosition').value)?.currency;
+  fx.value=foreign && foreign!=='EUR'?'':'1';
+  form.elements.fxRateDate.value='';
+  form.elements.fxSource.value='';
+  fxNote.textContent=fxHint;
+ }
  function configure(){
   const type=$('bookingType').value;
   const position=list.find(p=>p.id===$('bookingPosition').value);
@@ -2110,8 +2128,7 @@ function openBooking(){
   $('bookingFxWrap').classList.toggle('hidden',!foreign);
   $('bookingFxCurrency').textContent=position?.currency||'Fremdwährung';
   fx.required=Boolean(foreign);
-  if(!foreign){fx.value='1';form.elements.fxRateDate.value='';form.elements.fxSource.value='';}
-  else if(changed){fx.value='';form.elements.fxRateDate.value='';form.elements.fxSource.value='';$('historicalFxNote').textContent='Verwende den Kurs deiner Abrechnung oder lade einen Referenzkurs. Referenzkurse können abweichen.';}
+  if(changed)resetFx();
   const quantityInput=$('bookingQuantityWrap').querySelector('[name="quantity"]');
   quantityInput.required=needsQuantity;
   if(!needsQuantity)quantityInput.value='0';
@@ -2119,20 +2136,32 @@ function openBooking(){
   for(const el of $('dialogFields').querySelectorAll('.hidden [required]'))el.required=false;
   lastType=actual;lastPosition=position?.id||'';
  }
- $('loadHistoricalFx').addEventListener('click',async()=>{
-  const button=$('loadHistoricalFx'),selected=list.find(p=>p.id===$('bookingPosition').value),date=form.elements.date.value;
+ form.elements.date.addEventListener('input',resetFx);
+ loadFx.addEventListener('click',async()=>{
+  const positionId=$('bookingPosition').value,selected=list.find(p=>p.id===positionId);
   if(!selected||selected.currency==='EUR')return;
-  button.disabled=true;
+  const request={date:form.elements.date.value,positionId};
+  referenceRequest=request;
+  const current=()=>referenceRequest===request && editor===bookingEditor &&
+   form.elements.date.value===request.date && $('bookingPosition')?.value===positionId;
+  loadFx.disabled=true;
   try{
-   const quote=await historicalExchangeRate(selected.currency,date);
+   const quote=await historicalExchangeRate(selected.currency,request.date);
+   if(!current())return;
+   appliedReference=request;
    fx.value=String(quote.rate);
    form.elements.fxRateDate.value=quote.date;
    form.elements.fxSource.value=quote.source+' (Referenz)';
-   $('historicalFxNote').textContent='Referenzkurs vom '+quote.date+' für '+date+'. Abweichungen vom Broker-Ausführungskurs möglich.';
-  }catch(error){notify('Referenzkurs nicht verfügbar: '+error.message,true);}
-  finally{button.disabled=false;}
+   fxNote.textContent='Referenzkurs vom '+quote.date+' für '+request.date+'. Abweichungen vom Broker-Ausführungskurs möglich.';
+  }catch(error){
+   if(current())notify('Referenzkurs nicht verfügbar: '+error.message,true);
+  }finally{
+   if(referenceRequest===request)invalidateRequest();
+  }
  });
  fx.addEventListener('input',()=>{
+  invalidateRequest();
+  appliedReference=null;
   form.elements.fxSource.value='Manuell eingetragen';
   form.elements.fxRateDate.value='';
   $('historicalFxNote').textContent='Manuellen Wechselkurs mit deiner Abrechnung abgleichen.';
