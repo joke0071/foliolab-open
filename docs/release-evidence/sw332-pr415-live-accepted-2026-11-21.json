@@ -1,0 +1,291 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+  "origin": "https://foliolab.unperfekt.at/",
+  "cache": "foliolab-open-v332",
+  "liveArchive": {
+    "bytes": 152684545,
+    "sha256": "4ac8183fea5bfa6710eb617eec42c209c49566c7050583011e5bc475886aba7d",
+    "entries": 1947,
+    "zipCRC": "PASS",
+    "byteReadback": "PASS",
+    "original": 14726901984,
+    "githubDigest": "sha256:4ac8183fea5bfa6710eb617eec42c209c49566c7050583011e5bc475886aba7d",
+    "readbackMethod": "Independent pinned backing file extraction and bytewise comparison"
+  },
+  "pagesArchive": {
+    "bytes": 589520,
+    "sha256": "21e83619f7a1f72c1ffd48616de1eb0ac141666ab4db9f67a9472d935f3b51cf",
+    "entries": 1,
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "original": 14724772273,
+    "githubDigest": "sha256:21e83619f7a1f72c1ffd48616de1eb0ac141666ab4db9f67a9472d935f3b51cf"
+  },
+  "productPathMatches": 160,
+  "coreChecks": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu",
+    "controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record",
+    "controlled offline opt-in estimate is graphically distinct and never persists values"
+  ],
+  "axeScans": 22,
+  "restore": [
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "complete",
+      "cRevision": 7,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 8,
+      "reopenedRevision": 8,
+      "returnedBRevision": 9,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "kill",
+      "cRevision": 10,
+      "amount": "8.65",
+      "balance": "18.65",
+      "bookedRevision": 11,
+      "reopenedRevision": 11,
+      "returnedBRevision": 12,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "vault-read-abort",
+      "cRevision": 13,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 14,
+      "reopenedRevision": 14,
+      "returnedBRevision": 15,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "portfolio-read-abort",
+      "cRevision": 16,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 17,
+      "reopenedRevision": 17,
+      "returnedBRevision": 18,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    }
+  ],
+  "financeEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "fxEvidenceEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "navigationTransport": [
+    {
+      "engine": "chromium",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "directContexts": 2,
+      "replayed": [
+        290,
+        145,
+        145,
+        435
+      ]
+    },
+    {
+      "engine": "firefox",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "directContexts": 2,
+      "replayed": [
+        292,
+        146,
+        146,
+        438
+      ]
+    },
+    {
+      "engine": "webkit",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "directContexts": 2,
+      "replayed": [
+        292,
+        146,
+        146,
+        438
+      ]
+    }
+  ],
+  "refreshFixtureTransport": [
+    {
+      "engine": "chromium",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "replayed": 2900
+    },
+    {
+      "engine": "firefox",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "replayed": 2920
+    },
+    {
+      "engine": "webkit",
+      "sha": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+      "verifiedFiles": 160,
+      "replayed": 2920
+    }
+  ],
+  "pr": 415,
+  "releaseRun": 44949125354,
+  "attempt": 1,
+  "liveJob": 136989233715,
+  "deployJob": 136989103881,
+  "commitTree": "4bf32eddaf9b3162f84fc7c722574be311b96b53",
+  "testedPullRequestMerge": "60a2a916c941260402cee16b7d85666c06146212",
+  "ci": {
+    "prIntegration": 44947312347,
+    "wallet": 44947312342,
+    "nodeCount": 1532,
+    "mainIntegration": "success",
+    "pages": "success",
+    "live": "success"
+  },
+  "observedProductionAssetHttp429": 0,
+  "timing": {
+    "scope": "Uncontrolled comparison of regular production runs, from first classification job start to live acceptance job completion",
+    "classificationStartedUtc": "2026-11-21T20:59:17Z",
+    "liveCompletedUtc": "2026-11-21T22:03:19Z",
+    "mainToPagesSeconds": 1378,
+    "classificationToLiveSeconds": 3842,
+    "liveJobSeconds": 2462,
+    "chromiumStepSeconds": 693,
+    "crossStepSeconds": 1673,
+    "baseline": {
+      "run": 44863539670,
+      "mainToPagesSeconds": 1198,
+      "classificationToLiveSeconds": 3735,
+      "liveJobSeconds": 2534,
+      "chromiumStepSeconds": 716,
+      "crossStepSeconds": 1747
+    },
+    "deltaSeconds": {
+      "endToEnd": 107,
+      "liveJob": -72,
+      "chromiumStep": -23,
+      "crossStep": -74
+    },
+    "previousPagesLicenseLiveJobSeconds": 3166
+  }
+}

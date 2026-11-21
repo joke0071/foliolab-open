@@ -1,5 +1,5 @@
 {
-  "status": "QUALIFIED",
+  "status": "LIVE_ACCEPTED",
   "origin": "https://foliolab.unperfekt.at/",
   "previousLiveAccepted": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
   "main": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
@@ -99,12 +99,12 @@
     ],
     "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
     "mainRun": 44949125354,
-    "releaseConclusion": "in_progress",
+    "releaseConclusion": "success",
     "mainIntegrationConclusion": "success",
     "pagesConclusion": "success",
     "pagesJob": 136989103881,
     "liveJob": 136989233715,
-    "liveConclusion": "in_progress",
+    "liveConclusion": "success",
     "pages": {
       "original": 14724772273,
       "bytes": 589520,
@@ -117,7 +117,8 @@
         "/sw.js",
         "/LICENSE"
       ]
-    }
+    },
+    "liveReport": "sw332-pr415-live-accepted-2026-11-21.json"
   },
   "productionByteCheck": {
     "matches": 160,
