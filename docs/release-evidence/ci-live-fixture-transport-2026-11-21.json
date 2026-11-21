@@ -1,5 +1,5 @@
 {
-  "status": "PREPARED",
+  "status": "QUALIFIED",
   "origin": "https://foliolab.unperfekt.at/",
   "previousLiveAccepted": "93ed5418de32473fd9440cca2d69e37fb8612ccf",
   "main": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
@@ -87,7 +87,19 @@
     "walletConclusion": "success",
     "testedPullRequestMerge": "60a2a916c941260402cee16b7d85666c06146212",
     "testedMergeTree": "4bf32eddaf9b3162f84fc7c722574be311b96b53",
-    "base": "e0a6637a99e387d0925c287443a12e20c0b6b9df"
+    "base": "e0a6637a99e387d0925c287443a12e20c0b6b9df",
+    "mergeStatus": "merged",
+    "integrationConclusion": "success",
+    "integrationNodeTests": 1532,
+    "integrationBrowserShards": [
+      "Chromium",
+      "Firefox/WebKit (1)",
+      "Firefox/WebKit (2)",
+      "Firefox/WebKit (3)"
+    ],
+    "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+    "mainRun": 44949125354,
+    "releaseConclusion": "in_progress"
   },
   "productionByteCheck": {
     "matches": 160,
