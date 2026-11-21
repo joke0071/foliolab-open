@@ -12,9 +12,9 @@ export function verifiedFXRelease(reportPath,{root=process.cwd(),sha=process.env
  assert.equal(report.base,base,'Exact audited production base required');
  const sw=readFileSync(path.join(root,'sw.js'),'utf8');
  const assets=JSON.parse(sw.match(/const ASSETS=(\[[^\n]+\]);/)[1].replaceAll("'",'"'));
- const expected=[...assets,'./sw.js'];
+ const expected=[...assets,'./sw.js','./LICENSE'];
  assert.equal(new Set(expected).size,expected.length);
- assert.deepEqual(report.assetHashes.map(x=>x.path).sort(),[...expected].sort(),'Every original audited file exactly once');
+ assert.deepEqual(report.assetHashes.map(x=>x.path).sort(),[...expected].sort(),'Every expected published file exactly once');
  assert.equal(report.cache,sw.match(/const CACHE='([^']+)'/)[1]);
  const files=new Map();
  for(const item of report.assetHashes){
