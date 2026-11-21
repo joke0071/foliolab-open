@@ -1,0 +1,291 @@
+{
+  "version": "SW331",
+  "main": "321d33e8ce45511e7611a7f33607b79ce0fc3af1",
+  "tree": "d35064401176ceba091575114af087628bb624a4",
+  "run": 44858080095,
+  "attempt": 1,
+  "deployJob": 136710881088,
+  "liveJob": 136711019607,
+  "liveArtifact": 14691115723,
+  "pagesArtifact": 14688497363,
+  "pagesDigest": "sha256:90f15dda3af3fb3f38caf93441c11756c6c3d1c5de2b8d4657c5548ab8c27637",
+  "pagesFileMatches": 158,
+  "archive": "FolioLab-SW331-Live-Accepted.zip",
+  "byteSize": 153135752,
+  "sha256": "61e4d8fc6707d3c3031f97e1e63c09ba61f6c6919efd0b6c6d3518faffbad715",
+  "githubDigest": "sha256:61e4d8fc6707d3c3031f97e1e63c09ba61f6c6919efd0b6c6d3518faffbad715",
+  "entries": 1954,
+  "archiveCRC": "PASS",
+  "assetMatches": 159,
+  "coreGroups": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu",
+    "controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record",
+    "controlled offline opt-in estimate is graphically distinct and never persists values"
+  ],
+  "axeScans": 22,
+  "origin": "https://foliolab.unperfekt.at/",
+  "validTLS": true,
+  "postCommitDeposits": [
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "complete",
+      "cRevision": 7,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 8,
+      "reopenedRevision": 8,
+      "returnedBRevision": 9,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "kill",
+      "cRevision": 10,
+      "amount": "8.65",
+      "balance": "18.65",
+      "bookedRevision": 11,
+      "reopenedRevision": 11,
+      "returnedBRevision": 12,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "vault-read-abort",
+      "cRevision": 13,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 14,
+      "reopenedRevision": 14,
+      "returnedBRevision": 15,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "portfolio-read-abort",
+      "cRevision": 16,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 17,
+      "reopenedRevision": 17,
+      "returnedBRevision": 18,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    }
+  ],
+  "errors": [],
+  "pinnedByteReadback": "PASS",
+  "pinnedVersion": "0",
+  "readbackSha256": "61e4d8fc6707d3c3031f97e1e63c09ba61f6c6919efd0b6c6d3518faffbad715",
+  "status": "LIVE_ACCEPTED",
+  "androidProduction": {
+    "wallet": {
+      "run": 44860793144,
+      "artifact": 14690058710,
+      "archiveDigest": "260f04f7d61b34d63f6cb299cbb86f102f595989df51f2bf77300e8d7a5c044f",
+      "screenDigest": "7be1cc9c059ec6b3989854f96f028081c6bc9324151319e6e0919b93e2d7199e",
+      "report": {
+        "target": "321d33e8ce45511e7611a7f33607b79ce0fc3af1",
+        "probe": "1dcb99eeb0829a132307c10366745855027d41f2",
+        "platform": "Android SDK emulator, x86_64",
+        "physical": false,
+        "android": "15",
+        "ime": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+        "scenarios": [
+          {
+            "width": 412,
+            "height": 474.28570556640625,
+            "offset": 0,
+            "field": {
+              "top": 265.7797546386719,
+              "bottom": 309.7797546386719,
+              "height": 44,
+              "visible": true
+            },
+            "action": {
+              "top": 402.2857360839844,
+              "bottom": 446.2857360839844,
+              "height": 44,
+              "visible": true
+            },
+            "focus": "scanAddress",
+            "overflow": false,
+            "dialog": "wallet",
+            "closedHeight": 786.2857055664062,
+            "keyboardShown": true,
+            "cancelledWithoutMutation": true
+          }
+        ],
+        "transport": "Production HTTPS via fixed-origin CONNECT over ADB; regular Chrome TLS verification",
+        "deployment": {
+          "origin": "https://foliolab.unperfekt.at/",
+          "indexSha256": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0",
+          "workerSha256": "55ffc7fa3bb8ac146cf0faa86c32e76e4fedd659a5b3cd834fa97ac30a39b82f"
+        },
+        "browser": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+        "result": "PASS"
+      },
+      "jobConclusion": "cancelled after the complete PASS report and screenshot were written; separate asset job passed"
+    },
+    "asset": {
+      "run": 44863035489,
+      "artifact": 14690493379,
+      "archiveDigest": "50d83ed05de8beda50cae6c94b27db12df1273383ae4f6c091a63db5b3ae82c9",
+      "screenDigest": "b9b5c06742d89f4d8bcdddd935c61832367c7c328e131c2f60a3e1911af7a110",
+      "report": {
+        "target": "321d33e8ce45511e7611a7f33607b79ce0fc3af1",
+        "probe": "301a4b72fd61254ef780bce410301408f94e5e09",
+        "platform": "Android SDK emulator, x86_64",
+        "physical": false,
+        "android": "15",
+        "ime": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+        "scenarios": [
+          {
+            "width": 412,
+            "height": 474.28570556640625,
+            "offset": 0,
+            "field": {
+              "top": 214.8095245361328,
+              "bottom": 258.8095245361328,
+              "height": 44,
+              "visible": true
+            },
+            "action": {
+              "top": 402.2857360839844,
+              "bottom": 446.2857360839844,
+              "height": 44,
+              "visible": true
+            },
+            "focus": "wizardName",
+            "overflow": false,
+            "dialog": "asset",
+            "closedHeight": 786.2857055664062,
+            "keyboardShown": true,
+            "cancelledWithoutMutation": true
+          }
+        ],
+        "transport": "Production HTTPS via fixed-origin CONNECT over ADB; regular Chrome TLS verification",
+        "deployment": {
+          "origin": "https://foliolab.unperfekt.at/",
+          "indexSha256": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0",
+          "workerSha256": "55ffc7fa3bb8ac146cf0faa86c32e76e4fedd659a5b3cd834fa97ac30a39b82f"
+        },
+        "browser": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+        "result": "PASS"
+      }
+    },
+    "physicalHardware": "Separate device criterion, no physical test in this release"
+  },
+  "emulatorCandidate": {
+    "run": 44821249516,
+    "commit": "fe7971c6a2fc6427062cbdd979c25afb00b65d1e",
+    "equalToMain": [
+      "index.html",
+      "styles.css",
+      "src/"
+    ],
+    "candidateHTML": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0"
+  }
+}
