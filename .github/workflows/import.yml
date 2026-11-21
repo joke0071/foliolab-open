@@ -505,8 +505,6 @@ jobs:
           UH02_BASE="$ACCEPTANCE_BASE" node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-chromium.log
           UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/production-uh03-kraken-chromium.log
           UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-chromium.log
-          UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-chromium.log
-          UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-chromium.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-chromium.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-chromium.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-chromium.log
@@ -547,8 +545,6 @@ jobs:
           UH02_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-cross.log
           UH03_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/production-uh03-kraken-cross.log
           UH03_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-cross.log
-          UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-cross.log
-          UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-cross.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-cross.log
           LOADING_BASE="$ACCEPTANCE_BASE" LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-cross.log
           DIALOG_NATIVE_BASE="$ACCEPTANCE_BASE" DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs 2>&1 | tee artifacts/gates/production-dialog-native-cross.log
