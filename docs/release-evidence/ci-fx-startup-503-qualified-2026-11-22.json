@@ -1,0 +1,48 @@
+{
+  "status": "QUALIFIED",
+  "pullRequest": 424,
+  "base": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+  "head": "1438e1b44560b379492c22e8bbdf0b9bf88a06e5",
+  "testMerge": "65e01cb3deabe830ae4ed920b0faa4fce80a1134",
+  "tree": "ace60cd390a8c796cf59398a7811f8f46eab3226",
+  "runs": {
+    "integration": 45071129296,
+    "wallet": 45071129273
+  },
+  "integrationOriginal": {
+    "id": 14773574837,
+    "bytes": 68058736,
+    "sha256": "926d6fb91d142fd6713296ef4551fde1ce97308707fe16c713c2696127161ca6",
+    "zipCRC": "PASS",
+    "nodePass": 1533
+  },
+  "stageOriginal": {
+    "id": 14773217720,
+    "bytes": 520,
+    "sha256": "cdd2b9e89280e114cf97a38dccec8d2f9cb384b8e21160309fc1fd4a5eb52938",
+    "zipCRC": "PASS",
+    "stage": "INTEGRATION"
+  },
+  "controlledArchive": {
+    "sha256": "c1c9c5747481d367b5307c22669bd5772c6b8428f2fff58ca506cce6159343d2",
+    "bytes": 54611,
+    "entries": 28,
+    "zipCRC": "PASS"
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "applicationAssetsChanged": false,
+  "remaining": [
+    "SW337 production acceptance",
+    "Production workflow end-to-end verification and observable timing benefit"
+  ],
+  "roadmap": {
+    "coreComplete": 6,
+    "coreTotal": 6,
+    "followUpComplete": 10,
+    "followUpTotal": 29
+  }
+}
