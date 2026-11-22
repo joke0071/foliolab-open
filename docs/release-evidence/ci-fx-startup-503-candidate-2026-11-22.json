@@ -1,0 +1,102 @@
+{
+  "status": "CONTROLLED_QUALIFICATION_PASS",
+  "base": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+  "tree": "7f4fbdff60bd73133e872d6461eee7323a85c8df",
+  "roadmapIssue": 229,
+  "productionReference": {
+    "run": 45063908233,
+    "job": 137342342417,
+    "artifact": 14771133455,
+    "path": "/src/reference-management.js",
+    "status": 503,
+    "retryAfter": "0",
+    "directFXReadyTimeoutMs": 30000
+  },
+  "scope": "Only the direct FX production control, before writing fixture data. Native browser requests and both direct FX cases. Verified-byte replay unchanged.",
+  "environment": {
+    "transport": "Local HTTPS with test certificate and controlled response injection",
+    "node": "24.22.3",
+    "chromiumPlaywright": "1.56.1",
+    "crossEnginePlaywright": "1.64.1"
+  },
+  "samples": [
+    {
+      "implementation": "baseline",
+      "engine": "chromium",
+      "httpStatus": 503,
+      "injectedResponses": 1,
+      "elapsedMs": 30740,
+      "exitCode": 1,
+      "startupRetries": 0,
+      "completedCases": 0,
+      "logSHA256": "12546e416a59871fcb0cc05dac3a27eac9a152c1127a7ca93a9b59c647a13924"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "chromium",
+      "httpStatus": 503,
+      "injectedResponses": 1,
+      "elapsedMs": 3678,
+      "exitCode": 0,
+      "startupRetries": 1,
+      "completedCases": 2,
+      "logSHA256": "2fa9dfae52832755b4c0b56e9040ab262be5ee51aa7b9bb0d2d2bfff4ab6906a"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "chromium",
+      "httpStatus": 503,
+      "injectedResponses": 2,
+      "elapsedMs": 882,
+      "exitCode": 1,
+      "startupRetries": 1,
+      "completedCases": 0,
+      "logSHA256": "236287775612beebecfcb689241ad64a9bb3c14e8b5296b34c4379a6878d801a"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "chromium",
+      "httpStatus": null,
+      "injectedResponses": 0,
+      "elapsedMs": 3660,
+      "exitCode": 0,
+      "startupRetries": 0,
+      "completedCases": 2,
+      "logSHA256": "2fa9dfae52832755b4c0b56e9040ab262be5ee51aa7b9bb0d2d2bfff4ab6906a"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "chromium",
+      "httpStatus": 429,
+      "injectedResponses": 1,
+      "elapsedMs": 555,
+      "exitCode": 1,
+      "startupRetries": 0,
+      "completedCases": 0,
+      "logSHA256": "6771b59ca2faf8091fb4f42bdad2741b742fe8e459df0e06d1d7e9408a245955"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "firefox",
+      "httpStatus": 503,
+      "injectedResponses": 1,
+      "elapsedMs": 7256,
+      "exitCode": 0,
+      "startupRetries": 1,
+      "completedCases": 2,
+      "logSHA256": "1dd31d1baa82f00653aff75a8155932e93636f9d2ad3b31a1a9c60281595bfeb"
+    },
+    {
+      "implementation": "candidate",
+      "engine": "webkit",
+      "httpStatus": 503,
+      "injectedResponses": 1,
+      "elapsedMs": 3687,
+      "exitCode": 0,
+      "startupRetries": 1,
+      "completedCases": 2,
+      "logSHA256": "206c4b8b3686fea4b855d86115a6f22a1b96a2396913e66d238430af4bcbaeb8"
+    }
+  ],
+  "releaseTiming": "Production workflow savings require a subsequent release observation."
+}
