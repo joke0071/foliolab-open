@@ -1,0 +1,32 @@
+{
+  "release": "SW335",
+  "status": "CANDIDATE",
+  "base": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
+  "head": "edfa167800852c68cbbaf1e55fa27873bcf59296",
+  "pullRequestMergeRef": "977a19361f10c82e071dcc2f568dbce7b7901d80",
+  "candidateTree": "c190a0f1517b81e7c42589d4bf7bfd18ab9ba9d6",
+  "pullRequest": 418,
+  "pullRequestIntegrationRun": 45023664510,
+  "pullRequestWalletRun": 45023664473,
+  "baselineReproduction": {
+    "engine": "chromium",
+    "source": "SW334 local checkout",
+    "outcome": "A later journal entry on a hidden swap target prevented an otherwise valid purchase."
+  },
+  "localQualification": {
+    "syntax": "PASS",
+    "node": { "version": "24.22.3", "passed": 1535, "failed": 0 },
+    "finE2E": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "HOST_DEPENDENCIES_MISSING"
+    },
+    "checks": [
+      "Swap to buy, with explicit settlement account and no unrelated target reference",
+      "Buy to interest, with exact cash and no unrelated settlement account",
+      "One IndexedDB revision per confirmed booking and identical bytes after reopen"
+    ]
+  },
+  "independentOriginalReversal": "OPEN",
+  "lastAcceptedLiveRelease": "SW334"
+}
