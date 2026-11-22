@@ -1,0 +1,13 @@
+{
+  "status": "INTEGRATED_ON_ISOLATED_FLH04_BRANCH",
+  "pullRequest": 422,
+  "base": "89973215d408cea8d24f433d2583c05436ec2274",
+  "candidate": "b32360968b2aa3d8e3a50f8e4b080e23f92066ec",
+  "testMerge": "ca20cccb2d609e69bc8e149263c5fb28312112ae",
+  "integrated": "f2532984e1ff5e9e310077d6ab8674b3af8f7f84",
+  "tree": "12664602c6cf9d9c9414fe1d9721c778a10bfd41",
+  "ci": {"run": 45062532311, "outboxJob": 137331417111, "portableJob": 137331416824, "result": "success"},
+  "local": {"nodePass": 1714, "nodeFail": 0, "browserRestart": ["chromium", "firefox", "webkit"]},
+  "checks": ["fresh writer signature verified with pre-restart public key", "pre-restart synthetic ciphertext decrypted with persisted epoch key", "exact portfolio record after reopening the profile", "outbox absent, private and epoch keys non-extractable, enrollment locked"],
+  "remaining": ["enrollment authority", "independent cryptographic review", "authorized OAuth environment", "real multi-device acceptance"]
+}

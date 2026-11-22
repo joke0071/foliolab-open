@@ -15,13 +15,14 @@
     "nodeFail": 0,
     "syntax": "PASS",
     "gitDiffCheck": "PASS",
-    "browserFIN_E2E": ["chromium", "firefox"],
+    "browserFIN_E2E": ["chromium", "firefox", "webkit"],
     "baselineUSDRegression": "FAIL_EXPECTED"
   },
   "cases": {
     "nativeUSD": {"quantity": "12.5", "historicalFX": "0.8", "irrelevantUnitPrice": "3", "bookedEUR": "10"},
     "manualEUR": {"quantity": "12.5", "journalOutEUR": "-12.5", "journalInEUR": "12.5", "externalCashFlowsChanged": false, "exactReopen": true}
   },
+  "integrationStageReceipt": {"artifact": 14770080310, "testMerge": "c1fead4075ddd0b46f1186973e597c23ada7fd1d", "stage": "INTEGRATION", "sha256": "1eeb7d7ec200131ffb6ae2a592ddfbb848865d8d6a55e39932a7a6ba58af5eee", "crc": "PASS"},
   "roadmap": {"coreComplete": 6, "coreTotal": 6, "followUpComplete": 10, "followUpTotal": 29},
   "remaining": ["Main, Pages and production acceptance", "Independent original reversal evidence for FIN-E2E01"]
 }
