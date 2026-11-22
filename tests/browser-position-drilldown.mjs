@@ -1,11 +1,13 @@
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
-import {chromium} from 'playwright';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+import {chromium,firefox,webkit} from 'playwright';
+const engine=process.env.POSITION_DRILLDOWN_ENGINE||'chromium';
+const base=process.env.POSITION_DRILLDOWN_BASE||'http://127.0.0.1:4173/';
+const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 const today=new Date().toISOString().slice(0,10);
 try{
- await page.goto('http://127.0.0.1:4173/');
+ await page.goto(base);
  await page.evaluate(date=>import('/src/model.js').then(({blankModel,createProvider,createAccount,createPosition,snapshot,persist})=>{
   const m=blankModel(),provider=createProvider({name:'Testanbieter'});m.providers.push(provider);
   const account=createAccount({providerId:provider.id,name:'Langfristiges Depot',type:'securities'},m);
