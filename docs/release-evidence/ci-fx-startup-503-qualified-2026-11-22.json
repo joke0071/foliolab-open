@@ -1,13 +1,15 @@
 {
-  "status": "QUALIFIED",
+  "status": "INTEGRATED_LIVE_PENDING",
   "pullRequest": 424,
   "base": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
   "head": "1438e1b44560b379492c22e8bbdf0b9bf88a06e5",
   "testMerge": "65e01cb3deabe830ae4ed920b0faa4fce80a1134",
+  "main": "e2f6ad000ba5c7810905a819582872b563e90c42",
   "tree": "ace60cd390a8c796cf59398a7811f8f46eab3226",
   "runs": {
     "integration": 45071129296,
-    "wallet": 45071129273
+    "wallet": 45071129273,
+    "mainPagesLive": 45076914324
   },
   "integrationOriginal": {
     "id": 14773574837,
@@ -35,6 +37,7 @@
     "webkit"
   ],
   "applicationAssetsChanged": false,
+  "pagesArchive": {"artifact": 14775701705, "bytes": 589792, "sha256": "66944af961f449268ffc61f686553e794f01e7cf32cd5fafc72581889adbe8e0", "zipCRC": "PASS", "fileMatchesMain": 159},
   "remaining": [
     "Production workflow end-to-end verification and observable timing benefit"
   ],
