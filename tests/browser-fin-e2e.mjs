@@ -220,6 +220,27 @@ for(const engine of engines){
    await restored.reload();await ready(restored);
    assert.deepEqual(await record(restored),withInterest);
 
+   await restored.locator('#mobileNav [data-page="bookings"]').click();
+   await openBooking('etf');
+   await restored.locator('#bookingType').selectOption('transfer');
+   const transferPrice=restored.locator('#editorForm [name=unitPrice]');
+   await transferPrice.fill('3');
+   await restored.locator('#bookingPosition').selectOption('a');
+   await restored.locator('#bookingTarget').selectOption('b');
+   assert.equal(await transferPrice.isVisible(),false);
+   assert.equal(await transferPrice.isDisabled(),true);
+   const transferred=await saveBooking('2026-01-12','12.50');
+   const transferModel=JSON.parse(transferred.raw);
+   assert.equal(transferred.revision,withInterest.revision+1);
+   assert.equal(transferModel.bookings[0].amountExactEUR,'12.5');
+   assert.deepEqual(transferModel.journalEntries.at(-1).postings.map(p=>[p.positionId,p.quantityDeltaExact,p.amountBookEURExact]),
+    [['a','-12.5','-12.5'],['b','12.5','12.5']]);
+   assert.equal(transferModel.positions.find(p=>p.id==='a').quantityExact,'680.500000000000000001');
+   assert.equal(transferModel.positions.find(p=>p.id==='b').quantityExact,'114.5');
+   assert.deepEqual(transferModel.externalCashFlows,interestModel.externalCashFlows);
+   await restored.reload();await ready(restored);
+   assert.deepEqual(await record(restored),transferred);
+
   }finally{await fresh.close();}
   assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',steps:[...steps,...fxSteps],checks:['exact oracle after every CAS commit','cancel/stale/quota/post-put abort preserve bytes+revision','delete/reimport/undo','distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle','FX source conflicts/guards/archival + quota/post-put abort','actual second tab CAS','7 widths/Axe','offline reload','UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates','UI swap quantity and carried cost basis, exact reopen, dedicated correction quantity','switching booking types excludes hidden target and settlement account from chronology and persisted bookings']});
   console.log('FIN-E2E01 '+engine+': exact cash/flows/basis/PnL/fees/taxes, source identity, '+(steps.length+fxSteps.length)+' steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS');

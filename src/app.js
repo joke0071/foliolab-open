@@ -2109,10 +2109,12 @@ function openBooking(){
   $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(actual));
   $('bookingMetadataWrap').querySelector('[name="newSymbol"]').parentElement.classList.toggle('hidden',actual!=='ticker_change');
   $('bookingMetadataWrap').querySelector('[name="newIsin"]').parentElement.classList.toggle('hidden',actual!=='isin_change');
-  const priceRequired=trade,priceRelevant=trade||['swap','merger','transfer','deliver_in','deliver_out','adjust'].includes(actual);
+  const cashTransfer=actual==='transfer'&&position?.kind==='cash';
+  const priceRequired=trade,priceRelevant=!cashTransfer&&(trade||['swap','merger','transfer','deliver_in','deliver_out','adjust'].includes(actual));
   $('bookingPriceWrap').classList.toggle('hidden',!priceRelevant);
   $('bookingPriceLabel').textContent=trade?'Tatsächlicher Kurs je Stück':'Kurs je Stück (für die Bewertung)';
   price.required=priceRequired;
+  price.disabled=cashTransfer;
   if(changed)price.value=trade?'':String(position?.kind==='cash'?1:position?.price??0);
   $('bookingCashWrap').classList.toggle('hidden',!trade);
   $('bookingCash').disabled=!trade;

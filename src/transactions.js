@@ -233,7 +233,10 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
    throw Error('Barabfindung/Barausgleich wird bei dieser Kapitalmaßnahme nicht automatisch gebucht. Brokerabrechnung separat prüfen.');
  if((fee>0n||tax>0n)&&!['buy','sell'].includes(kind))throw Error('Nebenkosten für diesen Vorgang bitte separat als Gebühren-/Steuerbuchung erfassen.');
  if(p.kind==='cash'&&['buy','sell'].includes(kind))throw Error('Geldkonten über Ein-/Auszahlung oder Transfer buchen, nicht als Wertpapier kaufen/verkaufen.');
- const unitPrice=amount(input.unitPrice??p.price),unpriced=input.fxRate===FX_UNKNOWN&&kind==='transfer'&&p.kind==='cash'&&p.currency==='USD';
+ const cashTransfer=kind==='transfer'&&p.kind==='cash';
+ const unpriced=cashTransfer&&p.currency==='USD'&&input.fxRate===FX_UNKNOWN;
+ // A transfer of money is valued by its native amount and historical FX alone.
+ const unitPrice=cashTransfer&&!unpriced?units(1):amount(input.unitPrice??p.price);
  if(unpriced){
   const t=checkTarget(copy,p,input.targetPositionId);
   if(t.kind!=='cash'||t.currency!=='USD'||t.providerId!==p.providerId||t.accountId===p.accountId||unitPrice!==units(1)||String(input.feeEUR)!=='0'||String(input.taxEUR)!=='0'||words(input.fxSource)||words(input.fxRateDate)||[p,t].some(x=>x.price!==1||units(x.priceExact??x.price)!==units(1)||[x.costBasisExact,x.costBasisEUR,x.realizedPnLExact,x.realizedPnLEUR].some(v=>v!=null)))throw Error('Unbewerteter USD-Transfer benötigt zwei eigene USD-Geldbereiche ohne Kosten-/Ergebnisannahme.');
@@ -325,7 +328,7 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
  if(!changed)throw Error('Keine Änderung.');
  p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
  if(net){setBasis(p,null);p.realizedPnLExact=null;p.realizedPnLEUR=null;}
- const entry=remember(copy,p,input,qty,fee,tax,fx,cash);
+ const entry=remember(copy,p,cashTransfer?{...input,unitPrice:1}:input,qty,fee,tax,fx,cash);
  if(unpriced){entry.taxEUR=null;entry.costsVerified=false;}
  if(net){entry.netSettlement=structuredClone(net);entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;copy.version=5;}
  if(kind==='fee'&&p.kind==='crypto'){entry.amountEUR=null;entry.amountExactEUR=null;entry.unitPrice=null;entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;}
