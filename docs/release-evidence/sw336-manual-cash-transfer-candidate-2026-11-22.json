@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_LIVE_PENDING",
+  "status": "PAGES_PUBLISHED_LIVE_RETRY_IN_PROGRESS",
   "cache": "foliolab-open-v336",
   "base": "878c30ca70d499145ff1ef0de40dec3dc083f621",
   "candidate": "3b793010a48436ee1282ba899d092fcacdae4a01",
@@ -9,7 +9,10 @@
   "runs": {
     "prIntegration": 45061811116,
     "wallet": 45061811055,
-    "mainPagesLive": 45063908233
+    "mainPagesLive": 45063908233,
+    "pagesJob": 137342241671,
+    "firstLiveJob": 137342342417,
+    "retryLiveJob": 137343873537
   },
   "local": {
     "nodeVersion": "24.22.3",
@@ -27,6 +30,9 @@
   "integrationStageReceipt": {"artifact": 14770080310, "testMerge": "c1fead4075ddd0b46f1186973e597c23ada7fd1d", "stage": "INTEGRATION", "sha256": "1eeb7d7ec200131ffb6ae2a592ddfbb848865d8d6a55e39932a7a6ba58af5eee", "crc": "PASS"},
   "integrationOriginal": {"artifact": 14770811417, "testedCommit": "c1fead4075ddd0b46f1186973e597c23ada7fd1d", "bytes": 68063934, "sha256": "a3f22ea71e850f8ad36b91407e90f01e8a3f452192ba0f418e0c1f0ddcac5072", "zipCRC": "PASS", "entries": 848, "nodePass": 1536},
   "pagesArchive": {"artifact": 14770348513, "bytes": 589744, "sha256": "d44509ba0ef7201b403df2f524d14be78b8d1214acf449635e57acf6519ba162", "zipCRC": "PASS", "fileMatchesMain": 159},
+  "mainOriginal": {"artifact": 14770874130, "testedCommit": "dc6f450d3a260f2b236d5b29461237835591984e", "bytes": 68071015, "sha256": "bf95205543e9da4b9f110adc4f2ad2ee75c8f617f407d5cfe7dfb23898bd7fc5", "zipCRC": "PASS", "entries": 848, "nodePass": 1536},
+  "firstLiveArchive": {"artifact": 14771133455, "bytes": 11040492, "sha256": "e331986e868182593d9b708f8ede71fcc9d75bcb396caf4ac4c3200a351960ab", "zipCRC": "PASS", "entries": 114, "previousFXReplayCases": 8, "failure": "First unrestricted production-domain FX fixture did not reach IndexedDB readiness within 30 seconds. Cause undetermined."},
+  "independentProductionByteMatches": ["index.html", "sw.js", "src/app.js", "src/transactions.js"],
   "roadmap": {"coreComplete": 6, "coreTotal": 6, "followUpComplete": 10, "followUpTotal": 29},
   "remaining": ["Main, Pages and production acceptance", "Independent original reversal evidence for FIN-E2E01"]
 }

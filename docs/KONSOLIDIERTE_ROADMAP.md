@@ -49,6 +49,8 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 ### Priorisierung der 19 offenen Zeilen · 22.11.2026
 
+**Positionsdetails · SW337-Kandidat.** Der separat freigegebene [#423](https://github.com/joke0071/foliolab-open/pull/423) erhält EUR-Wert und Kontogewichtung in der Kopfzeile. Im aufgeklappten Bereich erscheinen Bestand, Kurs, Einstand, Kursquelle, Verlauf und Buchungen. Der neue Cache und die bestehenden Kontogewichtsprüfungen sind auf SW336 qualifiziert. Lokal 1.533 Node-Tests und derselbe Browserfall in Chromium, Firefox und WebKit bestanden. [Kandidatenbeleg](release-evidence/sw337-position-details-candidate-2026-11-22.json).
+
 **SW336 auf Main.** [#421](https://github.com/joke0071/foliolab-open/pull/421) bestand die gesamte Pflicht-CI am gemeinsamen Stand und ist baumgleich in `dc6f450d` integriert. Das vorab erzeugte Pages-Paket enthält 159 bytegleiche Main-Dateien. [Regulärer Release-Lauf](https://github.com/joke0071/foliolab-open/actions/runs/45063908233). Die Originalanforderung für FIN-E2E01 bleibt separat offen.
 
 **FLH04 · Lokale Schlüsselpersistenz.** [#422](https://github.com/joke0071/foliolab-open/pull/422) ergänzt die Seitenneueröffnung aus #419 um einen vollständigen Browserneustart desselben Profils. Chromium, Firefox und WebKit bestätigen Schreib- und Epochenschlüssel, exakte Portfoliodaten, abwesende Outbox und erhaltene Enrollment-Sperre. CI grün, baumgleich auf dem isolierten Zweig integriert. [Nachweis](release-evidence/flh04-locked-anchor-browser-restart-2026-11-22.json). Für die Gesamtzeile bleiben Enrollment, unabhängiges Kryptoreview, autorisierte OAuth-Umgebung und reale Mehrgeräte-Abnahme erforderlich.
