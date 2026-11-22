@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED_LIVE_GATE_RUNNING",
+  "status": "LIVE_ACCEPTED",
   "scope": "Native cash quantity for trades using a cash account in the trade currency",
   "baseline": {
     "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
@@ -125,5 +125,6 @@
       ]
     },
     "browser": "Chromium 141.0.7390.37"
-  }
+  },
+  "releaseEvidence": "sw333-pr416-live-accepted-2026-11-22.json"
 }
