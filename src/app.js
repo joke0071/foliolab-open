@@ -2050,7 +2050,7 @@ function openBooking(){
     '<p class="small-help">Beispiel: Beim Split 2:1 erhältst du 2 neue Anteile je altem Anteil. Barausgleich separat prüfen.</p></div>'+
   '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
     field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
-  '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
+  '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','correctedQuantity','0','text','inputmode="decimal"')+'</div>'+
   '<details class="advanced-apis" id="bookingAdvanced"><summary>Gebühren & Steuern (optional)</summary>'+
     '<div class="field-row">'+field('Gebühren in EUR','feeEUR','0','text','inputmode="decimal"')+
     field('Steuern in EUR','taxEUR','0','text','inputmode="decimal"')+'</div></details>'+
@@ -2066,7 +2066,7 @@ function openBooking(){
   async v=>{
    if(appliedReference && (v.date!==appliedReference.date || v.positionId!==appliedReference.positionId))
     throw Error('Bitte den Wechselkurs für dieses Buchungsdatum und diese Anlage erneut bestätigen.');
-   if(v.type==='correction')v.targetQuantity=$('bookingCorrectWrap').querySelector('input').value;
+   if(v.type==='correction')v.targetQuantity=v.correctedQuantity;
    const event=executeTransaction(model,v);
    if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);
    await save();notify('Buchung gespeichert: '+TX_TYPES[event.type]+'.');
