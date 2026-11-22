@@ -1,5 +1,5 @@
 {
-  "status": "MERGED_RELEASE_IN_PROGRESS",
+  "status": "DEPLOYED_LIVE_GATE_RUNNING",
   "scope": "Native cash quantity for trades using a cash account in the trade currency",
   "baseline": {
     "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
@@ -74,5 +74,56 @@
     "coreTotal": 6,
     "followUpAccepted": 10,
     "followUpTotal": 29
+  },
+  "integrationOriginals": [
+    {
+      "scope": "PR",
+      "id": 14741445955,
+      "sha256": "90ddbb6d9f540dd42a5e98884419e504d3f2e19d70ab24dbf4ae88dd8c766e4f",
+      "zipCRC": "PASS",
+      "testedCommit": "0bb27d7412650391a9246da572e46044d3123486",
+      "nodePass": 1533
+    },
+    {
+      "scope": "Main",
+      "id": 14741404511,
+      "sha256": "b377f6350f87351b7830416e58f08c33326061e27b141817788eb60673562fdc",
+      "zipCRC": "PASS",
+      "testedCommit": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
+      "nodePass": 1533
+    }
+  ],
+  "pagesOriginal": {
+    "id": 14740923589,
+    "bytes": 590052,
+    "sha256": "4be4ccdec5169e44f214aa459a775a8c49f2cc5d2dc6fc64319578e31e3600e9",
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "deployFinishedAt": "2026-11-22T05:57:03Z"
+  },
+  "directProduction": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "matchedPaths": [
+      "index.html",
+      "sw.js",
+      "src/transactions.js",
+      "icons/flask-192.png",
+      "icons/flask-512.png",
+      "icons/flask-maskable-512.png"
+    ],
+    "syntheticBookingUI": {
+      "unfundedPurchaseRejected": true,
+      "unfundedRecordUnchanged": true,
+      "fundedBuyAfterCash": "0.000000000000000002",
+      "fundedSaleAfterCash": "0.000000000000000005",
+      "exactReopen": true,
+      "revisions": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "browser": "Chromium 141.0.7390.37"
   }
 }

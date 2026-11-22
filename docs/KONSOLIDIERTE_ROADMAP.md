@@ -49,7 +49,7 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 | Reihenfolge | Zeile | Ausführbarer Anteil oder fehlender Eingang |
 | --- | --- | --- |
-| 1 | FIN-E2E01 | Exakte native Cashabrechnung mit synthetischen Fällen reproduziert und in [#416](https://github.com/joke0071/foliolab-open/pull/416) korrigiert. Pflicht-CI bestanden, baumgleich als `b2ff4a80` integriert. [SW333-Release](https://github.com/joke0071/foliolab-open/actions/runs/44989639395) läuft. Die zusätzliche Originalrücknahme benötigt weiterhin unabhängige Journal-, Kosten- und Cash-Sollwerte. |
+| 1 | FIN-E2E01 | Exakte native Cashabrechnung mit synthetischen Fällen reproduziert und in [#416](https://github.com/joke0071/foliolab-open/pull/416) korrigiert. Pflicht-CI bestanden, baumgleich als `b2ff4a80` integriert. SW333 ist veröffentlicht. Im [SW333-Release](https://github.com/joke0071/foliolab-open/actions/runs/44989639395) läuft die vollständige Live-Abnahme. Die zusätzliche Originalrücknahme benötigt weiterhin unabhängige Journal-, Kosten- und Cash-Sollwerte. |
 | 2 | CI-Effizienz | Den regulären SW333-Lauf ab Klassifizierung bis Liveabschluss mit denselben Marken wie SW332 auswerten. |
 | 3 | TRUST01 | Der Bestandstest unterstützt eigene HTTPS-RPC-/Worker-Origins. Ein CSP-Eingriff setzt einen konkret belegten Schutzgewinn voraus. Alle drei PWA-PNGs aus dem Projekt-SVG bytegenau reproduziert. Natives Safari/VoiceOver/ITP sowie Herkunft und Rechte der ursprünglichen Zeichnung bleiben offen. [Exportbeleg](release-evidence/pwa-icon-export-reproduction-2026-11-22.json). |
 | 4 | FLH03 | Privater Trade-Republic-Verrechnungskontozeitraum oder direkt ausgewiesener Bitpanda-Stichtagssaldo und persönliche BCI25-Aufstellung. |
