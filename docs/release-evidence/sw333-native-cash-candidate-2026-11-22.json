@@ -1,5 +1,5 @@
 {
-  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "status": "MERGED_RELEASE_IN_PROGRESS",
   "scope": "Native cash quantity for trades using a cash account in the trade currency",
   "baseline": {
     "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
@@ -7,7 +7,10 @@
     "liveRun": 44949125354,
     "liveArtifact": 14726901984,
     "pagesArtifact": 14724772273,
-    "directProductByteMatches": ["index.html", "sw.js"],
+    "directProductByteMatches": [
+      "index.html",
+      "sw.js"
+    ],
     "regression": "A USD buy with a principal of 0.000000000000000003 and EUR-per-USD 0.1 passed with zero available USD."
   },
   "candidate": {
@@ -17,24 +20,59 @@
     "tree": "002de0f673f81baf7701c5a779e1d9854b3b98a2",
     "cache": "foliolab-open-v333",
     "prIntegrationRun": 44988231086,
-    "walletRun": 44988231227
+    "walletRun": 44988231227,
+    "prIntegrationConclusion": "success",
+    "walletConclusion": "success",
+    "attempt": 1,
+    "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
+    "mainTree": "002de0f673f81baf7701c5a779e1d9854b3b98a2",
+    "mainReleaseRun": 44989639395
   },
   "local": {
-    "node": {"version": "24.22.3", "pass": 1533, "fail": 0},
+    "node": {
+      "version": "24.22.3",
+      "pass": 1533,
+      "fail": 0
+    },
     "syntax": "PASS",
     "diff": "PASS",
     "chromium": {
       "version": "141.0.7390.37",
-      "existingSuitesPassed": ["browser-fin-e2e.mjs", "browser-booking-reference-fx.mjs"],
+      "existingSuitesPassed": [
+        "browser-fin-e2e.mjs",
+        "browser-booking-reference-fx.mjs"
+      ],
       "syntheticBookingUI": {
         "unfundedPurchaseRejected": true,
         "unfundedRecordUnchanged": true,
         "fundedBuyAfterCash": "0.000000000000000002",
         "fundedSaleAfterCash": "0.000000000000000005",
         "exactReopen": true,
-        "revisions": [2, 3, 4, 5]
+        "revisions": [
+          2,
+          3,
+          4,
+          5
+        ]
       }
+    },
+    "firefox": {
+      "version": "157.0",
+      "finE2E": "PASS",
+      "bookingFX": "PASS with Firefox 142.0.1",
+      "syntheticBookingUI": "PASS with Firefox 142.0.1"
+    },
+    "webkit": {
+      "version": "27.2",
+      "finE2E": "PASS",
+      "bookingFX": "PASS with WebKit 26.0",
+      "syntheticBookingUI": "PASS"
     }
   },
-  "matrix": {"coreAccepted": 6, "coreTotal": 6, "followUpAccepted": 10, "followUpTotal": 29}
+  "matrix": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followUpAccepted": 10,
+    "followUpTotal": 29
+  }
 }
