@@ -47,21 +47,6 @@ async function operation(page,action,args={}){
  return page.evaluate(async({action,args})=>{
   const t=window.syncTest;
   if(action==='prepare-anchor')return t.prepareLocalSyncAnchor(t.db);
-  if(action==='anchor-preimage')return t.storage.readPortfolioSyncAnchorPreimage(t.db);
-  if(action==='pause-anchor-digest'){
-   const digest=crypto.subtle.digest;
-   crypto.subtle.digest=async function(...input){
-    try {
-     const result=await digest.apply(this,input);
-     await new Promise(resolve=>{t.resumeAnchorDigest=resolve;});
-     return result;
-    }finally{
-     crypto.subtle.digest=digest;
-     delete t.resumeAnchorDigest;
-    }
-   };
-   return;
-  }
   if(action==='anchor-proof'){
    const anchor=await new Promise((resolve,reject)=>{
     const tx=t.db.transaction('records','readonly'),r=tx.objectStore('records').get('sync-local-anchor-v1');let value;
@@ -90,17 +75,16 @@ async function operation(page,action,args={}){
   if(action==='delete')return t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:null,settings:null});
   if(action==='adopt')return t.storage.adoptPortfolioRecord(t.db,{expectedPortfolio:args.expected,raw:args.raw,settings:t.model.defaultSettings(),allowTombstone:true});
   if(action==='recover-record')return t.storage.restoreDamagedRecord(t.db,{expected:args.expected,raw:args.raw,settings:t.model.defaultSettings()});
-  if(action==='fault-capture'||action==='fault-restore'||action==='fault-prepare-anchor'){
+  if(action==='fault-capture'||action==='fault-restore'){
    const put=IDBObjectStore.prototype.put;
    IDBObjectStore.prototype.put=function(value,key){
-    if(key===(action==='fault-prepare-anchor'?'sync-local-anchor-v1':'sync-outbox-v1')){
+    if(key==='sync-outbox-v1'){
      if(args.fault==='quota')throw new DOMException('synthetic-quota','QuotaExceededError');
      const result=put.call(this,value,key);this.transaction.abort();return result;
     }
     return put.call(this,value,key);
    };
    try{
-    if(action==='fault-prepare-anchor')return await t.prepareLocalSyncAnchor(t.db);
     if(action==='fault-restore')return await t.storage.commitPortfolioRecord(t.db,{expectedRevision:args.revision,raw:args.raw,settings:t.model.defaultSettings(),intent:'restore'});
     return await t.api.capture({...args,receipt:await t.verify(args.frameText),expectedPortfolioId:'P',expectedEpochId:'12'.repeat(16)});
    }
@@ -170,22 +154,9 @@ try{
  const local=await browser.newContext();
  try{
   const page=await local.newPage();await setup(page);
-  const peer=await local.newPage();await setup(peer);
   const p=await operation(page,'initialize');
   const fenced=await operation(page,'adopt',{expected:p,raw:p.raw});
-  for(const fault of ['quota','abort']){
-   await assert.rejects(()=>operation(page,'fault-prepare-anchor',{fault}),
-    fault==="quota"?/synthetic-quota/:/sync-anchor-write-aborted|AbortError/);
-   assert.deepEqual(await operation(peer,'anchor-preimage'),
-    {portfolio:fenced,syncPresent:false,anchorPresent:false});
-  }
-  await operation(page,'pause-anchor-digest');
-  const stale=assert.rejects(()=>operation(page,'prepare-anchor'),/existing-anchor/);
-  await page.waitForFunction(()=>typeof window.syncTest.resumeAnchorDigest==='function');
-  let prepared;
-  try{prepared=await operation(peer,'prepare-anchor');}
-  finally{await page.evaluate(()=>window.syncTest.resumeAnchorDigest());}
-  await stale;
+  const prepared=await operation(page,'prepare-anchor');
   assert.equal(prepared.status,'prepared-locked');assert.equal(prepared.enrollmentAuthorized,false);
   assert.deepEqual(await operation(page,'read'),{portfolio:fenced,sync:null});
   const proof=await operation(page,'anchor-proof');assert.equal(proof.lineId,prepared.lineId);
@@ -197,7 +168,6 @@ try{
   assert.deepEqual(await operation(resumed,'anchor-proof'),proof);
   assert.equal((await operation(resumed,'read')).portfolio.syncEnrollmentRequired,true);
  }finally{await local.close();}
- console.log('FLH04 LOCKED ANCHOR '+name+': anchor quota and post-put abort leave no slot; concurrent preparation publishes exactly one locked key pair; canonical portfolio and outbox unchanged.');
  if(sourceLifecycle==='1'){
   const {runSourceLifecycleCandidate}=await import('./flh04-source-lifecycle-probes.mjs');
   await runSourceLifecycleCandidate({browser,setup,operation,url});

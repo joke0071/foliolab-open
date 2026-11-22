@@ -44,6 +44,7 @@ jobs:
           ulimit -c 0
           FLH04_BROWSER_PROCESS_RESTART=1 FLH04_SOURCE_LIFECYCLE=1 FLH04_RENDERER_TERMINATION=1 timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
           FLH04_VERSION2_CANDIDATE=1 timeout --kill-after=10s 360s node tests/browser-sync-outbox.mjs
+          timeout --kill-after=10s 90s node tests/browser-flh04-locked-anchor.mjs
   portable:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
@@ -88,4 +89,5 @@ jobs:
           kill -0 "$server"
           for engine in firefox webkit; do
             ENGINE="$engine" FLH04_PORTABLE=1 timeout --kill-after=10s 180s node tests/browser-sync-outbox.mjs
+            ENGINE="$engine" timeout --kill-after=10s 90s node tests/browser-flh04-locked-anchor.mjs
           done
