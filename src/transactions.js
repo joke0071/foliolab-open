@@ -240,7 +240,8 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
  // A native execution can state the settled EUR trade value more precisely than
  // quantity × a rounded display price. Keep that authoritative total exact.
  if(input.tradeAmountEURExact!==undefined&&(!['buy','sell'].includes(kind)||p.currency!=='EUR'))throw Error('Exakter Ausführungsbetrag benötigt einen EUR-Kauf oder -Verkauf.');
- const cash=unpriced?null:input.tradeAmountEURExact===undefined?mul(mul(qty,unitPrice),fx):amount(input.tradeAmountEURExact,1n);
+ const nativeGross=mul(qty,unitPrice);
+ const cash=unpriced?null:input.tradeAmountEURExact===undefined?mul(nativeGross,fx):amount(input.tradeAmountEURExact,1n);
  const b=basis(p);let changed=false,linkedCash=null;
  const net=input.netSettlement;
  if(net){
@@ -251,8 +252,12 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
    linkedCash=pos(copy,input.cashPositionId);
    if(linkedCash.id===p.id||linkedCash.kind!=='cash'||!['EUR',p.currency].includes(linkedCash.currency))throw Error('Ein passendes Verrechnungskonto in EUR oder Handelswährung wählen.');
    if(net&&(linkedCash.currency!=='EUR'||linkedCash.providerId!==p.providerId||linkedCash.accountId===p.accountId))throw Error('EUR-Nettocash benötigt getrenntes eigenes Konto beim selben Anbieter.');
-   const eur=net?units(net.cashExact):kind==='buy'?-(cash+fee+tax):cash-fee-tax;
-   const cashChange=linkedCash.currency==='EUR'?eur:div(eur,fx);
+   const side=kind==='buy'?-1n:1n;
+   // Preserve the exact native principal. Only EUR-denominated charges need
+   // conversion when settling in the trading currency.
+   const cashChange=linkedCash.currency==='EUR'
+     ? (net?units(net.cashExact):side*cash-fee-tax)
+     : side*nativeGross-div(fee+tax,fx);
    if(q(linkedCash)+cashChange<0n)throw Error('Verrechnungskonto hat nicht genügend Guthaben.');
    linkedCash.lastCashDeltaExact=exact(cashChange);
    setQ(linkedCash,q(linkedCash)+cashChange);
