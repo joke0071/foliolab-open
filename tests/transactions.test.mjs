@@ -12,6 +12,19 @@ function setup(){
 const book=(m,p,type,extra={})=>executeTransaction(m,{positionId:p.id,type,date:'2026-10-21',quantity:'1',unitPrice:100,...extra});
 test('Journal implements supported transaction vocabulary',()=>{for(const kind of ['buy','sell','deposit','withdraw','deliver_in','deliver_out','transfer','dividend','interest','reward','airdrop','fee','tax','correction','split','swap','merger','ticker_change','isin_change','delist'])assert.ok(TX_TYPES[kind]);});
 test('Transfers conserve value and cost basis, and never create an external flow',()=>{const {m,p,target}=setup(),prior=totalEUR(m);book(m,p,'transfer',{quantity:'2',targetPositionId:target.id});assert.equal(p.quantity,8);assert.equal(target.quantity,2);assert.equal(p.costBasisEUR,800);assert.equal(target.costBasisEUR,200);assert.equal(totalEUR(m),prior);assert.equal(m.externalCashFlows.length,0);});
+test('A cash transfer values the native amount at historical FX, regardless of a stale asset price',()=>{
+ const {m,c}=setup(),account=createAccount({providerId:c.providerId,name:'USD target',type:'checking'},m);
+ m.accounts.push(account);
+ const target=createPosition({providerId:c.providerId,accountId:account.id,name:'USD target',kind:'cash',currency:'USD',quantity:'0'},m);
+ c.currency='USD';m.positions.push(target);
+ const entry=book(m,c,'transfer',{quantity:'12.5',targetPositionId:target.id,fxRate:'0.8',unitPrice:'3'});
+ assert.equal(entry.unitPrice,1);
+ assert.equal(entry.amountExactEUR,'10');
+ assert.deepEqual(m.journalEntries.at(-1).postings.map(p=>[p.quantityDeltaExact,p.amountBookEURExact]),[['-12.5','-10'],['12.5','10']]);
+ assert.equal(c.quantityExact,'987.5');
+ assert.equal(target.quantityExact,'12.5');
+ assert.deepEqual(m.externalCashFlows,[]);
+});
 test('Deposits and withdrawals change cash and record signed external flows',()=>{const {m,c}=setup();book(m,c,'deposit',{quantity:'200',unitPrice:1});book(m,c,'withdraw',{quantity:'50',unitPrice:1});assert.equal(c.quantity,1150);assert.deepEqual(m.externalCashFlows.map(x=>x.amountEUR),[200,-50]);assert.equal(m.bookings[0].external,true);const b=safeImport(JSON.parse(backup(m)));assert.equal(b.externalCashFlows.length,2);});
 test('Shares split and reverse split conserve position value and cost basis',()=>{const {m,p}=setup();const v=totalEUR(m);book(m,p,'split',{ratioNumerator:2,ratioDenominator:1,quantity:0});assert.equal(p.quantity,20);assert.equal(p.price,50);assert.equal(p.costBasisEUR,1000);assert.equal(totalEUR(m),v);book(m,p,'split',{ratioNumerator:1,ratioDenominator:2,quantity:0});assert.equal(p.quantity,10);assert.equal(p.price,100);});
 test('Swap consumes input and transfers basis without inventing tax profit',()=>{const {m,p,target}=setup();book(m,p,'swap',{quantity:'2',targetPositionId:target.id,targetQuantity:'3'});assert.equal(p.quantity,8);assert.equal(target.quantity,3);assert.equal(p.realizedPnLEUR,null);});
