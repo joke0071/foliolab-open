@@ -1,0 +1,32 @@
+{
+  "scope": "Native IndexedDB qualification of locked local key preparation",
+  "baseBranch": "feature/flh04-revisions-20261113-b5ddfe1c",
+  "base": "5e761ae52dc051d040cb8ff149d04ab51b37f11c",
+  "pullRequest": 419,
+  "head": "b04c50b09d36c1e6f3af57631e05589e9c9c7c3f",
+  "testedMergeRef": "e514a43c616783061cbfc74cb515256d2b390fbd",
+  "tree": "908a885d2035ad5adb0baccd9ddf38af718290fe",
+  "integrated": "89973215d408cea8d24f433d2583c05436ec2274",
+  "workflow": {
+    "run": 45024332150,
+    "attempt": 1,
+    "chromiumJob": 137213912412,
+    "firefoxAndWebKitJob": 137213912236,
+    "conclusion": "success",
+    "nodePassed": 1714,
+    "nodeFailed": 0,
+    "engines": { "chromium": "PASS", "firefox": "PASS", "webkit": "PASS" }
+  },
+  "checks": [
+    "Injected quota at the anchor put and an explicit abort after put leave the portfolio, outbox and anchor preimage exact.",
+    "A tab holding a stale preparation loses to the committed anchor without replacing it.",
+    "The winning locked key pair remains usable for a local signature proof after page reopening."
+  ],
+  "earlierRun": {
+    "run": 45023957071,
+    "outcome": "The byte guard rejected modifications to the previously pinned harness.",
+    "resolution": "A dedicated probe now runs alongside the byte-identical historical harness."
+  },
+  "productDeployment": "OUT_OF_SCOPE",
+  "open": ["transactionally bound authorized enrollment", "independent crypto review", "authorized OAuth origin and account", "real remote and second-device acceptance"]
+}

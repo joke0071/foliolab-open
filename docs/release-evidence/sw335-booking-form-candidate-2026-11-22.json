@@ -19,7 +19,7 @@
     "finE2E": {
       "chromium": "PASS",
       "firefox": "PASS",
-      "webkit": "HOST_DEPENDENCIES_MISSING"
+      "webkit": "PASS"
     },
     "checks": [
       "Swap to buy, with explicit settlement account and no unrelated target reference",
