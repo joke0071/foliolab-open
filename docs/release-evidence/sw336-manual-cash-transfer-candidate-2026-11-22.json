@@ -1,0 +1,27 @@
+{
+  "status": "CANDIDATE",
+  "cache": "foliolab-open-v336",
+  "base": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+  "candidate": "3b793010a48436ee1282ba899d092fcacdae4a01",
+  "tree": "96cbc8d7e3ed822966f9103fbb2066b008937dea",
+  "pullRequest": 421,
+  "runs": {
+    "prIntegration": 45061811116,
+    "wallet": 45061811055
+  },
+  "local": {
+    "nodeVersion": "24.22.3",
+    "nodePass": 1536,
+    "nodeFail": 0,
+    "syntax": "PASS",
+    "gitDiffCheck": "PASS",
+    "browserFIN_E2E": ["chromium", "firefox"],
+    "baselineUSDRegression": "FAIL_EXPECTED"
+  },
+  "cases": {
+    "nativeUSD": {"quantity": "12.5", "historicalFX": "0.8", "irrelevantUnitPrice": "3", "bookedEUR": "10"},
+    "manualEUR": {"quantity": "12.5", "journalOutEUR": "-12.5", "journalInEUR": "12.5", "externalCashFlowsChanged": false, "exactReopen": true}
+  },
+  "roadmap": {"coreComplete": 6, "coreTotal": 6, "followUpComplete": 10, "followUpTotal": 29},
+  "remaining": ["Main, Pages and production acceptance", "Independent original reversal evidence for FIN-E2E01"]
+}
