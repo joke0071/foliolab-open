@@ -1,6 +1,6 @@
 {
   "release": "SW335",
-  "status": "CANDIDATE",
+  "status": "MERGED_PENDING_LIVE",
   "base": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
   "head": "edfa167800852c68cbbaf1e55fa27873bcf59296",
   "pullRequestMergeRef": "977a19361f10c82e071dcc2f568dbce7b7901d80",
@@ -15,7 +15,11 @@
   },
   "localQualification": {
     "syntax": "PASS",
-    "node": { "version": "24.22.3", "passed": 1535, "failed": 0 },
+    "node": {
+      "version": "24.22.3",
+      "passed": 1535,
+      "failed": 0
+    },
     "finE2E": {
       "chromium": "PASS",
       "firefox": "PASS",
@@ -28,5 +32,23 @@
     ]
   },
   "independentOriginalReversal": "OPEN",
-  "lastAcceptedLiveRelease": "SW334"
+  "lastAcceptedLiveRelease": "SW334",
+  "main": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+  "mainPagesLiveRun": 45025955025,
+  "pullRequestQualification": {
+    "stage": "INTEGRATION",
+    "wallet": "PASS",
+    "chromium": "PASS",
+    "crossEngineShards": {
+      "1": "PASS",
+      "2": "PASS",
+      "3": "PASS"
+    },
+    "original": {
+      "id": 14755058773,
+      "sha256": "73966945e3ab3422500c4782fa48e526d0ad8eb6efba8ada17f12a744caf0499",
+      "zipCRC": "PASS",
+      "nodePassed": 1535
+    }
+  }
 }
