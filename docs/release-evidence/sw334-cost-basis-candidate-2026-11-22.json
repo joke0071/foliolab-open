@@ -1,0 +1,63 @@
+{
+  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "baseline": {
+    "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
+    "cache": "foliolab-open-v333"
+  },
+  "candidate": {
+    "pullRequest": 417,
+    "head": "c2cbe45b00693ce132bfa1075c187ab3f3a2f462",
+    "githubTestMerge": "f14168e860d652bdebae40c58ba3522932456dd9",
+    "tree": "d302c24fe2583f6c9dfdd7962a4d247e5310ac4a",
+    "cache": "foliolab-open-v334",
+    "prIntegrationRun": 44997957360,
+    "walletRun": 44997957374
+  },
+  "before": {
+    "ledgerLossOnEmptyTarget": [
+      "transfer",
+      "swap",
+      "merger"
+    ],
+    "formProblem": "The hidden correction input appeared after the exchange input with the same form name and submitted zero instead of the typed target quantity."
+  },
+  "local": {
+    "nodePass": 1535,
+    "nodeFail": 0,
+    "nodeSkip": 0,
+    "syntax": "PASS",
+    "diff": "PASS",
+    "exactBookingUIPass": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "bookingUIOracle": {
+      "operations": [
+        "transfer",
+        "swap",
+        "merger"
+      ],
+      "carriedBasis": "200",
+      "remainingBasis": "100",
+      "laterSalePnL": "20",
+      "cashAfterSale": "2120",
+      "exactReopen": true
+    },
+    "finE2EBrowserPass": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "unknownCostGuards": [
+      "unknown source basis",
+      "unknown basis on a nonempty target"
+    ]
+  },
+  "matrix": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followUpAccepted": 10,
+    "followUpTotal": 29
+  }
+}
