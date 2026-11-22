@@ -58,6 +58,25 @@ test('USD trade settles against USD cash with exact EUR fees and FX conversion',
  assert.ok(Math.abs(totalEUR(m)-(before-9))<1e-9);
  assert.deepEqual(m.journalEntries[0].postings.map(x=>x.amountBookEURExact),['900','-909','9']);
 });
+test('Same-currency foreign cash settles an exact principal below EUR journal precision',()=>{
+ const {m,etf,cashPosition}=fixture({cash:0,currency:'USD',fx:0.1});
+ const order={quantity:'1',unitPrice:'0.000000000000000003',fxRate:'0.1',cashPositionId:cashPosition.id};
+ const before=backup(m);
+ assert.throws(()=>trade(m,etf,'buy',order),/genügend/);
+ assert.equal(backup(m),before);
+
+ trade(m,cashPosition,'deposit',{quantity:'0.000000000000000005',unitPrice:'1',fxRate:'0.1'});
+ trade(m,etf,'buy',order);
+ assert.equal(cashPosition.quantityExact,'0.000000000000000002');
+ assert.equal(m.journalEntries.at(-1).postings[1].quantityDeltaExact,'-0.000000000000000003');
+ trade(m,etf,'sell',order);
+ assert.equal(cashPosition.quantityExact,'0.000000000000000005');
+ assert.equal(m.journalEntries.at(-1).postings[1].quantityDeltaExact,'0.000000000000000003');
+ const restored=safeImport(JSON.parse(backup(m)));
+ assert.equal(restored.positions.find(p=>p.id===cashPosition.id).quantityExact,cashPosition.quantityExact);
+ assert.deepEqual(restored.journalEntries,m.journalEntries);
+ assert.equal(ledgerQuantityAudit(restored).ok,true);
+});
 test('Cash deposits are external, internal asset transfers are not',()=>{
  const {m,etf,cashPosition}=fixture({security:10});
  trade(m,cashPosition,'deposit',{quantity:50,unitPrice:1});
