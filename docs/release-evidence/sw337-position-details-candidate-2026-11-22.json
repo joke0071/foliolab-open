@@ -1,5 +1,5 @@
 {
-  "status": "CANDIDATE",
+  "status": "INTEGRATED_LIVE_PENDING",
   "pullRequest": 423,
   "supersededCandidate": "cdebd1674e263983587c56d297c5a3698bcdfce3",
   "base": "dc6f450d3a260f2b236d5b29461237835591984e",
@@ -25,13 +25,86 @@
   ],
   "runs": {
     "prIntegration": 45066460880,
-    "wallet": 45066460865
+    "wallet": 45066460865,
+    "mainPagesLive": 45070652741
   },
   "remaining": [
-    "SW336 live acceptance before integration",
-    "Main, Pages and production acceptance"
+    "Main, Pages and production acceptance",
+    "Independent production position-detail probe and artifact readback"
   ],
   "qualifiedBranchAndTestMergeTreeMatch": true,
   "integration": "PASS",
-  "wallet": "PASS"
+  "wallet": "PASS",
+  "main": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+  "independentNativeIndexedDBProbe": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "3dbd6ed60166ff36b5cd5944ce24fc012ad521dd6b0b7ddef94f2ca89d4d43c5",
+      "encryptedBackupSha256": "dddbdfe642744c192293f054410c3c431267738e731ce709e70c8f36d5723a11",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "9b976f9ff18a2eccf2a0c2d3850c9f9943fedf8e42c263e6c4624833a6a194c2",
+      "encryptedBackupSha256": "5e26b5bcad98ff35d09f1642822b58d3a1ae3b2af4678bfe536c6a810c614eea",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "b597ba20f1383b0fcb3c87de1abb74cbf74a0d2da810509bc067cd42ed34ec30",
+      "encryptedBackupSha256": "8e24c58b959e61b9321589c3ec9ac9e0af82a137e3523b7635608f3483bee01e",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    }
+  ]
 }
