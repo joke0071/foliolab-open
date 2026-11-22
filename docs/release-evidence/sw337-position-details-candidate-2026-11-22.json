@@ -106,5 +106,21 @@
       "freshRestore": true,
       "reopen": true
     }
-  ]
+  ],
+  "integrationStageReceipt": {
+    "artifact": 14771102319,
+    "bytes": 529,
+    "sha256": "7c094416edc37334b9407efa8761caa61c39ce7cfc74267ef0e9acc443147e7a",
+    "stage": "INTEGRATION",
+    "zipCRC": "PASS"
+  },
+  "integrationOriginal": {
+    "artifact": 14772675373,
+    "bytes": 68058995,
+    "sha256": "13d9222d79ec6b57153405302e79b827a568ede3be5b60f761730bdf6b2ad32c",
+    "testedCommit": "883e9dbf225b9da2bb3cf4130b85466648fd2da4",
+    "entries": 848,
+    "nodePass": 1533,
+    "zipCRC": "PASS"
+  }
 }
