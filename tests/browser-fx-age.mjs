@@ -20,8 +20,9 @@ const cases=[
  {id:'old-unknown-other-fx-saved',date:'2000-01-03',known:false,accept:false,mixed:true}
 ];
 const replay=process.env.FX_AGE_VERIFIED_RELEASE?verifiedFXRelease(process.env.FX_AGE_VERIFIED_RELEASE,{base}):null;
-const selected=process.env.FX_AGE_DOMAIN_CONTROL==='1'?cases.filter(f=>['today','old-unknown-other-fx-saved'].includes(f.id)):cases;
-assert.equal(selected.length,process.env.FX_AGE_DOMAIN_CONTROL==='1'?2:8);
+const domainControl=process.env.FX_AGE_DOMAIN_CONTROL==='1';
+const selected=domainControl?cases.filter(f=>['today','old-unknown-other-fx-saved'].includes(f.id)):cases;
+assert.equal(selected.length,domainControl?2:8);
 const deadline=setTimeout(()=>{console.error('FX age browser deadline exceeded');process.exit(1);},180000);deadline.unref();
 for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
@@ -48,7 +49,29 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
    const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
    const state=()=>page.evaluate(key=>JSON.parse(localStorage.getItem(key)),stateKey);
-   await page.goto(origin+'/');await ready();
+   // Only the direct production control may recover from an explicit transient
+   // response before fixture state is written. The original request still uses
+   // the production origin and any failure on the second navigation fails.
+   if(domainControl&&!replay&&origin===new URL(base).origin){
+    const startupFailures=[];
+    const observeStartup=response=>{
+     const request=response.request(),url=new URL(response.url());
+     if(url.origin===origin&&request.resourceType()==='script'&&response.status()>=400)
+      startupFailures.push({path:url.pathname,status:response.status(),retryAfter:response.headers()['retry-after']??null});
+    };
+    page.on('response',observeStartup);
+    try{
+     await page.goto(origin+'/');
+     if(startupFailures.length===1&&startupFailures[0].path==='/src/reference-management.js'&&startupFailures[0].status===503&&startupFailures[0].retryAfter==='0'){
+      event('STARTUP_ORIGIN_RETRY',startupFailures.pop());
+      await page.reload();
+     }
+     assert.deepEqual(startupFailures,[],'Direct production startup module responses');
+     await ready();
+    }finally{page.off('response',observeStartup);}
+   }else{
+    await page.goto(origin+'/');await ready();
+   }
    await page.evaluate(async({known,mixed,key})=>{
     const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
     const m=blankModel();m.settings.autoRefresh='off';
