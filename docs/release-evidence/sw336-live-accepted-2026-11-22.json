@@ -1,0 +1,137 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "cache": "foliolab-open-v336",
+  "base": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+  "candidate": "3b793010a48436ee1282ba899d092fcacdae4a01",
+  "main": "dc6f450d3a260f2b236d5b29461237835591984e",
+  "tree": "96cbc8d7e3ed822966f9103fbb2066b008937dea",
+  "pullRequest": 421,
+  "runs": {
+    "prIntegration": 45061811116,
+    "wallet": 45061811055,
+    "mainPagesLive": 45063908233,
+    "pagesJob": 137342241671,
+    "firstLiveJob": 137342342417,
+    "retryLiveJob": 137343873537,
+    "successfulLiveAttempt": 2,
+    "successfulLiveJob": 137343873537
+  },
+  "local": {
+    "nodeVersion": "24.22.3",
+    "nodePass": 1536,
+    "nodeFail": 0,
+    "syntax": "PASS",
+    "gitDiffCheck": "PASS",
+    "browserFIN_E2E": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "baselineUSDRegression": "FAIL_EXPECTED"
+  },
+  "cases": {
+    "nativeUSD": {
+      "quantity": "12.5",
+      "historicalFX": "0.8",
+      "irrelevantUnitPrice": "3",
+      "bookedEUR": "10"
+    },
+    "manualEUR": {
+      "quantity": "12.5",
+      "journalOutEUR": "-12.5",
+      "journalInEUR": "12.5",
+      "externalCashFlowsChanged": false,
+      "exactReopen": true
+    }
+  },
+  "integrationStageReceipt": {
+    "artifact": 14770080310,
+    "testMerge": "c1fead4075ddd0b46f1186973e597c23ada7fd1d",
+    "stage": "INTEGRATION",
+    "sha256": "1eeb7d7ec200131ffb6ae2a592ddfbb848865d8d6a55e39932a7a6ba58af5eee",
+    "crc": "PASS"
+  },
+  "integrationOriginal": {
+    "artifact": 14770811417,
+    "testedCommit": "c1fead4075ddd0b46f1186973e597c23ada7fd1d",
+    "bytes": 68063934,
+    "sha256": "a3f22ea71e850f8ad36b91407e90f01e8a3f452192ba0f418e0c1f0ddcac5072",
+    "zipCRC": "PASS",
+    "entries": 848,
+    "nodePass": 1536
+  },
+  "pagesArchive": {
+    "artifact": 14770348513,
+    "bytes": 589744,
+    "sha256": "d44509ba0ef7201b403df2f524d14be78b8d1214acf449635e57acf6519ba162",
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "byteReadback": "PASS"
+  },
+  "mainOriginal": {
+    "artifact": 14770874130,
+    "testedCommit": "dc6f450d3a260f2b236d5b29461237835591984e",
+    "bytes": 68071015,
+    "sha256": "bf95205543e9da4b9f110adc4f2ad2ee75c8f617f407d5cfe7dfb23898bd7fc5",
+    "zipCRC": "PASS",
+    "entries": 848,
+    "nodePass": 1536
+  },
+  "firstLiveArchive": {
+    "artifact": 14771133455,
+    "bytes": 11040492,
+    "sha256": "e331986e868182593d9b708f8ede71fcc9d75bcb396caf4ac4c3200a351960ab",
+    "zipCRC": "PASS",
+    "entries": 114,
+    "previousFXReplayCases": 8,
+    "failure": "Production returned HTTP 503 for the startup module /src/reference-management.js, followed by net::ERR_ABORTED and absence of the IndexedDB readiness marker.",
+    "startupAssetFailure": {
+      "diagnostic": "worker-diagnostics/chromium-5181-0.jsonl",
+      "timeUTC": "2026-11-22T20:25:21.355Z",
+      "path": "/src/reference-management.js",
+      "status": 503,
+      "server": "Varnish",
+      "retryAfter": "0",
+      "browserFailure": "net::ERR_ABORTED"
+    },
+    "byteReadback": "PASS"
+  },
+  "independentProductionByteMatches": [
+    "index.html",
+    "sw.js",
+    "src/app.js",
+    "src/transactions.js"
+  ],
+  "roadmap": {
+    "coreComplete": 6,
+    "coreTotal": 6,
+    "followUpComplete": 10,
+    "followUpTotal": 29
+  },
+  "remaining": [
+    "Independent original reversal evidence for FIN-E2E01"
+  ],
+  "liveArchive": {
+    "artifact": 14773510562,
+    "bytes": 153081801,
+    "sha256": "07e83e2979882d9d034c8abae3f4d8e389d4a177ac9510f0f3aca0fc91a36e86",
+    "entries": 1947,
+    "zipCRC": "PASS",
+    "byteReadback": "PASS"
+  },
+  "production": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "assetMatches": 160,
+    "coreCheckGroups": 11,
+    "axeScans": 22,
+    "restoreReports": 18,
+    "fxVerifiedReplayCasesPerEngine": 8,
+    "fxDirectOriginCasesPerEngine": 2,
+    "finE2EStepsPerEngine": 16,
+    "allWorkflowSteps": "PASS"
+  }
+}

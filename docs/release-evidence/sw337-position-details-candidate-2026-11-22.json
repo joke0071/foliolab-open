@@ -7,8 +7,31 @@
   "testMerge": "883e9dbf225b9da2bb3cf4130b85466648fd2da4",
   "tree": "7f4fbdff60bd73133e872d6461eee7323a85c8df",
   "cache": "foliolab-open-v337",
-  "local": {"nodePass": 1533, "nodeFail": 0, "syntax": "PASS", "positionDrilldown": ["chromium", "firefox", "webkit"]},
-  "checks": ["exact EUR value and account share in row summary", "units, quote per unit and acquisition value in expanded details", "details preserve source, price history and booking timeline", "separate account allocation expectations preserved"],
-  "runs": {"prIntegration": 45066460880, "wallet": 45066460865},
-  "remaining": ["Exact-head integration checks", "SW336 live acceptance before next merge", "Main, Pages and production acceptance"]
+  "local": {
+    "nodePass": 1533,
+    "nodeFail": 0,
+    "syntax": "PASS",
+    "positionDrilldown": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "checks": [
+    "exact EUR value and account share in row summary",
+    "units, quote per unit and acquisition value in expanded details",
+    "details preserve source, price history and booking timeline",
+    "separate account allocation expectations preserved"
+  ],
+  "runs": {
+    "prIntegration": 45066460880,
+    "wallet": 45066460865
+  },
+  "remaining": [
+    "SW336 live acceptance before integration",
+    "Main, Pages and production acceptance"
+  ],
+  "qualifiedBranchAndTestMergeTreeMatch": true,
+  "integration": "PASS",
+  "wallet": "PASS"
 }
