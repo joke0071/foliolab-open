@@ -1,5 +1,5 @@
 {
-  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "status": "MERGED_RELEASE_IN_PROGRESS",
   "baseline": {
     "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
     "cache": "foliolab-open-v333"
@@ -11,7 +11,11 @@
     "tree": "d302c24fe2583f6c9dfdd7962a4d247e5310ac4a",
     "cache": "foliolab-open-v334",
     "prIntegrationRun": 44997957360,
-    "walletRun": 44997957374
+    "walletRun": 44997957374,
+    "prIntegrationConclusion": "success",
+    "walletConclusion": "success",
+    "main": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
+    "mainReleaseRun": 44999769069
   },
   "before": {
     "ledgerLossOnEmptyTarget": [
