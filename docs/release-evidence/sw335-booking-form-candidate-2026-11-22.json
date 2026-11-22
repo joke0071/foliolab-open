@@ -1,6 +1,6 @@
 {
   "release": "SW335",
-  "status": "PUBLISHED_PENDING_LIVE",
+  "status": "LIVE_ACCEPTED",
   "base": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
   "head": "edfa167800852c68cbbaf1e55fa27873bcf59296",
   "pullRequestMergeRef": "977a19361f10c82e071dcc2f568dbce7b7901d80",
@@ -32,7 +32,7 @@
     ]
   },
   "independentOriginalReversal": "OPEN",
-  "lastAcceptedLiveRelease": "SW334",
+  "lastAcceptedLiveRelease": "SW335",
   "main": "878c30ca70d499145ff1ef0de40dec3dc083f621",
   "mainPagesLiveRun": 45025955025,
   "pullRequestQualification": {
@@ -71,5 +71,6 @@
     "sw.js": "6eae5f03e350bb6be89ff8ff9af29f6c46b276c49f5cddd4d6b6b44f971f6d0e",
     "src/app.js": "ccc96efab161555168a14134650af4270d4f3edf581f7f02f7cff6f49118347d",
     "LICENSE": "1876bab16148708a12229ec65c5a019bbb4c7a846b8d0622118008daa40232b0"
-  }
+  },
+  "liveEvidence": "sw335-pr418-live-accepted-2026-11-22.json"
 }

@@ -1,0 +1,241 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "origin": "https://foliolab.unperfekt.at/",
+  "main": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+  "tree": "c190a0f1517b81e7c42589d4bf7bfd18ab9ba9d6",
+  "cache": "foliolab-open-v335",
+  "pullRequest": 418,
+  "candidate": "edfa167800852c68cbbaf1e55fa27873bcf59296",
+  "githubTestMerge": "977a19361f10c82e071dcc2f568dbce7b7901d80",
+  "runs": {
+    "prIntegration": 45023664510,
+    "wallet": 45023664473,
+    "mainPagesLive": 45025955025,
+    "mainAndPagesAttempt": 1,
+    "successfulLiveAttempt": 2,
+    "successfulLiveJob": 137232486555
+  },
+  "pagesArchive": {
+    "bytes": 589667,
+    "sha256": "8de9ec29891719b9b47da5f9e4646302f58c18c8e9c12a298dfa527a4a5958de",
+    "entries": 1,
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "original": 14755698268,
+    "originalName": "FolioLab_SW335_Pages_14755698268.zip",
+    "byteReadback": "PASS"
+  },
+  "liveArchive": {
+    "bytes": 152775978,
+    "sha256": "02529871f68e0a959c350585e1341b48d7073482095f12e5f64e7e9c74c9145c",
+    "entries": 1947,
+    "zipCRC": "PASS",
+    "original": 14758897829,
+    "originalName": "FolioLab_SW335_Live_14758897829.zip",
+    "byteReadback": "PASS"
+  },
+  "integrationOriginals": [
+    {
+      "scope": "PR",
+      "id": 14755058773,
+      "sha256": "73966945e3ab3422500c4782fa48e526d0ad8eb6efba8ada17f12a744caf0499",
+      "bytes": 68078773,
+      "testedCommit": "977a19361f10c82e071dcc2f568dbce7b7901d80",
+      "zipCRC": "PASS",
+      "nodePass": 1535,
+      "entries": 848
+    },
+    {
+      "scope": "Main",
+      "id": 14756600861,
+      "sha256": "683144f6c66d7d9ee5cabadb9d9eee8df138cad1c3beca86f62d229aaf733f54",
+      "bytes": 68074103,
+      "testedCommit": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+      "zipCRC": "PASS",
+      "nodePass": 1535,
+      "entries": 848
+    }
+  ],
+  "nodeTests": {
+    "prPass": 1535,
+    "mainPass": 1535,
+    "fail": 0
+  },
+  "productPathMatches": 160,
+  "coreChecks": 11,
+  "axeScans": 22,
+  "restore": [
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "complete",
+      "cRevision": 7,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 8,
+      "reopenedRevision": 8,
+      "returnedBRevision": 9,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "kill",
+      "cRevision": 10,
+      "amount": "8.65",
+      "balance": "18.65",
+      "bookedRevision": 11,
+      "reopenedRevision": 11,
+      "returnedBRevision": 12,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "vault-read-abort",
+      "cRevision": 13,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 14,
+      "reopenedRevision": 14,
+      "returnedBRevision": 15,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "portfolio-read-abort",
+      "cRevision": 16,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 17,
+      "reopenedRevision": 17,
+      "returnedBRevision": 18,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    }
+  ],
+  "finE2E": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "directProductionSha256": {
+    "index.html": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0",
+    "sw.js": "6eae5f03e350bb6be89ff8ff9af29f6c46b276c49f5cddd4d6b6b44f971f6d0e",
+    "src/app.js": "ccc96efab161555168a14134650af4270d4f3edf581f7f02f7cff6f49118347d",
+    "LICENSE": "1876bab16148708a12229ec65c5a019bbb4c7a846b8d0622118008daa40232b0"
+  },
+  "timing": {
+    "classification": "2026-11-22T13:09:23Z",
+    "pagesPublished": "2026-11-22T13:30:26Z",
+    "acceptanceCompleted": "2026-11-22T14:41:33Z",
+    "totalSeconds": 5530,
+    "toPagesSeconds": 1263,
+    "successfulLiveAttemptSeconds": 2493,
+    "chromiumSeconds": 681,
+    "firefoxWebKitSeconds": 1702,
+    "observation": "Total includes the preserved navigation abort and the focused live-job rerun; no timing attribution to a workflow change."
+  },
+  "firstLiveAttempt": "sw335-first-live-attempt-2026-11-22.json",
+  "matrix": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followUpAccepted": 10,
+    "followUpTotal": 29
+  },
+  "pending": "Independent original-source reversal with verified ledger, cost basis and broker cash endpoints.",
+  "personalTradeRepublic": "NOT_APPLICABLE",
+  "genericTradeRepublicRealEvidence": "REAL_EVIDENCE_NOT_VERIFIED"
+}
