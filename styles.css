@@ -154,13 +154,8 @@
 .provider-position-detail{min-width:0;max-width:100%;padding:12px 8px 18px;border-radius:11px;background:#f9fbf8}
 .position-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 14px}
 .position-detail-stat{display:flex;flex-direction:column;gap:4px;min-width:0}
-.position-detail-stat span,.position-share-label span{font-size:11px;color:#4d6756}
+.position-detail-stat span{font-size:11px;color:#4d6756}
 .position-detail-stat strong{font-size:12px;font-weight:700;color:#254a34;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.position-share{margin-top:14px}
-.position-share-label{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#56745b;gap:8px}
-.position-share-label strong{font-size:11px;font-variant-numeric:tabular-nums}
-.position-share-track{height:6px;border-radius:100px;background:#e2ede4;overflow:hidden;margin-top:6px}
-.position-share-track>div{height:100%;border-radius:100px;background:#4d8963}
 .position-detail-source,.position-detail-note{font-size:10.5px;color:#4d6756;line-height:1.5;margin:12px 0 0;overflow-wrap:anywhere}
 .position-period{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:15px}
 .position-period button{appearance:none;min-width:0;border:1px solid #d8e4db;border-radius:8px;padding:8px 4px;background:white;color:#4d6756;font-size:11px;line-height:1.2;cursor:pointer}

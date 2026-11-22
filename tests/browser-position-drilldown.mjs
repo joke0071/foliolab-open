@@ -1,11 +1,13 @@
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
-import {chromium} from 'playwright';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+import {chromium,firefox,webkit} from 'playwright';
+const engine=process.env.POSITION_DRILLDOWN_ENGINE||'chromium';
+const base=process.env.POSITION_DRILLDOWN_BASE||'http://127.0.0.1:4173/';
+const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 const today=new Date().toISOString().slice(0,10);
 try{
- await page.goto('http://127.0.0.1:4173/');
+ await page.goto(base);
  await page.evaluate(date=>import('/src/model.js').then(({blankModel,createProvider,createAccount,createPosition,snapshot,persist})=>{
   const m=blankModel(),provider=createProvider({name:'Testanbieter'});m.providers.push(provider);
   const account=createAccount({providerId:provider.id,name:'Langfristiges Depot',type:'securities'},m);
@@ -34,6 +36,10 @@ try{
  await btc.locator('summary.provider-holding').click();
  assert.equal(await btc.getAttribute('open'),'');
  await btc.locator('.position-history-chart .chart-plot').waitFor();
+ assert.equal(await btc.locator('summary .account-allocation').count(),1,'Allocation ring is retained in the summary');
+ assert.match(await btc.locator('summary.provider-holding').innerText(),/35\.000/,'The current EUR value remains visible');
+ assert.deepEqual(await btc.locator('.provider-position-detail .position-detail-stat span').allTextContents(),['Bestand','Kurs je Einheit','Einstandswert']);
+ assert.equal(await btc.locator('.provider-position-detail .position-share').count(),0,'No duplicate share bar');
  assert.match(await btc.innerText(),/Kurs je Einheit/);
  assert.match(await btc.innerText(),/Marktkurs je Einheit/);
  assert.match(await btc.innerText(),/nicht deine persönliche Rendite/);

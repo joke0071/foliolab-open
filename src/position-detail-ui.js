@@ -5,7 +5,7 @@ import {renderChartPeriodButtons,syncChartPeriodButtons} from './chart-periods.j
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {positionBookingTimeline} from './position-bookings.js';
-import {displayQuotePrice,positionValueLabel,hasMissingPositionValue} from './quote-quality.js';
+import {displayQuotePrice} from './quote-quality.js';
 
 /** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
  * Always display a complete, credential-safe explanation rather than a raw
@@ -43,14 +43,9 @@ function positionChartTools(p,model,esc){
   '<div class="position-period-popover"><div class="position-period-extended"></div>'+csv+'</div></details></div>';
 }
 
-export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR}){
- // Provider allocation reflects the provider heading above all its accounts.
- // Account allocation would show a misleading 100% for every single-holding
- // savings or term-deposit account at the same provider.
- const account=model.accounts.find(a=>a.id===p.accountId);
- const providerAccountIds=new Set(model.accounts.filter(a=>a.providerId===(account?.providerId||p.providerId)).map(a=>a.id));
- const providerTotal=model.positions.filter(x=>providerAccountIds.has(x.accountId)).reduce((sum,x)=>sum+valueEUR(x),0);
- const amount=valueEUR(p),weight=providerTotal>0&&amount!==null&&amount>=0&&!model.positions.some(x=>providerAccountIds.has(x.accountId)&&hasMissingPositionValue(x))?100*amount/providerTotal:null;
+export function positionDetailMarkup(p,model,{esc,money,quant}){
+ // The compact summary already shows the valuation and account-allocation ring.
+ // The expanded detail adds only the remaining facts.
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
  const quotePrice=displayQuotePrice(p);
  const price=quotePrice===null?'Nicht verfügbar':quoteCurrency(quotePrice,p.currency||'EUR');
@@ -58,11 +53,8 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR}){
  const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
-    ['Kurs je Einheit',price],['Positionswert',positionValueLabel(p,amount,money)],['Einstandswert',cost]]
+    ['Kurs je Einheit',price],['Einstandswert',cost]]
    .map(([name,value])=>'<div class="position-detail-stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong></div>').join('')+'</div>';
- const allocation=weight==null?'<p class="position-detail-note">Anteil am Anbieter nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
-   '<div class="position-share"><div class="position-share-label"><span>Anteil am Anbieter</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
-   '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
  const isSecurity=securityKind(p);
  const imported=model.priceHistories?.[p.id];
@@ -92,7 +84,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR}){
    '<p class="position-detail-note">Für diese Position sind noch keine zugeordneten Buchungen erfasst.</p>')+
   '<p class="position-detail-note">Nur dieser Position zugeordnete Buchungen. Ausführungskurse sind kein belegter Nettogewinn. Cash-Dividenden ohne eindeutige Anlagenzuordnung werden nicht hinzugefügt.</p>'+
   '</div></details>';
- return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
+ return meta+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
    quoteCredit+positionChartTools(p,model,esc)+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory;
 }
 export async function loadPositionDetail(position,model,mount,{days=30,reuse=false,fetcher=globalThis.fetch,esc,money,dateLabel}){

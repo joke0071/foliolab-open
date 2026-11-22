@@ -54,10 +54,14 @@ test('Rendered position drills include exact account context and escape injected
  const {m,add}=fixture(),p=add({name:'ETF <img src=x>',quantity:10,price:100});
  const html=renderProviderAccounts(m,money,valueEUR,escapeHTML,new Set([m.providers[0].id]),new Set([p.id]));
  assert.match(html,/provider-position-accordion/);assert.match(html,/data-position-id=/);
+ assert.match(html,/class="account-allocation"/,'The compact allocation ring remains in the summary');
+ assert.match(html,/€\s*1\.000,00/,'The current EUR value remains in the summary');
  assert.match(html,/open/);assert.ok(!html.includes('<img src=x>'));
  const detail=positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});
- assert.match(detail,/Kurs je Einheit/);assert.match(detail,/Positionswert/);
- assert.match(detail,/Anteil am Anbieter/);assert.match(detail,/Kein nativer Kursverlauf/);assert.match(detail,/CSV-Kursverlauf importieren/);assert.doesNotMatch(detail,/Weitere Kursoptionen|TradingView|load-tradingview/);assert.doesNotMatch(detail,/data-position-range/);
+ assert.match(detail,/Kurs je Einheit/);assert.match(detail,/Bestand/);assert.match(detail,/Einstandswert/);
+ assert.equal((detail.match(/class="position-detail-stat"/g)||[]).length,3,'Expanded view has only three distinct facts');
+ assert.doesNotMatch(detail,/Positionswert|Anteil am Anbieter|position-share/,'Value and share belong to summary only');
+ assert.match(detail,/Kein nativer Kursverlauf/);assert.match(detail,/CSV-Kursverlauf importieren/);assert.doesNotMatch(detail,/Weitere Kursoptionen|TradingView|load-tradingview/);assert.doesNotMatch(detail,/data-position-range/);
  p.valuationMode='excluded';
  assert.match(positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR}),/Nicht doppelt mitgezählt/);
  p.valuationMode='liability';

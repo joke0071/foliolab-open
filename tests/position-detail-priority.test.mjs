@@ -73,54 +73,6 @@ test('Only specific safe non-truncated failure guidance is shown',()=>{
  assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar (Netzwerk/CORS)'),{security:true}),/nicht überprüft/);
 });
 
-test('Generic provider allocation spans multiple single-position accounts',()=>{
- const positions=[
-  {id:'a',accountId:'cash-a',providerId:'provider-alpha',kind:'cash',name:'Savings A',symbol:'EUR',currency:'EUR',quantity:120,price:1},
-  {id:'b',accountId:'cash-b',providerId:'provider-alpha',kind:'cash',name:'Savings B',symbol:'EUR',currency:'EUR',quantity:80,price:1},
-  {id:'c',accountId:'cash-c',providerId:'provider-alpha',kind:'cash',name:'Savings C',symbol:'EUR',currency:'EUR',quantity:200,price:1},
-  {id:'d',accountId:'asset-d',providerId:'provider-beta',kind:'cash',name:'Other provider',symbol:'EUR',currency:'EUR',quantity:1000,price:1}
- ];
- const accounts=[
-  {id:'cash-a',providerId:'provider-alpha'},
-  {id:'cash-b',providerId:'provider-alpha'},
-  {id:'cash-c',providerId:'provider-alpha'},
-  {id:'asset-d',providerId:'provider-beta'}
- ];
- const m={accounts,positions,priceHistories:{},settings:{}};
- const details=positions.slice(0,3).map(p=>positionDetailMarkup(p,m,config));
- assert.match(details[0],/Anteil am Anbieter<\/span><strong>30 %/);
- assert.match(details[1],/Anteil am Anbieter<\/span><strong>20 %/);
- assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
- assert.doesNotMatch(details.join(''),/Anteil am Konto/);
- assert.match(positionDetailMarkup(positions[3],m,config),/Anteil am Anbieter<\/span><strong>100 %/);
-});
-test('Provider allocations exclude separately configured providers and handle liabilities defensively',()=>{
- const p={id:'one',accountId:'a',providerId:'p',kind:'cash',symbol:'EUR',quantity:100,price:1,currency:'EUR'};
- const q={id:'two',accountId:'b',providerId:'q',kind:'cash',symbol:'EUR',quantity:999,price:1,currency:'EUR'};
- const m={accounts:[{id:'a',providerId:'p'},{id:'b',providerId:'q'}],positions:[p,q],settings:{},priceHistories:{}};
- assert.match(positionDetailMarkup(p,m,config),/Anteil am Anbieter<\/span><strong>100 %/);
- const bad={...p,id:'liability'};
- m.positions=[bad,{...p,id:'negative',quantity:-200}];
- assert.match(positionDetailMarkup(bad,m,config),/Anteil am Anbieter nicht sinnvoll bestimmbar/);
-});
-
-test('Provider share handles multiple holdings within the same account across providers',()=>{
- const holdings=[
-  {id:'a',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Daily account',symbol:'EUR',currency:'EUR',quantity:100,price:1},
-  {id:'b',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Reserve 1',symbol:'EUR',currency:'EUR',quantity:100,price:1},
-  {id:'c',accountId:'wallet-b',providerId:'provider-one',kind:'cash',name:'Reserve 2',symbol:'EUR',currency:'EUR',quantity:200,price:1},
-  {id:'d',accountId:'wallet-c',providerId:'provider-two',kind:'cash',name:'Other provider',symbol:'EUR',currency:'EUR',quantity:1000,price:1}
- ];
- const m={positions:holdings,accounts:[
-  {id:'wallet-a',providerId:'provider-one'},{id:'wallet-b',providerId:'provider-one'},
-  {id:'wallet-c',providerId:'provider-two'}],settings:{},priceHistories:{}};
- const details=holdings.map(h=>positionDetailMarkup(h,m,config));
- assert.match(details[0],/Anteil am Anbieter<\/span><strong>25 %/);
- assert.match(details[1],/Anteil am Anbieter<\/span><strong>25 %/);
- assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
- assert.match(details[3],/Anteil am Anbieter<\/span><strong>100 %/);
-});
-
 test('Missing canonical quote is unavailable, never a manual zero, without model changes',async()=>{
  const {blankModel,createProvider,createAccount,createPosition,escapeHTML,money,valueEUR}=await import('../src/model.js');
  const {priceQuality}=await import('../src/quote-quality.js');
