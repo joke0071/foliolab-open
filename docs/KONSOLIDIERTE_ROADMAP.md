@@ -49,6 +49,8 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 ### Priorisierung der 19 offenen Zeilen · 22.11.2026
 
+**SW336 auf Main.** [#421](https://github.com/joke0071/foliolab-open/pull/421) bestand die gesamte Pflicht-CI am gemeinsamen Stand und ist baumgleich in `dc6f450d` integriert. Das vorab erzeugte Pages-Paket enthält 159 bytegleiche Main-Dateien. [Regulärer Release-Lauf](https://github.com/joke0071/foliolab-open/actions/runs/45063908233). Die Originalanforderung für FIN-E2E01 bleibt separat offen.
+
 **FLH04 · Lokale Schlüsselpersistenz.** [#422](https://github.com/joke0071/foliolab-open/pull/422) ergänzt die Seitenneueröffnung aus #419 um einen vollständigen Browserneustart desselben Profils. Chromium, Firefox und WebKit bestätigen Schreib- und Epochenschlüssel, exakte Portfoliodaten, abwesende Outbox und erhaltene Enrollment-Sperre. CI grün, baumgleich auf dem isolierten Zweig integriert. [Nachweis](release-evidence/flh04-locked-anchor-browser-restart-2026-11-22.json). Für die Gesamtzeile bleiben Enrollment, unabhängiges Kryptoreview, autorisierte OAuth-Umgebung und reale Mehrgeräte-Abnahme erforderlich.
 
 **FIN-E2E01 · Geldtransfer.** [#421 / SW336](https://github.com/joke0071/foliolab-open/pull/421) korrigiert die Journalbewertung manueller Geldtransfers. Historischer FX und nativer Betrag bestimmen den EUR-Wert. Lokal belegt sind der USD-Fall mit abweichendem Stückkurs und der EUR-Formularpfad mit exakten Journalpostings, Geldbeständen und IndexedDB nach Wiederöffnung. Der technische Nachweis ergänzt FIN-E2E01 und Verwaltung. Der Originalnachweis für die unabhängige Rücknahme bleibt offen. [Prüfstand](release-evidence/sw336-manual-cash-transfer-candidate-2026-11-22.json)
