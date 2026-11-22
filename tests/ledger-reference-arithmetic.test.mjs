@@ -16,9 +16,9 @@ function fixture({sourceQuantity='3',sourceBasis='300',sourcePrice=100,currency=
   isin:'IE00BK5BQT80',quantity:sourceQuantity,price:sourcePrice,currency,fxRate,
   costBasisExact:sourceBasis},m);
  const target=createPosition({providerId:broker.id,accountId:ac2.id,name:'World ETF',kind:'etf',
-  isin:'IE00BK5BQT80',quantity:0,price:sourcePrice,currency,fxRate,costBasisExact:'0'},m);
+  isin:'IE00BK5BQT80',quantity:0,price:sourcePrice,currency,fxRate},m);
  const swapTarget=createPosition({providerId:broker.id,accountId:ac2.id,name:'Token B',kind:'crypto',
-  symbol:'TOKB',quantity:0,price:25,currency:'EUR',costBasisExact:'0'},m);
+  symbol:'TOKB',quantity:0,price:25,currency:'EUR'},m);
  const cash=createPosition({providerId:broker.id,accountId:cashAcc.id,name:'Cash',kind:'cash',
   quantity:cashAmount,price:1,currency,fxRate},m);
  m.positions.push(source,target,swapTarget,cash);
@@ -45,6 +45,7 @@ test('Reference cost-basis allocation: transfer 2/3 moves exactly EUR 200 of EUR
  assert.equal(target.quantityExact,'2');
  assert.equal(source.costBasisExact,'100');
  assert.equal(target.costBasisExact,'200');
+ assert.equal(safeImport(JSON.parse(backup(m))).positions.find(p=>p.id===target.id).costBasisExact,'200');
  assert.equal(totalExactEUR(m),start);
  assert.equal(m.externalCashFlows.length,0);
  assert.equal(ledgerQuantityAudit(m).ok,true);
@@ -60,6 +61,35 @@ test('Token swap 2/3 of 3 tokens transfers exactly 200 basis into 7 output token
  assert.equal(source.realizedPnLExact,null);
  assert.equal(m.externalCashFlows.length,0);
  assert.equal(ledgerQuantityAudit(m).ok,true);
+});
+
+test('A merger preserves carried costs through a later sale from the formerly empty position',()=>{
+ const {m,source,swapTarget,cash}=fixture();
+ tx(m,source,'merger',{quantity:'3',targetPositionId:swapTarget.id,targetQuantity:'12'});
+ assert.equal(source.costBasisExact,'0');
+ assert.equal(swapTarget.costBasisExact,'300');
+ assert.equal(swapTarget.realizedPnLExact,null);
+ tx(m,swapTarget,'sell',{quantity:'6',unitPrice:'30',cashPositionId:cash.id});
+ assert.equal(swapTarget.costBasisExact,'150');
+ assert.equal(swapTarget.realizedPnLExact,'30');
+ assert.equal(cash.quantityExact,'2180');
+ assert.equal(m.externalCashFlows.length,0);
+ assert.equal(ledgerQuantityAudit(m).ok,true);
+});
+
+test('An unknown source or a nonempty target with unknown costs keeps the combined basis unknown',()=>{
+ for(const kind of ['transfer','swap','merger']){
+  const {m,source,target,swapTarget}=fixture({sourceBasis:null});
+  const received=kind==='transfer'?target:swapTarget;
+  tx(m,source,kind,{quantity:'2',targetPositionId:received.id,targetQuantity:'7'});
+  assert.equal(received.costBasisExact,null,kind+' unknown source');
+
+  const known=fixture();
+  const withHoldings=kind==='transfer'?known.target:known.swapTarget;
+  tx(known.m,withHoldings,'deliver_in',{quantity:'1'});
+  tx(known.m,known.source,kind,{quantity:'2',targetPositionId:withHoldings.id,targetQuantity:'7'});
+  assert.equal(withHoldings.costBasisExact,null,kind+' unknown existing lots');
+ }
 });
 
 test('3-for-2 split and 2-for-3 reverse split roundtrip exact shares and price',()=>{
