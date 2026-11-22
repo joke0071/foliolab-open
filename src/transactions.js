@@ -37,6 +37,8 @@ const pos=(m,id)=>{const p=m.positions.find(p=>p.id===id);if(!p)throw Error('Pos
 const q=p=>units(p.quantityExact??p.quantity);
 const setQ=(p,u)=>{p.quantityExact=exact(u);p.quantity=Number(p.quantityExact);};
 const basis=p=>p.costBasisExact!=null?units(p.costBasisExact):p.costBasisEUR==null?null:units(p.costBasisEUR);
+// With no existing units, an absent basis adds no cost to the incoming lot.
+const basisBeforeReceipt=p=>basis(p)??(q(p)===0n?0n:null);
 const setBasis=(p,u)=>{p.costBasisEUR=u==null?null:Number(exact(u));p.costBasisExact=u==null?null:exact(u);};
 // Perform a/b proportional fixed-point arithmetic with ONE final rounding.
 // Computing mul(value,div(a,b)) rounds a/b first and introduces phantom dust
@@ -287,7 +289,7 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
    positive();enough();const target=checkTarget(copy,p,input.targetPositionId);
    if(assetKey(p)!==assetKey(target)||p.currency!==target.currency)throw Error('Interner Transfer erfordert dasselbe Asset und dieselbe Währung.');
    if(target.wallet?.enabled)throw Error('Automatisches Wallet-Ziel ist nicht manuell veränderbar.');
-   const tb=basis(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
+   const tb=basisBeforeReceipt(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
    setQ(p,prev-qty);setQ(target,q(target)+qty);
    setBasis(p,taken==null?null:b-taken);
    setBasis(target,taken==null||tb==null?null:tb+taken);
@@ -310,7 +312,7 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
    positive();enough();const target=checkTarget(copy,p,input.targetPositionId),out=amount(input.targetQuantity,1n);
    if(p.kind==='cash'||target.kind==='cash')
      throw Error('Ein Umtausch mit Geldkonto benötigt nachvollziehbare Kauf-/Verkaufs- und Geldbuchungen; kein bargeldloser Token-Swap.');
-   const tb=basis(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
+   const tb=basisBeforeReceipt(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
    setQ(p,prev-qty);setQ(target,q(target)+out);
    setBasis(p,taken==null?null:b-taken);setBasis(target,taken==null||tb==null?null:tb+taken);
    // No assumed tax treatment on conversions or mergers.

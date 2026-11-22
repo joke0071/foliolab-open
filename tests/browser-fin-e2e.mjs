@@ -135,8 +135,48 @@ for(const engine of engines){
    assert.deepEqual(await record(restored),actual);await restored.reload();await ready(restored);assert.deepEqual(await record(restored),actual);
    assert.deepEqual(await restored.evaluate(async files=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{parseCSV,inferMapping,previewCSV,importCSV}=await import('/src/csv-import.js');const s=new PortfolioStorage();try{const m=await s.initialize(),before=JSON.stringify(m),results=[];for(const text of files){const csv=parseCSV(text),p=previewCSV(m,csv,inferMapping(csv.headers));importCSV(m,p);results.push({duplicates:p.duplicates,ready:p.ready,issues:p.issues.length});}if(JSON.stringify(m)!==before)throw Error('Fresh restore FX duplicate mutation');return results;}finally{s.close();}},[fxCSV,fxSaleCSV]),[{duplicates:2,ready:0,issues:0},{duplicates:1,ready:0,issues:0}]);
    assert.deepEqual(await record(restored),actual,'fresh restore FX deduplication is read-only');
+   await restored.evaluate(async()=>{
+    const {createPosition}=await import('/src/model.js');
+    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+    const store=new PortfolioStorage();
+    try{
+     const m=await store.initialize();
+     m.positions.push(createPosition({id:'swap-target',providerId:'p',accountId:'account-etf',
+      name:'Synthetic empty swap target',symbol:'SWAPTARGET',kind:'crypto',quantity:'0',price:'25'},m));
+     await store.save(m);
+    }finally{store.close();}
+   });
+   await restored.reload();await ready(restored);
+   await restored.locator('#mobileNav [data-page="bookings"]').click();
+   await restored.locator('#addBooking').click();
+   await restored.locator('#bookingPosition').selectOption('etf');
+   await restored.locator('#bookingType').selectOption('swap');
+   await restored.locator('#editorForm [name=date]').fill('2026-01-10');
+   await restored.locator('#editorForm [name=quantity]').fill('1');
+   await restored.locator('#bookingTarget').selectOption('swap-target');
+   await restored.getByLabel('Erhaltene Menge bei Umtausch').fill('4');
+   await restored.locator('#saveDialog').click();
+   await restored.locator('#editDialog').waitFor({state:'hidden'});
+   const swapped=await record(restored);
+   const pos=JSON.parse(swapped.raw).positions.find(p=>p.id==='swap-target');
+   assert.equal(pos.quantityExact,'4');
+   assert.equal(pos.costBasisExact,'101','the known ETF costs follow the new holding');
+   await restored.reload();await ready(restored);assert.deepEqual(await record(restored),swapped);
+
+   await restored.locator('#mobileNav [data-page="bookings"]').click();
+   await restored.locator('#addBooking').click();
+   await restored.locator('#bookingPosition').selectOption('swap-target');
+   await restored.locator('#bookingType').selectOption('correction');
+   await restored.locator('#editorForm [name=date]').fill('2026-01-11');
+   await restored.getByLabel('Korrekter neuer Bestand').fill('5');
+   await restored.locator('#saveDialog').click();
+   await restored.locator('#editDialog').waitFor({state:'hidden'});
+   const corrected=await record(restored);
+   assert.equal(corrected.revision,swapped.revision+1);
+   assert.equal(JSON.parse(corrected.raw).positions.find(p=>p.id==='swap-target').quantityExact,'5');
+
   }finally{await fresh.close();}
-  assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',steps:[...steps,...fxSteps],checks:['exact oracle after every CAS commit','cancel/stale/quota/post-put abort preserve bytes+revision','delete/reimport/undo','distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle','FX source conflicts/guards/archival + quota/post-put abort','actual second tab CAS','7 widths/Axe','offline reload','UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates']});
+  assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',steps:[...steps,...fxSteps],checks:['exact oracle after every CAS commit','cancel/stale/quota/post-put abort preserve bytes+revision','delete/reimport/undo','distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle','FX source conflicts/guards/archival + quota/post-put abort','actual second tab CAS','7 widths/Axe','offline reload','UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates','UI swap quantity and carried cost basis, exact reopen, dedicated correction quantity']});
   console.log('FIN-E2E01 '+engine+': exact cash/flows/basis/PnL/fees/taxes, source identity, '+(steps.length+fxSteps.length)+' steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS');
  }finally{writeFileSync('artifacts/gates/fin-e2e/'+engine+'.json',JSON.stringify(report,null,2));await context.close();await browser.close();}
 }
