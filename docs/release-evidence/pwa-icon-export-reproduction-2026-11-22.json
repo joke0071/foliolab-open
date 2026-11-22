@@ -1,0 +1,53 @@
+{
+  "playwrightVersion": "1.56.1",
+  "chromiumVersion": "141.0.7390.37",
+  "source": {
+    "path": "icons/flask.svg",
+    "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1",
+    "gitBlob": "823323630cb3fe1b9a6342e9d6e5421554c1194d"
+  },
+  "comparisons": [
+    {
+      "name": "flask-192.png",
+      "width": 192,
+      "height": 192,
+      "artSize": 192,
+      "offset": 0,
+      "background": "transparent",
+      "bytes": 7706,
+      "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119",
+      "byteIdentical": true,
+      "gitBlob": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b"
+    },
+    {
+      "name": "flask-512.png",
+      "width": 512,
+      "height": 512,
+      "artSize": 512,
+      "offset": 0,
+      "background": "transparent",
+      "bytes": 21846,
+      "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167",
+      "byteIdentical": true,
+      "gitBlob": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0"
+    },
+    {
+      "name": "flask-maskable-512.png",
+      "width": 512,
+      "height": 512,
+      "artSize": 358.4,
+      "offset": 76.80000000000001,
+      "background": "#214d38",
+      "bytes": 14006,
+      "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d",
+      "byteIdentical": true,
+      "gitBlob": "645419333138793ef88441a53d2f362e324fed4a"
+    }
+  ],
+  "status": "BYTE_EXACT_EXPORT_REPRODUCED",
+  "introductionCommit": "040853ca948554fb6a1e985ca5e5bc69836d421e",
+  "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
+  "allFourGitBlobsMatchIntroduction": true,
+  "platform": "Debian Linux x86_64",
+  "remainingEvidence": "Original drawing authorship and rights assignment. The reconstruction demonstrates byte-identical output from the repository SVG. Historical execution records remain unavailable."
+}

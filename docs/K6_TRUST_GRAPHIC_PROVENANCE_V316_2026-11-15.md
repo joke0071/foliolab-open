@@ -4,6 +4,12 @@
 
 Basis bleibt v316/Main `82ce984b1a0406ac37c8bdb5a2cf856afa4b7e69`. Das abgeschlossene [Auslieferungsinventar](K6_TRUST_ATTRIBUTION_V316_2026-11-15.md) wird weiterverwendet. Nur die betroffenen sieben Dateien und ihre Fragmente wurden anhand der vorhandenen Hashes verglichen; keine neue Release-CI.
 
+## Nachtrag · 22.11.2026
+
+**Alle drei PWA-PNGs sind aus der eingecheckten SVG-Datei bytegenau reproduzierbar.** Die vier Git-Blobs stimmen zwischen der Einführung `040853ca` und Main `b2ff4a80` überein. Die Standard-PNGs werden transparent in 192 bzw. 512 px gerendert. Bei der maskierbaren Variante liegt die zu 70 % skalierte Vorlage mittig auf 512 × 512 px mit Hintergrund `#214d38`. Der Vergleich lief mit Chromium 141.0.7390.37 unter Linux x86_64 und meldete je Datei dieselbe SHA-256 wie das Original. Die Herkunft der Zeichnung, ihre Rechtezuordnung und das historische Herstellungsprotokoll bleiben offen. Die Aussagen zum technischen Export in den Abschnitten unten beschreiben den Stand vom 15.11.
+
+Reproduktion aus einem Checkout mit den vier Icons. Zuerst `npm install --no-save --package-lock=false playwright@1.56.1` und `npx playwright install chromium --only-shell` ausführen. Danach das [Reproduktionsskript](release-evidence/pwa-icon-export-reproduction-2026-11-22.mjs) mit Node ausführen und den Pfad zum Checkout als Argument übergeben. Das Skript vergleicht die PNG-Bytes und meldet Größen sowie SHA-256. [Maschinenbeleg](release-evidence/pwa-icon-export-reproduction-2026-11-22.json).
+
 ## Entscheidungen je Grafikgruppe
 
 | Gruppe | Stärkster konkreter Beleg | Nachgewiesen | Noch benötigter Primärbeleg |
