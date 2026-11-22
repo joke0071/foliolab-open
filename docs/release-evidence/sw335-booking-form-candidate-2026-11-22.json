@@ -1,6 +1,6 @@
 {
   "release": "SW335",
-  "status": "MERGED_PENDING_LIVE",
+  "status": "PUBLISHED_PENDING_LIVE",
   "base": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
   "head": "edfa167800852c68cbbaf1e55fa27873bcf59296",
   "pullRequestMergeRef": "977a19361f10c82e071dcc2f568dbce7b7901d80",
@@ -50,5 +50,26 @@
       "zipCRC": "PASS",
       "nodePassed": 1535
     }
+  },
+  "pages": {
+    "original": 14755698268,
+    "sha256": "8de9ec29891719b9b47da5f9e4646302f58c18c8e9c12a298dfa527a4a5958de",
+    "bytes": 589667,
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "pinnedReadback": "PASS",
+    "archiveFile": "FolioLab_SW335_Pages_14755698268.zip"
+  },
+  "mainGateOriginal": {
+    "original": 14756600861,
+    "sha256": "683144f6c66d7d9ee5cabadb9d9eee8df138cad1c3beca86f62d229aaf733f54",
+    "zipCRC": "PASS",
+    "nodePassed": 1535
+  },
+  "directProduction": {
+    "index.html": "bc409d059b73d5b77bf06eb99c88619f024779b200531028246ca46e71c161c0",
+    "sw.js": "6eae5f03e350bb6be89ff8ff9af29f6c46b276c49f5cddd4d6b6b44f971f6d0e",
+    "src/app.js": "ccc96efab161555168a14134650af4270d4f3edf581f7f02f7cff6f49118347d",
+    "LICENSE": "1876bab16148708a12229ec65c5a019bbb4c7a846b8d0622118008daa40232b0"
   }
 }
