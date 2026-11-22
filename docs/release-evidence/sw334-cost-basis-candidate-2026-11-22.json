@@ -1,5 +1,5 @@
 {
-  "status": "MERGED_RELEASE_IN_PROGRESS",
+  "status": "DEPLOYED_LIVE_GATE_RUNNING",
   "baseline": {
     "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
     "cache": "foliolab-open-v333"
@@ -63,5 +63,40 @@
     "coreTotal": 6,
     "followUpAccepted": 10,
     "followUpTotal": 29
+  },
+  "integrationOriginals": [
+    {
+      "scope": "PR",
+      "original": 14745785010,
+      "sha256": "aea6a0e6ab3f424ce96ca65103c7b03311bd4cee00e5117da22bed8239b29521",
+      "zipCRC": "PASS",
+      "testedCommit": "f14168e860d652bdebae40c58ba3522932456dd9",
+      "nodePass": 1535
+    },
+    {
+      "scope": "Main",
+      "original": 14746290329,
+      "sha256": "abae051714f6e34f27dd91d2341ee9d23420ef1ab7fbc1ecebd9550e5df944dd",
+      "zipCRC": "PASS",
+      "testedCommit": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
+      "nodePass": 1535
+    }
+  ],
+  "pagesOriginal": {
+    "original": 14745058788,
+    "bytes": 589665,
+    "sha256": "1075f648aceec93ddb47be5881ce568fc236ed091c69005a340509c588e3379c",
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "deployCompleted": "2026-11-22T08:07:17Z"
+  },
+  "directProduction": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "byteIdentical": [
+      "index.html",
+      "sw.js",
+      "src/app.js",
+      "src/transactions.js"
+    ]
   }
 }
