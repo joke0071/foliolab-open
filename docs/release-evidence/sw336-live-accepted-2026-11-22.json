@@ -66,7 +66,8 @@
     "sha256": "d44509ba0ef7201b403df2f524d14be78b8d1214acf449635e57acf6519ba162",
     "zipCRC": "PASS",
     "fileMatchesMain": 159,
-    "byteReadback": "PASS"
+    "byteReadback": "PASS",
+    "durablePinnedByteReadback": "PASS"
   },
   "mainOriginal": {
     "artifact": 14770874130,
@@ -117,7 +118,8 @@
     "sha256": "07e83e2979882d9d034c8abae3f4d8e389d4a177ac9510f0f3aca0fc91a36e86",
     "entries": 1947,
     "zipCRC": "PASS",
-    "byteReadback": "PASS"
+    "byteReadback": "PASS",
+    "durablePinnedByteReadback": "PASS"
   },
   "production": {
     "engines": [

@@ -1,5 +1,5 @@
 {
-  "status": "PAGES_PUBLISHED_LIVE_PENDING",
+  "status": "LIVE_ACCEPTED",
   "pullRequest": 423,
   "supersededCandidate": "cdebd1674e263983587c56d297c5a3698bcdfce3",
   "base": "dc6f450d3a260f2b236d5b29461237835591984e",
@@ -30,9 +30,7 @@
     "pagesJob": 137362996353,
     "liveJob": 137363129843
   },
-  "remaining": [
-    "Standard production live workflow and original archive verification"
-  ],
+  "remaining": [],
   "qualifiedBranchAndTestMergeTreeMatch": true,
   "integration": "PASS",
   "wallet": "PASS",
@@ -224,5 +222,6 @@
         "reopen": true
       }
     ]
-  }
+  },
+  "acceptanceEvidence": "sw337-live-accepted-2026-11-22.json"
 }

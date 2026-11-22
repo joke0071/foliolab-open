@@ -1,0 +1,271 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "pullRequest": 423,
+  "supersededCandidate": "cdebd1674e263983587c56d297c5a3698bcdfce3",
+  "base": "dc6f450d3a260f2b236d5b29461237835591984e",
+  "candidate": "f2349a841eedba27e29fc73f0f9ee61c14e5dfa2",
+  "testMerge": "883e9dbf225b9da2bb3cf4130b85466648fd2da4",
+  "tree": "7f4fbdff60bd73133e872d6461eee7323a85c8df",
+  "cache": "foliolab-open-v337",
+  "local": {
+    "nodePass": 1533,
+    "nodeFail": 0,
+    "syntax": "PASS",
+    "positionDrilldown": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "checks": [
+    "exact EUR value and account share in row summary",
+    "units, quote per unit and acquisition value in expanded details",
+    "details preserve source, price history and booking timeline",
+    "separate account allocation expectations preserved"
+  ],
+  "runs": {
+    "prIntegration": 45066460880,
+    "wallet": 45066460865,
+    "mainPagesLive": 45070652741,
+    "pagesJob": 137362996353,
+    "liveJob": 137363129843,
+    "successfulLiveAttempt": 1
+  },
+  "remaining": [],
+  "qualifiedBranchAndTestMergeTreeMatch": true,
+  "integration": "PASS",
+  "wallet": "PASS",
+  "main": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+  "independentNativeIndexedDBProbe": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "3dbd6ed60166ff36b5cd5944ce24fc012ad521dd6b0b7ddef94f2ca89d4d43c5",
+      "encryptedBackupSha256": "dddbdfe642744c192293f054410c3c431267738e731ce709e70c8f36d5723a11",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "9b976f9ff18a2eccf2a0c2d3850c9f9943fedf8e42c263e6c4624833a6a194c2",
+      "encryptedBackupSha256": "5e26b5bcad98ff35d09f1642822b58d3a1ae3b2af4678bfe536c6a810c614eea",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        1024,
+        1440
+      ],
+      "portfolioSha256": "b597ba20f1383b0fcb3c87de1abb74cbf74a0d2da810509bc067cd42ed34ec30",
+      "encryptedBackupSha256": "8e24c58b959e61b9321589c3ec9ac9e0af82a137e3523b7635608f3483bee01e",
+      "positionValueEUR": 100,
+      "accountShare": "33,3 %",
+      "keyboard": true,
+      "chart": true,
+      "bookingTimeline": true,
+      "exactRecord": true,
+      "freshRestore": true,
+      "reopen": true
+    }
+  ],
+  "integrationStageReceipt": {
+    "artifact": 14771102319,
+    "bytes": 529,
+    "sha256": "7c094416edc37334b9407efa8761caa61c39ce7cfc74267ef0e9acc443147e7a",
+    "stage": "INTEGRATION",
+    "zipCRC": "PASS"
+  },
+  "integrationOriginal": {
+    "artifact": 14772675373,
+    "bytes": 68058995,
+    "sha256": "13d9222d79ec6b57153405302e79b827a568ede3be5b60f761730bdf6b2ad32c",
+    "testedCommit": "883e9dbf225b9da2bb3cf4130b85466648fd2da4",
+    "entries": 848,
+    "nodePass": 1533,
+    "zipCRC": "PASS"
+  },
+  "mainOriginal": {
+    "artifact": 14773877888,
+    "bytes": 68050439,
+    "sha256": "782e70966818583d34347cf1d0a2433000301c753eaf4e700b81fc23cd0bd95e",
+    "testedCommit": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+    "entries": 848,
+    "nodePass": 1533,
+    "zipCRC": "PASS"
+  },
+  "pagesArchive": {
+    "artifact": 14773755205,
+    "bytes": 589795,
+    "sha256": "2b0003ed24fa3ffc8f0474d04fadf27fbc1de1f7a904d09f87a0c7d2b0c9d8e1",
+    "entries": 1,
+    "zipCRC": "PASS",
+    "byteReadback": "PASS",
+    "fileMatchesMain": 159,
+    "durablePinnedByteReadback": "PASS"
+  },
+  "independentProductionPositionProbe": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "proxyCertificateException": true,
+    "strictTLSProductionAssetsComparedSeparately": [
+      "index.html",
+      "sw.js",
+      "src/position-detail-ui.js",
+      "styles.css"
+    ],
+    "reportSha256": "eed06d128e0eca41bf6b49bd5cc174b7babb1a77786f88b3c108c13b4b356712",
+    "scriptSha256": "f7324b2324eb8e7f5dcfd51bb7e3ce39da3e65226e042f11b28e4fadea2a6daf",
+    "reports": [
+      {
+        "engine": "chromium",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "854bda52cdf32af03e0990c95b288b636d671caefed3a808e1432d26b418443d",
+        "encryptedBackupSha256": "ccff388067eb724c58f272fe95487f88fb80410f227f6a317ac143da9098a776",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      },
+      {
+        "engine": "firefox",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "0e7bdfd7fc98c85c4ad459d6f33f88e89f962ce88481e146f424d65f440b3523",
+        "encryptedBackupSha256": "6cff7e0e8aab8b360383135d6157ce43d0dc6861f8bd3ce6697a4c6d333bc61d",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      },
+      {
+        "engine": "webkit",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "35b1a2d3209fd1c3bdf577244ac8e1f30d4afba15f1d1fc1c9174e821722625b",
+        "encryptedBackupSha256": "3522d01350e2475a8ff9878861d28b0b7cee1db8cb02ebfd2a5cbdd885bed648",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      }
+    ]
+  },
+  "acceptanceEvidence": "sw337-live-accepted-2026-11-22.json",
+  "liveArchive": {
+    "bytes": 152621316,
+    "sha256": "f0489927681d2a49f6d14fba029d5e1a4acd8c90bf04ee5c588fcf0336cc55e2",
+    "entries": 1947,
+    "zipCRC": "PASS",
+    "byteReadback": "PASS",
+    "artifact": 14775955291,
+    "durablePinnedByteReadback": "PASS"
+  },
+  "production": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "assetMatches": 160,
+    "coreCheckGroups": 11,
+    "axeScans": 22,
+    "restoreReports": 18,
+    "fxVerifiedReplayCasesPerEngine": 8,
+    "fxDirectOriginCasesPerEngine": 2,
+    "finE2EStepsPerEngine": 16,
+    "workflowLogFiles": 37,
+    "startedAt": "2026-11-22T21:33:37.974Z",
+    "finishedCoreAt": "2026-11-22T21:33:54.061Z"
+  },
+  "timing": {
+    "classificationStartedAt": "2026-11-22T21:11:09Z",
+    "pagesCompletedAt": "2026-11-22T21:33:15Z",
+    "liveStartedAt": "2026-11-22T21:33:18Z",
+    "liveCompletedAt": "2026-11-22T22:14:58Z",
+    "totalSeconds": 3829,
+    "liveSeconds": 2500,
+    "chromiumSeconds": 695,
+    "firefoxWebKitSeconds": 1698
+  },
+  "roadmap": {
+    "coreComplete": 6,
+    "coreTotal": 6,
+    "followUpComplete": 10,
+    "followUpTotal": 29
+  }
+}
