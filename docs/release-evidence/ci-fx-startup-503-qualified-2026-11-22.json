@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_LIVE_PENDING",
+  "status": "MAIN_PAGES_LIVE_WORKFLOW_PASSED",
   "pullRequest": 424,
   "base": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
   "head": "1438e1b44560b379492c22e8bbdf0b9bf88a06e5",
@@ -9,7 +9,8 @@
   "runs": {
     "integration": 45071129296,
     "wallet": 45071129273,
-    "mainPagesLive": 45076914324
+    "mainPagesLive": 45076914324,
+    "liveJob": 137382165290
   },
   "integrationOriginal": {
     "id": 14773574837,
@@ -37,9 +38,16 @@
     "webkit"
   ],
   "applicationAssetsChanged": false,
-  "pagesArchive": {"artifact": 14775701705, "bytes": 589792, "sha256": "66944af961f449268ffc61f686553e794f01e7cf32cd5fafc72581889adbe8e0", "zipCRC": "PASS", "fileMatchesMain": 159},
+  "pagesArchive": {
+    "artifact": 14775701705,
+    "bytes": 589792,
+    "sha256": "66944af961f449268ffc61f686553e794f01e7cf32cd5fafc72581889adbe8e0",
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159
+  },
   "remaining": [
-    "Production workflow end-to-end verification and observable timing benefit"
+    "Independent CRC and durable readback for the additional CI-only original",
+    "Reproducible general wall-clock benefit outside the controlled single-503 scenario"
   ],
   "roadmap": {
     "coreComplete": 6,
@@ -58,5 +66,36 @@
     "liveSeconds": 2500,
     "chromiumSeconds": 695,
     "firefoxWebKitSeconds": 1698
+  },
+  "mainOriginal": {
+    "artifact": 14775789804,
+    "bytes": 68058374,
+    "sha256": "961ecc822b7e63484e19d23e8b06fe5262f8cec88f57cdfc0e1db4637f42261c",
+    "zipCRC": "PASS",
+    "entries": 848,
+    "nodePass": 1533
+  },
+  "liveArchive": {
+    "artifact": 14777427249,
+    "bytes": 152552350,
+    "sha256": "5b8e93d111b7efa22cb48e30f987d5971204e51ac014dd46da535c60f968e4ce",
+    "digestSource": "GitHub Actions artifact metadata",
+    "independentZipCRC": "NOT_CHECKED",
+    "separatePinnedByteReadback": "NOT_CHECKED"
+  },
+  "production": {
+    "mainPagesAndAllLiveJobs": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "assetMatches": 160,
+    "coreCheckGroups": 11,
+    "axeScans": 22,
+    "fxVerifiedReplayCasesPerEngine": 8,
+    "fxDirectOriginCasesPerEngine": 2,
+    "finE2EStepsPerEngine": 16,
+    "retryEventObservedInJobLog": false
   }
 }
