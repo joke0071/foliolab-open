@@ -34,6 +34,10 @@ try{
  await btc.locator('summary.provider-holding').click();
  assert.equal(await btc.getAttribute('open'),'');
  await btc.locator('.position-history-chart .chart-plot').waitFor();
+ assert.equal(await btc.locator('summary .account-allocation').count(),1,'Allocation ring is retained in the summary');
+ assert.match(await btc.locator('summary.provider-holding').innerText(),/35\.000/,'The current EUR value remains visible');
+ assert.deepEqual(await btc.locator('.provider-position-detail .position-detail-stat span').allTextContents(),['Bestand','Kurs je Einheit','Einstandswert']);
+ assert.equal(await btc.locator('.provider-position-detail .position-share').count(),0,'No duplicate share bar');
  assert.match(await btc.innerText(),/Kurs je Einheit/);
  assert.match(await btc.innerText(),/Marktkurs je Einheit/);
  assert.match(await btc.innerText(),/nicht deine persönliche Rendite/);
