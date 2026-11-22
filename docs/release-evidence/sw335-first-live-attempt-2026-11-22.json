@@ -1,0 +1,42 @@
+{
+  "release": "SW335",
+  "main": "878c30ca70d499145ff1ef0de40dec3dc083f621",
+  "workflow": 45025955025,
+  "attempt": 1,
+  "job": 137224623449,
+  "status": "FAILED",
+  "originalArchive": {
+    "artifactId": 14757815237,
+    "sha256": "c5f39438a1e6f557ea356e766353a794892a7fa3e58a98f21eafabe2bd2ec159",
+    "bytes": 87563211,
+    "entries": 1111,
+    "zipCRC": "PASS",
+    "pinnedByteReadback": "PASS",
+    "name": "FolioLab_SW335_Live_Attempt1_14757815237.zip"
+  },
+  "evidence": {
+    "chromium": "PASS",
+    "failedTest": "browser-refresh-frequency.mjs",
+    "engine": "firefox",
+    "error": "page.reload: NS_ERROR_ABORT",
+    "sourceLine": 51,
+    "callerLine": 124,
+    "diagnostic": "worker-diagnostics/firefox-35975-6.jsonl",
+    "response": "no HTTP response for the aborted document request and no HTTP 429 in this Firefox observer",
+    "cause": "UNDETERMINED"
+  },
+  "isolatedCounterprobe": {
+    "engine": "firefox",
+    "source": "production origin",
+    "status": "PASS",
+    "verifiedPublishedFiles": 160,
+    "replayedStaticFixtureRequests": 2920,
+    "scope": "Supplementary run with the local execution environment certificate exception. Regular GitHub release TLS remains mandatory."
+  },
+  "retry": {
+    "attempt": 2,
+    "job": 137232486555,
+    "scope": "live-acceptance only",
+    "mainAndPagesGates": "reused from successful exact-head run"
+  }
+}
