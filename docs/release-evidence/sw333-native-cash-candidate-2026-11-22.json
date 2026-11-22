@@ -1,0 +1,40 @@
+{
+  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "scope": "Native cash quantity for trades using a cash account in the trade currency",
+  "baseline": {
+    "main": "2b66371e029ebf17b37f3b80603e07a0f3270e8c",
+    "tree": "4bf32eddaf9b3162f84fc7c722574be311b96b53",
+    "liveRun": 44949125354,
+    "liveArtifact": 14726901984,
+    "pagesArtifact": 14724772273,
+    "directProductByteMatches": ["index.html", "sw.js"],
+    "regression": "A USD buy with a principal of 0.000000000000000003 and EUR-per-USD 0.1 passed with zero available USD."
+  },
+  "candidate": {
+    "pullRequest": 416,
+    "head": "281c72780f3fea434afb4f4bdac37a84a618e22f",
+    "githubTestMerge": "0bb27d7412650391a9246da572e46044d3123486",
+    "tree": "002de0f673f81baf7701c5a779e1d9854b3b98a2",
+    "cache": "foliolab-open-v333",
+    "prIntegrationRun": 44988231086,
+    "walletRun": 44988231227
+  },
+  "local": {
+    "node": {"version": "24.22.3", "pass": 1533, "fail": 0},
+    "syntax": "PASS",
+    "diff": "PASS",
+    "chromium": {
+      "version": "141.0.7390.37",
+      "existingSuitesPassed": ["browser-fin-e2e.mjs", "browser-booking-reference-fx.mjs"],
+      "syntheticBookingUI": {
+        "unfundedPurchaseRejected": true,
+        "unfundedRecordUnchanged": true,
+        "fundedBuyAfterCash": "0.000000000000000002",
+        "fundedSaleAfterCash": "0.000000000000000005",
+        "exactReopen": true,
+        "revisions": [2, 3, 4, 5]
+      }
+    }
+  },
+  "matrix": {"coreAccepted": 6, "coreTotal": 6, "followUpAccepted": 10, "followUpTotal": 29}
+}

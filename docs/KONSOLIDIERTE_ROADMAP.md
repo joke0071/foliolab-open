@@ -45,6 +45,32 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 | QUALIFIED / BLOCKED_EXTERNAL · Anbieter und Geräte | **Drive/FLH04** · gebundene Geräteschlüssel, unabhängiges Kryptoreview, autorisierte Testorigin und zweites echtes Gerät. **UI-SENTIMENT01** · zugelassener FolioLab-CMC-Zugang sowie CNN-Feed mit Anzeigerechten. **TRUST01** · Safari/VoiceOver/ITP und Original/Rechtekette der PWA-Grafiken, CSP-Kandidat erst mit belegtem Schutzgewinn. **Speicher/Migration** · passendes natives Gerät, Altbestand und zweites autorisiertes Gerät für die jeweilige offene Variante. **Startperformance** · benannte physische Android-Hardware, derselbe Datenbestand und fünf Kalt-/Warm-/Offline-Starts. |
 | BLOCKED_EXTERNAL · Produktentscheidung | **UI-Refresh** · Entscheidung über drei Sprunglinks in „Mehr“. **Benchmark/Roadmap** · Vergleichsreihe, Währung und Gewichtung. **Produktmaster** · Freigabe des öffentlichen Produktauftritts. |
 
+### Priorisierung der 19 offenen Zeilen · 22.11.2026
+
+| Reihenfolge | Zeile | Ausführbarer Anteil oder fehlender Eingang |
+| --- | --- | --- |
+| 1 | FIN-E2E01 | Exakte native Cashabrechnung mit synthetischen Fällen reproduziert und in [#416](https://github.com/joke0071/foliolab-open/pull/416) korrigiert. Pflicht-CI läuft. Die zusätzliche Originalrücknahme benötigt weiterhin unabhängige Journal-, Kosten- und Cash-Sollwerte. |
+| 2 | CI-Effizienz | Den regulären SW333-Lauf ab Klassifizierung bis Liveabschluss mit denselben Marken wie SW332 auswerten. |
+| 3 | TRUST01 | Der Bestandstest unterstützt eigene HTTPS-RPC-/Worker-Origins. Ein CSP-Eingriff setzt einen konkret belegten Schutzgewinn voraus. Für die übrigen Teile fehlen natives Safari/VoiceOver/ITP sowie der Grafikherkunfts- und Rechtebeleg. |
+| 4 | FLH03 | Privater Trade-Republic-Verrechnungskontozeitraum oder direkt ausgewiesener Bitpanda-Stichtagssaldo und persönliche BCI25-Aufstellung. |
+| 4 | AT03 | Derselbe Trade-Republic-Zeitraum mit Anfangs- und Endsaldo. |
+| 4 | FLH05 | Zusammengehörige Teilfüllungs-/FX-/Gebührenzeilen und unabhängiger Nettosollwert. Wenn möglich denselben Brokerzeitraum verwenden. |
+| 4 | Verwaltung / Buchungsmutationen | Originalbuchung samt Gegenposition und unabhängige Journal-, Kostenbasis- und Flow-Sollwerte. |
+| 4 | ETH-HISTORY-CURSOR01 | Privater Originalcursor und die dazugehörige Folgeantwort. |
+| 4 | FLH03-18 | Eine zusätzlich zu prüfende Ledger-/Stakingposition mit datiertem Endbestand und eigener Kontozuordnung. |
+| 4 | Weitere Wallet-Abdeckung | Datierter eigener Wallet-/Stakingbestand mit Menge und Finalität. |
+| 4 | AT05 | Brokerjahresabrechnung, zugehörige OeKB-Daten und unabhängige Fachprüfung. |
+| 4 | Barausgleich | Originalabrechnung mit Bruchteil, Auszahlungswährung, Kosten und Steuerbasis. |
+| 5 | Drive / FLH04 | Geräteschlüssel transaktional binden. Erweiterte Abnahme braucht unabhängiges Kryptoreview, autorisierte OAuth-Testorigin und zweites echtes Gerät. |
+| 5 | UI-SENTIMENT01 | CMC-Zugang mit erlaubtem Abrufweg sowie CNN-Feed mit Anzeigerechten. Qualifizierte Vorschau wiederverwenden. |
+| 5 | Speicher / Migration / Recovery | Passende Altinstallation und für den geräteübergreifenden Fall ein zweites autorisiertes Gerät. |
+| 5 | Startperformance | Fünf Kalt-, Warm- und Offline-Starts auf benannter physischer Android-Hardware mit identischem Testbestand. |
+| 6 | UI-Refresh | Produktentscheidung über die drei Sprunglinks in „Mehr“. |
+| 6 | Benchmark / Roadmap | Produktentscheidung zu Vergleichsreihe, Währung und Gewichtung. |
+| 6 | Produktmaster | Veröffentlichungsfreigabe für den öffentlichen Auftritt. |
+
+Die bestehenden 10 Abnahmen und die 6/6 Kernbereiche bleiben gültig. Der Teilfix in FIN-E2E01 zählt erst als Release ab seiner vollständigen eigenen Abnahme. Die Originalanforderung der Matrixzeile bleibt separat bestehen.
+
 ### Reihenfolge ab SW332
 
 | Vorrang | Kleinster Eingang und anschließender Schritt |
