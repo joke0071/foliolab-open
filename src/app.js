@@ -2102,6 +2102,7 @@ function openBooking(){
   const needsQuantity=!meta&&!ratio&&!correct;
   $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
   $('bookingTargetWrap').classList.toggle('hidden',!target);
+  $('bookingTarget').disabled=!target;
   $('bookingTarget').required=target;
   $('bookingRatioWrap').classList.toggle('hidden',!ratio);
   $('bookingCorrectWrap').classList.toggle('hidden',!correct);
@@ -2114,6 +2115,7 @@ function openBooking(){
   price.required=priceRequired;
   if(changed)price.value=trade?'':String(position?.kind==='cash'?1:position?.price??0);
   $('bookingCashWrap').classList.toggle('hidden',!trade);
+  $('bookingCash').disabled=!trade;
   if(trade){
    const available=list.filter(p=>p.kind==='cash'&&p.id!==position?.id&&['EUR',position?.currency].includes(p.currency));
    const selected=$('bookingCash').value;
