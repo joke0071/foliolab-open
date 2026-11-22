@@ -1,0 +1,302 @@
+{
+  "main": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
+  "cache": "foliolab-open-v334",
+  "pagesArchive": {
+    "bytes": 589665,
+    "sha256": "1075f648aceec93ddb47be5881ce568fc236ed091c69005a340509c588e3379c",
+    "entries": 1,
+    "zipCRC": "PASS",
+    "fileMatchesMain": 159,
+    "original": 14745058788,
+    "originalName": "FolioLab_SW334_Pages_14745058788.zip",
+    "githubDigest": "sha256:1075f648aceec93ddb47be5881ce568fc236ed091c69005a340509c588e3379c",
+    "byteReadback": "PASS",
+    "readbackMethod": "Independently materialized the pinned archive and compared it byte-for-byte to the original download."
+  },
+  "liveArchive": {
+    "bytes": 152733363,
+    "sha256": "8ac168c5ddd5bc97639717af24514d77c68668011d3d3754104f599e634d51f0",
+    "entries": 1947,
+    "zipCRC": "PASS",
+    "original": 14747470465,
+    "originalName": "FolioLab_SW334_Live_14747470465.zip",
+    "githubDigest": "sha256:8ac168c5ddd5bc97639717af24514d77c68668011d3d3754104f599e634d51f0",
+    "byteReadback": "PASS",
+    "readbackMethod": "Independently materialized the pinned archive and compared it byte-for-byte to the original download."
+  },
+  "productPathMatches": 160,
+  "coreChecks": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload",
+    "actual controlled offline projection changes no portfolio data",
+    "actual controlled offline history section links preserve portfolio and projection input",
+    "controlled offline position chart shows only evidenced periods and accessible read-only CSV menu",
+    "controlled offline model history is opt-in, honors gaps and preserves the exact portfolio record",
+    "controlled offline opt-in estimate is graphically distinct and never persists values"
+  ],
+  "axeScans": 22,
+  "restore": [
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "complete",
+      "cRevision": 7,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 8,
+      "reopenedRevision": 8,
+      "returnedBRevision": 9,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "kill",
+      "cRevision": 10,
+      "amount": "8.65",
+      "balance": "18.65",
+      "bookedRevision": 11,
+      "reopenedRevision": 11,
+      "returnedBRevision": 12,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "vault-read-abort",
+      "cRevision": 13,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 14,
+      "reopenedRevision": 14,
+      "returnedBRevision": 15,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "chromium",
+      "end": "portfolio-read-abort",
+      "cRevision": 16,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 17,
+      "reopenedRevision": 17,
+      "returnedBRevision": 18,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "firefox",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "complete",
+      "cRevision": 5,
+      "amount": "6.35",
+      "balance": "16.35",
+      "bookedRevision": 6,
+      "reopenedRevision": 6,
+      "returnedBRevision": 7,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "vault-read-abort",
+      "cRevision": 8,
+      "amount": "3.45",
+      "balance": "13.45",
+      "bookedRevision": 9,
+      "reopenedRevision": 9,
+      "returnedBRevision": 10,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    },
+    {
+      "kind": "FLH04PostCommitDeposit",
+      "status": "PASS",
+      "engine": "webkit",
+      "end": "portfolio-read-abort",
+      "cRevision": 11,
+      "amount": "5.85",
+      "balance": "15.85",
+      "bookedRevision": 12,
+      "reopenedRevision": 12,
+      "returnedBRevision": 13,
+      "journalEntries": 1,
+      "confirmedSessions": 1
+    }
+  ],
+  "status": "LIVE_ACCEPTED",
+  "origin": "https://foliolab.unperfekt.at/",
+  "tree": "d302c24fe2583f6c9dfdd7962a4d247e5310ac4a",
+  "pullRequest": 417,
+  "candidate": "c2cbe45b00693ce132bfa1075c187ab3f3a2f462",
+  "githubTestMerge": "f14168e860d652bdebae40c58ba3522932456dd9",
+  "runs": {
+    "prIntegration": 44997957360,
+    "wallet": 44997957374,
+    "mainPagesLive": 44999769069,
+    "attempt": 1
+  },
+  "nodeTests": {
+    "prPass": 1535,
+    "mainPass": 1535,
+    "fail": 0,
+    "skip": 0
+  },
+  "qualifiedBrowserEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "directProduction": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "byteIdentical": [
+      "index.html",
+      "sw.js",
+      "src/app.js",
+      "src/transactions.js"
+    ],
+    "firstTargetedProbe": {
+      "result": "APP_START_TIMEOUT",
+      "bookingReached": false,
+      "cause": "undetermined"
+    },
+    "singleRetry": {
+      "result": "PASS",
+      "engine": "chromium",
+      "operation": "swap",
+      "exactReopen": true,
+      "carriedBasis": "200",
+      "remainingBasis": "100",
+      "laterSalePnL": "20",
+      "cashAfterSale": "2120",
+      "badResponses": [],
+      "failedPaths": [],
+      "pageErrors": []
+    }
+  },
+  "transportDiagnostics": {
+    "engineFinanceProofs": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "workerDiagnosticFiles": 214,
+    "productionHTTP429": 0
+  },
+  "timing": {
+    "classification": "2026-11-22T07:46:48Z",
+    "pages": "2026-11-22T08:07:17Z",
+    "liveStarted": "2026-11-22T08:07:20Z",
+    "liveCompleted": "2026-11-22T08:48:17Z",
+    "totalSeconds": 3689,
+    "toPagesSeconds": 1229,
+    "liveSeconds": 2457,
+    "engineSteps": [
+      [
+        "Verify published bytes, core flows and targeted UI in Chromium",
+        688,
+        "success"
+      ],
+      [
+        "Verify targeted production UI in Firefox and WebKit",
+        1678,
+        "success"
+      ]
+    ],
+    "previousSW333": {
+      "totalSeconds": 4294,
+      "liveSeconds": 2656
+    },
+    "vsSW333TotalDeltaSeconds": -605,
+    "vsSW333LiveDeltaSeconds": -199,
+    "previousSW332PR415": {
+      "totalSeconds": 3842,
+      "liveSeconds": 2462
+    },
+    "vsSW332PR415TotalDeltaSeconds": -153,
+    "observation": "This run was faster. It contained no CI workflow change and does not establish an optimization effect."
+  },
+  "matrix": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followUpAccepted": 10,
+    "followUpTotal": 29
+  },
+  "integrationOriginals": [
+    {
+      "scope": "PR",
+      "original": 14745785010,
+      "sha256": "aea6a0e6ab3f424ce96ca65103c7b03311bd4cee00e5117da22bed8239b29521",
+      "zipCRC": "PASS",
+      "testedCommit": "f14168e860d652bdebae40c58ba3522932456dd9",
+      "nodePass": 1535
+    },
+    {
+      "scope": "Main",
+      "original": 14746290329,
+      "sha256": "abae051714f6e34f27dd91d2341ee9d23420ef1ab7fbc1ecebd9550e5df944dd",
+      "zipCRC": "PASS",
+      "testedCommit": "7269d3e48daf6ca4817bc71b6c79c4521674b44b",
+      "nodePass": 1535
+    }
+  ],
+  "personalTradeRepublic": "NOT_APPLICABLE",
+  "genericTradeRepublicRealEvidence": "REAL_EVIDENCE_NOT_VERIFIED"
+}

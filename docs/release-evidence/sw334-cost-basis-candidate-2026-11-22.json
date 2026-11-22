@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED_LIVE_GATE_RUNNING",
+  "status": "LIVE_ACCEPTED",
   "baseline": {
     "main": "b2ff4a803f9247be9e2730d0e4638f6165d0f722",
     "cache": "foliolab-open-v333"
@@ -97,6 +97,25 @@
       "sw.js",
       "src/app.js",
       "src/transactions.js"
-    ]
-  }
+    ],
+    "firstTargetedProbe": {
+      "result": "APP_START_TIMEOUT",
+      "bookingReached": false,
+      "cause": "undetermined"
+    },
+    "singleRetry": {
+      "result": "PASS",
+      "engine": "chromium",
+      "operation": "swap",
+      "exactReopen": true,
+      "carriedBasis": "200",
+      "remainingBasis": "100",
+      "laterSalePnL": "20",
+      "cashAfterSale": "2120",
+      "badResponses": [],
+      "failedPaths": [],
+      "pageErrors": []
+    }
+  },
+  "releaseEvidence": "sw334-pr417-live-accepted-2026-11-22.json"
 }
