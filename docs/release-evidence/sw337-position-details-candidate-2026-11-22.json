@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_LIVE_PENDING",
+  "status": "PAGES_PUBLISHED_LIVE_PENDING",
   "pullRequest": 423,
   "supersededCandidate": "cdebd1674e263983587c56d297c5a3698bcdfce3",
   "base": "dc6f450d3a260f2b236d5b29461237835591984e",
@@ -26,11 +26,12 @@
   "runs": {
     "prIntegration": 45066460880,
     "wallet": 45066460865,
-    "mainPagesLive": 45070652741
+    "mainPagesLive": 45070652741,
+    "pagesJob": 137362996353,
+    "liveJob": 137363129843
   },
   "remaining": [
-    "Main, Pages and production acceptance",
-    "Independent production position-detail probe and artifact readback"
+    "Standard production live workflow and original archive verification"
   ],
   "qualifiedBranchAndTestMergeTreeMatch": true,
   "integration": "PASS",
@@ -122,5 +123,106 @@
     "entries": 848,
     "nodePass": 1533,
     "zipCRC": "PASS"
+  },
+  "mainOriginal": {
+    "artifact": 14773877888,
+    "bytes": 68050439,
+    "sha256": "782e70966818583d34347cf1d0a2433000301c753eaf4e700b81fc23cd0bd95e",
+    "testedCommit": "97f0d02a05e6051c90e04fe70a67f47fdadf0067",
+    "entries": 848,
+    "nodePass": 1533,
+    "zipCRC": "PASS"
+  },
+  "pagesArchive": {
+    "artifact": 14773755205,
+    "bytes": 589795,
+    "sha256": "2b0003ed24fa3ffc8f0474d04fadf27fbc1de1f7a904d09f87a0c7d2b0c9d8e1",
+    "entries": 1,
+    "zipCRC": "PASS",
+    "byteReadback": "PASS",
+    "fileMatchesMain": 159
+  },
+  "independentProductionPositionProbe": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "proxyCertificateException": true,
+    "strictTLSProductionAssetsComparedSeparately": [
+      "index.html",
+      "sw.js",
+      "src/position-detail-ui.js",
+      "styles.css"
+    ],
+    "reportSha256": "eed06d128e0eca41bf6b49bd5cc174b7babb1a77786f88b3c108c13b4b356712",
+    "scriptSha256": "f7324b2324eb8e7f5dcfd51bb7e3ce39da3e65226e042f11b28e4fadea2a6daf",
+    "reports": [
+      {
+        "engine": "chromium",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "854bda52cdf32af03e0990c95b288b636d671caefed3a808e1432d26b418443d",
+        "encryptedBackupSha256": "ccff388067eb724c58f272fe95487f88fb80410f227f6a317ac143da9098a776",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      },
+      {
+        "engine": "firefox",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "0e7bdfd7fc98c85c4ad459d6f33f88e89f962ce88481e146f424d65f440b3523",
+        "encryptedBackupSha256": "6cff7e0e8aab8b360383135d6157ce43d0dc6861f8bd3ce6697a4c6d333bc61d",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      },
+      {
+        "engine": "webkit",
+        "status": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          1024,
+          1440
+        ],
+        "portfolioSha256": "35b1a2d3209fd1c3bdf577244ac8e1f30d4afba15f1d1fc1c9174e821722625b",
+        "encryptedBackupSha256": "3522d01350e2475a8ff9878861d28b0b7cee1db8cb02ebfd2a5cbdd885bed648",
+        "positionValueEUR": 100,
+        "accountShare": "33,3 %",
+        "keyboard": true,
+        "chart": true,
+        "bookingTimeline": true,
+        "exactRecord": true,
+        "freshRestore": true,
+        "reopen": true
+      }
+    ]
   }
 }
