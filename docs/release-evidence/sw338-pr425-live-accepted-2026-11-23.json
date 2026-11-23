@@ -1,0 +1,143 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "recordedOn": "2026-11-23",
+  "issue": 298,
+  "pullRequest": 425,
+  "version": "SW338",
+  "base": "e2f6ad000ba5c7810905a819582872b563e90c42",
+  "head": "e0dc2657254ba964ceee735b3c470e6281e74047",
+  "testMerge": "f467b78be829f6a764ee4a5b93eac3ce04434ed1",
+  "tree": "e89c816f86d1e048dea52b0cc6a7532bd1aff649",
+  "main": "e40e0ab41260a83fec4390849d09353ba4d61bae",
+  "qualifiedTreeMatchesMain": true,
+  "scope": "TRUST01 B, document base URI restriction with a PWA cache revision",
+  "runs": {
+    "prIntegration": 45116616458,
+    "wallet": 45116616443,
+    "mainPagesLive": 45119375859,
+    "pagesJob": 137517132166,
+    "firstLiveJob": 137517304665,
+    "liveJob": 137520329045,
+    "successfulLiveAttempt": 2
+  },
+  "qualification": {
+    "nodePass": 1533,
+    "syntax": "PASS",
+    "browserDocumentBase": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "wallet": "PASS",
+    "main": "PASS",
+    "pages": "PASS",
+    "production": "PASS"
+  },
+  "prOriginal": {
+    "id": 14792118991,
+    "bytes": 68077083,
+    "sha256": "009c3e99644e89b726f88342a04990d394a5feea746f8982cee1c5b759a837af",
+    "entries": 848,
+    "crc": "PASS"
+  },
+  "mainOriginal": {
+    "id": 14793534037,
+    "bytes": 68075613,
+    "sha256": "315ed5cdb61b73dc6b4c366379dc51b844faaf0e10db5bebad18911aeeadcb15",
+    "entries": 848,
+    "crc": "PASS"
+  },
+  "productionDirect": {
+    "htmlSha256": "65e5ba15f52112a35091b804344193d86d46a2959aca63f03c43869a39b47329",
+    "serviceWorkerSha256": "82b1a3ea336188df09dbd5e4e864eeb9bca45e0419d595d63bb77997f72728b6",
+    "byteMatch": [
+      "/",
+      "/index.html",
+      "/sw.js"
+    ]
+  },
+  "pagesOriginal": {
+    "id": 14792704471,
+    "bytes": 589791,
+    "sha256": "5f0f26dc834f6f7b85c9557e019778999821b82ee9f634fc3a29e745c67942ae",
+    "entries": 1,
+    "crc": "PASS",
+    "trackedFilesMatched": 159,
+    "pinnedByteReadback": "PASS"
+  },
+  "firstLiveAttempt": "sw338-pr425-live-attempt-1-2026-11-23.json",
+  "liveOriginal": {
+    "id": 14795493958,
+    "filename": "FolioLab-SW338-PR425-Live-Original-14795493958.zip",
+    "bytes": 152685787,
+    "sha256": "c65750c94863b6e9277698c2c8184f5d6bd21f70b0c287dadee4b6770cf81b9b",
+    "entries": 1947,
+    "crc": "PASS",
+    "cache": "foliolab-open-v338",
+    "paths": 160,
+    "coreChecks": 11,
+    "axeScans": 22,
+    "restoreChecks": 18,
+    "restoreEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "finE2E": {
+      "chromium": 16,
+      "firefox": 16,
+      "webkit": 16
+    },
+    "directFX": {
+      "chromium": 2,
+      "firefox": 2,
+      "webkit": 2
+    },
+    "replayedFX": {
+      "chromium": 8,
+      "firefox": 8,
+      "webkit": 8
+    },
+    "krakenUsdPrincipal": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "pinnedByteReadback": "PASS",
+    "pinnedVersion": 0
+  },
+  "timing": {
+    "classificationStartedAt": "2026-11-23T05:41:42Z",
+    "pagesCompletedAt": "2026-11-23T06:06:08Z",
+    "firstLiveStartedAt": "2026-11-23T06:06:11Z",
+    "firstLiveCompletedAt": "2026-11-23T06:13:22Z",
+    "liveStartedAt": "2026-11-23T06:15:02Z",
+    "liveCompletedAt": "2026-11-23T06:54:32Z",
+    "totalSeconds": 4370,
+    "successfulLiveSeconds": 2370,
+    "firstLiveSeconds": 431,
+    "chromiumSeconds": 656,
+    "firefoxWebKitSeconds": 1614,
+    "comparisonPR424": {
+      "run": 45076914324,
+      "totalSeconds": 3607,
+      "liveSeconds": 2367
+    },
+    "reproducibleOverallGain": "OPEN"
+  },
+  "roadmap": {
+    "coreComplete": 6,
+    "coreTotal": 6,
+    "followUpComplete": 10,
+    "followUpTotal": 29,
+    "blockedExternal": 13,
+    "requiresProductDecision": 3,
+    "partiallyExecutable": 3
+  },
+  "remaining": [
+    "Native Safari, VoiceOver and ITP device tests",
+    "Rights and provenance of the original PWA drawing",
+    "Reproducible overall release-time benefit",
+    "External evidence and product decisions listed in the roadmap"
+  ]
+}
