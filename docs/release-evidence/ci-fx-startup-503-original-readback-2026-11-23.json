@@ -1,0 +1,32 @@
+{
+  "status": "ORIGINAL_ARCHIVE_VERIFIED",
+  "verifiedOn": "2026-11-23",
+  "pullRequest": 424,
+  "main": "e2f6ad000ba5c7810905a819582872b563e90c42",
+  "tree": "ace60cd390a8c796cf59398a7811f8f46eab3226",
+  "run": 45076914324,
+  "liveJob": 137382165290,
+  "productVersion": "SW337",
+  "artifact": 14777427249,
+  "bytes": 152552350,
+  "sha256": "5b8e93d111b7efa22cb48e30f987d5971204e51ac014dd46da535c60f968e4ce",
+  "githubMetadataMatches": true,
+  "entries": 1947,
+  "zipCRC": "PASS",
+  "secondGitHubDownloadByteMatch": "PASS",
+  "pinnedDurableReadback": {
+    "filename": "FolioLab-SW337-PR424-Live-Original-14777427249.zip",
+    "version": 0,
+    "bytes": 152552350,
+    "byteMatch": "PASS"
+  },
+  "productionServiceWorkerByteMatch": "PASS",
+  "productionServiceWorkerSha256": "919cfdb9f51e4349733c47cc79516eac96a2ad0875a6ae94e1bb4e4e9ccf6b2c",
+  "roadmap": {
+    "coreComplete": 6,
+    "coreTotal": 6,
+    "followUpComplete": 10,
+    "followUpTotal": 29
+  },
+  "remaining": "Compare the next ordinary release against the same classification-to-live and live-job time boundaries."
+}
