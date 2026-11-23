@@ -19,7 +19,16 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   const workerState=()=>page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {url:location.href,timeOrigin:performance.timeOrigin,controller:navigator.serviceWorker.controller?.scriptURL??null,controllerState:navigator.serviceWorker.controller?.state??null,active:r?.active?.state??null,activeURL:r?.active?.scriptURL??null,waiting:r?.waiting?.state??null,installing:r?.installing?.state??null};});
   const lifecycle={engine:name,expectedScript:'http://127.0.0.1:4173/sw.js'},pageErrors=[];page.on('pageerror',e=>pageErrors.push(e.message));
   try{
-   await page.goto('http://127.0.0.1:4173/');await waitForAppServiceWorker(page);lifecycle.activated=await workerState();assert.equal(lifecycle.activated.active,'activated');assert.equal(lifecycle.activated.activeURL,lifecycle.expectedScript);
+   await page.goto('http://127.0.0.1:4173/');
+   const documentBase = await page.evaluate(() => {
+    const base = document.createElement('base');
+    base.href = './csp-base-check/';
+    document.head.append(base);
+    try { return document.baseURI; }
+    finally { base.remove(); }
+   });
+   assert.equal(documentBase, page.url(), 'App CSP blocks a same-origin document base override');
+   await waitForAppServiceWorker(page);lifecycle.activated=await workerState();assert.equal(lifecycle.activated.active,'activated');assert.equal(lifecycle.activated.activeURL,lifecycle.expectedScript);
    // Activation alone does not prove control of this document. Establish the
    // actual initial controller before testing a controlled reload, then retain
    // the original post-reload and offline requirements without retries.

@@ -88,4 +88,7 @@ test('CSP allows only the Google OAuth script alongside same-origin JavaScript',
  assert.ok(!app.toLowerCase().includes('tradingview.com')&&!app.includes('load-tradingview')&&!app.includes('openPublicTradingView')&&!app.includes('data-tv-slot'),'No active third-party chart path remains');
  assert.ok(!html.toLowerCase().includes('tradingview.com'),'CSP must not allow vendor chart framing');
  assert.ok(html.includes('frame-src https://accounts.google.com/gsi/;'),'Google OAuth framing remains available');
+ assert.ok(html.includes("base-uri 'none';"),'The document must resolve relative URLs against its own URL');
+ assert.doesNotMatch(html,/<base[\s/>]/i,'The app does not require a document base element');
+ assert.ok(html.includes("connect-src 'self' https:;"),'User-configured HTTPS RPC and provider origins remain available');
 });
