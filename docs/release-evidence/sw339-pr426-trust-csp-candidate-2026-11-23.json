@@ -1,0 +1,56 @@
+{
+  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "version": "SW339",
+  "pullRequest": 426,
+  "base": {
+    "commit": "e40e0ab41260a83fec4390849d09353ba4d61bae",
+    "tree": "e89c816f86d1e048dea52b0cc6a7532bd1aff649",
+    "liveVersion": "SW338",
+    "liveRun": 45119375859
+  },
+  "candidate": {
+    "head": "743afe2fc1f821f819dff5303ec0764bee52fab6",
+    "tree": "85c1c07f4053611e22d8bcd22af7d7ae2daa778d",
+    "integrationMerge": "4a15aa882eed3b340bb4741934e52b5d69127171",
+    "integrationRun": 45194016324,
+    "walletRun": 45194016325
+  },
+  "local": {
+    "nodeTestsPassed": 1533,
+    "syntaxAndDiff": "PASS",
+    "baselineChromium": "The empty native form navigation reached the loopback server under SW338.",
+    "enforcedFormActionServiceWorkerAndOfflineReplay": [
+      "Chromium 141",
+      "Firefox 142"
+    ],
+    "finE2EAndProjection": [
+      "Chromium 141",
+      "Firefox 142"
+    ],
+    "credentialAndDriveFixture": [
+      "Chromium 141"
+    ],
+    "driveFixtureScope": "Synthetic Google OAuth and Drive transport. Real UI, local encryption and IndexedDB.",
+    "knownLocalFirefoxLimitation": "With Playwright 1.56.1, the existing forced child worker module failure unexpectedly resolves both on SW338 and SW339. The CSP assertion, activation, reload and offline replay pass on SW339. Use pinned CI before merge.",
+    "localWebKit": "Unavailable due to missing Debian shared libraries. Required in CI."
+  },
+  "ciReference": {
+    "sw338ChromiumVerificationSeconds": 656,
+    "sw338FirefoxWebKitVerificationSeconds": 1614,
+    "sw338SuccessfulLiveJobSeconds": 2370,
+    "comparison": "Use the same workflow markers on the next necessary release. No workflow changes in PR 426."
+  },
+  "roadmap": {
+    "coreAccepted": 6,
+    "followupAccepted": 10,
+    "followupTotal": 29,
+    "external": 13,
+    "productDecision": 3,
+    "partiallyExecutable": 3
+  },
+  "flatexPublicDocumentation": {
+    "cashConditions": "https://konto.flatex.at/formularcenter_at_bank/public/5020006.pdf",
+    "consumerInformation": "https://konto.flatex.at/formularcenter_at_bank/public/5000335.pdf",
+    "scope": "Section IV.6 and B-6.8 describe account statements and quarterly closing documents in the customer online archive. No private document or verified opening/closing balance pair was obtained."
+  }
+}
