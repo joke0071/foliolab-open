@@ -36,8 +36,12 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
       document.documentElement.dataset.cspFormBlocked = 'true';
      }
     });
+    const submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.hidden = true;
+    form.append(submit);
     document.body.append(form);
-    form.submit();
+    submit.click();
    });
    await page.waitForFunction(() => document.documentElement.dataset.cspFormBlocked === 'true', undefined, {timeout: 5000});
    assert.equal(page.url(), 'http://127.0.0.1:4173/', 'App CSP blocks native same-origin form navigation');
