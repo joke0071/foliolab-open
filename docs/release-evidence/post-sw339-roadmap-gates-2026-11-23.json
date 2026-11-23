@@ -1,0 +1,75 @@
+{
+  "recordedOn": "2026-11-23",
+  "scope": "Post-SW339 roadmap and critical-path verification",
+  "product": {
+    "version": "SW339",
+    "status": "LIVE_ACCEPTED",
+    "pullRequest": 426,
+    "main": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+    "tree": "85c1c07f4053611e22d8bcd22af7d7ae2daa778d",
+    "releaseRun": 45197813405,
+    "releaseRunAttempt": 1,
+    "walletRun": 45194016325,
+    "liveByteReadback": ["/", "/index.html", "/sw.js"],
+    "originalEvidence": "sw339-pr426-live-accepted-2026-11-23.json",
+    "pagesOriginal": 14827972428,
+    "liveOriginal": 14833519883
+  },
+  "checkpointBase": "971ff04abff543d46e9120801e01841f23b33ed1",
+  "checkpointBaseTree": "d5cba25c3212c343b16c9fd850727f6464d0b0d1",
+  "openPullRequests": [350, 348, 161],
+  "openIssues": [405, 300, 298, 268, 266, 257, 256, 255, 254, 229, 177, 174, 165, 160, 159, 149, 148, 129, 127, 124, 119, 52, 44],
+  "trust": {
+    "productPatch": "NO_QUALIFIED_CANDIDATE",
+    "observedPolicy": {
+      "object-src": "'none'",
+      "base-uri": "'none'",
+      "form-action": "'none'",
+      "connect-src": "'self' https:"
+    },
+    "workerEntrypoints": ["sw.js", "src/wallet-history-days-worker.js"],
+    "customHttpsEndpointsRequired": true,
+    "frameProtectionHeaderPresentOnProductionIndex": false,
+    "remaining": ["Native Safari with VoiceOver", "Observed Safari ITP storage expiry", "Original artwork provenance and rights chain"]
+  },
+  "flh04": {
+    "isolatedCommit": "f2532984e1ff5e9e310077d6ab8674b3af8f7f84",
+    "tree": "12664602c6cf9d9c9414fe1d9721c778a10bfd41",
+    "localRestartEvidence": "flh04-locked-anchor-browser-restart-2026-11-22.json",
+    "workflowRun": 45062532311,
+    "reviewInputs": {
+      "docs/FLH04_ENROLLMENT_ISSUER_CONTRACT.md": "4e0c446e70a828cd0cfcf81b1600a556cd7c509a",
+      "docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_CONTRACT.md": "d4343830ebd1a513c674fb3ec347a2605c7c7b01",
+      "docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_VECTORS.json": "cda312a060f4aa60b8746466cb0ddd73abc7c297",
+      "docs/FLH04_WRITER_FRAME_BYTE_CONTRACT.md": "9fa404df544eaa6a64da5f0f62a8f9b915a287de",
+      "docs/FLH04_WRITER_FRAME_BYTE_VECTORS.json": "098bd729c7abb2d88ddfa195bdac7b85fab10e42"
+    },
+    "review": "REQUIRED",
+    "reviewerInOpenDesignPR161": null,
+    "remaining": ["Independent cryptographic review", "Authorized OAuth test origin and account", "Two real devices", "Independent remote write and readback", "Security release approval"]
+  },
+  "ci": {
+    "units": "seconds",
+    "liveStep": "Verify targeted production UI in Firefox and WebKit",
+    "referenceGroupBoundary": "Elapsed time between BROWSER_GATE_PASS for browser-history-followup.mjs and browser-reference-management.mjs",
+    "managementParityBoundary": "Elapsed time between WebKit REFERENCE REMOVAL PASS and WebKit P1A three lists PASS",
+    "uiQualityBoundary": "Elapsed time between BROWSER_GATE_PASS for browser-flatex-native-commit.mjs and WebKit UI presentation PASS",
+    "observations": [
+      {"release": "PR424", "run": 45076914324, "attempt": 1, "liveJob": 137382165290, "releaseTotal": 3607, "liveTotal": 2367, "liveChromium": 667, "liveFirefoxWebKit": 1611, "referenceGroup": 164, "managementParity": 101, "uiQuality": 148},
+      {"release": "SW338", "run": 45119375859, "attempt": 2, "liveJob": 137520329045, "releaseTotal": 4370, "liveTotal": 2370, "liveChromium": 656, "liveFirefoxWebKit": 1614, "referenceGroup": 165, "managementParity": 103, "uiQuality": 149},
+      {"release": "SW339", "run": 45197813405, "attempt": 1, "liveJob": 137786669101, "releaseTotal": 3831, "liveTotal": 2558, "liveChromium": 703, "liveFirefoxWebKit": 1798, "referenceGroup": 188, "managementParity": 118, "uiQuality": 165}
+    ],
+    "sw338ReleaseTotalIncludesFailedFirstAttempt": true,
+    "reproducibleOverallGain": "OPEN",
+    "next": "Use the same Actions and output timestamp boundaries on the next required release. Attribute measured suite costs before changing the pipeline."
+  },
+  "roadmap": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followupTotal": 29,
+    "accepted": ["D/P2", "Lokaler Datei-Restore", "Buchungsdetails", "Verlaufsdetails", "Such-/Filteraktionen", "Erststart", "Tages-/Festgeld", "Mobile Bedienung", "Anlageassistent/Walletdialog", "ETF/FX"],
+    "blockedExternal": ["FIN-E2E01", "FLH03", "AT03", "FLH05", "Verwaltung/Buchungsmutationen", "ETH-HISTORY-CURSOR01", "FLH03-18", "Weitere Wallet-Abdeckung", "AT05", "Barausgleich", "UI-SENTIMENT01", "Speicher/Migration/Recovery", "Startperformance"],
+    "requiresProductDecision": ["UI-Refresh", "Benchmark/Roadmap", "Produktmaster"],
+    "partiallyExecutable": ["TRUST01", "FLH04", "CI-Effizienz"]
+  }
+}

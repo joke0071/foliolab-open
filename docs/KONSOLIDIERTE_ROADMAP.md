@@ -51,6 +51,14 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 ### Priorisierung der 19 offenen Zeilen · 22.11.2026
 
+**23.11.2026 · Abschlussabgleich nach SW339.** Die Fachmatrix umfasst weiterhin **6/6 Kernbereiche, 10/29 Folgepakete**. Von den 19 offenen Zeilen sind 13 `BLOCKED_EXTERNAL`, drei `REQUIRES_PRODUCT_DECISION` und drei `PARTIALLY_EXECUTABLE`. Die aktuelle Prüfung ergab keinen qualifizierten, unmittelbar freigabefähigen Produkt- oder Workflowpatch. Die Zeilen unten behalten ihre fachlichen Abschlusskriterien. [Maschinenbeleg](release-evidence/post-sw339-roadmap-gates-2026-11-23.json).
+
+| Paket | Nächster konkreter Eingang oder Messpunkt |
+| --- | --- |
+| TRUST01 | Native Safari-/VoiceOver-Prüfung, beobachtete ITP-Speicherbereinigung und Primärbeleg zur Herkunft und Rechtekette der Grafik. Der statische CSP-Bestand unterstützt eigene HTTPS-RPC-/Worker-Origins. Frame-Schutz erfordert eine HTTP-Antwortpolicy. |
+| Drive / FLH04 | Die lokale transaktionale Schlüsselvorbereitung und der Neustart sind auf `f2532984` abgenommen. Unabhängiges Review der gepinnten Enrollment-, Autoritäts- und Writerverträge samt Vektoren ist der nächste Eingang. Danach den gesperrten Erzeugungsweg auf dem isolierten Zweig weiterführen. |
+| CI-Effizienz | Vorhandene Live-Logs auf denselben Zeitmarken ausgewertet. Firefox/WebKit 26:51 / 26:54 / 29:58 für #424, SW338 (erfolgreicher Wiederanlauf) und SW339. Innerhalb dieses Schritts benötigt die Verwaltungslistenprüfung 1:41 / 1:43 / 1:58. Beim nächsten notwendigen Release erneut messen und die Kosten vor einem Eingriff einer konkreten Ursache zuordnen. |
+
 **23.11.2026 · TRUST01 B / SW339 ist `LIVE_ACCEPTED`.** [#426](https://github.com/joke0071/foliolab-open/pull/426) auf Main `d919bfc2` stimmt mit dem geprüften Git-Tree `85c1c07f` überein. Die App-CSP sperrt native Formularübermittlungen. Drei Browser, 1.533 Node-Tests und Wallet-CI sind grün. Der [Main-/Pages-/Live-Lauf](https://github.com/joke0071/foliolab-open/actions/runs/45197813405) bestand im ersten Versuch. 159 Paketdateien und 160 Produktivpfade sind bytegleich. Elf Kernprüfgruppen, 22 Axe-Scans, 18 Restore-Protokolle und die FIN-E2E-, FX- und Kraken-USD-Nachweise sind bestätigt. SHA-256, ZIP-CRC und gepinnter Byte-Rückabruf für Pages `14827972428` und Live `14833519883` bestanden. [Vollständiger Abnahmebeleg](release-evidence/sw339-pr426-live-accepted-2026-11-23.json).
 
 **CI-Effizienz · SW339.** 63:51 von der Klassifizierung bis zur Live-Abnahme und 42:38 im Livejob. Chromium 11:43, Firefox/WebKit 29:58. Der SW338-Gesamtlauf mit Wiederanlauf dauerte 72:50. #424 lag bei 60:07. Die Vergleichsläufe belegen noch keine reproduzierbare Einsparung.
