@@ -28,6 +28,24 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
     finally { base.remove(); }
    });
    assert.equal(documentBase, page.url(), 'App CSP blocks a same-origin document base override');
+   await page.evaluate(() => {
+    const form = document.createElement('form');
+    form.action = './csp-form-check/';
+    document.addEventListener('securitypolicyviolation', event => {
+     if (event.effectiveDirective === 'form-action' && event.disposition === 'enforce') {
+      document.documentElement.dataset.cspFormBlocked = 'true';
+     }
+    });
+    const submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.hidden = true;
+    form.append(submit);
+    document.body.append(form);
+    submit.click();
+   });
+   await page.waitForFunction(() => document.documentElement.dataset.cspFormBlocked === 'true', undefined, {timeout: 5000});
+   assert.equal(page.url(), 'http://127.0.0.1:4173/', 'App CSP blocks native same-origin form navigation');
+   lifecycle.formAction = 'PASS';
    await waitForAppServiceWorker(page);lifecycle.activated=await workerState();assert.equal(lifecycle.activated.active,'activated');assert.equal(lifecycle.activated.activeURL,lifecycle.expectedScript);
    // Activation alone does not prove control of this document. Establish the
    // actual initial controller before testing a controlled reload, then retain
