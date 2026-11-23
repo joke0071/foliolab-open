@@ -49,6 +49,8 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 ### Priorisierung der 19 offenen Zeilen · 22.11.2026
 
+**23.11.2026 · TRUST01 B · SW338 ausgeliefert.** [#425](https://github.com/joke0071/foliolab-open/pull/425) hat grüne Drei-Browser- und Wallet-Pflichtprüfungen. Main `e40e0ab4`, Pages und der direkte Produktiv-Bytevergleich sind grün. Die vollständige Live-Abnahme wird im gezielten Wiederanlauf qualifiziert. [Beleg des ersten Versuchs](release-evidence/sw338-pr425-live-attempt-1-2026-11-23.json).
+
 **23.11.2026 · Roadmap-Abgleich.** 10/29 `LIVE_ACCEPTED`. Unter den 19 offenen Zeilen sind 13 `BLOCKED_EXTERNAL`, drei `REQUIRES_PRODUCT_DECISION` und drei `PARTIALLY_EXECUTABLE` (CI-Effizienz, TRUST01, Drive/FLH04). TRUST01 B hat mit [#425](https://github.com/joke0071/foliolab-open/pull/425) einen begrenzten Kandidaten in Pflicht-CI. Der #424-Regellauf dauerte 60 min 07 s ab Klassifizierung und 39 min 27 s im Livejob. Die SW337-Referenz vor #424 lag bei 63 min 49 s bzw. 41 min 40 s. Diese Einzelmessungen dienen als Referenz für SW338. Ein reproduzierbarer End-to-End-Gewinn ist offen.
 
 **23.11.2026 · CI-Effizienz, Teilnachweis zu #424.** GitHub-Original `14777427249` geprüft. 152.552.350 Bytes, SHA-256, CRC für 1.947 ZIP-Einträge und gepinnter Byte-Readback bestätigt. [Originalnachweis](release-evidence/ci-fx-startup-503-original-readback-2026-11-23.json). Status der CI-Zeile weiterhin `PARTIALLY_EXECUTABLE`. Der Vergleich der regulären Gesamtlaufzeit erfolgt beim nächsten regulären Release. Paketstand 10/29.

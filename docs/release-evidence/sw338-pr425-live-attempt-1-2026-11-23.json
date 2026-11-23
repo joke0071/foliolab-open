@@ -1,0 +1,63 @@
+{
+  "status": "DEPLOYED_LIVE_ACCEPTANCE_RERUN",
+  "pullRequest": 425,
+  "main": "e40e0ab41260a83fec4390849d09353ba4d61bae",
+  "tree": "e89c816f86d1e048dea52b0cc6a7532bd1aff649",
+  "run": 45119375859,
+  "pagesJob": 137517132166,
+  "firstLiveJob": 137517304665,
+  "secondLiveJob": 137520329045,
+  "mainTest": "PASS",
+  "pages": "PASS",
+  "directProduction": {
+    "cache": "foliolab-open-v338",
+    "htmlSha256": "65e5ba15f52112a35091b804344193d86d46a2959aca63f03c43869a39b47329",
+    "serviceWorkerSha256": "82b1a3ea336188df09dbd5e4e864eeb9bca45e0419d595d63bb77997f72728b6",
+    "byteMatch": [
+      "/",
+      "/index.html",
+      "/sw.js"
+    ],
+    "separateBrowserStartup": "Transaktionale IndexedDB aktiv"
+  },
+  "pagesOriginal": {
+    "id": 14792704471,
+    "bytes": 589791,
+    "sha256": "5f0f26dc834f6f7b85c9557e019778999821b82ee9f634fc3a29e745c67942ae",
+    "entries": 1,
+    "crc": "PASS",
+    "trackedFilesMatched": 159,
+    "pinnedByteReadback": "PASS"
+  },
+  "firstLiveOriginal": {
+    "id": 14794231783,
+    "bytes": 19672759,
+    "sha256": "c48c355e265de8e64d38779e84232dc0daad3d16b3da34b53454861cccfab8b8",
+    "entries": 253,
+    "crc": "PASS",
+    "pinnedByteReadback": "PASS",
+    "core": {
+      "result": "PASS",
+      "productPaths": 160,
+      "checks": 11,
+      "axeScans": 22
+    },
+    "failure": {
+      "test": "tests/browser-kraken-usd-principal.mjs",
+      "step": "initial",
+      "engine": "chromium",
+      "timeoutMs": 15000,
+      "seedReached": false,
+      "cause": "Startup timeout. The original does not identify an HTTP status or a particular failed resource."
+    }
+  },
+  "mainComparison": {
+    "id": 14793534037,
+    "bytes": 68075613,
+    "sha256": "315ed5cdb61b73dc6b4c366379dc51b844faaf0e10db5bebad18911aeeadcb15",
+    "entries": 848,
+    "crc": "PASS",
+    "nodePass": 1533,
+    "krakenUsdPrincipal": "PASS"
+  }
+}
