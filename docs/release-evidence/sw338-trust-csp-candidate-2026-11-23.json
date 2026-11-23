@@ -1,0 +1,46 @@
+{
+  "status": "PR_QUALIFICATION_RUNNING",
+  "recordedOn": "2026-11-23",
+  "issue": 298,
+  "pullRequest": 425,
+  "version": "SW338",
+  "base": "e2f6ad000ba5c7810905a819582872b563e90c42",
+  "head": "e0dc2657254ba964ceee735b3c470e6281e74047",
+  "testMerge": "f467b78be829f6a764ee4a5b93eac3ce04434ed1",
+  "tree": "e89c816f86d1e048dea52b0cc6a7532bd1aff649",
+  "scope": "CSP base-uri none, service-worker cache revision and regression checks",
+  "local": {
+    "nodePass": 1533,
+    "nodeFail": 0,
+    "syntax": "PASS",
+    "browser": "Executor denied opening Chromium's Unix socket. Pinned Playwright browser download returned HTTP 403."
+  },
+  "workflow": {
+    "integration": 45116616458,
+    "wallet": 45116616443,
+    "walletStatus": "PASS",
+    "stageOriginal": {
+      "id": 14791618738,
+      "bytes": 499,
+      "sha256": "5acd4797fab5ffc60d1b0eb9c6cde0b5be4c450e28a4402ed56e10cabaf15f2b",
+      "crc": "PASS",
+      "stage": "INTEGRATION"
+    }
+  },
+  "previousRelease": {
+    "run": 45076914324,
+    "classificationStartedAt": "2026-11-22T22:17:53Z",
+    "pagesCompletedAt": "2026-11-22T22:38:31Z",
+    "liveStartedAt": "2026-11-22T22:38:33Z",
+    "liveCompletedAt": "2026-11-22T23:18:00Z",
+    "totalSeconds": 3607,
+    "liveSeconds": 2367,
+    "chromiumSeconds": 667,
+    "firefoxWebKitSeconds": 1611
+  },
+  "remaining": [
+    "Existing three-engine integration gates, Pages, production and originals",
+    "Native Safari, VoiceOver and ITP checks",
+    "PWA graphic provenance and permissions"
+  ]
+}
