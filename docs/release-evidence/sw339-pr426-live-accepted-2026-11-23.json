@@ -1,0 +1,187 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "recordedOn": "2026-11-23",
+  "version": "SW339",
+  "pullRequest": 426,
+  "issue": 298,
+  "base": "e40e0ab41260a83fec4390849d09353ba4d61bae",
+  "head": "743afe2fc1f821f819dff5303ec0764bee52fab6",
+  "testMerge": "4a15aa882eed3b340bb4741934e52b5d69127171",
+  "tree": "85c1c07f4053611e22d8bcd22af7d7ae2daa778d",
+  "main": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+  "qualifiedTreeMatchesMain": true,
+  "scope": "TRUST01 B, native form submission restriction with a PWA cache revision",
+  "runs": {
+    "prIntegration": 45194016324,
+    "wallet": 45194016325,
+    "mainPagesLive": 45197813405,
+    "pagesJob": 137786367304,
+    "liveJob": 137786669101,
+    "successfulLiveAttempt": 1
+  },
+  "qualification": {
+    "syntax": "PASS",
+    "nodeTestsPassed": 1533,
+    "formActionServiceWorkerAndOffline": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "wallet": "PASS",
+    "main": "PASS",
+    "pages": "PASS",
+    "production": "PASS"
+  },
+  "prOriginals": [
+    {
+      "id": 14829286609,
+      "bytes": 68070901,
+      "sha256": "141d016c2d187fbeb874bb765d0509358af9c736838525c51d162e924c29346f",
+      "entries": 848,
+      "crc": "PASS",
+      "nodeTestsPassed": 1533
+    },
+    {
+      "id": 14828681674,
+      "bytes": 21497259,
+      "sha256": "65ac00633b26a4d87dd943b082b87f05694b570a043806ebde4f2b2c1a10e119",
+      "crc": "PASS",
+      "engines": [
+        "firefox",
+        "webkit"
+      ]
+    }
+  ],
+  "mainOriginal": {
+    "id": 14830997621,
+    "bytes": 68070815,
+    "sha256": "f672854832102b27ea809ca57bc5d5216568296f0d73fbcd8ce1105a6c24d9d3",
+    "entries": 848,
+    "crc": "PASS",
+    "commit": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+    "unitTestsPassed": 1533
+  },
+  "pagesOriginal": {
+    "id": 14827972428,
+    "bytes": 589345,
+    "sha256": "174be19429c6d024ba157fe1b7680b58b2205df69ff21fa0cd8a4b08953e4268",
+    "entries": 1,
+    "crc": "PASS",
+    "commit": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+    "trackedFilesMatched": 159,
+    "pinnedByteReadback": "PASS",
+    "pinnedVersion": 0
+  },
+  "productionDirect": {
+    "byteMatch": [
+      "/",
+      "/index.html",
+      "/sw.js"
+    ],
+    "htmlSha256": "50fb8992d48d0f00255f660b92ae4d14a840bc2ee23ba555ff404555774d80d3",
+    "serviceWorkerSha256": "439e0851ea4e04e34807443015048a97ae281de3f36c2c6ea4e22057b640ff7a"
+  },
+  "liveOriginal": {
+    "id": 14833519883,
+    "bytes": 152875412,
+    "sha256": "fed8096a802c4fa17fade4c8ae7326feb40fa01fdbf283d495971313f65a3820",
+    "entries": 1947,
+    "crc": "PASS",
+    "commit": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+    "cache": "foliolab-open-v339",
+    "paths": 160,
+    "coreChecks": 11,
+    "axeScans": 22,
+    "financialReports": [
+      "fin-e2e/chromium.json",
+      "fin-e2e/firefox.json",
+      "fin-e2e/webkit.json",
+      "fx-age/chromium.json",
+      "fx-age/firefox.json",
+      "fx-age/production-domain/chromium.json",
+      "fx-age/production-domain/firefox.json",
+      "fx-age/production-domain/webkit.json",
+      "fx-age/webkit.json",
+      "kraken-usd-principal/report-chromium.json",
+      "kraken-usd-principal/report-firefox.json",
+      "kraken-usd-principal/report-webkit.json",
+      "unknown-fx/report-chromium.json",
+      "unknown-fx/report-firefox.json",
+      "unknown-fx/report-webkit.json"
+    ],
+    "pinnedByteReadback": "PASS",
+    "pinnedVersion": 0,
+    "filename": "FolioLab-SW339-Live-Original-14833519883.zip",
+    "restoreChecks": 18,
+    "restoreChecksByEngine": {
+      "chromium": 8,
+      "firefox": 5,
+      "webkit": 5
+    },
+    "finE2ESteps": {
+      "chromium": 16,
+      "firefox": 16,
+      "webkit": 16
+    },
+    "directFX": {
+      "chromium": 2,
+      "firefox": 2,
+      "webkit": 2
+    },
+    "replayedFX": {
+      "chromium": 8,
+      "firefox": 8,
+      "webkit": 8
+    },
+    "krakenUSD": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    }
+  },
+  "timing": {
+    "classificationStartedAt": "2026-11-23T14:46:38Z",
+    "pagesCompletedAt": "2026-11-23T15:07:49Z",
+    "liveStartedAt": "2026-11-23T15:07:51Z",
+    "liveCompletedAt": "2026-11-23T15:50:29Z",
+    "totalSeconds": 3831,
+    "successfulLiveSeconds": 2558,
+    "chromiumSeconds": 703,
+    "firefoxWebKitSeconds": 1798,
+    "comparison": {
+      "SW338": {
+        "totalSeconds": 4370,
+        "liveSeconds": 2370,
+        "includesFirstFailedAttempt": true
+      },
+      "PR424": {
+        "totalSeconds": 3607,
+        "liveSeconds": 2367
+      }
+    },
+    "reproducibleOverallGain": "OPEN"
+  },
+  "roadmap": {
+    "coreAccepted": 6,
+    "followupAccepted": 10,
+    "followupTotal": 29,
+    "external": 13,
+    "productDecision": 3,
+    "partiallyExecutable": 3
+  },
+  "remaining": {
+    "TRUST01": [
+      "Native Safari/VoiceOver/ITP evidence",
+      "Original artwork provenance and rights chain"
+    ],
+    "FLH04": [
+      "Independent review of the enrollment/authority byte contracts",
+      "Authorized OAuth test origin",
+      "Real two-device qualification"
+    ],
+    "CI-Efficiency": [
+      "Repeat comparable end-to-end measurement on the next necessary release"
+    ],
+    "other": "All externally blocked and product-decision rows keep the next required input stated in the roadmap."
+  }
+}
