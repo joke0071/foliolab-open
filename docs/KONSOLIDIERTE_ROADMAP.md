@@ -51,6 +51,8 @@ Die aktuelle Paketmatrix umfasst **29 Zeilen**. **10/29** sind im dokumentierten
 
 ### Priorisierung der 19 offenen Zeilen · 22.11.2026
 
+**23.11.2026 · TRUST01 B / #426.** SW339 ist auf Main `d919bfc2a177b642275afa9f15fcb9a63b4de709` baumgleich zum qualifizierten PR-Prüfstand integriert. [Main-/Pages-/Live-Lauf 45197813405](https://github.com/joke0071/foliolab-open/actions/runs/45197813405) läuft. Letzter vollständig abgenommener Produktivstand: SW338. Der Folgeroadmap-Zähler bleibt 10/29.
+
 **23.11.2026 · Stand der Restarbeit.** TRUST01 B hat mit [#426 / SW339](https://github.com/joke0071/foliolab-open/pull/426) einen lokal geprüften Kandidaten für die Sperre nativer Formularübermittlungen. [Kandidatenbeleg](release-evidence/sw339-pr426-trust-csp-candidate-2026-11-23.json). Native Safari-/VoiceOver-/ITP-Prüfungen und Grafikherkunft bleiben offen. CI-Effizienz vergleicht die regulären SW339-Zeitmarken mit SW338. FLH04 benötigt vor Umschließungs-/Ausstellercode das unabhängige Review des vorhandenen Bytevertrags. 10/29 Folgezeilen abgeschlossen.
 
 **23.11.2026 · AT03-C bleibt `BLOCKED_EXTERNAL`.** Laut [österreichischen Cash-Konto-Bedingungen](https://konto.flatex.at/formularcenter_at_bank/public/5020006.pdf#page=28) und [Kundeninformation](https://konto.flatex.at/formularcenter_at_bank/public/5000335.pdf#page=8) ist das Onlinearchiv der dokumentierte Bezugsweg für die dort beschriebenen Kontoauszüge und Quartalsabschlüsse. Der konkrete Nachweis bleibt ein unabhängig belegtes gebuchtes Saldenpaar desselben Kontos und Zeitraums. Eine persönliche Auszugsanforderung wurde nicht gestellt.

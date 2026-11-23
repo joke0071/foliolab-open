@@ -1,5 +1,5 @@
 {
-  "status": "PR_QUALIFICATION_IN_PROGRESS",
+  "status": "MERGED_RELEASE_QUALIFICATION_IN_PROGRESS",
   "version": "SW339",
   "pullRequest": 426,
   "base": {
@@ -52,5 +52,40 @@
     "cashConditions": "https://konto.flatex.at/formularcenter_at_bank/public/5020006.pdf",
     "consumerInformation": "https://konto.flatex.at/formularcenter_at_bank/public/5000335.pdf",
     "scope": "Section IV.6 and B-6.8 describe account statements and quarterly closing documents in the customer online archive. No private document or verified opening/closing balance pair was obtained."
-  }
+  },
+  "main": {
+    "commit": "d919bfc2a177b642275afa9f15fcb9a63b4de709",
+    "gitTreeMatchesIntegration": true,
+    "run": 45197813405
+  },
+  "qualification": {
+    "integration": "PASS",
+    "wallet": "PASS",
+    "formActionAndServiceWorkerReload": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "localPinnedFirefox157CompleteWorkerGate": "PASS"
+  },
+  "integrationOriginals": [
+    {
+      "id": 14829286609,
+      "bytes": 68070901,
+      "sha256": "141d016c2d187fbeb874bb765d0509358af9c736838525c51d162e924c29346f",
+      "entries": 848,
+      "crc": "PASS",
+      "nodeTestsPassed": 1533
+    },
+    {
+      "id": 14828681674,
+      "bytes": 21497259,
+      "sha256": "65ac00633b26a4d87dd943b082b87f05694b570a043806ebde4f2b2c1a10e119",
+      "crc": "PASS",
+      "engines": [
+        "firefox",
+        "webkit"
+      ]
+    }
+  ]
 }
