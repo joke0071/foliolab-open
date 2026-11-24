@@ -145,6 +145,8 @@ jobs:
           npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
           npx playwright install chromium --only-shell
       - name: Browser smoke tests (320–1440 px)
+        env:
+          P1A_CONTROLLED_PARALLEL: '1'
         run: |
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
@@ -338,6 +340,8 @@ jobs:
           npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
           DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
       - name: Test portfolio workflows on Firefox and WebKit
+        env:
+          P1A_CONTROLLED_PARALLEL: '1'
         run: |
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
