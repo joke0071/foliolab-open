@@ -83,9 +83,10 @@ Zustände. Das Modell simuliert insbesondere den ablehnenden Rückgabewert
 eines Signaturverifiers. Es enthält keinen Signatur-, Wire-, Persistenz- oder
 Enrollment-Code. 16.384 Zustände bzw. 64 MiB sind ausschließlich Modellgrenzen
 für prüfbare Lastfälle. Bruchteile der Kette geben nur `pending` zurück.
-14 Tests decken die Grenzfälle, bekannte Forks und Floors, Kontextbindung,
+15 Tests decken die Grenzfälle, bekannte Forks und Floors, Kontextbindung,
 Manipulation, Ablehnung, Replay, Rollentrennung, Widerruf über die Grenze,
-Neustart und Ressourcenfehler ab.
+Neustart, Abbruch während der Prüfung, konkurrierenden Segmentaufruf und
+Ressourcenfehler ab.
 
 Der unabhängige Review muss vor dem Wire-Code insbesondere die exakten
 Invarianten an Segmentgrenzen, den Erwerb eines aktuellen autorisierten

@@ -20,6 +20,7 @@ export function startAuthorityReview(context, verifyFixture) {
   }
 
   let status = 'pending';
+  let running = false;
   let previous = null;
   let verifiedBytes = 0;
   const authorities = new Set();
@@ -40,11 +41,13 @@ export function startAuthorityReview(context, verifyFixture) {
 
     verifySegment(objects) {
       if (status !== 'pending') throw new Error('Review session is closed');
+      if (running) throw new Error('A segment is already being checked');
       // A segment has exactly the next up-to-128 states. Short, empty and
       // excessive pages are terminal and never become checkpoints.
       const expected = Math.min(SEGMENT_LIMIT, target.version - (previous?.version ?? 0));
       if (!Array.isArray(objects) || objects.length !== expected) return close('rejected');
 
+      running = true;
       try {
         // Preflight the complete segment before calling the fixture verifier.
         for (const object of objects) {
@@ -56,6 +59,7 @@ export function startAuthorityReview(context, verifyFixture) {
 
         for (const object of objects) {
           const state = verifyFixture(object, previous);
+          if (status !== 'pending') return status;
           if (!state || state.portfolio !== portfolio || state.root !== root ||
               state.version !== (previous?.version ?? 0) + 1 ||
               state.previousId !== (previous?.id ?? null) ||
@@ -77,7 +81,9 @@ export function startAuthorityReview(context, verifyFixture) {
         }
         return previous.version === target.version ? close('verified-chain-only') : status;
       } catch {
-        return close('rejected');
+        return status === 'pending' ? close('rejected') : status;
+      } finally {
+        running = false;
       }
     }
   });

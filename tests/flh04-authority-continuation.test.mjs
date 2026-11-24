@@ -169,3 +169,14 @@ test('keeps a removed writer out of all post-boundary fixture memberships', () =
   assert.equal(complete(session, objects), 'verified-chain-only');
   assert.deepEqual(previousMembership, [true, false]);
 });
+
+test('rejects an overlapping segment and discards a verifier result after cancellation', () => {
+  const { context, objects, verify } = fixtures(1);
+  const session = startAuthorityReview(context, object => {
+    assert.throws(() => session.verifySegment(objects), /already being checked/);
+    assert.equal(session.cancel(), 'cancelled');
+    return verify(object);
+  });
+  assert.equal(session.verifySegment(objects), 'cancelled');
+  assert.throws(() => session.verifySegment(objects), /closed/);
+});
