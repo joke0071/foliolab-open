@@ -1,0 +1,68 @@
+name: P1A controlled local browser comparison
+on:
+  push:
+    branches: [ci/local-parallel-management-parity-20261124]
+permissions:
+  contents: read
+jobs:
+  compare:
+    name: P1A ABBA (${{ matrix.engine }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    env:
+      UI_QUALITY_ENGINES: ${{ matrix.engine }}
+      UI_QUALITY_BASE: http://127.0.0.1:4173/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned browsers and Axe
+        run: |
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
+          npx playwright install --with-deps "$UI_QUALITY_ENGINES"
+      - name: Execute the complete matrix in ABBA order
+        run: |
+          set -euo pipefail
+          output=artifacts/gates/p1a-comparison
+          mkdir -p "$output"
+          python3 -m http.server --bind 127.0.0.1 4173 > "$output/server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl -fsS "$UI_QUALITY_BASE" -o /dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS "$UI_QUALITY_BASE" -o /dev/null
+          for phase in A1 B1 B2 A2; do
+            parallel=0
+            if [[ "$phase" == B* ]]; then parallel=1; fi
+            P1A_CONTROLLED_PARALLEL="$parallel" node tests/browser-management-parity.mjs 2>&1 | tee "$output/$phase.log"
+            mv artifacts/gates/management-parity "$output/$phase"
+            test "$(find "$output/$phase" -type f -name '*.png' | wc -l)" -eq 84
+            node --input-type=module - "$output/$phase/report.json" "$parallel" <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFileSync} from 'node:fs';
+          const [path, parallel] = process.argv.slice(2);
+          const report = JSON.parse(readFileSync(path, 'utf8'));
+          assert.equal(report.parallel, parallel === '1');
+          assert.equal(report.engines.length, 1);
+          const [engine] = report.engines;
+          assert.equal(engine.engine, process.env.UI_QUALITY_ENGINES);
+          assert.equal(engine.result, 'PASS');
+          assert.equal(engine.timing.phases.seedAndOpen.samples, 12);
+          assert.equal(engine.timing.phases.responsiveChecks.samples, 42);
+          assert.equal(engine.timing.phases.screenshots.samples, 42);
+          JS
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p1a-abba-${{ matrix.engine }}-${{ github.sha }}
+          path: artifacts/gates/p1a-comparison/
