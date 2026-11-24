@@ -91,7 +91,29 @@ enthielt 12 Seed-/Öffnungsvorgänge, 42 responsive Fälle mit Axe und
 [#430](https://github.com/joke0071/foliolab-open/pull/430) überträgt den
 Kandidaten auf die zwei regulären Localhost-Prüfschritte. Der Vertragstest
 schützt weiterhin alle historischen CI-Bodies und prüft die exakt zwei
-lokalen Bindungen. Lokal 26/26 gezielte Tests erfolgreich. Für die
-Übernahme sind die Pflicht-CI am gemeinsamen Tree und die gemessene
-reguläre Jobdauer erforderlich. Live-Gates folgen weiterhin der seriellen
+lokalen Bindungen. Lokal 26/26 gezielte Tests erfolgreich. Live-Gates folgen der seriellen
 Reihenfolge.
+
+### Vergleich der regulären Pflichtstrecke
+
+[#430 Pflicht-CI](https://github.com/joke0071/foliolab-open/actions/runs/45481395180)
+und [Wallet-CI](https://github.com/joke0071/foliolab-open/actions/runs/45481395351)
+grün, 1.534 Node-Tests. Gemeinsamer Prüfmerge
+`eb7c2d13478da57beea54cf0864492a7799bb043` und Head
+`5c2d7aca906aad6e186e0e34847ae6bf807afe7a` sind baumgleich
+(`dad691b978e2bebede12940b9ab35d33d40e7a8e`).
+
+| Abschnitt | #428 seriell | #430 lokales P1A parallel |
+| --- | ---: | ---: |
+| Gesamter Chromium-Browserschritt | 17:33 | 16:41 |
+| Ganzer Firefox-/WebKit-Schritt, Shard 2 | 17:14 | 19:56 |
+| P1A Chromium | 49,455 s | 24,632 s |
+| P1A Firefox | 47,394 s | 33,166 s |
+| P1A WebKit | 40,980 s | 46,327 s |
+
+Die Pflichtstrecke liefert bislang keinen reproduzierbaren Gesamtgewinn.
+[#430](https://github.com/joke0071/foliolab-open/pull/430) bleibt
+qualifizierter Prüfkandidat ohne Integration. Ein folgender regulärer
+Vergleich soll Zeit außerhalb von P1A und die Dauer bis zum letzten
+Pflichtjob erfassen. Der reproduzierbare Release-Gewinn bleibt ein
+eigenes offenes Roadmap-Kriterium.
