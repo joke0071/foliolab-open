@@ -1,13 +1,16 @@
 # FolioLab Open · Fortsetzung am 24.11.2026
 
-Main `d919bfc2a177b642275afa9f15fcb9a63b4de709`, Tree
-`85c1c07f4053611e22d8bcd22af7d7ae2daa778d`. Produktiv
+Main `8de635271c341d7462d4d33e5f268089c26da6d0`, Tree
+`d80ec391347b9586e28b73389d193edec866bab3`. [#428](https://github.com/joke0071/foliolab-open/pull/428)
+ist nach grüner Pflicht-CI auf exakt diesem Tree integriert. Der PR enthält ausschließlich Prüftelemetrie.
+Der [neue Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/45481111315) läuft.
+Produktiv
 **SW339 LIVE_ACCEPTED**, integriert in [#426](https://github.com/joke0071/foliolab-open/pull/426).
 Direkt abgerufene Bytes von `/`, `/index.html` und `/sw.js` stimmen mit Main
 überein. Firefox bestätigte im frischen Profil den aktiven IndexedDB-Store,
 Service Worker und Cache v339 sowie die Buchungsnavigation. [Main, Pages und Live](https://github.com/joke0071/foliolab-open/actions/runs/45197813405)
 und [Wallet-CI](https://github.com/joke0071/foliolab-open/actions/runs/45194016325)
-sind grün. Geprüfter Fortschritt **6/6 Kernbereiche und 10/29 Folgepakete**.
+für SW339 sind grün. Geprüfter Fortschritt **6/6 Kernbereiche und 10/29 Folgepakete**.
 
 ## Offen nach Abnahmekriterium
 
@@ -71,3 +74,24 @@ Produktivabnahme. Die bestehenden anderen Roadmap-Kriterien gelten getrennt.
   Vor Übernahme: direkter Vergleich auf den übrigen Pflichtbrowsern,
   Ressourcenprüfung unter Runnerbedingungen und Vergleich der regulären
   CI-Gesamtlaufzeit.
+
+### Runner-Vergleich für #429
+
+[ABBA auf drei GitHub-Runnern](https://github.com/joke0071/foliolab-open/actions/runs/45480145717)
+grün auf `012207e5ca7cd5f83b83ea430cc69f8e65ac6204`. Jeder Durchlauf
+enthielt 12 Seed-/Öffnungsvorgänge, 42 responsive Fälle mit Axe und
+84 Screenshots. Dauer in Sekunden.
+
+| Browser | A1 seriell | B1 parallel | B2 parallel | A2 seriell | Median-Ersparnis |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Chromium | 48,306 | 26,160 | 26,015 | 46,738 | 45,1 % |
+| Firefox | 58,181 | 31,530 | 32,088 | 58,711 | 45,6 % |
+| WebKit | 74,110 | 40,823 | 40,858 | 67,095 | 42,2 % |
+
+[#430](https://github.com/joke0071/foliolab-open/pull/430) überträgt den
+Kandidaten auf die zwei regulären Localhost-Prüfschritte. Der Vertragstest
+schützt weiterhin alle historischen CI-Bodies und prüft die exakt zwei
+lokalen Bindungen. Lokal 26/26 gezielte Tests erfolgreich. Für die
+Übernahme sind die Pflicht-CI am gemeinsamen Tree und die gemessene
+reguläre Jobdauer erforderlich. Live-Gates folgen weiterhin der seriellen
+Reihenfolge.
