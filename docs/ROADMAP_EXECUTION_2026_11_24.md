@@ -3,7 +3,10 @@
 Main `8de635271c341d7462d4d33e5f268089c26da6d0`, Tree
 `d80ec391347b9586e28b73389d193edec866bab3`. [#428](https://github.com/joke0071/foliolab-open/pull/428)
 ist nach grüner Pflicht-CI auf exakt diesem Tree integriert. Der PR enthält ausschließlich Prüftelemetrie.
-Der [neue Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/45481111315) läuft.
+Der [neue Mainlauf](https://github.com/joke0071/foliolab-open/actions/runs/45481111315)
+bestand Node, alle Browserjobs und Pages. Der automatische zusätzliche
+Livejob ist gestartet. Die veröffentlichten App-Dateien im Tree stimmen
+mit der bereits abgenommenen SW339-Fassung überein.
 Produktiv
 **SW339 LIVE_ACCEPTED**, integriert in [#426](https://github.com/joke0071/foliolab-open/pull/426).
 Direkt abgerufene Bytes von `/`, `/index.html` und `/sw.js` stimmen mit Main
@@ -103,13 +106,13 @@ grün, 1.534 Node-Tests. Gemeinsamer Prüfmerge
 `5c2d7aca906aad6e186e0e34847ae6bf807afe7a` sind baumgleich
 (`dad691b978e2bebede12940b9ab35d33d40e7a8e`).
 
-| Abschnitt | #428 seriell | #430 lokales P1A parallel |
-| --- | ---: | ---: |
-| Gesamter Chromium-Browserschritt | 17:33 | 16:41 |
-| Ganzer Firefox-/WebKit-Schritt, Shard 2 | 17:14 | 19:56 |
-| P1A Chromium | 49,455 s | 24,632 s |
-| P1A Firefox | 47,394 s | 33,166 s |
-| P1A WebKit | 40,980 s | 46,327 s |
+| Abschnitt | #428 seriell | Main seriell | #430 lokales P1A parallel |
+| --- | ---: | ---: | ---: |
+| Gesamter Chromium-Browserschritt | 17:33 | 17:02 | 16:41 |
+| Ganzer Firefox-/WebKit-Schritt, Shard 2 | 17:14 | 25:23 | 19:56 |
+| P1A Chromium | 49,455 s | 47,009 s | 24,632 s |
+| P1A Firefox | 47,394 s | 81,083 s | 33,166 s |
+| P1A WebKit | 40,980 s | 67,347 s | 46,327 s |
 
 Die Pflichtstrecke liefert bislang keinen reproduzierbaren Gesamtgewinn.
 [#430](https://github.com/joke0071/foliolab-open/pull/430) bleibt
