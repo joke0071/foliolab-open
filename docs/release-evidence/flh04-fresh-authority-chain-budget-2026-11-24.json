@@ -1,0 +1,38 @@
+{
+  "recordedOn": "2026-11-24",
+  "scope": "Internal FLH04 contract check for a fresh device with a pinned root and no accepted authority state",
+  "candidateCommit": "f2532984e1ff5e9e310077d6ab8674b3af8f7f84",
+  "candidateTree": "12664602c6cf9d9c9414fe1d9721c778a10bfd41",
+  "source": [
+    {
+      "path": "docs/FLH04_SYNC_WRAP_AUTHORITY_BYTE_CONTRACT.md",
+      "blob": "d4343830ebd1a513c674fb3ec347a2605c7c7b01",
+      "sections": ["3: operation budget", "5: bootstrap, successor versions and full predecessor validation", "8: new-device enrollment"]
+    },
+    {
+      "path": "docs/FLH04_WRITER_FRAME_BYTE_CONTRACT.md",
+      "blob": "9fa404df544eaa6a64da5f0f62a8f9b915a287de",
+      "sections": ["3: validate the complete authority chain to the locally pinned root"]
+    }
+  ],
+  "finding": {
+    "type": "DESIGN_AVAILABILITY_AND_RECOVERY",
+    "status": "INDEPENDENT_REVIEW_REQUIRED",
+    "maximumStatesPerOperation": 128,
+    "assumptions": ["Genesis has version 1 and counts as an authority state", "Each valid transition increments the authority version by one", "The fresh device has the pinned root identity and no previously verified predecessor state"],
+    "observations": [
+      {"targetVersion": 127, "requiredStates": 127, "requiredPredecessors": 126, "withinStateBudget": true},
+      {"targetVersion": 128, "requiredStates": 128, "requiredPredecessors": 127, "withinStateBudget": true},
+      {"targetVersion": 129, "requiredStates": 129, "requiredPredecessors": 128, "withinStateBudget": false},
+      {"targetVersion": 130, "requiredStates": 130, "requiredPredecessors": 129, "withinStateBudget": false}
+    ],
+    "result": "Target version 129 requires 129 signed states including the target. Even if the budget were interpreted as counting only predecessors, version 130 requires 129 predecessors. The pinned contracts do not specify a verified continuation across operations or a planned retirement boundary that preserves new-device enrollment.",
+    "decisionNeeded": "The independent reviewer must confirm an explicit lifecycle boundary with a qualified recovery or retirement path, or a bounded verification continuation with an independently reviewed trust and persistence model.",
+    "acceptanceCases": ["Fresh-device cases at versions 127, 128, 129 and 130", "Interrupted or resumed verification if continuation is chosen", "Fork and rollback across the budget boundary", "Writer role history and membership revocation across the budget boundary"],
+    "guard": "Keep the bound and fail closed until the independent review and any revised contract are qualified."
+  },
+  "method": "Pinned specification and arithmetic checks, no live or cryptographic execution",
+  "productVersion": "SW339",
+  "followupAccepted": 10,
+  "followupTotal": 29
+}
