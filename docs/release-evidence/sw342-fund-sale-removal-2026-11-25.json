@@ -217,5 +217,30 @@
   "integrationRun": 45674710469,
   "walletRun": 45674710545,
   "main": "513c2a41e9a82d9c175c35a7cbee580be4951638",
-  "mainRun": 45678926971
+  "mainRun": 45678926971,
+  "integrationArtifacts": [
+    {
+      "artifact": 15052892567,
+      "artifactBytes": 68065555,
+      "artifactSHA256": "49233e7a647093cb1cf435fd0d84778e75d150db66b7ca022f596e4c47a26932",
+      "zipCRC": "PASS",
+      "reportPath": "fund-sale-removal.json",
+      "reportSHA256": "459fd7da3012ccfcd33ef7dfc27c30294867b3cddb8561318c324eb0b324ed0f",
+      "engines": {
+        "chromium": "141.0.7390.37"
+      }
+    },
+    {
+      "artifact": 15051557320,
+      "artifactBytes": 61158426,
+      "artifactSHA256": "9641d9f49345ff879deee2407a0e557e4c1d8e29253dd751c5d0f0f437872d47",
+      "zipCRC": "PASS",
+      "reportPath": "fund-sale-removal.json",
+      "reportSHA256": "b9da8e1dfbd876a8b64af38b4385ba47e42e001d584940a192a107b0937243ae",
+      "engines": {
+        "firefox": "157.0",
+        "webkit": "27.2"
+      }
+    }
+  ]
 }
