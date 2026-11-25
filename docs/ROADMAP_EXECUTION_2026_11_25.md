@@ -432,3 +432,92 @@ Reihe und ein belegter Produktpfad für Bewertungen an Flow-Grenzen.
 [Twelve Data](https://support.twelvedata.com/en/articles/5332349-commercial-and-personal-usage) ·
 [Yahoo](https://uk.help.yahoo.com/kb/SLN2352.html) ·
 [Open Data](https://registry.opendata.aws/deutsche-boerse-pds/).
+
+### Broker und Buchungsverwaltung · gebuchte Salden und EUR-Abgänge
+
+Der in der Portfolio-Performance-Testsammlung veröffentlichte,
+anonymisierte [Trade-Republic-Kontoauszug 24](https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/traderepublic/Kontoauszug24.txt)
+weist einen gebuchten EUR-Anfangssaldo von 10.361,85 und einen
+gebuchten Endsaldo von 7.324,06 für dasselbe Konto aus. Die drei
+gebuchten Abgänge vom 29.–31.12.2024 betragen 18,94, 3.000,00 und
+18,85 EUR. Unabhängige Cent-Rechnung und im Dokument ausgewiesene
+Zwischensalden stimmen auf allen drei Stufen überein. Der Beleg wurde
+für den Test manuell in das generische FolioLab-CSV-Schema übertragen.
+Veröffentlicht werden nur Prüfwerte und Quellverweis.
+
+- **AT03.** Auf SW339 in Chromium stimmen beide Anker im
+  Kontostandsdialog. Die CSV-Vorschau blieb schreibfrei. Der reguläre
+  Import speicherte drei Journale mit gleichem Gegenbetrag für das
+  externe Clearing und drei externe Flüsse. Der entstandene
+  Stichtagsbezug sperrt die isolierte Rücknahme. Abgebrochenes
+  Import-Undo ließ den ganzen Datensatz gleich, bestätigtes Undo
+  stellte den exakten Stand vor Import wieder her. Der generische
+  EUR-Abgleich ist belegt. Persönliche Konto- und Periodenabnahme
+  benötigt weiterhin ihr direkt ausgewiesenes Saldenpaar.
+- **FIN-E2E01.** Die bestehende Importfunktion wurde zusätzlich in
+  einem isolierten Bestand ohne spätere Beobachtung verwendet. Soll
+  bei Wegfall des letzten EUR-Abgangs: 7.342,91 EUR, zwei Flüsse und
+  die Journal-Gegenposition der zurückgenommenen Buchung im
+  Änderungsbeleg. Alle Werte stimmten. Undo und frischer portabler
+  Restore stellten die bestätigten Portfolio-Bytes wieder her.
+  Abgedeckt ist der belegte EUR-Geldabgang. Eine neue Rücknahme mit
+  unabhängig prüfbarer Wertpapierkostenbasis bleibt offen.
+- **Verwaltung.** Dieselbe EUR-Buchung war im isolierten Bestand über
+  die reguläre Verwaltungsoberfläche auswählbar. Abbruch erhielt
+  Revision und Bytes. Die bestätigte Einzelrücknahme schrieb genau
+  eine Revision. Der Import derselben Identität blieb gesperrt. Die
+  bestehende Sperre mit späterem Kontrollpunkt war sowohl nach
+  regulärem Import als auch mit separat gesetztem Abschlussstichtag
+  wirksam. Umfang: Abbruch, EUR-Rücknahme, Schutz mit Kontrollpunkt,
+  genaues Undo und Wiederimportsperre. Die wertpapierbezogene
+  Verwaltung mit unabhängig belegter Kostenbasis bleibt offen.
+- **FLH05.** Die neue Belegart zeigt EUR-Kontoabgänge. Eine nach
+  gemeinsamer Order-ID belegte Fremdwährungs-Teilfüllung samt separater
+  Nettoabrechnung wurde damit nicht qualifiziert.
+- **FLH03.** In derselben öffentlichen Testsammlung liegen sechs
+  native [Trade-Republic-CSV-Fälle](https://github.com/portfolio-performance/portfolio/tree/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic)
+  mit Handels-/Cashkategorie, Originalwährung und Transaktions-ID.
+  Für den generischen Regionalfall bleibt die Zuordnung derselben
+  CSV-Transaktion zur separaten Abrechnung offen. Die drei
+  Kontoauszugsabgänge belegen den manuellen generischen CSV-Pfad.
+  Der persönliche TR-Fall bleibt `NOT_APPLICABLE`.
+
+[Prüfnachweis](release-evidence/sw339-at03-public-statement-2026-11-25.json).
+
+### Weitere Wallet-Abdeckung · NEAR-Präzisionsgrenze
+
+SW339 fragte über den realen Produktadapter bei FastNear jeweils den
+finalisierten Kontostand von `aurora` und `figment.poolv1.near` ab.
+Der zweite öffentliche NEAR-RPC lieferte dieselben Beträge und
+Sperrbestände an den identischen Blockhashes. Soll war die exakte
+Dezimaldarstellung der YoctoNEAR-Beträge. Beide Konten enthalten
+Beträge, die mehr als 18 Nachkommastellen benötigen. SW339 wies beide
+mit der ausdrücklich ausgewiesenen Präzisionsgrenze zurück. Für die
+betroffenen Daten gab es keine importierbare Position. Der Befund
+bleibt eine Produktgrenze bis zu einer exakt nachweisbaren Behandlung
+dieser Präzision im bestehenden Mengen- und Journalvertrag.
+Externe Delegationen, Rewards und privates Eigentum sind eigene Kriterien.
+[NEAR-RPC-Referenz](https://docs.fastnear.com/rpc/account/view-account) ·
+[Blockreferenzen und Prüfnachweis](release-evidence/sw339-near-final-precision-2026-11-25.json).
+
+### Weitere Originalanforderungen
+
+- **ETH-Cursor und FLH04.** Der aktuelle private Restnachweis bestätigt
+  die öffentliche Mehrseitenabnahme und dokumentiert das weiterhin
+  fehlende private ursprüngliche Antwortpaar. #427 hat weiterhin
+  keinen unabhängigen Review. Enrollment und Remote-Write bleiben
+  bis zur konkreten Sicherheitsfreigabe und autorisierten
+  Zwei-Geräte-Abnahme gesperrt.
+- **Barausgleich.** Der [Citigroup-Emittentenfall](https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/tap_tax_basis.pdf?ieNocache=165)
+  enthält Stückbruchteile, Beispielauszahlungen und zugeordnete
+  US-Steuerbasis. Er eignet sich als Rechenvergleich, enthält
+  jedoch keine unabhängige tatsächliche Brokerabrechnung desselben
+  Vorgangs mit Kosten und Auszahlungs-FX. Für die Produktfreigabe
+  bleibt diese Kombination erforderlich.
+- **Geräte und Vorschau.** Der bereits autorisierte Geräteumfang
+  liefert weiterhin kein verfügbares physisches Android-Projektgerät
+  mit Messzugriff und keine native Safari-/VoiceOver-/ITP-Sitzung.
+  Android Device Streaming verlangt einen autorisierten
+  [Firebase-/Cloud-Projektzugang](https://developer.android.com/studio/run/android-device-streaming).
+  Die interne Produktvorschau ist fertig. Öffentliche Bewerbung bleibt
+  gemäß Arbeitsentscheidung zurückgestellt.

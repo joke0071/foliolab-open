@@ -1,0 +1,41 @@
+{
+  "main": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "report": [
+    {
+      "publicAccount": "aurora",
+      "block": "46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH",
+      "height": 226157919,
+      "timeUTC": "2026-11-25T12:58:45.796Z",
+      "independentProvider": "https://rpc.mainnet.near.org",
+      "productProvider": "https://rpc.mainnet.fastnear.com",
+      "sourceSha256": [
+        "5eaba0f54df1b73e538f5dc4de4edf80000a61c36aec4af1f9c84851c35e483f",
+        "eaa971525c4db29cb644da27adacbdf2efd7e5270fb7849b6273160f24c87c8f",
+        "ac3f22a3b8fbd3013ce474ca6004fe7a334ed858aa78f524119a673c95630b66"
+      ],
+      "expectedLiquid": "145768.498431409676817125837316",
+      "expectedLocked": "0",
+      "emitted": null,
+      "productError": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+      "externalPoolAndRewards": false
+    },
+    {
+      "publicAccount": "figment.poolv1.near",
+      "block": "8akzf4fSoapsYXdLpbzUm3pJbq7RP3LaucWEQSFSPgw",
+      "height": 226157944,
+      "timeUTC": "2026-11-25T12:59:00.713Z",
+      "independentProvider": "https://rpc.mainnet.near.org",
+      "productProvider": "https://rpc.mainnet.fastnear.com",
+      "sourceSha256": [
+        "f1861e9d7c8d23e992bf5cebde9cf298210e16c8ea8a3b683e9b523bb875d1c2",
+        "f50a4463bbf335ec74e1e21a50412dae46e22226a1b725dbac526fe5cd76ac94",
+        "b7430c1bacb574eaffc9fd670dc9ebed6461e28dd3ae3e0888d0ba8a0511ab98"
+      ],
+      "expectedLiquid": "2657936.191207537505603225697927",
+      "expectedLocked": "29106556.065488580784331702544649",
+      "emitted": null,
+      "productError": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+      "externalPoolAndRewards": false
+    }
+  ]
+}

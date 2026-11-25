@@ -1,0 +1,67 @@
+{
+  "source": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/traderepublic/Kontoauszug24.txt",
+  "sourceSha256": "cf9e52f073c4a17562a0bbb473e6f5e7dc01b0ca4b2e5b071eb9676bdf2f35d4",
+  "browser": "141.0.7390.37",
+  "format": "anonymized published broker PDF text, manually transcribed generic CSV",
+  "currency": "EUR",
+  "opening": "10361.85",
+  "ending": "7324.06",
+  "debits": [
+    "18.94",
+    "3000",
+    "18.85"
+  ],
+  "runningBalances": [
+    "10342.91",
+    "7342.91",
+    "7324.06"
+  ],
+  "productJournalPostings": [
+    [
+      [
+        "cash",
+        "-18.94"
+      ],
+      [
+        "external-clearing",
+        "18.94"
+      ]
+    ],
+    [
+      [
+        "cash",
+        "-3000"
+      ],
+      [
+        "external-clearing",
+        "3000"
+      ]
+    ],
+    [
+      [
+        "cash",
+        "-18.85"
+      ],
+      [
+        "external-clearing",
+        "18.85"
+      ]
+    ]
+  ],
+  "productExternalFlows": [
+    "-18.94",
+    "-3000",
+    "-18.85"
+  ],
+  "cancelPreserved": true,
+  "uiImportAndBatchUndoExact": true,
+  "protectedByAutomaticObservation": true,
+  "removalFixture": "existing generic import engine with no later observation",
+  "removedBalance": "7342.91",
+  "reimportBlocked": true,
+  "undoExact": true,
+  "portableRestoreExact": true,
+  "protectedByClosingSnapshot": true,
+  "stockCostBasisScope": "not present",
+  "product": "8de635271c341d7462d4d33e5f268089c26da6d0"
+}
