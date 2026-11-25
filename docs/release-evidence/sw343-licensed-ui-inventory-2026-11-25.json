@@ -354,7 +354,7 @@
   "unitTests": 1534,
   "syntax": "PASS",
   "chromiumLoadingPWA": "PASS",
-  "status": "MERGED_MAIN_PENDING",
+  "status": "DEPLOYED_AWAITING_STANDARD_LIVE_GATE",
   "pullRequest": 434,
   "baseMain": "513c2a41e9a82d9c175c35a7cbee580be4951638",
   "sameOriginPwaUpgrade": {
@@ -372,5 +372,49 @@
   "integration": "PASS",
   "testedMerge": "681d814e2e2b44bd063a06b109918f6327cca61b",
   "main": "af3cdff0b83ea9b0c406e0204efd3d9e32896165",
-  "mainRun": 45691776339
+  "mainRun": 45691776339,
+  "pagesJob": 139493409057,
+  "liveJob": 139493614412,
+  "pagesOriginal": {
+    "main": "af3cdff0b83ea9b0c406e0204efd3d9e32896165",
+    "tree": "6fe56d80dd0881d9956285ca1c725a22b6039a1c",
+    "artifactId": 15058508200,
+    "artifactBytes": 579116,
+    "archiveSHA256": "c0c474eb1b7fd632641fd9079b34357238f375df3639be70658149ad26922de5",
+    "zipCRC": "PASS",
+    "exactFiles": 160
+  },
+  "production": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "publishedWorkerSeenAt": "2026-11-25T20:33:39Z",
+    "changedAssetReadback": [
+      {
+        "path": "index.html",
+        "matched": true,
+        "sha256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+        "cspHttpHeader": false,
+        "xFrameOptionsHttpHeader": false
+      },
+      {
+        "path": "sw.js",
+        "matched": true,
+        "sha256": "d546b42ba62e2b2a509b875c7ca3735c9e4c0340dd841a73aed5a5c471ebe95d"
+      },
+      {
+        "path": "src/format.js",
+        "matched": true,
+        "sha256": "3d1a430644833e976a90cb935e094548fa3639d137183be7b33a3b3ca56a713d"
+      },
+      {
+        "path": "src/position-icons.js",
+        "matched": true,
+        "sha256": "c9da521a995c7421996c318fbe73cef9fc079d6498c1f12f94ab2ebe3b7b195c"
+      },
+      {
+        "path": "icons/LICENSE-Lucide.txt",
+        "matched": true,
+        "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+      }
+    ]
+  }
 }
