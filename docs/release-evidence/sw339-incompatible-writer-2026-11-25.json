@@ -1,0 +1,28 @@
+{
+  "browser": "141.0.7390.37",
+  "https": true,
+  "oldWriter": "58c8aab6ce93d605cae6e4f2dd8cb7f7bf8d3128",
+  "oldCache": "foliolab-open-v88",
+  "current": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+  "nativeUiBeforeAndAfter": true,
+  "oldPositiveControl": true,
+  "explicitCutoverAndUiRestore": true,
+  "error": "Änderung nicht gespeichert: Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.",
+  "storageError": "IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.",
+  "oldDocumentKeptOpen": true,
+  "revision": [
+    2,
+    2
+  ],
+  "bookings": 10000,
+  "journalEntries": 10000,
+  "journalSha256": "6cf96a4b041823e8f57c7aa37a3cd29b653835dc5013d0fe5df81b9232166a67",
+  "fullIdbSha256": "f7e9740fb99612cbfc846ec337226b295bb287a923c39dfcd441438ce1b5528b",
+  "sameCompleteIdb": true,
+  "sameLocalStorageCopy": true,
+  "databases": [
+    "foliolab-open-backup-password-v1",
+    "foliolab-open-portfolio"
+  ]
+}

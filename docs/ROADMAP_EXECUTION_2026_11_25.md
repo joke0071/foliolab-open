@@ -378,3 +378,57 @@ Anschaffungskosten bleiben offen.
 [Originalfeld-Codes und Prüfsummen](release-evidence/sw340-roadmap-ui-at05-2026-11-25.json).
 
 **Zeilenabnahme zu diesem Stand: 6/6 Kernbereiche, 10/29 Folgepakete.**
+
+### Speicher und Recovery · inkompatibler SW88-Writer
+
+Der historische [SW88-Stand 58c8aab6](https://github.com/joke0071/foliolab-open/commit/58c8aab6ce93d605cae6e4f2dd8cb7f7bf8d3128)
+und SW339 liefen auf getrennten Pfaden derselben isolierten HTTPS-Origin
+in Chromium 141. Der alte Tab legte vor dem Cutover erfolgreich einen
+synthetischen Anbieter über die Oberfläche an. Dieser Tab blieb
+durchgehend offen. SW339 stellte ausdrücklich auf IndexedDB um und
+spielte die vorhandene 10k-Fixture über die Backup-Oberfläche ein.
+
+Unabhängiges Soll nach dem erneuten Speicherversuch aus dem
+localStorage-Modus: Revision 2, 10.000 Buchungen und 10.000
+Journalvorgänge unverändert, einschließlich aller IndexedDB-Stores
+mit ihren Schlüsseln und der eingefrorenen localStorage-Kopie.
+Die alte UI wies die Änderung mit einem Hinweis auf den anderen Tab
+zurück. Ein zusätzlicher direkter Aufruf des unveränderten historischen
+Speicheradapters wies sie mit „IndexedDB ist in einem anderen Tab
+aktiv“ zurück. Soll und Ist stimmen vollständig überein.
+Der Altwriter-Teil ist für diesen Cutover belegt. Beobachtete
+OS-Speicherbereinigung und Wiederherstellung auf einem zweiten
+autorisierten physischen Gerät bleiben separat offen.
+[Prüfnachweis](release-evidence/sw339-incompatible-writer-2026-11-25.json).
+
+### Benchmark · unabhängiger Ein- und Auszahlungsfall
+
+Der [PortfolioAnalyst-Referenzfall von Interactive Brokers](https://www.interactivebrokers.com/images/common/Statements/MWR-TWR_white_paper.pdf)
+auf Seite 3 enthält eine Auszahlung von 225.000 USD und eine Einzahlung
+von 81.500 USD jeweils am Tagesbeginn sowie fünf Vor- und Endwerte.
+Das veröffentlichte Soll ist 0,14 %. Die unabhängige Verknüpfung mit
+ganzzahligen Cent-Brüchen ergibt **0,139931612453 %**. FolioLabs
+`twr`-Funktion liefert bei denselben bereits flowbereinigten
+Teilperiodengrenzen **0,139931612453 %**. Auf Portfolioebene liefert SW339
+mit Tagesstichtagen und externem Ab- bzw. Zufluss vertragsgemäß `null`.
+Der Snapshot-Vertrag enthält keine belegte Bewertungsgrenze unmittelbar
+vor und nach dem Flow. Das gilt einzeln für Einzahlung und Auszahlung.
+[Prüfnachweis](release-evidence/sw339-ibkr-twr-flow-2026-11-25.json).
+
+Für VWCE sind [Instrument, Notierungsdatum und Anteilsklasse](https://global.vanguard.com/private-anleger/anlageprodukte/etf/aktien/9679/ftse-all-world-ucits-etf-usd-accumulating)
+bestätigt. EODHD beschreibt eine split- und ausschüttungsbereinigte
+Schlusskursreihe sowie eine gesonderte Lizenz für externe
+Darstellung. Twelve Data dokumentiert Xetra-Such- und EOD-Abdeckung,
+externen Anzeigeumfang nach Vertrag und zusätzliche Börsenfreigaben.
+Die öffentlichen Yahoo-Finance-Datenangaben schließen Weitergabe aus.
+Die Xetra-Open-Data-Reihe ist laut Anbieter eingestellt und für
+nichtkommerzielle Zwecke lizenziert. Diese Wege qualifizieren derzeit
+keine vollständige kapitalmaßnahmenbereinigte EUR-Reihe für die
+konkrete FolioLab-Anzeige. Die fünftägige Stichprobe bleibt der belegte
+Marktdatenumfang. Für die Zeilenabnahme fehlen die nutzbare lizenzierte
+Reihe und ein belegter Produktpfad für Bewertungen an Flow-Grenzen.
+[EODHD-Methodik](https://eodhd.com/help/methodology) ·
+[EODHD-Lizenz](https://eodhd.com/help/commercial) ·
+[Twelve Data](https://support.twelvedata.com/en/articles/5332349-commercial-and-personal-usage) ·
+[Yahoo](https://uk.help.yahoo.com/kb/SLN2352.html) ·
+[Open Data](https://registry.opendata.aws/deutsche-boerse-pds/).

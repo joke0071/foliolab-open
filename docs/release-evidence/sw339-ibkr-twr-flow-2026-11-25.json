@@ -1,0 +1,10 @@
+{
+  "source": "https://www.interactivebrokers.com/images/common/Statements/MWR-TWR_white_paper.pdf",
+  "scenario": "BOD withdrawal and deposit",
+  "independentProviderReportedPercent": "0.14",
+  "rationalReferenceFraction": 0.0013993161245342393,
+  "sw339TwrPrimitiveFraction": 0.0013993161245344776,
+  "sw339PortfolioTwr": null,
+  "withdrawalOnlyAlsoUnavailable": true,
+  "depositOnlyAlsoUnavailable": true
+}
