@@ -1,0 +1,70 @@
+{
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "chain": "cosmoshub-4",
+  "height": "34044337",
+  "blockHash": "E10789421CF97190A442B20E563DF6BBE597884CA095C55A98C3751E84FFCE60",
+  "time": "2026-11-25T15:56:52.293136979Z",
+  "transactionHash": "F0F894B8B64F022FAFCBED0C0CC87F9F8E7EBABDB79DF4CBEBF4553F02B9569D",
+  "transactionIndex": 0,
+  "providers": {
+    "rpcs": [
+      "cosmos-rpc.publicnode.com",
+      "cosmos-rpc.polkachu.com",
+      "rpc.cosmos.directory-cosmoshub"
+    ],
+    "lcds": [
+      "rest.cosmos.directory-cosmoshub",
+      "cosmos-rest.publicnode.com",
+      "cosmos-api.polkachu.com"
+    ]
+  },
+  "account": "cosmos1nx3yrqs5v5wz9yygplleswu5tn9e4r8zcgncar",
+  "validator": "cosmosvaloper1fsg635n5vgc7jazz9sx5725wnc3xqgr7awxaag",
+  "expected": {
+    "bankBeforeMicroATOM": "281159",
+    "paidRewardMicroATOM": "536836",
+    "feeMicroATOM": "6823",
+    "bankAfterMicroATOM": "811172"
+  },
+  "observed": {
+    "positions": [
+      [
+        "cosmos",
+        "0.811172"
+      ],
+      [
+        "cosmos-stake",
+        "507.155712"
+      ],
+      [
+        "cosmos-stake",
+        "684.791623"
+      ]
+    ],
+    "partial": true,
+    "warning": "ATOM: freie, delegierte und unbondende Bestände getrennt; ausstehende Rewards und weitere Cosmos-Assets nicht vollständig abgedeckt",
+    "separateRewardIncomeEvent": false
+  },
+  "scope": "Positive paid reward, verified independently against finalized balance delta. Product scans the credited balance; dedicated historical reward booking remains open.",
+  "digests": {
+    "rest.cosmos.directory-cosmoshub-bank-34044336": "2f5df64693b1450e896a499e92e80bb16f77674c6c18ddfd3a49777ddc8c5f31",
+    "cosmos-rest.publicnode.com-bank-34044336": "2f5df64693b1450e896a499e92e80bb16f77674c6c18ddfd3a49777ddc8c5f31",
+    "cosmos-api.polkachu.com-bank-34044336": "2f5df64693b1450e896a499e92e80bb16f77674c6c18ddfd3a49777ddc8c5f31",
+    "rest.cosmos.directory-cosmoshub-bank-34044337": "e6a462d7659be75c59823d7af08e456382bc3426d7bdbb749d10b7460f689675",
+    "cosmos-rest.publicnode.com-bank-34044337": "e6a462d7659be75c59823d7af08e456382bc3426d7bdbb749d10b7460f689675",
+    "cosmos-api.polkachu.com-bank-34044337": "e6a462d7659be75c59823d7af08e456382bc3426d7bdbb749d10b7460f689675",
+    "rest.cosmos.directory-cosmoshub-delegated": "cea36d21519a68b2158001d6d7c652058e51b2bfedbb1a551a1dcaf73d89d998",
+    "cosmos-rest.publicnode.com-delegated": "cea36d21519a68b2158001d6d7c652058e51b2bfedbb1a551a1dcaf73d89d998",
+    "cosmos-api.polkachu.com-delegated": "cea36d21519a68b2158001d6d7c652058e51b2bfedbb1a551a1dcaf73d89d998",
+    "rest.cosmos.directory-cosmoshub-unbonding": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+    "cosmos-rest.publicnode.com-unbonding": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+    "cosmos-api.polkachu.com-unbonding": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+    "cosmos-rpc.publicnode.com": "cdce901ce3de5939697a0ce50e3a585c4c1c788c5b0bac04d442c1ee9d170eee",
+    "cosmos-rpc.polkachu.com": "cdce901ce3de5939697a0ce50e3a585c4c1c788c5b0bac04d442c1ee9d170eee",
+    "rpc.cosmos.directory-cosmoshub": "cdce901ce3de5939697a0ce50e3a585c4c1c788c5b0bac04d442c1ee9d170eee",
+    "cosmos-rpc.publicnode.com-block": "993ff9c1c4b6b3acb46f610650ede8ab608512d4458b134f692dc6ccf363c3ab",
+    "cosmos-rpc.polkachu.com-block": "52bc6b6ab1eba596c99af329784ec46d7d83df788375d22458fe9ee1f4db3095",
+    "cosmos-rpc.publicnode.com-block-results": "f9297e36b33f345658ff943bd9769a3ae9d89bbaa7970e361e44e40e6fc0182e",
+    "cosmos-rpc.polkachu.com-block-results": "944b180f47e5ea9f35123ab767a46a955a47fa15bfafe9816d136b87b97e6172"
+  }
+}
