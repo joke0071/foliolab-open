@@ -1,0 +1,22 @@
+{
+  "product": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "brokerSource": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/traderepublic/Fusion01.txt",
+  "sourceSha256": "06d13804f54b11db1e89fec44236fa38a4339417ea893dd8e7f2b1804e10db5c",
+  "issuerFiling": "https://www.sec.gov/Archives/edgar/data/1764925/000119312520307607/d86251d425.htm",
+  "slackShares": "10",
+  "salesforceShares": "0.776",
+  "usdPerShare": "26.79",
+  "shareRatio": "0.0776",
+  "cashGrossUSD": "267.90",
+  "usdPerEUR": "1.1785",
+  "cashGrossEUR": "227.32",
+  "deductionsEUR": [
+    "55.58",
+    "3.06",
+    "5.00"
+  ],
+  "cashBookedEUR": "163.68",
+  "kind": "mixed merger consideration",
+  "taxableBasisExplicit": false,
+  "exactStateAfterBlockedAutoBooking": true
+}

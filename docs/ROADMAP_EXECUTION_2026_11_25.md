@@ -590,3 +590,29 @@ Arbeitszweig als Beleg. Die weiteren Grafikgruppen, native
 Safari-/VoiceOver-Prüfung und HTTP-Framingschutz bleiben offen.
 [Quelle, Lizenz und Ausgabeprüfung](release-evidence/trust-flask-candidate-2026-11-25/verification.json) ·
 [Reproduktion](release-evidence/trust-flask-candidate-2026-11-25/reproduce.mjs).
+
+### Broker-Nachtrag · CSV-Referenzsuche und gemischte Fusion
+
+- **FLH03.** Die sechs regionalen Trade-Republic-CSV-Fixtures
+  enthalten zusammen 363 Zeilen. Der Abgleich mit den 249
+  anonymisierten Trade-Republic-PDF-Textfällen derselben gepinnten
+  Testsammlung ergab drei Kandidaten mit gleicher ISIN und Datum
+  im jeweiligen Dokument. Bei keinem stimmte der gebuchte Betrag
+  überein. Der untersuchte Wertpapierkorpus liefert damit kein
+  belastbares Paar aus Originalexport und unabhängiger
+  Einzelabrechnung. Die generische CSV-Abnahme des Kontoauszugs
+  bleibt separat belegt.
+- **Barausgleich.** Die anonymisierte Trade-Republic-Abrechnung
+  zur Slack/Salesforce-Fusion enthält 10 Slack-Aktien, 0,776
+  gutgeschriebene Salesforce-Aktien und den fixen Bargeldanteil
+  der Fusion. Der [SEC-Emittentenbeleg](https://www.sec.gov/Archives/edgar/data/1764925/000119312520307607/d86251d425.htm)
+  bestätigt 0,0776 Aktien und 26,79 USD je Slack-Aktie. Daraus
+  ergeben sich 267,90 USD. Mit Broker-FX und ausgewiesenen
+  Abzügen ergeben sich exakt 163,68 EUR gebuchter Nettozufluss.
+  Die Abrechnung weist dabei die vollständigen 0,776 Aktien aus
+  und keinen zusätzlich abgegoltenen Stückrest. SW339 wies die
+  automatische Übernahme des kombinierten Geldvorgangs atomar ab.
+  Wertpapier- und Cashbestand einschließlich Journal blieben
+  unverändert. Für die Zeilenabnahme bleibt ein tatsächlicher
+  Stückrest-Ausgleich samt ausgewiesener Steuerbasis offen.
+  [Prüfnachweis](release-evidence/sw339-slack-merger-boundary-2026-11-25.json).
