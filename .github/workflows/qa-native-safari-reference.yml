@@ -16,7 +16,7 @@ jobs:
       - name: Verify unchanged application bytes
         run: git diff --exit-code HEAD^ HEAD -- src index.html styles.css sw.js
       - name: Observe native Safari with the actual application and a synthetic portfolio
-        run: python3 tests/native-safari/run.py
+        run: python3 tests/native-safari/ordinary-restore.py
       - name: Preserve observations
         if: always()
         uses: actions/upload-artifact@v4

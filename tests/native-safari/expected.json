@@ -1,0 +1,20 @@
+{
+  "source": "Linux Chromium 141.0.7390.37",
+  "revision": 2,
+  "fields": [
+    "providers",
+    "accounts",
+    "positions",
+    "bookings",
+    "journalEntries",
+    "externalCashFlows",
+    "snapshots",
+    "walletHistory"
+  ],
+  "dataSHA256": "ae44a1410bb80c49d47df8ceea7104fa9b18b6fe7727c694e4ac7e09d9c67175",
+  "envelopeSHA256": "c34b885a85f6f0a9a6185d3114b9091b78bcb8acd63e4b0055e93e1f6a73cf6b",
+  "cash": "22.34",
+  "bookings": 1,
+  "journals": 1,
+  "historySessions": 1
+}

@@ -1,0 +1,45 @@
+<!doctype html><meta charset="utf-8"><title>FolioLab native recovery reference</title>
+<iframe id="application" title="FolioLab" src="/index.html" style="width:98vw;height:95vh"></iframe>
+<script type="module">
+import {openPortfolioDB,readPortfolioRecord} from '/src/atomic-storage.js';
+const frame=document.querySelector('iframe');
+const step=new URL(location.href).searchParams.get('step');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const hash=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),v=>v.toString(16).padStart(2,'0')).join('');
+const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;
+async function waitFor(test){for(let i=0;i<250;i++){if(await test())return;await sleep(100)}throw Error('Condition timed out');}
+async function read(){const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close()}}
+const report={step,frame:'same-origin actual product index.html',browser:navigator.userAgent};
+try {
+ await waitFor(()=>frame.contentDocument?.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ const win=frame.contentWindow,doc=frame.contentDocument;
+ const expected=await(await fetch('expected.json')).json();
+ const input=doc.getElementById('backupFile'),before=await read();
+ if(step==='restore'&&!JSON.parse(before.raw).bookings.length){
+  const bytes=await(await fetch('synthetic-source.json')).arrayBuffer();
+  if((await hash(bytes))!==expected.envelopeSHA256)throw Error('Fixture bytes mismatch');
+  report.envelopeSHA256=expected.envelopeSHA256;report.dialogs=[];
+  win.prompt=msg=>{if(!msg.includes('Backup-Passwort'))throw Error('Unexpected prompt');report.dialogs.push('password');return 'Synthetic native Safari QA fixture';};
+  win.confirm=msg=>{if(!msg.includes('Der aktuelle Datenbestand wird ersetzt.'))throw Error('Unexpected confirmation');report.dialogs.push('replace');return true;};
+  const transfer=new win.DataTransfer();
+  transfer.items.add(new win.File([bytes],'synthetic-source.json',{type:'application/json'}));
+  input.files=transfer.files;input.dispatchEvent(new win.Event('change',{bubbles:true}));
+  await waitFor(()=>doc.getElementById('toast').textContent.includes('Backup wiederhergestellt'));
+  report.revisionBefore=before.revision;
+ }
+ const record=await read(),m=JSON.parse(record.raw);
+ const fields=Object.fromEntries(expected.fields.map(k=>[k,m[k]]));
+ report.dataSHA256=await hash(new TextEncoder().encode(JSON.stringify(stable(fields))));
+ if(report.dataSHA256!==expected.dataSHA256)throw Error('Target data differs from independently exported Linux source');
+ report.cash=m.positions[0].quantityExact;report.journals=m.journalEntries.length;report.bookings=m.bookings.length;
+ report.snapshots=m.snapshots.length;report.externalFlows=m.externalCashFlows.length;report.historySessions=m.walletHistory.sessions.length;
+ report.revision=record.revision;report.rawSHA256=await hash(new TextEncoder().encode(record.raw));
+ const link=doc.querySelector('.skip-to-content');win.focus();link.focus();report.focusBefore=doc.activeElement===link?link.textContent:'';
+ if(step==='reopen'){
+  win.addEventListener('keydown',ev=>{if(ev.key==='Enter')report.trustedEnter=ev.isTrusted;},true);
+  async function reportFocus(){const snapshot={...report,step:'focus',active:doc.activeElement.id,location:win.location.hash};await fetch('/result',{method:'POST',body:JSON.stringify(snapshot)});}
+  win.addEventListener('keyup',ev=>{if(ev.key==='Enter')setTimeout(reportFocus,120);},true);
+ }
+} catch(err){report.error=String(err);}
+await fetch('/result',{method:'POST',body:JSON.stringify(report)});
+</script>
