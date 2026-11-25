@@ -1,0 +1,430 @@
+{
+  "baseline": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "baselineTree": "d80ec391347b9586e28b73389d193edec866bab3",
+  "environment": "Debian 13 sandbox",
+  "browserVersions": {
+    "chromium": "141.0.7390.37",
+    "firefox": "157.0",
+    "webkit": "27.2"
+  },
+  "nodeVersions": {
+    "test": "v22.23.5",
+    "wallet": "v20.20.2"
+  },
+  "cpuAffinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "memoryAvailableMinKiB": 4403748,
+  "memoryTotalKiB": 10206472,
+  "elapsedLastJobSeconds": 1620.0920448919999,
+  "retriesInFirstRun": 0,
+  "jobResults": [
+    {
+      "job": "test",
+      "exit": 1,
+      "startedSeconds": 0.0006337869999697432,
+      "finishedSeconds": 208.95015362200002
+    },
+    {
+      "job": "cross1",
+      "exit": 0,
+      "startedSeconds": 0.0011175110000749555,
+      "finishedSeconds": 867.639063715
+    },
+    {
+      "job": "cross2",
+      "exit": 1,
+      "startedSeconds": 0.0017972319999444153,
+      "finishedSeconds": 1620.0920448919999
+    },
+    {
+      "job": "cross3",
+      "exit": 1,
+      "startedSeconds": 0.002318673999980092,
+      "finishedSeconds": 82.08588663399996
+    },
+    {
+      "job": "wallet",
+      "exit": 0,
+      "startedSeconds": 0.002782368999987739,
+      "finishedSeconds": 48.80580765600007
+    }
+  ],
+  "failureReasons": {
+    "test": "Axe dependency path unavailable in shared local fixture server on first start",
+    "cross3": "same fixture dependency path",
+    "cross2": "WebKit target-size finding at booking detail list while scrolled"
+  },
+  "fullComparisonEligible": false,
+  "comparisonRun": 45623781167,
+  "debian": {
+    "browser": "27.2",
+    "failures": [
+      {
+        "label": "expanded restriction 412",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 301,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 378,
+                      "bottom": 64.734375,
+                      "left": 301
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "localized bookings 412",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 301,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 378,
+                      "bottom": 64.734375,
+                      "left": 301
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "expanded restriction 430",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 319,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 396,
+                      "bottom": 64.734375,
+                      "left": 319
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "localized bookings 430",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 319,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 396,
+                      "bottom": 64.734375,
+                      "left": 319
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ubuntuBinaryOnLocalHost": {
+    "browser": "27.2",
+    "failures": [
+      {
+        "label": "expanded restriction 412",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 301,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 378,
+                      "bottom": 64.734375,
+                      "left": 301
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "localized bookings 412",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 301,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 378,
+                      "bottom": 64.734375,
+                      "left": 301
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "expanded restriction 430",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 319,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 396,
+                      "bottom": 64.734375,
+                      "left": 319
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "localized bookings 430",
+        "result": [
+          {
+            "id": "target-size",
+            "nodes": [
+              {
+                "target": [
+                  ".detail-edit[data-id=\"in2\"][data-booking-row-action=\"edit\"]"
+                ],
+                "summary": "Fix any of the following:\n  Target has insufficient size because it is partially obscured (smallest space is 77px by 15.7px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 22.8px instead of at least 24px.",
+                "measure": [
+                  {
+                    "messageKey": "partiallyObscured",
+                    "minSize": 24,
+                    "width": 77,
+                    "height": 15.7
+                  },
+                  {
+                    "closestOffset": 22.8,
+                    "minOffset": 24
+                  }
+                ],
+                "geometry": [
+                  {
+                    "rect": {
+                      "x": 319,
+                      "y": 20.734375,
+                      "width": 77,
+                      "height": 44,
+                      "top": 20.734375,
+                      "right": 396,
+                      "bottom": 64.734375,
+                      "left": 319
+                    },
+                    "font": "800 11px Inter, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif",
+                    "scrollY": 1106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

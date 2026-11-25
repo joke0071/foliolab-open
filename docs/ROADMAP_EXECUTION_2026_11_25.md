@@ -616,3 +616,37 @@ Safari-/VoiceOver-Prüfung und HTTP-Framingschutz bleiben offen.
   unverändert. Für die Zeilenabnahme bleibt ein tatsächlicher
   Stückrest-Ausgleich samt ausgewiesener Steuerbasis offen.
   [Prüfnachweis](release-evidence/sw339-slack-merger-boundary-2026-11-25.json).
+
+### CI-Effizienz · Pflichtpfad paaren
+
+Der erste serielle Versuch führte die vorhandenen Chromium-, drei
+Cross-Engine- und Wallet-Pflichtjobs auf demselben lokalen Rechner aus.
+Installierte Versionen: Chromium 141, Firefox 157, WebKit 27.2,
+Node 22.23.5 bzw. 20.20.2. Neun logische CPUs waren zugänglich.
+Wallet und Shard 1 bestanden. Nach 27:00 endete der letzte Job.
+Chromium und Shard 3 hatten zuvor wegen des zunächst fehlenden
+Axe-Dateipfads am geteilten Fixture-Server abgebrochen. Der Pfad
+wurde für die Folgeläufe korrigiert.
+
+Shard 2 brach mit einem WebKit-Axe-Befund in der Buchungsliste ab.
+Der isolierte Nachlauf reproduzierte den Befund bei 412 und 430 px
+mit dem Debian-WebKit und mit dem Ubuntu-WebKit-Build auf demselben
+lokalen Host. Die Schaltfläche besitzt 77 × 44 px. In der beobachteten
+Scrollposition sind durch die Kopfzeile nur 15,7 px Höhe frei
+anklickbar. Das ist ein eigener Befund außerhalb des geprüften
+„Mehr“-Übergangs. Die fehlgeschlagene Pflichtstrecke liefert keine
+vergleichbare Gesamtzeit.
+[Lokaler Mess- und Geometriebeleg](release-evidence/sw339-local-ci-baseline-diagnostic-2026-11-25.json).
+
+Für den vollständigen Vergleich läuft eine [isolierte Ubuntu-Matrix](https://github.com/joke0071/foliolab-open/actions/runs/45623781167).
+Jeder Browser-Pflichtjob und Wallet laufen innerhalb eines
+Runnerjobs einmal seriell/parallel und in einem zweiten Runnerjob
+in umgekehrter Reihenfolge. Beide Varianten verwenden
+die unveränderten Appbytes und die jeweiligen Original-Prüfkommandos.
+Die Messung erfasst Liste, Ausstiegsstatus, Dauer, CPU und Speicher
+je Job. Für die modellierte Dauer des gleichzeitig gestarteten
+Pflichtpfads zählt je Reihenfolge der längste Pflichtjob.
+Diese Messung ist von der tatsächlichen GitHub-Laufdauer mit
+Installation, Zuteilung, Pages und Live getrennt.
+[#430](https://github.com/joke0071/foliolab-open/pull/430) bleibt bis
+zum reproduzierbaren, vollständigen Gewinn zurückgestellt.
