@@ -1,0 +1,33 @@
+{
+  "result": "PASS",
+  "sourceSHA256": "bfd41f222cc71c3abefddedda444067c2578312e53cbfc129e37451de1aea36e",
+  "release": "513c2a41e9a82d9c175c35a7cbee580be4951638",
+  "reference": "https://support.kraken.com/hc/articles/360001169383-how-to-interpret-ledger-history-fields",
+  "bookedAnchors": 2,
+  "between": 216,
+  "types": {
+    "trade": 196,
+    "withdrawal": 5,
+    "receive": 1,
+    "spend": 3,
+    "deposit": 9,
+    "earn": 2
+  },
+  "internalTransfer": {
+    "legs": 4,
+    "assets": [
+      "EUR",
+      "USDC"
+    ],
+    "providerOpeningAnchors": 4,
+    "providerClosingAnchors": 4,
+    "externalFlows": 0,
+    "exactBalanceMatches": 4,
+    "restore": "byte-exact"
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ]
+}
