@@ -1,0 +1,62 @@
+name: Controlled full localhost path comparison
+on:
+  push:
+    branches: [ci/compare-full-local-shards-20261125]
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  paired:
+    name: Pair (${{ matrix.job }}, ${{ matrix.order }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        order: [AB, BA]
+        job: [chromium, cross1, cross2, cross3, wallet]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.job == 'wallet' && '20' || '22' }}
+      - name: Prepare the matching dependency stack
+        shell: bash
+        env:
+          PAIR_JOB: ${{ matrix.job }}
+        run: |
+          if ! python3 -c 'import yaml'; then
+            python3 -m venv "$RUNNER_TEMP/foliolab-python"
+            "$RUNNER_TEMP/foliolab-python/bin/pip" install PyYAML==6.0.3
+          fi
+          case "$PAIR_JOB" in
+            chromium)
+              npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+              npx playwright install chromium --only-shell
+              ;;
+            cross*)
+              npm install --no-save playwright@1.64.1 axe-core@4.10.3
+              npx playwright install --with-deps firefox webkit
+              ;;
+          esac
+      - name: Run both complete localhost paths on the same runner
+        shell: bash
+        env:
+          PAIR_JOB: ${{ matrix.job }}
+          PAIR_ORDER: ${{ matrix.order }}
+        run: |
+          local_python=python3
+          if [[ -x "$RUNNER_TEMP/foliolab-python/bin/python" ]]; then
+            local_python="$RUNNER_TEMP/foliolab-python/bin/python"
+          fi
+          "$local_python" tools/compare-full-local-path.py "$PAIR_JOB" "$PAIR_ORDER"
+      - name: Preserve paired measurements
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-local-pair-${{ matrix.job }}-${{ matrix.order }}
+          path: artifacts/full-local-pair/
+          if-no-files-found: error
