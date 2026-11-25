@@ -1,0 +1,17 @@
+{
+  "candidate": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "tree": "e87fab0abdbc0dda57da48cf9f30bccbabbb655c",
+  "base": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "publicFinalBlock": 226157919,
+  "bankQuantityYoctoNEAR": "145768498431409676817125837316",
+  "positionQuantityExact": "145768.498431409676817125837316",
+  "testsPassed": 1540,
+  "original": "sw340-near-precision-roundtrip-2026-11-25.json",
+  "browserChecks": {
+    "chromium": "NEAR_PRECISION_PASS chromium 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore",
+    "firefox": "NEAR_PRECISION_PASS firefox 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore",
+    "webkit": "NEAR_PRECISION_PASS webkit 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore"
+  },
+  "scope": "Native liquid and directly locked NEAR positions. Public archived balances. No private-wallet attribution, pooling, delegation or historical booking inferred.",
+  "initialCandidate": "209f6f3411d2cedffca17724966d8385846c93a6"
+}

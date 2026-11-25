@@ -1,0 +1,36 @@
+{
+  "mainBeforeChange": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "candidate": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "tree": "e87fab0abdbc0dda57da48cf9f30bccbabbb655c",
+  "sourceSettlement": "https://github.com/portfolio-performance/portfolio/issues/3711",
+  "allocationSource": "https://github.com/portfolio-performance/portfolio/issues/3712",
+  "allocationOrder": "0021740090",
+  "allocation": "2 JNJ -> 16.0648 KVUE",
+  "ratio": "8.0324",
+  "linksAcrossReceipts": "One reporting contributor. Allocation-in/out share an order. Custody continuity to separately reported settlement unconfirmed.",
+  "fraction": "0.0648",
+  "nativeUnitPriceUSD": "21.0032",
+  "postedGrossUSD": "1.36",
+  "quotedUSDperEUR": "1.089718",
+  "netEUR": "1.25",
+  "feeEUR": "0",
+  "taxEUR": "0",
+  "inferredFractionBasisEUR": "1.38",
+  "realizedPostTaxEUR": "-0.13",
+  "openingTestPortfolio": "only the posted fraction, 1.38 EUR basis and 0 EUR cash",
+  "postingsEUR": [
+    "-1.25",
+    "1.25"
+  ],
+  "externalCashFlows": 0,
+  "newRevision": 1,
+  "wrongNetEUR": "1.26",
+  "wrongNetUnchanged": true,
+  "persistedOriginalQuoteAndGross": true,
+  "isolatedFreshEncryptedRestore": true,
+  "browserChecks": [
+    "USD_FRACTIONAL_SETTLEMENT_PASS chromium 0.0648 shares, 1.36 USD, 1.089718 USD per EUR, 1.25 EUR net, -0.13 realized, fresh restore",
+    "USD_FRACTIONAL_SETTLEMENT_PASS firefox 0.0648 shares, 1.36 USD, 1.089718 USD per EUR, 1.25 EUR net, -0.13 realized, fresh restore",
+    "USD_FRACTIONAL_SETTLEMENT_PASS webkit 0.0648 shares, 1.36 USD, 1.089718 USD per EUR, 1.25 EUR net, -0.13 realized, fresh restore"
+  ]
+}
