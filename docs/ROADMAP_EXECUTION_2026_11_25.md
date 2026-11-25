@@ -327,6 +327,7 @@ Reviewthreads vor.
   „Mehr“. Nach `Enter → Tab` zeigte der X11-Mitschnitt den Fokus auf
   „Firefox View“ in der Browserleiste. Im Dokument blieb „Mehr“ als
   letzter aktiver Knoten gespeichert.
+  [SW339 im sichtbaren Firefox](release-evidence/sw340-firefox-focus/sw339-after-tab.png).
 - **Korrektur und Gegenprobe.** [SW340, PR #431](https://github.com/joke0071/foliolab-open/pull/431)
   setzt die feste Mobilnavigation im DOM zwischen Kopfzeile und Hauptinhalt.
   Auf dem [Kandidaten d20f202a](https://github.com/joke0071/foliolab-open/commit/d20f202a104fbf2a90c5c0c03f5c2f7c9671f5ca)
@@ -334,6 +335,7 @@ Reviewthreads vor.
   ausgeblendeter Installation an „+ Konto“. Umschalt+Tab führt zurück
   zu „Mehr“. Die bestehende Pflichtprüfung enthält den Übergang bei
   320 und 390 px. Syntax und 1.533 Node-Tests lokal bestanden.
+  [SW340 im sichtbaren Firefox](release-evidence/sw340-firefox-focus/sw340-after-tab.png).
 - **Drei Rubriken.** Firefox mit OS-Tastatur bei 450 CSS-Pixeln und bei
   echtem Browserzoom 200 % bestand Vorwärts- und Rückweg. Der Browserzoom
   wurde mit sechs Vergrößerungsschritten von 100 % auf 200 % gesetzt:
@@ -458,7 +460,10 @@ Veröffentlicht werden nur Prüfwerte und Quellverweis.
   einem isolierten Bestand ohne spätere Beobachtung verwendet. Soll
   bei Wegfall des letzten EUR-Abgangs: 7.342,91 EUR, zwei Flüsse und
   die Journal-Gegenposition der zurückgenommenen Buchung im
-  Änderungsbeleg. Alle Werte stimmten. Undo und frischer portabler
+  Änderungsbeleg. Alle Werte stimmten. Ein konkurrierender Tab speicherte während der
+  geöffneten Rücknahmevorschau eine neue Revision. Der veraltete
+  Submit wurde abgelehnt und ließ den vollständigen gewinnenden
+  IndexedDB-Datensatz exakt gleich. Undo und frischer portabler
   Restore stellten die bestätigten Portfolio-Bytes wieder her.
   Abgedeckt ist der belegte EUR-Geldabgang. Eine neue Rücknahme mit
   unabhängig prüfbarer Wertpapierkostenbasis bleibt offen.
@@ -521,3 +526,26 @@ Externe Delegationen, Rewards und privates Eigentum sind eigene Kriterien.
   [Firebase-/Cloud-Projektzugang](https://developer.android.com/studio/run/android-device-streaming).
   Die interne Produktvorschau ist fertig. Öffentliche Bewerbung bleibt
   gemäß Arbeitsentscheidung zurückgestellt.
+
+### Weitere Wallet-Abdeckung · Cosmos Hub
+
+Am finalisierten Block **34.042.495** von `cosmoshub-4` bestätigten
+Cosmos Directory, PublicNode und Polkachu denselben Blockhash und
+dieselbe Antwort für das öffentliche Selbstdelegationskonto des
+Validators Kraken03. Jeder Kontoreadback bestätigte die angeforderte
+Blockhöhe. Das vorab aus den Rohbeträgen berechnete Soll war
+**9,995 ATOM frei, 1 ATOM delegiert, 0 ATOM in Unbonding**. Der echte
+SW339-Adapter lieferte die ersten beiden Positionen einzeln, keinen
+Unbonding-Eintrag und den Hinweis auf unvollständige Reward- und
+Assetabdeckung. Geprüft ist dieser öffentliche Zustand. Private
+Zuordnung, ein positiver Unbonding-Fall und Rewards bleiben offen.
+[Cosmos-Staking-Referenz](https://github.com/cosmos/cosmos-sdk/blob/main/x/staking/README.md) ·
+[Block und Prüfnachweis](release-evidence/sw339-cosmos-final-balance-2026-11-25.json).
+
+**TRUST01.** Der erneute HTTP-Readback der ausgelieferten Origin
+bestätigt weiterhin Antwortstatus 200 ohne HTTP-CSP- und
+X-Frame-Options-Header. Der vorhandene Meta-CSP-Beleg und das getrennte
+PNG-Reproduktionsprotokoll behalten ihren Umfang. Für die ausstehende
+Teilabnahme fehlen ein autorisierter Auslieferungspfad mit wirksamen
+HTTP-Headern, natives Safari/VoiceOver/ITP und der Primärnachweis zur
+ursprünglichen Zeichnung.

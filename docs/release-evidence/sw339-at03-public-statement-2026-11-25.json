@@ -54,6 +54,7 @@
     "-18.85"
   ],
   "cancelPreserved": true,
+  "staleRemovalPreservedWinner": true,
   "uiImportAndBatchUndoExact": true,
   "protectedByAutomaticObservation": true,
   "removalFixture": "existing generic import engine with no later observation",
