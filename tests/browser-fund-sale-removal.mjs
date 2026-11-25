@@ -68,7 +68,8 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   const page=await ctx.newPage();
   page.on('dialog',dialog=>dialog.accept());
   page.on('pageerror',error=>errors.push(error.message));
-  await page.goto(base);
+  await page.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin?route.continue():route.abort());
+  await page.goto(base,{waitUntil:'domcontentloaded'});
   await ready(page);
   return page;
  }
@@ -158,9 +159,10 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   await page.locator('#saveDialog').click();
   await page.locator('#dialogError:not(.hidden)').waitFor();
   assert.deepEqual(await read(page),winner,'stale submission must preserve the winning bytes and revision');
-  await peer.close();
+  await page.locator('#cancelDialog').click();
+  await closed(page);
 
-  await page.reload();
+  await page.reload({waitUntil:'domcontentloaded'});
   await ready(page);
   await nav(page,'bookings');
   await removePreview(page,sale.id);
@@ -188,7 +190,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   const freshContext=await context(),fresh=await open(freshContext);
   await restore(fresh,bytes);
   assert.equal((await read(fresh)).raw,committed.raw);
-  await fresh.reload();
+  await fresh.reload({waitUntil:'domcontentloaded'});
   await ready(fresh);
   assert.equal((await read(fresh)).raw,committed.raw);
   await checkReimport(fresh);
