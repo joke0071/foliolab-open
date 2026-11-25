@@ -1,0 +1,172 @@
+{
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "origin": "https://foliolab.unperfekt.at/",
+  "httpStatus": "HTTP/2 200 ",
+  "httpCSP": false,
+  "httpXFO": false,
+  "htmlSHA256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa",
+  "icons": {
+    "icons/flask.svg": {
+      "oldSHA256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1",
+      "candidateSHA256": "1d8a16dba63e517de44296172357bf69b18ed413b3a7326011cbdef995319924",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    "icons/flask-192.png": {
+      "oldSHA256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119",
+      "candidateSHA256": "e66c0df3e9059df8aac7c6a905a4c1c215344a3b02b4057dac94c93810520223",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    "icons/flask-512.png": {
+      "oldSHA256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167",
+      "candidateSHA256": "4866dba9d3234ce57f59ac13342ebc1f49e30a4efeab300361583318ced62cf3",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    "icons/flask-maskable-512.png": {
+      "oldSHA256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d",
+      "candidateSHA256": "cd2e2a21d9e690fe076241ffad2016547c508258691cb6c2ef67db56de5aae04",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  },
+  "svgInline": [
+    {
+      "line": 10,
+      "sha256": "e268d77177c33e78715de05469ab95d1e2fe2b6bcac606f4accb631ff67d6433",
+      "v316Ordinal": 1
+    },
+    {
+      "line": 12,
+      "sha256": "7f5cab916c2a1815b97cd8f8a65418799aac3b18317920ecab29c1eee5142a7c",
+      "v316Ordinal": 16
+    },
+    {
+      "line": 12,
+      "sha256": "c4db087ac97563237873d4f112781b370d463391b244e3c296b02173f25170c5",
+      "v316Ordinal": 3
+    },
+    {
+      "line": 13,
+      "sha256": "4dd566bc14b201a61a28042bae61f9183c1b83ae70b4708f1c38ab545b8b2bd9",
+      "v316Ordinal": 6
+    },
+    {
+      "line": 13,
+      "sha256": "1bec3318a0d65f5774bb58d80326bf6adc3fad336d2c31dbb2b7da23ac51fbef",
+      "v316Ordinal": 7
+    },
+    {
+      "line": 15,
+      "sha256": "4dd566bc14b201a61a28042bae61f9183c1b83ae70b4708f1c38ab545b8b2bd9",
+      "v316Ordinal": 6
+    },
+    {
+      "line": 15,
+      "sha256": "1bec3318a0d65f5774bb58d80326bf6adc3fad336d2c31dbb2b7da23ac51fbef",
+      "v316Ordinal": 7
+    },
+    {
+      "line": 18,
+      "sha256": "2af894dd389467a5cc5d22a3f567b6f3f1f7f90afdb613b04505e6b76834fe06",
+      "v316Ordinal": 8
+    },
+    {
+      "line": 18,
+      "sha256": "69b8824b675faba07d2ff0388b6a8a488be6768f351c623e565ff34d535fdb50",
+      "v316Ordinal": 9
+    },
+    {
+      "line": 34,
+      "sha256": "59b932663f768faf6928af51bbcf1284750c7136d957413a1b5a43de83d002ff",
+      "v316Ordinal": 10
+    },
+    {
+      "line": 58,
+      "sha256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "v316Ordinal": 15
+    },
+    {
+      "line": 98,
+      "sha256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "v316Ordinal": 15
+    },
+    {
+      "line": 98,
+      "sha256": "80a53138d4a910880aae217d84dfdbf82b68a495e9afbc832c1dd0c97b322210",
+      "v316Ordinal": 13
+    },
+    {
+      "line": 99,
+      "sha256": "63640bc82186b1f061cb47a5f6b686a7aa4d69eb9e146bdd09f20897f3277198",
+      "v316Ordinal": 14
+    },
+    {
+      "line": 99,
+      "sha256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "v316Ordinal": 15
+    },
+    {
+      "line": 100,
+      "sha256": "7f5cab916c2a1815b97cd8f8a65418799aac3b18317920ecab29c1eee5142a7c",
+      "v316Ordinal": 16
+    },
+    {
+      "line": 194,
+      "sha256": "066ad94875e9865ae66f12d555f30204ba8278c81224ecc5b900f572811f32af",
+      "v316Ordinal": 17
+    },
+    {
+      "line": 199,
+      "sha256": "c94f946311bab3c0288dca29d014b6985e56f4f0bacc3359f94ed40ec0ce1f92",
+      "v316Ordinal": 18
+    },
+    {
+      "line": 218,
+      "sha256": "70ffa2531b973b66fdc7e72d2d8b5c251cb3924524e000ed810cee87874777a6",
+      "v316Ordinal": 19
+    },
+    {
+      "line": 236,
+      "sha256": "521369c56538e3c57fc3efa49996ab2506bac8ed1e942553876618adec29af51",
+      "v316Ordinal": 20
+    }
+  ],
+  "graphicModules": {
+    "src/format.js": {
+      "sha256": "9f2d4d6f48caef0fd1c89e648cf0647ae59e4c0fb9b1d1869162f971bd341323",
+      "v316Match": true
+    },
+    "src/position-icons.js": {
+      "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758",
+      "v316Match": true
+    },
+    "src/loading-ui.js": {
+      "sha256": "da180d76592c9188bd4bb374d3f007e0b84a9fbe41828f66be755d9fadfba383",
+      "v316Match": true
+    },
+    "src/dashboard-ui.js": {
+      "sha256": "5f2e1b7cc486adc73db44bba9cb1ea7f84349cac7db89a9b7b00e654fb3e1a4f",
+      "v316Match": false
+    },
+    "src/allocation-ui.js": {
+      "sha256": "726779845c33f27f77dde7f227479861e848ffae0f402be86e3f56ea3ff118a9",
+      "v316Match": false
+    },
+    "src/portfolio-projection-ui.js": {
+      "sha256": "7e7d1a96c4543dc1eefc5ad42f6fff77a2cdc0d185c4201acf753ac98076b8d4",
+      "v316Match": false
+    }
+  },
+  "licenseSHA256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+  "candidateCommit": "c33aefacdd2d3f46f72c74b080219bb314703845",
+  "candidateTree": "c9aaaaa071b32890909236cbc6fd35ee59a86ed8",
+  "oldIconsEachReadBackFromOrigin": true,
+  "candidateUpstream": "https://github.com/lucide-icons/lucide/tree/f12b0de177fbc2a6795e99be065887e72b237123",
+  "candidateUpstreamOriginalSHA256": "a2ce857c159bef4c128a6d9f0b6dcbd6504ecf1a2a670ee220efd14fd032b561",
+  "candidateUpstreamNoticeVerified": true,
+  "candidatePR": "https://github.com/joke0071/foliolab-open/pull/432",
+  "localChromiumLoadingPWAGate": "passed",
+  "localNodeTests": 1533
+}

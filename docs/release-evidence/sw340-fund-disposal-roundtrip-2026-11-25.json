@@ -1,0 +1,101 @@
+{
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "browser": "141.0.7390.37",
+  "source": "https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202610013/",
+  "sourceSha256": "06818f9183f806ab9500dfa21d25f9c7d57c7ee8db3ca9f8426d352a731ec571",
+  "case": "BFH VIII R 22/23, Fund disposition in 2018",
+  "transactionDayInFixture": "2018-12-31",
+  "dateQualification": "The public ruling specifies the year only. The date is an explicit test placeholder.",
+  "accountOpeningQualification": "Zero is the fixture cash opening, to test the independently published cash delta.",
+  "oracle": {
+    "quantity": "386",
+    "historicalBasis": "39303.64",
+    "gross": "39819.76",
+    "unitPrice": "103.16",
+    "fee": "69.9",
+    "withholding": "674.7",
+    "surcharge": "37.1",
+    "paid": "39038.06",
+    "beforeWithholding": "446.22",
+    "afterWithholding": "-265.58",
+    "journal": [
+      [
+        "asset",
+        "-386",
+        "-39819.76"
+      ],
+      [
+        "cash",
+        "39038.06",
+        "39038.06"
+      ],
+      [
+        "fee",
+        null,
+        "69.9"
+      ],
+      [
+        "tax",
+        null,
+        "711.8"
+      ]
+    ]
+  },
+  "observed": {
+    "positions": [
+      [
+        "fund",
+        "0",
+        "0",
+        "-265.58"
+      ],
+      [
+        "cash",
+        "39038.06",
+        null,
+        null
+      ]
+    ],
+    "postings": [
+      [
+        "asset",
+        "-386",
+        "-39819.76"
+      ],
+      [
+        "cash",
+        "39038.06",
+        "39038.06"
+      ],
+      [
+        "fee",
+        null,
+        "69.9"
+      ],
+      [
+        "tax",
+        null,
+        "711.8"
+      ]
+    ],
+    "flows": [],
+    "bookings": [
+      [
+        "sell",
+        "386",
+        "39819.76",
+        "cash"
+      ]
+    ]
+  },
+  "individualRemoval": {
+    "allowed": false,
+    "reason": "Löschen gesperrt: 1 Einträge mit Herkunftsschutz · 1 eingeschränkt änderbare Einträge (+3 Kategorien).\n\nDetails anzeigen\n1 Einträge mit Herkunftsschutz\n\nImportierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.\n\n1 betroffene Einträge\n\n31. Dez. 2018 · Fondsanteile\n\n1 eingeschränkt änderbare Einträge\n\nWirtschaftliche Änderung derzeit nur für vollständig belegte EUR-Geldbuchungen.\n\n1 betroffene Einträge\n\n31. Dez. 2018 · Fondsanteile\n\n1 Einträge mit Kostenverknüpfung\n\nGebühren oder Steuern sind unbekannt, nicht null oder mit einem Gegenkonto verknüpft. Zuerst beleggebunden prüfen.\n\n1 betroffene Einträge\n\n31. Dez. 2018 · Fondsanteile\n\n1 Einträge mit Bestandsfragen\n\nMengen, EUR-Beträge oder Kontobelege widersprechen dem Geldvorgang.\n\n1 betroffene Einträge\n\n31. Dez. 2018 · Fondsanteile\n\n1 Einträge mit Stichtagsbezug\n\nSpätere Kontrollpunkte könnten widersprechen; zuerst beleggebunden abgleichen.\n\n1 betroffene Einträge\n\n31. Dez. 2018 · Fondsanteile",
+    "recordUnchanged": true
+  },
+  "cancelUndoExact": true,
+  "batchUndoExact": true,
+  "reimportExact": true,
+  "backupSha256": "cf37b6004a87bdae60178f721cc59c74167bcab59c74167c8a0ddcebc2330bcf",
+  "restoreAndReopenExact": true
+}

@@ -1,0 +1,65 @@
+{
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "source": {
+    "isin": "IE00BNG8L278",
+    "reportId": 343333,
+    "date": "2022-01-17",
+    "currency": "USD",
+    "fields": {
+      "10105": {
+        "position": "12.",
+        "optionUSD": "0.0036",
+        "noOptionUSD": "0.0036"
+      },
+      "10108": {
+        "position": "12.3",
+        "optionUSD": "0.0054",
+        "noOptionUSD": "0.0054"
+      },
+      "10109": {
+        "position": "12.4",
+        "optionUSD": "-0.0018",
+        "noOptionUSD": "-0.0018"
+      },
+      "10287": {
+        "position": "16.2.",
+        "optionUSD": "0.0197",
+        "noOptionUSD": "0.0197"
+      },
+      "10288": {
+        "position": "16.3.",
+        "optionUSD": "0.0018",
+        "noOptionUSD": "0.0018"
+      },
+      "10289": {
+        "position": "16.4.",
+        "optionUSD": "0.0171",
+        "noOptionUSD": "0.0171"
+      }
+    },
+    "sourceDigest": "724dc743d4ce06e01b6bb7b000045d5e46553e8b61f198d701ca9612748bece6",
+    "shares": "8622.7",
+    "usdPerEur": "1.14030",
+    "taxEUR": "27.22",
+    "taxableUSD": "112.88",
+    "costBasisIncreaseEURPerShare": "0.01499605367008681925808997632",
+    "unitCostBeforeEUR": "4.7315",
+    "unitCostAfterEUR": "4.7465"
+  },
+  "fixture": "Documented event transcribed into a synthetic native source row; no native original matching or opening cost asserted",
+  "observed": {
+    "kind": "accumulation",
+    "projectionIssues": [
+      "event-review"
+    ],
+    "previewReason": "Alle Quellen müssen geklärt sein; keine teilweise Übernahme von Cash-, Sonder- oder fehlerhaften Vorgängen.",
+    "writeEnabled": false,
+    "basis": "40798.30505",
+    "portfolioUnchanged": true
+  },
+  "oracle": {
+    "publicCostBasisIncreaseEURPerShare": "0.01499605367008681925808997632",
+    "derivedTotalBasisIncreaseEUR": "129.3064719810576164167324388",
+    "syntheticOpeningBasisEUR": "40798.30505"
+  }
+}
