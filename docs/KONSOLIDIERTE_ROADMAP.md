@@ -1,8 +1,10 @@
-## Verbindlicher Arbeitsstand · 21.11.2026
+## Aktueller Arbeitsplan
 
-**25.11.2026 · Arbeitsplan ohne weitere Nutzerbelege.** [Freigabewege und Abnahmekriterien für alle 19 offenen Pakete](ROADMAP_EXECUTION_2026_11_25.md#freigabewege-ab-25112026). Die Entwicklungsleitung bearbeitet die dort festgelegten Produktentscheidungen, Originalabgleiche und Geräteprüfungen. Der Ausgangsstand beträgt 6/6 Kernbereiche und 10/29 Folgepakete.
+[Main, letzte Live-Abnahme und nächster Auftrag](ROADMAP_EXECUTION_2026_11_25.md#aktueller-einstieg) · [Soll, Ist, Beleg und Restkriterium je Paket](ROADMAP_EXECUTION_2026_11_25.md#paketmatrix-der-19-ursprünglich-offenen-zeilen)
 
-**Fortsetzung ab `c6a5578`.** [Aktuelle Abnahme und offene Kriterien je Zeile](ROADMAP_EXECUTION_2026_11_25.md#freigabestand-aller-19-folgezeilen--fortsetzung-vom-25112026). SW340 ist **LIVE_ACCEPTED**. Der neue Tastaturübergang ist auf der Origin bestätigt. UI-Refresh erhöht den Paketstand auf **6/6 und 11/29**.
+## Historischer Ausgangsstand vom 21. bis 25.11.2026
+
+Zu Beginn waren 6/6 Kernbereiche und 10/29 Folgepakete abgenommen. Mit der Live-Abnahme von SW340 und der Tastaturkorrektur stieg der Stand auf 11/29. Die späteren Abnahmen stehen im verlinkten Arbeitsplan.
 
 **Nutzerklarstellung 23.11.2026 – flatex/AT03:** Der Nutzer kennt bei flatex nach eigener Aussage **keine klassischen Kontoauszüge**. Ihre generelle Nichtverfügbarkeit ist nicht belegt. Einen „flatex-Kontoauszug mit gebuchtem Anfangs-/Endsaldo“ deshalb nicht erneut von ihm anfordern, solange ein konkreter verfügbarer Dokumenttyp und Zugang nicht nachgewiesen sind. Bereits vorliegende Kontoumsätze, datierte Saldenanzeigen, Abrechnungen und alternative unabhängige Nachweise prüfen; nicht einen rechnerisch rekonstruierten Saldo als zweiten Originalsaldo ausgeben. **AT03-C und die zusätzliche FIN-E2E-Originalrücknahme bleiben `BLOCKED_EXTERNAL`, nicht `DONE`.** Keine Sperre für unabhängige Roadmap-Arbeit; keine Änderung an 6/6 bzw. 10/29 oder am abgenommenen SW338.
 

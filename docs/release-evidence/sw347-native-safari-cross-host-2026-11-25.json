@@ -1,0 +1,237 @@
+{
+  "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "productTree": "e87fab0abdbc0dda57da48cf9f30bccbabbb655c",
+  "source": "Linux Chromium 141.0.7390.37",
+  "target": "Independent public project macOS VM, Safari 27.2 on 15.8.2, ordinary persistent browser profile.",
+  "scope": "Password-encrypted application download, regular restore file input and both confirmation branches accepted. Synthetic data. Two independent computing environments; no physical second handset, OS eviction, seven-day ITP deletion, or proven spoken phrase.",
+  "attempts": [
+    {
+      "run": 45716484382,
+      "job": 139563741945,
+      "attempt": 1,
+      "jobConclusion": "failure",
+      "archiveId": 15069947442,
+      "archiveSHA256": "2a2f9aa920f07447b876925ea9154d9b37bfbe71b263bf87c58d440b5762ee04",
+      "sourceCommit": "320a93880b85ceb78986a2f6be15bed9d2920863",
+      "report": {
+        "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+        "system": "15.8.2",
+        "image": "20261118.0550.1",
+        "scope": "Fresh project VM. First-party ordinary Safari relaunch and native WebDriver UI tested independently.",
+        "ordinarySeed": {
+          "step": "seed",
+          "revision": 2,
+          "hash": "a73ea55f8258f579bf07944ceeceab72f849f473a81fd07f0e505fcfc0b8edc3",
+          "marker": true,
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "secureContext": true
+        },
+        "processBefore": {
+          "exit": 0,
+          "stdout": "1205",
+          "stderr": ""
+        },
+        "processExitObserved": true,
+        "ordinaryReopen": {
+          "step": "reopen",
+          "revision": 2,
+          "hash": "a73ea55f8258f579bf07944ceeceab72f849f473a81fd07f0e505fcfc0b8edc3",
+          "marker": true,
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "secureContext": true
+        },
+        "processAfter": {
+          "exit": 0,
+          "stdout": "1332",
+          "stderr": ""
+        },
+        "firstPartyRelaunch": "PASS",
+        "safariVersion": {
+          "exit": 0,
+          "stdout": "Included with Safari 27.2 (20625.2.8.18.4)",
+          "stderr": ""
+        },
+        "driverEnable": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "nativeUIError": "timed out"
+      }
+    },
+    {
+      "run": 45716912281,
+      "job": 139565200908,
+      "attempt": 1,
+      "jobConclusion": "failure",
+      "archiveId": 15069822901,
+      "archiveSHA256": "bd6e20774ef83f706b1d9078b9d8abd902d21563689df79e0aa819d2299781fe",
+      "sourceCommit": "046d65e2e119cdbce32d52c3545dc7bce8ebd1e1",
+      "report": {
+        "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+        "system": "15.8.2",
+        "image": "20261118.0550.1",
+        "driver": "normal Safari via LaunchServices",
+        "source": "Linux Chromium genuine password-protected UI download; synthetic portfolio only",
+        "processBefore": {
+          "code": 0,
+          "text": "1236"
+        },
+        "observedExit": true,
+        "error": "RuntimeError('reopen missing')",
+        "observations": {
+          "restore": {
+            "step": "restore",
+            "frame": "same-origin actual product index.html",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+            "envelopeSHA256": "c34b885a85f6f0a9a6185d3114b9091b78bcb8acd63e4b0055e93e1f6a73cf6b",
+            "dialogs": [
+              "password",
+              "replace"
+            ],
+            "revisionBefore": 1,
+            "dataSHA256": "ae44a1410bb80c49d47df8ceea7104fa9b18b6fe7727c694e4ac7e09d9c67175",
+            "cash": "22.34",
+            "journals": 1,
+            "bookings": 1,
+            "snapshots": 1,
+            "externalFlows": 1,
+            "historySessions": 1,
+            "revision": 2,
+            "rawSHA256": "b3f0f386fe58e87c0aaf8774ae5fa5ec256053f1b0a30c3e3bf2fd8b026441ed",
+            "focusBefore": "Direkt zum Inhalt"
+          }
+        }
+      }
+    },
+    {
+      "run": 45717337706,
+      "job": 139566651548,
+      "attempt": 1,
+      "jobConclusion": "success",
+      "archiveId": 15070776109,
+      "archiveSHA256": "1cf5b0b7b1f1c88aee0aeba2734a3ba50d997485098f4919414e99e32fca9a76",
+      "sourceCommit": "8adea0f3c9be112dee0446a88cc97e325bd5f2d1",
+      "report": {
+        "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+        "system": "15.8.2",
+        "image": "20261118.0550.1",
+        "driver": "normal Safari via LaunchServices",
+        "source": "Linux Chromium genuine password-protected UI download; synthetic portfolio only",
+        "processBefore": {
+          "code": 0,
+          "text": "1200"
+        },
+        "observedExit": true,
+        "processAfter": {
+          "code": 0,
+          "text": "1317"
+        },
+        "crossHostRecovery": "PASS",
+        "keyboard": {
+          "code": 0,
+          "text": "macOS Return key sent"
+        },
+        "voiceOverLaunch": {
+          "code": 0,
+          "text": ""
+        },
+        "actualVoiceOverPhrase": {
+          "code": null,
+          "text": "Command '['osascript', '-e', 'tell application \"VoiceOver\" to get content of last phrase']' timed out after 5 seconds"
+        },
+        "siteIsolation": "ISOLATED",
+        "scope": "Localhost and 127.0.0.1 first/embedded storage comparison. This does not measure timed ITP deletion or OS eviction.",
+        "observations": {
+          "restore": {
+            "step": "restore",
+            "frame": "same-origin actual product index.html",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+            "envelopeSHA256": "c34b885a85f6f0a9a6185d3114b9091b78bcb8acd63e4b0055e93e1f6a73cf6b",
+            "dialogs": [
+              "password",
+              "replace"
+            ],
+            "revisionBefore": 1,
+            "dataSHA256": "ae44a1410bb80c49d47df8ceea7104fa9b18b6fe7727c694e4ac7e09d9c67175",
+            "cash": "22.34",
+            "journals": 1,
+            "bookings": 1,
+            "snapshots": 1,
+            "externalFlows": 1,
+            "historySessions": 1,
+            "revision": 2,
+            "rawSHA256": "b3f0f386fe58e87c0aaf8774ae5fa5ec256053f1b0a30c3e3bf2fd8b026441ed",
+            "focusBefore": "Direkt zum Inhalt"
+          },
+          "reopen": {
+            "step": "reopen",
+            "frame": "same-origin actual product index.html",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+            "dataSHA256": "ae44a1410bb80c49d47df8ceea7104fa9b18b6fe7727c694e4ac7e09d9c67175",
+            "cash": "22.34",
+            "journals": 1,
+            "bookings": 1,
+            "snapshots": 1,
+            "externalFlows": 1,
+            "historySessions": 1,
+            "revision": 2,
+            "rawSHA256": "b3f0f386fe58e87c0aaf8774ae5fa5ec256053f1b0a30c3e3bf2fd8b026441ed",
+            "focusBefore": "Direkt zum Inhalt"
+          },
+          "focus": {
+            "step": "focus",
+            "frame": "same-origin actual product index.html",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+            "dataSHA256": "ae44a1410bb80c49d47df8ceea7104fa9b18b6fe7727c694e4ac7e09d9c67175",
+            "cash": "22.34",
+            "journals": 1,
+            "bookings": 1,
+            "snapshots": 1,
+            "externalFlows": 1,
+            "historySessions": 1,
+            "revision": 2,
+            "rawSHA256": "b3f0f386fe58e87c0aaf8774ae5fa5ec256053f1b0a30c3e3bf2fd8b026441ed",
+            "focusBefore": "Direkt zum Inhalt",
+            "trustedEnter": true,
+            "active": "mainContent",
+            "location": "#mainContent"
+          },
+          "first": {
+            "step": "first",
+            "origin": "http://127.0.0.1:49164",
+            "topLevel": true,
+            "referrer": "",
+            "firstPartyToken": "first-party",
+            "thirdPartyToken": null,
+            "hasStorageAccess": true,
+            "revision": 2,
+            "cash": "22.34"
+          },
+          "embedded": {
+            "step": "embedded",
+            "origin": "http://127.0.0.1:49164",
+            "topLevel": false,
+            "referrer": "http://localhost:49164/",
+            "firstPartyToken": null,
+            "thirdPartyToken": null,
+            "hasStorageAccess": false,
+            "revision": null,
+            "cash": null
+          },
+          "last": {
+            "step": "last",
+            "origin": "http://127.0.0.1:49164",
+            "topLevel": true,
+            "referrer": "",
+            "firstPartyToken": "first-party",
+            "thirdPartyToken": null,
+            "hasStorageAccess": true,
+            "revision": 2,
+            "cash": "22.34"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "evidence": "Two actual versions on the same origin. Existing and fresh SW346 readers encounter a recoverable read error on a new high-precision NEAR amount, preserve storage, and SW347 reopens the intact revision.",
+  "fromMain": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "toHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "environment": "isolated local browser profiles; same logical origin; no OS eviction or physical second device",
+  "results": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "legacy": "SW346",
+      "candidate": "SW347",
+      "initialRevision": 1,
+      "acceptedRevision": 2,
+      "legacyParser": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+      "openTabStorageMessage": "Gespeicherte Portfolio-Daten sind beschädigt. Keine Änderungen vorgenommen.",
+      "freshOldProfileTabOpenedRecoverableError": true,
+      "oldReadersPreservedRawAndRevision": true,
+      "reopenedNewReaderPreservedRawAndRevision": true,
+      "sha256": "1d3f797793a6d97afdcd2b35ea52cdedcb8e1b5d700a392129391b71832b3ef7"
+    },
+    {
+      "engine": "firefox",
+      "browser": "157.0",
+      "legacy": "SW346",
+      "candidate": "SW347",
+      "initialRevision": 1,
+      "acceptedRevision": 2,
+      "legacyParser": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+      "openTabStorageMessage": "Gespeicherte Portfolio-Daten sind beschädigt. Keine Änderungen vorgenommen.",
+      "freshOldProfileTabOpenedRecoverableError": true,
+      "oldReadersPreservedRawAndRevision": true,
+      "reopenedNewReaderPreservedRawAndRevision": true,
+      "sha256": "1d3f797793a6d97afdcd2b35ea52cdedcb8e1b5d700a392129391b71832b3ef7"
+    },
+    {
+      "engine": "webkit",
+      "browser": "27.2",
+      "legacy": "SW346",
+      "candidate": "SW347",
+      "initialRevision": 1,
+      "acceptedRevision": 2,
+      "legacyParser": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+      "openTabStorageMessage": "Gespeicherte Portfolio-Daten sind beschädigt. Keine Änderungen vorgenommen.",
+      "freshOldProfileTabOpenedRecoverableError": true,
+      "oldReadersPreservedRawAndRevision": true,
+      "reopenedNewReaderPreservedRawAndRevision": true,
+      "sha256": "1d3f797793a6d97afdcd2b35ea52cdedcb8e1b5d700a392129391b71832b3ef7"
+    }
+  ]
+}

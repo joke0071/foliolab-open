@@ -1,0 +1,56 @@
+{
+  "evidence": "Actual SW346 to SW347 service worker upgrade on same-origin profiles followed by an offline restart.",
+  "fromMain": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "toHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "environment": "isolated local browser profiles; same logical origin; no OS eviction or physical second device",
+  "results": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "from": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "to": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    },
+    {
+      "engine": "firefox",
+      "browser": "157.0",
+      "from": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "to": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    },
+    {
+      "engine": "webkit",
+      "browser": "27.2",
+      "from": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "to": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    }
+  ]
+}
