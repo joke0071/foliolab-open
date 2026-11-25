@@ -816,3 +816,29 @@ Abwicklungskosten und eine ausgewiesene Einzelzuordnung der
 Anschaffungskosten. Die deutsche Fallentscheidung liefert keine
 österreichische Regel.
 [Rechen- und Produktbeleg](release-evidence/sw340-lorillard-merger-court-reference-2026-11-25.json).
+
+## Freigabestand aller 19 Folgezeilen · Fortsetzung vom 25.11.2026
+
+Der Gesamtstand beträgt **6/6 Kernbereiche und 10/29 Folgepakete**. SW340 ist veröffentlicht. Die formale Abnahme wartet auf den laufenden Live-Wiederanlauf.
+
+| Ursprünglich offene Zeile | Umfang aus dieser Fortsetzung | Verbleibender Freigabepunkt |
+| --- | --- | --- |
+| UI-Refresh · #300 | SW340 korrigiert den vorwärts gerichteten Fokusübergang. Drei Bereiche, echte Firefox-Vergrößerung, WebKit, sichtbarer Fokus, Entwurf und gleichbleibende IndexedDB bestätigt. | Drei bestehende Bereiche entschieden. Der offizielle Drei-Engine-Live-Wiederanlauf steht noch aus. |
+| Speicher und Recovery · #44/#254 | HTTPS-Aktualisierung mit 10.000 Buchungen, Offline-Neustart und gesondert blockierter inkompatibler SW88-Schreibversuch belegt. | Beobachtete OS-Bereinigung und verschlüsselter Restore auf zweitem autorisierten Gerät. |
+| AT05 · #129 | OeKB-Original, Flatex-Einzelabrechnung über 27,22 EUR und Anschaffungskostenkorrektur unabhängig berechnet. Dokumentierende Jahresansicht, Journal und Restore im bisherigen Umfang belegt. | Jahresabrechnung desselben Depots, fallbezogene Fachprüfung und Nachweis einer automatischen Kostenbasiszuordnung. |
+| Benchmark · #124 | 100 % VWCE/Xetra/EUR, Fünf-Tage-Stichprobe und unabhängige TWR-Rechnung mit Ein- und Auszahlung. FolioLab belässt Rendite bei fehlenden Ereignisbewertungen als unbekannt. | Vollständige adjustierte EUR-Reihe samt Anzeigerechten und gemeinsamer Vergleich auf belegten Bewertungstagen. |
+| AT03 · #127 | Öffentlicher EUR-Kontostand mit unabhängig ausgewiesenem Anfangs- und Endsaldo, reguläre Importbestätigung und Vergleich der Zwischenstände. | Persönliche gebuchte Salden desselben tatsächlich genutzten Kontos und Zeitraums. |
+| FLH05 · #174 | Kraken- und Flatex-Teilbelege, öffentlich dokumentiertes Order-/Ausführungsschema als weiterer Suchpfad. | Zusammengehörige echte Teilfüllungen mit Gebühren und Fremdwährung samt gesonderter gebuchter Nettoabrechnung. |
+| FIN-E2E01 · #255 | Neuer Cash-Abgang durch reguläre Import-, Rücknahme-, Undo- und Restoreprüfung mit Abbruch und Parallelwrite. | Referenzfall einer Wertpapier-Rücknahme mit unabhängig belegter Kostenbasis und Gegenbuchung. |
+| Verwaltung · #165/#257 | Tatsächliche Verwaltungsoberfläche für erlaubten Cash-Abgang und geschützte Folgeabhängigkeit. Abbruch, Stale, Wiederimport, Undo und Restore geprüft. | Separater Originalfall mit Kostenbasis und Gegenbuchung im Verwaltungsablauf. |
+| FLH03 · #148 | Öffentlicher Trade-Republic-Kontoauszug als generischer CSV-Fall. Sechs native CSV-Profile gegen veröffentlichte PDF-Abrechnungen verglichen. Persönlicher TR-Fall entfällt. | Passendes Paar aus nativem regionalem Export und Einzelabrechnung. Persönliche Bitpanda-Stichtagsbestätigung für Cash und BCI25-Einzelpositionen. |
+| FLH03-18 · #159 | Vorhandener belegter SOL-Brückenfall bleibt maßgeblich. | Weitere Ledger-/Stakingposition mit unabhängiger Kontozuordnung und datiertem Endbestand. |
+| Weitere Wallets · #119 | Öffentlicher Cosmos-Abgleich für frei, delegiert, Unbonding und gesondert ausgewiesenen ausstehenden Reward. NEAR weist die beobachtete Präzision jenseits von 18 Nachkommastellen ausdrücklich ab. | Rewards-Abdeckung, exakte Verarbeitung dieser NEAR-Beträge und Beleg für die private Kontozuordnung. |
+| ETH-Cursor · #268 | Öffentlicher Seitenwechsel und Chain-Receipts bereits abgenommen. Verfügbare Privatbelege gezielt für den historischen Fall geprüft. | Ursprüngliche private Providerantwort mit Cursor und zugehörige Folgeantwort. |
+| Barausgleich · #52 | Lorillard/Reynolds belegt Stückrest, Barausgleich, Gegenwert und gesamte historische Anschaffungskosten. Kombinierte Buchungen bleiben mit identischem Datenstand gesperrt. | Vollständiger tatsächlicher Stückrest-Ausgleich mit Auszahlungswährung, FX, Gebühren und zugeordneter Steuerbasis. |
+| CI-Effizienz · #229/#430 | Identische Appbytes im Paarvergleich, lokale Gegenproben und Ubuntu-Paare in beiden Reihenfolgen. | Vollständige Messung in beiden Reihenfolgen. #430 bleibt zurückgestellt. |
+| TRUST01 · #298 | Ausgelieferte Antworten erneut geprüft. Lizenzierter Kolbenersatz mit reproduzierbaren PNGs liegt als Kandidat vor. | Wirksamer HTTP-Framingschutz auf autorisierter Origin, native Safari-/VoiceOver-/ITP-Probe und Rechtekette der übrigen betroffenen Grafiken. |
+| Startperformance · #177/#256 | 10k-Fixture und zugängliche Gerätetestwege geprüft. | Physisches Android-Projektgerät für fünf Kalt-, Warm- und Offline-Starts pro Vergleichsstand. |
+| UI-SENTIMENT01 · #405 | CMC-CORS und die CNN-Einbettungsgrenze auf produktiver Origin geprüft. Separate Fixture-Prüfung für Anzeige und Cache liegt vor. | Autorisierter CMC-Abruf und offizieller CNN-Datenweg samt Anzeigeerlaubnis. |
+| FLH04 · #160/#427 | Draft und veröffentlichten Reviewauftrag auf neuesten Antworten geprüft. | Unabhängiges Kryptografie-/Architekturreview und konkrete Sicherheitsfreigabe. Danach autorisierter Zwei-Geräte-Test. Enrollment und Remote-Write sind gesperrt. |
+| Produktmaster · #149 | Fertige interne Textvorschau am ausgelieferten Umfang eingeordnet. | Öffentliche Bewerbung bleibt getrennt zurückgestellt. |
