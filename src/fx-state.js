@@ -1,4 +1,4 @@
-import {units,exact,preciseValue} from './decimal.js';
+import {units,exact,preciseValue,quantityMath} from './decimal.js';
 import {valueSign} from './defi.js';
 
 // An explicit, fail-closed value in the existing exact FX field. Older readers
@@ -37,9 +37,9 @@ export function normalizePositionFX(p,{legacy=false}={}){
 }
 /** Same fixed-point valuation as the existing core; UNKNOWN is never arithmetic. */
 export function grossPositionValueExact(p){
- if(units(p.quantityExact??p.quantity)===0n)return '0';
+ if(quantityMath(p.wallet).units(p.quantityExact??p.quantity)===0n)return '0';
  const fx=positionFX(p);if(fx.state!=='known')return null;
- return preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,fx.rateExact);
+ return preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,fx.rateExact,p.wallet);
 }
 export function signedPositionValueExact(p){
  const sign=valueSign(p);if(sign===0)return '0';

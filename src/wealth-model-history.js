@@ -1,4 +1,4 @@
-import {exact,units} from './decimal.js';
+import {exact,units,quantityMath} from './decimal.js';
 import {valueSign} from './defi.js';
 import {historicalEURValue,historicalPositionMarket,walletStreamMatches} from './historical-position-value.js';
 import {validCalendarDate} from './transactions.js';
@@ -27,14 +27,14 @@ function compatibleAfter(model){
 }
 
 function currentHoldings(model){
- const positions=model.positions.filter(p=>units(p.quantityExact??p.quantity)>0n);
+ const positions=model.positions.filter(p=>quantityMath(p.wallet).units(p.quantityExact??p.quantity)>0n);
  const byId=new Map(positions.map(p=>[p.id,p]));
  const included=positions.filter(p=>valueSign(p)!==0);
  if(duplicateWalletHoldings({positions:included}).length)throw Error('Überlappende Wallet-Bestände zuerst zuordnen.');
  for(const position of positions){
   if(valueSign(position)!==0)continue;
   const target=byId.get(position.representedByPositionId),key=walletHoldingKey(position.wallet);
-  if(!key||!target||valueSign(target)!==1||key!==walletHoldingKey(target.wallet)||units(position.quantityExact??position.quantity)!==units(target.quantityExact??target.quantity)){
+  if(!key||!target||valueSign(target)!==1||key!==walletHoldingKey(target.wallet)||quantityMath(position.wallet).units(position.quantityExact??position.quantity)!==quantityMath(target.wallet).units(target.quantityExact??target.quantity)){
    throw Error('Die wirtschaftliche Zuordnung eines ausgeschlossenen Bestands ist offen.');
   }
  }
@@ -65,7 +65,7 @@ export function modeledWealthSeries(model){
     }
     fxByCurrency.set(p.currency,known);
    }
-   markets.push({position:p,market,quantity:exact(units(p.quantityExact??p.quantity)),sign:BigInt(valueSign(p))});
+   markets.push({position:p,market,quantity:p.quantityExact??p.quantity,sign:BigInt(valueSign(p))});
   }
   if(positions.every(p=>p.kind==='cash'))for(const fx of fxByCurrency.values())for(const date of fx.keys())calendar.add(date);
   if(calendar.size*positions.length>maxPositionsByDay)throw Error('Zu viele Kombinationen aus Position und Modelltagen für eine direkte Übersicht.');
@@ -83,7 +83,7 @@ export function modeledWealthSeries(model){
     }else if(price===null||fx===null){
      reasons.add(price===null?'An einzelnen Tagen fehlt ein historischer Kurs.':'An einzelnen Tagen fehlt ein eindeutiger historischer EUR-Wechselkurs.');
      complete=false;
-    }else sum+=units(historicalEURValue(quantity,price,fx))*sign;
+    }else sum+=units(historicalEURValue(quantity,price,fx,p.wallet))*sign;
    }
    if(!complete){interrupted=true;continue;}
    const gap=previousDate&&(Date.parse(date)-Date.parse(previousDate))/864e5>(strictDaily?1:4);

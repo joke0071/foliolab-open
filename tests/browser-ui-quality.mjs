@@ -32,7 +32,8 @@ for(const check of [
  './browser-flatex-native-simulation-ui.mjs',
  './browser-flatex-native-commit.mjs',
  './browser-cosmos-reward.mjs',
- './browser-fractional-settlement.mjs'
+ './browser-fractional-settlement.mjs',
+ './browser-near-native-precision.mjs'
 ]){const finish=browserGateDeadline('ui-quality import '+check);try{await import(check);console.log('BROWSER_GATE_PASS '+check);}finally{finish();}}
 import {clickDisclosed,revealAction} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';

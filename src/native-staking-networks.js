@@ -1,4 +1,4 @@
-import {atomicDecimal} from './decimal.js';
+import {atomicDecimal,nearQuantity} from './decimal.js';
 import {requestJSON,TTL} from './request-cache.js';
 
 /** Strict read-only, keyless public endpoints. Endpoint uptime and browser CORS are NOT guaranteed. */
@@ -124,7 +124,12 @@ export async function discoverHedera(address,fetcher=globalThis.fetch){
 export async function nearAccountBalances(address,fetcher=globalThis.fetch){
  const a=validateNativeStakingAddress('near',address);
  const d=await postRpc(NEAR_RPC,'query',{request_type:'view_account',account_id:a,finality:'final'},fetcher);
- return {liquid:amount(d.amount,24),locked:amount(d.locked,24)};
+ const format=value=>{
+  const n=nonnegativeRaw(value);
+  if(n>=10n**32n*nearQuantity.scale)throw Error('Wert überschreitet das unterstützte Größenlimit.');
+  return nearQuantity.exact(n);
+ };
+ return {liquid:format(d.amount),locked:format(d.locked)};
 }
 export async function discoverNear(address,fetcher=globalThis.fetch){
  const q=await nearAccountBalances(address,fetcher),items=[];
