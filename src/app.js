@@ -1,3 +1,4 @@
+import {units,SCALE} from './decimal.js';
 import {createInstallHintPreference} from './install-hint-preference.js';
 import {createSharedImportUI} from './shared-import-ui.js';
 import {bindNativeFlatexSourceContext} from './flatex-native.js';
@@ -2046,6 +2047,10 @@ function openBooking(){
     '<label class="field" id="bookingPriceWrap"><span id="bookingPriceLabel">Kauf-/Verkaufskurs je Stück</span><input name="unitPrice" type="text" inputmode="decimal" placeholder="Tatsächlicher Ausführungskurs"></label></div>'+
   '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
     '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
+  '<details id="bookingFraction" class="advanced-apis hidden"><summary>Abrechnung für einen Aktienbruchteil</summary>'+
+    '<p class="small-help">Für den Verkauf des bereits eingebuchten Stückrests. Übertrage beide EUR-Beträge vom Beleg und erfasse die zugehörigen Gebühren und Steuern.</p>'+
+    '<div class="field-row">'+field('Kurswert vor Abzügen in EUR','fractionGrossEUR','','text','inputmode="decimal"')+
+    field('Nettogutschrift in EUR','fractionNetEUR','','text','inputmode="decimal"')+'</div></details>'+
   '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget"><option value="">Zielposition auswählen</option>'+options(list.map(p=>[p.id,p.name]),'')+'</select></label>'+
     field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
     '<p class="small-help">Ein Barausgleich oder eine Barabfindung wird nicht automatisch verbucht. Bitte mit der Brokerabrechnung abgleichen.</p></div>'+
@@ -2103,6 +2108,14 @@ function openBooking(){
   const meta=['ticker_change','isin_change','delist'].includes(actual);
   const ratio=actual==='split',correct=actual==='correction',target=['transfer','swap','merger'].includes(actual);
   const trade=['buy','sell'].includes(actual);
+  const fraction=$('bookingFraction');
+  const showFraction=actual==='sell'&&position?.kind==='stock'&&position.currency==='EUR'&&units(position.quantityExact??position.quantity)%SCALE>0n;
+  fraction.classList.toggle('hidden',!showFraction);
+  for(const input of fraction.querySelectorAll('input')){
+   input.disabled=!showFraction;
+   if(changed)input.value='';
+  }
+  if(changed)fraction.open=false;
   const needsQuantity=!meta&&!ratio&&!correct;
   $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
   $('bookingTargetWrap').classList.toggle('hidden',!target);

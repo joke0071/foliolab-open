@@ -77,3 +77,28 @@ test('Unrepresentable reverse split must not silently erase an 18-decimal holdin
  const {m,stock}=fixture({shares:'0.000000000000000001',basis:'0.01'});
  unchanged(m,()=>trade(m,stock,'split',{ratioNumerator:1,ratioDenominator:3}));
 });
+
+test('separately settled EUR fractional sale reconciles the two broker amounts and keeps other holdings intact',()=>{
+ const {m,stock,cash}=fixture({shares:'1.609',basis:'20.11',cashQuantity:'0'});
+ const fields={type:'sell',date:'2022-07-01',positionId:stock.id,cashPositionId:cash.id,
+  quantity:'0,609',unitPrice:'15,537607',fractionGrossEUR:'9,46',fractionNetEUR:'8,95',feeEUR:'0',taxEUR:'0,51'};
+ const before=JSON.stringify(m);
+ for(const overrides of [{fractionNetEUR:''},{fractionGrossEUR:''},{fractionGrossEUR:'9.47'},
+                         {fractionNetEUR:'9.46'},{cashPositionId:null},{quantity:'0.608'},
+                         {type:'buy'},{tradeAmountEURExact:'9.46'}]){
+  assert.throws(()=>executeTransaction(m,{...fields,...overrides}));
+  assert.equal(JSON.stringify(m),before);
+ }
+ const booking=executeTransaction(m,fields);
+ assert.equal(booking.unitPrice,15.537607);
+ assert.equal(booking.amountExactEUR,'9.46');
+ assert.equal(stock.quantityExact,'1');
+ assert.equal(cash.quantityExact,'8.95');
+ assert.deepEqual(m.journalEntries[0].postings.map(p=>p.amountBookEURExact),['-9.46','8.95','0.51']);
+ assert.equal(m.externalCashFlows.length,0);
+ assert(ledgerQuantityAudit(m).ok);
+ assert.deepEqual(safeImport(JSON.parse(backup(m))).bookings,m.bookings);
+ const settled=JSON.stringify(m);
+ assert.throws(()=>executeTransaction(m,fields));
+ assert.equal(JSON.stringify(m),settled);
+});
