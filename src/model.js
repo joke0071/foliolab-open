@@ -16,7 +16,7 @@ import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches,validateUnpricedUSDTransfers,validCalendarDate} from './transactions.js';
-import {units,exact,preciseValue} from './decimal.js';
+import {units,exact,preciseValue,quantityMath,SCALE} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
 import {enhanceKnownReferenceListing} from './reference-listings.js';
@@ -103,12 +103,15 @@ export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==unde
   for(const value of [v.quantity,v.quantityExact,v.fxRate,v.fxRateExact]){
     if(value!=null&&typeof value!=='string'&&typeof value!=='number'&&typeof value!=='bigint')throw Error('Positionsmenge und Wechselkurs dürfen keine strukturierten oder booleschen Werte enthalten.');
   }
-  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);
+  const kind=KINDS.includes(v.kind)?v.kind:'other';
+  const wallet=kind==='crypto'?validateWallet(v.wallet):null;
+  const math=quantityMath(wallet);
+  const quantityExact=math.exact(math.units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);
   const priceInput=v.price??0;
   if(!['string','number'].includes(typeof priceInput))throw Error('Der Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');
   if(v.priceExact!=null&&!['string','number'].includes(typeof v.priceExact))throw Error('Der exakte Kurs muss eine Zahl sein; boolesche oder strukturierte Werte sind ungültig.');
   const price=safeNumber(priceInput);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fx=normalizePositionFX({...v,currency},{legacy:legacyFX}),fxRate=fx.fxRate;
-  const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
+  const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
   assertWalletHoldingAvailable(model,{id:v.id,wallet,valuationMode:v.valuationMode,representedByPositionId:v.representedByPositionId});
   const costBasisExact=v.costBasisExact==null?(v.costBasisEUR==null||v.costBasisEUR===''?null:exact(units(v.costBasisEUR))):exact(units(v.costBasisExact));
   const costBasisEUR=costBasisExact==null?null:safeNumber(costBasisExact);
@@ -223,9 +226,12 @@ export function safeImport(raw){
   if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
   m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!validCalendarDate(x.date)||!Number.isFinite(Number(x.amountEUR))||!exactMatchesDisplay(x.amountEUR,x.amountExactEUR))throw Error('Cashflow-Historie: Datum oder Betrag widersprüchlich.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
   uniqueIds(m.externalCashFlows,'externen Geldflüssen');
+  const positionById=new Map(m.positions.map(p=>[p.id,p]));
   m.openingPositions=raw.version===3&&Array.isArray(raw.openingPositions)?raw.openingPositions.map(x=>{
-    if(!x||!x.positionId||!m.positions.some(p=>p.id===x.positionId))throw Error('Ungültiger Eröffnungsbestand.');
-    return {positionId:cleanString(x.positionId,120),quantityExact:exact(units(x.quantityExact)),costBasisExact:x.costBasisExact==null?null:exact(units(x.costBasisExact)),realizedPnLExact:x.realizedPnLExact==null?null:exact(units(x.realizedPnLExact)),source:'observed-opening',asOf:x.asOf==null?null:(validCalendarDate(x.asOf)?x.asOf:(()=>{throw Error('Ungültiges Eröffnungsdatum.');})())};
+    const position=positionById.get(x?.positionId);
+    if(!position)throw Error('Ungültiger Eröffnungsbestand.');
+    const math=quantityMath(position.wallet);
+    return {positionId:cleanString(x.positionId,120),quantityExact:math.exact(math.units(x.quantityExact)),costBasisExact:x.costBasisExact==null?null:exact(units(x.costBasisExact)),realizedPnLExact:x.realizedPnLExact==null?null:exact(units(x.realizedPnLExact)),source:'observed-opening',asOf:x.asOf==null?null:(validCalendarDate(x.asOf)?x.asOf:(()=>{throw Error('Ungültiges Eröffnungsdatum.');})())};
   }):[];
   if(raw.version<3)captureOpenings(m);
   if(raw.version===3){
@@ -296,6 +302,16 @@ export function safeImport(raw){
       revisions:Array.isArray(x.revisions)?structuredClone(x.revisions):[],
       note:cleanString(x.note,180)};
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
+  // Legacy readers accepted unattached opening observations in portfolios without a journal.
+  // A new high-precision opening must agree with its independently stored position.
+  if(raw.version===3&&!m.journalEntries.length){
+   for(const opening of m.openingPositions){
+    const p=positionById.get(opening.positionId);
+    if(quantityMath(p.wallet).scale>SCALE&&opening.quantityExact!==p.quantityExact&&
+       [opening.quantityExact,p.quantityExact].some(value=>(value.split('.')[1]?.length??0)>18))
+     throw Error('Backup: NEAR-Eröffnungsbestand und aktuelle Positionsmenge stimmen nicht überein.');
+   }
+  }
   if(raw.version===3&&m.journalEntries.length){
    const audit=ledgerQuantityAudit(m);
    if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');

@@ -1,19 +1,21 @@
-import {units,exact} from './decimal.js';
+import {units,exact,quantityMath} from './decimal.js';
 
 /**
  * Apply a confirmed wallet rescan to an existing holding.
- * The UI's Number fields and the 18-decimal strings used for valuation must
+ * The UI's Number fields and the exact quantities used for valuation must
  * always represent the same economic quantity and market quote.
  */
 export function updateScannedWalletPosition(existing,asset,{updatedAt=new Date().toISOString(),model=null}={}){
  if(!existing?.wallet?.enabled||!asset)throw Error('Ungültige Wallet-Scan-Daten.');
- const quantityExact=exact(units(asset.quantityExact??asset.quantity));
- if(units(quantityExact)<0n)throw Error('Wallet-Bestand darf nicht negativ sein.');
+ const math=quantityMath(existing.wallet);
+ const raw=math.units(asset.quantityExact??asset.quantity);
+ const quantityExact=math.exact(raw);
+ if(raw<0n)throw Error('Wallet-Bestand darf nicht negativ sein.');
  const hasFreshPrice=Number.isFinite(asset.price)&&asset.price>0;
  const priceExact=hasFreshPrice?exact(units(asset.price)):null;
  const opening=model?.openingPositions?.find(o=>o.positionId===existing.id);
  const quantityManaged=Boolean(model?.journalEntries?.some(j=>j.postings.some(p=>p.positionId===existing.id&&p.quantityDeltaExact!=null)));
- if(model&&units(quantityExact)!==units(existing.quantityExact??existing.quantity)&&
+ if(model&&raw!==math.units(existing.quantityExact??existing.quantity)&&
     (quantityManaged||opening&&(opening.source!=='observed-opening'||opening.asOf!==null)))
   throw Error('Wallet-Bestand besitzt einen datierten Anfang oder mengenwirksame Buchungen. Neue Beobachtung gesondert abgleichen.');
  existing.quantityExact=quantityExact;

@@ -52,7 +52,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,sourcesOpen=false}
  const quote=String(p.quoteSource||'').trim()?esc(p.quoteSource):'Unbekannt',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
  const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
-   [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
+   [['Bestand',(p.wallet?.chain==='near'||p.wallet?.chain==='near-locked'?exactQuantityLabel(p.quantityExact):quant(Number(p.quantityExact??p.quantity)))+' '+(p.symbol||'Stk.')],
     ['Kurs je Einheit',price],['Einstandswert',cost]]
    .map(([name,value])=>'<div class="position-detail-stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong></div>').join('')+'</div>';
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';

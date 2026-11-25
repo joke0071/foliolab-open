@@ -22,19 +22,35 @@ export function units(value){
  if(typeof value==='bigint')return value*SCALE;
  const key=(typeof value==='string'&&value.length<=80)||typeof value==='number'?String(value):null;
  if(key!==null&&parsedUnits.has(key))return parsedUnits.get(key);
- const s=expand(value);
- const match=/^([+-]?)(\d+)(?:\.(\d+))?$/.exec(s);
- const fraction=match[3]||'';
- if(fraction.length>18 && /[1-9]/.test(fraction.slice(18)))throw Error('Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.');
- if(match[2].length>32)throw Error('Wert überschreitet das unterstützte Größenlimit.');
- const n=BigInt(match[2])*SCALE+BigInt((fraction.slice(0,18)+'0'.repeat(18)).slice(0,18));
- return rememberUnits(key,match[1]==='-'?-n:n);
+ return rememberUnits(key,parseFixed(value,18,SCALE));
 }
-/** @param {bigint} n @returns {string} */
-export function exact(n){
+
+function parseFixed(value,places,scale){
+ if(typeof value==='bigint')return value*scale;
+ const match=/^([+-]?)(\d+)(?:\.(\d+))?$/.exec(expand(value));
+ const fraction=match[3]||'';
+ if(fraction.length>places&&/[1-9]/.test(fraction.slice(places)))throw Error('Mehr als '+places+' Nachkommastellen können nicht exakt gespeichert werden.');
+ if(match[2].length>32)throw Error('Wert überschreitet das unterstützte Größenlimit.');
+ const n=BigInt(match[2])*scale+BigInt(fraction.slice(0,places).padEnd(places,'0'));
+ return match[1]==='-'?-n:n;
+}
+
+function formatFixed(n,places,scale){
  const sign=n<0n?'-':'',u=n<0n?-n:n;
- const whole=u/SCALE,frac=(u%SCALE).toString().padStart(18,'0').replace(/0+$/,'');
- return sign+whole+(frac?'.'+frac:'');
+ const fraction=(u%scale).toString().padStart(places,'0').replace(/0+$/,'');
+ return sign+(u/scale)+(fraction?'.'+fraction:'');
+}
+
+export const exact=n=>formatFixed(n,18,SCALE);
+const ledgerQuantity=Object.freeze({units,exact,scale:SCALE});
+const yoctoScale=10n**24n;
+export const nearQuantity=Object.freeze({
+ units:value=>parseFixed(value,24,yoctoScale),
+ exact:value=>formatFixed(value,24,yoctoScale),
+ scale:yoctoScale
+});
+export function quantityMath(wallet){
+ return wallet?.enabled&&!wallet.contract&&(wallet.chain==='near'||wallet.chain==='near-locked')?nearQuantity:ledgerQuantity;
 }
 export const plus=(a,b)=>a+b;
 export const minus=(a,b)=>a-b;
@@ -49,8 +65,12 @@ export function div(a,b){
  const result=(aa+bb/2n)/bb;
  return negative?-result:result;
 }
-export function preciseValue(quantity,price,rate='1'){
- return exact(mul(mul(units(quantity),units(price)),units(rate)));
+export function preciseValue(quantity,price,rate='1',wallet=null){
+ const math=quantityMath(wallet);
+ const product=math.units(quantity)*units(price);
+ const magnitude=product<0n?-product:product;
+ const gross=(magnitude+math.scale/2n)/math.scale;
+ return exact(mul(product<0n?-gross:gross,units(rate)));
 }
 /** Only convert to JS number at UI/external-API boundaries. */
 export function approx(value){return Number(exact(typeof value==='bigint'?value:units(value)));}

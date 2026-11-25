@@ -1,6 +1,6 @@
 import {validateNetSettlement} from './flatex-net-settlement.js';
 import {assetKey} from './assets.js';
-import {units,exact,mul,div,SCALE} from './decimal.js';
+import {units,exact,mul,div,SCALE,quantityMath} from './decimal.js';
 import {bookingOwnership,sourceDigest,provenBookingRemovalImport,sourceUnmodified,validateImportSource} from './import-identity.js';
 import {FX_UNKNOWN} from './fx-state.js';
 export const UNPRICED_USD_PRINCIPAL='unpriced-native-usd-principal';
@@ -144,21 +144,24 @@ export function validateUnpricedUSDTransfers(model,{pendingJournalId=null}={}){
 /** Compare recorded holdings to opening balance plus chronological, exact journal movements. */
 export function ledgerQuantityAudit(model,{pendingUSDJournalId=null}={}){
  validateUnpricedUSDTransfers(model,{pendingJournalId:pendingUSDJournalId});
- const balances=new Map((model.openingPositions||[]).map(x=>[x.positionId,units(x.quantityExact)]));
+ const precisionByPosition=new Map(model.positions.map(p=>[p.id,quantityMath(p.wallet)]));
+ const mathFor=id=>precisionByPosition.get(id)??quantityMath(null);
+ const balances=new Map((model.openingPositions||[]).map(x=>[x.positionId,mathFor(x.positionId).units(x.quantityExact)]));
  const ordered=[...(model.journalEntries||[])].sort((a,b)=>a.date.localeCompare(b.date)||(a.sequence||0)-(b.sequence||0));
  for(const entry of ordered){
   validateJournalEntry(entry);
   for(const posting of entry.postings){
    if(posting.quantityDeltaExact===null||posting.quantityDeltaExact===undefined)continue;
    if(!balances.has(posting.positionId))throw Error('Journal ohne dokumentierten Eröffnungsbestand.');
-   balances.set(posting.positionId,balances.get(posting.positionId)+units(posting.quantityDeltaExact));
+   balances.set(posting.positionId,balances.get(posting.positionId)+mathFor(posting.positionId).units(posting.quantityDeltaExact));
    if(balances.get(posting.positionId)<0n)throw Error('Chronologischer Buchungsverlauf führt zu negativem Bestand.');
   }
  }
  const mismatches=[];
  for(const p of model.positions){
   const expected=balances.get(p.id);if(expected===undefined)continue;
-  if(expected!==units(p.quantityExact??p.quantity))mismatches.push({positionId:p.id,expected:exact(expected),actual:String(p.quantityExact??p.quantity)});
+  const math=mathFor(p.id);
+  if(expected!==math.units(p.quantityExact??p.quantity))mismatches.push({positionId:p.id,expected:math.exact(expected),actual:String(p.quantityExact??p.quantity)});
  }
  return {ok:mismatches.length===0,mismatches};
 }

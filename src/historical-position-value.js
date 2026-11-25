@@ -1,7 +1,7 @@
 import {historyDays,rawQuantity} from './wallet-history-days.js';
 import {validateHistorySession} from './wallet-history-state.js';
 /** Read-only EOD projection. Journal dates are trade dates, not settlement or UTC guesses. */
-import {units,exact,mul} from './decimal.js';
+import {units,exact,preciseValue,quantityMath} from './decimal.js';
 import {ledgerQuantityAudit,validateJournalEntry,validCalendarDate as validDate} from './transactions.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
 const daysBetween=(a,b)=>(Date.parse(b)-Date.parse(a))/864e5;
@@ -27,18 +27,19 @@ export function historicalQuantityRows(model,positionId,dates){
  if((model.bookings||[]).some(b=>(b.positionId===positionId||b.targetPositionId===positionId)&&!journals.some(e=>e.id===(b.journalEntryId??b.id)))){known=false;reason='Journalhistorie unvollständig – Buchungen prüfen.';}
  // An undated non-zero baseline is never back-extrapolated. A zero baseline
  // starts only at the first evidenced journal movement, never before it.
- const start=opening?.asOf||(opening&&units(opening.quantityExact)===0n?journals[0]?.date:null);
+ const math=quantityMath(p?.wallet);
+ const start=opening?.asOf||(opening&&math.units(opening.quantityExact)===0n?journals[0]?.date:null);
  if(!validDate(start))known=false;
- let q=opening?units(opening.quantityExact):0n,index=0;
+ let q=opening?math.units(opening.quantityExact):0n,index=0;
  if(opening?.asOf&&journals.some(e=>e.date<opening.asOf)){known=false;reason='Eröffnungsdatum und Journal widersprechen sich.';}
  const ordered=[...new Set(dates)].sort();
  return ordered.map(date=>{
   if(!validDate(date))throw Error('Ungültiger Bewertungstag.');
   while(index<journals.length&&journals[index].date<=date){
-   const e=journals[index++];for(const x of e.postings)if(x.positionId===positionId&&x.quantityDeltaExact!=null)q+=units(x.quantityDeltaExact);
+   const e=journals[index++];for(const x of e.postings)if(x.positionId===positionId&&x.quantityDeltaExact!=null)q+=math.units(x.quantityDeltaExact);
   }
   const valid=known&&date>=start&&q>=0n;
-  return {date,positionId,accountId:p?.accountId??null,quantityExact:valid?exact(q):null,coverage:valid?'verified':'unknown',reason:valid?'':reason,quantitySource:'journal-trade-day-EOD'};
+  return {date,positionId,accountId:p?.accountId??null,quantityExact:valid?math.exact(q):null,coverage:valid?'verified':'unknown',reason:valid?'':reason,quantitySource:'journal-trade-day-EOD'};
  });
 }
 
@@ -87,8 +88,8 @@ export function historicalPositionMarket(model,p,{marketHistory=null,fxPoints=nu
  return {history,session,valuationCurrency,quotes,fx,fxDates};
 }
 
-export function historicalEURValue(quantity,price,fx){
- return quantity==='0'?'0':quantity!==null&&price!==null&&fx!==null?exact(mul(mul(units(quantity),units(price)),units(fx))):null;
+export function historicalEURValue(quantity,price,fx,wallet=null){
+ return quantity==='0'?'0':quantity!==null&&price!==null&&fx!==null?preciseValue(quantity,price,fx,wallet):null;
 }
 
 export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=null,dates=null,walletDaysCache=new Map()}={}){
@@ -100,7 +101,7 @@ export function projectHistoricalPosition(model,positionId,{marketHistory=null,f
   const price=p.kind==='cash'?'1':quotes.get(row.date)??null,fxExact=valuationCurrency==='EUR'?'1':fx.get(row.date)??null;
   let reason=row.reason;if(row.quantityExact!==null&&row.quantityExact!=='0'&&price===null)reason='Historischer Schlusskurs fehlt – Kurs-CSV importieren oder bestätigte API-Quelle laden.';
   if(row.quantityExact!==null&&row.quantityExact!=='0'&&price!==null&&fxExact===null)reason='Historischer EUR-Wechselkurs fehlt – datierten FX-Nachweis laden.';
-  let valueEURExact=null;try{valueEURExact=historicalEURValue(row.quantityExact,price,fxExact);}catch{reason='Menge oder Bewertung überschreitet die sichere Dezimalpräzision. Rohmenge bleibt erhalten; kein gerundeter Gesamtwert.';}
+  let valueEURExact=null;try{valueEURExact=historicalEURValue(row.quantityExact,price,fxExact,p.wallet);}catch{reason='Menge oder Bewertung überschreitet die sichere Dezimalpräzision. Rohmenge bleibt erhalten; kein gerundeter Gesamtwert.';}
   return {...row,priceExact:price,priceDate:price===null?null:row.date,fxExact,fxDate:valuationCurrency==='EUR'?row.date:fxDates.get(row.date)??null,valueEURExact,source:history?.source??(p.kind==='cash'?'Journal':'Keine Kursquelle'),priceType:history?.priceType??'close',coverage:valueEURExact===null?'unknown':'verified',reason};
  });
  const segments=[];let segment=[];for(const row of rows){

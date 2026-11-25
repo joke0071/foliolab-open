@@ -1,4 +1,4 @@
-import {units} from './decimal.js';
+import {quantityMath} from './decimal.js';
 import {positionValuation} from './fx-state.js';
 import {hasMissingPositionValue,automaticValuationConfirmed} from './quote-quality.js';
 import {duplicateWalletHoldings} from './wallet-identity.js';
@@ -6,7 +6,7 @@ import {duplicateWalletHoldings} from './wallet-identity.js';
 export const projectionLimits={start:1e9,monthly:1e7,years:50,lowRate:-90,highRate:50,inflation:30};
 
 export function projectionStart(positions,now=Date.now()){
- const included=positions.filter(p=>p.valuationMode!=='excluded'&&units(p.quantityExact??p.quantity)!==0n);
+ const included=positions.filter(p=>p.valuationMode!=='excluded'&&quantityMath(p.wallet).units(p.quantityExact??p.quantity)!==0n);
  if(!included.length)return {value:null,reason:'Kein belegter aktueller Portfoliowert vorhanden.'};
  if(duplicateWalletHoldings({positions}).length)return {value:null,reason:'Mehrfach erfasste Walletbestände verhindern die Übernahme des Portfoliowerts.'};
  const missing=included.filter(p=>hasMissingPositionValue(p)||!automaticValuationConfirmed(p,now)).length;
