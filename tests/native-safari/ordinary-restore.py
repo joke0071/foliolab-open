@@ -4,12 +4,15 @@ from pathlib import Path
 from threading import Event, Thread
 import json, os, platform, subprocess as sp, time
 
-events={key:Event() for key in ('restore','reopen','focus')}
+events={key:Event() for key in ('restore','reopen','focus','embedded','first','last')}
 observations={}
 report={'productHead':'c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94','system':platform.mac_ver()[0],
         'image':os.environ.get('ImageVersion'),'driver':'normal Safari via LaunchServices',
         'source':'Linux Chromium genuine password-protected UI download; synthetic portfolio only'}
 class Handler(SimpleHTTPRequestHandler):
+    def translate_path(self,path):
+        if path.startswith('/app/'):path=path[4:]
+        return super().translate_path(path)
     def do_POST(self):
         size=int(self.headers.get('Content-Length','0'))
         if self.path!='/result' or not 0<size<=4096:
@@ -30,6 +33,12 @@ def run(args,timeout=10):
 server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
 Thread(target=server.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(server.server_port)
+def storage_context(stage,site='127.0.0.1'):
+    uri='http://'+site+':'+str(server.server_port)+'/tests/native-safari/storage-context.html?step='+stage
+    opened=run(['open','-a','Safari',uri])
+    key='embedded' if stage=='parent' else stage
+    if opened['code']!=0 or not events[key].wait(30):raise RuntimeError('Missing context probe '+key)
+    return observations[key]
 def page(stage):
     opener=run(['open','-a','Safari',base+'/tests/native-safari/cross-restore.html?step='+stage])
     if opener['code']!=0 or not events[stage].wait(65):raise RuntimeError(stage+' missing')
@@ -56,6 +65,18 @@ try:
     report['voiceOverLaunch']=run(['open','-a','/System/Library/CoreServices/VoiceOver.app'])
     time.sleep(2)
     report['actualVoiceOverPhrase']=run(['osascript','-e','tell application "VoiceOver" to get content of last phrase'],timeout=5)
+    if report['voiceOverLaunch']['code']==0:
+        # Keep any VoiceOver welcome window independent from the storage comparison.
+        run(['open','-a','Safari'])
+    first=storage_context('first')
+    embedded=storage_context('parent','localhost')
+    again=storage_context('last')
+    assert first['topLevel'] and again['topLevel'] and not embedded['topLevel']
+    assert first['firstPartyToken']==again['firstPartyToken']=='first-party'
+    assert first['cash']==again['cash']=='22.34' and first['revision']==again['revision']==2
+    isolated=embedded.get('firstPartyToken') is None and embedded.get('cash') is None and again['thirdPartyToken'] is None
+    report['siteIsolation']='ISOLATED' if isolated else 'FIRST_PARTY_DATA_VISIBLE_IN_LOCALHOST_CONTROL'
+    report['scope']='Localhost and 127.0.0.1 first/embedded storage comparison. This does not measure timed ITP deletion or OS eviction.'
 except Exception as ex:report['error']=repr(ex)
 finally:
     server.shutdown()
@@ -63,4 +84,4 @@ finally:
     out=Path('artifacts/native-safari/report.json');out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(report,ensure_ascii=False))
-if report.get('crossHostRecovery')!='PASS':raise SystemExit(1)
+if report.get('crossHostRecovery')!='PASS' or not report.get('siteIsolation'):raise SystemExit(1)
