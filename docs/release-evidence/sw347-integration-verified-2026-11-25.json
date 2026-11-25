@@ -27,5 +27,58 @@
     "FRACTIONAL_SETTLEMENT_PASS",
     "USD_FRACTIONAL_SETTLEMENT_PASS",
     "NEAR_PRECISION_PASS"
+  ],
+  "candidate": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "testedMerge": "2b9e3bc057bf2cdbbbe2b8e66bb03e919a6e6c78",
+  "integrationRun": 45715151865,
+  "attempt": 1,
+  "unitTests": 1540,
+  "jobResults": [
+    {
+      "id": 139559370390,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "conclusion": "success"
+    },
+    {
+      "id": 139559518118,
+      "name": "cross-engine (3)",
+      "conclusion": "success"
+    },
+    {
+      "id": 139559518155,
+      "name": "cross-engine (1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 139559518177,
+      "name": "cross-engine (2)",
+      "conclusion": "success"
+    },
+    {
+      "id": 139559518180,
+      "name": "test",
+      "conclusion": "success"
+    },
+    {
+      "id": 139559520601,
+      "name": "FAST only / UI contract canary \u2014 no integration approval",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 139571935142,
+      "name": "live-acceptance",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 139571935378,
+      "name": "deploy",
+      "conclusion": "skipped"
+    }
+  ],
+  "allBrowserCases": [
+    "Cosmos block 34044337, exact wallet amount 0.811172 ATOM",
+    "separate EUR fractional settlement",
+    "separate USD fractional settlement",
+    "native liquid NEAR, 145768498431409676817125837316 yoctoNEAR"
   ]
 }

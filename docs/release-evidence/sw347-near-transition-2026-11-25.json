@@ -1,0 +1,44 @@
+{
+  "from": "61d67d0d",
+  "candidate": "c3d6204f",
+  "tree": "e87fab0abdbc0dda57da48cf9f30bccbabbb655c",
+  "cacheControl": "max-age=600",
+  "results": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "controllerAfterNavigation": "activated",
+      "controllerAfterOfflineReopen": "activated",
+      "oldBalance": "2.5",
+      "stateByteExactAfterUpdate": true,
+      "positionIdRetained": true,
+      "oneRevision": true,
+      "offlineReopened": true,
+      "finalQuantity": "145768.498431409676817125837316"
+    },
+    {
+      "engine": "firefox",
+      "browser": "142.0.1",
+      "controllerAfterNavigation": "activated",
+      "controllerAfterOfflineReopen": "activated",
+      "oldBalance": "2.5",
+      "stateByteExactAfterUpdate": true,
+      "positionIdRetained": true,
+      "oneRevision": true,
+      "offlineReopened": true,
+      "finalQuantity": "145768.498431409676817125837316"
+    },
+    {
+      "engine": "webkit",
+      "browser": "26.0",
+      "controllerAfterNavigation": "activated",
+      "controllerAfterOfflineReopen": "activated",
+      "oldBalance": "2.5",
+      "stateByteExactAfterUpdate": true,
+      "positionIdRetained": true,
+      "oneRevision": true,
+      "offlineReopened": true,
+      "finalQuantity": "145768.498431409676817125837316"
+    }
+  ]
+}
