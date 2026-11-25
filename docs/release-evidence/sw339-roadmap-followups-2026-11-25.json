@@ -1,0 +1,136 @@
+{
+  "main": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "version": "SW339",
+  "uiMore": {
+    "scope": "isolated headless browser, CSS zoom 200 percent at a 640 px viewport and 100 percent at 320 px",
+    "chromium": {
+      "keys": "Tab",
+      "browser": "141.0.7390.37",
+      "report": [
+        {
+          "width": 320,
+          "zoom": 1,
+          "headings": [
+            "Anbieter und Konten",
+            "Deine Daten",
+            "Datenquellen & Aktualisierung"
+          ],
+          "scrollWidth": 320,
+          "keyboardBackAndReturn": true,
+          "draftRetainedOnRejectedDiscard": true,
+          "openerFocusRestored": true,
+          "idbUnchanged": true
+        },
+        {
+          "width": 640,
+          "zoom": 2,
+          "headings": [
+            "Anbieter und Konten",
+            "Deine Daten",
+            "Datenquellen & Aktualisierung"
+          ],
+          "scrollWidth": 640,
+          "keyboardBackAndReturn": true,
+          "draftRetainedOnRejectedDiscard": true,
+          "openerFocusRestored": true,
+          "idbUnchanged": true
+        }
+      ]
+    },
+    "firefox": {
+      "keys": "Shift+Tab",
+      "browser": "142.0.1",
+      "report": [
+        {
+          "width": 320,
+          "zoom": 1,
+          "headings": [
+            "Datenquellen & Aktualisierung",
+            "Deine Daten",
+            "Anbieter und Konten"
+          ],
+          "scrollWidth": 320,
+          "keyboardBackAndReturn": true,
+          "draftRetainedOnRejectedDiscard": true,
+          "openerFocusRestored": true,
+          "idbUnchanged": true
+        },
+        {
+          "width": 640,
+          "zoom": 2,
+          "headings": [
+            "Datenquellen & Aktualisierung",
+            "Deine Daten",
+            "Anbieter und Konten"
+          ],
+          "scrollWidth": 640,
+          "keyboardBackAndReturn": true,
+          "draftRetainedOnRejectedDiscard": true,
+          "openerFocusRestored": true,
+          "idbUnchanged": true
+        }
+      ]
+    },
+    "webkit": "UNAVAILABLE_HOST_LIBRARIES",
+    "nativeBrowserZoom": "NOT_VERIFIED"
+  },
+  "httpsUpgrade": {
+    "oldCommit": "e272297ab1ba855a2922c1faa4010b83c558a796",
+    "newCommit": "8de635271c341d7462d4d33e5f268089c26da6d0",
+    "browser": "141.0.7390.37",
+    "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+    "fixtures": {
+      "positions": 19,
+      "bookings": 10000,
+      "snapshots": 1825
+    },
+    "oldUiRestore": true,
+    "oldDocumentRemainedOpen": true,
+    "activeWorker": "foliolab-open-v339",
+    "freshTabExactIdbAndDisplayedTotal": true,
+    "offlineBrowserProcessReopenExactIdbAndDisplayedTotal": true
+  },
+  "benchmark": {
+    "isin": "IE00BK5BQT80",
+    "mic": "XETR",
+    "currency": "EUR",
+    "weight": 100,
+    "firstDate": "2026-11-09",
+    "lastDate": "2026-11-13",
+    "sampleClosesMatching": 5,
+    "referenceEndIndexed": "101.45741250",
+    "syntheticTwrExpectedPercent": "3.5",
+    "syntheticTwrActualFraction": 0.03500000000000014,
+    "withCashFlow": null,
+    "withoutEndValuation": null
+  },
+  "publicEthTokenTransferPages": {
+    "items": [
+      50,
+      50
+    ],
+    "duplicates": 0,
+    "pageChecksums": [
+      "caa51612afba792d8b8109da173730e1af869311bce08b9d82d12f75df29626f",
+      "8206adfb03b680f5a29d224c83161b868c35291f7fd86c7679766ef8263044df"
+    ],
+    "cursorKeys": [
+      "index",
+      "block_number"
+    ],
+    "lastBlockByPage": [
+      26349235,
+      26218104
+    ],
+    "publicContract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "validatorAcceptedBothPageTokens": true,
+    "independentRoutescanBoundaryReceipts": 2,
+    "maxBlock": 26487387,
+    "routescanFinalizedHead": 26491356,
+    "unitTestsPassed": 22
+  },
+  "accepted": {
+    "core": 6,
+    "followups": 10
+  }
+}
