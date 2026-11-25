@@ -1,0 +1,248 @@
+{
+  "readback": {
+    "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+    "runId": "45620573232",
+    "deployJob": 139239512050,
+    "origin": "https://foliolab.unperfekt.at",
+    "verifiedAtUTC": "2026-11-25T13:30:26.938494+00:00",
+    "paths": {
+      "/": {
+        "status": 200,
+        "equal": true,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa",
+        "contentType": "text/html; charset=utf-8"
+      },
+      "/index.html": {
+        "status": 200,
+        "equal": true,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa",
+        "contentType": "text/html; charset=utf-8"
+      },
+      "/sw.js": {
+        "status": 200,
+        "equal": true,
+        "sha256": "df4fd8ea4346483bd93d8203f30ed3cebd814e5c9ebb5123c4c6251db0f9c22d",
+        "contentType": "application/javascript; charset=utf-8"
+      }
+    }
+  },
+  "candidate": {
+    "base": "https://foliolab.unperfekt.at/",
+    "engine": "firefox",
+    "version": "142.0.1",
+    "nativeOsKeys": true,
+    "reports": [
+      {
+        "mode": "narrow-window-450px",
+        "initial": {
+          "width": 450,
+          "height": 790,
+          "dpr": 1,
+          "cssZoom": "1",
+          "scrollWidth": 450
+        },
+        "measured": {
+          "width": 450,
+          "height": 790,
+          "dpr": 1,
+          "cssZoom": "1",
+          "scrollWidth": 450
+        },
+        "forward": {
+          "id": "installButton",
+          "page": null,
+          "section": "morePage",
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": 3,
+          "inContentViewport": true
+        },
+        "reverse": {
+          "id": "",
+          "page": "more",
+          "section": null,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": 2,
+          "inContentViewport": false
+        },
+        "progression": {
+          "Tab": [
+            {
+              "id": "addProvider",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "exportBackup",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "autoRefresh",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            }
+          ],
+          "Shift+Tab": [
+            {
+              "id": "autoRefresh",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "exportBackup",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "addProvider",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            }
+          ]
+        },
+        "openerRestored": true,
+        "discardRejectedDraftRetained": true,
+        "overviewAndReturn": true,
+        "exactIdb": true,
+        "recordSha256": "5fe39514ce72697ca1d93fe453438902bcf579102dfa24d6ba3dc1355f79273d"
+      },
+      {
+        "mode": "browser200",
+        "initial": {
+          "width": 640,
+          "height": 790,
+          "dpr": 1,
+          "cssZoom": "1",
+          "scrollWidth": 640
+        },
+        "measured": {
+          "width": 320,
+          "height": 395,
+          "dpr": 2,
+          "cssZoom": "1",
+          "scrollWidth": 320
+        },
+        "forward": {
+          "id": "installButton",
+          "page": null,
+          "section": "morePage",
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": 3,
+          "inContentViewport": true
+        },
+        "reverse": {
+          "id": "",
+          "page": "more",
+          "section": null,
+          "focusVisible": true,
+          "outline": "solid",
+          "outlineWidth": 2,
+          "inContentViewport": false
+        },
+        "progression": {
+          "Tab": [
+            {
+              "id": "addProvider",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "exportBackup",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "autoRefresh",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            }
+          ],
+          "Shift+Tab": [
+            {
+              "id": "autoRefresh",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "exportBackup",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            },
+            {
+              "id": "addProvider",
+              "page": null,
+              "section": "morePage",
+              "focusVisible": true,
+              "outline": "solid",
+              "outlineWidth": 3,
+              "inContentViewport": true
+            }
+          ]
+        },
+        "openerRestored": true,
+        "discardRejectedDraftRetained": true,
+        "overviewAndReturn": true,
+        "exactIdb": true,
+        "recordSha256": "1bb74c5f0e1713976bc43c4f4c7eeecb42105a8537cf3d227bed8138bab30f9b"
+      }
+    ]
+  },
+  "firstLiveAttempt": {
+    "jobId": 139239730947,
+    "coreChecks": 11,
+    "axeScans": 22,
+    "assetMatches": 160,
+    "failedScenario": "browser-loading-pwa held-module startup recovery or reload at line 37",
+    "timeoutMs": 30000,
+    "artifactId": 15026562830,
+    "artifactSha256": "d13e9dfa46e559d386c942b43aacd15a11a37f8478b482e7ce783216c50c2490"
+  },
+  "targetedRerunJobId": 139241875358
+}

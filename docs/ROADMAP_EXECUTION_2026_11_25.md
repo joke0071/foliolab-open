@@ -650,3 +650,27 @@ Diese Messung ist von der tatsächlichen GitHub-Laufdauer mit
 Installation, Zuteilung, Pages und Live getrennt.
 [#430](https://github.com/joke0071/foliolab-open/pull/430) bleibt bis
 zum reproduzierbaren, vollständigen Gewinn zurückgestellt.
+
+### SW340 · veröffentlicht und Zielprüfung auf der Produktivseite
+
+Die Pflichtjobs auf Main und Pages sind grün. Auf
+`https://foliolab.unperfekt.at/` wurden `/`, `/index.html` und `/sw.js`
+erneut abgerufen. Alle drei Antworten waren bytegleich mit Main
+`7adbf028`. Der echte Browserzoom in sichtbarem Firefox bestand auf
+dieser ausgelieferten Origin ebenfalls. Bei 200 % und 320 CSS-Pixeln
+blieben alle drei Ziele per Tab und Umschalt+Tab erreichbar. Entwurf,
+Fokus-Rückweg und Gleichheit des vollständigen IndexedDB-Datensatzes
+bestanden. Separat wurde die in der lokalen Buchungsliste beim
+Scrollen teilweise verdeckte Bearbeiten-Taste auf SW340 per
+Tastatur geprüft. Der tatsächliche Fokus brachte die gesamte
+44-px-Treffhöhe unter die Kopfzeile.
+
+Der erste [Livejob](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139239730947)
+bestand 11 Kerngruppen, 22 Axe-Scans und 160 Dateiübereinstimmungen.
+Die gesonderte PWA-Ladeprüfung erreichte nach simuliertem verzögertem
+Modulstart an Zeile 37 das 30-Sekunden-Limit. Ein konkreter
+HTTP-Fehler ist für diesen Versuch nicht ausgewiesen. Der
+[gezielte Wiederanlauf desselben Livejobs](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139241875358)
+verwendet denselben Main-SHA und dieselben Prüfungen. Die
+volle Release- und Zeilenabnahme bleibt bis zu dessen Erfolg offen.
+[Produktivnachweis](release-evidence/sw340-published-focus-2026-11-25.json).
