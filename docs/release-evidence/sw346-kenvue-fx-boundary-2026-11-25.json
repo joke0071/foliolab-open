@@ -1,0 +1,41 @@
+{
+  "testedProduct": {
+    "main": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+    "candidate": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+    "sharedTree": "761420703d04371b46d558f72ec19957b705619d"
+  },
+  "source": {
+    "settlement": {
+      "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/ingdiba/Verkauf11.txt",
+      "sha256": "0f761538291bf44afa7a5bf15eaeb919d3905ddd7a2b0d39bd73efc10f2235eb"
+    },
+    "allocation": {
+      "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/ingdiba/UmtauschEingang01.txt",
+      "sha256": "cd693c1ca8b0010f29525b22d4c0b4b78dc815a4c1a80d90e854ab3a8db43f31",
+      "date": "2023-08-25",
+      "allocatedShares": "16.0648",
+      "printedCustodyIdentifierMatchesSettlement": false
+    }
+  },
+  "independentSettlement": {
+    "isin": "US49177J1025",
+    "executionAndValueDate": "2023-09-01",
+    "shares": "0.0648",
+    "executionPriceUSD": "21.0032",
+    "reportedGrossUSD": "1.36",
+    "reportedUSDperEUR": "1.089718",
+    "actualCreditEUR": "1.25",
+    "reportedLossEUR": "-0.13",
+    "inferredTaxBasisToCentsEUR": "1.38",
+    "separateTransactionCharges": "None shown between USD gross, USD subtotal and EUR credit."
+  },
+  "modelActual": {
+    "fixture": "Only the already allocated public fraction and inferred EUR basis. Zero opening cash is a test parameter.",
+    "regularUnroundedSaleCashEUR": "1.248953729313455408",
+    "regularUnroundedRealizedEUR": "-0.131046270686544592",
+    "exactEURFieldsRejectedForUSD": true,
+    "bothRejectionsPreserveFullInputModel": true,
+    "externalCashFlows": 0
+  },
+  "releaseDecision": "Public source and model guard qualified. Foreign-currency settlement and cross-document custody continuity still open."
+}
