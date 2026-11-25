@@ -426,5 +426,97 @@
         ]
       }
     ]
+  },
+  "localCandidate": {
+    "sha": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+    "tree": "dad691b978e2bebede12940b9ab35d33d40e7a8e",
+    "startedAt": "2026-11-25T13:19:19.765493+00:00",
+    "elapsedLastJobSeconds": 1802.7359352800004,
+    "retries": 0,
+    "jobs": [
+      {
+        "job": "test",
+        "exit": 1,
+        "startedSeconds": 0.00030296600016299635,
+        "finishedSeconds": 1479.6971564619998
+      },
+      {
+        "job": "cross1",
+        "exit": 0,
+        "startedSeconds": 0.0009058410000761796,
+        "finishedSeconds": 1057.887444336
+      },
+      {
+        "job": "cross2",
+        "exit": 1,
+        "startedSeconds": 0.0014418460000342748,
+        "finishedSeconds": 1802.7359352800004
+      },
+      {
+        "job": "cross3",
+        "exit": 0,
+        "startedSeconds": 0.0018434610001349938,
+        "finishedSeconds": 1339.9801547749998
+      },
+      {
+        "job": "wallet",
+        "exit": 0,
+        "startedSeconds": 0.0022310260001177085,
+        "finishedSeconds": 47.95119190000014
+      }
+    ],
+    "runnerCpuBusyPercent": 49.99,
+    "runnerMinAvailableMemoryMiB": 2982,
+    "failureReasons": {
+      "test": "Chromium dialog screenshot differences and two wallet screenshot dimension differences",
+      "cross2": "Same WebKit target-size finding in expanded transaction booking list"
+    },
+    "fullComparisonEligible": false
+  },
+  "localCommands": {
+    "baseline": {
+      "test": {
+        "lines": 118,
+        "sha256": "8f6e135e0b5fd92f25323c49934985b7cf78e08f29f633d4a9ef9691b9939e79"
+      },
+      "cross1": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "cross2": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "cross3": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "wallet": {
+        "lines": 2,
+        "sha256": "ae930fc34c17235d1b64a7af9e5b95a699461f0caf1620996dd6b727e1a79d34"
+      }
+    },
+    "candidate": {
+      "test": {
+        "lines": 118,
+        "sha256": "8f6e135e0b5fd92f25323c49934985b7cf78e08f29f633d4a9ef9691b9939e79"
+      },
+      "cross1": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "cross2": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "cross3": {
+        "lines": 53,
+        "sha256": "c03c1a5aac49d561b2aaadc212deef3da5b15090bff0964df61d3f3472f3cf7d"
+      },
+      "wallet": {
+        "lines": 2,
+        "sha256": "ae930fc34c17235d1b64a7af9e5b95a699461f0caf1620996dd6b727e1a79d34"
+      }
+    }
   }
 }

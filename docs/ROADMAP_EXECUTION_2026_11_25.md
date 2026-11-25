@@ -738,3 +738,17 @@ Zuflussstichtag und gesondert gemeldete Anschaffungskostenkorrektur.
 Er prüft keine Jahresergebnisse des konkreten Depots. Diese
 Jahresabrechnung und die fallbezogene unabhängige Jahresprüfung
 sind weiterhin gesonderte offene Kriterien.
+
+### CI-Effizienz · vollständiger lokaler Kandidatenversuch
+
+Für #430 liefen Chromium, drei Cross-Engine-Shards und Wallet auf
+demselben Debian-Host mit identischen Browser- und Node-Versionen wie
+die serielle Referenz. Wallet und die Shards 1 und 3 bestanden.
+Chromium brach im Dialog-Bildvergleich mit Pixeldifferenzen und
+abweichenden Wallet-Dialogmaßen ab. Shard 2 reproduzierte im
+WebKit-Lauf denselben Befund an der teilweise verdeckten
+Bearbeiten-Taste in der Buchungsliste. Ende des letzten Jobs
+nach **30:03**, ohne Wiederanlauf. Der Lauf ist wegen der
+fehlgeschlagenen Gates kein Geschwindigkeitsbeleg. Erfasst sind
+Jobzeiten, Ressourcen und Hashes der per Job geplanten Prüfkommandos.
+[Lokaler Vergleich](release-evidence/sw339-local-ci-baseline-diagnostic-2026-11-25.json).
