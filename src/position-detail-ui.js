@@ -30,7 +30,7 @@ function collapsedHistory(message,{esc,id='',retry=false}){
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
 const securityKind=p=>['etf','stock','fund'].includes(p.kind);
 const positionCharts=new WeakMap();
-function positionChartTools(p,model,esc){
+function positionChartTools(p,model,esc,sourcesOpen){
  if(!securityKind(p)&&p.kind!=='crypto')return '';
  const imported=model.priceHistories?.[p.id];
  const csv=securityKind(p)?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+
@@ -38,12 +38,12 @@ function positionChartTools(p,model,esc){
   (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'">'+svg('trash',14)+'CSV-Kursverlauf entfernen</button>':'')+
   '</div><p class="position-csv-help">Datum und Schlusskurs in der Handelswährung dieser Position. Die Datei bleibt lokal.</p>':'';
  return '<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
-  '<div class="position-period-presets"></div><details class="position-period-more"'+(csv?'':' hidden')+
+  '<div class="position-period-presets"></div><details class="position-period-more"'+(csv?'':' hidden')+(sourcesOpen?' open':'')+
   '><summary aria-label="Weitere Zeiträume und Kursdaten" title="Weitere Zeiträume und Kursdaten">⋯</summary>'+
   '<div class="position-period-popover"><div class="position-period-extended"></div>'+csv+'</div></details></div>';
 }
 
-export function positionDetailMarkup(p,model,{esc,money,quant}){
+export function positionDetailMarkup(p,model,{esc,money,quant,sourcesOpen=false}){
  // The compact summary already shows the valuation and account-allocation ring.
  // The expanded detail adds only the remaining facts.
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
@@ -85,7 +85,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant}){
   '<p class="position-detail-note">Nur dieser Position zugeordnete Buchungen. Ausführungskurse sind kein belegter Nettogewinn. Cash-Dividenden ohne eindeutige Anlagenzuordnung werden nicht hinzugefügt.</p>'+
   '</div></details>';
  return meta+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   quoteCredit+positionChartTools(p,model,esc)+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory;
+   quoteCredit+positionChartTools(p,model,esc,sourcesOpen)+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory;
 }
 export async function loadPositionDetail(position,model,mount,{days=30,reuse=false,fetcher=globalThis.fetch,esc,money,dateLabel}){
  const target=mount.querySelector('.position-history-plot');

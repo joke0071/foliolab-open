@@ -375,7 +375,8 @@ function showPositionDetail(id){
   const mount=[...$('providerOverview').querySelectorAll('[data-position-detail]')].find(el=>el.dataset.positionDetail===id);
   if(!p||!mount||!mount.closest('details[data-position-id]')?.open)return;
   const days=positionDetailRanges.get(id)||30;
-  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR});
+  const sourcesOpen=mount.querySelector('.position-period-more')?.open===true;
+  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,sourcesOpen});
   void loadPositionDetail(p,model,mount,{days,esc,money,dateLabel});
 }
 // Calendar dates keep their day even if the device time zone changes while the app stays open.

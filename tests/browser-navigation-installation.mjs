@@ -130,10 +130,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      const before={connected:retained.isConnected,height:retained.getBoundingClientRect().height};
      document.querySelector('details[data-position-id="nav-etf"]').dispatchEvent(new Event('toggle'));
      const current=document.querySelector('.position-csv-import');
-     current.closest('details').open=true;
-     return {before,retainedAfterRender:{connected:retained.isConnected,height:retained.getBoundingClientRect().height},currentAfterRender:{connected:current.isConnected,height:current.getBoundingClientRect().height}};
+     return {before,retainedAfterRender:{connected:retained.isConnected,height:retained.getBoundingClientRect().height},currentAfterRender:{connected:current.isConnected,open:current.closest('details').open,height:current.getBoundingClientRect().height}};
     });
-    assert.deepEqual(csvMeasurementLifecycle,{before:{connected:true,height:44},retainedAfterRender:{connected:false,height:0},currentAfterRender:{connected:true,height:44}});
+    assert.deepEqual(csvMeasurementLifecycle,{before:{connected:true,height:44},retainedAfterRender:{connected:false,height:0},currentAfterRender:{connected:true,open:true,height:44}});
    }
    // Keep the >=44 threshold and full diagnostics, without polling or retries.
    try{
