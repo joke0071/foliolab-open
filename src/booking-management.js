@@ -48,7 +48,7 @@ export function reviewBookingSelection(model,selectedIds,matchingIds){
 import {executeTransaction,validateJournalEntry,nextJournalSequence} from './transactions.js';
 import {units,exact} from './decimal.js';
 import {safeImport,totalExactEUR} from './model.js';
-import {sourceDigest,provenCashImport,importSourceKey} from './import-identity.js';
+import {sourceDigest,provenCashImport,importSourceKey,importedFundSaleSettlement} from './import-identity.js';
 const cashTypes=new Set(['deposit','withdraw','dividend','interest','fee','tax']);
 const clone=x=>structuredClone(x);
 const raw=x=>JSON.stringify(x);
@@ -96,11 +96,42 @@ function referenceReasons(model,b,e){
  return reasons;
 }
 const importFileKey=b=>JSON.stringify([b.importSource?.sourceId,b.accountId,b.importSource?.fileId]);
+
+function fundSaleReversal(model,b,e,fund,settlement){
+ const fail=message=>{throw Error(message);};
+ if(!settlement)fail('Verkaufsbetrag, Provision, Steuer und Verrechnung müssen durch dieselbe Importzeile und das vollständige Journal belegt sein.');
+ const cash=model.positions.find(p=>p.id===b.cashPositionId);
+ const account=model.accounts.find(a=>a.id===fund.accountId),cashAccount=model.accounts.find(a=>a.id===cash?.accountId);
+ if(fund.currency!=='EUR'||fund.accountId!==b.accountId||!account||account.currency!=='EUR'||!cash||cash.kind!=='cash'||cash.currency!=='EUR'||
+  cash.accountId!==settlement.cashAccountId||!cashAccount||cashAccount.currency!=='EUR'||cash.accountId===fund.accountId||cash.providerId!==fund.providerId||
+  cash.wallet?.enabled||cash.wallet?.address||cash.wallet?.xpub||cash.representedByPositionId||(cash.economicRole??'standard')!=='standard'||(cash.valuationMode??'included')!=='included'||
+  units(cash.priceExact??cash.price)!==units(1)||[cash.costBasisExact,cash.costBasisEUR,cash.realizedPnLExact,cash.realizedPnLEUR].some(x=>x!=null))
+  fail('Eigenes EUR-Verrechnungskonto des Fondsverkaufs ist nicht eindeutig belegt.');
+ if(model.positions.some(p=>p.representedByPositionId===fund.id||p.representedByPositionId===cash.id))fail('Eine weitere Position ist dem Fonds oder Verrechnungskonto zugeordnet.');
+ const touches=(entry,id)=>entry?.postings.some(p=>p.positionId===id),later=entry=>entry.date>e.date||(entry.date===e.date&&(!entry.sequence||entry.sequence>=e.sequence));
+ const depends=entry=>entry.id!==e.id&&(touches(entry,fund.id)||(touches(entry,cash.id)&&later(entry)));
+ if(model.journalEntries.some(j=>depends(j)||j.managementAudit?.originals.some(o=>depends(o.journal)))||model.bookings.some(x=>x.id!==b.id&&
+  ([x.positionId,x.cashPositionId,x.targetPositionId].includes(fund.id)||([x.positionId,x.cashPositionId,x.targetPositionId].includes(cash.id)&&
+   !model.journalEntries.some(j=>j.id===x.journalEntryId&&touches(j,cash.id)&&!later(j))))))
+  fail('Weitere Fondsbuchungen oder spätere beziehungsweise ungeklärte Verrechnungsvorgänge verhindern die Einzelrücknahme.');
+ const opening=model.openingPositions.find(o=>o.positionId===fund.id);
+ if(opening?.source!=='observed-opening'||(opening.asOf&&opening.asOf>=b.date)||opening.costBasisExact==null||units(opening.costBasisExact)<0n||
+  units(opening.quantityExact)!==settlement.quantity||units(fund.quantityExact)!==0n||costUnits(fund.costBasisExact)!==0n||costUnits(fund.costBasisEUR)!==0n)
+  fail('Der vollständige Abgang aus dem belegten Fonds-Eröffnungsbestand ist nicht nachweisbar.');
+ const previousResult=opening.realizedPnLExact==null?null:units(opening.realizedPnLExact);
+ const expectedResult=(previousResult??0n)+settlement.net-units(opening.costBasisExact);
+ if(costUnits(fund.realizedPnLExact)!==expectedResult||fund.realizedPnLEUR!==Number(exact(expectedResult))||units(cash.quantityExact)<settlement.net||model.externalCashFlows.some(f=>f.id===b.id))
+  fail('Realisierter Erfolg, Cash-Bestand oder externer Geldfluss widersprechen dem Verkaufsnachweis.');
+ return {opening,cashId:cash.id,cashAfter:units(cash.quantityExact)-settlement.net};
+}
+
 function eligibility(model,b,action,{checkReferences=true,index=null}={}){
  const e=index?index.journals.get(b?.journalEntryId):model.journalEntries.find(e=>e.id===b?.journalEntryId),p=index?index.positions.get(b?.positionId):model.positions.find(p=>p.id===b?.positionId),reasons=[];
  if(!b||!e||!p)return ['Buchung, Journal oder Position fehlen.'];
  const imported=e.source!=='manual'||b.importSource||b.importFingerprint;
- const proven=action==='remove'&&provenCashImport(b,e)&&(index?index.importKeys.get(importSourceKey(b.importSource)):model.bookings.filter(x=>importSourceKey(x.importSource)===importSourceKey(b.importSource)).length)===1&&(index?index.importFiles.get(importFileKey(b)):model.bookings.filter(x=>importFileKey(x)===importFileKey(b)).length)===1;
+ const fundSale=action==='remove'&&p.kind==='fund'&&b.type==='sell';
+ const settlement=fundSale?importedFundSaleSettlement(b,e):null;
+ const proven=action==='remove'&&(fundSale?settlement:provenCashImport(b,e))&&(index?index.importKeys.get(importSourceKey(b.importSource)):model.bookings.filter(x=>importSourceKey(x.importSource)===importSourceKey(b.importSource)).length)===1&&(index?index.importFiles.get(importFileKey(b)):model.bookings.filter(x=>importFileKey(x)===importFileKey(b)).length)===1;
  if(imported&&!proven)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
  if(b.transferMatch||b.targetPositionId||e.status==='matched-internal-transfer'||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
@@ -109,6 +140,11 @@ function eligibility(model,b,action,{checkReferences=true,index=null}={}){
  if(checkReferences)reasons.push(...referenceReasons(model,b,e));
  else if(Object.keys(b).some(k=>!bookingKeys.has(k))||Object.keys(e).some(k=>!journalKeys.has(k))||e.postings.some(p=>Object.keys(p).some(k=>!postingKeys.has(k))))reasons.push('Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.');
  if(action==='notes')return [...new Set(reasons)];
+ if(model.snapshots.some(s=>s.date>=b.date))reasons.push('Spätere Kontrollpunkte könnten widersprechen; zuerst beleggebunden abgleichen.');
+ if(fundSale){
+  try{fundSaleReversal(model,b,e,p,settlement);}catch(error){reasons.push(error.message);}
+  return [...new Set(reasons)];
+ }
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
  if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für vollständig belegte EUR-Geldbuchungen.');
  if(b.cashPositionId||costUnits(b.feeEUR)!==0n||costUnits(b.taxEUR)!==0n||Number(b.feeEUR)!==0||Number(b.taxEUR)!==0)reasons.push('Gebühren oder Steuern sind unbekannt, nicht null oder mit einem Gegenkonto verknüpft. Zuerst beleggebunden prüfen.');
@@ -126,7 +162,6 @@ function eligibility(model,b,action,{checkReferences=true,index=null}={}){
   if(['deposit','withdraw'].includes(b.type)?flows.length!==1||units(flows[0].amountExactEUR)!==sign*q||units(flows[0].amountEUR)!==sign*q||flows[0].date!==b.date:flows.length!==0)
     reasons.push('Externer Kapitalfluss ist nicht eindeutig belegt.');
  }catch{reasons.push('Exakte Mengen- oder Journalnachweise sind ungültig.');}
- if(model.snapshots.some(s=>s.date>=b.date))reasons.push('Spätere Kontrollpunkte könnten widersprechen; zuerst beleggebunden abgleichen.');
  return [...new Set(reasons)];
 }
 export function previewBookingChange(model,request){
@@ -141,6 +176,7 @@ export function previewBookingChange(model,request){
  const reason=String(request.reason||'').trim();if(!reason||reason.length>180)throw Error('Bitte eine Belegreferenz oder Begründung mit höchstens 180 Zeichen angeben.');
  const selected=ids.map(id=>{const b=model.bookings.find(x=>x.id===id);if(!b)throw Error('Buchung nicht vorhanden oder technisch; Auswahl neu prüfen.');return b;});
  const blocks=selected.flatMap(b=>eligibility(model,b,action).map(reason=>({id:b.id,reason})));
+ if(action==='remove'&&ids.length!==1&&selected.some(b=>b.type==='sell'))blocks.push({id:ids[0],reason:'Fondsverkauf zur Einzelrücknahme separat auswählen.'});
  const result={action,ids:[...ids],blocks,ready:false,effects:[],beforeTotalEURExact:totalExactEUR(model),afterTotalEURExact:null,candidate:null};
  if(action==='edit'&&request.changes?.date&&model.snapshots.some(s=>s.date>=request.changes.date))blocks.push({id:ids[0],reason:'Das neue Datum berührt gespeicherte Kontrollpunkte.'});
  if(blocks.length)return result;
@@ -149,12 +185,23 @@ export function previewBookingChange(model,request){
   if(sameNote&&(action==='notes'||((changes.date??b.date)===b.date&&units(changes.quantity??b.quantityExact)===units(b.quantityExact))))throw Error('Keine Änderung angegeben.');
  }
  const candidate=clone(model),originals=selected.map(b=>({booking:clone(b),journal:clone(model.journalEntries.find(e=>e.id===b.journalEntryId)),flows:clone(model.externalCashFlows.filter(f=>f.id===b.id))}));
+ const effectsPositions=new Set(selected.map(b=>b.positionId));
  if(action==='notes'){
   const note=String(request.changes?.notes??'').trim();if(note.length>180)throw Error('Notiz ist zu lang.');
   candidate.bookings.find(b=>b.id===ids[0]).notes=note;
  }else{
   for(const b of selected){
    const e=model.journalEntries.find(e=>e.id===b.journalEntryId),posting=e.postings.find(p=>p.positionId===b.positionId),p=candidate.positions.find(p=>p.id===b.positionId);
+   if(b.type==='sell'){
+    const {opening,cashId,cashAfter}=fundSaleReversal(model,b,e,p,importedFundSaleSettlement(b,e));
+    const cash=candidate.positions.find(p=>p.id===cashId);
+    p.quantityExact=opening.quantityExact;p.quantity=Number(p.quantityExact);
+    p.costBasisExact=opening.costBasisExact;p.costBasisEUR=Number(p.costBasisExact);
+    p.realizedPnLExact=opening.realizedPnLExact??null;p.realizedPnLEUR=p.realizedPnLExact===null?null:Number(p.realizedPnLExact);
+    cash.quantityExact=exact(cashAfter);cash.quantity=Number(cash.quantityExact);
+    effectsPositions.add(cashId);
+    continue;
+   }
    const next=units(p.quantityExact)-units(posting.quantityDeltaExact);if(next<0n)throw Error('Rücknahme führt zu negativem Geldbestand.');
    p.quantityExact=exact(next);p.quantity=Number(p.quantityExact);
   }
@@ -176,7 +223,7 @@ export function previewBookingChange(model,request){
  const dates=[...model.journalEntries.map(e=>e.date),...candidate.journalEntries.map(e=>e.date)].sort();
  candidate.journalEntries.push({id:auditId,type:'booking-management-audit',date:dates.at(-1),recordedAt:new Date().toISOString(),sequence:nextJournalSequence(candidate),source:'management-audit',postings:[{id:globalThis.crypto.randomUUID(),role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],managementAudit:{version:originals.some(o=>o.booking.importSource)?2:1,action,reason,originals,afterBookings}});
  safeImport(clone(candidate));
- result.effects=[...new Set(selected.map(b=>b.positionId))].map(positionId=>{
+ result.effects=[...effectsPositions].map(positionId=>{
   const before=model.positions.find(p=>p.id===positionId),after=candidate.positions.find(p=>p.id===positionId),group=selected.filter(b=>b.positionId===positionId),groupIds=group.map(b=>b.id),afterGroup=candidate.bookings.filter(b=>groupIds.includes(b.id));
   const charges=(books,kind)=>{
    let total=0n;

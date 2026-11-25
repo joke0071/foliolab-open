@@ -1,5 +1,5 @@
 /** Versioned provenance, not a second journal. Legacy bookings remain untouched. */
-import {units} from './decimal.js';
+import {units,mul} from './decimal.js';
 import {nativeFlatexColumns,nativeFlatexScope,FLATEX_MISSING_SCOPE} from './flatex-native.js';
 const nativeReference=v=>typeof v==='string'&&v.trim()!==''&&v.trim()!=='-'&&v.length<=200&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
 /** Reserved optional evidence inside the existing sourcePayload, not a new schema. */
@@ -107,15 +107,21 @@ export function sourceDigest(text){
 /** Narrow provenance proof for removal, never permission to edit or import.
  * Native/broker/wallet and legacy identities require their own evidence contract.
  */
-export function provenCashImport(booking,journal){
- try{
+function genericImportRow(booking,journal){
   const s=validateImportSource(booking.importSource,booking.accountId);
   if(!s||Object.keys(booking.importSource).some(k=>!Object.hasOwn(s,k))||s.sourceId!=='generic-csv'||!s.externalId||!s.fileId||s.occurrence!==1||journal.source!=='csv'||
-   !sourceUnmodified({journalEntries:[journal]},booking)||
-   !['deposit','withdraw','dividend','interest','fee','tax'].includes(booking.type))return false;
+   !sourceUnmodified({journalEntries:[journal]},booking))return null;
   const r=JSON.parse(s.sourcePayload),keys='type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId'.split(' ');
   if(Object.keys(r).length!==keys.length||keys.some(k=>!Object.hasOwn(r,k))||r.externalId!==s.externalId||
-   r.type!==booking.type||r.date!==booking.date||r.positionId!==booking.positionId||r.notes!==(booking.notes||'')||r.cashPositionId||booking.cashPositionId||
+   r.type!==booking.type||r.date!==booking.date||r.positionId!==booking.positionId||r.notes!==(booking.notes||''))return null;
+  const fingerprint=JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId]);
+  return booking.importFingerprint===fingerprint?r:null;
+}
+
+export function provenCashImport(booking,journal){
+ try{
+  const r=genericImportRow(booking,journal);
+  if(!r||!['deposit','withdraw','dividend','interest','fee','tax'].includes(booking.type)||r.cashPositionId||booking.cashPositionId||
    units(r.quantity)<=0n||units(r.quantity)!==units(booking.quantityExact)||units(r.unitPrice)!==units(1)||units(booking.unitPrice)!==units(1)||
    units(r.feeEUR)!==0n||units(r.taxEUR)!==0n||units(r.fxRate)!==units(1))return false;
   const q=units(r.quantity),sign=['deposit','dividend','interest'].includes(booking.type)?1n:-1n;
@@ -126,13 +132,39 @@ export function provenCashImport(booking,journal){
    units(booking.quantity)!==q||units(booking.amountExactEUR)!==q||units(booking.amountEUR)!==q||units(booking.feeEUR)!==0n||units(booking.taxEUR)!==0n||units(booking.fxRate)!==units(1)||
    journal.postings.length!==2||own.length!==1||other.length!==1||own[0].role!=='cash'||own[0].accountId!==booking.accountId||
    units(own[0].quantityDeltaExact)!==sign*q||units(own[0].amountBookEURExact)!==sign*q||other[0].role!==role||other[0].quantityDeltaExact!=null||other[0].accountId!=null||units(other[0].amountBookEURExact)!==-sign*q)return false;
-  const fingerprint=JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId]);
-  return booking.importFingerprint===fingerprint;
+  return true;
  }catch{return false;}
 }
+
+/** Returns exact settlement only when every leg belongs to the same recorded CSV sale. */
+export function importedFundSaleSettlement(booking,journal){
+ try{
+  const r=genericImportRow(booking,journal);
+  if(!r||r.type!=='sell'||!r.cashPositionId||r.cashPositionId===booking.positionId||r.cashPositionId!==booking.cashPositionId||
+   ![r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate].every(v=>typeof v==='string'&&v.length)||
+   ![booking.unitPrice,booking.feeEUR,booking.taxEUR,booking.fxRate,booking.amountEUR].every(Number.isFinite)||
+   booking.costsVerified===false||booking.external!==false||booking.targetPositionId||booking.transferMatch||
+   journal.id!==booking.journalEntryId||journal.type!=='sell'||journal.date!==booking.date||journal.status!=='recorded'||journal.cashPositionId!==r.cashPositionId)return null;
+  const quantity=units(r.quantity),price=units(r.unitPrice),fee=units(r.feeEUR),tax=units(r.taxEUR);
+  const gross=mul(quantity,price),net=gross-fee-tax;
+  if(quantity<=0n||price<=0n||fee<0n||tax<0n||net<=0n||units(r.fxRate)!==units(1)||booking.fxRate!==1||
+   units(booking.quantityExact)!==quantity||units(booking.quantity)!==quantity||units(booking.unitPrice)!==price||
+   units(booking.feeEUR)!==fee||units(booking.taxEUR)!==tax||units(booking.amountExactEUR)!==gross||units(booking.amountEUR)!==gross)return null;
+  const matches=(p,role,positionId,accountId,delta,value)=>p.role===role&&p.positionId===positionId&&p.accountId===accountId&&
+   (delta===null?p.quantityDeltaExact===null:p.quantityDeltaExact!=null&&units(p.quantityDeltaExact)===delta)&&units(p.amountBookEURExact)===value;
+  const [asset,cash,...charges]=journal.postings;
+  if(!asset||!cash||!cash.accountId||!matches(asset,'asset',booking.positionId,booking.accountId,-quantity,-gross)||
+   !matches(cash,'cash',r.cashPositionId,cash.accountId,net,net))return null;
+  const expected=[['fee',fee],['tax',tax]].filter(([,amount])=>amount!==0n);
+  if(charges.length!==expected.length||expected.some(([role,amount],i)=>!matches(charges[i],role,null,null,null,amount)))return null;
+  return {quantity,net,cashAccountId:cash.accountId};
+ }catch{return null;}
+}
+
+export const provenBookingRemovalImport=(booking,journal)=>provenCashImport(booking,journal)||Boolean(importedFundSaleSettlement(booking,journal));
 /** Retained removal evidence prevents a later CSV from silently resurrecting it. */
 export function removedImportSources(model){
  return (model.journalEntries||[]).filter(j=>j.type==='booking-management-audit'&&j.managementAudit?.version===2&&j.managementAudit.action==='remove')
-  .flatMap(j=>j.managementAudit.originals.filter(o=>provenCashImport(o.booking,o.journal)).map(o=>o.booking.importSource));
+  .flatMap(j=>j.managementAudit.originals.filter(o=>provenBookingRemovalImport(o.booking,o.journal)).map(o=>o.booking.importSource));
 }
 
