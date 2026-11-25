@@ -1,0 +1,47 @@
+{
+  "checkedAtUTC": "2026-11-25T22:30:26Z",
+  "instrument": {
+    "isin": "IE00BK5BQT80",
+    "ticker": "VWCE",
+    "mic": "XETR",
+    "currency": "EUR",
+    "shareClass": "accumulating"
+  },
+  "expected": "A complete corporate-action-adjusted Xetra EUR close series and documented public display rights for the same series, compared on common portfolio valuation dates.",
+  "sources": [
+    {
+      "provider": "Deutsche Börse Public Data Set",
+      "registry": "https://registry.opendata.aws/deutsche-boerse-pds/",
+      "catalogueStatus": "deprecated",
+      "catalogueTerms": "Noncommercial display and derivatives for this historical public dataset.",
+      "probe": {
+        "unsignedS3Hosts": [
+          "deutsche-boerse-xetra-pds.s3.eu-central-1.amazonaws.com",
+          "deutsche-boerse-xetra-pds.s3.amazonaws.com"
+        ],
+        "prefixes": ["2019-07", "2020-01", "2024-01", "2026-11"],
+        "result": "AccessDenied on every ListObjectsV2 request. No usable completeness evidence."
+      }
+    },
+    {
+      "provider": "Deutsche Börse MiFID delayed Xetra",
+      "overview": "https://www.mds.deutsche-boerse.com/mds-en/real-time-data/Delayed-data",
+      "terms": "https://www.mds.deutsche-boerse.com/resource/blob/4028410/8c40e8b49bbbae4adcf9aee2f8193ad6/data/Market%20Data%20Policy%20Guidelines%20and%20FAQ_V2_8.pdf",
+      "availableWindow": "15-minute delay, each publication retained until midnight of the following business day.",
+      "result": "Recent minute-level trades can support individual observations. The stated window does not provide the historical daily series."
+    },
+    {
+      "provider": "Deutsche Börse Historical Marketplace",
+      "overview": "https://www.mds.deutsche-boerse.com/mds-en/historical-data",
+      "terms": "https://console.marketplace.deutsche-boerse.com/assets/GTC_Marketplace.pdf",
+      "result": "Historical data is offered. Intended usage depends on the order form and granted licence. The exact adjusted series and FolioLab display entitlement were not evidenced."
+    },
+    {
+      "provider": "Twelve Data EOD",
+      "terms": "https://support.twelvedata.com/en/articles/12682324-end-of-day-eod-pricing-market-data",
+      "result": "Historical EOD coverage is advertised. Terms require the relevant redistribution rights or a written agreement for external distribution. No FolioLab entitlement or full adjusted VWCE series was evidenced."
+    }
+  ],
+  "result": "PARTIAL: public sources explain the availability and rights boundaries. The previously qualified identity, short sample and TWR oracle remain valid.",
+  "remaining": "Complete XETR/EUR daily close history with adjustment evidence, documented display rights for this use, and comparison on the shared valuation dates."
+}
