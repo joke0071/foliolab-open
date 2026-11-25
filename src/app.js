@@ -121,7 +121,7 @@ const $=id=>document.getElementById(id), esc=escapeHTML;
 const refreshPortfolioProjection=bindPortfolioProjection($('portfolioProjection'),()=>model);
 const transferMatchingUI=createTransferMatchingUI({restoreFocus:restoreBookingTransferFocus,getModel:()=>model,assertCurrent:async()=>{assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();},commit:async draft=>{assertBookingWritable();model=draft;await save();},onCreate:kind=>$(kind==='cash'?'addWizard':'addBooking').click(),canCreate:kind=>!$(kind==='cash'?'addWizard':'addBooking').disabled});
 const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
-const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
+const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:draft=>save(draft,{resetFilter:false})});
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const PAGE_DESCRIPTIONS={history:'Historische Werte und ihre Datenabdeckung ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
@@ -130,7 +130,7 @@ const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnun
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone({created=true}={}){try{if(created)localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
-async function save(replacement){
+async function save(replacement,{resetFilter=true}={}){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
  let committed=false;
  const displayFailure=error=>{lastDisplayError='Daten gespeichert. Anzeige konnte nicht vollständig aktualisiert werden: '+String(error?.message||error)+'. Änderung nicht erneut ausführen.';try{notify(lastDisplayError,true);}catch{}};
@@ -141,7 +141,7 @@ async function save(replacement){
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
   await portfolioStore.save(replacement??model);
   committed=true;
-  if(replacement){model=replacement;filter='all';}
+  if(replacement){model=replacement;if(resetFilter)filter='all';}
   lastStorageError='';lastDisplayError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
@@ -375,7 +375,8 @@ function showPositionDetail(id){
   const mount=[...$('providerOverview').querySelectorAll('[data-position-detail]')].find(el=>el.dataset.positionDetail===id);
   if(!p||!mount||!mount.closest('details[data-position-id]')?.open)return;
   const days=positionDetailRanges.get(id)||30;
-  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR});
+  const sourcesOpen=mount.querySelector('.position-period-more')?.open===true;
+  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,sourcesOpen});
   void loadPositionDetail(p,model,mount,{days,esc,money,dateLabel});
 }
 // Calendar dates keep their day even if the device time zone changes while the app stays open.

@@ -1,3 +1,4 @@
+import {cosmosRewardWallet} from './cosmos-reward-evidence.js';
 import {units,exact} from './decimal.js';
 import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
 
@@ -55,7 +56,7 @@ export function bookingHistoryRows(model){
 }
 export function historyAction(model,p){
  if(p.wallet?.enabled){
-  const supported=['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1;
+  const supported=cosmosRewardWallet(p)||['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1;
   if(!supported)return null;
   const exists=model.walletHistory?.sessions?.some(s=>s.id==='wallet-history:'+p.id);
   return {action:'wallet-history',label:exists?'Historie anzeigen':'Historie rekonstruieren'};
