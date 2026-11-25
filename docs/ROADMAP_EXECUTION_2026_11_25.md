@@ -549,3 +549,44 @@ PNG-Reproduktionsprotokoll behalten ihren Umfang. Für die ausstehende
 Teilabnahme fehlen ein autorisierter Auslieferungspfad mit wirksamen
 HTTP-Headern, natives Safari/VoiceOver/ITP und der Primärnachweis zur
 ursprünglichen Zeichnung.
+
+### SW340 · auf Main integriert
+
+[PR #431](https://github.com/joke0071/foliolab-open/pull/431) bestand
+die Pflichtintegration einschließlich aller drei Browser-Shards
+und den separaten Wallet-Lauf. Der gemeinsame Prüfstamm
+`dda5be4ca1d49c6e40712a9c11114408adf2adbd` und der integrierte Main
+`7adbf028ff407df2c48f5c8e2e788ed10e8573f0` haben denselben Tree
+`09ce84403c8d79be0b077ad33d5ae7fa8e7568a2`. Der [Main-, Pages- und
+Live-Lauf 45620573232](https://github.com/joke0071/foliolab-open/actions/runs/45620573232)
+läuft. Gezählt sind weiterhin 10/29 Folgepakete.
+
+### Cosmos Hub · positiver Unbonding-Fall
+
+Für die erfolgreiche öffentliche Undelegation im Block **34.042.462**
+bestätigt das Ereignis `unbond` **3.487.930 uATOM**. Der
+Transaktionsauftrag enthält 3.487.931 uATOM. Im nachfolgenden
+finalisierten Block bestätigten alle drei Knoten den Ereignisbetrag
+als aktuellen Unbonding-Bestand. FolioLab lieferte **3,48793 ATOM
+in Freigabe**, separat von **6,984256 ATOM** Bankguthaben und ohne
+verbleibende Delegation. Damit ist auch eine positive Unbonding-Menge
+im öffentlichen Adapterpfad belegt. Rewards und die private
+Kontozuordnung bleiben offen.
+[Prüfnachweis](release-evidence/sw339-cosmos-final-unbonding-2026-11-25.json).
+
+### TRUST01 · lizenzierter Kolbenersatz für die Prüfung
+
+Für die offene ursprüngliche Kolbenzeichnung liegt ein Ersatzkandidat
+auf Basis des [Lucide-Kolbens](https://lucide.dev/icons/flask-conical)
+aus dem gepinnten [Upstream `f12b0de1`](https://github.com/lucide-icons/lucide/tree/f12b0de177fbc2a6795e99be065887e72b237123)
+vor. Das unveränderte Upstream-SVG und sein vollständiger Lizenzhinweis
+liegen bei. Die lokale Ableitung verwendet die bestehende Farbpalette
+und exportiert transparente PNGs in 192 und 512 px und ein opakes
+maskierbares PNG in 512 px. Zwei unabhängige Renderläufe in Chromium
+141 verglichen die drei PNGs bytegenau. Der Kantenradius des
+Vordergrunds der maskierbaren Fassung lag bei **132,21 px** innerhalb
+der 204,8-px-Sicherheitszone. Die Kandidatendateien liegen auf dem
+Arbeitszweig als Beleg. Die weiteren Grafikgruppen, native
+Safari-/VoiceOver-Prüfung und HTTP-Framingschutz bleiben offen.
+[Quelle, Lizenz und Ausgabeprüfung](release-evidence/trust-flask-candidate-2026-11-25/verification.json) ·
+[Reproduktion](release-evidence/trust-flask-candidate-2026-11-25/reproduce.mjs).
