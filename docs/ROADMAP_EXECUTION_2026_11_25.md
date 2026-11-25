@@ -311,3 +311,70 @@ betroffenen Zeilen bleiben erhalten.
   Barausgleich wird bei Split, Swap und Fusion atomar abgelehnt.
   Der geforderte Abrechnungsfall für eine automatische Zuordnung bleibt
   ohne belegte Nettoauszahlung samt Steuerbasis offen.
+
+## Fortsetzung ab Checkpoint `c6a5578` · 25.11.2026
+
+Vor der Arbeit abgeglichen: Main `8de63527`, Arbeitszweig
+`feature/flh05-import-foundation` auf `c6a5578`, Draft #427 auf
+`84ef0b37`, #430 auf `5c2d7aca`. Die vier Stände waren seit dem
+Checkpoint unverändert. Für #427 lagen keine eingereichten Reviews oder
+Reviewthreads vor.
+
+### UI-Refresh · „Mehr“
+
+- **Soll und Ausgangsbefund.** Bei sichtbarem Firefox 142.0.1 und
+  585 × 770 CSS-Pixeln stand der Fokus auf der letzten mobilen Taste
+  „Mehr“. Nach `Enter → Tab` zeigte der X11-Mitschnitt den Fokus auf
+  „Firefox View“ in der Browserleiste. Im Dokument blieb „Mehr“ als
+  letzter aktiver Knoten gespeichert.
+- **Korrektur und Gegenprobe.** [SW340, PR #431](https://github.com/joke0071/foliolab-open/pull/431)
+  setzt die feste Mobilnavigation im DOM zwischen Kopfzeile und Hauptinhalt.
+  Auf dem [Kandidaten d20f202a](https://github.com/joke0071/foliolab-open/commit/d20f202a104fbf2a90c5c0c03f5c2f7c9671f5ca)
+  geht der Fokus nach derselben Tastenfolge an „App installieren“, bei
+  ausgeblendeter Installation an „+ Konto“. Umschalt+Tab führt zurück
+  zu „Mehr“. Die bestehende Pflichtprüfung enthält den Übergang bei
+  320 und 390 px. Syntax und 1.533 Node-Tests lokal bestanden.
+- **Drei Rubriken.** Firefox mit OS-Tastatur bei 450 CSS-Pixeln und bei
+  echtem Browserzoom 200 % bestand Vorwärts- und Rückweg. Der Browserzoom
+  wurde mit sechs Vergrößerungsschritten von 100 % auf 200 % gesetzt:
+  640 → 320 CSS-Pixel, DPR 1 → 2 und CSS-Zoom 1. Chromium 141 und WebKit
+  26 bestanden bei 320 px und separat bei CSS-Zoom 200 % auf 640 px.
+  Alle drei primären Bedienelemente zeigten sichtbaren Fokus zwischen den
+  Leisten. Abgelehntes Verwerfen erhielt den Entwurf, bestätigtes
+  Verwerfen stellte den Fokus zum Auslöser wieder her. „Übersicht“ und
+  erneut „Mehr“ funktionierten per Tastatur. Der vollständige gelesene
+  IndexedDB-Datensatz war vor und nach jedem Fall identisch.
+- **Abnahme.** Die drei bestehenden Rubriken sind fachlich auf dem
+  Kandidaten bestätigt. Die vollständige Zeilenbuchung folgt nach
+  [Integration](https://github.com/joke0071/foliolab-open/actions/runs/45617054520),
+  [Wallet-CI](https://github.com/joke0071/foliolab-open/actions/runs/45617054505)
+  und Main-/Pages-/Live-Abnahme desselben Produktstands. Der bestehende
+  CSS-Nachweis auf SW339 bleibt separat erhalten.
+  [Messwerte](release-evidence/sw340-roadmap-ui-at05-2026-11-25.json).
+
+### AT05 · OeKB-Original und zugehörige Flatex-Abrechnung
+
+Im [öffentlichen OeKB-Portal](https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f?isin=IE00BNG8L278)
+wurde über die Meldungsnavigation die finale Jahresmeldung **343333** vom
+**17.01.2022** für **IE00BNG8L278** geöffnet. Die Originaltabellen in USD
+je Anteil lieferten 0,0197 ausschüttungsgleichen Ertrag, 0,0018 anrechenbare
+Quellensteuer, 0,0036 im Steuerabzug erhobene KESt (Position 12) und 0,0171
+Anschaffungskostenkorrektur (16.4). Der USD-Quellensteuerbetrag ist in
+Position 12.4 bereits als Abzug erfasst.
+
+Das unabhängig festgelegte Soll aus der [Flatex-Abrechnung und dem
+Depotumsatz](https://www.broker-test.at/steuern/fondsthesaurierung/) war
+27,22 EUR Steuer, 112,88 USD steuerpflichtiger Ertrag und 4,7465 EUR
+korrigierter Einstand je Anteil. Mit 8.622,7 Anteilen und 1,14030 USD/EUR
+ergab Decimal aus dem Original alle drei Werte. Der Zuwachs je Anteil
+beträgt 0,01499605367 EUR. Der Listenpunkt im Artikel zeigt für den
+ausschüttungsgleichen Ertrag abweichend 0,197 USD, während OeKB und
+Fließtext 0,0197 USD ausweisen. Die Buchung und der Restore waren bereits
+auf SW339 bestätigt. Damit ist der Bezug zwischen Originalmeldung,
+Einzelabrechnung und Einstandskorrektur hergestellt. Die
+Brokerjahresabrechnung, die unabhängige Fachabnahme derselben
+Jahreszusammenführung und der automatische Produktabgleich der
+Anschaffungskosten bleiben offen.
+[Originalfeld-Codes und Prüfsummen](release-evidence/sw340-roadmap-ui-at05-2026-11-25.json).
+
+**Zeilenabnahme zu diesem Stand: 6/6 Kernbereiche, 10/29 Folgepakete.**

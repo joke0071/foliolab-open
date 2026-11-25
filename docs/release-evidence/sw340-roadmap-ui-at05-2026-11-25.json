@@ -1,0 +1,687 @@
+{
+  "baseline": "8de635271c341d7462d4d33e5f268089c26da6d0",
+  "candidate": "d20f202a104fbf2a90c5c0c03f5c2f7c9671f5ca",
+  "baselineVisibleFirefox": {
+    "browser": "142.0.1",
+    "viewportCSS": [
+      585,
+      770
+    ],
+    "from": "#mobileNav [data-page=more]",
+    "keys": [
+      "Enter",
+      "Tab"
+    ],
+    "actualDesktopFocus": "Firefox View",
+    "capturedFromX11": true
+  },
+  "candidateCases": {
+    "firefox": {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "nativeOsKeys": true,
+      "reports": [
+        {
+          "mode": "narrow-window-450px",
+          "initial": {
+            "width": 450,
+            "height": 790,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 450
+          },
+          "measured": {
+            "width": 450,
+            "height": 790,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 450
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "c7b311ad27a3b0bd4006183f14ef7485dbfba1e4bd6cc9e4ccfa62864b1f162a"
+        },
+        {
+          "mode": "browser200",
+          "initial": {
+            "width": 640,
+            "height": 790,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 640
+          },
+          "measured": {
+            "width": 320,
+            "height": 395,
+            "dpr": 2,
+            "cssZoom": "1",
+            "scrollWidth": 320
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "71bb964a11fe5aeee6167a46c16627174c8a5f8bbb9779254fee8724dd8825b0"
+        }
+      ]
+    },
+    "webkit": {
+      "engine": "webkit",
+      "version": "26.0",
+      "nativeOsKeys": false,
+      "reports": [
+        {
+          "mode": "320px",
+          "initial": {
+            "width": 320,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 320
+          },
+          "measured": {
+            "width": 320,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 320
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "79cd8894db1e69ab2c1b2e385f1edc4a52532d1f0c0fa360d91285f23bc8ca90"
+        },
+        {
+          "mode": "css200",
+          "initial": {
+            "width": 640,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 640
+          },
+          "measured": {
+            "width": 640,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "2",
+            "scrollWidth": 640
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "42b61b22a3d9b3918cf01c878675fc65601caef8e8b5c2e422a7e20734ddb3c8"
+        }
+      ]
+    },
+    "chromium": {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "nativeOsKeys": false,
+      "reports": [
+        {
+          "mode": "320px",
+          "initial": {
+            "width": 320,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 320
+          },
+          "measured": {
+            "width": 320,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 320
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "f6ac2f67cb85c4cf0ea76c93737a6c14007c63905736aa1848ed1f1fea2c4133"
+        },
+        {
+          "mode": "css200",
+          "initial": {
+            "width": 640,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "1",
+            "scrollWidth": 640
+          },
+          "measured": {
+            "width": 640,
+            "height": 850,
+            "dpr": 1,
+            "cssZoom": "2",
+            "scrollWidth": 640
+          },
+          "forward": {
+            "id": "installButton",
+            "page": null,
+            "section": "morePage",
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 3,
+            "inContentViewport": true
+          },
+          "reverse": {
+            "id": "",
+            "page": "more",
+            "section": null,
+            "focusVisible": true,
+            "outline": "solid",
+            "outlineWidth": 2,
+            "inContentViewport": false
+          },
+          "progression": {
+            "Tab": [
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ],
+            "Shift+Tab": [
+              {
+                "id": "autoRefresh",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "exportBackup",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              },
+              {
+                "id": "addProvider",
+                "page": null,
+                "section": "morePage",
+                "focusVisible": true,
+                "outline": "solid",
+                "outlineWidth": 3,
+                "inContentViewport": true
+              }
+            ]
+          },
+          "openerRestored": true,
+          "discardRejectedDraftRetained": true,
+          "overviewAndReturn": true,
+          "exactIdb": true,
+          "recordSha256": "63442f6e9f03e24078d5ffb1087ac3eefeec7f30f91a7a2a02d526a46cd79ead"
+        }
+      ]
+    }
+  },
+  "at05PrimarySource": {
+    "isin": "IE00BNG8L278",
+    "reportId": 343333,
+    "date": "2022-01-17",
+    "currency": "USD",
+    "fields": {
+      "10105": {
+        "position": "12.",
+        "optionUSD": "0.0036",
+        "noOptionUSD": "0.0036"
+      },
+      "10108": {
+        "position": "12.3",
+        "optionUSD": "0.0054",
+        "noOptionUSD": "0.0054"
+      },
+      "10109": {
+        "position": "12.4",
+        "optionUSD": "-0.0018",
+        "noOptionUSD": "-0.0018"
+      },
+      "10287": {
+        "position": "16.2.",
+        "optionUSD": "0.0197",
+        "noOptionUSD": "0.0197"
+      },
+      "10288": {
+        "position": "16.3.",
+        "optionUSD": "0.0018",
+        "noOptionUSD": "0.0018"
+      },
+      "10289": {
+        "position": "16.4.",
+        "optionUSD": "0.0171",
+        "noOptionUSD": "0.0171"
+      }
+    },
+    "sourceDigest": "724dc743d4ce06e01b6bb7b000045d5e46553e8b61f198d701ca9612748bece6",
+    "shares": "8622.7",
+    "usdPerEur": "1.14030",
+    "taxEUR": "27.22",
+    "taxableUSD": "112.88",
+    "costBasisIncreaseEURPerShare": "0.01499605367008681925808997632",
+    "unitCostBeforeEUR": "4.7315",
+    "unitCostAfterEUR": "4.7465"
+  }
+}
