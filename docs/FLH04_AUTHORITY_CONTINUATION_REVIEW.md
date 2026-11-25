@@ -83,7 +83,7 @@ Zustände. Das Modell simuliert insbesondere den ablehnenden Rückgabewert
 eines Signaturverifiers. Es enthält keinen Signatur-, Wire-, Persistenz- oder
 Enrollment-Code. 16.384 Zustände bzw. 64 MiB sind ausschließlich Modellgrenzen
 für prüfbare Lastfälle. Bruchteile der Kette geben nur `pending` zurück.
-15 Tests decken die Grenzfälle, bekannte Forks und Floors, Kontextbindung,
+18 Tests decken die Grenzfälle, bekannte Forks und Floors, Kontextbindung,
 Manipulation, Ablehnung, Replay, Rollentrennung, Widerruf über die Grenze,
 Neustart, Abbruch während der Prüfung, konkurrierenden Segmentaufruf und
 Ressourcenfehler ab.
@@ -95,3 +95,24 @@ Lebenszyklus-/Verfügbarkeitsgrenze bestätigen. Danach sind echte
 kryptografische Positiv-/Negativ-Vektoren, native Browser-Unterbrechungen,
 Profilwechsel, kontrollierte Speicher-/Zeitmessungen und ein
 Zwei-Geräte-Fall mit OAuth und unabhängigem Remote-Readback erforderlich.
+
+### Fragen und erwartete Reviewbelege
+
+Prüfbasis ist der in [#427](https://github.com/joke0071/foliolab-open/pull/427)
+angegebene Head. Die synthetischen Einstiegspunkte sind
+`startAuthorityReview` und `verifySegment`. Die Vorprüfung und der
+Fixture-Verifier verwenden dieselben unveränderlichen Segmentstrings. Das
+Modell prüft die Form der Writerliste und ihre vertragliche Obergrenze von 64.
+
+| Frage | Erwarteter Reviewbeleg |
+| --- | --- |
+| Wie bindet der Controller Root, vollständige Vorgängerhistorie und aktuelles Ziel? | Begründen, dass jede Transition einschließlich beider Signaturen bei Rotation auch über die Segmentgrenze geprüft wird. Festlegen, welche bereits beobachteten Konflikte und Floors bis zum lokalen Commit geprüft werden müssen. |
+| Wer kann die aktuelle Autorität unabhängig bestätigen? | Quelle, Vertrauensannahme, Bindung an StateId und Operation, Ablauf bei Widerruf oder Widerspruch sowie erwartetes Verhalten bei fehlender Bestätigung benennen. |
+| Wie enden unterbrochene oder konkurrierende Prüfungen? | Abbruch und Neustart, veraltete asynchrone Ergebnisse, unveränderliche Eingaben, lokale Zustimmung und den finalen CAS gegen denselben Kontext prüfen. |
+| Welche Grenzen braucht der Produktionspfad? | Transport/Allokation, Signaturarbeit, Abbruchlatenz und Verhalten bei erschöpftem Budget begründen. Den Wiederanlauf ohne vertrauenswürdigen persistenten Prüfstand beschreiben. |
+| Wie bleiben Bestand und Originale erhalten? | Fehlerklassen für fehlende Originale, Konflikte, Budget und fehlende Aktualität festlegen. Für jede Klasse die Wirkung auf Outbox, Backup/Restore und Geräteidentität prüfen. |
+
+Reviewbefunde sollen den geprüften Commit, die betroffene Vertragsstelle,
+Schweregrad und den für eine Freigabe erforderlichen Nachweis enthalten.
+Die unabhängige Bestätigung der aktuellen Autorität und die native
+Zwei-Geräte-Abnahme bleiben eigene Nachweise.

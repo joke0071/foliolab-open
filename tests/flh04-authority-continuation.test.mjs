@@ -180,3 +180,46 @@ test('rejects an overlapping segment and discards a verifier result after cancel
   assert.equal(session.verifySegment(objects), 'cancelled');
   assert.throws(() => session.verifySegment(objects), /closed/);
 });
+
+test('verifies the same segment strings that it preflighted', () => {
+  const { context, objects, verify } = fixtures(2);
+  const verified = [];
+  const session = startAuthorityReview(context, object => {
+    verified.push(object);
+    if (verified.length === 1) objects[1] = 'x'.repeat(65_537);
+    return verify(object);
+  });
+  const expected = objects.slice();
+  assert.equal(session.verifySegment(objects), 'verified-chain-only');
+  assert.deepEqual(verified, expected);
+});
+
+test('rejects malformed verifier results before retaining the next predecessor', () => {
+  const { context, objects, verify } = fixtures(2);
+  for (const invalid of [
+    { id: '' },
+    { authority: 1 },
+    { writers: [] },
+    { writers: ['writer', 'writer'] },
+    { writers: new Array(1) },
+    { writers: Array.from({ length: 65 }, (_, index) => `writer-${index}`) }
+  ]) {
+    const checked = [];
+    const session = startAuthorityReview(context, object => {
+      const state = verify(object);
+      checked.push(state.version);
+      return { ...state, ...invalid };
+    });
+    assert.equal(session.verifySegment(objects), 'rejected');
+    assert.deepEqual(checked, [1]);
+    assert.throws(() => session.verifySegment(objects), /closed/);
+  }
+});
+
+test('rejects missing target or verifier and invalid pinned identifiers at session setup', () => {
+  const { context, verify } = fixtures(1);
+  for (const change of [{ target: null }, { root: {} }, { portfolio: 1 }]) {
+    assert.throws(() => startAuthorityReview({ ...context, ...change }, verify), /Invalid review context/);
+  }
+  assert.throws(() => startAuthorityReview(context, null), /Fixture verifier required/);
+});
