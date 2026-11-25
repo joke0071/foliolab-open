@@ -1,0 +1,56 @@
+{
+  "scope": "Synthetic performance seed from the working plan. Same loopback origin, pinned SW345 and candidate SW346. No OS eviction or physical second-device test.",
+  "fixture": "perf-evidence/2026-11-01/android03-v251/seed-10000.json.gz",
+  "harness": "sw346-10000-offline-upgrade-2026-11-25.mjs",
+  "initialHarnessCorrection": "First local Chromium attempt received HTTP 304 for sw.js because both checkout files had the same filesystem mtime. Repeated with release-specific mtimes from git.",
+  "results": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "from": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+      "to": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    },
+    {
+      "engine": "firefox",
+      "browser": "157.0",
+      "from": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+      "to": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    },
+    {
+      "engine": "webkit",
+      "browser": "27.2",
+      "from": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+      "to": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+      "fixtureSha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2",
+      "portfolioSha256": "a979c753e7e6111419f0f021aef56f71df8ce2d0256c09eeae0d77e52200859c",
+      "revision": 2,
+      "bookings": 10000,
+      "journal": 10000,
+      "flows": 4615,
+      "snapshots": 1825,
+      "afterUpdate": "byte-and-revision-equal",
+      "offlineReload": "byte-and-revision-equal",
+      "environment": "local isolated browser profile, same origin"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "productCommit": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+  "scope": "Archived public bank replay in fresh test portfolios. The same archival bank value was supplied to the local REST adapter. No separate previously confirmed portfolio position was recorded.",
+  "runs": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "height": 34048131,
+      "archivedFreeATOM": "4.972381",
+      "bankReads": 1,
+      "regularScan": true,
+      "explicitSave": true,
+      "reopen": true,
+      "associatedWithLocalAccount": true,
+      "historyActionAvailable": false,
+      "historicalProductPositionInPreexistingPortfolio": false,
+      "fullWalletScanned": false,
+      "method": "The local replay adapts an independently archived ABCI bank result to the LCD bank response. Other endpoints are blocked. This case cannot establish ownership or the original state of a project portfolio."
+    },
+    {
+      "engine": "firefox",
+      "browser": "157.0",
+      "height": 34048131,
+      "archivedFreeATOM": "4.972381",
+      "bankReads": 1,
+      "regularScan": true,
+      "explicitSave": true,
+      "reopen": true,
+      "associatedWithLocalAccount": true,
+      "historyActionAvailable": false,
+      "historicalProductPositionInPreexistingPortfolio": false,
+      "fullWalletScanned": false,
+      "method": "The local replay adapts an independently archived ABCI bank result to the LCD bank response. Other endpoints are blocked. This case cannot establish ownership or the original state of a project portfolio."
+    },
+    {
+      "engine": "webkit",
+      "browser": "27.2",
+      "height": 34048131,
+      "archivedFreeATOM": "4.972381",
+      "bankReads": 1,
+      "regularScan": true,
+      "explicitSave": true,
+      "reopen": true,
+      "associatedWithLocalAccount": true,
+      "historyActionAvailable": false,
+      "historicalProductPositionInPreexistingPortfolio": false,
+      "fullWalletScanned": false,
+      "method": "The local replay adapts an independently archived ABCI bank result to the LCD bank response. Other endpoints are blocked. This case cannot establish ownership or the original state of a project portfolio."
+    }
+  ]
+}

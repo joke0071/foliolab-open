@@ -93,6 +93,31 @@
     "grossAndNetSaleEUR": "5.41",
     "separateTaxRefundEUR": "3.05",
     "reportedLossEUR": "11.55",
-    "caveat": "Both receipts have the same intermediate ISIN and corporate action but different printed custody account identifiers. The joint upstream commit does not establish same-account continuity."
+    "caveat": "Both receipts have the same intermediate ISIN and corporate action but different printed custody account identifiers. The joint upstream commit does not establish same-account continuity.",
+    "independentProductReplays": {
+      "allocationReceipt": {
+        "from": "55",
+        "rightsAfterFirstAllocation": "5.5",
+        "positionsAfterSecondAllocation": [
+          "0",
+          "0.5",
+          "5"
+        ],
+        "basis": "unknown",
+        "restore": true
+      },
+      "separateSettlementReceipt": {
+        "shares": "0.5",
+        "cashEUR": "5.41",
+        "realizedEUR": "-11.55",
+        "impliedAllocatedBasisEUR": "16.96",
+        "restore": true
+      },
+      "isolatedTestPortfolios": 2,
+      "sameCustomerAccountVerified": false,
+      "separateTaxRefundEUR": "3.05",
+      "taxRefundPosted": false,
+      "combinedSettlementApproved": false
+    }
   }
 }

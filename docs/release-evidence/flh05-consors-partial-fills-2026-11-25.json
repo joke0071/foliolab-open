@@ -39,5 +39,27 @@
     "Two published broker receipts explicitly identify the executions and their EUR debits.",
     "No independently paired native order export in the pinned corpus. The masked clearing account identifiers are different.",
     "No CSV profile or import approved."
-  ]
+  ],
+  "genericImportProbe": {
+    "genericTranscription": true,
+    "feeConversionEUR": "55.00035438372669927",
+    "euroPerJPY": "0.007087674533985399",
+    "actual": {
+      "quantity": "1700",
+      "cash": "38291.29143596286397073",
+      "executions": [
+        "-54356.26018498830235",
+        "-7352.44837904883367927"
+      ],
+      "reimportNew": 0,
+      "restored": true
+    },
+    "expectedDebits": [
+      "-7352.45",
+      "-54356.26"
+    ],
+    "expectedCash": "38291.29",
+    "exactCashMatch": false
+  },
+  "testControl": "100000 EUR opening cash; manually transcribed execution rows; OTC venue fee converted with reciprocal from the broker. No provider-level import approval."
 }
