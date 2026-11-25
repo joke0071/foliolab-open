@@ -354,7 +354,7 @@
   "unitTests": 1534,
   "syntax": "PASS",
   "chromiumLoadingPWA": "PASS",
-  "status": "DEPLOYED_AWAITING_STANDARD_LIVE_GATE",
+  "status": "DEPLOYED_LIVE_RETRY_ACTIVE",
   "pullRequest": 434,
   "baseMain": "513c2a41e9a82d9c175c35a7cbee580be4951638",
   "sameOriginPwaUpgrade": {
@@ -416,5 +416,61 @@
         "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
       }
     ]
-  }
+  },
+  "liveAttempt1": {
+    "job": 139493614412,
+    "conclusion": "failure",
+    "artifactId": 15059949884,
+    "artifactSHA256": "f095f03a2bb1a7e16f5affe3257865176afd8bf3ea0f14203bd8942143a82fbf",
+    "archiveBytes": 20302550,
+    "zipCRC": "PASS",
+    "productionCore": "PASS",
+    "coreAssetMatches": 161,
+    "axeScans": 22,
+    "failure": {
+      "test": "tests/browser-navigation-installation.mjs",
+      "line": 124,
+      "width": 430,
+      "target": "[data-action=import-price-history][data-id=nav-etf]",
+      "observed": "element resolved to hidden; visibility wait elapsed"
+    },
+    "controlledRepeat": {
+      "unchangedLocalTests": {
+        "SW342": "3/3 PASS",
+        "SW343": "3/3 PASS"
+      },
+      "directProductionSW343": "PASS",
+      "detailToggleLifecycle": {
+        "sw342": {
+          "before": {
+            "connected": true,
+            "height": 44
+          },
+          "retainedAfterRender": {
+            "connected": false,
+            "height": 0
+          },
+          "currentAfterRender": {
+            "connected": true,
+            "height": 44
+          }
+        },
+        "sw343": {
+          "before": {
+            "connected": true,
+            "height": 44
+          },
+          "retainedAfterRender": {
+            "connected": false,
+            "height": 0
+          },
+          "currentAfterRender": {
+            "connected": true,
+            "height": 44
+          }
+        }
+      }
+    }
+  },
+  "liveRetryRequested": true
 }
