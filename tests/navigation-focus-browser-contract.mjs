@@ -18,9 +18,23 @@ export async function navigationFocusBrowserContract({p,nav,record,engine}){
   const target=menu.locator('[data-page="bookings"]');await target.focus();await p.keyboard.press('Enter');
   assert.equal(await target.evaluate(e=>e===document.activeElement),true,'persistent navigation retains keyboard focus');
   assert.equal(await target.getAttribute('aria-current'),'page');
+  const mobileMore=width<720;
+  if(mobileMore){
+   const more=menu.locator('[data-page="more"]');
+   await p.keyboard.press('Tab');
+   assert.equal(await more.evaluate(e=>e===document.activeElement),true,'Mehr follows Buchungen in the mobile navigation');
+   await p.keyboard.press('Enter');
+   assert.equal(await more.getAttribute('aria-current'),'page');
+   const install=p.locator('#morePage #installButton');
+   const firstControl=await install.isVisible()?install:p.locator('#morePage #addAccount');
+   await p.keyboard.press('Tab');
+   assert.equal(await firstControl.evaluate(e=>e===document.activeElement&&e.matches(':focus-visible')),true,'Tab from the final mobile navigation button reaches a visible keyboard focus in Mehr');
+   await p.keyboard.press('Shift+Tab');
+   assert.equal(await more.evaluate(e=>e===document.activeElement),true,'Shift+Tab from the first control returns to Mehr');
+  }
   assert.deepEqual(await record(),before,'navigation does not change canonical data or revision');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow');
-  checks.push({width,pageActionFocus:'pageTitle',nextTabVisibleOutsidePreviousPage:true,navigationFocusRetained:true,canonicalBytesAndRevisionUnchanged:true});
+  checks.push({width,pageActionFocus:'pageTitle',nextTabVisibleOutsidePreviousPage:true,navigationFocusRetained:true,...(mobileMore?{mobileMoreTabAndReverse:true}:{}),canonicalBytesAndRevisionUnchanged:true});
  }
  await nav('dashboard');
  const out='artifacts/gates/navigation-focus';await mkdir(out,{recursive:true});
