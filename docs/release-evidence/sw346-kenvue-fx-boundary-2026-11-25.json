@@ -7,15 +7,24 @@
   "source": {
     "settlement": {
       "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/ingdiba/Verkauf11.txt",
-      "sha256": "0f761538291bf44afa7a5bf15eaeb919d3905ddd7a2b0d39bd73efc10f2235eb"
+      "sha256": "0f761538291bf44afa7a5bf15eaeb919d3905ddd7a2b0d39bd73efc10f2235eb",
+      "originalIssue": "https://github.com/portfolio-performance/portfolio/issues/3711"
     },
     "allocation": {
       "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/ingdiba/UmtauschEingang01.txt",
       "sha256": "cd693c1ca8b0010f29525b22d4c0b4b78dc815a4c1a80d90e854ab3a8db43f31",
       "date": "2023-08-25",
       "allocatedShares": "16.0648",
-      "printedCustodyIdentifierMatchesSettlement": false
-    }
+      "printedCustodyIdentifierMatchesSettlement": false,
+      "originalIssue": "https://github.com/portfolio-performance/portfolio/issues/3712",
+      "tenderedJnjShares": "2",
+      "issuerRatioKenvuePerJnj": "8.0324",
+      "issuer": "https://www.jnj.com/media-center/press-releases/johnson-johnson-announces-final-exchange-ratio-of-8-0324-in-split-off-of-kenvue-inc",
+      "sourceOrderSameBetweenInboundAndOutbound": true,
+      "printedCustodyIdentifierMatchesOutbound": true
+    },
+    "upstreamIssueSubmittedBySameAccount": true,
+    "explicitSaleOrderMatchesAllocation": false
   },
   "independentSettlement": {
     "isin": "US49177J1025",
