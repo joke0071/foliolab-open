@@ -1,5 +1,5 @@
 {
-  "status": "MERGED_MAIN_PENDING",
+  "status": "DEPLOYED_AWAITING_STANDARD_LIVE",
   "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
   "tree": "16263c152fd85b2f527a6549b4c3a27144c0aa2a",
   "candidate": "bc8806617d234551559336beec1fee6155e77e8b",
@@ -29,9 +29,18 @@
     "targetedNode": "2/2 PASS on the Main checkout",
     "targetedChromiumOnMainCheckout": "PASS",
     "integrationBrowserResult": {
-      "chromium": {"job": 139503906005, "result": "PASS"},
-      "firefox": {"job": 139503906398, "result": "PASS"},
-      "webkit": {"job": 139503906398, "result": "PASS"}
+      "chromium": {
+        "job": 139503906005,
+        "result": "PASS"
+      },
+      "firefox": {
+        "job": 139503906398,
+        "result": "PASS"
+      },
+      "webkit": {
+        "job": 139503906398,
+        "result": "PASS"
+      }
     },
     "oneStoredReward": true,
     "recordUnchangedOnReimport": true,
@@ -49,5 +58,53 @@
     ],
     "acceptedFollowUpPackages": 13,
     "totalFollowUpPackages": 29
-  }
+  },
+  "deployJob": 139530497724,
+  "liveJob": 139530649509,
+  "pagesOriginal": {
+    "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+    "tree": "16263c152fd85b2f527a6549b4c3a27144c0aa2a",
+    "artifactId": 15065010544,
+    "artifactBytes": 581702,
+    "archiveSHA256": "5ab6b64fab5041ac45f683fbd0e26fd61075213a060cf4fcae90007ccfb19c2d",
+    "zipCRC": "PASS",
+    "exactFiles": 161
+  },
+  "originReadback": [
+    {
+      "path": "index.html",
+      "matched": true,
+      "sha256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a"
+    },
+    {
+      "path": "sw.js",
+      "matched": true,
+      "sha256": "f680529563e2f6ef886516ba91ca15e57586aeaa5c2a23f2e04942e3b88fb87c"
+    },
+    {
+      "path": "src/app.js",
+      "matched": true,
+      "sha256": "0e60b360d240c086802f2deeed95d41a0c08a8ff7033c18514f4a8fe17636fdc"
+    },
+    {
+      "path": "src/cosmos-reward-evidence.js",
+      "matched": true,
+      "sha256": "01c3bc5d684b342f09c60dd5de56bb863743cdd4c717d76f0925f0cfa02cfdba"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "matched": true,
+      "sha256": "b2174903c3e444fc47d58ce9d08ee5d2b57ff8088f9e6d4aea54756dba10daa7"
+    },
+    {
+      "path": "src/wallet-history-ui.js",
+      "matched": true,
+      "sha256": "4b07f1e0075c4ac06cfdd055b5065318723ae4fd7024203ac05d53f069e39ac7"
+    },
+    {
+      "path": "src/position-detail-ui.js",
+      "matched": true,
+      "sha256": "b561ce71b3b87c3e3ef1b83531053409cf000c60859068f9554bd8d679b36eba"
+    }
+  ]
 }
