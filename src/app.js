@@ -1,4 +1,4 @@
-import {units,SCALE} from './decimal.js';
+import {units,exact as exactDecimal,div,SCALE} from './decimal.js';
 import {createInstallHintPreference} from './install-hint-preference.js';
 import {createSharedImportUI} from './shared-import-ui.js';
 import {bindNativeFlatexSourceContext} from './flatex-native.js';
@@ -2048,8 +2048,10 @@ function openBooking(){
   '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
     '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
   '<details id="bookingFraction" class="advanced-apis hidden"><summary>Abrechnung für einen Aktienbruchteil</summary>'+
-    '<p class="small-help">Für den Verkauf des bereits eingebuchten Stückrests. Übertrage beide EUR-Beträge vom Beleg und erfasse die zugehörigen Gebühren und Steuern.</p>'+
+    '<p class="small-help">Für den Verkauf des bereits eingebuchten Stückrests. Übertrage Kurswert und EUR-Nettogutschrift vom Beleg. Erfasse die zugehörigen Gebühren und Steuern in EUR.</p>'+
     '<div class="field-row">'+field('Kurswert vor Abzügen in EUR','fractionGrossEUR','','text','inputmode="decimal"')+
+    field('Kurswert vor Abzügen in USD','fractionGrossUSD','','text','inputmode="decimal"')+
+    field('Abrechnungskurs in USD je EUR','fractionUSDPerEUR','','text','inputmode="decimal"')+
     field('Nettogutschrift in EUR','fractionNetEUR','','text','inputmode="decimal"')+'</div></details>'+
   '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget"><option value="">Zielposition auswählen</option>'+options(list.map(p=>[p.id,p.name]),'')+'</select></label>'+
     field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
@@ -2089,6 +2091,8 @@ function openBooking(){
   loadFx.disabled=false;
  }
  function resetFx(){
+  fx.readOnly=false;
+  form.elements.fractionUSDPerEUR.value='';
   invalidateRequest();
   appliedReference=null;
   const foreign=list.find(p=>p.id===$('bookingPosition').value)?.currency;
@@ -2109,10 +2113,13 @@ function openBooking(){
   const ratio=actual==='split',correct=actual==='correction',target=['transfer','swap','merger'].includes(actual);
   const trade=['buy','sell'].includes(actual);
   const fraction=$('bookingFraction');
-  const showFraction=actual==='sell'&&position?.kind==='stock'&&position.currency==='EUR'&&units(position.quantityExact??position.quantity)%SCALE>0n;
+  const showFraction=actual==='sell'&&position?.kind==='stock'&&['EUR','USD'].includes(position.currency)&&units(position.quantityExact??position.quantity)%SCALE>0n;
   fraction.classList.toggle('hidden',!showFraction);
   for(const input of fraction.querySelectorAll('input')){
-   input.disabled=!showFraction;
+   const isForeignField=input.name==='fractionGrossUSD'||input.name==='fractionUSDPerEUR';
+   const applies=input.name==='fractionNetEUR'||(isForeignField?position?.currency==='USD':position?.currency==='EUR');
+   input.closest('label').classList.toggle('hidden',!applies);
+   input.disabled=!showFraction||!applies;
    if(changed)input.value='';
   }
   if(changed)fraction.open=false;
@@ -2157,6 +2164,17 @@ function openBooking(){
   for(const el of $('dialogFields').querySelectorAll('.hidden [required]'))el.required=false;
   lastType=actual;lastPosition=position?.id||'';
  }
+ form.elements.fractionUSDPerEUR.addEventListener('input',()=>{
+  invalidateRequest();appliedReference=null;
+  const quoted=form.elements.fractionUSDPerEUR.value.trim();
+  fx.readOnly=Boolean(quoted);loadFx.disabled=Boolean(quoted);
+  form.elements.fxRateDate.value='';form.elements.fxSource.value='';
+  fx.value='';
+  if(quoted){
+   try{const rate=units(quoted);if(rate>0n)fx.value=exactDecimal(div(SCALE,rate));}catch{}
+  }
+  fxNote.textContent=quoted?'Aus dem Abrechnungskurs in USD je EUR berechnet.':fxHint;
+ });
  form.elements.date.addEventListener('input',resetFx);
  loadFx.addEventListener('click',async()=>{
   const positionId=$('bookingPosition').value,selected=list.find(p=>p.id===positionId);

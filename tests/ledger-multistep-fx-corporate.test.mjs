@@ -102,3 +102,24 @@ test('separately settled EUR fractional sale reconciles the two broker amounts a
  assert.throws(()=>executeTransaction(m,fields));
  assert.equal(JSON.stringify(m),settled);
 });
+
+test('settled Kenvue fraction converts the posted USD cents using the broker rate before recording EUR',()=>{
+ const {m,stock,cash}=fixture({shares:'0.0648',basis:'1.38',cashQuantity:'0'});
+ stock.currency='USD';
+ const fields={type:'sell',date:'2023-09-01',positionId:stock.id,cashPositionId:cash.id,quantity:'0.0648',
+  unitPrice:'21.0032',fractionGrossUSD:'1.36',fractionUSDPerEUR:'1.089718',fractionNetEUR:'1.25'};
+ for(const amend of [{fractionGrossEUR:'1.25'},{fractionGrossUSD:'1.35'},{fractionUSDPerEUR:'0.917668'},
+  {fractionUSDPerEUR:''},{fractionNetEUR:'1.26'},{fxRate:'1.089718'},{cashPositionId:''},{tradeAmountEURExact:'1.25'}]){
+  const before=JSON.stringify(m);
+  assert.throws(()=>executeTransaction(m,{...fields,...amend}));
+  assert.equal(JSON.stringify(m),before);
+ }
+ const record=executeTransaction(m,fields);
+ assert.equal(record.amountExactEUR,'1.25');
+ assert.equal(record.fxSource,'Brokerabrechnung USD/EUR 1.089718 · Kurswert 1.36 USD');
+ assert.equal(stock.quantityExact,'0');assert.equal(cash.quantityExact,'1.25');
+ assert.equal(stock.realizedPnLExact,'-0.13');
+ assert.deepEqual(m.journalEntries[0].postings.map(p=>p.amountBookEURExact),['-1.25','1.25']);
+ assert.equal(m.externalCashFlows.length,0);assert(ledgerQuantityAudit(m).ok);
+ assert.deepEqual(safeImport(JSON.parse(backup(m))).bookings,m.bookings);
+});

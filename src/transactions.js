@@ -82,6 +82,35 @@ export function captureOpenings(model){
     Object.assign(opening,{...baseline,asOf:opening.asOf??null}); // Manual or wallet position not yet journal-managed.
  }
 }
+function fractionalSale(model,holding,kind,input,qty,previous,price,fee,tax){
+ const {fractionGrossEUR,fractionGrossUSD,fractionUSDPerEUR,fractionNetEUR}=input;
+ if(!fractionGrossEUR&&!fractionGrossUSD&&!fractionUSDPerEUR&&!fractionNetEUR)return null;
+ if(!input.cashPositionId)throw Error('Bitte das EUR-Verrechnungskonto der Stückrestabrechnung auswählen.');
+ const account=pos(model,input.cashPositionId);
+ const usd=holding.currency==='USD',grossInput=usd?fractionGrossUSD:fractionGrossEUR;
+ if(kind!=='sell'||holding.kind!=='stock'||(!usd&&holding.currency!=='EUR')||account.kind!=='cash'||account.currency!=='EUR'||
+    account.providerId!==holding.providerId||account.accountId===holding.accountId||qty<=0n||qty!==previous%SCALE||
+    input.netSettlement||input.tradeAmountEURExact!==undefined)
+  throw Error('Stückrestabrechnung benötigt den verbleibenden Aktienbruchteil und ein eigenes EUR-Verrechnungskonto beim selben Anbieter.');
+ if(!grossInput||!fractionNetEUR||(usd?(!fractionUSDPerEUR||fractionGrossEUR):(fractionGrossUSD||fractionUSDPerEUR)))
+  throw Error('Bitte Kurswert, Nettogutschrift und gegebenenfalls den USD-Kurs laut Abrechnung eingeben.');
+ const cent=SCALE/100n;
+ const cents=(numerator,denominator)=>(numerator+denominator/2n)/denominator*cent;
+ const gross=amount(grossInput,1n);
+ if(gross!==cents(qty*price,SCALE*cent)||fee%cent||tax%cent)
+  throw Error('Kurswert und Abzüge stimmen mit dem centgerundeten Stückrestverkauf nicht überein.');
+ const quoted=usd?amount(fractionUSDPerEUR,1n):SCALE;
+ const euroGross=cents(gross*SCALE,quoted*cent);
+ if(amount(fractionNetEUR)!==euroGross-fee-tax)
+  throw Error('Nettogutschrift und Abzüge stimmen mit dem centgerundeten Stückrestverkauf nicht überein.');
+ const fx=div(SCALE,quoted);
+ if(usd&&(!fx||(input.fxRate!=null&&input.fxRate!==''&&amount(input.fxRate,1n)!==fx)))
+  throw Error('Der EUR-Wechselkurs widerspricht dem USD-Abrechnungskurs.');
+ const source=usd?'Brokerabrechnung USD/EUR '+exact(quoted)+' · Kurswert '+exact(gross)+' USD':null;
+ if(source&&source.length>80)throw Error('Die belegten USD-Werte überschreiten den Speicherumfang der Wechselkursquelle.');
+ return {euroGross,fx,source};
+}
+
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
  if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!validCalendarDate(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
@@ -244,30 +273,11 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
   const t=checkTarget(copy,p,input.targetPositionId);
   if(t.kind!=='cash'||t.currency!=='USD'||t.providerId!==p.providerId||t.accountId===p.accountId||unitPrice!==units(1)||String(input.feeEUR)!=='0'||String(input.taxEUR)!=='0'||words(input.fxSource)||words(input.fxRateDate)||[p,t].some(x=>x.price!==1||units(x.priceExact??x.price)!==units(1)||[x.costBasisExact,x.costBasisEUR,x.realizedPnLExact,x.realizedPnLEUR].some(v=>v!=null)))throw Error('Unbewerteter USD-Transfer benötigt zwei eigene USD-Geldbereiche ohne Kosten-/Ergebnisannahme.');
  }
- const fx=unpriced?null:p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
- // A native execution can state the settled EUR trade value more precisely than
- // quantity × a rounded display price. Keep that authoritative total exact.
+ const fraction=fractionalSale(copy,p,kind,input,qty,prev,unitPrice,fee,tax);
+ const fx=unpriced?null:fraction?fraction.fx:p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
  if(input.tradeAmountEURExact!==undefined&&(!['buy','sell'].includes(kind)||p.currency!=='EUR'))throw Error('Exakter Ausführungsbetrag benötigt einen EUR-Kauf oder -Verkauf.');
  const nativeGross=mul(qty,unitPrice);
- let tradeAmount=input.tradeAmountEURExact;
- if(input.fractionGrossEUR||input.fractionNetEUR){
-   const cent=SCALE/100n;
-   if(!input.cashPositionId)throw Error('Bitte das EUR-Verrechnungskonto der Stückrestabrechnung auswählen.');
-   const account=pos(copy,input.cashPositionId);
-   if(kind!=='sell'||p.kind!=='stock'||p.currency!=='EUR'||account.kind!=='cash'||account.currency!=='EUR'||
-      account.providerId!==p.providerId||account.accountId===p.accountId||qty<=0n||qty!==prev%SCALE||
-      input.netSettlement||tradeAmount!==undefined)
-     throw Error('Stückrestabrechnung benötigt den verbleibenden Aktienbruchteil und ein eigenes EUR-Verrechnungskonto beim selben Anbieter.');
-   if(!input.fractionGrossEUR||!input.fractionNetEUR)
-     throw Error('Bitte Kurswert und tatsächliche Nettogutschrift laut Abrechnung eingeben.');
-   const gross=amount(input.fractionGrossEUR,1n),netAmount=amount(input.fractionNetEUR);
-   const centDenominator=SCALE*cent;
-   const roundedGross=(qty*unitPrice+centDenominator/2n)/centDenominator*cent;
-   if(gross!==roundedGross||fee%cent||tax%cent||netAmount!==gross-fee-tax)
-     throw Error('Kurswert, Nettogutschrift und Abzüge stimmen mit dem centgerundeten Stückrestverkauf nicht überein.');
-   tradeAmount=exact(gross);
- }
- const cash=unpriced?null:tradeAmount===undefined?mul(nativeGross,fx):amount(tradeAmount,1n);
+ const cash=unpriced?null:fraction?fraction.euroGross:input.tradeAmountEURExact===undefined?mul(nativeGross,fx):amount(input.tradeAmountEURExact,1n);
  const b=basis(p);let changed=false,linkedCash=null;
  const net=input.netSettlement;
  if(net){
@@ -349,7 +359,7 @@ export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=fals
  if(!changed)throw Error('Keine Änderung.');
  p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
  if(net){setBasis(p,null);p.realizedPnLExact=null;p.realizedPnLEUR=null;}
- const entry=remember(copy,p,cashTransfer?{...input,unitPrice:1}:input.fractionGrossEUR?{...input,unitPrice:exact(unitPrice)}:input,qty,fee,tax,fx,cash);
+ const entry=remember(copy,p,cashTransfer?{...input,unitPrice:1}:fraction?{...input,unitPrice:exact(unitPrice),fxSource:fraction.source??input.fxSource,fxRateDate:fraction.source?input.date:input.fxRateDate}:input,qty,fee,tax,fx,cash);
  if(unpriced){entry.taxEUR=null;entry.costsVerified=false;}
  if(net){entry.netSettlement=structuredClone(net);entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;copy.version=5;}
  if(kind==='fee'&&p.kind==='crypto'){entry.amountEUR=null;entry.amountExactEUR=null;entry.unitPrice=null;entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;}
