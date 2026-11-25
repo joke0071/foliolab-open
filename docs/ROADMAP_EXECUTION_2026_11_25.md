@@ -346,12 +346,12 @@ Reviewthreads vor.
   Verwerfen stellte den Fokus zum Auslöser wieder her. „Übersicht“ und
   erneut „Mehr“ funktionierten per Tastatur. Der vollständige gelesene
   IndexedDB-Datensatz war vor und nach jedem Fall identisch.
-- **Abnahme.** Die drei bestehenden Rubriken sind fachlich auf dem
-  Kandidaten bestätigt. Die vollständige Zeilenbuchung folgt nach
+- **Abnahme.** Die drei bestehenden Rubriken sind als Standard bestätigt.
   [Integration](https://github.com/joke0071/foliolab-open/actions/runs/45617054520),
   [Wallet-CI](https://github.com/joke0071/foliolab-open/actions/runs/45617054505)
-  und Main-/Pages-/Live-Abnahme desselben Produktstands. Der bestehende
-  CSS-Nachweis auf SW339 bleibt separat erhalten.
+  sowie Main, Pages und der [Drei-Engine-Live-Wiederanlauf](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139241875358)
+  bestanden auf baumgleichem Produktstand. Die UI-Refresh-Zeile ist
+  abgenommen. Der bestehende CSS-Nachweis auf SW339 bleibt separat erhalten.
   [Messwerte](release-evidence/sw340-roadmap-ui-at05-2026-11-25.json).
 
 ### AT05 · OeKB-Original und zugehörige Flatex-Abrechnung
@@ -681,8 +681,14 @@ Live-Beleg `15026562830` zeigt den ersten Wartepunkt unmittelbar
 nach dem Freigeben der App-Anfrage vor dem Reload. Ein konkreter
 HTTP-Fehler ist für diesen Versuch nicht ausgewiesen. Der
 [gezielte Wiederanlauf desselben Livejobs](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139241875358)
-verwendet denselben Main-SHA und dieselben Prüfungen. Die
-volle Release- und Zeilenabnahme bleibt bis zu dessen Erfolg offen.
+verwendete denselben Main-SHA und dieselben Prüfungen. Der Wiederanlauf
+bestand vollständig in Chromium, Firefox und WebKit. **SW340 ist auf
+`7adbf028` LIVE_ACCEPTED.** Der ZIP-Rückabruf `15031490573` bestand
+SHA-256 und CRC für alle **1.947 Einträge**. Der Lauf bestätigt **160**
+bytegleiche Produktivpfade, **11** Kerngruppen und **22** Axe-Scans.
+Die Loader-, UI-, Finanz- und Restore-Prüfungen liefen im regulären
+Pfad. Der direkte Abruf von `/`, `/index.html` und `/sw.js` war auch
+nach dem Live-Abschluss bytegleich mit Main.
 [Produktivnachweis](release-evidence/sw340-published-focus-2026-11-25.json).
 
 ### Barausgleich · gebuchter Vodafone-Stückrest
@@ -823,11 +829,11 @@ Anschaffungskosten. Die deutsche Fallentscheidung liefert keine
 
 ## Freigabestand aller 19 Folgezeilen · Fortsetzung vom 25.11.2026
 
-Der Gesamtstand beträgt **6/6 Kernbereiche und 10/29 Folgepakete**. SW340 ist veröffentlicht. Die formale Abnahme wartet auf den laufenden Live-Wiederanlauf.
+Der Gesamtstand beträgt **6/6 Kernbereiche und 11/29 Folgepakete**. SW340 ist **LIVE_ACCEPTED**. UI-Refresh ist die neu abgenommene Zeile.
 
 | Ursprünglich offene Zeile | Umfang aus dieser Fortsetzung | Verbleibender Freigabepunkt |
 | --- | --- | --- |
-| UI-Refresh · #300 | SW340 korrigiert den vorwärts gerichteten Fokusübergang. Drei Bereiche, echte Firefox-Vergrößerung, WebKit, sichtbarer Fokus, Entwurf und gleichbleibende IndexedDB bestätigt. | Drei bestehende Bereiche entschieden. Der offizielle Drei-Engine-Live-Wiederanlauf steht noch aus. |
+| UI-Refresh · #300 | SW340 korrigiert den vorwärts gerichteten Fokusübergang. Drei Bereiche, echte Firefox-Vergrößerung, WebKit, sichtbarer Fokus, Entwurf und gleichbleibende IndexedDB bestätigt. | **Abgenommen** im dokumentierten Zeilenumfang. [SW340 Live](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139241875358). |
 | Speicher und Recovery · #44/#254 | HTTPS-Aktualisierung mit 10.000 Buchungen, Offline-Neustart und gesondert blockierter inkompatibler SW88-Schreibversuch belegt. | Beobachtete OS-Bereinigung und verschlüsselter Restore auf zweitem autorisierten Gerät. |
 | AT05 · #129 | OeKB-Original, Flatex-Einzelabrechnung über 27,22 EUR und Anschaffungskostenkorrektur unabhängig berechnet. Dokumentierende Jahresansicht, Journal und Restore im bisherigen Umfang belegt. | Jahresabrechnung desselben Depots, fallbezogene Fachprüfung und Nachweis einer automatischen Kostenbasiszuordnung. |
 | Benchmark · #124 | 100 % VWCE/Xetra/EUR, Fünf-Tage-Stichprobe und unabhängige TWR-Rechnung mit Ein- und Auszahlung. FolioLab belässt Rendite bei fehlenden Ereignisbewertungen als unbekannt. | Vollständige adjustierte EUR-Reihe samt Anzeigerechten und gemeinsamer Vergleich auf belegten Bewertungstagen. |

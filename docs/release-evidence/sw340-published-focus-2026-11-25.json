@@ -687,5 +687,77 @@
     "id": 15026562830,
     "failureAt": "tests/browser-loading-pwa.mjs:37:19",
     "stage": "first interactive wait immediately after releasing the stalled app.js request, before reload"
+  },
+  "status": "LIVE_ACCEPTED",
+  "roadmapStatus": {
+    "coreAccepted": 6,
+    "coreTotal": 6,
+    "followupsAccepted": 11,
+    "followupsTotal": 29
+  },
+  "successfulLiveOriginal": {
+    "id": 15031490573,
+    "bytes": 152673066,
+    "sha256": "9b81a980ee0ed90f29a0a8f4f29b0a5941f672c60e347e8f180e3270db318deb",
+    "zipEntries": 1947,
+    "crc": "PASS",
+    "job": 139241875358,
+    "run": 45620573232,
+    "attempt": 2,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "loadingPwa": "PASS",
+    "primaryUiReports": [
+      "production-ui-chromium.json",
+      "production-ui-cross.json"
+    ],
+    "verifiedReportsPresent": [
+      "fin-e2e/chromium.json",
+      "loading-pwa/chromium.json",
+      "fin-e2e/firefox.json",
+      "loading-pwa/firefox.json",
+      "fin-e2e/webkit.json",
+      "loading-pwa/webkit.json"
+    ],
+    "scopeKeysInUiReports": {
+      "production-ui-chromium.json": [
+        "base",
+        "scope",
+        "engines"
+      ],
+      "production-ui-cross.json": [
+        "base",
+        "scope",
+        "engines"
+      ]
+    },
+    "cache": "foliolab-open-v340",
+    "publishedPaths": 160,
+    "coreGroups": 11,
+    "coreAxeScans": 22
+  },
+  "productionRecheckAfterLive": {
+    "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+    "checkedAtUTC": "2026-11-25T14:14:59.547826+00:00",
+    "paths": {
+      "/": {
+        "status": 200,
+        "byteExact": true,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa"
+      },
+      "/index.html": {
+        "status": 200,
+        "byteExact": true,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa"
+      },
+      "/sw.js": {
+        "status": 200,
+        "byteExact": true,
+        "sha256": "df4fd8ea4346483bd93d8203f30ed3cebd814e5c9ebb5123c4c6251db0f9c22d"
+      }
+    }
   }
 }
