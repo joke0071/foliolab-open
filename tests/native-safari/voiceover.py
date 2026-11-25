@@ -32,8 +32,12 @@ try:
     sp.run(['swiftc','tests/native-safari/voice-keys.swift','-o','/tmp/foliolab-voice-keys'],check=True,timeout=60)
     report['initial']=key('state')
     if report['initial']!='voiceOverEnabled=true':
-        key('start');time.sleep(3)
-        if key('state')!='voiceOverEnabled=true':key('welcome');time.sleep(3)
+        # Launch the installed accessibility application directly. The earlier Cmd-F5 probe did not activate it.
+        report['launch']=run(['open','-a','/System/Library/CoreServices/VoiceOver.app'])
+        time.sleep(2)
+        report['voiceOverProcessesBeforeWelcome']=run(['pgrep','-x','VoiceOver'])
+        key('welcome');time.sleep(3)
+        report['voiceOverProcessesAfterWelcome']=run(['pgrep','-x','VoiceOver'])
     report['active']=key('state')
     if report['active']!='voiceOverEnabled=true':raise RuntimeError('No active system VoiceOver session')
     run(['open','-a','Safari','http://127.0.0.1:'+str(server.server_port)+'/tests/native-safari/voiceover-focus.html'])
