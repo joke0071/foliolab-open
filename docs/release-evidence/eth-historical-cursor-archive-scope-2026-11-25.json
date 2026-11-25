@@ -1,0 +1,22 @@
+{
+  "package": "ETH-HISTORY-CURSOR01",
+  "case": "Original private Blockscout cursor incident",
+  "expected": "Original first provider payload with cursor and the associated original second-response payload.",
+  "projectArchiveScan": {
+    "scope": "Existing private project continuation and recursively nested local TAR members. Text-like artefacts scanned for cursor markers and raw-provider shape. Nested ZIP text was counted by bounded size and deduplicated by archive filename and size.",
+    "nestedTARLayers": 26,
+    "archiveMembers": 28511,
+    "textFilesScanned": 5633,
+    "filesMentioningKnownIssueOrRawShape": 34,
+    "nestedZIPArchives": 18,
+    "nestedZIPMembers": 6040,
+    "nestedZIPTextFilesScanned": 677,
+    "rawProviderShapeCandidates": 0,
+    "privateDataPublished": false
+  },
+  "publicProjectIssue": "https://github.com/joke0071/foliolab-open/issues/268",
+  "publicProjectIssueOriginalPair": false,
+  "actual": "The scanned project archive contains handoff notes, issue copies and fixture references. The original provider payload pair was not present in the scanned scope.",
+  "accepted": "Existing public cursor and independent chain receipt evidence.",
+  "remaining": "The original response pair for the private incident."
+}

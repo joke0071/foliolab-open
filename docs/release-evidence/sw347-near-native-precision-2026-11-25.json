@@ -13,5 +13,15 @@
     "webkit": "NEAR_PRECISION_PASS webkit 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore"
   },
   "scope": "Native liquid and directly locked NEAR positions. Public archived balances. No private-wallet attribution, pooling, delegation or historical booking inferred.",
-  "initialCandidate": "209f6f3411d2cedffca17724966d8385846c93a6"
+  "initialCandidate": "209f6f3411d2cedffca17724966d8385846c93a6",
+  "independentMixedModel": {
+    "ordinaryEurDeposit": "3",
+    "initialEurCash": "5",
+    "closingEurCash": "8",
+    "ledgerQuantityAudit": "PASS",
+    "currentVersion4ArchiveRestore": "PASS",
+    "sw346ReaderRejectsExactNewQuantity": "PASS",
+    "unsupported24DecimalEurJournalPostingRejected": "PASS",
+    "sourceBackupUnchangedByRejections": "PASS"
+  }
 }
