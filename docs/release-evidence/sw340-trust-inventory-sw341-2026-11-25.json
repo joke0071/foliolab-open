@@ -201,5 +201,28 @@
       }
     },
     "offlineReloadAndFetch": true
+  },
+  "sameOriginUpdate": {
+    "from": "SW340",
+    "to": "SW341",
+    "browser": "141.0.7390.37",
+    "normalUIProvider": true,
+    "exactRecordAfterUpdate": true,
+    "exactOfflineReload": true,
+    "offlineLicense": true
+  },
+  "integration": {
+    "main": "162d76aeba6a441d761cac1132e964516a867b3e",
+    "prMergeTestedCommit": "b61c6fca3273dbf9877aa0889a36246e13864ca4",
+    "commonTree": "c9aaaaa071b32890909236cbc6fd35ee59a86ed8",
+    "requiredCi": {
+      "id": 45649013303,
+      "status": "success"
+    },
+    "walletCi": {
+      "id": 45649013359,
+      "status": "success"
+    },
+    "mergedAtUTC": "2026-11-25T16:13:32Z"
   }
 }
