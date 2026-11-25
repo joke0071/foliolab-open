@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8"><title>FolioLab native focus observation</title>
+<iframe title="FolioLab Open" src="/app/index.html" style="width:98vw;height:94vh"></iframe>
+<script type="module">
+const frame=document.querySelector('iframe');
+const pause=ms=>new Promise(r=>setTimeout(r,ms));
+let previous='';
+for(let n=0;n<240;n++){
+ await pause(400);
+ const doc=frame.contentDocument;
+ if(!doc?.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'))continue;
+ const name=await(await fetch('/target',{cache:'no-store'})).text();
+ if(!name||name===previous)continue;
+ const selectors={skip:'.skip-to-content',positions:'nav [data-page="positions"]',bookings:'nav [data-page="bookings"]'};
+ const target=[...doc.querySelectorAll(selectors[name])].find(e=>e.getBoundingClientRect().width>0);
+ if(!target)continue;
+ frame.contentWindow.focus();target.focus();
+ const label=target.getAttribute('aria-label')||target.textContent.trim();
+ await fetch('/observed',{method:'POST',body:JSON.stringify({name,label,focused:doc.activeElement===target})});
+ previous=name;
+}
+</script>
