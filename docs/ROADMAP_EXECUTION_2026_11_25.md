@@ -827,6 +827,36 @@ Anschaffungskosten. Die deutsche Fallentscheidung liefert keine
 österreichische Regel.
 [Rechen- und Produktbeleg](release-evidence/sw340-lorillard-merger-court-reference-2026-11-25.json).
 
+### CI-Effizienz · Entscheidung nach beiden vollständigen Paaren
+
+Alle zehn [Ubuntu-Paare](https://github.com/joke0071/foliolab-open/actions/runs/45623781167)
+bestanden ohne Jobwiederanlauf. Pro Job waren die ausgeführten
+Prüfkommandos gleich. Der Kandidat enthielt zusätzlich den vorgesehenen
+Node-Vertrag für Parallelität (1.534 statt 1.533 Tests). Die P1A-Phasen
+hatten je Engine in beiden Varianten jeweils zwölf Initialisierungen,
+42 responsive Prüfungen und 42 Screenshot-Ausgaben. Alle zehn
+Originalartefakte wurden über SHA-256 und ZIP-CRC geprüft. Die
+Prüflisten, Browserstände, CPU-/Speicherwerte sowie die Dauer
+innerhalb und außerhalb P1A sind festgehalten.
+
+| Reihenfolge | Letzter modellierter Pflichtjob | Seriell | Parallel | Gewinn |
+| --- | --- | ---: | ---: | ---: |
+| Seriell → parallel | Chromium einschließlich Node und Syntax | 22:49,24 | 22:16,70 | 32,54 s |
+| Parallel → seriell | Firefox/WebKit, Shard 2 | 26:54,72 | 25:48,12 | 66,60 s |
+
+Die zwei seriellen Referenzen liegen **4:05,48** auseinander.
+Der modellierte Zeitgewinn liegt in beiden Paaren innerhalb dieser
+beobachteten Streuung. Erfasst ist die längste Laufzeit der parallel
+gestarteten Pflichtjobs auf Loopback. Installation, Runnerzuteilung,
+Pages und Live liegen außerhalb dieses Paarvergleichs. Die korrigierte
+lokale serielle Probe endete nach 32:06 und reproduzierte die
+Chromium-Bildabweichungen sowie den WebKit-Befund aus dem lokalen
+Parallelversuch. Beide Debian-Läufe liefern wegen dieser Pflichtfehler
+keine belastbare Laufzeitdifferenz. **#430 bleibt zurückgestellt.**
+Für die Freigabe fehlt ein Gesamtgewinn außerhalb der Streuung,
+einschließlich des regulären Releasepfads.
+[Prüflisten, Messdaten und geprüfte Originale](release-evidence/ci-430-full-local-path-pairs-2026-11-25.json).
+
 ## Freigabestand aller 19 Folgezeilen · Fortsetzung vom 25.11.2026
 
 Der Gesamtstand beträgt **6/6 Kernbereiche und 11/29 Folgepakete**. SW340 ist **LIVE_ACCEPTED**. UI-Refresh ist die neu abgenommene Zeile.
@@ -846,7 +876,7 @@ Der Gesamtstand beträgt **6/6 Kernbereiche und 11/29 Folgepakete**. SW340 ist *
 | Weitere Wallets · #119 | Öffentlicher Cosmos-Abgleich für frei, delegiert, Unbonding und gesondert ausgewiesenen ausstehenden Reward. NEAR weist die beobachtete Präzision jenseits von 18 Nachkommastellen ausdrücklich ab. | Rewards-Abdeckung, exakte Verarbeitung dieser NEAR-Beträge und Beleg für die private Kontozuordnung. |
 | ETH-Cursor · #268 | Öffentlicher Seitenwechsel und Chain-Receipts bereits abgenommen. Verfügbare Privatbelege gezielt für den historischen Fall geprüft. | Ursprüngliche private Providerantwort mit Cursor und zugehörige Folgeantwort. |
 | Barausgleich · #52 | Lorillard/Reynolds belegt Stückrest, Barausgleich, Gegenwert und gesamte historische Anschaffungskosten. Kombinierte Buchungen bleiben mit identischem Datenstand gesperrt. | Vollständiger tatsächlicher Stückrest-Ausgleich mit Auszahlungswährung, FX, Gebühren und zugeordneter Steuerbasis. |
-| CI-Effizienz · #229/#430 | Identische Appbytes im Paarvergleich, lokale Gegenproben und Ubuntu-Paare in beiden Reihenfolgen. | Vollständige Messung in beiden Reihenfolgen. #430 bleibt zurückgestellt. |
+| CI-Effizienz · #229/#430 | Identische Appbytes im Paarvergleich, lokale Gegenproben und Ubuntu-Paare in beiden Reihenfolgen. | Reproduzierbarer Gesamtgewinn außerhalb der Streuung im regulären Releasepfad. #430 bleibt zurückgestellt. |
 | TRUST01 · #298 | Ausgelieferte Antworten erneut geprüft. Lizenzierter Kolbenersatz mit reproduzierbaren PNGs liegt als Kandidat vor. | Wirksamer HTTP-Framingschutz auf autorisierter Origin, native Safari-/VoiceOver-/ITP-Probe und Rechtekette der übrigen betroffenen Grafiken. |
 | Startperformance · #177/#256 | 10k-Fixture und zugängliche Gerätetestwege geprüft. | Physisches Android-Projektgerät für fünf Kalt-, Warm- und Offline-Starts pro Vergleichsstand. |
 | UI-SENTIMENT01 · #405 | CMC-CORS und die CNN-Einbettungsgrenze auf produktiver Origin geprüft. Separate Fixture-Prüfung für Anzeige und Cache liegt vor. | Autorisierter CMC-Abruf und offizieller CNN-Datenweg samt Anzeigeerlaubnis. |

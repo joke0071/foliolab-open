@@ -1,0 +1,1183 @@
+{
+  "workflow": "https://github.com/joke0071/foliolab-open/actions/runs/45623781167",
+  "measurementSha": "17dd9582d4f42cebc6e74bc11239f28e216496db",
+  "browserVersions": {
+    "chromium": "141.0.7390.37",
+    "firefox": "157.0",
+    "webkit": "27.2"
+  },
+  "playwright": {
+    "chromium": "1.56.1",
+    "crossEngine": "1.64.1"
+  },
+  "runs": {
+    "AB": [
+      {
+        "job": "chromium",
+        "order": "AB",
+        "artifact": 15032210698,
+        "sha256": "de733f8bfd9cd1ec86d8c3a2863d05943fc21c83809b4d2ec5d1c8e162d5738f",
+        "bytes": 1413502,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "b3e8d6f4c3e149b7a107b9c370626b0f697df4a5daec0357b899f4aa6335944e",
+        "seconds": {
+          "A": 1369.2377820719998,
+          "B": 1336.69811124
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1369.238,
+            "withoutP1ASeconds": 1304.757,
+            "exit": 0,
+            "retries": 0,
+            "commands": 118,
+            "nodeTests": [
+              1533
+            ],
+            "stepsSeconds": [
+              0.004,
+              0.012,
+              42.979,
+              1325.912,
+              0.041
+            ],
+            "runnerCpuBusyPercent": 36.96,
+            "runnerMinAvailableMemoryMiB": 13726,
+            "resourceWindowSeconds": 1365.139,
+            "p1a": [
+              {
+                "engine": "chromium",
+                "totalMs": 64481,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 2411
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 49589
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 4304
+                  }
+                }
+              }
+            ]
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1336.698,
+            "withoutP1ASeconds": 1299.556,
+            "exit": 0,
+            "retries": 0,
+            "commands": 118,
+            "nodeTests": [
+              1534
+            ],
+            "stepsSeconds": [
+              0.005,
+              0.012,
+              41.891,
+              1294.481,
+              0.039
+            ],
+            "runnerCpuBusyPercent": 37.79,
+            "runnerMinAvailableMemoryMiB": 13724,
+            "resourceWindowSeconds": 1335.126,
+            "p1a": [
+              {
+                "engine": "chromium",
+                "parallel": true,
+                "totalMs": 37142,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 4650
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 70102
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 5236
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "job": "cross1",
+        "order": "AB",
+        "artifact": 15027464229,
+        "sha256": "8fbbfc5ed1ce80cd73b9bd2d9def34b6108ca0b86499aab739084ef7b6a2b5c8",
+        "bytes": 173449,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "f8b51d54c83e400f404394e6f5703027df11c3359cb339c888617b0d8e8515bd",
+        "seconds": {
+          "A": 525.1818741769999,
+          "B": 514.1581124950001
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 525.182,
+            "withoutP1ASeconds": 525.182,
+            "exit": 0,
+            "retries": 0,
+            "commands": 22,
+            "nodeTests": [],
+            "stepsSeconds": [
+              524.867
+            ],
+            "runnerCpuBusyPercent": 33.61,
+            "runnerMinAvailableMemoryMiB": 13366,
+            "resourceWindowSeconds": 520.041,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 514.158,
+            "withoutP1ASeconds": 514.158,
+            "exit": 0,
+            "retries": 0,
+            "commands": 22,
+            "nodeTests": [],
+            "stepsSeconds": [
+              513.903
+            ],
+            "runnerCpuBusyPercent": 33.73,
+            "runnerMinAvailableMemoryMiB": 13265,
+            "resourceWindowSeconds": 510.044,
+            "p1a": []
+          }
+        }
+      },
+      {
+        "job": "cross2",
+        "order": "AB",
+        "artifact": 15030088717,
+        "sha256": "19dc2242f92b38d029058d55aea4cf0728d6c5704b5bce959f610465431e3659",
+        "bytes": 348154,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "ef7e42d5678e9b5a12b535ccda6094bc507ff96b56ccf44d9a92d2bbc57a5bd9",
+        "seconds": {
+          "A": 1139.623238186,
+          "B": 1076.9067294149997
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1139.623,
+            "withoutP1ASeconds": 1033.428,
+            "exit": 0,
+            "retries": 0,
+            "commands": 15,
+            "nodeTests": [],
+            "stepsSeconds": [
+              1139.308
+            ],
+            "runnerCpuBusyPercent": 35.46,
+            "runnerMinAvailableMemoryMiB": 12524,
+            "resourceWindowSeconds": 1135.092,
+            "p1a": [
+              {
+                "engine": "firefox",
+                "totalMs": 56071,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 5179
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 36053
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 3647
+                  }
+                }
+              },
+              {
+                "engine": "webkit",
+                "totalMs": 50124,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 2937
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 34479
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 4318
+                  }
+                }
+              }
+            ]
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1076.907,
+            "withoutP1ASeconds": 1009.792,
+            "exit": 0,
+            "retries": 0,
+            "commands": 15,
+            "nodeTests": [],
+            "stepsSeconds": [
+              1076.649
+            ],
+            "runnerCpuBusyPercent": 37.93,
+            "runnerMinAvailableMemoryMiB": 12279,
+            "resourceWindowSeconds": 1075.089,
+            "p1a": [
+              {
+                "engine": "firefox",
+                "parallel": true,
+                "totalMs": 30927,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 9689
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 48230
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 5238
+                  }
+                }
+              },
+              {
+                "engine": "webkit",
+                "parallel": true,
+                "totalMs": 36188,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 4505
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 49356
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 5816
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "job": "cross3",
+        "order": "AB",
+        "artifact": 15028802187,
+        "sha256": "5bb7e0444ec1546325ec279a26ec98103987a5b437aa8e0584672234f08536dd",
+        "bytes": 465648,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "f92f42ecdae5094a0ab573704149bdbfadbc8ffc745ea0a26b76c60d53266401",
+        "seconds": {
+          "A": 716.0911260519999,
+          "B": 722.516615969
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 716.091,
+            "withoutP1ASeconds": 716.091,
+            "exit": 0,
+            "retries": 0,
+            "commands": 16,
+            "nodeTests": [],
+            "stepsSeconds": [
+              715.751
+            ],
+            "runnerCpuBusyPercent": 40.88,
+            "runnerMinAvailableMemoryMiB": 13394,
+            "resourceWindowSeconds": 715.059,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 722.517,
+            "withoutP1ASeconds": 722.517,
+            "exit": 0,
+            "retries": 0,
+            "commands": 16,
+            "nodeTests": [],
+            "stepsSeconds": [
+              722.261
+            ],
+            "runnerCpuBusyPercent": 41.66,
+            "runnerMinAvailableMemoryMiB": 13590,
+            "resourceWindowSeconds": 720.062,
+            "p1a": []
+          }
+        }
+      },
+      {
+        "job": "wallet",
+        "order": "AB",
+        "artifact": 15027371357,
+        "sha256": "4211b05e47f27492dd20701af700af097b6ee61a4733bf29fe3a657ba451782b",
+        "bytes": 144266,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "d212da6800b04ad5c66da54083c18b4a81dcc54bd07e67c32d9bd701e44ee6e3",
+        "seconds": {
+          "A": 48.293548199000014,
+          "B": 47.65845884299998
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v20.20.2",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 48.294,
+            "withoutP1ASeconds": 48.294,
+            "exit": 0,
+            "retries": 0,
+            "commands": 2,
+            "nodeTests": [
+              1533
+            ],
+            "stepsSeconds": [
+              3.468,
+              44.819
+            ],
+            "runnerCpuBusyPercent": 77.14,
+            "runnerMinAvailableMemoryMiB": 14386,
+            "resourceWindowSeconds": 45.004,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v20.20.2",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 47.658,
+            "withoutP1ASeconds": 47.658,
+            "exit": 0,
+            "retries": 0,
+            "commands": 2,
+            "nodeTests": [
+              1534
+            ],
+            "stepsSeconds": [
+              3.611,
+              44.042
+            ],
+            "runnerCpuBusyPercent": 75.06,
+            "runnerMinAvailableMemoryMiB": 14488,
+            "resourceWindowSeconds": 45.006,
+            "p1a": []
+          }
+        }
+      }
+    ],
+    "BA": [
+      {
+        "job": "chromium",
+        "order": "BA",
+        "artifact": 15029274785,
+        "sha256": "12ae2ab1e349b8dd74727b3c39c2ae9aecb3feff665f024aefe3f3aa26cef0d2",
+        "bytes": 1414079,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "b3e8d6f4c3e149b7a107b9c370626b0f697df4a5daec0357b899f4aa6335944e",
+        "seconds": {
+          "B": 1318.896194723,
+          "A": 1339.7167438019999
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1339.717,
+            "withoutP1ASeconds": 1277.777,
+            "exit": 0,
+            "retries": 0,
+            "commands": 118,
+            "nodeTests": [
+              1533
+            ],
+            "stepsSeconds": [
+              0.005,
+              0.012,
+              40.452,
+              1298.938,
+              0.043
+            ],
+            "runnerCpuBusyPercent": 36.26,
+            "runnerMinAvailableMemoryMiB": 13777,
+            "resourceWindowSeconds": 1335.117,
+            "p1a": [
+              {
+                "engine": "chromium",
+                "totalMs": 61940,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 2330
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 47546
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 4170
+                  }
+                }
+              }
+            ]
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1318.896,
+            "withoutP1ASeconds": 1283.117,
+            "exit": 0,
+            "retries": 0,
+            "commands": 118,
+            "nodeTests": [
+              1534
+            ],
+            "stepsSeconds": [
+              0.005,
+              0.013,
+              40.637,
+              1277.897,
+              0.043
+            ],
+            "runnerCpuBusyPercent": 37.92,
+            "runnerMinAvailableMemoryMiB": 13752,
+            "resourceWindowSeconds": 1315.121,
+            "p1a": [
+              {
+                "engine": "chromium",
+                "parallel": true,
+                "totalMs": 35779,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 4486
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 67091
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 5337
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "job": "cross1",
+        "order": "BA",
+        "artifact": 15029856247,
+        "sha256": "92f8759e7bc2a9726c618f4792379007213baaa09e32a5eebc9dcf296ba93f02",
+        "bytes": 179498,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "f8b51d54c83e400f404394e6f5703027df11c3359cb339c888617b0d8e8515bd",
+        "seconds": {
+          "B": 700.897586673,
+          "A": 703.1025477490001
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 703.103,
+            "withoutP1ASeconds": 703.103,
+            "exit": 0,
+            "retries": 0,
+            "commands": 22,
+            "nodeTests": [],
+            "stepsSeconds": [
+              702.844
+            ],
+            "runnerCpuBusyPercent": 37.77,
+            "runnerMinAvailableMemoryMiB": 13667,
+            "resourceWindowSeconds": 700.065,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 700.898,
+            "withoutP1ASeconds": 700.898,
+            "exit": 0,
+            "retries": 0,
+            "commands": 22,
+            "nodeTests": [],
+            "stepsSeconds": [
+              700.608
+            ],
+            "runnerCpuBusyPercent": 37.67,
+            "runnerMinAvailableMemoryMiB": 13693,
+            "resourceWindowSeconds": 700.06,
+            "p1a": []
+          }
+        }
+      },
+      {
+        "job": "cross2",
+        "order": "BA",
+        "artifact": 15032111703,
+        "sha256": "5617475842c33679df3fd216ba244733e357df029d1503c85d07a7667eab25fa",
+        "bytes": 374118,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "ef7e42d5678e9b5a12b535ccda6094bc507ff96b56ccf44d9a92d2bbc57a5bd9",
+        "seconds": {
+          "B": 1548.120950989,
+          "A": 1614.715915866
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1614.716,
+            "withoutP1ASeconds": 1449.697,
+            "exit": 0,
+            "retries": 0,
+            "commands": 15,
+            "nodeTests": [],
+            "stepsSeconds": [
+              1614.454
+            ],
+            "runnerCpuBusyPercent": 39.99,
+            "runnerMinAvailableMemoryMiB": 12906,
+            "resourceWindowSeconds": 1610.157,
+            "p1a": [
+              {
+                "engine": "firefox",
+                "totalMs": 91331,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 8121
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 63188
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 6221
+                  }
+                }
+              },
+              {
+                "engine": "webkit",
+                "totalMs": 73688,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 4382
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 51569
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 6080
+                  }
+                }
+              }
+            ]
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 1548.121,
+            "withoutP1ASeconds": 1447.431,
+            "exit": 0,
+            "retries": 0,
+            "commands": 15,
+            "nodeTests": [],
+            "stepsSeconds": [
+              1547.841
+            ],
+            "runnerCpuBusyPercent": 43.09,
+            "runnerMinAvailableMemoryMiB": 12855,
+            "resourceWindowSeconds": 1545.156,
+            "p1a": [
+              {
+                "engine": "firefox",
+                "parallel": true,
+                "totalMs": 53442,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 15998
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 85385
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 7873
+                  }
+                }
+              },
+              {
+                "engine": "webkit",
+                "parallel": true,
+                "totalMs": 47248,
+                "phases": {
+                  "seedAndOpen": {
+                    "samples": 12,
+                    "totalMs": 11032
+                  },
+                  "responsiveChecks": {
+                    "samples": 42,
+                    "totalMs": 79450
+                  },
+                  "screenshots": {
+                    "samples": 42,
+                    "totalMs": 8222
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "job": "cross3",
+        "order": "BA",
+        "artifact": 15030675104,
+        "sha256": "74f49140b4728fae30a9bb8e4b23b9f441d6a51cc59282019ebbed0b0db99623",
+        "bytes": 485022,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "f92f42ecdae5094a0ab573704149bdbfadbc8ffc745ea0a26b76c60d53266401",
+        "seconds": {
+          "B": 954.357116569,
+          "A": 946.6758382400001
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 946.676,
+            "withoutP1ASeconds": 946.676,
+            "exit": 0,
+            "retries": 0,
+            "commands": 16,
+            "nodeTests": [],
+            "stepsSeconds": [
+              946.418
+            ],
+            "runnerCpuBusyPercent": 47.22,
+            "runnerMinAvailableMemoryMiB": 13989,
+            "resourceWindowSeconds": 945.092,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v22.23.5",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 954.357,
+            "withoutP1ASeconds": 954.357,
+            "exit": 0,
+            "retries": 0,
+            "commands": 16,
+            "nodeTests": [],
+            "stepsSeconds": [
+              954.077
+            ],
+            "runnerCpuBusyPercent": 46.83,
+            "runnerMinAvailableMemoryMiB": 13891,
+            "resourceWindowSeconds": 950.094,
+            "p1a": []
+          }
+        }
+      },
+      {
+        "job": "wallet",
+        "order": "BA",
+        "artifact": 15027946315,
+        "sha256": "7c58d0c05920d27b1a20dd3d3602ab6fc1d1fb689b5cddfb9c3bf8593be15d83",
+        "bytes": 143605,
+        "status": "completed",
+        "conclusion": "success",
+        "sameExecutedTestList": true,
+        "eligible": true,
+        "testListSha256": "d212da6800b04ad5c66da54083c18b4a81dcc54bd07e67c32d9bd701e44ee6e3",
+        "seconds": {
+          "B": 32.456520179999984,
+          "A": 31.79332921499997
+        },
+        "variants": {
+          "A": {
+            "revision": "8de635271c341d7462d4d33e5f268089c26da6d0",
+            "node": "v20.20.2",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 31.793,
+            "withoutP1ASeconds": 31.793,
+            "exit": 0,
+            "retries": 0,
+            "commands": 2,
+            "nodeTests": [
+              1533
+            ],
+            "stepsSeconds": [
+              2.652,
+              29.137
+            ],
+            "runnerCpuBusyPercent": 72.9,
+            "runnerMinAvailableMemoryMiB": 14406,
+            "resourceWindowSeconds": 30.004,
+            "p1a": []
+          },
+          "B": {
+            "revision": "5c2d7aca906aad6e186e0e34847ae6bf807afe7a",
+            "node": "v20.20.2",
+            "cpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seconds": 32.457,
+            "withoutP1ASeconds": 32.457,
+            "exit": 0,
+            "retries": 0,
+            "commands": 2,
+            "nodeTests": [
+              1534
+            ],
+            "stepsSeconds": [
+              2.642,
+              29.81
+            ],
+            "runnerCpuBusyPercent": 75.23,
+            "runnerMinAvailableMemoryMiB": 14264,
+            "resourceWindowSeconds": 30.008,
+            "p1a": []
+          }
+        }
+      }
+    ]
+  },
+  "aggregate": {
+    "AB": {
+      "wholePathQualified": true,
+      "criticalJob": {
+        "A": "chromium",
+        "B": "chromium"
+      },
+      "seconds": {
+        "A": 1369.238,
+        "B": 1336.698
+      },
+      "savingSeconds": 32.54
+    },
+    "BA": {
+      "wholePathQualified": true,
+      "criticalJob": {
+        "A": "cross2",
+        "B": "cross2"
+      },
+      "seconds": {
+        "A": 1614.716,
+        "B": 1548.121
+      },
+      "savingSeconds": 66.595
+    }
+  },
+  "criticalPathMethod": "maximum end-to-end localhost time across the five eligible job pairs within the same order; install, runner allocation, deployment and live verification are outside the paired comparison",
+  "commandListsBySha256": {
+    "b3e8d6f4c3e149b7a107b9c370626b0f697df4a5daec0357b899f4aa6335944e": [
+      "npm test",
+      "npm run check",
+      "node tests/browser-cash-account-ux.mjs",
+      "node tests/browser-etf-source-recovery.mjs",
+      "node tests/browser-smoke.mjs",
+      "node tests/browser-loading-pwa.mjs",
+      "node tests/browser-ui-alltag10.mjs",
+      "node tests/browser-ui-textscale.mjs",
+      "node tests/browser-price-csv-tools.mjs",
+      "node tests/browser-pwa-update.mjs",
+      "node tests/browser-extended.mjs",
+      "node tests/browser-ledger.mjs",
+      "node tests/browser-phase2.mjs",
+      "node tests/browser-phase3.mjs",
+      "node tests/browser-wallet-history-core.mjs",
+      "node tests/browser-pchain-evidence.mjs",
+      "node tests/browser-sonic-staking-evidence.mjs",
+      "node tests/browser-bitcoin-history.mjs",
+      "node tests/browser-ethereum-history.mjs",
+      "node tests/browser-history-storage.mjs",
+      "node tests/browser-history-ui.mjs",
+      "node tests/browser-purchase-evidence.mjs",
+      "node tests/browser-unified-bitcoin.mjs",
+      "node tests/browser-kraken-import.mjs",
+      "node tests/browser-bitpanda-import.mjs",
+      "node tests/browser-historical-position-value.mjs",
+      "node tests/browser-flh02-release.mjs",
+      "node tests/browser-history-worker.mjs",
+      "node tests/browser-p0-import.mjs",
+      "node tests/browser-csv-review-a11y.mjs",
+      "node tests/browser-csv-batch.mjs",
+      "node tests/browser-flh03-abce.mjs",
+      "node tests/browser-dialog-native-navigation.mjs",
+      "node tests/browser-restore-deposits.mjs",
+      "node tests/browser-position-selection.mjs",
+      "node tests/browser-position-removal.mjs",
+      "node tests/browser-position-archive.mjs",
+      "node tests/browser-booking-management.mjs",
+      "node tests/browser-ui-quality.mjs",
+      "node tests/browser-flatex-import.mjs",
+      "node tests/browser-flatex-backfill.mjs",
+      "node tests/browser-flatex-native-ui.mjs",
+      "node tests/browser-flatex-native-commit.mjs",
+      "node tests/browser-flatex-net-settlement.mjs",
+      "node tests/browser-defi-dialog-guidance.mjs",
+      "node tests/browser-audit.mjs",
+      "node tests/browser-dashboard-polish.mjs",
+      "node tests/browser-responsive-actions.mjs",
+      "node tests/browser-allocation.mjs",
+      "node tests/browser-avalanche-valuation.mjs",
+      "node tests/browser-staking-coverage.mjs",
+      "node tests/browser-staking-dialog-scope.mjs",
+      "node tests/browser-modal-clarity.mjs",
+      "node tests/browser-dialog-consistency.mjs",
+      "node tests/browser-position-editor-ux.mjs",
+      "node tests/browser-listing-review-clarity.mjs",
+      "node tests/browser-dialog-visual.mjs",
+      "node tests/browser-dialog-visual-regression.mjs",
+      "node tests/browser-dialog-a11y-mobile.mjs",
+      "node tests/browser-dialog-financial-choices.mjs",
+      "node tests/browser-ledger-xpub.mjs",
+      "node tests/browser-position-drilldown.mjs",
+      "node tests/browser-historical-csv.mjs",
+      "node tests/browser-crypto-history-resilience.mjs",
+      "node tests/browser-etf-crypto-fallbacks.mjs",
+      "node tests/browser-universal-security-discovery.mjs",
+      "node tests/browser-onboarding-suggestions.mjs",
+      "node tests/browser-account-opening.mjs",
+      "node tests/browser-cash-reconciliation.mjs",
+      "node tests/browser-cash-terms.mjs",
+      "node tests/browser-interest-scenario.mjs",
+      "node tests/browser-valuation-drilldown.mjs",
+      "node tests/browser-settings-backup.mjs",
+      "node tests/browser-corrupt-backup-restore.mjs",
+      "node tests/browser-recovery-backup-limits.mjs",
+      "node tests/browser-fin-e2e.mjs",
+      "node tests/browser-multitab-integrity.mjs",
+      "node tests/browser-p0-storage.mjs",
+      "node tests/browser-atomic-storage.mjs",
+      "node tests/browser-idb-new-install.mjs",
+      "node tests/browser-idb-migration-acceptance.mjs",
+      "node tests/browser-idb-unmarked-recovery.mjs",
+      "node tests/browser-idb-cutover.mjs",
+      "node tests/browser-idb-migration-resilience.mjs",
+      "node tests/browser-idb-crash-recovery.mjs",
+      "node tests/browser-idb-concurrent-imports.mjs",
+      "node tests/browser-idb-corrupt-recovery.mjs",
+      "node tests/browser-key-privacy.mjs",
+      "node tests/browser-solana-rpc-help.mjs",
+      "node tests/browser-data-source-settings.mjs",
+      "node tests/browser-eodhd-credentials.mjs",
+      "node tests/browser-position-search.mjs",
+      "node tests/browser-position-details.mjs",
+      "node tests/browser-asset-wizard.mjs",
+      "node tests/browser-ui07-audit.mjs",
+      "node tests/browser-quality-review.mjs",
+      "node tests/browser-annual-overview.mjs",
+      "node tests/browser-transfer-matching.mjs",
+      "node tests/browser-transfer-states.mjs",
+      "node tests/browser-booking-history.mjs",
+      "node tests/browser-booking-filters.mjs",
+      "node tests/browser-dashboard-periods.mjs",
+      "node tests/browser-chart-period-consistency.mjs",
+      "node tests/browser-extended-chart-periods.mjs",
+      "node tests/browser-provider-accordion.mjs",
+      "node tests/browser-legacy-quotes-chevrons.mjs",
+      "node tests/browser-public-instruments.mjs",
+      "node tests/browser-account-deeplink.mjs",
+      "node tests/browser-catalog-expansion.mjs",
+      "node tests/browser-security-catalog.mjs",
+      "node tests/browser-security-sources.mjs",
+      "node tests/browser-eodhd-worker.mjs",
+      "node tests/browser-market-diagnostics.mjs",
+      "node tests/live-probes.mjs",
+      "node tests/browser-accessibility-audit.mjs",
+      "node tests/browser-portfolio-scale.mjs",
+      "node tests/browser-offline-mobile.mjs",
+      "node tests/browser-pwa-updates.mjs"
+    ],
+    "f8b51d54c83e400f404394e6f5703027df11c3359cb339c888617b0d8e8515bd": [
+      "node tests/browser-ui07-audit.mjs",
+      "node tests/browser-ui-alltag10.mjs",
+      "node tests/browser-ui-textscale.mjs",
+      "node tests/browser-price-csv-tools.mjs",
+      "node tests/browser-quality-review.mjs",
+      "node tests/browser-annual-overview.mjs",
+      "node tests/browser-transfer-matching.mjs",
+      "node tests/browser-transfer-states.mjs",
+      "node tests/browser-csv-batch.mjs",
+      "node tests/browser-position-selection.mjs",
+      "node tests/browser-position-archive.mjs",
+      "node tests/browser-booking-management.mjs",
+      "node tests/browser-cash-terms.mjs",
+      "node tests/browser-atomic-storage-cross-engine.mjs",
+      "node tests/browser-chart-period-consistency.mjs",
+      "node tests/browser-extended-chart-periods.mjs",
+      "node tests/browser-chart-period-consistency.mjs",
+      "node tests/browser-extended-chart-periods.mjs",
+      "node tests/browser-idb-unmarked-recovery.mjs",
+      "node tests/browser-wallet-history-core.mjs",
+      "node tests/browser-ethereum-history.mjs",
+      "node tests/browser-history-ui.mjs"
+    ],
+    "ef7e42d5678e9b5a12b535ccda6094bc507ff96b56ccf44d9a92d2bbc57a5bd9": [
+      "node tests/browser-cash-account-ux.mjs",
+      "node tests/browser-etf-source-recovery.mjs",
+      "node tests/browser-loading-pwa.mjs",
+      "node tests/browser-pwa-update.mjs",
+      "node tests/browser-booking-history.mjs",
+      "node tests/browser-cross-engine.mjs",
+      "node tests/browser-recovery-backup-limits.mjs",
+      "node tests/browser-fin-e2e.mjs",
+      "node tests/browser-pchain-evidence.mjs",
+      "node tests/browser-sonic-staking-evidence.mjs",
+      "node tests/browser-flh03-abce.mjs",
+      "node tests/browser-dialog-native-navigation.mjs",
+      "node tests/browser-restore-deposits.mjs",
+      "node tests/browser-position-removal.mjs",
+      "node tests/browser-ui-quality.mjs"
+    ],
+    "f92f42ecdae5094a0ab573704149bdbfadbc8ffc745ea0a26b76c60d53266401": [
+      "node tests/browser-cash-reconciliation.mjs",
+      "node tests/browser-interest-scenario.mjs",
+      "node tests/browser-idb-new-install.mjs",
+      "node tests/browser-idb-migration-acceptance.mjs",
+      "node tests/browser-bitcoin-history.mjs",
+      "node tests/browser-history-storage.mjs",
+      "node tests/browser-purchase-evidence.mjs",
+      "node tests/browser-unified-bitcoin.mjs",
+      "node tests/browser-kraken-import.mjs",
+      "node tests/browser-bitpanda-import.mjs",
+      "node tests/browser-historical-position-value.mjs",
+      "node tests/browser-flh02-release.mjs",
+      "node tests/browser-history-worker.mjs",
+      "node tests/browser-flatex-native-ui.mjs",
+      "node tests/browser-flatex-native-commit.mjs",
+      "node tests/browser-flatex-net-settlement.mjs"
+    ],
+    "d212da6800b04ad5c66da54083c18b4a81dcc54bd07e67c32d9bd701e44ee6e3": [
+      "npm run check",
+      "npm test"
+    ]
+  },
+  "serialReferenceCriticalPathSpreadSeconds": 245.478,
+  "previousOrdinarySerialSpreadSeconds": 448,
+  "sameP1ACasesAndScreenshots": true,
+  "candidateAdopted": false,
+  "decision": "Both controlled runs were faster; neither reduction exceeds the measured reference spread, and full live impact of the candidate was not established.",
+  "correctedLocalSerialAttempt": {
+    "startedAt": "2026-11-25T13:49:47.193003+00:00",
+    "endOfLastJobSeconds": 1926.3002540409998,
+    "eligible": false,
+    "jobs": [
+      {
+        "job": "test",
+        "exit": 1,
+        "startedSeconds": 0.0006115930000305525,
+        "finishedSeconds": 1533.9991658810004
+      },
+      {
+        "job": "cross1",
+        "exit": 0,
+        "startedSeconds": 0.0013465219999488909,
+        "finishedSeconds": 1099.1249507800003
+      },
+      {
+        "job": "cross2",
+        "exit": 1,
+        "startedSeconds": 0.0020183160004307865,
+        "finishedSeconds": 1926.3002540409998
+      },
+      {
+        "job": "cross3",
+        "exit": 0,
+        "startedSeconds": 0.002332420000129787,
+        "finishedSeconds": 1393.134780683
+      },
+      {
+        "job": "wallet",
+        "exit": 0,
+        "startedSeconds": 0.0029615200000989717,
+        "finishedSeconds": 50.195946638999885
+      }
+    ],
+    "failed": {
+      "test": "Same Chromium comparison and wallet dialog size deviations as the local parallel candidate",
+      "cross2": "Same WebKit booking-row target-size finding as the local parallel candidate"
+    }
+  }
+}
