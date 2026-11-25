@@ -1,0 +1,358 @@
+{
+  "package": "lucide-static",
+  "version": "0.468.0",
+  "archive": "https://registry.npmjs.org/lucide-static/-/lucide-static-0.468.0.tgz",
+  "archiveSHA256": "d87c47325f0b2ac3ad2d6f056889da32b8f1216eafe4ed6534bc02786effe8cc",
+  "noticeSHA256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+  "notice": "icons/LICENSE-Lucide.txt",
+  "symbols": {
+    "dashboard": "layout-grid",
+    "history": "trending-up",
+    "positions": "list",
+    "bookings": "notebook-text",
+    "more": "sliders-horizontal",
+    "plus": "plus",
+    "refresh": "rotate-ccw",
+    "download": "download",
+    "wallet": "wallet",
+    "folder": "folder",
+    "bank": "landmark",
+    "shield": "shield-check",
+    "pencil": "pencil",
+    "trash": "trash-2",
+    "close": "x",
+    "gear": "settings",
+    "eye": "eye",
+    "eye-off": "eye-off",
+    "check": "check",
+    "archive": "archive",
+    "unarchive": "archive-restore",
+    "chart-no-axes-combined": "chart-no-axes-combined",
+    "clipboard-check": "clipboard-check"
+  },
+  "positions": {
+    "asset-etf": "layers",
+    "asset-stock": "chart-candlestick",
+    "asset-fund": "chart-pie",
+    "asset-crypto": "coins",
+    "asset-cash": "landmark",
+    "asset-fixed": "calendar-clock",
+    "asset-other": "shapes"
+  },
+  "inline": [
+    {
+      "ordinal": 2,
+      "use": "sidebar-install",
+      "icon": "file-plus-2",
+      "originalSvgSHA256": "7f5cab916c2a1815b97cd8f8a65418799aac3b18317920ecab29c1eee5142a7c",
+      "replacementSvgSHA256": "24b58da348d4e63a791b8a0ebd0b07a17a728ca7944b20f06e0602b5a0bb00e2"
+    },
+    {
+      "ordinal": 3,
+      "use": "close-install-hint",
+      "icon": "x",
+      "originalSvgSHA256": "c4db087ac97563237873d4f112781b370d463391b244e3c296b02173f25170c5",
+      "replacementSvgSHA256": "a1e2b9d76d9fea8e5268dd6c9cb6728fb51fd9ea123078c2822ba5df09a9bf9d"
+    },
+    {
+      "ordinal": 4,
+      "use": "mobile-storage",
+      "icon": "database",
+      "originalSvgSHA256": "4dd566bc14b201a61a28042bae61f9183c1b83ae70b4708f1c38ab545b8b2bd9",
+      "replacementSvgSHA256": "c93f112417684fe72da77a6127caf099c9b9d61aacf6543b5378417216456549"
+    },
+    {
+      "ordinal": 5,
+      "use": "mobile-drive",
+      "icon": "cloud",
+      "originalSvgSHA256": "1bec3318a0d65f5774bb58d80326bf6adc3fad336d2c31dbb2b7da23ac51fbef",
+      "replacementSvgSHA256": "0099cfeeb2f7a20c180490cfa59cb105b9999efba1f91e971b92e20f9f7db285"
+    },
+    {
+      "ordinal": 6,
+      "use": "desktop-storage",
+      "icon": "database",
+      "originalSvgSHA256": "4dd566bc14b201a61a28042bae61f9183c1b83ae70b4708f1c38ab545b8b2bd9",
+      "replacementSvgSHA256": "c93f112417684fe72da77a6127caf099c9b9d61aacf6543b5378417216456549"
+    },
+    {
+      "ordinal": 7,
+      "use": "desktop-drive",
+      "icon": "cloud",
+      "originalSvgSHA256": "1bec3318a0d65f5774bb58d80326bf6adc3fad336d2c31dbb2b7da23ac51fbef",
+      "replacementSvgSHA256": "0099cfeeb2f7a20c180490cfa59cb105b9999efba1f91e971b92e20f9f7db285"
+    },
+    {
+      "ordinal": 8,
+      "use": "dashboard-review",
+      "icon": "triangle-alert",
+      "originalSvgSHA256": "2af894dd389467a5cc5d22a3f567b6f3f1f7f90afdb613b04505e6b76834fe06",
+      "replacementSvgSHA256": "9666e3ff3d702577aea4b03db7abe550a7e8cf5db038f1aa7fa5efbde27321d6"
+    },
+    {
+      "ordinal": 9,
+      "use": "dashboard-review-arrow",
+      "icon": "chevron-right",
+      "originalSvgSHA256": "69b8824b675faba07d2ff0388b6a8a488be6768f351c623e565ff34d535fdb50",
+      "replacementSvgSHA256": "174b0e8c87346eccac9c5b2b6b39d0b48f67fe9276ad9f89e109800b7bc771b2"
+    },
+    {
+      "ordinal": 10,
+      "use": "history-calendar",
+      "icon": "calendar-days",
+      "originalSvgSHA256": "59b932663f768faf6928af51bbcf1284750c7136d957413a1b5a43de83d002ff",
+      "replacementSvgSHA256": "35ecfafc971ad21754b7dc64c926b9bdaf36b0f5201af249a3ead87eb4016c85"
+    },
+    {
+      "ordinal": 11,
+      "use": "add-reference",
+      "icon": "plus",
+      "originalSvgSHA256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "replacementSvgSHA256": "057c004d4579672e79b87f213715bba5d2a971399f6ff1c2f64a169c8b1fa2af"
+    },
+    {
+      "ordinal": 12,
+      "use": "add-position",
+      "icon": "plus",
+      "originalSvgSHA256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "replacementSvgSHA256": "057c004d4579672e79b87f213715bba5d2a971399f6ff1c2f64a169c8b1fa2af"
+    },
+    {
+      "ordinal": 13,
+      "use": "add-wallet",
+      "icon": "wallet",
+      "originalSvgSHA256": "80a53138d4a910880aae217d84dfdbf82b68a495e9afbc832c1dd0c97b322210",
+      "replacementSvgSHA256": "5af92c484899eded6f5b5888c53118579b285ebc2786b48c02a7f349340dd113"
+    },
+    {
+      "ordinal": 14,
+      "use": "import-csv",
+      "icon": "file-down",
+      "originalSvgSHA256": "63640bc82186b1f061cb47a5f6b686a7aa4d69eb9e146bdd09f20897f3277198",
+      "replacementSvgSHA256": "d8697c022896771a895d112de286d8d8c4d5df43ef04168be16284b33e918378"
+    },
+    {
+      "ordinal": 15,
+      "use": "add-booking",
+      "icon": "plus",
+      "originalSvgSHA256": "c286a67f25b5faf2ec72c6e6077dcb3b540de51eb252d67913671bbf51753809",
+      "replacementSvgSHA256": "057c004d4579672e79b87f213715bba5d2a971399f6ff1c2f64a169c8b1fa2af"
+    },
+    {
+      "ordinal": 16,
+      "use": "settings-install",
+      "icon": "file-plus-2",
+      "originalSvgSHA256": "7f5cab916c2a1815b97cd8f8a65418799aac3b18317920ecab29c1eee5142a7c",
+      "replacementSvgSHA256": "24b58da348d4e63a791b8a0ebd0b07a17a728ca7944b20f06e0602b5a0bb00e2"
+    },
+    {
+      "ordinal": 17,
+      "use": "market-settings",
+      "icon": "refresh-cw",
+      "originalSvgSHA256": "066ad94875e9865ae66f12d555f30204ba8278c81224ecc5b900f572811f32af",
+      "replacementSvgSHA256": "66776f98558bb897f532e55275a360464bc84dd8d2f5d625c877e95c4ade8a73"
+    },
+    {
+      "ordinal": 18,
+      "use": "optional-connections",
+      "icon": "sliders-horizontal",
+      "originalSvgSHA256": "c94f946311bab3c0288dca29d014b6985e56f4f0bacc3359f94ed40ec0ce1f92",
+      "replacementSvgSHA256": "06f76c8987e7ecd3cf5a13625ab8c90757734025c4546e240ea2c522a467002d"
+    },
+    {
+      "ordinal": 19,
+      "use": "blockchain-settings",
+      "icon": "network",
+      "originalSvgSHA256": "70ffa2531b973b66fdc7e72d2d8b5c251cb3924524e000ed810cee87874777a6",
+      "replacementSvgSHA256": "5f0869819daef0da46b0f5ba9b4e25faa5a8ae4d5bb881fd0212b645448ffce9"
+    },
+    {
+      "ordinal": 20,
+      "use": "privacy-notes",
+      "icon": "shield-check",
+      "originalSvgSHA256": "521369c56538e3c57fc3efa49996ab2506bac8ed1e942553876618adec29af51",
+      "replacementSvgSHA256": "dc8dde9e0b49b67672578d27e24a2af3c3f1f5fd44d291e6e41c2ac1394ea154"
+    }
+  ],
+  "icons": {
+    "layout-grid": {
+      "upstreamSHA256": "f5dfe49a6c944a86a6d75f9f18a9a51903272ba2b9397333cd24f62cf2620969",
+      "installedChildrenSHA256": "e87c50b8bf79094da56c1d02c37a0658956e8552996ae6431a8a642f390d7a83"
+    },
+    "trending-up": {
+      "upstreamSHA256": "75e1c29533c654c9f6d6870b29a7251af1c85b70df68cb0fcc49863ff4a0255b",
+      "installedChildrenSHA256": "6cf3b32039ade6bd3fcdcc718eed1a9eb6b1c3521ea446f7e639b7bea4e11d04"
+    },
+    "list": {
+      "upstreamSHA256": "490d9d70cad07afaf4af2aad4be9fd34898e91c2ed296e05fd35c07977839963",
+      "installedChildrenSHA256": "afc589ef5ed37377156c6fde39105cc611027c6b4320f7315e8e04c65bf608b5"
+    },
+    "notebook-text": {
+      "upstreamSHA256": "d1f722feef9aab01052e96054b09fd19246e619271ba109a0553985cf8221951",
+      "installedChildrenSHA256": "d60e937323cee6c3b228fa878bb1e45306f743808fb64a5ab748f1b9c6076e61"
+    },
+    "sliders-horizontal": {
+      "upstreamSHA256": "995507595c7c24deffef382bacc452a24b40a2efc4aa54908563a0f09b6a75aa",
+      "installedChildrenSHA256": "0c64f5e43956fd3cf09a1dfac5d41e344d3e7f2ce2cdeb7695381a522edf5b8d"
+    },
+    "plus": {
+      "upstreamSHA256": "b29207ee8f5cc0e829c0bab2e5b223fc88687599c6bd40b94ba35f52327615d6",
+      "installedChildrenSHA256": "b5d12bc3003fba43ad285f58ea6ce2f4848663f640a225e4fc8806daddec24b4"
+    },
+    "rotate-ccw": {
+      "upstreamSHA256": "33c3670d65cad6b5f21d042e1629988c0cedd1ab8f8aba2fefe036a464e0246b",
+      "installedChildrenSHA256": "c484810a3563c2878fbac102036f049ca2253a7496669dabd603c4b3318c6c54"
+    },
+    "download": {
+      "upstreamSHA256": "f68a21e11115edc0aef51ac6f8f4618e14d2b92055f1cb9f5d670efc696bea85",
+      "installedChildrenSHA256": "f132970aa6ed5d96371d77f6a03746eceb03d91dd1051e0bcaa45d53c517df22"
+    },
+    "wallet": {
+      "upstreamSHA256": "100d8d0773d3f5d3b8c5076e32c16a829daff5211642f6cc48b9d1d6be771142",
+      "installedChildrenSHA256": "cd06c9e61fe4b666b77236b4099df40b95bd4b8736ae816da736926eb064b65a"
+    },
+    "folder": {
+      "upstreamSHA256": "d2708a4727b3d2e5640bce703b3362994e482a3080bbcbca7940efe0b88b7167",
+      "installedChildrenSHA256": "9d3e634d01520b98d37ea7af5c72d81987cd286da2cb87e3a2eff0ec894da259"
+    },
+    "landmark": {
+      "upstreamSHA256": "7205e6f7c9eb22e526668fd47726d5904bf58bce5f5a1f7bc2f9ee18757200dc",
+      "installedChildrenSHA256": "eacc2bc9d6979e8134e8aab732d63c18e262bbc25c1a7b03403953a48814309f"
+    },
+    "shield-check": {
+      "upstreamSHA256": "0e9116845c6053cd3bfa09a3e4c232f5fb28c3abab75792287d2aed31c24ebe7",
+      "installedChildrenSHA256": "2ac23312d7b1669c5a1a79107fe320417b629e76782cf2000c05bad1369fda33"
+    },
+    "pencil": {
+      "upstreamSHA256": "5ab7033f164ff2813af748eaaa5cb104f04534bde78b53d90016b1465769e575",
+      "installedChildrenSHA256": "6034d275e3ebff11851f56053842bcf9ecd326dd96a8b12eea0f9b1447c17aa2"
+    },
+    "trash-2": {
+      "upstreamSHA256": "9268a35cfb4f9d852c3d13f2c91476dd067c21c20e2bcdb0093fd93fd0bf34b7",
+      "installedChildrenSHA256": "834b8b551c7440be577f97b77ddb304e1938ac33ca4d851049a7d8c0c0d39090"
+    },
+    "x": {
+      "upstreamSHA256": "0f38855d9d5775c10960ae53e46b745f77914b43f78c43bf8abc39f4d5e06de1",
+      "installedChildrenSHA256": "3f969bc86b02f3a880881c4ac4cc095e2fd21fbe9134eb4f82c1e7a5c1183d39"
+    },
+    "settings": {
+      "upstreamSHA256": "ceea1a72d04b112291222ba9ad0779a12d47d816079fe4174900c724f360b55c",
+      "installedChildrenSHA256": "7297cc72ebc16421f4f526453b71f9eab0f4e484606dab45735ce323ae95f177"
+    },
+    "eye": {
+      "upstreamSHA256": "7a23c549710b70c9eb1324540260943190190ef309e9f3604726a42c85f9b552",
+      "installedChildrenSHA256": "06ae25af061587db6ee130984f09dc15028d50b2b76f8476eb07f866629a035b"
+    },
+    "eye-off": {
+      "upstreamSHA256": "e58f8907b5caf0b7fea682291844a2f65435f020b2ac1a9c8449b804e2333562",
+      "installedChildrenSHA256": "a39c31771c26db32f5fbe1ef15bb87ffbdbe6003ff9b18cc26cc87cb12b542af"
+    },
+    "check": {
+      "upstreamSHA256": "538432eec072ceeccf5a7aacf347a2ad2bff9937d203dbd0b4f4245d7accd93c",
+      "installedChildrenSHA256": "b1fae48e85719ffb4fc7c4bad64bdd2417de1911186b00482e8bb2df73983c2d"
+    },
+    "archive": {
+      "upstreamSHA256": "1a6e1c540c9a1a9b489893cc14ab9f597496c69aab5ba222fdd5b456de9e2fac",
+      "installedChildrenSHA256": "323a0c4f52f184ecd145c7bf66a8ebfa18cbb2020f24852f67594af7346f04da"
+    },
+    "archive-restore": {
+      "upstreamSHA256": "cfbaf9443a1f42d8faed6498e80e6045e8352627b36e9b862289262ed0782e19",
+      "installedChildrenSHA256": "d2d80711e7a116a9a312595f284d24f6f020483db07edda4098d6c9bbb504aef"
+    },
+    "chart-no-axes-combined": {
+      "upstreamSHA256": "2a614a5c049576984707237266e260757951e92663a272550e109b06b9da7a2b",
+      "installedChildrenSHA256": "deaccd7198af15b754482b879a65a19403399f23517c6ef8e106d124de46a1a3"
+    },
+    "clipboard-check": {
+      "upstreamSHA256": "e038524adde1b7553d49f11e7590e67a0f82e97e0e27045842eb94ecec5ca8c9",
+      "installedChildrenSHA256": "ea383e5c3ecc73c34a7e25e4204e2a18fc98e69a4b90266c808d984d59791204"
+    },
+    "layers": {
+      "upstreamSHA256": "e0471ac93c7e2d383864a837ac4e15f325c5ceff710440634dfe08f762cf2858",
+      "installedChildrenSHA256": "d3bdb60bf3364d53efe631e76047fd5800493e914b40cd880e717743edeb4d9a"
+    },
+    "chart-candlestick": {
+      "upstreamSHA256": "764e20b12d9b47d294291bc8942624314ef5f7f97388f4448d101664bea04dd4",
+      "installedChildrenSHA256": "3ccb82fe24dbb2bfde1b46df9dfaa392cdbe2ccc512ecd54e3ba799efb927b4d"
+    },
+    "chart-pie": {
+      "upstreamSHA256": "70ee2486494fc03f802098f07052109d243bc700cbefcb9ce7b270284cccc81e",
+      "installedChildrenSHA256": "ce47af5a9a6f952164915386b5ed5f89f2889741a94d32d47cb11b9504e3f5cb"
+    },
+    "coins": {
+      "upstreamSHA256": "15c74fea83191438eb16486369a151620899fcdae48ad0a7d545eb79c33b6d58",
+      "installedChildrenSHA256": "77fc892958e2e37b302ff118350d341608f6c2fc5bd014d2ac63fb82ad6f3965"
+    },
+    "calendar-clock": {
+      "upstreamSHA256": "7d0886060d87d9aa86483526620468f8e3855202d7708d0fb3c44c871b9fa19c",
+      "installedChildrenSHA256": "9717d9aa13bad55771cd04be795ea407be5d5aed016b8376aeb8ea9174134307"
+    },
+    "shapes": {
+      "upstreamSHA256": "6838d037ef45de39a261cc2ba0fd5654a080eef9e62a8e12d40103f0e615d930",
+      "installedChildrenSHA256": "ae1c2a1e6ede2c38fccf2d848b47f3aec7c94d4d61f773299a21629a0fd21972"
+    },
+    "file-plus-2": {
+      "upstreamSHA256": "9b0665310f2248a4d9f847295d9053bfd32ec733736ccdf54c2449a356280b44",
+      "installedChildrenSHA256": "aee441258a731705f6369652944f5d95f36ffef4bae12a51d899cd3f26a6630b"
+    },
+    "database": {
+      "upstreamSHA256": "275e46d23e67d43698afaecd8ddf347ffbf477cbb7d25aec73e6996dc4fc6774",
+      "installedChildrenSHA256": "45b01a8abe49a1ebe2f1e9325b05c946c23eb91ee2a9fa7f50980dc9dcdaaa63"
+    },
+    "cloud": {
+      "upstreamSHA256": "63d076b99f2fde11de97e9cf79fc701931945bc5c8cc596c5cf55d4439dbe82b",
+      "installedChildrenSHA256": "d2bc3667ff702e54b83c43d6b0d474b695b116166b5f71ed430e2e8aa9eadeec"
+    },
+    "triangle-alert": {
+      "upstreamSHA256": "cba6c904f2cc8cc0ca16940e89762a4885dff08be9105ccff1dbd13d12663f70",
+      "installedChildrenSHA256": "da211fdedcb9ae15d2b50f9e2ac5bd4ea8eddb7383112714ce58ce0b5294b9ec"
+    },
+    "chevron-right": {
+      "upstreamSHA256": "fea488a3b60fd7738bbbf8ca98826ef5c0381347c5fd1048d45ee70a75a51cfe",
+      "installedChildrenSHA256": "2273536ef4a19417a74dc6147416f288f4540101ace2cf962d808af39e1a5fa4"
+    },
+    "calendar-days": {
+      "upstreamSHA256": "b91ebeecee30b2b6f9258f4fdf25c5fc91adbd265bf071139774dea2f9e51ac7",
+      "installedChildrenSHA256": "6cdb08be2bcb5ce4e3c77dfd11c9da4c4453c9b5c3ad6b55af1adbace1f17b97"
+    },
+    "file-down": {
+      "upstreamSHA256": "f779b7e99994be929fb371e5fc7f4ec1bd123c96ca82c0a2b1c0d09b81620e95",
+      "installedChildrenSHA256": "5556b5d38725abccd88de9568066ad34725b338e9337d5ab68c66e77bbc6e287"
+    },
+    "refresh-cw": {
+      "upstreamSHA256": "d63b359b0fe05e03cff8aaa7acf82f9569733e83f7fb4742d583a086972c4bb0",
+      "installedChildrenSHA256": "5bfd14094a059e31b3ef044d969defe27343663af6fc1b453c0a94730942dfe0"
+    },
+    "network": {
+      "upstreamSHA256": "ba80b45fdf8a3cb43b031fd17637c1703eabfadcc6cfec6c5455f581ac4ca0e1",
+      "installedChildrenSHA256": "c636189c7c5ab419b5084fb13a2b617e129586b745029b3bc6bab205c4b4a6fd"
+    }
+  },
+  "locallyDrawn": [
+    "index.html#appStartup",
+    "src/loading-ui.js",
+    "src/dashboard-ui.js",
+    "src/allocation-ui.js",
+    "src/portfolio-projection-ui.js"
+  ],
+  "candidateCommit": "35488aa14c2fe22f85571064ef6f22c5a8e2f486",
+  "candidateTree": "6fe56d80dd0881d9956285ca1c725a22b6039a1c",
+  "offlineCheck": {
+    "browser": "141.0.7390.37",
+    "offlineAssetSHA256": {
+      "index.html": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+      "src/format.js": "3d1a430644833e976a90cb935e094548fa3639d137183be7b33a3b3ca56a713d",
+      "src/position-icons.js": "c9da521a995c7421996c318fbe73cef9fc079d6498c1f12f94ab2ebe3b7b195c",
+      "icons/LICENSE-Lucide.txt": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+    },
+    "cache": "foliolab-open-v343",
+    "functionalSymbols": 23,
+    "positionSymbols": 7,
+    "inlineReplacements": 19,
+    "unchangedRecord": true
+  },
+  "unitTests": 1534,
+  "syntax": "PASS",
+  "chromiumLoadingPWA": "PASS",
+  "status": "LOCAL_CANDIDATE"
+}

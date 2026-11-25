@@ -1,0 +1,416 @@
+{
+  "https://cosmos-api.polkachu.com": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-origin": "*",
+        "x-cosmos-block-height": "34044336"
+      },
+      "http": "200",
+      "result": {
+        "balance": {
+          "amount": "281159",
+          "denom": "uatom"
+        }
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-origin": "*",
+        "x-cosmos-block-height": "34044337"
+      },
+      "http": "200",
+      "result": {
+        "balance": {
+          "amount": "811172",
+          "denom": "uatom"
+        }
+      }
+    },
+    "preflight": {
+      "headers": {},
+      "http": "403",
+      "result": null
+    }
+  },
+  "https://cosmos-rest.publicnode.com": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-origin": "*"
+      },
+      "http": "500",
+      "result": {
+        "code": 2,
+        "details": [],
+        "message": "codespace sdk code 38: not found: failed to load state at height 34044336; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045965)"
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-origin": "*"
+      },
+      "http": "500",
+      "result": {
+        "code": 2,
+        "details": [],
+        "message": "codespace sdk code 38: not found: failed to load state at height 34044337; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045966)"
+      }
+    },
+    "preflight": {
+      "headers": {
+        "access-control-allow-headers": "x-cosmos-block-height",
+        "access-control-allow-methods": "GET,HEAD,OPTIONS,POST",
+        "access-control-allow-origin": "*"
+      },
+      "http": "204",
+      "result": null
+    }
+  },
+  "https://cosmos-rpc.polkachu.com": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-headers": "*",
+        "access-control-allow-origin": "*"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 0,
+            "codespace": "",
+            "height": "34044336",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "",
+            "proofOps": null,
+            "value": "Cg8KBXVhdG9tEgYyODExNTk="
+          }
+        }
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-headers": "*",
+        "access-control-allow-origin": "*"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 0,
+            "codespace": "",
+            "height": "34044337",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "",
+            "proofOps": null,
+            "value": "Cg8KBXVhdG9tEgY4MTExNzI="
+          }
+        }
+      }
+    }
+  },
+  "https://cosmos-rpc.publicnode.com": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-origin": "*"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 38,
+            "codespace": "sdk",
+            "height": "0",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "failed to load state at height 34044336; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045968): not found",
+            "proofOps": null,
+            "value": null
+          }
+        }
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-origin": "*"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 38,
+            "codespace": "sdk",
+            "height": "0",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "failed to load state at height 34044337; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045969): not found",
+            "proofOps": null,
+            "value": null
+          }
+        }
+      }
+    }
+  },
+  "https://rest.cosmos.directory/cosmoshub": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-origin": "*",
+        "x-cosmos-block-height": "34044336"
+      },
+      "http": "200",
+      "result": {
+        "balance": {
+          "amount": "281159",
+          "denom": "uatom"
+        }
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-origin": "*",
+        "x-cosmos-block-height": "34044337"
+      },
+      "http": "200",
+      "result": {
+        "balance": {
+          "amount": "811172",
+          "denom": "uatom"
+        }
+      }
+    },
+    "preflight": {
+      "headers": {
+        "access-control-allow-headers": "x-cosmos-block-height",
+        "access-control-allow-methods": "GET,HEAD,PUT,POST,DELETE,PATCH",
+        "access-control-allow-origin": "https://foliolab.unperfekt.at"
+      },
+      "http": "204",
+      "result": null
+    }
+  },
+  "https://rpc.cosmos.directory/cosmoshub": {
+    "34044336": {
+      "headers": {
+        "access-control-allow-origin": "*"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 38,
+            "codespace": "sdk",
+            "height": "0",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "failed to load state at height 34044336; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045971): not found",
+            "proofOps": null,
+            "value": null
+          }
+        }
+      }
+    },
+    "34044337": {
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "Retry-After"
+      },
+      "http": "200",
+      "result": {
+        "id": -1,
+        "jsonrpc": "2.0",
+        "result": {
+          "response": {
+            "code": 0,
+            "codespace": "",
+            "height": "34044337",
+            "index": "0",
+            "info": "",
+            "key": null,
+            "log": "",
+            "proofOps": null,
+            "value": "Cg8KBXVhdG9tEgY4MTExNzI="
+          }
+        }
+      }
+    }
+  },
+  "browserOriginProof": {
+    "testedOrigin": "https://foliolab.unperfekt.at/",
+    "browser": "141.0.7390.37",
+    "results": [
+      {
+        "kind": "abci",
+        "host": "https://cosmos-rpc.polkachu.com",
+        "height": "34044336",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 0,
+          "log": "",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": "Cg8KBXVhdG9tEgYyODExNTk=",
+          "proofOps": null,
+          "height": "34044336",
+          "codespace": ""
+        }
+      },
+      {
+        "kind": "abci",
+        "host": "https://cosmos-rpc.polkachu.com",
+        "height": "34044337",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 0,
+          "log": "",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": "Cg8KBXVhdG9tEgY4MTExNzI=",
+          "proofOps": null,
+          "height": "34044337",
+          "codespace": ""
+        }
+      },
+      {
+        "kind": "abci",
+        "host": "https://cosmos-rpc.publicnode.com",
+        "height": "34044336",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 38,
+          "log": "failed to load state at height 34044336; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045981): not found",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": null,
+          "proofOps": null,
+          "height": "0",
+          "codespace": "sdk"
+        }
+      },
+      {
+        "kind": "abci",
+        "host": "https://cosmos-rpc.publicnode.com",
+        "height": "34044337",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 38,
+          "log": "failed to load state at height 34044337; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045981): not found",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": null,
+          "proofOps": null,
+          "height": "0",
+          "codespace": "sdk"
+        }
+      },
+      {
+        "kind": "abci",
+        "host": "https://rpc.cosmos.directory/cosmoshub",
+        "height": "34044336",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 0,
+          "log": "",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": "Cg8KBXVhdG9tEgYyODExNTk=",
+          "proofOps": null,
+          "height": "34044336",
+          "codespace": ""
+        }
+      },
+      {
+        "kind": "abci",
+        "host": "https://rpc.cosmos.directory/cosmoshub",
+        "height": "34044337",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "code": 0,
+          "log": "",
+          "info": "",
+          "index": "0",
+          "key": null,
+          "value": "Cg8KBXVhdG9tEgY4MTExNzI=",
+          "proofOps": null,
+          "height": "34044337",
+          "codespace": ""
+        }
+      },
+      {
+        "kind": "lcd",
+        "host": "https://rest.cosmos.directory/cosmoshub",
+        "height": "34044336",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "denom": "uatom",
+          "amount": "281159"
+        }
+      },
+      {
+        "kind": "lcd",
+        "host": "https://rest.cosmos.directory/cosmoshub",
+        "height": "34044337",
+        "status": 200,
+        "visibleHeight": null,
+        "result": {
+          "denom": "uatom",
+          "amount": "811172"
+        }
+      },
+      {
+        "kind": "lcd",
+        "host": "https://cosmos-rest.publicnode.com",
+        "height": "34044336",
+        "status": 500,
+        "visibleHeight": null,
+        "result": "codespace sdk code 38: not found: failed to load state at height 34044336; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045980)"
+      },
+      {
+        "kind": "lcd",
+        "host": "https://cosmos-rest.publicnode.com",
+        "height": "34044337",
+        "status": 500,
+        "visibleHeight": null,
+        "result": "codespace sdk code 38: not found: failed to load state at height 34044337; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34045980)"
+      },
+      {
+        "kind": "lcd",
+        "host": "https://cosmos-api.polkachu.com",
+        "height": "34044336",
+        "error": "TypeError"
+      },
+      {
+        "kind": "lcd",
+        "host": "https://cosmos-api.polkachu.com",
+        "height": "34044337",
+        "error": "TypeError"
+      }
+    ]
+  }
+}
