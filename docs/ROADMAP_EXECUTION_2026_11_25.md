@@ -791,3 +791,28 @@ Der positive öffentliche Fall belegt die Abgrenzung gegen
 Doppelzählung. Import und Abgleich tatsächlich ausgezahlter Rewards
 sowie private Kontozuordnung bleiben gesondert.
 [Block und Prüfnachweis](release-evidence/sw340-cosmos-unclaimed-reward-2026-11-25.json).
+
+### Barausgleich · Lorillard/Reynolds mit Anschaffungskosten
+
+Der [SEC-Emittentenbeleg](https://www.sec.gov/Archives/edgar/data/1275283/000119312515221972/d941569d8k.htm)
+bestätigt je Lorillard-Aktie 0,2909 Reynolds-Aktien und 50,50 USD.
+Aus 2.000 Aktien folgen exakt 581 ganze neue Aktien, 0,8 als
+Stückrest und 101.000 USD fester Bargeldanteil. Der
+[Bundesfinanzhof VIII R 44/18](https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202210151/)
+gibt für denselben Fall die Bankwerte getrennt wieder. 89.801,73 EUR
+Barzuzahlung, 49,29 EUR Spitzenausgleich und 35.796,54 EUR Wert
+der eingebuchten Aktien ergeben 125.647,56 EUR. Nach den im
+Revisionsentscheid ausgewiesenen Anschaffungskosten beider Lose von
+insgesamt 78.034,13 EUR stimmen **47.613,43 EUR** mit dem deutschen
+Entscheidungssoll überein.
+
+SW340 wies die automatische Fusion sowohl mit dem Stückrest
+als auch mit beiden Geldkomponenten zusammen ab. Gegenpositionen,
+volle Kostenbasis, Journal und wieder eingelesene Sicherung blieben
+in beiden Versuchen exakt gleich. Qualifiziert sind der historische
+Gesamtfall und die atomare Abweisung. Für eine eigene Buchung des
+Stückrests fehlen der separate Auszahlungs-FX, die gesonderten
+Abwicklungskosten und eine ausgewiesene Einzelzuordnung der
+Anschaffungskosten. Die deutsche Fallentscheidung liefert keine
+österreichische Regel.
+[Rechen- und Produktbeleg](release-evidence/sw340-lorillard-merger-court-reference-2026-11-25.json).

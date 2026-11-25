@@ -1,0 +1,35 @@
+{
+  "release": "SW340",
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "effective": "2015-06-12",
+  "issuerFiling": "https://www.sec.gov/Archives/edgar/data/1275283/000119312515221972/d941569d8k.htm",
+  "publishedBrokerFactsAndFinalGermanyResolution": "https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202210151/",
+  "issuerRatio": "0.2909",
+  "fixedCashUSDPerOldShare": "50.50",
+  "independentlyCalculated": {
+    "oldQuantity": "2000",
+    "wholeNewQuantity": "581",
+    "residualQuantity": "0.8",
+    "fixedCashGrossUSD": "101000.00",
+    "bookedFixedCashEUR": "89801.73",
+    "bookedResidualCashEUR": "49.29",
+    "receivedShareValueEUR": "35796.54",
+    "historicalTotalAcquisitionBasisEUR": "78034.13",
+    "separatelyPublishedGermanWithholdingEUR": [
+      "22450.43",
+      "1234.77"
+    ],
+    "impliedCashAfterKnownTaxesEUR": "66165.82",
+    "aggregateConsiderationEUR": "125647.56",
+    "aggregateGainForGermanDecisionEUR": "47613.43"
+  },
+  "scope": {
+    "combinedTransactionRejected": true,
+    "fullPortfolioAndRestoredBackupUnchanged": true,
+    "residualSpecificFx": null,
+    "residualSpecificFees": null,
+    "residualSpecificCostAllocation": null,
+    "grossToNetDirectBrokerLine": null,
+    "austrianTreatment": null
+  }
+}
