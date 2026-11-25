@@ -1,0 +1,51 @@
+{
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "browser": "141.0.7390.37",
+  "rpc": {
+    "block": "46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH",
+    "height": 226157919,
+    "responseSHA256": [
+      "eaa971525c4db29cb644da27adacbdf2efd7e5270fb7849b6273160f24c87c8f",
+      "eaa971525c4db29cb644da27adacbdf2efd7e5270fb7849b6273160f24c87c8f"
+    ],
+    "amount": "145768498431409676817125837316",
+    "locked": "0",
+    "expected": "145768.498431409676817125837316",
+    "yoctoRemainderAtScale18": "837316"
+  },
+  "supported": {
+    "preview": [
+      "NEAR (Kontoguthaben)\nNEAR · NEAR\n2,5\nKurs offen",
+      "NEAR im Konto gesperrt\nNEAR · NEAR\n1,25\nKurs offen"
+    ],
+    "savedPositions": [
+      [
+        "near",
+        "2.5",
+        "2500000000000000000000000"
+      ],
+      [
+        "near-locked",
+        "1.25",
+        "1250000000000000000000000"
+      ]
+    ],
+    "reopenExact": true,
+    "backupSHA256": "3e339791ef41d98079887ea502110704171a6b3538bbc4014dd9c22e89405ee0",
+    "freshRestoreExact": true
+  },
+  "pinned": {
+    "rejection": "Suche fehlgeschlagen: Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "resultRows": 0,
+    "saveEnabled": false,
+    "recordUnchanged": true
+  },
+  "contract": {
+    "atomicDecimal": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "units": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "createPosition": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "openingRestore": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "journalQuantityAudit": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
+    "backupRestore": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden."
+  }
+}

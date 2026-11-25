@@ -857,6 +857,16 @@ Für die Freigabe fehlt ein Gesamtgewinn außerhalb der Streuung,
 einschließlich des regulären Releasepfads.
 [Prüflisten, Messdaten und geprüfte Originale](release-evidence/ci-430-full-local-path-pairs-2026-11-25.json).
 
+### SW340 · NEAR-Mengengrenze im normalen Wallet-Pfad
+
+Getesteter Produktstand [Main `7adbf028`](https://github.com/joke0071/foliolab-open/commit/7adbf028ff407df2c48f5c8e2e788ed10e8573f0). FastNear und NEAR RPC lieferten bei erneutem Abruf desselben finalisierten Blocks 226.157.919 bytegleiche Antwortkörper. Das unabhängige Soll lautet **145768498431409676817125837316 YoctoNEAR** bzw. **145768,498431409676817125837316 NEAR**. Auf dem 18-stelligen Raster bleiben **837316 YoctoNEAR** außerhalb der Darstellbarkeit.
+
+Chromium 141 führte die Wallet-Oberfläche mit den gepinnten RPC-Bytes über isolierten Transport aus. Zwei bekannte, darstellbare Kontrollmengen erschienen als **2,5 NEAR frei** und **1,25 NEAR gesperrt**. Nach Übernahme, Wiederöffnung, lokalem Backup und Restore in einem frischen Browserprofil ergab die Rückrechnung exakt die beiden atomaren Ausgangsmengen. Der öffentliche Aurora-Fall zeigte vor der Vorschau die Präzisionsmeldung, erzeugte keine Ergebniszeile und ließ die Übernahme gesperrt. Inhalt und Revision des IndexedDB-Datensatzes blieben exakt gleich.
+
+Die erste Grenze ist [`atomicDecimal()` → `units()`](https://github.com/joke0071/foliolab-open/blob/7adbf028ff407df2c48f5c8e2e788ed10e8573f0/src/decimal.js#L53). Derselbe Wert wurde gesondert von Positionserstellung, Restore des Eröffnungsbestands, Journal-Mengenprüfung und Backup-Restore abgelehnt. Validator, Wallet-Metadatum `decimals: 24` und Positionstext allein ändern den Mengenvertrag nicht. Ein exakter Import braucht eine durchgängige Repräsentation samt Rechenregeln für Position, Eröffnungsmenge, Journal-Deltas und Restore-Kompatibilität. Die sichere Ablehnung bleibt aktiv. Belegt sind der bisherige Weg und die Vertragsgrenze. Der positive 24-stellige Import, Rewards-Abdeckung und private Kontozuordnung bleiben offen.
+
+[Maschinenbeleg](release-evidence/sw340-near-precision-roundtrip-2026-11-25.json) · [Reproduktion](release-evidence/sw340-near-precision-roundtrip-2026-11-25.mjs).
+
 ## Freigabestand aller 19 Folgezeilen · Fortsetzung vom 25.11.2026
 
 Der Gesamtstand beträgt **6/6 Kernbereiche und 11/29 Folgepakete**. SW340 ist **LIVE_ACCEPTED**. UI-Refresh ist die neu abgenommene Zeile.
@@ -873,7 +883,7 @@ Der Gesamtstand beträgt **6/6 Kernbereiche und 11/29 Folgepakete**. SW340 ist *
 | Verwaltung · #165/#257 | Tatsächliche Verwaltungsoberfläche für erlaubten Cash-Abgang und geschützte Folgeabhängigkeit. Abbruch, Stale, Wiederimport, Undo und Restore geprüft. | Separater Originalfall mit Kostenbasis und Gegenbuchung im Verwaltungsablauf. |
 | FLH03 · #148 | Öffentlicher Trade-Republic-Kontoauszug als generischer CSV-Fall. Sechs native CSV-Profile gegen veröffentlichte PDF-Abrechnungen verglichen. Persönlicher TR-Fall entfällt. | Passendes Paar aus nativem regionalem Export und Einzelabrechnung. Persönliche Bitpanda-Stichtagsbestätigung für Cash und BCI25-Einzelpositionen. |
 | FLH03-18 · #159 | Vorhandener belegter SOL-Brückenfall bleibt maßgeblich. | Weitere Ledger-/Stakingposition mit unabhängiger Kontozuordnung und datiertem Endbestand. |
-| Weitere Wallets · #119 | Öffentlicher Cosmos-Abgleich für frei, delegiert, Unbonding und gesondert ausgewiesenen ausstehenden Reward. NEAR weist die beobachtete Präzision jenseits von 18 Nachkommastellen ausdrücklich ab. | Rewards-Abdeckung, exakte Verarbeitung dieser NEAR-Beträge und Beleg für die private Kontozuordnung. |
+| Weitere Wallets · #119 | Öffentlicher Cosmos-Abgleich für frei, delegiert, Unbonding und gesondert ausgewiesenen ausstehenden Reward. NEAR-Kontrollbestand bleibt über Übernahme, Wiederöffnung und Restore auf YoctoNEAR exakt. Der gepinnte 24-stellige Fall erreicht die gemeinsame Mengengrenze vor der Vorschau. | Rewards-Abdeckung, exakte Verarbeitung dieser NEAR-Beträge und Beleg für die private Kontozuordnung. |
 | ETH-Cursor · #268 | Öffentlicher Seitenwechsel und Chain-Receipts bereits abgenommen. Verfügbare Privatbelege gezielt für den historischen Fall geprüft. | Ursprüngliche private Providerantwort mit Cursor und zugehörige Folgeantwort. |
 | Barausgleich · #52 | Lorillard/Reynolds belegt Stückrest, Barausgleich, Gegenwert und gesamte historische Anschaffungskosten. Kombinierte Buchungen bleiben mit identischem Datenstand gesperrt. | Vollständiger tatsächlicher Stückrest-Ausgleich mit Auszahlungswährung, FX, Gebühren und zugeordneter Steuerbasis. |
 | CI-Effizienz · #229/#430 | Identische Appbytes im Paarvergleich, lokale Gegenproben und Ubuntu-Paare in beiden Reihenfolgen. | Reproduzierbarer Gesamtgewinn außerhalb der Streuung im regulären Releasepfad. #430 bleibt zurückgestellt. |
