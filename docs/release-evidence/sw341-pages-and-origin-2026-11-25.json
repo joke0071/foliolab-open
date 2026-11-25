@@ -1,0 +1,72 @@
+{
+  "mainCiRun": 45651922252,
+  "deploymentJob": 139349647658,
+  "liveAcceptanceJob": 139349885940,
+  "status": "DEPLOYED_LIVE_GATE_RUNNING",
+  "pages": {
+    "main": "162d76aeba6a441d761cac1132e964516a867b3e",
+    "tree": "c9aaaaa071b32890909236cbc6fd35ee59a86ed8",
+    "run": 45651922252,
+    "id": 15041691232,
+    "name": "github-pages-attempt-1",
+    "sha256": "aa4709f3c40c3834f186d6a618fdaad58ed03bba9d9cbd49403ca82c6f42bed6",
+    "zipCRC": "PASS",
+    "filesMatched": 160,
+    "iconsAndNotice": {
+      "icons/flask-192.png": "e66c0df3e9059df8aac7c6a905a4c1c215344a3b02b4057dac94c93810520223",
+      "icons/LICENSE-Lucide.txt": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+      "icons/flask-maskable-512.png": "cd2e2a21d9e690fe076241ffad2016547c508258691cb6c2ef67db56de5aae04",
+      "icons/flask.svg": "1d8a16dba63e517de44296172357bf69b18ed413b3a7326011cbdef995319924",
+      "icons/flask-512.png": "4866dba9d3234ce57f59ac13342ebc1f49e30a4efeab300361583318ced62cf3"
+    }
+  },
+  "originReadback": {
+    "main": "162d76aeba6a441d761cac1132e964516a867b3e",
+    "origin": "https://foliolab.unperfekt.at/",
+    "observedAtUTC": "2026-11-25T16:34:39.209287+00:00",
+    "paths": {
+      "/": {
+        "status": 200,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa",
+        "contentType": "text/html; charset=utf-8",
+        "hasHttpCSP": false,
+        "hasHttpXFO": false
+      },
+      "/manifest.webmanifest": {
+        "status": 200,
+        "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd",
+        "contentType": "application/manifest+json; charset=utf-8"
+      },
+      "/sw.js": {
+        "status": 200,
+        "sha256": "a4a35a8b2abceb836e8356788cfddba2673b38eeba235c6a6d2848cdea90a578",
+        "contentType": "application/javascript; charset=utf-8"
+      },
+      "/icons/flask.svg": {
+        "status": 200,
+        "sha256": "1d8a16dba63e517de44296172357bf69b18ed413b3a7326011cbdef995319924",
+        "contentType": "image/svg+xml"
+      },
+      "/icons/flask-192.png": {
+        "status": 200,
+        "sha256": "e66c0df3e9059df8aac7c6a905a4c1c215344a3b02b4057dac94c93810520223",
+        "contentType": "image/png"
+      },
+      "/icons/flask-512.png": {
+        "status": 200,
+        "sha256": "4866dba9d3234ce57f59ac13342ebc1f49e30a4efeab300361583318ced62cf3",
+        "contentType": "image/png"
+      },
+      "/icons/flask-maskable-512.png": {
+        "status": 200,
+        "sha256": "cd2e2a21d9e690fe076241ffad2016547c508258691cb6c2ef67db56de5aae04",
+        "contentType": "image/png"
+      },
+      "/icons/LICENSE-Lucide.txt": {
+        "status": 200,
+        "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+        "contentType": "text/plain; charset=utf-8"
+      }
+    }
+  }
+}
