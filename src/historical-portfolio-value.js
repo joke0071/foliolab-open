@@ -5,7 +5,7 @@ import {valueSign} from './defi.js';
 export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCurrency={}}={}){
  const calendarInput=dates??[...new Set([
   ...Object.values(model.priceHistories??{}).flatMap(h=>(h.points??[]).map(p=>p.valuationDate??p.date).filter(Boolean)),
-  ...Object.values(histories).flatMap(h=>(h.points||[]).map(p=>p.valuationDate??p.date).filter(Boolean)),...(model.walletHistory?.sessions||[]).flatMap(s=>[...(s.quotes||[]).map(q=>q.date),...s.events.filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10))]),...(model.journalEntries??[]).map(e=>e.date),...(model.snapshots??[]).map(s=>s.date)
+  ...Object.values(histories).flatMap(h=>(h.points||[]).map(p=>p.valuationDate??p.date).filter(Boolean)),...(model.walletHistory?.sessions||[]).filter(s=>s.chain!=='cosmos').flatMap(s=>[...(s.quotes||[]).map(q=>q.date),...s.events.filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10))]),...(model.journalEntries??[]).map(e=>e.date),...(model.snapshots??[]).map(s=>s.date)
  ])].sort();
  const calendar=[...new Set(calendarInput)].sort();
  if(calendar.length>15000)throw Error('Bewertungszeitraum zu groß.');

@@ -1,3 +1,4 @@
+import {cosmosRewardProof,cosmosRewardPreview,cosmosRewardWallet} from './cosmos-reward-evidence.js';
 import {parseLinkEvidence,partialLinkHistory,linkWallet} from './link-explorer-evidence.js';
 import {setLoading} from './loading-ui.js';
 import {bitcoinHistoryScope} from './wallet-history-state.js';
@@ -16,7 +17,7 @@ import {replayWalletHistory} from './wallet-history-core.js';
 import {CHART_PERIODS,chartPeriodDays} from './chart-periods.js';
 import {escapeHTML as esc} from './model.js';
 const cache=new Map(); // raw provider pages only; not portfolio state or backups
-const supported=p=>p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1);
+const supported=p=>cosmosRewardWallet(p)||p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1);
 const link=(chain,id)=>chain==='btc'?'https://blockstream.info/tx/'+encodeURIComponent(id):chain==='eth'?'https://etherscan.io/tx/'+encodeURIComponent(id):'https://solscan.io/tx/'+encodeURIComponent(id);
 function issueLabel(code){
  const recovery={'provider-cursor-format-changed':'Der Explorer hat einen nicht unterstützten Seitenzeiger geliefert.','invalid-cursor':'Der temporäre Abrufstand ist nicht mehr verwendbar.','nonadvancing-cursor':'Der Explorer wiederholt denselben Seitenzeiger.','cursor-provider-changed':'Bereits gelesene Explorer-Seiten haben sich verändert.','cursor-scope-mismatch':'Die Wallet-Zuordnung des Abrufstands passt nicht mehr.','page-limit':'Das Abrufbudget für diesen Schritt ist erreicht.','network':'Die Datenquelle ist vorübergehend nicht erreichbar.','timeout':'Die Datenquelle hat nicht rechtzeitig geantwortet.','aborted':'Der Abruf wurde abgebrochen.'};
@@ -31,19 +32,34 @@ export function createWalletHistoryUI({getModel,commit}){
  const el=name=>dialog.querySelector('[data-history="'+name+'"]');
  const setStatus=text=>{el('status').textContent=text;setLoading(el('status'),running||calculating);};
  const model=()=>getModel();
- const source=()=>selected.wallet.chain.startsWith('btc')?'blockstream.info':['sol','spl'].includes(selected.wallet.chain)?new URL(model().settings.solanaRpc).hostname:'eth.blockscout.com';
- const chain=()=>selected.wallet.chain.startsWith('btc')?'btc':['sol','spl'].includes(selected.wallet.chain)?'sol':'eth';
+ const source=()=>chain()==='cosmos'?'archivierter Cosmos-Hub-Beleg':selected.wallet.chain.startsWith('btc')?'blockstream.info':['sol','spl'].includes(selected.wallet.chain)?new URL(model().settings.solanaRpc).hostname:'eth.blockscout.com';
+ const chain=()=>cosmosRewardWallet(selected)?'cosmos':selected.wallet.chain.startsWith('btc')?'btc':['sol','spl'].includes(selected.wallet.chain)?'sol':'eth';
  function busy(value){running=value;const blocked=value||calculating;setLoading(el('status'),blocked);for(const field of dialog.querySelectorAll('select,input'))field.disabled=blocked;el('start').disabled=blocked;el('accept').disabled=blocked||!preview;el('discard').disabled=blocked;if(el('link-read'))el('link-read').disabled=blocked;el('cancel').disabled=!blocked;
   const entry=cache.get(id()),pending=model().walletHistory?.pending.some(p=>p.id===id()),eth=chain()==='eth';
   const compatible=entry?.identity===JSON.stringify([selected.wallet,model().settings.solanaRpc]);
-  el('resume').disabled=blocked||(eth?!(compatible&&Array.isArray(entry.state?.jobs)&&entry.state.jobs.length):!entry&&!pending);
+  el('resume').hidden=chain()==='cosmos';
+  el('resume').disabled=blocked||chain()==='cosmos'||(eth?!(compatible&&Array.isArray(entry.state?.jobs)&&entry.state.jobs.length):!entry&&!pending);
   unifiedUI?.syncBusy();
-  el('start').textContent=eth&&(restartNeeded||entry||pending||stored())?'Neu abrufen':'Historie abrufen';
+  el('start').textContent=chain()==='cosmos'?'Reward-Beleg prüfen':eth&&(restartNeeded||entry||pending||stored())?'Neu abrufen':'Historie abrufen';
  }
  function cutoff(){const days=chartPeriodDays('wealth',el('period').value);return el('from').value||(days?new Date(Date.now()-(days-1)*864e5).toISOString().slice(0,10):'0000-01-01');}
  async function show(session,isPreview=false){
   const generation=++calculation;calculationController?.abort();calculationController=new AbortController();
   el('output').replaceChildren();if(!session){calculating=false;busy(running);el('accept').hidden=true;return;}
+  if(session.chain==='cosmos'){
+   const proof=cosmosRewardProof;
+   const summary=document.createElement('section');
+   summary.innerHTML='<h3>'+(isPreview?'Reward-Vorschau':'Gespeicherte Historie')+'</h3>'+
+    '<p>Cosmos Hub · Block 34.044.337 · '+esc(proof.time)+'</p>'+
+    '<dl><dt>Bankbestand vor dem Block</dt><dd>'+rawQuantity(proof.before,6)+' ATOM</dd>'+
+    '<dt>Ausgezahlter Staking-Reward</dt><dd>'+rawQuantity(proof.reward,6)+' ATOM</dd>'+
+    '<dt>Gebühr</dt><dd>−'+rawQuantity(proof.fee,6)+' ATOM</dd>'+
+    '<dt>Tip</dt><dd>−'+rawQuantity(proof.tip,6)+' ATOM</dd>'+
+    '<dt>Bankbestand nach dem Block</dt><dd>'+rawQuantity(proof.after,6)+' ATOM</dd></dl>'+
+    '<a target="_blank" rel="noopener noreferrer" href="https://cosmos-rpc.polkachu.com/tx?hash=0x'+proof.txid+'">Öffentlicher Transaktionsbeleg</a>';
+   el('output').append(summary);
+   calculating=false;el('accept').hidden=!isPreview;busy(running);return true;
+  }
   const replay=replayWalletHistory({events:session.events,streams:session.streams});
   calculating=true;busy(running);el('accept').hidden=true;el('output').textContent='Tagesbestände werden lokal berechnet …';
   let dayRows=[],calculationError='';
@@ -77,6 +93,12 @@ export function createWalletHistoryUI({getModel,commit}){
   preview=null;restartNeeded=false;el('accept').hidden=true;controller=new AbortController();busy(true);setStatus('Historie wird abgerufen. Es werden keine Wallet-Signaturen angefordert.');
   const key=id(),p=selected,w=p.wallet;
   try{
+   if(chain()==='cosmos'){
+    preview=cosmosRewardPreview(model(),p.id,cosmosRewardProof.height);
+    await show(preview,true);
+    setStatus('Vorschau für einen belegten Block. Übernehmen speichert den Reward in dieser Wallet-Historie.');
+    return;
+   }
    const onCheckpoint=state=>{cache.set(key,{state,identity:JSON.stringify([w,model().settings.solanaRpc])});if(cache.size>3)cache.delete(cache.keys().next().value);const count=state.transactions?.length??state.jobs?.reduce((n,j)=>n+j.items.length,0)??state.transactions?.length??0;setStatus(count+' Datensätze abgerufen; Blockchain-Stand wird geprüft.');};
    const entry=cache.get(key),compatible=entry?.identity===JSON.stringify([w,model().settings.solanaRpc]);
    if(resume&&!compatible)setStatus('Temporäre Daten fehlen oder Quelle geändert: sicherer erneuter Abruf.');
@@ -111,10 +133,10 @@ export function createWalletHistoryUI({getModel,commit}){
   }
   finally{busy(false);if(restartNeeded&&dialog.open)el('start').focus();}
  }
- function choose(positionId){linkPreviewBaseline=null;selected=model().positions.find(p=>p.id===positionId&&supported(p));preview=null;restartNeeded=false;limit=100;if(!selected)return;el('link-local').hidden=!linkWallet(selected);el('link-local').classList.toggle('hidden',!linkWallet(selected));el('link-file').value='';el('link-consent').checked=false;el('wallet').value=selected.id;evidenceUI?.refresh();unifiedUI?.refresh();show(stored());busy(false);setStatus('Quelle: '+source()+'. '+(model().walletHistory?.pending.some(p=>p.id===id())?(chain()==='eth'&&!cache.has(id())?'Temporäre Seiten fehlen. Bitte neu abrufen.':'Vorheriger Abruf kann neu aufgenommen werden.'):'Zum Starten Historie abrufen.'));}
+ function choose(positionId){linkPreviewBaseline=null;selected=model().positions.find(p=>p.id===positionId&&supported(p));preview=null;restartNeeded=false;limit=100;if(!selected)return;el('link-local').hidden=!linkWallet(selected);el('link-local').classList.toggle('hidden',!linkWallet(selected));el('link-file').value='';el('link-consent').checked=false;el('wallet').value=selected.id;for(const field of ['view','period','from'])el(field).closest('label').hidden=chain()==='cosmos';el('range-help').hidden=chain()==='cosmos';evidenceUI?.refresh();unifiedUI?.refresh();show(stored());busy(false);setStatus('Quelle: '+source()+'. '+(model().walletHistory?.pending.some(p=>p.id===id())?(chain()==='eth'&&!cache.has(id())?'Temporäre Seiten fehlen. Bitte neu abrufen.':'Vorheriger Abruf kann neu aufgenommen werden.'):'Zum Starten Historie abrufen.'));}
  function mount(){
   dialog=document.createElement('dialog');dialog.className='edit-dialog wallet-history-dialog';dialog.id='walletHistoryDialog';dialog.setAttribute('aria-labelledby','walletHistoryTitle');
-  dialog.innerHTML='<div class="dialog-head"><h2 id="walletHistoryTitle" tabindex="-1">Wallet-Historie</h2><button type="button" class="icon-close" data-history="close" aria-label="Historie schließen">×</button></div><div class="wallet-history-body"><p>Öffentliche Blockchain-Daten werden beim Indexer abgefragt. Ein xpub legt zusammengehörige Adressen offen. Keine Seeds, privaten Schlüssel oder Signaturen eingeben. Eigene Transfers sind keine Einzahlungen. Solana-Archive können Lücken enthalten; einen optionalen Archiv-RPC oder Helius-Zugang kannst du unter Mehr → Datenquellen hinterlegen. Keine Pflichtregistrierung.</p><div class="wallet-history-controls"><label class="field"><span>Wallet</span><select data-history="wallet"></select></label><label class="field"><span>Ansicht</span><select data-history="view"><option value="eur">Wert (€)</option><option value="price">Kurs</option><option value="balances">Bestand</option><option value="events">Transaktionen</option></select></label><label class="field"><span>Anzeigezeitraum</span><select data-history="period">'+CHART_PERIODS.wealth.map(p=>'<option value="'+p.value+'"'+(p.value==='all'?' selected':'')+'>'+p.label+'</option>').join('')+'</select></label><label class="field"><span>Optional anzeigen ab</span><input data-history="from" type="date"></label></div><p class="small-help">Für belegte Anfangsbestände kann der Abruf den Gesamtverlauf benötigen. Die Auswahl begrenzt die Anzeige.</p><div class="wallet-history-controls"><button class="btn primary" type="button" data-history="start">Historie abrufen</button><button class="btn outline" type="button" data-history="resume">Fortsetzen</button><button class="btn light" type="button" data-history="cancel" disabled>Abruf abbrechen</button></div><p role="status" aria-live="polite" data-history="status"></p><section data-history="output" aria-label="Historienvorschau"></section></div><div class="dialog-footer"><button type="button" class="btn light" data-history="discard">Vorschau verwerfen</button><button type="button" class="btn primary" data-history="accept" hidden>Historie übernehmen</button></div>';
+  dialog.innerHTML='<div class="dialog-head"><h2 id="walletHistoryTitle" tabindex="-1">Wallet-Historie</h2><button type="button" class="icon-close" data-history="close" aria-label="Historie schließen">×</button></div><div class="wallet-history-body"><p>Öffentliche Blockchain-Daten werden beim Indexer abgefragt. Ein xpub legt zusammengehörige Adressen offen. Keine Seeds, privaten Schlüssel oder Signaturen eingeben. Eigene Transfers sind keine Einzahlungen. Solana-Archive können Lücken enthalten; einen optionalen Archiv-RPC oder Helius-Zugang kannst du unter Mehr → Datenquellen hinterlegen. Keine Pflichtregistrierung.</p><div class="wallet-history-controls"><label class="field"><span>Wallet</span><select data-history="wallet"></select></label><label class="field"><span>Ansicht</span><select data-history="view"><option value="eur">Wert (€)</option><option value="price">Kurs</option><option value="balances">Bestand</option><option value="events">Transaktionen</option></select></label><label class="field"><span>Anzeigezeitraum</span><select data-history="period">'+CHART_PERIODS.wealth.map(p=>'<option value="'+p.value+'"'+(p.value==='all'?' selected':'')+'>'+p.label+'</option>').join('')+'</select></label><label class="field"><span>Optional anzeigen ab</span><input data-history="from" type="date"></label></div><p class="small-help" data-history="range-help">Für belegte Anfangsbestände kann der Abruf den Gesamtverlauf benötigen. Die Auswahl begrenzt die Anzeige.</p><div class="wallet-history-controls"><button class="btn primary" type="button" data-history="start">Historie abrufen</button><button class="btn outline" type="button" data-history="resume">Fortsetzen</button><button class="btn light" type="button" data-history="cancel" disabled>Abruf abbrechen</button></div><p role="status" aria-live="polite" data-history="status"></p><section data-history="output" aria-label="Historienvorschau"></section></div><div class="dialog-footer"><button type="button" class="btn light" data-history="discard">Vorschau verwerfen</button><button type="button" class="btn primary" data-history="accept" hidden>Historie übernehmen</button></div>';
   const local=document.createElement('details');local.dataset.history='link-local';local.innerHTML='<summary>Lokalen LINK-Einzelbeleg prüfen</summary><p class="small-help">Belegt genau einen LINK-Eingang auf Ethereum. Der Gesamtverlauf und Anfangsbestand bleiben unbekannt; dein Walletbestand wird nicht verändert. Die Prüfung vertraut den gespeicherten Blockscout- und Beacon-Antworten, ohne neue Netzabfrage. LINK-Contract und 18 Dezimalstellen sind fest begrenzt; keine historische Saldenprüfung.</p><label class="field"><span>Lokales LINK-Belegpaket (JSON, höchstens 1 MB)</span><input data-history="link-file" type="file" accept=".json,application/json"></label><label class="field"><span><input data-history="link-consent" type="checkbox"> Dieses lokale Belegpaket ausdrücklich für die ausgewählte eigene LINK-Wallet prüfen.</span></label><button data-history="link-read" class="btn outline" type="button">Teilhistory prüfen</button>';
   el('status').before(local);
   document.body.append(dialog);
@@ -131,7 +153,7 @@ export function createWalletHistoryUI({getModel,commit}){
   el('wallet').onchange=()=>choose(el('wallet').value);for(const field of ['period','from','view'])el(field).onchange=()=>show(preview||stored(),Boolean(preview));
   el('start').onclick=()=>run(false);el('resume').onclick=()=>run(true);el('cancel').onclick=()=>{controller?.abort();calculationController?.abort();};
   el('discard').onclick=()=>{preview=null;linkPreviewBaseline=null;show(stored());setStatus('Vorschau verworfen. Gespeicherte Historie bleibt unverändert.');};
-  el('accept').onclick=async()=>{if(!preview||running)return;busy(true);try{if(linkPreviewBaseline!==null&&linkPreviewBaseline!==JSON.stringify(model()))throw Error('Datenstand geändert. Lokalen LINK-Beleg erneut prüfen.');await commit(acceptHistory(model(),preview));linkPreviewBaseline=null;preview=null;await show(stored());evidenceUI.refresh();unifiedUI.refresh();setStatus('Historie dauerhaft gespeichert. Finanzbuchungen und Stichtage bleiben unverändert.');}catch(e){setStatus('Nicht gespeichert: '+e.message);}finally{busy(false);}};
+  el('accept').onclick=async()=>{if(!preview||running)return;busy(true);try{if(linkPreviewBaseline!==null&&linkPreviewBaseline!==JSON.stringify(model()))throw Error('Datenstand geändert. Lokalen LINK-Beleg erneut prüfen.');const current=model(),draft=acceptHistory(current,preview);if(draft!==current)await commit(draft);linkPreviewBaseline=null;preview=null;await show(stored());evidenceUI.refresh();unifiedUI.refresh();setStatus('Historie dauerhaft gespeichert. Finanzbuchungen und Stichtage bleiben unverändert.');}catch(e){setStatus('Nicht gespeichert: '+e.message);}finally{busy(false);}};
  }
  return {open(positionId,button){if(!dialog)mount();trigger=button;el('wallet').innerHTML=model().positions.filter(supported).map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join('');choose(positionId);if(!selected)return;if(!dialog.open)dialog.showModal();dialog.querySelector('h2').focus();},async openBitcoinFiles(files,button){const wallets=model().positions.filter(p=>p.wallet?.enabled&&p.wallet.chain.startsWith('btc'));if(wallets.length!==1)throw Error('Genau eine Bitcoin-Wallet erforderlich. Bitte Wallet-Zuordnung zuerst klären.');this.open(wallets[0].id,button);await unifiedUI.loadFiles(files);}};
 }

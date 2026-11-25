@@ -9,6 +9,7 @@ import {refreshSettings} from './refresh-frequency.js';
 import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
+import {validateCosmosHistoryPositions} from './cosmos-reward-evidence.js';
 import {validateWalletHistory} from './wallet-history-state.js';
 import {validatePurchaseEvidence} from './purchase-evidence.js';
 import {validateImportSource} from './import-identity.js';
@@ -205,6 +206,7 @@ export function safeImport(raw){
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
   m.positions=raw.positions.map(p=>createPosition(enhanceKnownReferenceListing(p),m,{legacyFX:true}));uniqueIds(m.positions,'Positionen');
+  validateCosmosHistoryPositions(m.walletHistory,m.positions);
   if(raw.priceHistories!=null){
    if(typeof raw.priceHistories!=='object'||Array.isArray(raw.priceHistories))throw Error('Kurshistorien im Backup sind beschädigt.');
    const entries=Object.entries(raw.priceHistories);
@@ -305,7 +307,7 @@ export function safeImport(raw){
   assertDataVersion(m);
   return m;
 }
-export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnpricedUSDTransfers(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);for(const p of copy.positions){if(p.currency!=='EUR')Object.assign(p,normalizePositionFX(p,{legacy:true}));}if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnpricedUSDTransfers(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);for(const p of copy.positions){if(p.currency!=='EUR')Object.assign(p,normalizePositionFX(p,{legacy:true}));}if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory){copy.walletHistory=validateWalletHistory(copy.walletHistory);validateCosmosHistoryPositions(copy.walletHistory,copy.positions);}rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -332,6 +334,7 @@ export function persist(model,storage=globalThis.localStorage){
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
+ validateCosmosHistoryPositions(model.walletHistory,model.positions);
  const serialized=JSON.stringify({...model,positions:model.positions.map(p=>({...p,...normalizePositionFX(p,{legacy:true})})),settings:withoutRetiredSettings(refreshSettings(model.settings)),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);

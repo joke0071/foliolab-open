@@ -1,3 +1,4 @@
+import {validateCosmosRewardSession,validateCosmosHistoryPositions} from './cosmos-reward-evidence.js';
 import {sourceDigest} from './import-identity.js';
 import {validateHistoryQuotes} from './wallet-history-valuation.js';
 /** Accepted read-only history is part of the existing revisioned portfolio record. */
@@ -16,14 +17,17 @@ export function bitcoinHistoryScope(wallet){
  return sourceDigest(JSON.stringify([wallet.chain,wallet.address,wallet.chain==='btc-hd'?(wallet.addressType||'auto'):null]));
 }
 export function validateHistorySession(v){
- if(!v||!['btc','eth','sol'].includes(v.chain)||!Array.isArray(v.events)||v.events.length>50000||!Array.isArray(v.streams)||v.streams.length>1000)throw Error('Historie ist ungültig oder zu groß.');
+ if(!v||!['btc','eth','sol','cosmos'].includes(v.chain)||!Array.isArray(v.events)||v.events.length>50000||!Array.isArray(v.streams)||v.streams.length>1000)throw Error('Historie ist ungültig oder zu groß.');
  const projected=v.events.map(e=>validateHistoryEvent({...e,source:e.source?source(e.source):null})),streams=v.streams.map(stream);
  const canonical=dedupeHistoryEvents(projected);if(canonical.conflicts.length)throw Error('Widersprüchliche Ereignisse können nicht bestätigt werden.');
  const events=canonical.events,checked=replayWalletHistory({events,streams});
  for(let i=0;i<streams.length;i++){const s=streams[i],b=checked.balances.find(b=>b.network===s.network&&b.chainId===s.chainId&&b.accountId===s.accountId&&b.assetId===s.assetId&&b.contract===s.contract&&b.mint===s.mint);s.coverage.status=b.coverage;} // validates identity, duplicates, opening ranges and exact raw amounts
  const quotes=validateHistoryQuotes(v.quotes??[],streams);
- if(v.walletScopeDigest!==undefined&&(v.chain!=='btc'||typeof v.walletScopeDigest!=='string'||!/^[a-f0-9]{64}$/.test(v.walletScopeDigest)))throw Error('Ungültiger Historien-Walletbezug.');
- return {...(v.walletScopeDigest===undefined?{}:{walletScopeDigest:v.walletScopeDigest}),quotes,id:label(v.id),chain:v.chain,walletKey:label(v.walletKey,300),acceptedAt:utc(v.acceptedAt),events,streams,issues:(v.issues||[]).slice(0,100).map(x=>label(x)),decision:'accepted',providerCache:'re-fetch-needed'};
+ if(v.walletScopeDigest!==undefined&&(!['btc','cosmos'].includes(v.chain)||typeof v.walletScopeDigest!=='string'||!/^[a-f0-9]{64}$/.test(v.walletScopeDigest)))throw Error('Ungültiger Historien-Walletbezug.');
+ const record={...(v.walletScopeDigest===undefined?{}:{walletScopeDigest:v.walletScopeDigest}),quotes,id:label(v.id),chain:v.chain,walletKey:label(v.walletKey,300),acceptedAt:utc(v.acceptedAt),events,streams,issues:(v.issues||[]).slice(0,100).map(x=>label(x)),decision:'accepted',providerCache:'re-fetch-needed'};
+ if(v.chain==='cosmos')validateCosmosRewardSession(record);
+ else if(streams.some(s=>s.network==='cosmos'))throw Error('Cosmos-Beleg benötigt seine bestätigte Wallet-Zuordnung.');
+ return record;
 }
 export function validateWalletHistory(value){
  if(!value||value.schema!==1||!Array.isArray(value.sessions)||value.sessions.length>100||!Array.isArray(value.pending)||value.pending.length>100)throw Error('Unbekanntes Historienformat.');
@@ -37,6 +41,14 @@ export const emptyWalletHistory=()=>({schema:1,sessions:[],pending:[]});
 /** Return a draft only. Caller commits via existing PortfolioStorage and CAS/WebLocks. */
 export function acceptHistory(model,session){
  const state=validateWalletHistory(model.walletHistory??emptyWalletHistory()),record=validateHistorySession(session);
+ if(record.chain==='cosmos'){
+  validateCosmosHistoryPositions({sessions:[record]},model.positions);
+  const existing=state.sessions.find(s=>s.id===record.id);
+  if(existing){
+   if(existing.chain==='cosmos'&&existing.walletScopeDigest===record.walletScopeDigest)return model;
+   throw Error('Eine andere Historie ist dieser Wallet-Position bereits zugeordnet.');
+  }
+ }
  state.sessions=state.sessions.filter(s=>s.id!==record.id);state.sessions.push(record);state.pending=state.pending.filter(p=>p.id!==record.id);
  const draft={...model,walletHistory:validateWalletHistory(state)};if(new TextEncoder().encode(JSON.stringify(draft)).length>10e6)throw Error('Portfolio mit Historie überschreitet das sichere Vollbackuplimit.');return draft;
 }
