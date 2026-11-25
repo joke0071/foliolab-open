@@ -180,8 +180,23 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.doesNotMatch(reduced,/uses: actions\/cache@v4/,'No other unreviewed cache steps');
  return reduced;
 }
+const localParallelSteps = ['Browser smoke tests (320–1440 px)', 'Test portfolio workflows on Firefox and WebKit'];
+const localParallelEnv = "        env:\n          P1A_CONTROLLED_PARALLEL: '1'\n";
+
+function normalizeLocalP1AParallel(source) {
+  assert.equal([...source.matchAll(/P1A_CONTROLLED_PARALLEL/g)].length, localParallelSteps.length,
+    'Parallel P1A must be scoped only to the two localhost steps');
+  for (const name of localParallelSteps) {
+    const prefix = `      - name: ${name}\n`;
+    const candidate = prefix + localParallelEnv + '        run: |\n';
+    assert.equal(source.split(candidate).length, 2, 'Exact local P1A binding is required');
+    source = source.replace(candidate, prefix + '        run: |\n');
+  }
+  return source;
+}
+
 function validate(s) {
-  const sealed=originalContractWithOnlyPinnedCaches(historicalCrossEngineLayout(s));
+  const sealed=originalContractWithOnlyPinnedCaches(historicalCrossEngineLayout(normalizeLocalP1AParallel(s)));
   assert.match(s, /types: \[opened, synchronize, reopened, ready_for_review, converted_to_draft\]/);
   for (const name of ['test', 'cross-engine']) assert.ok(s.includes('  '+name+':\n    needs: [plan]\n    if: needs.plan.outputs.full == '+"'true'"+'\n'));
   assert.ok(s.includes('    if: needs.plan.outputs.stage == '+"'FAST'"+" || needs.plan.outputs.ci_contract == 'true'"));
@@ -283,3 +298,11 @@ test('Ubuntu mirror selector succeeds and fails safely under seven isolated netw
  assert.equal(result.status,0,result.stdout+result.stderr);
 });
 
+
+test('P1A parallel mode rejects missing, disabled or production bindings', () => {
+  assert.throws(() => normalizeLocalP1AParallel(source.replace(localParallelEnv, '')), /scoped/);
+  assert.throws(() => normalizeLocalP1AParallel(source.replace("P1A_CONTROLLED_PARALLEL: '1'", "P1A_CONTROLLED_PARALLEL: '0'")), /binding/);
+  const production = source.replace('      - name: Verify targeted production UI in Firefox and WebKit\n        env:\n',
+    "      - name: Verify targeted production UI in Firefox and WebKit\n        env:\n          P1A_CONTROLLED_PARALLEL: '1'\n");
+  assert.throws(() => normalizeLocalP1AParallel(production), /scoped/);
+});

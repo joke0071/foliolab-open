@@ -3,11 +3,15 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 import {manageList} from './browser-management-mode.mjs';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
-const report={base,scope:'P1A presentation contract; synthetic canonical IDB fixtures',engines:[]},out='artifacts/gates/management-parity';mkdirSync(out,{recursive:true});
+const parallel=process.env.P1A_CONTROLLED_PARALLEL==='1';
+if(parallel&&new URL(base).origin!=='http://127.0.0.1:4173'){
+ throw new Error('Parallel management parity requires the controlled localhost fixture origin');
+}
+const report={base,parallel,scope:'P1A presentation contract; synthetic canonical IDB fixtures',engines:[]},out='artifacts/gates/management-parity';mkdirSync(out,{recursive:true});
 const categories=[{name:'positions',page:'positions',list:'#positionList',row:'.position-entry',edit:'[data-action=edit-position]',check:'[data-position-select]',view:'#positionArchiveFilter',master:'#positionSelectFiltered',finish:'[data-action=cancel-selection]',clear:'[data-action=clear-position-selection]',status:'#positionSelectionStatus'}, {name:'bookings',page:'bookings',list:'#bookingList',row:'[data-booking-id]',edit:'[data-booking-row-action=edit]',check:'[data-booking-select]',view:'#bookingArchiveFilter',master:'#bookingSelectFiltered',finish:'[data-booking-manage=cancel]',clear:'[data-booking-manage=clear]',status:'#bookingSelectionStatus'}, {name:'references',page:'history',list:'#snapshotList',row:'.reference-row',edit:'[data-action=edit-snapshot]',check:'[data-reference-select]',view:'#referenceArchiveFilter',master:'#referenceSelectVisible',finish:'#manageReferences[aria-pressed=true]',clear:'[data-reference-manage=clear]',status:'#referenceSelectionStatus'}];
-for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
+async function checkCategories(engine,selectedCategories){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,...(proxy?{proxy:{server:proxy}}:{})}),context=await browser.newContext({viewport:{width:390,height:900},ignoreHTTPSErrors:Boolean(proxy)}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await context.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});
- const startedAt=performance.now(), timings={seedAndOpen:[],responsiveChecks:[],screenshots:[]};
+ const timings={seedAndOpen:[],responsiveChecks:[],screenshots:[]};
  const measure=async(phase,operation)=>{
   const start=performance.now();
   const result=await operation();
@@ -19,7 +23,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const scan=async label=>{await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));assert.ok(await page.locator('#bookingsPage.active #openCSVImport,#bookingsPage.active #addBooking').evaluateAll(buttons=>buttons.every(button=>{const r=button.getBoundingClientRect(),header=document.querySelector('.mobile-header'),nav=document.getElementById('mobileNav');return r.width>=44&&r.height>=44&&r.top>=(header.checkVisibility()?header.getBoundingClientRect().bottom:0)&&r.bottom<=(nav.checkVisibility()?nav.getBoundingClientRect().top:innerHeight);})),label+' primary actions fully visible between fixed bars');await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});assert.deepEqual(await page.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' overflow');};
  try{
   await page.goto(base);await ready();
-  for(const category of categories)for(const count of [0,1,100,101]){
+  for(const category of selectedCategories)for(const count of [0,1,100,101]){
    await measure('seedAndOpen',async()=>{await page.evaluate(async({name,count})=>{
     const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{prepareBookingArchive}=await import('/src/booking-management.js'),{prepareReferenceArchive}=await import('/src/reference-management.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');let m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC parity provider'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC account',type:'checking'},m));
     const position=id=>createPosition({id,providerId:'p',accountId:'a',name:'SYNTHETIC long readable position '+id,kind:'cash',quantity:100,price:1},m);
@@ -43,13 +47,27 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    }
   }
   assert.deepEqual(errors,[]);
+  return timings;
+ }finally{await browser.close();}
+}
+
+for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
+ const startedAt=performance.now();
+ try{
+  const groups=parallel?categories.map(category=>[category]):[categories];
+  const results=await Promise.allSettled(groups.map(group=>checkCategories(engine,group)));
+  const failures=results.filter(result=>result.status==='rejected');
+  if(failures.length)throw new AggregateError(failures.map(result=>result.reason),engine+' management parity failed');
+  const durations=results.map(result=>result.value);
   const timing={totalMs:Math.round(performance.now()-startedAt),phases:{}};
-  for(const [phase,durations] of Object.entries(timings)){
-   timing.phases[phase]={samples:durations.length,totalMs:Math.round(durations.reduce((sum,ms)=>sum+ms,0))};
+  for(const phase of Object.keys(durations[0])){
+   // Phase totals describe work summed across contexts, including overlap.
+   const samples=durations.flatMap(group=>group[phase]);
+   timing.phases[phase]={samples:samples.length,totalMs:Math.round(samples.reduce((sum,ms)=>sum+ms,0))};
   }
   report.engines.push({engine,result:'PASS',counts:[0,1,100,101],views:['active','archived','all'],
    widths:[320,360,390,412,430,768,1440],timing});
   console.log(engine+': P1A three lists/0-1-100-101/three views/two modes/stable page+filter selection/7 widths/Axe/exact records PASS');
-  console.log('P1A timing '+JSON.stringify({engine,...timing}));
- }finally{await browser.close();writeFileSync(out+'/report.json',JSON.stringify(report,null,2));}
+  console.log('P1A timing '+JSON.stringify({engine,parallel,...timing}));
+ }finally{writeFileSync(out+'/report.json',JSON.stringify(report,null,2));}
 }
