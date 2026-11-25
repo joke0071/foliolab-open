@@ -1,0 +1,43 @@
+{
+  "blockHash": "F852636DAE787A5FC910E23E938D03403F620C38DC1206D2764B923EFBAB0CB0",
+  "chain": "cosmoshub-4",
+  "height": 34048131,
+  "time": "2026-11-25T21:53:29.980291238Z",
+  "txIndex": 0,
+  "txSHA256": "A4D60F019289A8AA924B55FB34971CC55FC4A51402E8743291161D6276790D7E",
+  "rewards": [
+    [
+      11,
+      "614783uatom"
+    ],
+    [
+      17,
+      "614783uatom"
+    ],
+    [
+      23,
+      "614783uatom"
+    ],
+    [
+      29,
+      "614721uatom"
+    ]
+  ],
+  "protocolFee": [
+    "8887uatom"
+  ],
+  "tip": [
+    "7120uatom"
+  ],
+  "responseSHA256": {
+    "https://cosmos-rpc.publicnode.com/block?height=34048131": "d6bed9c737c6785e38525fdac3169e37fcb3bda8b5b98317e9a8620123fe7853",
+    "https://cosmos-rpc.publicnode.com/block_results?height=34048131": "19d06a2b54c0c9c9e491ddbc36d26dadf9b394270654d9047107dab67f166373",
+    "https://cosmoshub.rpc.kjnodes.com/block?height=34048131": "c5cea57441ed93808c037d148dd4abb99f74491977c150b3a816392012f9c082",
+    "https://cosmoshub.rpc.kjnodes.com/block_results?height=34048131": "1a4e181405a3b3320674f20844d689602f7f2311f93c46996952eeaa2154a13a"
+  },
+  "bankAtParent": null,
+  "bankAtHeight": null,
+  "confirmedProductPosition": false,
+  "accepted": false,
+  "scope": "Public block-only reference. All four event locators, including the three equal payouts, are distinct. Missing independent historical states and product position."
+}

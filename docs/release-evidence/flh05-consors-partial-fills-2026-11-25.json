@@ -1,0 +1,43 @@
+{
+  "order": "238336487",
+  "tradeDate": "2022-07-01",
+  "valueDate": "2022-07-05",
+  "JPYperEUR": "141.09",
+  "fills": [
+    {
+      "source": {
+        "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/consorsbank/Kauf19_partial_execution_1.txt",
+        "sha256": "6cc8edc02cc26c95c8a4ff2a88e87bb3fb3fe7a5df4ad1f2aa6b76c49d4af679"
+      },
+      "execution": "238336487.001",
+      "quantity": "200",
+      "grossJPY": "1020000",
+      "exchangeFeeJPY": "7760",
+      "commissionEUR": "18.07",
+      "fixedFeeEUR": "49.95",
+      "bookedDebitEUR": "7352.45",
+      "independentlyRecomputedEUR": "7352.45"
+    },
+    {
+      "source": {
+        "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/consorsbank/Kauf19_partial_execution_2.txt",
+        "sha256": "c467a5732bf3dd4d6da36d027842fc398a9d2cc289b7c4b6c3c1eea4625ca022"
+      },
+      "execution": "238336487.002",
+      "quantity": "1500",
+      "grossJPY": "7650000",
+      "exchangeFeeJPY": "0",
+      "commissionEUR": "135.55",
+      "fixedFeeEUR": "0",
+      "bookedDebitEUR": "54356.26",
+      "independentlyRecomputedEUR": "54356.26"
+    }
+  ],
+  "totalShares": 1700,
+  "totalEURDebit": "61708.71",
+  "limits": [
+    "Two published broker receipts explicitly identify the executions and their EUR debits.",
+    "No independently paired native order export in the pinned corpus. The masked clearing account identifiers are different.",
+    "No CSV profile or import approved."
+  ]
+}

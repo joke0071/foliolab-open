@@ -1,0 +1,98 @@
+{
+  "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+  "candidate": "2bce0cd2b2ef443266c65c705980b69ab7f4459a",
+  "scope": "separately booked sale of an already allocated EUR stock fraction",
+  "primary": "https://forum.portfolio-performance.info/t/15433/28",
+  "issuer": "https://www.sanofi.com/en/media-room/press-releases/2022/2022-05-03-17-00-00-2434935",
+  "source": {
+    "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/erstebank/Verkauf14.txt",
+    "sha256": "41a80314b83b127183164581717d09c4647baacd4a246a97e8c9af6c24a65a88"
+  },
+  "execution": "2022-06-29",
+  "valueDate": "2022-07-01",
+  "shares": "0.609",
+  "unitPriceEUR": "15.537607",
+  "averageAcquisitionCostEUR": "12.4990418",
+  "reportedGainEUR": "1.85",
+  "allocatedBasisEUR": "7.61",
+  "grossEUR": "9.46",
+  "feeEUR": "0.00",
+  "taxEUR": "0.51",
+  "netEUR": "8.95",
+  "currencyConversion": "EUR to EUR; none",
+  "annualServicesEURExcludedFromTransaction": "0.26",
+  "fixtures": "Only the settled residual, its cent-denominated basis and zero opening cash. The grant, whole holding, parent quantity and clearing account total are outside the original. Financial evidence here is the published transaction delta.",
+  "baseline": {
+    "ordinarySale": {
+      "cash": "8.952402663"
+    },
+    "brokerGrossCore": {
+      "quantity": "0",
+      "cash": "8.95",
+      "basis": "0",
+      "realizedAfterTax": "1.34",
+      "externalFlows": 0,
+      "postings": [
+        [
+          "asset",
+          "-9.46",
+          "-0.609"
+        ],
+        [
+          "cash",
+          "8.95",
+          "8.95"
+        ],
+        [
+          "tax",
+          "0.51",
+          null
+        ]
+      ],
+      "restore": true
+    },
+    "unsupportedMixedActionAtomicRejection": true
+  },
+  "candidateActual": {
+    "unitTestsPassed": 1537,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "rejectedNetEUR": "8.96",
+    "rejectionUnchangedBytesAndRevision": true,
+    "acceptedRevisionDelta": 1,
+    "closingShares": "0",
+    "closingCashEUR": "8.95",
+    "closingBasisEUR": "0",
+    "realizedAfterRecordedTaxEUR": "1.34",
+    "journalBookEUR": [
+      "-9.46",
+      "8.95",
+      "0.51"
+    ],
+    "externalFlows": 0,
+    "freshEncryptedRestore": true
+  },
+  "browserTest": "https://github.com/joke0071/foliolab-open/blob/2bce0cd2b2ef443266c65c705980b69ab7f4459a/tests/browser-fractional-settlement.mjs",
+  "otherReference": {
+    "allocationReceipt": {
+      "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/onvista/Kapitalherabsetzung01.txt",
+      "sha256": "c591019c33b7ff19c0a1bd790fe14559e7e4838cca20301c3793eb1d5abad6e9"
+    },
+    "fractionSaleReceipt": {
+      "url": "https://github.com/portfolio-performance/portfolio/blob/024294dd4a7f58aa6b9417126a3f56cb1cc622ab/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/pdf/onvista/Verkauf05.txt",
+      "sha256": "bd0edf6441af84af3e6c0e2146e7a2d730f1b14a513462c26a9c37924d1e2c3b"
+    },
+    "issuer": "https://investor-relations.commerzbank.com/de/news/commerzbank-vollzieht-beschlossene-aktienzusammenlegung-im-verhaeltnis-10-1/5abc8867-dffe-41c3-9c88-7bca8f33726c",
+    "initialShares": "55",
+    "rights": "5.5",
+    "wholeShares": "5",
+    "soldRights": "0.5",
+    "grossAndNetSaleEUR": "5.41",
+    "separateTaxRefundEUR": "3.05",
+    "reportedLossEUR": "11.55",
+    "caveat": "Both receipts have the same intermediate ISIN and corporate action but different printed custody account identifiers. The joint upstream commit does not establish same-account continuity."
+  }
+}

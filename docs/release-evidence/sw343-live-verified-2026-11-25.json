@@ -1,0 +1,22 @@
+{
+  "sha": "af3cdff0b83ea9b0c406e0204efd3d9e32896165",
+  "cache": "foliolab-open-v343",
+  "artifactId": 15064720633,
+  "zipCRC": "PASS",
+  "archiveSHA256": "9e4e9cfd50fab0271b70042f40f824206839a5647c9d7006e8f9a657b798552d",
+  "origin": "https://foliolab.unperfekt.at/",
+  "exactResponses": 161,
+  "coreGroups": 11,
+  "axeScans": 22,
+  "verifiedCoreReportSHA256": "cf3389c1c2576aa28a89d6c6ac5cd1cf19c5b39ac2e8efa658282ed776a3cf53",
+  "loading": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS"
+  },
+  "navigation": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS"
+  }
+}
