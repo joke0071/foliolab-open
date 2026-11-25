@@ -674,3 +674,28 @@ HTTP-Fehler ist für diesen Versuch nicht ausgewiesen. Der
 verwendet denselben Main-SHA und dieselben Prüfungen. Die
 volle Release- und Zeilenabnahme bleibt bis zu dessen Erfolg offen.
 [Produktivnachweis](release-evidence/sw340-published-focus-2026-11-25.json).
+
+### Barausgleich · gebuchter Vodafone-Stückrest
+
+Im [Vodafone-Emittentenbeleg](https://www.vodafone.com/news/newsroom/corporate-and-financial/vz-shares-and-ratio-announcement)
+gilt das Verhältnis sechs neue zu elf alten Aktien. Für die im
+[veröffentlichten Tatbestand, Rn. 9](https://nrwe.justiz.nrw.de/pdfdownload/downloadEntscheidung.php?entscheidung=%2Fnrwe%2Ffgs%2Fmuenster%2Fj2018%2F9_K_2117_16_E_Urteil_20180228.html)
+genannten 709.933 Altaktien ergibt das 387.236 ganze Aktien und
+den exakten Rest 2/11. Die dort dokumentierte Depotbank buchte
+387.236 Aktien und schrieb für den gerundeten Rest von 0,1818 Aktien
+**0,48 EUR** gut. Damit liegt zusätzlich zur Slack-Fusion ein
+tatsächlich gebuchter Stückrest vor.
+
+SW340 wies Split und Geldanteil gemeinsam ab. Vollständiges Modell
+und wieder eingelesene Sicherung stimmten mit dem Vorzustand
+überein. Der reine Split ohne Ausgleich ergab erwartungsgemäß
+387.236,181818181818181818 Aktien und keinen Cashzufluss. Dieser
+Pfad bildet die konkrete Brokerabrechnung daher nicht ab.
+Die im Tatbestand genannten Anschaffungskosten gehören zu den
+separat zugeteilten Verizon-Aktien. Für den Vodafone-Stückrest
+fehlt weiterhin die Abrechnung mit zugeordneter historischer
+Steuerbasis, Kosten und Auszahlungs-FX. Der
+[Revisionsentscheid](https://www.bundesfinanzhof.de/en/entscheidungen/entscheidungen-online/decision-detail/STRE202110192/)
+hob das erste Urteil auf und dient hier zur Einordnung des
+Verfahrensstands.
+[Prüfnachweis](release-evidence/sw340-vodafone-fractional-reference-2026-11-25.json).

@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-11-25T13:42:46.556Z",
+  "product": "68ccd9f7d7a93e90f8044b041cb1d6a260a6fcb1",
+  "issuer": "https://www.vodafone.com/news/newsroom/corporate-and-financial/vz-shares-and-ratio-announcement",
+  "issuerRegister": "https://www.sec.gov/Archives/edgar/data/839923/000110465914066285/a14-20983_16k.htm",
+  "reportedBankBooking": "https://nrwe.justiz.nrw.de/pdfdownload/downloadEntscheidung.php?entscheidung=%2Fnrwe%2Ffgs%2Fmuenster%2Fj2018%2F9_K_2117_16_E_Urteil_20180228.html",
+  "courtFindingParagraph": 9,
+  "appeal": "https://www.bundesfinanzhof.de/en/entscheidungen/entscheidungen-online/decision-detail/STRE202110192/",
+  "ratio": "6/11",
+  "oldShares": "709933",
+  "expectedWholeShares": "387236",
+  "expectedResidual": "2/11",
+  "bankResidualPrinted": "0.1818",
+  "bookedNetEUR": "0.48",
+  "separateCostsAndForeignExchange": null,
+  "taxBasisOfResidual": null,
+  "actual": {
+    "combinedRejectedWithExactModelAndBackup": true,
+    "regularSplitOnlyQuantity": "387236.181818181818181818",
+    "regularSplitOnlyCashEUR": "0",
+    "regularSplitOnlyBasis": null
+  },
+  "acceptedScope": "reference for a realized fractional payment and an atomic boundary of the current engine",
+  "remaining": "full anonymized broker settlement with portion of historic tax basis, charges and FX for the same fractional payment"
+}
