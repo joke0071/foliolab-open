@@ -1,0 +1,53 @@
+{
+  "status": "MERGED_MAIN_PENDING",
+  "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+  "tree": "16263c152fd85b2f527a6549b4c3a27144c0aa2a",
+  "candidate": "bc8806617d234551559336beec1fee6155e77e8b",
+  "navigationCorrection": "971deb68e120ab01bcb3a1e3fa5ec70ecb392e5d",
+  "pullRequest": 436,
+  "integrationRun": 45698956992,
+  "walletRun": 45698957231,
+  "walletLiveAuditRun": 45698956864,
+  "mainRun": 45703846358,
+  "scope": "One published, finalized and archived Cosmos Hub payout for its exact free ATOM wallet. Stored as position history.",
+  "oracleMicroATOM": {
+    "start": "281159",
+    "reward": "536836",
+    "protocolFee": "2599",
+    "tip": "4224",
+    "totalDebit": "6823",
+    "end": "811172"
+  },
+  "blockHeight": "34044337",
+  "independentInputs": [
+    "sw340-cosmos-paid-reward-2026-11-25.json",
+    "sw341-cosmos-reward-replay-2026-11-25.json",
+    "sw341-cosmos-archive-access-2026-11-25.json"
+  ],
+  "verified": {
+    "binaryTreeEqualsTestedCandidate": true,
+    "targetedNode": "2/2 PASS on the Main checkout",
+    "targetedChromiumOnMainCheckout": "PASS",
+    "integrationBrowserResult": {
+      "chromium": {"job": 139503906005, "result": "PASS"},
+      "firefox": {"job": 139503906398, "result": "PASS"},
+      "webkit": {"job": 139503906398, "result": "PASS"}
+    },
+    "oneStoredReward": true,
+    "recordUnchangedOnReimport": true,
+    "alreadyScannedBalanceStillMicroATOM": "811172",
+    "rescanAndReopen": true,
+    "rejectManualCsvForScannedWallet": true,
+    "encryptedFreshRestore": true
+  },
+  "packageDecision": {
+    "Weitere Wallets": "PARTIAL",
+    "remaining": [
+      "Generalized historical import requires qualified additional events and ownership evidence",
+      "Exact end-to-end quantity representation for NEAR cases beyond 18 decimal places",
+      "Independent private wallet assignment"
+    ],
+    "acceptedFollowUpPackages": 13,
+    "totalFollowUpPackages": 29
+  }
+}
