@@ -653,7 +653,9 @@ zum reproduzierbaren, vollständigen Gewinn zurückgestellt.
 
 ### SW340 · veröffentlicht und Zielprüfung auf der Produktivseite
 
-Die Pflichtjobs auf Main und Pages sind grün. Das erneut aus GitHub
+Die Pflichtjobs auf Main und Pages sind grün. Der Originalbeleg
+`15026602135` bestand SHA-256 und ZIP-CRC und enthält **1.533/1.533
+erfolgreiche Node-Tests**. Das erneut aus GitHub
 gelesene Pages-Original `15024890193` bestand SHA-256 und ZIP-CRC.
 Alle **159 Paketdateien** waren bytegleich mit Main. Auf
 `https://foliolab.unperfekt.at/` wurden `/`, `/index.html` und `/sw.js`
@@ -674,7 +676,9 @@ Tastatur geprüft. Der tatsächliche Fokus brachte die gesamte
 Der erste [Livejob](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139239730947)
 bestand 11 Kerngruppen, 22 Axe-Scans und 160 Dateiübereinstimmungen.
 Die gesonderte PWA-Ladeprüfung erreichte nach simuliertem verzögertem
-Modulstart an Zeile 37 das 30-Sekunden-Limit. Ein konkreter
+Modulstart in Zeile 37:19 das 30-Sekunden-Limit. Der zurückgelesene
+Live-Beleg `15026562830` zeigt den ersten Wartepunkt unmittelbar
+nach dem Freigeben der App-Anfrage vor dem Reload. Ein konkreter
 HTTP-Fehler ist für diesen Versuch nicht ausgewiesen. Der
 [gezielte Wiederanlauf desselben Livejobs](https://github.com/joke0071/foliolab-open/actions/runs/45620573232/job/139241875358)
 verwendet denselben Main-SHA und dieselben Prüfungen. Die

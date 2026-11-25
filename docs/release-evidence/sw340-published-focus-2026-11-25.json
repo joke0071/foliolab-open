@@ -670,5 +670,22 @@
         }
       ]
     }
-  ]
+  ],
+  "mainOriginal": {
+    "bytes": 68069809,
+    "sha256": "ba3224a314c06f67daed10536b7e491f8a68ae154c16668a07b5c69f5e197134",
+    "zipEntries": 848,
+    "crc": "PASS",
+    "id": 15026602135,
+    "nodeTestsPassed": 1533
+  },
+  "firstLiveOriginal": {
+    "bytes": 879164,
+    "sha256": "d13e9dfa46e559d386c942b43aacd15a11a37f8478b482e7ce783216c50c2490",
+    "zipEntries": 25,
+    "crc": "PASS",
+    "id": 15026562830,
+    "failureAt": "tests/browser-loading-pwa.mjs:37:19",
+    "stage": "first interactive wait immediately after releasing the stalled app.js request, before reload"
+  }
 }
