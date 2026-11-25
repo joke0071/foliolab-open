@@ -1,7 +1,7 @@
 import {validateNetSettlement} from './flatex-net-settlement.js';
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
-import {bookingOwnership,sourceDigest,provenCashImport,sourceUnmodified,validateImportSource} from './import-identity.js';
+import {bookingOwnership,sourceDigest,provenBookingRemovalImport,sourceUnmodified,validateImportSource} from './import-identity.js';
 import {FX_UNKNOWN} from './fx-state.js';
 export const UNPRICED_USD_PRINCIPAL='unpriced-native-usd-principal';
 
@@ -106,7 +106,7 @@ export function validateJournalEntry(entry){
   const auditIds=new Set();
   for(let i=0;i<a.originals.length;i++){
    const o=a.originals[i],b=o?.booking,j=o?.journal,after=a.afterBookings[i];
-   if(!b?.id||auditIds.has(b.id)||(b.importSource?!(a.version===2&&provenCashImport(b,j)):j?.source!=='manual'||!!b.importFingerprint)||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
+   if(!b?.id||auditIds.has(b.id)||(b.importSource?!(a.version===2&&provenBookingRemovalImport(b,j)):j?.source!=='manual'||!!b.importFingerprint)||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
     (a.action==='remove'?after!==null:!after||after.id!==b.id))throw Error('Unvollständiger Buchungsänderungsnachweis.');
    if(a.version===2&&b.importSource){
     const external=['deposit','withdraw'].includes(b.type),signed=units(b.quantityExact)*(b.type==='deposit'?1n:-1n);

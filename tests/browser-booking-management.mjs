@@ -61,3 +61,5 @@ import "./browser-import-cash-removal.mjs";
 
 // Keep the archive-size explanation in all existing required engine gates.
 await import("./browser-booking-archive-limit.mjs");
+
+await import("./browser-fund-sale-removal.mjs");
