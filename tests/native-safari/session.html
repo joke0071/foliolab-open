@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8"><title>FolioLab native Safari storage test</title>
+<h1>FolioLab storage test</h1>
+<script type="module">
+import { PortfolioStorage } from '/src/browser-portfolio-storage.js';
+import { readPortfolioRecord } from '/src/atomic-storage.js';
+import { createProvider } from '/src/model.js';
+const step = new URL(location.href).searchParams.get('step');
+const storage = new PortfolioStorage();
+let report;
+try {
+  const model = await storage.initialize();
+  const marker = 'safari-local-test';
+  if (step === 'seed' && !model.providers.some(p => p.id === marker)) {
+    model.providers.push(createProvider({id:marker, name:'Safari QA Musterdepot', type:'broker'}));
+    await storage.save(model);
+  }
+  const record = await readPortfolioRecord(storage.db);
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(record.raw));
+  report = {step, revision:record.revision, hash:Array.from(new Uint8Array(hash),v=>v.toString(16).padStart(2,'0')).join(''),
+    marker:model.providers.some(p => p.id === marker), browser:navigator.userAgent, secureContext:isSecureContext};
+} catch (error) { report = {step, error:String(error)}; }
+finally {storage.close();}
+await fetch('/result',{method:'POST',body:JSON.stringify(report)});
+</script>

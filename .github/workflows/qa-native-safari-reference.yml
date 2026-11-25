@@ -1,0 +1,25 @@
+name: Native Safari project reference
+on:
+  push:
+    branches: [qa/native-safari-sw347-reference]
+permissions:
+  contents: read
+jobs:
+  native-safari:
+    runs-on: macos-15
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Verify unchanged application bytes
+        run: git diff --exit-code HEAD^ HEAD -- src index.html styles.css sw.js
+      - name: Observe native Safari with the actual application and a synthetic portfolio
+        run: python3 tests/native-safari/run.py
+      - name: Preserve observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-safari-project-reference
+          path: artifacts/native-safari/report.json
