@@ -752,3 +752,22 @@ nach **30:03**, ohne Wiederanlauf. Der Lauf ist wegen der
 fehlgeschlagenen Gates kein Geschwindigkeitsbeleg. Erfasst sind
 Jobzeiten, Ressourcen und Hashes der per Job geplanten Prüfkommandos.
 [Lokaler Vergleich](release-evidence/sw339-local-ci-baseline-diagnostic-2026-11-25.json).
+
+### FLH05 · separate IBKR-Order- und Cash-Belege
+
+Der [offizielle Flex-CSV-Musterreport](https://www.interactivebrokers.com/docs/web-api/api-reference/get-statement)
+zeigt drei AAPL-Ausführungen mit derselben Order-ID. Aus Stückzahl
+und Ausführungspreis ergeben sich **200 Stück zu insgesamt
+61.991,20 USD brutto**. Gebühren, Umrechnung und der separat gebuchte
+Nettobetrag sind im Beispiel nicht ausgewiesen. Die
+[Trades-Spezifikation](https://www.ibkrguides.com/reportingreference/reportguide/tradesfq.htm)
+definiert Net Cash als Rechenfeld derselben Trades. Der getrennte
+[Statement of Funds](https://ibkrguides.com/reportingreference/reportguide/statement%20of%20fundsfq.htm)
+wäre der geeignete Cash-Sollbeleg mit tatsächlich gebuchtem Betrag,
+Währung und Trade-ID. In den beiden zusätzlich gepinnten
+öffentlichen Flex-Testsammlungen fand sich keine passende Gruppe
+mit mehreren Ausführungen und zugehöriger Cash-Ledger-Zeile.
+Das Providerbeispiel qualifiziert die Mehrfachausführung als
+Belegart. Der vollständige FLH05-Test benötigt weiterhin die
+separate Nettoabrechnung derselben Gebühren-/FX-Gruppe.
+[Quellen- und Prüfliste](release-evidence/ibkr-order-and-net-cash-source-search-2026-11-25.json).
