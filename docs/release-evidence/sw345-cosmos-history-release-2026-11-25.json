@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED_AWAITING_STANDARD_LIVE",
+  "status": "LIVE_ACCEPTED_PUBLIC_COSMOS_SCOPE",
   "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
   "tree": "16263c152fd85b2f527a6549b4c3a27144c0aa2a",
   "candidate": "bc8806617d234551559336beec1fee6155e77e8b",
@@ -56,7 +56,7 @@
       "Exact end-to-end quantity representation for NEAR cases beyond 18 decimal places",
       "Independent private wallet assignment"
     ],
-    "acceptedFollowUpPackages": 13,
+    "acceptedFollowUpPackages": 14,
     "totalFollowUpPackages": 29
   },
   "deployJob": 139530497724,
@@ -106,5 +106,50 @@
       "matched": true,
       "sha256": "b561ce71b3b87c3e3ef1b83531053409cf000c60859068f9554bd8d679b36eba"
     }
-  ]
+  ],
+  "productionLiveOriginal": {
+    "main": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+    "cache": "foliolab-open-v345",
+    "artifactId": 15068307209,
+    "archiveBytes": 152585128,
+    "archiveSHA256": "07399268ff7f075fbd18ce557a6e54dcf8d21ad985e4b270d006feab0af7286d",
+    "zipCRC": "PASS",
+    "entries": 1950,
+    "coreReportSHA256": "af101c2da2d666d723edd9d7cd2c9bd6d2c53be1d1c2617d059ea37b43896a4d",
+    "assetMatches": 162,
+    "coreGroups": 11,
+    "axeScans": 22,
+    "loadingEngines": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "financialGateReportEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "job": 139530649509,
+    "cosmosRewardReimportRescanAndEncryptedRestore": {
+      "chromium": {
+        "result": "PASS",
+        "logUTC": "2026-11-25T21:52:41.6404601Z"
+      },
+      "firefox": {
+        "result": "PASS",
+        "logUTC": "2026-11-25T22:19:44.8958429Z"
+      },
+      "webkit": {
+        "result": "PASS",
+        "logUTC": "2026-11-25T22:19:48.9726845Z"
+      }
+    },
+    "navigationAndInstallationEngines": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    }
+  },
+  "additionalReadOnlyReference": "cosmos-four-rewards-block-34048131.json"
 }
