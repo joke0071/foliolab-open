@@ -211,7 +211,7 @@
   "baseMain": "162d76aeba6a441d761cac1132e964516a867b3e",
   "oracleTextSHA256": "98cd3e17e908f80b29c18306e0f1b42373c46d8184cb9572b0cc08f3165846bd",
   "localBrowserReportSHA256": "51004b6f31fc30f5a8050dbce04c42a786f90a0b88fb18fee0743e5c4c9a9707",
-  "stage": "MERGED_MAIN_PENDING",
+  "stage": "DEPLOYED_AWAITING_STANDARD_LIVE_GATE",
   "pullRequest": 433,
   "testedMerge": "0e00f845586e4069864206580c9690d603a41420",
   "integrationRun": 45674710469,
@@ -242,5 +242,226 @@
         "webkit": "27.2"
       }
     }
-  ]
+  ],
+  "pagesJob": 139448790040,
+  "liveJob": 139449020283,
+  "pagesOriginal": {
+    "main": "513c2a41e9a82d9c175c35a7cbee580be4951638",
+    "tree": "85d1a44ca0994e37b816ba3e4734b160bfd0257f",
+    "artifactId": 15053785609,
+    "artifactBytes": 581669,
+    "archiveSHA256": "cb1dd2f3800fe471591b084d863f035e0df00866c472546e20818a7577906f8e",
+    "zipCRC": "PASS",
+    "exactFiles": 160
+  },
+  "production": {
+    "origin": "https://foliolab.unperfekt.at/",
+    "publishedWorkerSeenAt": "2026-11-25T19:14:38Z",
+    "changedAssetReadback": [
+      {
+        "path": "index.html",
+        "matched": true,
+        "sha256": "42f0a9c9b67bf1c33a4449692cbff3d995ab3ee9e31e4d3020b870add085fdaa"
+      },
+      {
+        "path": "sw.js",
+        "matched": true,
+        "sha256": "e7176d592791f42d7ed304e166cf9bf672dcf81d42c6640b028b3aa59718c538"
+      },
+      {
+        "path": "src/app.js",
+        "matched": true,
+        "sha256": "c66ceb4d6ce6a2d1ceddc378cf042fcb48edb458df54f2a3924d56e39015679e"
+      },
+      {
+        "path": "src/booking-management.js",
+        "matched": true,
+        "sha256": "2430c847a181846925822426708bd9b077247d963c1024873c110732d53d7772"
+      },
+      {
+        "path": "src/import-identity.js",
+        "matched": true,
+        "sha256": "0962283cafb567d3cfd074987e8d3c7f43b50f62b831a29dbe7fd50f4596718a"
+      },
+      {
+        "path": "src/transactions.js",
+        "matched": true,
+        "sha256": "6f27d63f6d3b30cfeca4056468a2ab5b4f1dd594c3d841990ed8ea9023901a3b"
+      }
+    ],
+    "isolatedBrowserResults": [
+      {
+        "engine": "chromium",
+        "browser": "141.0.7390.37",
+        "status": "PASS",
+        "fund": [
+          "386",
+          "39303.64",
+          null
+        ],
+        "settlement": [
+          "0",
+          null,
+          null
+        ],
+        "removedPostings": [
+          [
+            "asset",
+            "-386",
+            "-39819.76"
+          ],
+          [
+            "cash",
+            "39038.06",
+            "39038.06"
+          ],
+          [
+            "fee",
+            null,
+            "69.9"
+          ],
+          [
+            "tax",
+            null,
+            "711.8"
+          ]
+        ],
+        "remainingExternalFlows": [
+          {
+            "id": "independent-deposit",
+            "date": "2019-01-02",
+            "amountEUR": 25.51,
+            "amountExactEUR": "25.51"
+          }
+        ],
+        "checkpointProtected": true,
+        "abortedUnchanged": true,
+        "staleUnchanged": true,
+        "requestedSaleOnly": true,
+        "removedRevision": 5,
+        "previousRevision": 4,
+        "reimportBlocked": true,
+        "restoreExact": true,
+        "reopenExact": true,
+        "reimportBlockedAfterRestore": true,
+        "managementUndoRestoresPreimage": true,
+        "backupSha256": "46f6b9bd0a90c2465b6b86d27859355402a4d9ed37db78b2586c1d40f83e8c37"
+      },
+      {
+        "engine": "firefox",
+        "browser": "157.0",
+        "status": "PASS",
+        "fund": [
+          "386",
+          "39303.64",
+          null
+        ],
+        "settlement": [
+          "0",
+          null,
+          null
+        ],
+        "removedPostings": [
+          [
+            "asset",
+            "-386",
+            "-39819.76"
+          ],
+          [
+            "cash",
+            "39038.06",
+            "39038.06"
+          ],
+          [
+            "fee",
+            null,
+            "69.9"
+          ],
+          [
+            "tax",
+            null,
+            "711.8"
+          ]
+        ],
+        "remainingExternalFlows": [
+          {
+            "id": "independent-deposit",
+            "date": "2019-01-02",
+            "amountEUR": 25.51,
+            "amountExactEUR": "25.51"
+          }
+        ],
+        "checkpointProtected": true,
+        "abortedUnchanged": true,
+        "staleUnchanged": true,
+        "requestedSaleOnly": true,
+        "removedRevision": 5,
+        "previousRevision": 4,
+        "reimportBlocked": true,
+        "restoreExact": true,
+        "reopenExact": true,
+        "reimportBlockedAfterRestore": true,
+        "managementUndoRestoresPreimage": true,
+        "backupSha256": "b6262ed135696dff7e1e8924b84b361031c90ad5717723df045290f399783d04"
+      },
+      {
+        "engine": "webkit",
+        "browser": "27.2",
+        "status": "PASS",
+        "fund": [
+          "386",
+          "39303.64",
+          null
+        ],
+        "settlement": [
+          "0",
+          null,
+          null
+        ],
+        "removedPostings": [
+          [
+            "asset",
+            "-386",
+            "-39819.76"
+          ],
+          [
+            "cash",
+            "39038.06",
+            "39038.06"
+          ],
+          [
+            "fee",
+            null,
+            "69.9"
+          ],
+          [
+            "tax",
+            null,
+            "711.8"
+          ]
+        ],
+        "remainingExternalFlows": [
+          {
+            "id": "independent-deposit",
+            "date": "2019-01-02",
+            "amountEUR": 25.51,
+            "amountExactEUR": "25.51"
+          }
+        ],
+        "checkpointProtected": true,
+        "abortedUnchanged": true,
+        "staleUnchanged": true,
+        "requestedSaleOnly": true,
+        "removedRevision": 5,
+        "previousRevision": 4,
+        "reimportBlocked": true,
+        "restoreExact": true,
+        "reopenExact": true,
+        "reimportBlockedAfterRestore": true,
+        "managementUndoRestoresPreimage": true,
+        "backupSha256": "108cfe2c5b0a6372b9dc8836c600c111a36dc9567a048d2c57225f95debd0294"
+      }
+    ],
+    "transportObservation": "The initial independent Firefox run with interception and disabled HTTP cache encountered HTTP 429 at same-origin JS subresources. With regular caching, Firefox subsequently passed. All three proofs load the original production origin."
+  }
 }
