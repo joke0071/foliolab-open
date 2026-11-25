@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
-import {chromium} from 'playwright';
+import {chromium,firefox,webkit} from 'playwright';
 
 const base=process.env.FOLIOLAB_QA_URL||'http://127.0.0.1:4188/';
 const files=process.argv.slice(2);
@@ -25,7 +25,15 @@ function yocto(value){
 }
 const representable={amount:'2500000000000000000000000',locked:'1250000000000000000000000'};
 const expected=[decimal(representable.amount),decimal(representable.locked)];
-const browser=await chromium.launch({args:['--no-sandbox']});
+const engine=process.env.FOLIOLAB_QA_ENGINE||'chromium';
+const browserType={chromium,firefox,webkit}[engine];
+assert.ok(browserType,'Unknown test browser');
+const executablePath=process.env.FOLIOLAB_QA_BROWSER_EXECUTABLE;
+const browser=await browserType.launch({
+ headless:true,
+ ...(engine==='chromium'?{args:['--no-sandbox']}:{}),
+ ...(executablePath?{executablePath}:{})
+});
 const read=page=>page.evaluate(async()=>{
  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
  const db=await openPortfolioDB();

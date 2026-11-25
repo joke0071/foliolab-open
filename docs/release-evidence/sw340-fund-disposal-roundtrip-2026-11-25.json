@@ -97,5 +97,15 @@
   "batchUndoExact": true,
   "reimportExact": true,
   "backupSha256": "cf37b6004a87bdae60178f721cc59c74167bcab59c74167c8a0ddcebc2330bcf",
-  "restoreAndReopenExact": true
+  "restoreAndReopenExact": true,
+  "crossEngine": {
+    "firefox": {
+      "version": "157.0",
+      "replayedSameAssertions": true
+    },
+    "webkit": {
+      "version": "27.2",
+      "replayedSameAssertions": true
+    }
+  }
 }

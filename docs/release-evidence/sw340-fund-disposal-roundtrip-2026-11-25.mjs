@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
-import {chromium} from 'playwright';
+import {chromium,firefox,webkit} from 'playwright';
 
 const base=process.env.FOLIOLAB_QA_URL||'http://127.0.0.1:4188/';
 const source='https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202610013/';
@@ -32,7 +32,15 @@ const txDate='2018-12-31'; // The ruling identifies the year only.
 const csvText=['date;type;position;quantity;price;fee;tax;cashPosition;id',
  [txDate,'sell','fund',qty,oracle.unitPrice,oracle.fee,euro(tax+surcharge),'cash','bfh-fund-sale'].join(';')].join('\n');
 const csv={name:'bfh-transcribed-fund-sale.csv',mimeType:'text/csv',buffer:Buffer.from(csvText)};
-const browser=await chromium.launch({args:['--no-sandbox']});
+const engine=process.env.FOLIOLAB_QA_ENGINE||'chromium';
+const browserType={chromium,firefox,webkit}[engine];
+assert.ok(browserType,'Unknown test browser');
+const executablePath=process.env.FOLIOLAB_QA_BROWSER_EXECUTABLE;
+const browser=await browserType.launch({
+ headless:true,
+ ...(engine==='chromium'?{args:['--no-sandbox']}:{}),
+ ...(executablePath?{executablePath}:{})
+});
 const read=page=>page.evaluate(async()=>{
  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
  const db=await openPortfolioDB();
@@ -136,7 +144,7 @@ try{
   source,sourceSha256:sha(sourceBytes),case:'BFH VIII R 22/23, Fund disposition in 2018',transactionDayInFixture:txDate,
   dateQualification:'The public ruling specifies the year only. The date is an explicit test placeholder.',
   accountOpeningQualification:'Zero is the fixture cash opening, to test the independently published cash delta.',
-  oracle,observed:financialState(booked),individualRemoval:{allowed:false,reason:blocked,recordUnchanged:true},
+  oracle,observed:financialState(booked),individualRemoval:{allowed:false,reason:blocked.replace(/ \[[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\]/g,''),recordUnchanged:true},
   cancelUndoExact:true,batchUndoExact:true,reimportExact:true,backupSha256:sha(bytes),restoreAndReopenExact:true
  },null,2));
 }finally{await browser.close();}

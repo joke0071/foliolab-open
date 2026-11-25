@@ -47,5 +47,15 @@
     "openingRestore": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
     "journalQuantityAudit": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.",
     "backupRestore": "Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden."
+  },
+  "crossEngine": {
+    "firefox": {
+      "version": "157.0",
+      "replayedSameAssertions": true
+    },
+    "webkit": {
+      "version": "27.2",
+      "replayedSameAssertions": true
+    }
   }
 }
