@@ -354,7 +354,7 @@
   "unitTests": 1534,
   "syntax": "PASS",
   "chromiumLoadingPWA": "PASS",
-  "status": "INTEGRATED_GATE_GREEN_PENDING_PREDECESSOR_LIVE",
+  "status": "MERGED_MAIN_PENDING",
   "pullRequest": 434,
   "baseMain": "513c2a41e9a82d9c175c35a7cbee580be4951638",
   "sameOriginPwaUpgrade": {
@@ -370,5 +370,7 @@
   "walletRun": 45679059263,
   "wallet": "PASS",
   "integration": "PASS",
-  "testedMerge": "681d814e2e2b44bd063a06b109918f6327cca61b"
+  "testedMerge": "681d814e2e2b44bd063a06b109918f6327cca61b",
+  "main": "af3cdff0b83ea9b0c406e0204efd3d9e32896165",
+  "mainRun": 45691776339
 }

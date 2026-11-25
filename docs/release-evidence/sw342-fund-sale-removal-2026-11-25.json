@@ -211,7 +211,7 @@
   "baseMain": "162d76aeba6a441d761cac1132e964516a867b3e",
   "oracleTextSHA256": "98cd3e17e908f80b29c18306e0f1b42373c46d8184cb9572b0cc08f3165846bd",
   "localBrowserReportSHA256": "51004b6f31fc30f5a8050dbce04c42a786f90a0b88fb18fee0743e5c4c9a9707",
-  "stage": "DEPLOYED_AWAITING_STANDARD_LIVE_GATE",
+  "stage": "LIVE_ACCEPTED",
   "pullRequest": 433,
   "testedMerge": "0e00f845586e4069864206580c9690d603a41420",
   "integrationRun": 45674710469,
@@ -463,5 +463,35 @@
       }
     ],
     "transportObservation": "The initial independent Firefox run with interception and disabled HTTP cache encountered HTTP 429 at same-origin JS subresources. With regular caching, Firefox subsequently passed. All three proofs load the original production origin."
+  },
+  "liveAttempt": 1,
+  "standardLive": {
+    "main": "513c2a41e9a82d9c175c35a7cbee580be4951638",
+    "cache": "foliolab-open-v342",
+    "artifactId": 15059760445,
+    "archiveBytes": 152758815,
+    "archiveSHA256": "d72ae6e7bd456de466cebea980ba1444f2e20c61d7f19a4a5fb0224a26eab61b",
+    "zipCRC": "PASS",
+    "entries": 1947,
+    "coreReportSHA256": "2f4903c1ef12200feb1bf1ddc105f1ecccd42d72c1daac2e6607a46bf9f6300a",
+    "assetMatches": 161,
+    "coreGroups": 11,
+    "axeScans": 22,
+    "loadingEngines": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "financialGateReportEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "packageDecision": {
+    "FIN-E2E01": "ACCEPTED",
+    "bookingManagement": "ACCEPTED",
+    "acceptedFollowUpPackages": 13,
+    "totalFollowUpPackages": 29
   }
 }
