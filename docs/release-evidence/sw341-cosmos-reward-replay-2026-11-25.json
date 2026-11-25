@@ -1,0 +1,38 @@
+{
+  "sourceEvidence": "F0F894B8B64F022FAFCBED0C0CC87F9F8E7EBABDB79DF4CBEBF4553F02B9569D",
+  "block": "34044337",
+  "blockHash": "E10789421CF97190A442B20E563DF6BBE597884CA095C55A98C3751E84FFCE60",
+  "atom": {
+    "bankBeforeMicroATOM": "281159",
+    "paidRewardMicroATOM": "536836",
+    "feeMicroATOM": "6823",
+    "bankAfterMicroATOM": "811172"
+  },
+  "debits": {
+    "protocolFeeMicroATOM": "2599",
+    "tipMicroATOM": "4224",
+    "payerTotalMicroATOM": "6823"
+  },
+  "eventIndices": {
+    "payerDebit": 2,
+    "recipientCredit": 8,
+    "reward": 11,
+    "fee": 16,
+    "tip": 17
+  },
+  "oneBlockReadOnlyReplay": {
+    "events": 2,
+    "dedupedIdentities": [
+      "[\"[\\\"cosmos\\\",\\\"cosmoshub-4\\\",\\\"cosmos1nx3yrqs5v5wz9yygplleswu5tn9e4r8zcgncar\\\",\\\"uatom\\\",null,null]\",\"F0F894B8B64F022FAFCBED0C0CC87F9F8E7EBABDB79DF4CBEBF4553F02B9569D\",\"fee\",\"0\",\"0\"]",
+      "[\"[\\\"cosmos\\\",\\\"cosmoshub-4\\\",\\\"cosmos1nx3yrqs5v5wz9yygplleswu5tn9e4r8zcgncar\\\",\\\"uatom\\\",null,null]\",\"F0F894B8B64F022FAFCBED0C0CC87F9F8E7EBABDB79DF4CBEBF4553F02B9569D\",\"log\",\"11\",\"0\"]"
+    ],
+    "endingMicroATOM": "811172",
+    "independentReconciliation": "verified",
+    "postBalanceAsOpeningMismatchMicroATOM": "530013"
+  },
+  "productWrite": {
+    "acceptedHistory": false,
+    "acceptedGenericCSV": false,
+    "portfolioUnchanged": true
+  }
+}

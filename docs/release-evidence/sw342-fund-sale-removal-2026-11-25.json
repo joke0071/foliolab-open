@@ -1,0 +1,215 @@
+{
+  "oracle": {
+    "source": "https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202610013/",
+    "fixture": {
+      "date": "2018-12-31",
+      "openingCash": "0",
+      "independentDeposit": "25.51"
+    },
+    "quantity": "386",
+    "basis": "39303.64",
+    "gross": "39819.76",
+    "fee": "69.9",
+    "tax": "711.8",
+    "cash": "39038.06",
+    "result": "-265.58",
+    "postings": [
+      [
+        "asset",
+        "-386",
+        "-39819.76"
+      ],
+      [
+        "cash",
+        "39038.06",
+        "39038.06"
+      ],
+      [
+        "fee",
+        null,
+        "69.9"
+      ],
+      [
+        "tax",
+        null,
+        "711.8"
+      ]
+    ]
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "status": "PASS",
+      "fund": [
+        "386",
+        "39303.64",
+        null
+      ],
+      "settlement": [
+        "0",
+        null,
+        null
+      ],
+      "removedPostings": [
+        [
+          "asset",
+          "-386",
+          "-39819.76"
+        ],
+        [
+          "cash",
+          "39038.06",
+          "39038.06"
+        ],
+        [
+          "fee",
+          null,
+          "69.9"
+        ],
+        [
+          "tax",
+          null,
+          "711.8"
+        ]
+      ],
+      "remainingExternalFlows": [
+        {
+          "id": "independent-deposit",
+          "date": "2019-01-02",
+          "amountEUR": 25.51,
+          "amountExactEUR": "25.51"
+        }
+      ],
+      "checkpointProtected": true,
+      "abortedUnchanged": true,
+      "staleUnchanged": true,
+      "requestedSaleOnly": true,
+      "removedRevision": 5,
+      "previousRevision": 4,
+      "reimportBlocked": true,
+      "restoreExact": true,
+      "reopenExact": true,
+      "reimportBlockedAfterRestore": true,
+      "backupSha256": "d4fbdc3f510b7b14da0bf8effb221fa8338928c1dac809fe9fc21cf558e3d141"
+    },
+    {
+      "engine": "firefox",
+      "browser": "142.0.1",
+      "status": "PASS",
+      "fund": [
+        "386",
+        "39303.64",
+        null
+      ],
+      "settlement": [
+        "0",
+        null,
+        null
+      ],
+      "removedPostings": [
+        [
+          "asset",
+          "-386",
+          "-39819.76"
+        ],
+        [
+          "cash",
+          "39038.06",
+          "39038.06"
+        ],
+        [
+          "fee",
+          null,
+          "69.9"
+        ],
+        [
+          "tax",
+          null,
+          "711.8"
+        ]
+      ],
+      "remainingExternalFlows": [
+        {
+          "id": "independent-deposit",
+          "date": "2019-01-02",
+          "amountEUR": 25.51,
+          "amountExactEUR": "25.51"
+        }
+      ],
+      "checkpointProtected": true,
+      "abortedUnchanged": true,
+      "staleUnchanged": true,
+      "requestedSaleOnly": true,
+      "removedRevision": 5,
+      "previousRevision": 4,
+      "reimportBlocked": true,
+      "restoreExact": true,
+      "reopenExact": true,
+      "reimportBlockedAfterRestore": true,
+      "backupSha256": "b9474a8b69b54f425e0c7039754a92fa52a962102c4eb0f3deca7288c0f8f511"
+    },
+    {
+      "engine": "webkit",
+      "browser": "26.0",
+      "status": "PASS",
+      "fund": [
+        "386",
+        "39303.64",
+        null
+      ],
+      "settlement": [
+        "0",
+        null,
+        null
+      ],
+      "removedPostings": [
+        [
+          "asset",
+          "-386",
+          "-39819.76"
+        ],
+        [
+          "cash",
+          "39038.06",
+          "39038.06"
+        ],
+        [
+          "fee",
+          null,
+          "69.9"
+        ],
+        [
+          "tax",
+          null,
+          "711.8"
+        ]
+      ],
+      "remainingExternalFlows": [
+        {
+          "id": "independent-deposit",
+          "date": "2019-01-02",
+          "amountEUR": 25.51,
+          "amountExactEUR": "25.51"
+        }
+      ],
+      "checkpointProtected": true,
+      "abortedUnchanged": true,
+      "staleUnchanged": true,
+      "requestedSaleOnly": true,
+      "removedRevision": 5,
+      "previousRevision": 4,
+      "reimportBlocked": true,
+      "restoreExact": true,
+      "reopenExact": true,
+      "reimportBlockedAfterRestore": true,
+      "backupSha256": "ae74ad691e5dbad3836351cbeb4de11800caf327e258825e8f5ea3eb9cfbfb2e"
+    }
+  ],
+  "candidateCommit": "9ff78374d8dcff659fb16284bddab3c49f2595a2",
+  "candidateTree": "85d1a44ca0994e37b816ba3e4734b160bfd0257f",
+  "baseMain": "162d76aeba6a441d761cac1132e964516a867b3e",
+  "oracleTextSHA256": "98cd3e17e908f80b29c18306e0f1b42373c46d8184cb9572b0cc08f3165846bd",
+  "localBrowserReportSHA256": "51004b6f31fc30f5a8050dbce04c42a786f90a0b88fb18fee0743e5c4c9a9707",
+  "stage": "LOCAL_ACCEPTANCE_PENDING_RELEASE"
+}

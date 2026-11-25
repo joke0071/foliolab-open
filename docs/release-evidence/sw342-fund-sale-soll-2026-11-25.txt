@@ -1,0 +1,12 @@
+Festgelegt vor der Ausführung, 25.11.2026.
+Unabhängiges Soll aus BFH VIII R 22/23 und Ganzzahlrechnung in Cent.
+386 Stück; Basis 3930364 Cent; Brutto 3981976 Cent; Provision 6990 Cent;
+Steuer 67470 Cent plus Solidaritätszuschlag 3710 Cent; Netto 3903806 Cent.
+Nach Rücknahme: Fonds 0 -> 386; Basis 0 -> 3930364;
+Verrechnung 3903806 -> 0; realisierter Beitrag -26558 entfällt, ursprüngliches null wiederhergestellt.
+Provision 6990 -> 0; Steuern einschließlich Zuschlag 71180 -> 0.
+Aktives Verkaufsjournal mit Asset-, Cash-, Gebühren- und Steuerposting entfällt;
+neutraler Änderungsnachweis enthält unveränderte Originalbuchung und Originaljournal.
+Verkauf erzeugt keinen externen Fluss; unabhängige Einzahlung und ihr Fluss bleiben vollständig erhalten.
+Testparameter: 31.12.2018, EUR-Verrechnungseröffnung 0, lokale IDs, unabhängige Einzahlung und USD-Position ohne EUR-FX.
+Gegenfall: gleicher Verkauf mit vollständigem aktuellem Stichtag bleibt inklusive Revision exakt erhalten.
