@@ -244,5 +244,13 @@
     "artifactId": 15026562830,
     "artifactSha256": "d13e9dfa46e559d386c942b43aacd15a11a37f8478b482e7ce783216c50c2490"
   },
-  "targetedRerunJobId": 139241875358
+  "targetedRerunJobId": 139241875358,
+  "pagesOriginal": {
+    "id": 15024890193,
+    "bytes": 589345,
+    "sha256": "5eba5f52b56b9418ca56263d177aec0bc4c0084ba025528c21834f30802d505c",
+    "zipEntries": 1,
+    "crc": "PASS",
+    "trackedFilesByteMatched": 159
+  }
 }

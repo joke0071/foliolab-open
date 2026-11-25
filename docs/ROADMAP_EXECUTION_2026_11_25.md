@@ -653,7 +653,9 @@ zum reproduzierbaren, vollständigen Gewinn zurückgestellt.
 
 ### SW340 · veröffentlicht und Zielprüfung auf der Produktivseite
 
-Die Pflichtjobs auf Main und Pages sind grün. Auf
+Die Pflichtjobs auf Main und Pages sind grün. Das erneut aus GitHub
+gelesene Pages-Original `15024890193` bestand SHA-256 und ZIP-CRC.
+Alle **159 Paketdateien** waren bytegleich mit Main. Auf
 `https://foliolab.unperfekt.at/` wurden `/`, `/index.html` und `/sw.js`
 erneut abgerufen. Alle drei Antworten waren bytegleich mit Main
 `7adbf028`. Der echte Browserzoom in sichtbarem Firefox bestand auf
