@@ -277,3 +277,37 @@ separat gebuchtem Netto. Der separat abgelegte Kraken-Ledgerexport und die Kopie
 **Stand der Zeilenabnahme: 6/6 Kernbereiche und 10/29 Folgepakete.**
 Die neuen Ergebnisse buchen Teilumfänge. Die ausstehenden Kriterien der
 betroffenen Zeilen bleiben erhalten.
+
+### Nachtrag · Flatex-Originalfelder und öffentlicher AT05-Abrechnungsfall
+
+- **AT03 und FLH05.** Die zwei vorhandenen Flatex-Original-CSV-Dialekte
+  wurden separat eingelesen. Der Kontoexport enthält Betrag, Währung und
+  Transaktionsreferenz. Gebuchte Anfangs-/Endsalden oder laufende
+  Salden stehen nicht in den Originalspalten. Der Depotexport enthält
+  Stückzahl, Kurs und Transaktionsreferenz. Die ZIP-Belege ergänzen
+  CSV-Varianten, aber keine separate Abrechnung mit je Teilfüllung
+  belegter FX-Richtung und gebuchtem Netto. Daher bleibt die konkrete
+  Salden- bzw. Ausführungslücke bestehen.
+- **AT05 Teilabnahme für gebuchte Steuer.** Der veröffentlichte
+  [Flatex-Fall zum Fonds IE00BNG8L278](https://www.broker-test.at/steuern/fondsthesaurierung/)
+  verknüpft eine Brokerabrechnung mit der OeKB-Jahresmeldung vom
+  17.01.2022 und einer getrennten Erläuterung. Vor dem Produkttest aus
+  dem veröffentlichten KESt-Abzugswert je Anteil, Stückzahl und
+  Abrechnungs-FX mit Python Decimal **27,22 EUR** berechnet. Die
+  Anschaffungskostenkorrektur ergab als separate Gegenrechnung
+  **4,7465 EUR je Anteil** aus dem angegebenen Einstandswert und der
+  veröffentlichten Korrekturrate. Der Produktversuch auf SW339 buchte
+  den vorab festgelegten Steuerbetrag in ein synthetisches EUR-Konto.
+  Ist: genau ein Journalvorgang, Cash **72,78 EUR** ausgehend von 100 EUR,
+  Jahresansicht und Jahressumme **−27,22 EUR**, identischer Bericht nach
+  portablem Backup/Restore. Der belegte Umfang ist die Wiedergabe
+  einer vorgegebenen gebuchten Steuer. Die
+  [historische OeKB-Meldung](https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f?isin=IE00BNG8L278)
+  lieferte im Abruf keine lesbaren Primärdaten. Jahresabrechnung,
+  unabhängige OeKB-Primärzusammenführung und automatischer
+  Anschaffungskostenabgleich bleiben für die vollständige Zeile offen.
+- **Barausgleich.** Die fünf Vertragsregressionen für Kapitalmaßnahmen
+  und Fremdwährung auf SW339 bestanden. Positiv übergebener
+  Barausgleich wird bei Split, Swap und Fusion atomar abgelehnt.
+  Der geforderte Abrechnungsfall für eine automatische Zuordnung bleibt
+  ohne belegte Nettoauszahlung samt Steuerbasis offen.
