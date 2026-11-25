@@ -33,11 +33,109 @@
     "https://cosmos-rpc.publicnode.com/block?height=34048131": "d6bed9c737c6785e38525fdac3169e37fcb3bda8b5b98317e9a8620123fe7853",
     "https://cosmos-rpc.publicnode.com/block_results?height=34048131": "19d06a2b54c0c9c9e491ddbc36d26dadf9b394270654d9047107dab67f166373",
     "https://cosmoshub.rpc.kjnodes.com/block?height=34048131": "c5cea57441ed93808c037d148dd4abb99f74491977c150b3a816392012f9c082",
-    "https://cosmoshub.rpc.kjnodes.com/block_results?height=34048131": "1a4e181405a3b3320674f20844d689602f7f2311f93c46996952eeaa2154a13a"
+    "https://cosmoshub.rpc.kjnodes.com/block_results?height=34048131": "1a4e181405a3b3320674f20844d689602f7f2311f93c46996952eeaa2154a13a",
+    "https://cosmos-rpc.polkachu.com/block?height=34048131": "c5cea57441ed93808c037d148dd4abb99f74491977c150b3a816392012f9c082",
+    "https://cosmos-rpc.polkachu.com/block_results?height=34048131": "1a4e181405a3b3320674f20844d689602f7f2311f93c46996952eeaa2154a13a"
   },
-  "bankAtParent": null,
-  "bankAtHeight": null,
+  "bankAtParent": {
+    "height": 34048130,
+    "freeMicroATOM": "2529318"
+  },
+  "bankAtHeight": {
+    "height": 34048131,
+    "freeMicroATOM": "4972381"
+  },
   "confirmedProductPosition": false,
   "accepted": false,
-  "scope": "Public block-only reference. All four event locators, including the three equal payouts, are distinct. Missing independent historical states and product position."
+  "scope": "Public source reconciliation and direct model replay. No product wallet import was performed for this address. The replay preserves four distinct payouts and one combined fee.",
+  "netRewardMicroATOM": "2443063",
+  "publicWallet": "cosmos1tyqmer8ul0l7msewx82wnhu9f0kswd79hxh6ee",
+  "archiveBalanceQueries": [
+    {
+      "endpoint": "https://cosmos-rpc.polkachu.com",
+      "requestedHeight": 34048130,
+      "responseSHA256": "230ad05d03f1860b3b71a6534d9ffade8cd2fd344f9741b3db7ea765859fd7a3",
+      "height": "34048130",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 2529318
+    },
+    {
+      "endpoint": "https://cosmos-rpc.polkachu.com",
+      "requestedHeight": 34048131,
+      "responseSHA256": "6e395b02644d6a84132b9d737f0d99dafc0b5a9a0c70ce33adccac073b91c634",
+      "height": "34048131",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 4972381
+    },
+    {
+      "endpoint": "https://cosmoshub.rpc.kjnodes.com",
+      "requestedHeight": 34048130,
+      "responseSHA256": "230ad05d03f1860b3b71a6534d9ffade8cd2fd344f9741b3db7ea765859fd7a3",
+      "height": "34048130",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 2529318
+    },
+    {
+      "endpoint": "https://cosmoshub.rpc.kjnodes.com",
+      "requestedHeight": 34048131,
+      "responseSHA256": "6e395b02644d6a84132b9d737f0d99dafc0b5a9a0c70ce33adccac073b91c634",
+      "height": "34048131",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 4972381
+    },
+    {
+      "endpoint": "https://cosmos-rpc.publicnode.com",
+      "requestedHeight": 34048130,
+      "responseSHA256": "e947c8a33872da0c3145f102e54cfef03146ce1260b55f378d0f7ea4455bc1bc",
+      "height": "0",
+      "code": 38,
+      "log": "failed to load state at height 34048130; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34048357): not found"
+    },
+    {
+      "endpoint": "https://cosmos-rpc.publicnode.com",
+      "requestedHeight": 34048131,
+      "responseSHA256": "61f75990da4cad38d4bebb871f09dc68b4c848e1c3fd7712c9bb49976bea745a",
+      "height": "0",
+      "code": 38,
+      "log": "failed to load state at height 34048131; version mismatch on immutable IAVL tree; version does not exist. Version has either been pruned, or is for a future block height (latest height: 34048357): not found"
+    },
+    {
+      "endpoint": "https://rpc.cosmos.directory/cosmoshub",
+      "requestedHeight": 34048130,
+      "responseSHA256": "230ad05d03f1860b3b71a6534d9ffade8cd2fd344f9741b3db7ea765859fd7a3",
+      "height": "34048130",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 2529318
+    },
+    {
+      "endpoint": "https://rpc.cosmos.directory/cosmoshub",
+      "requestedHeight": 34048131,
+      "responseSHA256": "6e395b02644d6a84132b9d737f0d99dafc0b5a9a0c70ce33adccac073b91c634",
+      "height": "34048131",
+      "code": 0,
+      "log": "",
+      "freeMicroATOM": 4972381
+    }
+  ],
+  "checkedBlockOriginals": {
+    "https://cosmos-rpc.polkachu.com/block?height=34048131": "polkachu-block.json",
+    "https://cosmos-rpc.polkachu.com/block_results?height=34048131": "polkachu-receipts.json",
+    "https://cosmoshub.rpc.kjnodes.com/block?height=34048131": "kjnodes-block.json",
+    "https://cosmoshub.rpc.kjnodes.com/block_results?height=34048131": "kjnodes-receipts.json"
+  },
+  "coreReplay": {
+    "commit": "9d7df163e27d48011887a5c117d6d823c7d22e11",
+    "runner": "cosmos-four-rewards-block-34048131.mjs",
+    "result": "PASS",
+    "eventsOnRepeatedAndReversedInput": 5,
+    "rewardsWithEqualAmountsKeptApart": 3,
+    "differenceFromIndependentBankStateMicroATOM": "0",
+    "contradictoryDuplicateLeavesClosingBalanceUnknown": true
+  },
+  "remaining": "Confirmed product-position binding and regular UI product acceptance for multi-reward imports. Broader Cosmos history and private wallet assignment remain separate."
 }
