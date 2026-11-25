@@ -233,5 +233,14 @@
         }
       }
     }
-  ]
+  ],
+  "independentVoiceOverCheck": {
+    "run": 45717847834,
+    "job": 139568412934,
+    "referenceHead": "a94f7caeaf67455bbc2461af9851273edc4a2187",
+    "systemVoiceOverEnabledBeforeAndAfterLaunch": false,
+    "voiceOverProcessPresent": true,
+    "spokenSequence": "NOT_AVAILABLE",
+    "reason": "The hosted macOS runner started the app process but no active system VoiceOver session was available after the keyboard welcome attempt."
+  }
 }
