@@ -211,5 +211,11 @@
   "baseMain": "162d76aeba6a441d761cac1132e964516a867b3e",
   "oracleTextSHA256": "98cd3e17e908f80b29c18306e0f1b42373c46d8184cb9572b0cc08f3165846bd",
   "localBrowserReportSHA256": "51004b6f31fc30f5a8050dbce04c42a786f90a0b88fb18fee0743e5c4c9a9707",
-  "stage": "LOCAL_ACCEPTANCE_PENDING_RELEASE"
+  "stage": "MERGED_MAIN_PENDING",
+  "pullRequest": 433,
+  "testedMerge": "0e00f845586e4069864206580c9690d603a41420",
+  "integrationRun": 45674710469,
+  "walletRun": 45674710545,
+  "main": "513c2a41e9a82d9c175c35a7cbee580be4951638",
+  "mainRun": 45678926971
 }

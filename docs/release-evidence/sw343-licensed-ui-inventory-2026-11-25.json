@@ -335,7 +335,7 @@
     "src/allocation-ui.js",
     "src/portfolio-projection-ui.js"
   ],
-  "candidateCommit": "35488aa14c2fe22f85571064ef6f22c5a8e2f486",
+  "candidateCommit": "09fe66ea387faec55a3eea3bd120a74e6909d3c2",
   "candidateTree": "6fe56d80dd0881d9956285ca1c725a22b6039a1c",
   "offlineCheck": {
     "browser": "141.0.7390.37",
@@ -354,5 +354,7 @@
   "unitTests": 1534,
   "syntax": "PASS",
   "chromiumLoadingPWA": "PASS",
-  "status": "LOCAL_CANDIDATE"
+  "status": "PR_INTEGRATION_PENDING",
+  "pullRequest": 434,
+  "baseMain": "513c2a41e9a82d9c175c35a7cbee580be4951638"
 }
