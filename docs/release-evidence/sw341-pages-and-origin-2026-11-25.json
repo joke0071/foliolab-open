@@ -68,5 +68,16 @@
         "contentType": "text/plain; charset=utf-8"
       }
     }
+  },
+  "independentChromiumLiveCore": {
+    "status": "PASS",
+    "main": "162d76aeba6a441d761cac1132e964516a867b3e",
+    "cache": "foliolab-open-v341",
+    "origin": "https://foliolab.unperfekt.at/",
+    "matchedResponses": 161,
+    "groups": 11,
+    "axeScans": 22,
+    "proxyCertificateException": true,
+    "reportSHA256": "261d6f4d3a5ef859c785d5427943487606fb7d8f020623ae5f714199450640da"
   }
 }
