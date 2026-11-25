@@ -234,6 +234,46 @@
       }
     }
   ],
+  "voiceOverQualification": [
+    {
+      "sourceCommit": "03ec0c66a8f3a86df9fe28b2e884c7189c3a3585",
+      "run": 45717620543,
+      "job": 139567633030,
+      "attempt": 1,
+      "conclusion": "failure",
+      "archiveId": 15070212773,
+      "archiveSHA256": "e6b120cc411ba2f6e56ab235a392c70ccd824633e71c06aad89bb7ca632cdb95",
+      "report": {
+        "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+        "system": "15.8.2",
+        "observations": [],
+        "initial": "voiceOverEnabled=false",
+        "active": "voiceOverEnabled=false",
+        "error": "RuntimeError('No active system VoiceOver session')"
+      }
+    },
+    {
+      "sourceCommit": "a94f7caeaf67455bbc2461af9851273edc4a2187",
+      "run": 45717847834,
+      "job": 139568412934,
+      "attempt": 1,
+      "conclusion": "failure",
+      "archiveId": 15070018745,
+      "archiveSHA256": "048937486d54093dfd004dbd0d28d5c309f4a25f0d3b923fd9492b3261688b4a",
+      "report": {
+        "productHead": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+        "system": "15.8.2",
+        "observations": [],
+        "initial": "voiceOverEnabled=false",
+        "launch": "",
+        "voiceOverProcessesBeforeWelcome": "1359",
+        "voiceOverProcessesAfterWelcome": "1359",
+        "active": "voiceOverEnabled=false",
+        "error": "RuntimeError('No active system VoiceOver session')"
+      }
+    }
+  ],
+  "nextVoiceOverTrigger": "A preconfigured active and authorized VoiceOver session with observable phrase output. The ordinary Safari evidence remains valid.",
   "independentVoiceOverCheck": {
     "run": 45717847834,
     "job": 139568412934,

@@ -1,0 +1,48 @@
+{
+  "sha": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "cache": "foliolab-open-v346",
+  "artifactId": 15073140970,
+  "zipCRC": "PASS",
+  "archiveSHA256": "4096171125af32d29163ae51bb81069e346ae1b49566a7d5b909ccc7b24f3155",
+  "settlement": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "shares": "0.609",
+    "grossEUR": "9.46",
+    "taxEUR": "0.51",
+    "netEUR": "8.95",
+    "postTaxResultEUR": "1.34",
+    "freshRestore": true
+  },
+  "cosmos": {
+    "result": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "height": "34044337",
+    "quantityExact": "0.811172"
+  },
+  "origin": "https://foliolab.unperfekt.at/",
+  "exactResponses": 162,
+  "coreGroups": 11,
+  "axeScans": 22,
+  "verifiedCoreReportSHA256": "bb9d4ab0fc686cda32e33bc024b5cf604bae2654190a45be02f1d190dc321df0",
+  "loading": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS"
+  },
+  "navigation": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS"
+  },
+  "runId": 45713556664,
+  "jobId": 139565401753,
+  "runAttempt": 1
+}

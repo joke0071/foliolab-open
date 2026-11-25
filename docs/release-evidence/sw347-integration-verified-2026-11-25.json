@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "job": 139559518180,
+      "engines": [
+        "chromium"
+      ]
+    },
+    {
+      "job": 139559518177,
+      "engines": [
+        "firefox",
+        "webkit"
+      ]
+    }
+  ],
+  "head": "c3d6204f6e18acbd58b4be4ecd78a1dfee59dd94",
+  "tree": "e87fab0abdbc0dda57da48cf9f30bccbabbb655c",
+  "units": 1540,
+  "run": 45715151865,
+  "walletRun": 45715151887,
+  "publicAuditRun": 45715151958,
+  "mergeTestCommit": "2b9e3bc057bf2cdbbbe2b8e66bb03e919a6e6c78",
+  "base": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "markers": [
+    "COSMOS_REWARD_PASS",
+    "FRACTIONAL_SETTLEMENT_PASS",
+    "USD_FRACTIONAL_SETTLEMENT_PASS",
+    "NEAR_PRECISION_PASS"
+  ]
+}
