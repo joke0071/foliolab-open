@@ -1,0 +1,47 @@
+{
+  "verifiedAt": "2026-11-25T13:48:35.586Z",
+  "browser": "Chromium 141.0.7390.37",
+  "productOrigin": "https://foliolab.unperfekt.at/",
+  "cmc": {
+    "source": "https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest",
+    "status": 200,
+    "numericScoreInSource": true,
+    "updateTimestampInSource": true,
+    "accessControlAllowOrigin": null,
+    "browser": {
+      "type": "TypeError",
+      "message": "Failed to fetch"
+    },
+    "browserEvidence": [
+      "Access to fetch at 'https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest' from origin 'https://foliolab.unperfekt.at' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    ],
+    "apiDocumentation": "https://coinmarketcap.com/api/documentation/pro-api-reference/keyless-public-api/",
+    "guide": "https://coinmarketcap.com/api/resources/coinmarketcap-keyless-public-api-guide-developers-guide/",
+    "remaining": [
+      "authorized compatible product access",
+      "documented FolioLab display rights"
+    ]
+  },
+  "cnn": {
+    "source": "https://www.cnn.com/markets/fear-and-greed",
+    "finalUrl": "https://edition.cnn.com/markets/fear-and-greed",
+    "status": 200,
+    "frameAncestors": "frame-ancestors 'self' https://*.cnn.com:* http://*.cnn.com https://*.cnn.io:* http://*.cnn.io:* *.turner.com:* courageousstudio.com",
+    "publisherHeaderReadAt": "2026-11-25T13:46:54.736Z",
+    "earlierIndependentFrameProbe": {
+      "browserObservedPublisherBlock": false,
+      "frameResponseHadCsp": false
+    },
+    "productionBrowserCspViolation": {
+      "directive": "frame-src",
+      "blocked": "https://www.cnn.com"
+    },
+    "productionFrameSrc": "frame-src https://accounts.google.com/gsi/",
+    "licensingPath": "https://commercial.cnn.com/contact-us/",
+    "remaining": [
+      "official product feed or authorized embedding",
+      "documented FolioLab display rights"
+    ]
+  },
+  "activated": false
+}

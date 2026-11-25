@@ -699,3 +699,42 @@ Steuerbasis, Kosten und Auszahlungs-FX. Der
 hob das erste Urteil auf und dient hier zur Einordnung des
 Verfahrensstands.
 [Prüfnachweis](release-evidence/sw340-vodafone-fractional-reference-2026-11-25.json).
+
+### UI-SENTIMENT01 · Originalquellen auf SW340
+
+CoinMarketCap lieferte am offiziellen Keyless-Endpunkt HTTP 200,
+einen numerischen Wert und einen Aktualisierungszeitpunkt. Chromium
+verweigerte von der aktuellen FolioLab-Origin aus den Abruf. Das
+fehlende `Access-Control-Allow-Origin` ist im Browserprotokoll und
+im separaten HTTP-Abruf belegt. Der
+[CMC-Leitfaden](https://coinmarketcap.com/api/resources/coinmarketcap-keyless-public-api-guide-developers-guide/)
+verweist für den Produktionseinsatz auf die authentifizierte API.
+
+Ein gewöhnlicher Abruf der CNN-Indexseite erreichte die öffentliche
+internationale Seite. Deren Antwort enthielt eine
+`frame-ancestors`-Liste ohne FolioLab. Ein unabhängiger Frame-Versuch
+erhielt eine abweichende Browserantwort ohne diesen Header.
+Auf SW340 selbst meldete Chromium beim Einbettungsversuch zuverlässig
+eine Verletzung von `frame-src`. Damit ist die öffentlich erreichbare
+Indexseite kein qualifizierter Produktabruf. Offen bleiben der offiziell
+erlaubte Feed für die kompakte Aktienanzeige und der für FolioLab
+zugelassene CMC-Abruf samt dokumentiertem Anzeigeumfang. Beide
+Originalwerte wurden in der App nicht aktiviert.
+[CNN-Lizenzweg](https://commercial.cnn.com/contact-us/) ·
+[Prüfnachweis](release-evidence/sw340-sentiment-source-gates-2026-11-25.json).
+
+### AT05 · getrennte Jahres- und Fachbelege
+
+Die [flatex-Dokumentation](https://www.flatex.at/service/faqs/detail/steuern/allgemein-zu-steuern/welche-steuerdokumente-werden-ausgegeben/)
+bezeichnet die detaillierte Gesamtaufstellung der steuerlichen
+Wertpapierumsätze als Erträgnisaufstellung. Das [BMF](https://findok.bmf.gv.at/findok/iwg/83/83598/83598.1.pdf#page=150)
+unterscheidet die bis einschließlich 2024 relevanten Vorgaben von
+dem ab 2025 geltenden Steuerreporting. Für 2022 wäre eine
+Jahresbescheinigung oder Erträgnisaufstellung desselben Depots der
+nächste Beleg. Die veröffentlichte Einzelabrechnung und die OeKB-Meldung
+tragen den Einzelfall. Der [unabhängige PwC-Fachleitfaden](https://www.oegsw.at/static/content/e2/e6/e21/e6158/e7723/download/ger/2025-10%20Veranlagung%20Fondsertr%C3%A4ge.pdf?checksum=446c84ad28ac3767e9508eaf1fba1f6bfcd3f9c7)
+bestätigt in den allgemeinen Hinweisen Meldewährung, Stückzahl am
+Zuflussstichtag und gesondert gemeldete Anschaffungskostenkorrektur.
+Er prüft keine Jahresergebnisse des konkreten Depots. Diese
+Jahresabrechnung und die fallbezogene unabhängige Jahresprüfung
+sind weiterhin gesonderte offene Kriterien.
