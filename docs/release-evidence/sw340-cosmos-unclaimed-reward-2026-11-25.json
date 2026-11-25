@@ -1,0 +1,95 @@
+{
+  "rewardMicroATOM": "32072.533799423334000000",
+  "rewardIsSeparateAndExcludedFromBankAndStake": true,
+  "main": "7adbf028ff407df2c48f5c8e2e788ed10e8573f0",
+  "chain": "cosmoshub-4",
+  "providers": [
+    "https://rest.cosmos.directory/cosmoshub",
+    "https://cosmos-rest.publicnode.com",
+    "https://cosmos-api.polkachu.com"
+  ],
+  "publicValidator": "cosmosvaloper1qe2s0gguw2khnpfteqy8mhsh5qtmmujfa6fas9",
+  "publicAccount": "cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk",
+  "height": "34043049",
+  "blockHash": "f0WwJZpxKrgIDIW4qBe9vmfAcJeSYTa8sPkoYjhKDE4=",
+  "time": "2026-11-25T13:55:57.664055758Z",
+  "providerAndIndependentResponseHashes": [
+    {
+      "url": "https://rest.cosmos.directory/cosmoshub/cosmos/bank/v1beta1/balances/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/by_denom?denom=uatom",
+      "hash": "14f3e2dce83426e34bd637399e60eebc091241f7611e9e64b5713a4e73e58b6f",
+      "height": "34043049"
+    },
+    {
+      "url": "https://rest.cosmos.directory/cosmoshub/cosmos/staking/v1beta1/delegations/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk?pagination.limit=100",
+      "hash": "c2299a8ed68f3318dc12f24b6325ea1da0724256b68538d9562185f4cfa70ae6",
+      "height": "34043049"
+    },
+    {
+      "url": "https://rest.cosmos.directory/cosmoshub/cosmos/staking/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/unbonding_delegations?pagination.limit=100",
+      "hash": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-rest.publicnode.com/cosmos/staking/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/unbonding_delegations?pagination.limit=100",
+      "hash": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-rest.publicnode.com/cosmos/bank/v1beta1/balances/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/by_denom?denom=uatom",
+      "hash": "14f3e2dce83426e34bd637399e60eebc091241f7611e9e64b5713a4e73e58b6f",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-rest.publicnode.com/cosmos/staking/v1beta1/delegations/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk?pagination.limit=100",
+      "hash": "c2299a8ed68f3318dc12f24b6325ea1da0724256b68538d9562185f4cfa70ae6",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-api.polkachu.com/cosmos/staking/v1beta1/delegations/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk?pagination.limit=100",
+      "hash": "c2299a8ed68f3318dc12f24b6325ea1da0724256b68538d9562185f4cfa70ae6",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-api.polkachu.com/cosmos/bank/v1beta1/balances/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/by_denom?denom=uatom",
+      "hash": "14f3e2dce83426e34bd637399e60eebc091241f7611e9e64b5713a4e73e58b6f",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-api.polkachu.com/cosmos/staking/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/unbonding_delegations?pagination.limit=100",
+      "hash": "7698c9b242d956f9580e30ba07214e1ce7643b40b790891b3c7cb97ce3112d31",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-rest.publicnode.com/cosmos/distribution/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/rewards",
+      "hash": "dba081188ca405d6eaff53fbf4f6442669c6e28b6709bbb9cc8c186e094bfdbd",
+      "height": "34043049"
+    },
+    {
+      "url": "https://cosmos-api.polkachu.com/cosmos/distribution/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/rewards",
+      "hash": "dba081188ca405d6eaff53fbf4f6442669c6e28b6709bbb9cc8c186e094bfdbd",
+      "height": "34043049"
+    },
+    {
+      "url": "https://rest.cosmos.directory/cosmoshub/cosmos/distribution/v1beta1/delegators/cosmos1qe2s0gguw2khnpfteqy8mhsh5qtmmujfcwaguk/rewards",
+      "hash": "dba081188ca405d6eaff53fbf4f6442669c6e28b6709bbb9cc8c186e094bfdbd",
+      "height": "34043049"
+    }
+  ],
+  "expectedMicroATOM": {
+    "cosmos": "9995000",
+    "cosmos-stake": "1000000",
+    "cosmos-unbonding": "0"
+  },
+  "exactProductQuantities": [
+    [
+      "cosmos",
+      "9.995"
+    ],
+    [
+      "cosmos-stake",
+      "1"
+    ]
+  ],
+  "partial": true,
+  "warning": "ATOM: freie, delegierte und unbondende Bestände getrennt; ausstehende Rewards und weitere Cosmos-Assets nicht vollständig abgedeckt"
+}

@@ -662,7 +662,11 @@ erneut abgerufen. Alle drei Antworten waren bytegleich mit Main
 dieser ausgelieferten Origin ebenfalls. Bei 200 % und 320 CSS-Pixeln
 blieben alle drei Ziele per Tab und Umschalt+Tab erreichbar. Entwurf,
 Fokus-Rückweg und Gleichheit des vollständigen IndexedDB-Datensatzes
-bestanden. Separat wurde die in der lokalen Buchungsliste beim
+bestanden. Ein weiterer sichtbarer Produktionslauf mit Firefox 157
+bestand dieselben OS-Tasten, 640 → 320 CSS-Pixel bei DPR 2 und
+CSS-Zoom 1. WebKit 27.2 bestand auf dem lokalen SW340-Stand
+bei 320 px und in der separaten CSS-Vergrößerung bei 200 %.
+Separat wurde die in der lokalen Buchungsliste beim
 Scrollen teilweise verdeckte Bearbeiten-Taste auf SW340 per
 Tastatur geprüft. Der tatsächliche Fokus brachte die gesamte
 44-px-Treffhöhe unter die Kopfzeile.
@@ -773,3 +777,17 @@ Das Providerbeispiel qualifiziert die Mehrfachausführung als
 Belegart. Der vollständige FLH05-Test benötigt weiterhin die
 separate Nettoabrechnung derselben Gebühren-/FX-Gruppe.
 [Quellen- und Prüfliste](release-evidence/ibkr-order-and-net-cash-source-search-2026-11-25.json).
+
+### Cosmos Hub · positive ausstehende Rewards
+
+Drei unabhängige Endpunkte lieferten auf Block **34.043.049** dieselbe
+finalisierte Blockidentität und denselben ausstehenden
+Reward von **0,032072533799423334 ATOM** im öffentlichen Kraken03-
+Selbstdelegationskonto. Die tatsächlichen Bank- und Stakebestände
+waren **9,995 ATOM** frei und **1 ATOM** delegiert. SW340 zeigte
+exakt diese beiden Mengen, führte keinen noch ungezahlten Reward
+als Besitz und meldete die fehlende vollständige Reward-Abdeckung.
+Der positive öffentliche Fall belegt die Abgrenzung gegen
+Doppelzählung. Import und Abgleich tatsächlich ausgezahlter Rewards
+sowie private Kontozuordnung bleiben gesondert.
+[Block und Prüfnachweis](release-evidence/sw340-cosmos-unclaimed-reward-2026-11-25.json).
