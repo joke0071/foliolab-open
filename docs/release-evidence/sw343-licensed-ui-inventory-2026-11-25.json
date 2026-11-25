@@ -472,5 +472,32 @@
       }
     }
   },
-  "liveRetryRequested": true
+  "liveRetryRequested": true,
+  "liveRetry": {
+    "job": 139499107248,
+    "attempt": 2,
+    "chromiumProductionBlock": "PASS",
+    "crossEngine": "IN_PROGRESS"
+  },
+  "fundSaleMainRegressionArtifacts": [
+    {
+      "artifact": 15061295679,
+      "artifactSHA256": "8609a397738182cec2b8f997a62ada5813f35697ef46ba07e40ae13a62c8a997",
+      "zipCRC": "PASS",
+      "reportSHA256": "e6624f75a7347ea3829cdeb50b4da43f01b55182b75f4d043bb34019b55fa2f0",
+      "engines": {
+        "chromium": "141.0.7390.37"
+      }
+    },
+    {
+      "artifact": 15059707400,
+      "artifactSHA256": "f00fce0854fe7f6d5707fddb5ab6b5e1e8c4ea11a792b093ca3295cd2872ae72",
+      "zipCRC": "PASS",
+      "reportSHA256": "bdbab4574f4f328d507b47d9a196c81743fd8885e29f839e9704c563d1ca92e5",
+      "engines": {
+        "firefox": "157.0",
+        "webkit": "27.2"
+      }
+    }
+  ]
 }
