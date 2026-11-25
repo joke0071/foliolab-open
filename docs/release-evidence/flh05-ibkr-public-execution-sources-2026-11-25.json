@@ -1,0 +1,163 @@
+{
+  "repository": "clifton/ib-flex",
+  "tree": "a433988cfed08847e8bd3b264b35a2d90d87e45d",
+  "examined": [
+    {
+      "path": "tests/fixtures/activity_backfill.xml",
+      "sha256": "cf115d2d096379bb4612d679fc16a54ded3573b3245d4056cc81dd99131ea744",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 4
+    },
+    {
+      "path": "tests/fixtures/activity_bonds.xml",
+      "sha256": "d3d831c21d0c5a2d990b59eac25ebb247215e12be6587d9c0a47e509a02b1b04",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 3
+    },
+    {
+      "path": "tests/fixtures/activity_cancelled_trades.xml",
+      "sha256": "ab7cdde71f336f5a136db064c0b4863a8e16a06210d8396dbfcf4d7828e7c9d3",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_cash.xml",
+      "sha256": "bf284b59791254f45159175a225088b3872a892d2ceaeb2af918522fa28c59d3",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 15
+    },
+    {
+      "path": "tests/fixtures/activity_cfds.xml",
+      "sha256": "6bc2429dd72150faea75c287360b2a9029104ed9554d39ee939252e0fc31b04e",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 1
+    },
+    {
+      "path": "tests/fixtures/activity_complex_corporate_actions.xml",
+      "sha256": "f3f06c8d4cc6e9f34dd311f89206daee9dc09013dd36da3b6a87f3dc2919c7fa",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_corporate_actions.xml",
+      "sha256": "77e297850be9f1fe0052b954e6515f379c1a13d1a0822e143594d04d42c15b70",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 2
+    },
+    {
+      "path": "tests/fixtures/activity_daily_portfolio.xml",
+      "sha256": "b16e648d2bfd0be58f2e6ee89f714efa0df986cd6e922f1ac59099024c270e70",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 3
+    },
+    {
+      "path": "tests/fixtures/activity_extended.xml",
+      "sha256": "1c6586175ee15a503595dead56de5faf4a7bcd35abb62ae849bcce7e6e84369c",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_forex.xml",
+      "sha256": "a745c0d9a0237269632b2ab143d4f5d6043c791e31e30639aafaba12fb248775",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 3
+    },
+    {
+      "path": "tests/fixtures/activity_fractional_shares.xml",
+      "sha256": "d2dd5dcbc54d64b5b02f042dc3b509bfe41a5ff09dc7f1185b0d44769968cc76",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_futures.xml",
+      "sha256": "595cd17d231064683d23fcc2bf7ded1d403cc81aee1478b3864f31b37d759e5e",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 2
+    },
+    {
+      "path": "tests/fixtures/activity_minimal.xml",
+      "sha256": "841b4f89f5a5d656b02d7a4d1c96e91e2fdaf21d4f92a51faa737c75ed64a8d3",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_options.xml",
+      "sha256": "c283fc052deb5a1649b06d5886d748dded2ff527502f0fc8849f7b069d679bff",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 2
+    },
+    {
+      "path": "tests/fixtures/activity_tbills.xml",
+      "sha256": "5a0d52385c0ca06086834046e5a6b0e3ef315de2e857c0e23622a4622ae4a66a",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/activity_warrants.xml",
+      "sha256": "763a905b386f033f4365a6c6542b9a1158e5bc90f86a033eaaac1e866229bf3d",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/wild_crypto_transfer.xml",
+      "sha256": "469edc256a57af2324b1e7799711e54ae938c6ad82826defc80ddb7957fc07af",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    },
+    {
+      "path": "tests/fixtures/wild_legacy_separator.xml",
+      "sha256": "d894e53209f49d8e3f3e5bc2a073f787aed32c05ac6d291175ebf3351192e242",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 1
+    },
+    {
+      "path": "tests/fixtures/wild_lending_economics.xml",
+      "sha256": "139b3e2303d5b34636a62f3e7621622b3ec06a4f13e43ee95a820396c7e150c3",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 3
+    },
+    {
+      "path": "tests/fixtures/wild_stock_grant.xml",
+      "sha256": "5ac5aaeb300829b4842319c07ba1e81513a8d5d9202bfeef458f8757fda8a2e7",
+      "nontrivialExecutionGroups": 0,
+      "directCashOrderMatches": 0,
+      "cashRows": 0
+    }
+  ],
+  "unreadable": [
+    {
+      "path": "tests/fixtures/activity_simple.xml",
+      "errorType": "ParseError"
+    }
+  ],
+  "sourceDocumentation": "https://www.interactivebrokers.com/docs/web-api/api-reference/get-statement",
+  "documentedExample": {
+    "ticker": "AAPL",
+    "currency": "USD",
+    "oneOrderExecutions": 3,
+    "shares": 200,
+    "independentGrossFromExecutionRowsUSD": "61991.20",
+    "separatelyBookedCashMatched": false,
+    "explicitFeeOrFxInExample": false
+  },
+  "decision": "Provider documentation and public test-fixture coverage checked. No independently booked, same-order FX and fee settlement identified. Preserve the Consorsbank and Kraken partial cases."
+}
