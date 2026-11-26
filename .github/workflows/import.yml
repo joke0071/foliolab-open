@@ -135,12 +135,14 @@ jobs:
           git rev-parse HEAD > artifacts/gates/tested-sha.txt
           npm test 2>&1 | tee artifacts/gates/unit.log
           npm run check 2>&1 | tee artifacts/gates/syntax.log
-      - name: Restore pinned Chromium shell cache (integration)
+      - &quality-chromium-cache
+        name: Restore pinned Chromium shell cache (integration)
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
-      - name: Install browser test tools
+      - &quality-chromium-install
+        name: Install browser test tools
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
           npx playwright install chromium --only-shell
@@ -185,7 +187,6 @@ jobs:
           node tests/browser-position-removal.mjs
           node tests/browser-position-archive.mjs
           node tests/browser-booking-management.mjs
-          UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
           node tests/browser-flatex-import.mjs
           node tests/browser-flatex-backfill.mjs
           node tests/browser-flatex-native-ui.mjs
@@ -265,22 +266,6 @@ jobs:
           node tests/browser-portfolio-scale.mjs
           node tests/browser-offline-mobile.mjs
           node tests/browser-pwa-updates.mjs
-      - name: Expose bounded synthetic C5 PR review
-        run: |
-          set -euo pipefail
-          node --input-type=module <<'JS'
-          import {readFileSync} from 'node:fs';
-          import {createHash} from 'node:crypto';
-          const files=[['c5-positions','artifacts/gates/ui-positions-390.png'],['c5-bookings','artifacts/gates/c5-bookings-390.png'],['c5-connections','artifacts/gates/c5-connections-390.png'],['c5-connections-viewport','artifacts/gates/c5-connections-viewport-390.png']];
-          for(const [id,path]of files){
-            const bytes=readFileSync(path);
-            if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
-            const data=bytes.toString('base64');
-            console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.GITHUB_SHA}));
-            for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
-            console.log('LIVE_IMAGE_END '+id);
-          }
-          JS
       - name: Preserve test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -310,12 +295,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Restore pinned Firefox/WebKit cache (integration)
+      - &quality-cross-cache
+        name: Restore pinned Firefox/WebKit cache (integration)
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
-      - name: Install Firefox and WebKit for cross-engine regression
+      - &quality-cross-install
+        name: Install Firefox and WebKit for cross-engine regression
         timeout-minutes: 8
         run: |
           set -euo pipefail
@@ -380,7 +367,6 @@ jobs:
             DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs
             RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs
             FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
-            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
           else
             CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
             INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
@@ -406,6 +392,70 @@ jobs:
           name: cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
           path: artifacts/gates/
           if-no-files-found: ignore
+  quality-chromium:
+    needs: [plan]
+    if: needs.plan.outputs.full == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - *quality-chromium-cache
+      - *quality-chromium-install
+      - name: Run the full local UI quality suite
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-quality.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
+      - name: Expose bounded synthetic C5 PR review
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const files=[['c5-positions','artifacts/gates/ui-positions-390.png'],['c5-bookings','artifacts/gates/c5-bookings-390.png'],['c5-connections','artifacts/gates/c5-connections-390.png'],['c5-connections-viewport','artifacts/gates/c5-connections-viewport-390.png']];
+          for(const [id,path]of files){
+            const bytes=readFileSync(path);
+            if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
+            const data=bytes.toString('base64');
+            console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.GITHUB_SHA}));
+            for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
+            console.log('LIVE_IMAGE_END '+id);
+          }
+          JS
+      - name: Preserve UI quality evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-quality-chromium-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+  quality-cross:
+    needs: [plan]
+    if: needs.plan.outputs.full == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - *quality-cross-cache
+      - *quality-cross-install
+      - name: Run the full local UI quality suite
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-quality.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
+      - name: Preserve UI quality evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-quality-cross-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     permissions:
@@ -413,7 +463,7 @@ jobs:
       actions: read
       pages: write
       id-token: write
-    needs: [test, cross-engine]
+    needs: [test, cross-engine, quality-chromium, quality-cross]
     runs-on: ubuntu-latest
     environment:
       name: github-pages

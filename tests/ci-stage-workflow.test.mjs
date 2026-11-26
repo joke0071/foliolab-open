@@ -1,10 +1,11 @@
+import {combinedQualityWorkflow} from './ci-stage-quality-jobs.mjs';
 import {historicalCrossEngineLayout} from './ci-cross-engine-layout.mjs';
 import {spawnSync} from 'node:child_process';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-const source = readFileSync(new URL('../.github/workflows/import.yml', import.meta.url), 'utf8');
+const source = combinedQualityWorkflow(readFileSync(new URL('../.github/workflows/import.yml', import.meta.url), 'utf8'));
 const uiSuite = readFileSync(new URL('./browser-ui-quality.mjs', import.meta.url), 'utf8');
 const liveUiFlatexModules = ['./browser-flatex-native-ui.mjs', './browser-flatex-native-commit.mjs'];
 const hashes = {"test": "ff07928ba1afb9b46963a14c07070f667bf11656e3b5d015791371c6c660329c", "cross-engine": "968e44c353136e18f3e108d30ab40a00b54acc4a58ef4e3758704160e44070d9", "deploy": "568af6de8fc542f67cdfb8255b00a38f7e06f0f8ca04d15f314d90fa8b5ac459", "live-acceptance": "650739b764551d00bf7529d17662f8369eddabf38f5473842fe80af2c75f856e"};

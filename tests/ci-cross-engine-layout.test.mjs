@@ -1,8 +1,9 @@
+import {combinedQualityWorkflow} from './ci-stage-quality-jobs.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {historicalCrossEngineLayout} from './ci-cross-engine-layout.mjs';
-const current=readFileSync(new URL('../.github/workflows/import.yml',import.meta.url),'utf8');
+const current=combinedQualityWorkflow(readFileSync(new URL('../.github/workflows/import.yml',import.meta.url),'utf8'));
 const row='            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs\n';
 test('one exact relocation preserves every invocation and original sealed layout',()=>{
  const old=historicalCrossEngineLayout(current);
