@@ -1,0 +1,85 @@
+name: Verify the SW347 combined live closure from uploaded originals
+on:
+  push:
+    branches: [qa/sw347-release-original-verification]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+          persist-credentials: false
+      - name: Reopen uploaded originals, compare reports and verify the complete release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir evidence
+          gh api repos/$GITHUB_REPOSITORY/contents/docs/release-evidence/verify-foliolab-release.py?ref=e51c5cfcd694cc1d4e233e62d3b1bcc780b355a9 --jq .content | base64 -d >/tmp/verify.py
+          python - <<'PY'
+          import json,hashlib,os,subprocess,zipfile
+          from pathlib import Path
+          repo=os.environ['GITHUB_REPOSITORY']
+          main='9803a2c849dbe9aaca88c756daea2d892c8cc56d'
+          GH=lambda p:subprocess.check_output(['gh','api','repos/'+repo+'/'+p])
+          ghjson=lambda p:json.loads(GH(p))
+          def digest(raw):return hashlib.sha256(raw).hexdigest()
+          def download(a,expected,p):
+              with open(p,'wb') as f:subprocess.run(['gh','api',f'repos/{repo}/actions/artifacts/{a}/zip'],stdout=f,check=True)
+              assert digest(Path(p).read_bytes())==expected
+              return zipfile.ZipFile(p)
+          assert ghjson('commits/main')['sha']==main
+          initial=ghjson('actions/runs/45746989122/attempts/1/jobs')['jobs']
+          statuses={j['name']:j['conclusion'] for j in initial}
+          assert all(statuses[k]=='success' for k in ['Determine FAST / INTEGRATION / RELEASE','test','cross-engine (1)','cross-engine (2)','cross-engine (3)','deploy'])
+          assert ghjson('actions/jobs/139675244765')['conclusion']=='failure'
+          assert ghjson('actions/jobs/139676569131')['conclusion']=='failure'
+          assert ghjson('actions/jobs/139690667027')['conclusion']=='success'
+          assert all(ghjson('actions/runs/'+str(i))['conclusion']=='success' for i in [45744441510,45744441503,45754759429])
+          originals=download(15087032865,'98f9bdc57fd3bd46fcda78d97cfe55a2e9f95d11d218bfce668c4e180c2bb5e8','/tmp/official-bundle.zip')
+          continuation=download(15086894103,'edef3ad5454e8311dabcddfc842fc7a682e8de88ad51789ce4cb1b1cd4f31b0a','/tmp/continuation.zip')
+          assert originals.testzip() is None and continuation.testzip() is None
+          for n in ['15083568731.zip','15085695238.zip','15087465440.zip']:originals.extract(n,'/tmp')
+          continuation.extract('combined-reports.zip','/tmp')
+          assert digest(Path('/tmp/15087465440.zip').read_bytes())=='9a17cbfade9ac301a2d4c6dda8737442837b400864f8d4c73410d02a113e5802'
+          assert digest(Path('/tmp/15085695238.zip').read_bytes())=='2965b2636588cfed5e878f70cf163f984219e6b83d289a8f48c44afbd013637f'
+          def verify(kind,name,artifact,sha256):
+              return json.loads(subprocess.check_output(['python','/tmp/verify.py',kind,'/tmp/'+name,'.',main,'347',str(artifact),sha256]))
+          pages=verify('pages','15083568731.zip',15083568731,'31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc')
+          embedded=digest(Path('/tmp/combined-reports.zip').read_bytes())
+          report=verify('live','combined-reports.zip',15086894103,embedded)
+          worker=json.loads(continuation.read('combined-verification.json'))
+          assert {k:v for k,v in report.items() if k!='artifactId'}=={k:v for k,v in worker.items() if k!='artifactId'}
+          boundary=json.loads(continuation.read('resume-boundary.json'))
+          assert len(boundary['completedImportsFromOriginal'])==23 and boundary['firstNewImport']=='./browser-near-native-precision.mjs'
+          source=Path('tests/browser-ui-quality.mjs').read_bytes()
+          assert digest(source)==boundary['sourceSHA256']
+          assert digest(source[source.index(b']){const finish=browserGateDeadline('):])==boundary['restOfSuiteSHA256']
+          screenshots=json.loads(continuation.read('screenshots.json'))
+          assert len(screenshots)==4
+          with zipfile.ZipFile('/tmp/15087465440.zip') as raw,zipfile.ZipFile('/tmp/combined-reports.zip') as joined:
+              assert raw.testzip() is None and joined.testzip() is None
+              fixed=[n for n in raw.namelist() if n.startswith('production-') and n!='production-ui-cross.log']+['live/report.json']
+              assert all(raw.read(n)==joined.read(n) for n in fixed)
+              prefix=raw.read('production-ui-cross.log').split(b'BROWSER_GATE_START ui-quality import ./browser-near-native-precision.mjs\n')[0]
+              assert digest(prefix)==boundary['retainedLogPrefixSHA256'] and joined.read('production-ui-cross.log').startswith(prefix)
+              for n,h in screenshots.items():assert digest(raw.read(n))==digest(joined.read(n))==h
+              for n in ['production-recovery-cross.log','production-fin-e2e-cross.log','production-transfers-cross.log','production-transfers-cross.json','production-ui-cross.json']:
+                  assert joined.getinfo(n).file_size>0,n
+          old=download(15082640866,'08d47185df21238088519cc87e9013785813f6325c9052ab85ccb6cd6cf0d9f1','evidence/ed0a1d9f-original.zip')
+          assert old.testzip() is None
+          out={'decision':'LIVE_ACCEPTED','main':main,'tree':ghjson('git/commits/'+main)['tree']['sha'],'mainRun':45746989122,'mainRunConclusion':'failure','regularLiveAttempts':[139675244765,139676569131],'continuationRun':45754759429,'continuationJob':139690667027,'unchangedOriginalReports':len(fixed),'preservedSuccessfulImports':23,'screenshots':screenshots,'pages':pages,'completeLiveReport':report,'receiptBundle':15087032865,'continuationBundle':15086894103,'archiveScope':'completeLiveReport.archiveSHA256 is the embedded combined-reports.zip hash. The continuation outer bundle has its own GitHub SHA256.'}
+          Path('evidence/verification.json').write_text(json.dumps(out,indent=2)+'\n')
+          print('VERIFIED_ACCEPTANCE',json.dumps(out,separators=(',',':')))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-sw347-release-closure
+          path: evidence/
+          retention-days: 90
+          compression-level: 0
