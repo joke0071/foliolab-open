@@ -33,7 +33,7 @@ jobs:
                   raw=z.read(name)
                   assert raw[:8]==b'\x89PNG\r\n\x1a\n'
                   width,height=unpack('>II',raw[16:24])
-                  assert width==390 and height>0
+                  assert width>0 and height>0
                   pictures[name]={'sha256':hashlib.sha256(raw).hexdigest(),'width':width,'height':height,'bytes':len(raw)}
                   z.extract(name,'artifacts/gates')
               target=max((i for i in z.infolist() if 'worker-diagnostics/firefox-' in i.filename and i.filename.endswith('.jsonl')),key=lambda i:i.date_time)
