@@ -1,0 +1,75 @@
+name: Audit the official SW347 source archives and production request volume
+on:
+  push:
+    branches: [qa/sw347-pages-request-accounting]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  originals:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+          persist-credentials: false
+      - name: Verify Pages and both raw failed job originals offline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          gh api repos/$GITHUB_REPOSITORY/contents/docs/release-evidence/verify-foliolab-release.py?ref=e51c5cfcd694cc1d4e233e62d3b1bcc780b355a9 --jq .content | base64 -d >/tmp/verify.py
+          for id in 15083568731 15085695238 15087465440; do gh api repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip >evidence/$id.zip; done
+          (cd evidence && sha256sum -c <<'HASH'
+          31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc  15083568731.zip
+          2965b2636588cfed5e878f70cf163f984219e6b83d289a8f48c44afbd013637f  15085695238.zip
+          9a17cbfade9ac301a2d4c6dda8737442837b400864f8d4c73410d02a113e5802  15087465440.zip
+          HASH
+          )
+          python /tmp/verify.py pages evidence/15083568731.zip . 9803a2c849dbe9aaca88c756daea2d892c8cc56d 347 15083568731 31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc | tee evidence/pages.json
+          python - <<'PY'
+          import collections,hashlib,json
+          from pathlib import Path
+          from zipfile import ZipFile
+          from urllib.parse import urlsplit
+          c=collections.Counter()
+          latest=None
+          for artifact in [15085695238,15087465440]:
+              with ZipFile('evidence/'+str(artifact)+'.zip') as z:
+                  assert z.testzip() is None
+                  if artifact==15085695238: continue
+                  files=[n for n in z.namelist() if n.startswith('worker-diagnostics/') and n.endswith('.jsonl')]
+                  for n in files:
+                      engine=n.split('/')[-1].split('-')[0]
+                      record=collections.Counter()
+                      title=''
+                      errors=[]
+                      for raw in z.open(n):
+                          e=json.loads(raw)
+                          if e['event']=='start':title=Path(e.get('script','')).name
+                          if e['event']=='contextResponse' and urlsplit(e['url']).netloc=='foliolab.unperfekt.at':
+                              record[e['status']]+=1
+                          if e['event']=='badResponse' and urlsplit(e['url']).netloc=='foliolab.unperfekt.at':
+                              errors.append((urlsplit(e['url']).path,e['status'],e.get('headers',{}).get('retry-after')))
+                      c[engine,title]+=sum(record.values())
+                      if engine=='firefox' and errors:
+                          rank=z.getinfo(n).date_time
+                          if latest is None or rank>latest[0]:latest=(rank,n,errors)
+                  report=json.loads(z.read('live/report.json'))
+                  assert report['sha']=='9803a2c849dbe9aaca88c756daea2d892c8cc56d' and report['result']=='PASS'
+                  for item in report['assetHashes']:
+                      path=item['path'].removeprefix('./') or 'index.html'
+                      assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==item['sha256']
+                  assert len(report['assetHashes'])==162 and all(e['status']==200 for e in report['assetResponses'])
+                  out={'source':artifact,'observerNote':'Playwright context response events can include cached and service-worker responses; these are not network billing units.','mostFrequentObservedSuites':[[e,s,v] for (e,s),v in c.most_common(12)],'lastThrottledFirefox':latest,'core':{'sha':report['sha'],'httpResponses':len(report['assetResponses']),'checks':len(report['checks']),'axe':len(report['scans'])},'crossLastPasses':[l for l in z.read('production-ui-cross.log').decode().splitlines() if 'FRACTIONAL_SETTLEMENT_PASS' in l or 'COSMOS_REWARD_PASS' in l]}
+                  print('OFFICIAL_DIAGNOSIS',json.dumps(out,separators=(',',':'))[:3500])
+                  Path('evidence/diagnosis.json').write_text(json.dumps(out,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: official-sw347-originals-and-request-audit
+          retention-days: 90
+          compression-level: 0
+          path: evidence/
