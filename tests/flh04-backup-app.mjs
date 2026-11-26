@@ -1,9 +1,29 @@
 import assert from 'node:assert/strict';
 import {blankModel,backup} from '../src/model.js';
 
-export async function openApp(context,origin){
+const navigationBackoffMs=[10000,30000,65000];
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function retryAfterMs(value){
+ if(!value)return 0;
+ if(/^\d+$/.test(value))return Number(value)*1000;
+ const date=Date.parse(value);
+ return Number.isFinite(date)?Math.max(0,date-Date.now()):0;
+}
+
+export async function openApp(context,origin,{waitForRetry=wait}={}){
  const page=await context.newPage();
- await page.goto(origin);
+ for(let attempt=0;;attempt++){
+  const response=await page.goto(origin);
+  if(response?.status()!==429)break;
+  const header=await response.headerValue('retry-after');
+  const backoff=navigationBackoffMs[attempt];
+  const delay=Math.max(backoff??0,retryAfterMs(header));
+  if(backoff===undefined||delay>120000){
+   throw Error('Application navigation still rate limited (HTTP 429, Retry-After: '+(header??'absent')+').');
+  }
+  console.log('QA navigation HTTP 429; waiting '+delay+' ms before retry '+(attempt+1));
+  await waitForRetry(delay);
+ }
  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  return page;
 }
