@@ -1,0 +1,125 @@
+name: Resume SW347 published acceptance at the incomplete Firefox and WebKit suite
+on:
+  push:
+    branches: [qa/sw347-published-checkpoint]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      RELEASE_SHA: ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad
+      ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      TRANSFER_STATE_BASE: https://foliolab.unperfekt.at/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify exact failure archive, Pages bytes and diagnostic responses
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          test "$(gh api repos/$GITHUB_REPOSITORY/commits/main --jq .sha)" = "$RELEASE_SHA"
+          mkdir -p evidence artifacts/gates
+          gh api repos/$GITHUB_REPOSITORY/contents/docs/release-evidence/verify-foliolab-release.py?ref=e51c5cfcd694cc1d4e233e62d3b1bcc780b355a9 --jq .content | base64 -d > /tmp/verify.py
+          for id in 15082640866 15080080836; do
+            gh api repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip > /tmp/$id.zip
+          done
+          sha256sum -c <<'HASH'
+          08d47185df21238088519cc87e9013785813f6325c9052ab85ccb6cd6cf0d9f1  /tmp/15082640866.zip
+          32f3ea61f8c27c8e7e9e9c6d25110fc1363d1002d7471e6259ccebcffd452310  /tmp/15080080836.zip
+          HASH
+          python /tmp/verify.py pages /tmp/15080080836.zip . "$RELEASE_SHA" 347 15080080836 32f3ea61f8c27c8e7e9e9c6d25110fc1363d1002d7471e6259ccebcffd452310 | tee evidence/pages.json
+          python - <<'PY' | tee evidence/failure-diagnosis.txt
+          from zipfile import ZipFile
+          from urllib.parse import urlsplit
+          import json, collections
+          with ZipFile('/tmp/15082640866.zip') as archive:
+              assert archive.testzip() is None
+              diagnostic = max((item for item in archive.infolist() if 'worker-diagnostics/firefox-' in item.filename and item.filename.endswith('.jsonl')),key=lambda item:item.date_time)
+              entries = [json.loads(line) for line in archive.read(diagnostic).splitlines()]
+              print('original', diagnostic.filename)
+              print('HTTP errors', collections.Counter((e.get('status'),urlsplit(e.get('url','')).path,e.get('headers',{}).get('retry-after')) for e in entries if e.get('event')=='badResponse').most_common(12))
+              print('document root',[(e.get('status'),e.get('at')) for e in entries if e.get('event')=='contextResponse' and e.get('url')=='https://foliolab.unperfekt.at/'][-8:])
+              archive.extractall('artifacts/gates')
+          PY
+          mv artifacts/gates/production-ui-cross.log evidence/original-interrupted-ui-cross.log
+          curl -fsS "$ACCEPTANCE_BASE/sw.js" -o /tmp/sw-live.js
+          cmp sw.js /tmp/sw-live.js
+      - name: Install Firefox and WebKit for cross-engine regression
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.
+          archive_mirror=''
+          security_mirror=''
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
+          fi
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
+      - name: Repeat the complete unfinished UI suite and all following production checks
+        env:
+          LIVE_WORKER_DIAGNOSTICS: '1'
+          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'
+          UI_QUALITY_ENGINES: firefox,webkit
+          TRANSFER_STATE_ENGINES: firefox,webkit
+        run: |
+          set -euo pipefail
+          node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
+          RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log
+          FIN_E2E_BASE="$ACCEPTANCE_BASE" FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-cross.log
+          cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-cross.json
+          node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-cross.log
+          cp artifacts/gates/transfer-states.json artifacts/gates/production-transfers-cross.json
+      - name: Verify all original and resumed reports and read back the deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,time,hashlib,urllib.request
+          from pathlib import Path
+          from urllib.parse import urljoin
+          from zipfile import ZipFile,ZIP_DEFLATED
+          root=Path('artifacts/gates')
+          report=json.loads((root/'live/report.json').read_text())
+          for item in report['assetHashes']:
+              with urllib.request.urlopen(urljoin(report['base'],item['path']),timeout=30) as r:
+                  assert r.status==200 and hashlib.sha256(r.read()).hexdigest()==item['sha256'],item['path']
+              time.sleep(0.4)
+          print('Final production readback',len(report['assetHashes']))
+          with ZipFile('/tmp/resumed.zip','w',ZIP_DEFLATED) as z:
+              for p in root.rglob('*'):
+                  if p.is_file():z.write(p,p.relative_to(root))
+          PY
+          test "$(gh api repos/$GITHUB_REPOSITORY/commits/main --jq .sha)" = "$RELEASE_SHA"
+          python /tmp/verify.py live /tmp/resumed.zip . "$RELEASE_SHA" 347 15082640866 "$(sha256sum /tmp/resumed.zip | cut -d' ' -f1)" | tee evidence/combined-verification.json
+          cp /tmp/resumed.zip evidence/combined-reports.zip
+          echo "Original 15082640866, same Main. Combined archive is a derivative containing the successful Chromium and early cross steps from the original and the complete rerun of UI-cross, recovery, finance and transfers." > evidence/provenance.txt
+      - name: Preserve original diagnosis and real continuation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sw347-same-main-continuation
+          path: evidence/
+          retention-days: 30
