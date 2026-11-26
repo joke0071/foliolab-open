@@ -12,20 +12,42 @@ function retryAfterMs(value){
 
 export async function openApp(context,origin,{waitForRetry=wait}={}){
  const page=await context.newPage();
+ return awaitAppNavigation(page,()=>page.goto(origin),new URL(origin).origin,waitForRetry);
+}
+
+export function reloadApp(page,{waitForRetry=wait}={}){
+ return awaitAppNavigation(page,()=>page.reload(),new URL(page.url()).origin,waitForRetry);
+}
+
+async function awaitAppNavigation(page,navigate,origin,waitForRetry){
  for(let attempt=0;;attempt++){
-  const response=await page.goto(origin);
-  if(response?.status()!==429)break;
-  const header=await response.headerValue('retry-after');
+  const throttled=[];
+  const observe=response=>{
+   if(response.status()===429&&response.request().resourceType()==='script'&&new URL(response.url()).origin===origin)
+    throttled.push(response);
+  };
+  page.on('response',observe);
+  try{
+   const response=await navigate();
+   if(response?.status()===429)throttled.push(response);
+   if(!throttled.length){
+    await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+    return page;
+   }
+  }catch(error){
+   if(!throttled.length)throw error;
+  }finally{
+   page.off('response',observe);
+  }
+  const headers=await Promise.all(throttled.map(response=>response.headerValue('retry-after')));
   const backoff=navigationBackoffMs[attempt];
-  const delay=Math.max(backoff??0,retryAfterMs(header));
+  const delay=Math.max(backoff??0,...headers.map(retryAfterMs));
   if(backoff===undefined||delay>120000){
-   throw Error('Application navigation still rate limited (HTTP 429, Retry-After: '+(header??'absent')+').');
+   throw Error('Application document or script remains rate limited (HTTP 429).');
   }
   console.log('QA navigation HTTP 429; waiting '+delay+' ms before retry '+(attempt+1));
   await waitForRetry(delay);
  }
- await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- return page;
 }
 
 export async function readAppState(page){

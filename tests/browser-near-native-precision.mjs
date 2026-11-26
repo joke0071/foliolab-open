@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
-import {openApp,readAppState,importPasswordFile} from './flh04-backup-app.mjs';
+import {openApp,reloadApp,readAppState,importPasswordFile} from './flh04-backup-app.mjs';
 
 // Public finalized block 226157919. Independent RPC receipts and the SW340
 // rejection are documented in the project’s NEAR precision acceptance record.
@@ -13,18 +13,21 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await engines[engine].launch();
  try{
   const context=await browser.newContext({serviceWorkers:'block'});
-  await context.route('**/*',route=>{
-   const url=new URL(route.request().url());
-   if(url.origin===new URL(base).origin)return route.continue();
-   if(url.hostname==='rpc.mainnet.fastnear.com'&&route.request().method()==='POST'){
-    const {method,params}=route.request().postDataJSON();
-    assert.equal(method,'query');
-    assert.deepEqual(params,{request_type:'view_account',account_id:'aurora',finality:'final'});
-    return route.fulfill({json:{jsonrpc:'2.0',id:1,result:{amount,locked:'0',block_height:226157919,
-     block_hash:'46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH'}},headers:{'access-control-allow-origin':'*'}});
-   }
-   return route.abort();
-  });
+  // Keep the browser's HTTP cache for same-origin product bytes.
+  // Only the public RPC response is pinned to the independently verified block.
+  await context.addInitScript(amount=>{
+   const fetchFromOrigin=window.fetch.bind(window);
+   window.fetch=async(input,init)=>{
+    const url=new URL(input instanceof Request?input.url:input,location.href);
+    if(url.origin===location.origin)return fetchFromOrigin(input,init);
+    if(url.href!=='https://rpc.mainnet.fastnear.com/'||init?.method!=='POST')throw TypeError('External request disabled in the NEAR regression test.');
+    const {method,params}=JSON.parse(init.body);
+    if(method!=='query'||params?.request_type!=='view_account'||params?.account_id!=='aurora'||params?.finality!=='final')
+     throw Error('Unexpected request for the archived NEAR balance.');
+    return new Response(JSON.stringify({jsonrpc:'2.0',id:1,result:{amount,locked:'0',block_height:226157919,
+     block_hash:'46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH'}}),{headers:{'content-type':'application/json'}});
+   };
+  },amount);
   const page=await openApp(context,base);
   const errors=[];
   page.on('pageerror',error=>errors.push(error.message));
@@ -48,8 +51,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(initial.positions[0].quantityExact,quantity);
   assert.equal(initial.positions[0].wallet.decimals,24);
   const before=initial.positions[0].id;
-  await scan();await page.reload();
-  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  await scan();await reloadApp(page);
   const rescanned=await model();
   assert.equal(rescanned.positions.length,1);assert.equal(rescanned.positions[0].id,before);
   assert.equal(rescanned.positions[0].quantityExact,quantity);

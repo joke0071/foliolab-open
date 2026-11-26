@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {openApp} from './flh04-backup-app.mjs';
+import {openApp,reloadApp} from './flh04-backup-app.mjs';
 
 const origin='https://example.invalid/';
 function navigation(replies,{readinessError}={}){
  const calls=[],delays=[];
  let ready=0;
  const page={
+  on(){},
+  off(){},
   async goto(url){
    calls.push(url);
    const [status,header]=replies.shift();
@@ -39,4 +41,23 @@ test('normal responses and application readiness errors retain the original beha
  const failed=navigation([[200]],{readinessError:error});
  await assert.rejects(failed.open(),e=>e===error);
  assert.deepEqual(failed.calls,[origin]);assert.deepEqual(failed.delays,[]);
+});
+test('a live script returning HTTP 429 after a successful reload is retried',async()=>{
+ const delays=[];
+ let observe,reloads=0,readiness=0;
+ const page={
+  url:()=>origin,
+  on(name,handler){assert.equal(name,'response');observe=handler;},
+  off(name,handler){assert.equal(name,'response');assert.equal(handler,observe);observe=null;},
+  async reload(){
+   if(++reloads===1){
+    observe({status:()=>429,url:()=>origin+'src/decimal.js',request:()=>({resourceType:()=> 'script'}),
+     headerValue:async()=> '15'});
+   }
+   return {status:()=>200};
+  },
+  async waitForFunction(){readiness++;}
+ };
+ assert.equal(await reloadApp(page,{waitForRetry:async time=>{delays.push(time);}}),page);
+ assert.deepEqual([reloads,readiness,delays,observe],[2,1,[15000],null]);
 });
