@@ -1,0 +1,33 @@
+{
+  "head": "fdd6fae13d231a0d99ed2da5eee7673b35f7709d",
+  "base": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+  "pr": 439,
+  "suite": "1543/1543",
+  "limits": "Only a real HTTP 429 document navigation. Same origin. Up to three delays. Numeric and HTTP-date Retry-After; no early retry when above the budget. No retries of application assertions.",
+  "localFullNEARFlowWithControlledFirstDocument": [
+    {
+      "engine": "chromium",
+      "initialStatus": 429,
+      "retryAfter": "0",
+      "nextStatus": 200,
+      "actualGapSeconds": 10.019,
+      "restore": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "initialStatus": 429,
+      "retryAfter": "0",
+      "nextStatus": 200,
+      "actualGapSeconds": 10.118,
+      "restore": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "initialStatus": 429,
+      "retryAfter": "0",
+      "nextStatus": 200,
+      "actualGapSeconds": 10.036,
+      "restore": "PASS"
+    }
+  ]
+}

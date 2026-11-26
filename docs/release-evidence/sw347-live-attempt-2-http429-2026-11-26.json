@@ -1,0 +1,144 @@
+{
+  "sha": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+  "run": 45722582039,
+  "attempt": 2,
+  "job": 139609896147,
+  "conclusion": "failure",
+  "step": {
+    "number": 7,
+    "name": "Verify targeted production UI in Firefox and WebKit"
+  },
+  "error": "page.waitForFunction: Timeout 30000ms exceeded in tests/flh04-backup-app.mjs:7:13; tests/browser-near-native-precision.mjs:28:14.",
+  "archiveId": 15077139277,
+  "archiveSHA256": "3e84d88d603a9befbbdb5352bd7659ae9fe6a28b3c972f8ba764b09289a3a179",
+  "bytes": 135074296,
+  "zipCRC": "PASS",
+  "entries": 1743,
+  "networkRecords": [
+    {
+      "at": 1795655670874,
+      "event": "start",
+      "engine": "firefox",
+      "script": "/home/runner/work/foliolab-open/foliolab-open/tests/browser-ui-quality.mjs",
+      "scope": "context-network-and-document-lifecycle",
+      "timingAffected": true
+    },
+    {
+      "at": 1795655671168,
+      "event": "context",
+      "context": 0,
+      "serviceWorkers": "block"
+    },
+    {
+      "at": 1795655671671,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "method": "GET",
+      "resourceType": "document"
+    },
+    {
+      "at": 1795655671754,
+      "event": "contextResponse",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 429
+    },
+    {
+      "at": 1795655671754,
+      "event": "badResponse",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 429,
+      "headers": {
+        "server": "Varnish",
+        "retry-after": "0",
+        "content-type": "text/html; charset=utf-8",
+        "accept-ranges": "bytes",
+        "date": "Thu, 26 Nov 2026 01:14:31 GMT",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-iad-khef600077-IAD",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "content-length": "1511",
+        "x-firefox-spdy": "h2"
+      }
+    },
+    {
+      "at": 1795655671816,
+      "event": "document",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "controller": null,
+      "active": null,
+      "installing": null,
+      "waiting": null
+    },
+    {
+      "at": 1795655671828,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/primer-tiny.css",
+      "method": "GET",
+      "resourceType": "stylesheet"
+    },
+    {
+      "at": 1795655671829,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/gh.svg",
+      "method": "GET",
+      "resourceType": "image"
+    },
+    {
+      "at": 1795655671830,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/lock.svg",
+      "method": "GET",
+      "resourceType": "image"
+    },
+    {
+      "at": 1795655671834,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/primer-tiny.css",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795655671836,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/gh.svg",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795655671836,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/lock.svg",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795655701844,
+      "event": "browserClosing"
+    },
+    {
+      "at": 1795655701848,
+      "event": "contextClosed",
+      "context": 0
+    },
+    {
+      "at": 1795655702091,
+      "event": "browserClosed"
+    }
+  ],
+  "isolatedFullNearReproduction": 45730263755,
+  "correctionPR": 439
+}

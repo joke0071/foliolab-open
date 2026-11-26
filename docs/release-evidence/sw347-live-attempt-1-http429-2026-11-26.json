@@ -2,9 +2,18 @@
   "run": 45722582039,
   "attempt": 1,
   "job": 139594077281,
-  "step": "Verify targeted production UI in Firefox and WebKit",
+  "step": {
+    "number": 7,
+    "name": "Verify targeted production UI in Firefox and WebKit"
+  },
   "sha": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
-  "artifact": 15076261417,
+  "artifact": {
+    "id": 15076261417,
+    "sha256": "3b96a5327444e8ea805bad2d9de45eabacfd40df247c8651c7fbe0b948e587f9",
+    "zipCRC": "PASS",
+    "entries": 1743,
+    "bytes": 135043968
+  },
   "bytes": 135043968,
   "archiveSHA256": "3b96a5327444e8ea805bad2d9de45eabacfd40df247c8651c7fbe0b948e587f9",
   "archiveZIPCRC": "PASS",
@@ -171,5 +180,37 @@
       "NEAR_PRECISION_PASS webkit 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore"
     ],
     "scope": "Exact original NEAR test module, actual production application, public archived RPC response supplied as in the regression. Separate from the full retry."
+  },
+  "runId": 45722582039,
+  "jobId": 139594077281,
+  "jobConclusion": "failure",
+  "liveCore": {
+    "result": "PASS",
+    "exactOriginResponses": 162
+  },
+  "failure": {
+    "engine": "firefox",
+    "network": {
+      "status": 429,
+      "request": "https://foliolab.unperfekt.at/",
+      "date": "Thu, 26 Nov 2026 00:36:34 GMT",
+      "server": "Varnish",
+      "retryAfter": "0"
+    },
+    "log": "production-ui-cross.log",
+    "timeoutMs": 30000,
+    "test": "tests/browser-near-native-precision.mjs:28:14",
+    "workerDiagnostics": "worker-diagnostics/firefox-38438-52.jsonl",
+    "beforeAppSourceLoad": true
+  },
+  "previouslyPassedInSameStep": [
+    "Firefox digital wallet Cosmos",
+    "WebKit digital wallet Cosmos",
+    "Firefox/WebKit EUR and USD separately posted fractional settlements"
+  ],
+  "attempt2": {
+    "jobId": 139609896147,
+    "sameSha": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+    "scope": "failed live job only"
   }
 }
