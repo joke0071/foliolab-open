@@ -1,0 +1,80 @@
+{
+  "continuation": 45783680786,
+  "combinedSHA256": "167244f4397ec6b444010b9f3915646cba1da5030d048d21e81105f7b9cadc0f",
+  "originalRetainedProductionReports": 35,
+  "retainedNestedModules": 23,
+  "totalNestedModules": 24,
+  "firstNewModule": "./browser-near-native-precision.mjs",
+  "regularMainConclusion": "failure",
+  "decision": "LIVE_ACCEPTED",
+  "release": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+  "worker": "foliolab-open-v347",
+  "run": 45775837478,
+  "unitTests": 1545,
+  "pagesFiles": 161,
+  "liveHttp200HashMatches": 162,
+  "coreChecks": 11,
+  "axeScans": 22,
+  "uiScans": {
+    "chromium": 66,
+    "firefox": 66,
+    "webkit": 66
+  },
+  "pagesWorkerSHA256": "742f785232881cfac70144a7c6a857eac72d1a13d8a2e96c9129e464e8dad9f6",
+  "artifacts": [
+    {
+      "id": 15096431278,
+      "name": "github-pages-attempt-1",
+      "digest": "sha256:5acb359f19195bf7ad0b35be7bf96ad7606eac1584ad53ad021c7f7117c79c5d",
+      "size_in_bytes": 582161
+    },
+    {
+      "id": 15098959376,
+      "name": "pr442-sw347-live-continuation",
+      "digest": "sha256:da85782ed02307f880020ae70345d2037e615407c86e0feffcc325c50e88c93c",
+      "size_in_bytes": 152141697
+    },
+    {
+      "id": 15096134195,
+      "name": "release-gates-74e7a94274ba5191864ffde33b357d90b1940ec4",
+      "digest": "sha256:0710ba88f17c4e484c7e28cdc34f45d9f7592671815539d7b1a54e568cf3dc35",
+      "size_in_bytes": 43819361
+    }
+  ],
+  "pr": 442,
+  "testedTree": "31b21414009bcb47d643108eb280d2cc77c0cfc8",
+  "staging": {
+    "mainPlanCreated": "2026-11-26T07:30:35Z",
+    "lastIntegrationCompleted": "2026-11-26T07:44:59Z",
+    "requiredPathSeconds": 864,
+    "deployCompleted": "2026-11-26T07:45:19Z",
+    "continuationCompleted": "2026-11-26T08:41:37Z",
+    "secondsFromMainRunCreationThroughContinuation": 4263
+  },
+  "originalLiveAttempts": [
+    {
+      "attempt": 1,
+      "job": 139765198464,
+      "artifact": 15096369827,
+      "cause": "503 on same-origin /src/refresh-ui.js"
+    },
+    {
+      "attempt": 2,
+      "job": 139766986818,
+      "artifact": 15098179885,
+      "cause": "43 HTTP 429 responses for ten JavaScript paths and one SVG during Firefox NEAR initialization; Chromium completed"
+    }
+  ],
+  "acceptanceBasis": "SW321 exact-Main continuation; original traces retained. Combined-report hash is separate from the official archive digests.",
+  "packageCounts": {
+    "core": [
+      6,
+      6
+    ],
+    "followUps": [
+      17,
+      29
+    ],
+    "open": 12
+  }
+}
