@@ -6,8 +6,8 @@ name: SW347 paired integration timing with two isolated UI quality jobs
 permissions:
   contents: read
 jobs:
-  b1_plan:
-    name: b1 / plan
+  a2_plan:
+    name: a2 / plan
     runs-on: ubuntu-24.04
     outputs:
       stage: ${{ steps.stage.outputs.stage }}
@@ -30,487 +30,14 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: b1-ci-stage-${{ github.sha }}
+        name: a2-ci-stage-${{ github.sha }}
         path: artifacts/ci-stage/
         if-no-files-found: error
         retention-days: 7
-  b1_test:
+  a2_test:
     needs:
-    - b1_plan
-    if: needs.b1_plan.outputs.full == 'true'
-    runs-on: ubuntu-24.04
-    outputs:
-      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}
-      pages_artifact_attempt: ${{ github.run_attempt }}
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 2
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    - name: Require a service-worker cache revision for shipped asset changes
-      run: |
-        set -euo pipefail
-        if git diff --quiet HEAD^ HEAD -- index.html styles.css manifest.webmanifest src icons; then
-          echo 'No shipped application assets changed; cache revision unchanged is allowed.'
-          exit 0
-        fi
-        previous="$(git show HEAD^:sw.js | grep '^const CACHE=' || true)"
-        current="$(grep '^const CACHE=' sw.js || true)"
-        if [[ -z "$previous" || -z "$current" || "$previous" == "$current" ]]; then
-          echo 'Shipped app assets changed without a new PWA cache revision.' >&2
-          exit 1
-        fi
-        echo "PWA cache revision changed: $previous -> $current"
-    - name: Prepare static site
-      run: |
-        set -euo pipefail
-        mkdir -p _site
-        cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/
-        cmp LICENSE _site/LICENSE
-    - id: pages_upload
-      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-      uses: actions/upload-pages-artifact@v3
-      with:
-        name: github-pages-attempt-${{ github.run_attempt }}
-        path: _site
-    - name: Verify standalone application
-      run: |
-        set -euo pipefail
-        mkdir -p artifacts/gates
-        git rev-parse HEAD > artifacts/gates/tested-sha.txt
-        npm test 2>&1 | tee artifacts/gates/unit.log
-        npm run check 2>&1 | tee artifacts/gates/syntax.log
-    - name: Restore pinned Chromium shell cache (integration)
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
-    - name: Install browser test tools
-      run: |
-        npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
-        npx playwright install chromium --only-shell
-    - name: Browser smoke tests (320–1440 px)
-      run: |
-        set -euo pipefail
-        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
-        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-        node tests/browser-cash-account-ux.mjs
-        node tests/browser-etf-source-recovery.mjs
-        node tests/browser-smoke.mjs
-        node tests/browser-loading-pwa.mjs
-        node tests/browser-ui-alltag10.mjs
-        node tests/browser-ui-textscale.mjs
-        node tests/browser-price-csv-tools.mjs
-        node tests/browser-pwa-update.mjs
-        node tests/browser-extended.mjs
-        node tests/browser-ledger.mjs
-        node tests/browser-phase2.mjs
-        node tests/browser-phase3.mjs
-        node tests/browser-wallet-history-core.mjs
-        node tests/browser-pchain-evidence.mjs
-        node tests/browser-sonic-staking-evidence.mjs
-        node tests/browser-bitcoin-history.mjs
-        node tests/browser-ethereum-history.mjs
-        node tests/browser-history-storage.mjs
-        node tests/browser-history-ui.mjs
-        node tests/browser-purchase-evidence.mjs
-        node tests/browser-unified-bitcoin.mjs
-        node tests/browser-kraken-import.mjs
-        node tests/browser-bitpanda-import.mjs
-        node tests/browser-historical-position-value.mjs
-        node tests/browser-flh02-release.mjs
-        node tests/browser-history-worker.mjs
-        node tests/browser-p0-import.mjs
-        node tests/browser-csv-review-a11y.mjs
-        node tests/browser-csv-batch.mjs
-        node tests/browser-flh03-abce.mjs
-        node tests/browser-dialog-native-navigation.mjs
-        node tests/browser-restore-deposits.mjs
-        node tests/browser-position-selection.mjs
-        node tests/browser-position-removal.mjs
-        node tests/browser-position-archive.mjs
-        node tests/browser-booking-management.mjs
-        node tests/browser-flatex-import.mjs
-        node tests/browser-flatex-backfill.mjs
-        node tests/browser-flatex-native-ui.mjs
-        node tests/browser-flatex-native-commit.mjs
-        node tests/browser-flatex-net-settlement.mjs
-        node tests/browser-defi-dialog-guidance.mjs
-        node tests/browser-audit.mjs
-        node tests/browser-dashboard-polish.mjs
-        node tests/browser-responsive-actions.mjs
-        node tests/browser-allocation.mjs
-        node tests/browser-avalanche-valuation.mjs
-        node tests/browser-staking-coverage.mjs
-        node tests/browser-staking-dialog-scope.mjs
-        node tests/browser-modal-clarity.mjs
-        node tests/browser-dialog-consistency.mjs
-        node tests/browser-position-editor-ux.mjs
-        node tests/browser-listing-review-clarity.mjs
-        node tests/browser-dialog-visual.mjs
-        node tests/browser-dialog-visual-regression.mjs
-        node tests/browser-dialog-a11y-mobile.mjs
-        node tests/browser-dialog-financial-choices.mjs
-        node tests/browser-ledger-xpub.mjs
-        node tests/browser-position-drilldown.mjs
-        node tests/browser-historical-csv.mjs
-        node tests/browser-crypto-history-resilience.mjs
-        node tests/browser-etf-crypto-fallbacks.mjs
-        node tests/browser-universal-security-discovery.mjs
-        node tests/browser-onboarding-suggestions.mjs
-        node tests/browser-account-opening.mjs
-        node tests/browser-cash-reconciliation.mjs
-        node tests/browser-cash-terms.mjs
-        node tests/browser-interest-scenario.mjs
-        node tests/browser-valuation-drilldown.mjs
-        node tests/browser-settings-backup.mjs
-        node tests/browser-corrupt-backup-restore.mjs
-        node tests/browser-recovery-backup-limits.mjs
-        node tests/browser-fin-e2e.mjs
-        node tests/browser-multitab-integrity.mjs
-        node tests/browser-p0-storage.mjs
-        node tests/browser-atomic-storage.mjs
-        node tests/browser-idb-new-install.mjs
-        node tests/browser-idb-migration-acceptance.mjs
-        node tests/browser-idb-unmarked-recovery.mjs
-        node tests/browser-idb-cutover.mjs
-        node tests/browser-idb-migration-resilience.mjs
-        node tests/browser-idb-crash-recovery.mjs
-        node tests/browser-idb-concurrent-imports.mjs
-        node tests/browser-idb-corrupt-recovery.mjs
-        node tests/browser-key-privacy.mjs
-        node tests/browser-solana-rpc-help.mjs
-        node tests/browser-data-source-settings.mjs
-        node tests/browser-eodhd-credentials.mjs
-        node tests/browser-position-search.mjs
-        node tests/browser-position-details.mjs
-        node tests/browser-asset-wizard.mjs
-        node tests/browser-ui07-audit.mjs
-        node tests/browser-quality-review.mjs
-        node tests/browser-annual-overview.mjs
-        node tests/browser-transfer-matching.mjs
-        node tests/browser-transfer-states.mjs
-        node tests/browser-booking-history.mjs
-        node tests/browser-booking-filters.mjs
-        node tests/browser-dashboard-periods.mjs
-        node tests/browser-chart-period-consistency.mjs
-        node tests/browser-extended-chart-periods.mjs
-        node tests/browser-provider-accordion.mjs
-        node tests/browser-legacy-quotes-chevrons.mjs
-        node tests/browser-public-instruments.mjs
-        node tests/browser-account-deeplink.mjs
-        node tests/browser-catalog-expansion.mjs
-        node tests/browser-security-catalog.mjs
-        node tests/browser-security-sources.mjs
-        node tests/browser-eodhd-worker.mjs
-        node tests/browser-market-diagnostics.mjs
-        node tests/live-probes.mjs
-        node tests/browser-accessibility-audit.mjs
-        node tests/browser-portfolio-scale.mjs
-        node tests/browser-offline-mobile.mjs
-        node tests/browser-pwa-updates.mjs
-    - name: Preserve test evidence
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: b1-release-gates-${{ github.sha }}
-        path: artifacts/gates/
-        if-no-files-found: error
-        retention-days: 7
-    - name: Preserve representative dialog screenshots
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: b1-dialog-visual-reference
-        path: |
-          artifacts/dialog-visual/
-          artifacts/dialog-visual-diff/
-        if-no-files-found: ignore
-        retention-days: 7
-    name: b1 / test
-  b1_cross:
-    needs:
-    - b1_plan
-    if: needs.b1_plan.outputs.full == 'true'
-    strategy:
-      fail-fast: false
-      matrix:
-        shard:
-        - 1
-        - 2
-        - 3
-    runs-on: ubuntu-24.04
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    - name: Restore pinned Firefox/WebKit cache (integration)
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
-    - name: Install Firefox and WebKit for cross-engine regression
-      timeout-minutes: 8
-      run: |
-        set -euo pipefail
-        mkdir -p artifacts/gates
-        # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.
-        archive_mirror=''
-        security_mirror=''
-        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-          archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
-        fi
-        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-          security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
-        fi
-        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-          printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
-        fi
-        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-          printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
-        fi
-        npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
-        DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
-    - name: Test portfolio workflows on Firefox and WebKit
-      run: |
-        set -euo pipefail
-        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
-        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-        if [[ "${{ matrix.shard }}" == "1" ]]; then
-          UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
-          UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs
-          UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs
-          UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs
-          QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
-          ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
-          TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
-          TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs
-          FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
-          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
-          ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs
-          BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
-          TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
-          node tests/browser-atomic-storage-cross-engine.mjs
-          UI_PERIOD_ENGINE=firefox node tests/browser-chart-period-consistency.mjs
-          UI_PERIOD_ENGINE=firefox node tests/browser-extended-chart-periods.mjs
-          UI_PERIOD_ENGINE=webkit node tests/browser-chart-period-consistency.mjs
-          UI_PERIOD_ENGINE=webkit node tests/browser-extended-chart-periods.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
-        elif [[ "${{ matrix.shard }}" == "2" ]]; then
-          CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs
-          ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs
-          LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs
-          PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
-          FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
-          node tests/browser-cross-engine.mjs
-          RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs
-          FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs
-          PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
-          SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
-          FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
-          DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs
-          RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs
-          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
-        else
-          CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
-          INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
-          FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
-          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs
-          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs
-          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs
-        fi
-    - name: Preserve cross-engine evidence
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: b1-cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
-        path: artifacts/gates/
-        if-no-files-found: ignore
-        retention-days: 7
-    name: b1 / cross (${{ matrix.shard }})
-  b1_wallet:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    - run: npm run check
-    - run: npm test
-    name: b1 / wallet
-    needs:
-    - b1_plan
-  b1_quality_chromium:
-    needs:
-    - b1_plan
-    if: needs.b1_plan.outputs.full == 'true'
-    runs-on: ubuntu-24.04
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 2
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    - name: Restore pinned Chromium shell cache (integration)
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
-    - name: Install browser test tools
-      run: |
-        npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
-        npx playwright install chromium --only-shell
-    - name: Browser smoke tests (320–1440 px)
-      run: |
-        set -euo pipefail
-        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
-        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-        UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
-    - name: Expose bounded synthetic C5 PR review
-      run: |
-        set -euo pipefail
-        node --input-type=module <<'JS'
-        import {readFileSync} from 'node:fs';
-        import {createHash} from 'node:crypto';
-        const files=[['c5-positions','artifacts/gates/ui-positions-390.png'],['c5-bookings','artifacts/gates/c5-bookings-390.png'],['c5-connections','artifacts/gates/c5-connections-390.png'],['c5-connections-viewport','artifacts/gates/c5-connections-viewport-390.png']];
-        for(const [id,path]of files){
-          const bytes=readFileSync(path);
-          if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
-          const data=bytes.toString('base64');
-          console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.GITHUB_SHA}));
-          for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
-          console.log('LIVE_IMAGE_END '+id);
-        }
-        JS
-    - name: Preserve test evidence
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: b1-ui-quality-chromium
-        path: artifacts/gates/
-        if-no-files-found: error
-        retention-days: 7
-    name: b1 / quality_chromium
-  b1_quality_cross:
-    needs:
-    - b1_plan
-    if: needs.b1_plan.outputs.full == 'true'
-    runs-on: ubuntu-24.04
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    - name: Restore pinned Firefox/WebKit cache (integration)
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
-    - name: Install Firefox and WebKit for cross-engine regression
-      timeout-minutes: 8
-      run: |
-        set -euo pipefail
-        mkdir -p artifacts/gates
-        # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.
-        archive_mirror=''
-        security_mirror=''
-        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-          archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
-        fi
-        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-          security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
-        fi
-        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-          printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
-        fi
-        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
-          printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
-        fi
-        npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
-        DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
-    - name: Test portfolio workflows on Firefox and WebKit
-      run: |
-        set -euo pipefail
-        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
-        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-        UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
-    - name: Preserve cross-engine evidence
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: b1-ui-quality-cross
-        path: artifacts/gates/
-        if-no-files-found: error
-        retention-days: 7
-    name: b1 / quality_cross
-  a1_plan:
-    name: a1 / plan
-    runs-on: ubuntu-24.04
-    outputs:
-      stage: ${{ steps.stage.outputs.stage }}
-      full: ${{ steps.stage.outputs.full }}
-      css: ${{ steps.stage.outputs.css }}
-      ci_contract: ${{ steps.stage.outputs.ci_contract }}
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
-        persist-credentials: false
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    - id: stage
-      name: Classify exact base/head changes conservatively
-      run: node tests/ci-stage-plan.mjs
-    - name: Preserve explicit stage and impact receipt
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: a1-ci-stage-${{ github.sha }}
-        path: artifacts/ci-stage/
-        if-no-files-found: error
-        retention-days: 7
-    needs:
-    - b1_test
-    - b1_cross
-    - b1_wallet
-    - b1_quality_chromium
-    - b1_quality_cross
-  a1_test:
-    needs:
-    - a1_plan
-    if: needs.a1_plan.outputs.full == 'true'
+    - a2_plan
+    if: needs.a2_plan.outputs.full == 'true'
     runs-on: ubuntu-24.04
     outputs:
       pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}
@@ -707,7 +234,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: a1-release-gates-${{ github.sha }}
+        name: a2-release-gates-${{ github.sha }}
         path: artifacts/gates/
         if-no-files-found: error
         retention-days: 7
@@ -715,17 +242,17 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: a1-dialog-visual-reference
+        name: a2-dialog-visual-reference
         path: |
           artifacts/dialog-visual/
           artifacts/dialog-visual-diff/
         if-no-files-found: ignore
         retention-days: 7
-    name: a1 / test
-  a1_cross:
+    name: a2 / test
+  a2_cross:
     needs:
-    - a1_plan
-    if: needs.a1_plan.outputs.full == 'true'
+    - a2_plan
+    if: needs.a2_plan.outputs.full == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -835,12 +362,12 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: a1-cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
+        name: a2-cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
         path: artifacts/gates/
         if-no-files-found: ignore
         retention-days: 7
-    name: a1 / cross (${{ matrix.shard }})
-  a1_wallet:
+    name: a2 / cross (${{ matrix.shard }})
+  a2_wallet:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -852,6 +379,477 @@ jobs:
         node-version: '20'
     - run: npm run check
     - run: npm test
-    name: a1 / wallet
+    name: a2 / wallet
     needs:
-    - a1_plan
+    - a2_plan
+  b2_plan:
+    name: b2 / plan
+    runs-on: ubuntu-24.04
+    outputs:
+      stage: ${{ steps.stage.outputs.stage }}
+      full: ${{ steps.stage.outputs.full }}
+      css: ${{ steps.stage.outputs.css }}
+      ci_contract: ${{ steps.stage.outputs.ci_contract }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - id: stage
+      name: Classify exact base/head changes conservatively
+      run: node tests/ci-stage-plan.mjs
+    - name: Preserve explicit stage and impact receipt
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-ci-stage-${{ github.sha }}
+        path: artifacts/ci-stage/
+        if-no-files-found: error
+        retention-days: 7
+    needs:
+    - a2_test
+    - a2_cross
+    - a2_wallet
+  b2_test:
+    needs:
+    - b2_plan
+    if: needs.b2_plan.outputs.full == 'true'
+    runs-on: ubuntu-24.04
+    outputs:
+      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}
+      pages_artifact_attempt: ${{ github.run_attempt }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Require a service-worker cache revision for shipped asset changes
+      run: |
+        set -euo pipefail
+        if git diff --quiet HEAD^ HEAD -- index.html styles.css manifest.webmanifest src icons; then
+          echo 'No shipped application assets changed; cache revision unchanged is allowed.'
+          exit 0
+        fi
+        previous="$(git show HEAD^:sw.js | grep '^const CACHE=' || true)"
+        current="$(grep '^const CACHE=' sw.js || true)"
+        if [[ -z "$previous" || -z "$current" || "$previous" == "$current" ]]; then
+          echo 'Shipped app assets changed without a new PWA cache revision.' >&2
+          exit 1
+        fi
+        echo "PWA cache revision changed: $previous -> $current"
+    - name: Prepare static site
+      run: |
+        set -euo pipefail
+        mkdir -p _site
+        cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/
+        cmp LICENSE _site/LICENSE
+    - id: pages_upload
+      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      uses: actions/upload-pages-artifact@v3
+      with:
+        name: github-pages-attempt-${{ github.run_attempt }}
+        path: _site
+    - name: Verify standalone application
+      run: |
+        set -euo pipefail
+        mkdir -p artifacts/gates
+        git rev-parse HEAD > artifacts/gates/tested-sha.txt
+        npm test 2>&1 | tee artifacts/gates/unit.log
+        npm run check 2>&1 | tee artifacts/gates/syntax.log
+    - name: Restore pinned Chromium shell cache (integration)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
+    - name: Install browser test tools
+      run: |
+        npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+        npx playwright install chromium --only-shell
+    - name: Browser smoke tests (320–1440 px)
+      run: |
+        set -euo pipefail
+        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
+        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+        node tests/browser-cash-account-ux.mjs
+        node tests/browser-etf-source-recovery.mjs
+        node tests/browser-smoke.mjs
+        node tests/browser-loading-pwa.mjs
+        node tests/browser-ui-alltag10.mjs
+        node tests/browser-ui-textscale.mjs
+        node tests/browser-price-csv-tools.mjs
+        node tests/browser-pwa-update.mjs
+        node tests/browser-extended.mjs
+        node tests/browser-ledger.mjs
+        node tests/browser-phase2.mjs
+        node tests/browser-phase3.mjs
+        node tests/browser-wallet-history-core.mjs
+        node tests/browser-pchain-evidence.mjs
+        node tests/browser-sonic-staking-evidence.mjs
+        node tests/browser-bitcoin-history.mjs
+        node tests/browser-ethereum-history.mjs
+        node tests/browser-history-storage.mjs
+        node tests/browser-history-ui.mjs
+        node tests/browser-purchase-evidence.mjs
+        node tests/browser-unified-bitcoin.mjs
+        node tests/browser-kraken-import.mjs
+        node tests/browser-bitpanda-import.mjs
+        node tests/browser-historical-position-value.mjs
+        node tests/browser-flh02-release.mjs
+        node tests/browser-history-worker.mjs
+        node tests/browser-p0-import.mjs
+        node tests/browser-csv-review-a11y.mjs
+        node tests/browser-csv-batch.mjs
+        node tests/browser-flh03-abce.mjs
+        node tests/browser-dialog-native-navigation.mjs
+        node tests/browser-restore-deposits.mjs
+        node tests/browser-position-selection.mjs
+        node tests/browser-position-removal.mjs
+        node tests/browser-position-archive.mjs
+        node tests/browser-booking-management.mjs
+        node tests/browser-flatex-import.mjs
+        node tests/browser-flatex-backfill.mjs
+        node tests/browser-flatex-native-ui.mjs
+        node tests/browser-flatex-native-commit.mjs
+        node tests/browser-flatex-net-settlement.mjs
+        node tests/browser-defi-dialog-guidance.mjs
+        node tests/browser-audit.mjs
+        node tests/browser-dashboard-polish.mjs
+        node tests/browser-responsive-actions.mjs
+        node tests/browser-allocation.mjs
+        node tests/browser-avalanche-valuation.mjs
+        node tests/browser-staking-coverage.mjs
+        node tests/browser-staking-dialog-scope.mjs
+        node tests/browser-modal-clarity.mjs
+        node tests/browser-dialog-consistency.mjs
+        node tests/browser-position-editor-ux.mjs
+        node tests/browser-listing-review-clarity.mjs
+        node tests/browser-dialog-visual.mjs
+        node tests/browser-dialog-visual-regression.mjs
+        node tests/browser-dialog-a11y-mobile.mjs
+        node tests/browser-dialog-financial-choices.mjs
+        node tests/browser-ledger-xpub.mjs
+        node tests/browser-position-drilldown.mjs
+        node tests/browser-historical-csv.mjs
+        node tests/browser-crypto-history-resilience.mjs
+        node tests/browser-etf-crypto-fallbacks.mjs
+        node tests/browser-universal-security-discovery.mjs
+        node tests/browser-onboarding-suggestions.mjs
+        node tests/browser-account-opening.mjs
+        node tests/browser-cash-reconciliation.mjs
+        node tests/browser-cash-terms.mjs
+        node tests/browser-interest-scenario.mjs
+        node tests/browser-valuation-drilldown.mjs
+        node tests/browser-settings-backup.mjs
+        node tests/browser-corrupt-backup-restore.mjs
+        node tests/browser-recovery-backup-limits.mjs
+        node tests/browser-fin-e2e.mjs
+        node tests/browser-multitab-integrity.mjs
+        node tests/browser-p0-storage.mjs
+        node tests/browser-atomic-storage.mjs
+        node tests/browser-idb-new-install.mjs
+        node tests/browser-idb-migration-acceptance.mjs
+        node tests/browser-idb-unmarked-recovery.mjs
+        node tests/browser-idb-cutover.mjs
+        node tests/browser-idb-migration-resilience.mjs
+        node tests/browser-idb-crash-recovery.mjs
+        node tests/browser-idb-concurrent-imports.mjs
+        node tests/browser-idb-corrupt-recovery.mjs
+        node tests/browser-key-privacy.mjs
+        node tests/browser-solana-rpc-help.mjs
+        node tests/browser-data-source-settings.mjs
+        node tests/browser-eodhd-credentials.mjs
+        node tests/browser-position-search.mjs
+        node tests/browser-position-details.mjs
+        node tests/browser-asset-wizard.mjs
+        node tests/browser-ui07-audit.mjs
+        node tests/browser-quality-review.mjs
+        node tests/browser-annual-overview.mjs
+        node tests/browser-transfer-matching.mjs
+        node tests/browser-transfer-states.mjs
+        node tests/browser-booking-history.mjs
+        node tests/browser-booking-filters.mjs
+        node tests/browser-dashboard-periods.mjs
+        node tests/browser-chart-period-consistency.mjs
+        node tests/browser-extended-chart-periods.mjs
+        node tests/browser-provider-accordion.mjs
+        node tests/browser-legacy-quotes-chevrons.mjs
+        node tests/browser-public-instruments.mjs
+        node tests/browser-account-deeplink.mjs
+        node tests/browser-catalog-expansion.mjs
+        node tests/browser-security-catalog.mjs
+        node tests/browser-security-sources.mjs
+        node tests/browser-eodhd-worker.mjs
+        node tests/browser-market-diagnostics.mjs
+        node tests/live-probes.mjs
+        node tests/browser-accessibility-audit.mjs
+        node tests/browser-portfolio-scale.mjs
+        node tests/browser-offline-mobile.mjs
+        node tests/browser-pwa-updates.mjs
+    - name: Preserve test evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-release-gates-${{ github.sha }}
+        path: artifacts/gates/
+        if-no-files-found: error
+        retention-days: 7
+    - name: Preserve representative dialog screenshots
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-dialog-visual-reference
+        path: |
+          artifacts/dialog-visual/
+          artifacts/dialog-visual-diff/
+        if-no-files-found: ignore
+        retention-days: 7
+    name: b2 / test
+  b2_cross:
+    needs:
+    - b2_plan
+    if: needs.b2_plan.outputs.full == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+        - 1
+        - 2
+        - 3
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Restore pinned Firefox/WebKit cache (integration)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
+    - name: Install Firefox and WebKit for cross-engine regression
+      timeout-minutes: 8
+      run: |
+        set -euo pipefail
+        mkdir -p artifacts/gates
+        # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.
+        archive_mirror=''
+        security_mirror=''
+        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+          archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
+        fi
+        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+          security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
+        fi
+        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+          printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+        fi
+        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+          printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+        fi
+        npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+        DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
+    - name: Test portfolio workflows on Firefox and WebKit
+      run: |
+        set -euo pipefail
+        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
+        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+        if [[ "${{ matrix.shard }}" == "1" ]]; then
+          UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
+          UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs
+          UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs
+          UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs
+          QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
+          ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
+          TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
+          TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs
+          FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
+          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
+          ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs
+          BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
+          TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
+          node tests/browser-atomic-storage-cross-engine.mjs
+          UI_PERIOD_ENGINE=firefox node tests/browser-chart-period-consistency.mjs
+          UI_PERIOD_ENGINE=firefox node tests/browser-extended-chart-periods.mjs
+          UI_PERIOD_ENGINE=webkit node tests/browser-chart-period-consistency.mjs
+          UI_PERIOD_ENGINE=webkit node tests/browser-extended-chart-periods.mjs
+          IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
+        elif [[ "${{ matrix.shard }}" == "2" ]]; then
+          CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs
+          ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs
+          LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs
+          PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
+          FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
+          node tests/browser-cross-engine.mjs
+          RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs
+          FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs
+          PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
+          SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
+          FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
+          DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs
+          RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs
+          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
+        else
+          CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
+          INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
+          IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
+          IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
+          FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
+          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs
+          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs
+          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs
+        fi
+    - name: Preserve cross-engine evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
+        path: artifacts/gates/
+        if-no-files-found: ignore
+        retention-days: 7
+    name: b2 / cross (${{ matrix.shard }})
+  b2_wallet:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - run: npm run check
+    - run: npm test
+    name: b2 / wallet
+    needs:
+    - b2_plan
+  b2_quality_chromium:
+    needs:
+    - b2_plan
+    if: needs.b2_plan.outputs.full == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Restore pinned Chromium shell cache (integration)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
+    - name: Install browser test tools
+      run: |
+        npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+        npx playwright install chromium --only-shell
+    - name: Browser smoke tests (320–1440 px)
+      run: |
+        set -euo pipefail
+        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
+        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+        UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
+    - name: Expose bounded synthetic C5 PR review
+      run: |
+        set -euo pipefail
+        node --input-type=module <<'JS'
+        import {readFileSync} from 'node:fs';
+        import {createHash} from 'node:crypto';
+        const files=[['c5-positions','artifacts/gates/ui-positions-390.png'],['c5-bookings','artifacts/gates/c5-bookings-390.png'],['c5-connections','artifacts/gates/c5-connections-390.png'],['c5-connections-viewport','artifacts/gates/c5-connections-viewport-390.png']];
+        for(const [id,path]of files){
+          const bytes=readFileSync(path);
+          if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
+          const data=bytes.toString('base64');
+          console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.GITHUB_SHA}));
+          for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
+          console.log('LIVE_IMAGE_END '+id);
+        }
+        JS
+    - name: Preserve test evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-ui-quality-chromium
+        path: artifacts/gates/
+        if-no-files-found: error
+        retention-days: 7
+    name: b2 / quality_chromium
+  b2_quality_cross:
+    needs:
+    - b2_plan
+    if: needs.b2_plan.outputs.full == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 9803a2c849dbe9aaca88c756daea2d892c8cc56d
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Restore pinned Firefox/WebKit cache (integration)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
+    - name: Install Firefox and WebKit for cross-engine regression
+      timeout-minutes: 8
+      run: |
+        set -euo pipefail
+        mkdir -p artifacts/gates
+        # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.
+        archive_mirror=''
+        security_mirror=''
+        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+          archive_mirror="$(bash tools/select-ubuntu-mirror.sh archive noble)"
+        fi
+        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+          security_mirror="$(bash tools/select-ubuntu-mirror.sh security noble)"
+        fi
+        if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+          printf '%s\n' "$archive_mirror" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+        fi
+        if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+          printf '%s\n' "$security_mirror" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+        fi
+        npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+        DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
+    - name: Test portfolio workflows on Firefox and WebKit
+      run: |
+        set -euo pipefail
+        python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
+        for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+        UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
+    - name: Preserve cross-engine evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: b2-ui-quality-cross
+        path: artifacts/gates/
+        if-no-files-found: error
+        retention-days: 7
+    name: b2 / quality_cross
