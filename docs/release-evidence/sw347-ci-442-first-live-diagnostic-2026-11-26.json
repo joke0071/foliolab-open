@@ -1,0 +1,88 @@
+{
+  "main": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+  "run": 45775837478,
+  "attempt": 1,
+  "job": 139765198464,
+  "outcome": "FAILURE",
+  "firstFailedStep": "Verify published bytes, core flows and targeted UI in Chromium",
+  "script": "tests/browser-plain-backup-limits.mjs:19 initial ready() before import",
+  "officialOriginal": {
+    "artifact": 15096369827,
+    "size": 11572729,
+    "sha256": "e191fcd0f7da387a02577abedd953f87e7e5f08068f2cde955d3d633669802a5",
+    "crc": "PASS",
+    "networkTrace": "worker-diagnostics/chromium-5348-1.jsonl",
+    "observedOriginErrors": [
+      {
+        "at": 1795679296227,
+        "event": "badResponse",
+        "context": 0,
+        "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+        "status": 503,
+        "headers": {
+          "x-fastly-request-id": "c01e8438182bdb5cbe94c216c340093ff70a7d5f",
+          "retry-after": "0",
+          "x-timer": "S1795679296.191030,VS0,VE28",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "x-cache": "MISS",
+          "content-length": "54887",
+          "date": "Thu, 26 Nov 2026 07:48:16 GMT",
+          "content-type": "text/html; charset=utf-8",
+          "x-served-by": "cache-chi-kmdw8640060-CHI",
+          "server": "Varnish",
+          "x-cache-hits": "0"
+        }
+      }
+    ],
+    "plainBackupResultAtTimeout": {
+      "base": "https://foliolab.unperfekt.at/",
+      "inputBytes": 19999833,
+      "prettyBytes": 20000167,
+      "engines": []
+    },
+    "core": {
+      "sha": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+      "result": "PASS",
+      "hashesEqualGit": 162,
+      "allHttp200": true,
+      "checks": 11,
+      "axe": 22
+    }
+  },
+  "targetedActualOriginRerun": {
+    "testSourceGitBlob": "868ff55758882566e7698cabde8a0e8058d2514b",
+    "runtime": "Chromium via Playwright 1.56.1 with inherited HTTPS proxy and local certificate exception; response/error listeners added, all original test assertions retained",
+    "sourceChanges": "Transport and read-only diagnostic listeners only. No intercepted responses.",
+    "httpResponses": {
+      "200": 588
+    },
+    "failedRequests": 0,
+    "pageErrors": 0,
+    "logSHA256": "11b5eaa93f492093ef2222fb8c755b8d16f3e8dd7a22083b00a551ff72870543",
+    "report": {
+      "base": "https://foliolab.unperfekt.at/",
+      "inputBytes": 19999833,
+      "prettyBytes": 20000167,
+      "engines": [
+        {
+          "engine": "chromium",
+          "status": "PASS",
+          "canonicalHash": "8d444694bacb89417fd023978332763e57ff890c8caf90081d1b67cef122ded4",
+          "oversizedCanonicalHash": "e582ac9c09beac89d60b73df9daf79335de61829e979df48d258bfeaad4af359",
+          "downloadBytes": 19999833,
+          "downloadSha256": "dd7781f5d7db8689d4f850a275f3c3d3d0cc7e2bb05d5eae5e3dabb4ee7888e6",
+          "checks": [
+            "accepted legacy compact input",
+            "readable plain UI export preserves all revision bytes",
+            "fresh UI restore",
+            "UTF8 too large rejected before URL/download/backup acknowledgement",
+            "canonical record/revision/reload unchanged",
+            "failed mandatory safety export cannot unlock reference deletion"
+          ]
+        }
+      ]
+    }
+  },
+  "otherEngines": "Targeted local diagnostic covers Chromium only."
+}
