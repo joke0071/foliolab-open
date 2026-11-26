@@ -1,0 +1,175 @@
+{
+  "run": 45722582039,
+  "attempt": 1,
+  "job": 139594077281,
+  "step": "Verify targeted production UI in Firefox and WebKit",
+  "sha": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+  "artifact": 15076261417,
+  "bytes": 135043968,
+  "archiveSHA256": "3b96a5327444e8ea805bad2d9de45eabacfd40df247c8651c7fbe0b948e587f9",
+  "archiveZIPCRC": "PASS",
+  "error": "page.waitForFunction: Timeout 30000ms exceeded. tests/flh04-backup-app.mjs:7:13, called from tests/browser-near-native-precision.mjs:28:14.",
+  "stage": "Firefox first navigation, before scan, booking, revision or restore; no application document delivered",
+  "networkDiagnostic": "worker-diagnostics/firefox-38438-52.jsonl",
+  "networkRecords": [
+    {
+      "at": 1795653393548,
+      "event": "start",
+      "engine": "firefox",
+      "script": "/home/runner/work/foliolab-open/foliolab-open/tests/browser-ui-quality.mjs",
+      "scope": "context-network-and-document-lifecycle",
+      "timingAffected": true
+    },
+    {
+      "at": 1795653393855,
+      "event": "context",
+      "context": 0,
+      "serviceWorkers": "block"
+    },
+    {
+      "at": 1795653394374,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "method": "GET",
+      "resourceType": "document"
+    },
+    {
+      "at": 1795653394436,
+      "event": "contextResponse",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 429
+    },
+    {
+      "at": 1795653394436,
+      "event": "badResponse",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 429,
+      "headers": {
+        "server": "Varnish",
+        "retry-after": "0",
+        "content-type": "text/html; charset=utf-8",
+        "accept-ranges": "bytes",
+        "date": "Thu, 26 Nov 2026 00:36:34 GMT",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-iad-khef600037-IAD",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "content-length": "1509",
+        "x-firefox-spdy": "h2"
+      }
+    },
+    {
+      "at": 1795653394478,
+      "event": "document",
+      "context": 0,
+      "url": "https://foliolab.unperfekt.at/",
+      "controller": null,
+      "active": null,
+      "installing": null,
+      "waiting": null
+    },
+    {
+      "at": 1795653394486,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/primer-tiny.css",
+      "method": "GET",
+      "resourceType": "stylesheet"
+    },
+    {
+      "at": 1795653394487,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/gh.svg",
+      "method": "GET",
+      "resourceType": "image"
+    },
+    {
+      "at": 1795653394487,
+      "event": "contextRequest",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/lock.svg",
+      "method": "GET",
+      "resourceType": "image"
+    },
+    {
+      "at": 1795653394493,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/primer-tiny.css",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795653394494,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/gh.svg",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795653394494,
+      "event": "requestfailed",
+      "context": 0,
+      "url": "https://github.github.com/pages-staticassets/lock.svg",
+      "failure": {
+        "errorText": "NS_ERROR_FAILURE"
+      }
+    },
+    {
+      "at": 1795653424505,
+      "event": "browserClosing"
+    },
+    {
+      "at": 1795653424511,
+      "event": "contextClosed",
+      "context": 0
+    },
+    {
+      "at": 1795653424771,
+      "event": "browserClosed"
+    }
+  ],
+  "confirmedAtFailure": {
+    "eurAndUsdSettlement": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "cosmos": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "nativeNEAR": [
+      "chromium"
+    ]
+  },
+  "next": {
+    "runAttempt": 2,
+    "job": 139609896147,
+    "action": "rerun the failed live job only",
+    "reason": "GitHub Pages/Varnish returned HTTP 429 for GET / with Retry-After 0."
+  },
+  "targetedProductionReproduction": {
+    "run": 45730263755,
+    "job": 139610232808,
+    "sha": "00378aec434cea50d1fabec1c5adbeef6030f5a8",
+    "productMain": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+    "workerByteComparison": "PASS",
+    "tls": "normal native certificates on an authorized GitHub project runner",
+    "archiveId": 15075594023,
+    "archiveSHA256": "bef1cbeb5b76f4911439e1f15b46eeca1e13de8d1bd4695b2d972e384f07d3c2",
+    "result": [
+      "NEAR_PRECISION_PASS firefox 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore",
+      "NEAR_PRECISION_PASS webkit 145768498431409676817125837316 yoctoNEAR, rescan, reopen and fresh encrypted restore"
+    ],
+    "scope": "Exact original NEAR test module, actual production application, public archived RPC response supplied as in the regression. Separate from the full retry."
+  }
+}
