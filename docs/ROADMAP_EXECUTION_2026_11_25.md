@@ -1094,7 +1094,7 @@ Der [Kraken-Testexport mit gehashten Bezeichnern](https://github.com/dcdpr/taxco
 
 ## Paketmatrix der 19 ursprünglich offenen Zeilen
 
-Sechs dieser Zeilen sind im dokumentierten Umfang abgenommen. Mit den zehn zuvor abgeschlossenen Folgepaketen ergibt das 16/29.
+Sieben dieser 19 Zeilen sind im dokumentierten Umfang abgenommen. Zusammen mit den zehn zuvor abgeschlossenen Folgepaketen ergibt das 17/29. Die übrigen zwölf Zeilen nennen den jeweils fehlenden Nachweis.
 
 | Paket | Soll | Ist | Beleg | Restkriterium |
 | --- | --- | --- | --- | --- |
