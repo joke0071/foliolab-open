@@ -1,0 +1,668 @@
+{
+  "sourceMain": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+  "candidateHead": "1b6404fcb64fecf3a4e14f6e958eb53ea5370f37",
+  "testedTree": "31b21414009bcb47d643108eb280d2cc77c0cfc8",
+  "pr": 442,
+  "scope": "Local integration critical path, preserving serial production tests. A is the serial control and B uses two isolated UI quality jobs. Standard GitHub-hosted runners, first attempts.",
+  "protocol": "https://github.com/joke0071/foliolab-open/blob/e0d91638f020bd39dcc56bc14d6b604c740c5ebe/docs/ROADMAP_EXECUTION_2026_11_25.md#delta-ab-faa91ef1",
+  "measurement": "Earliest successful job start in each phase (plan) to latest successful job completion, including setup, queue after plan and uploads. Runner seconds sum actual elapsed job durations. Independent runner instances; cross-order runs overlap in calendar time. No monetary attribution.",
+  "timingSource": "GET /repos/joke0071/foliolab-open/actions/runs/{run}/attempts/1/jobs?per_page=100",
+  "controlAppGitCheckout": "Pinned to sourceMain for every measured job; direct comparison covers 116 Chromium commands and 53 cross-engine commands with the same engine bindings. Wallet and unit/syntax ran in every phase.",
+  "trials": {
+    "b1": {
+      "run": 45768805788,
+      "rows": [
+        {
+          "id": 139736169278,
+          "role": "plan",
+          "start": "2026-11-26T06:31:42Z",
+          "end": "2026-11-26T06:32:02Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310812,
+          "role": "test",
+          "start": "2026-11-26T06:32:04Z",
+          "end": "2026-11-26T06:50:55Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310835,
+          "role": "cross (1)",
+          "start": "2026-11-26T06:32:04Z",
+          "end": "2026-11-26T06:48:06Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310845,
+          "role": "quality_cross",
+          "start": "2026-11-26T06:32:05Z",
+          "end": "2026-11-26T06:43:27Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310860,
+          "role": "wallet",
+          "start": "2026-11-26T06:32:04Z",
+          "end": "2026-11-26T06:32:51Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310885,
+          "role": "quality_chromium",
+          "start": "2026-11-26T06:32:05Z",
+          "end": "2026-11-26T06:37:42Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310923,
+          "role": "cross (3)",
+          "start": "2026-11-26T06:32:05Z",
+          "end": "2026-11-26T06:46:58Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139736310933,
+          "role": "cross (2)",
+          "start": "2026-11-26T06:32:04Z",
+          "end": "2026-11-26T06:44:46Z",
+          "conclusion": "success",
+          "status": "completed"
+        }
+      ],
+      "seconds": 1153.0,
+      "runnerSeconds": 4834.0,
+      "allGreen": true
+    },
+    "a1": {
+      "run": 45768805788,
+      "rows": [
+        {
+          "id": 139743483513,
+          "role": "plan",
+          "start": "2026-11-26T06:50:57Z",
+          "end": "2026-11-26T06:51:06Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139743552480,
+          "role": "test",
+          "start": "2026-11-26T06:51:09Z",
+          "end": "2026-11-26T07:09:22Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139743552503,
+          "role": "wallet",
+          "start": "2026-11-26T06:51:08Z",
+          "end": "2026-11-26T06:52:08Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139743552510,
+          "role": "cross (1)",
+          "start": "2026-11-26T06:51:09Z",
+          "end": "2026-11-26T07:02:38Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139743552557,
+          "role": "cross (2)",
+          "start": "2026-11-26T06:51:08Z",
+          "end": "2026-11-26T07:18:52Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139743552602,
+          "role": "cross (3)",
+          "start": "2026-11-26T06:51:09Z",
+          "end": "2026-11-26T07:04:23Z",
+          "conclusion": "success",
+          "status": "completed"
+        }
+      ],
+      "seconds": 1675.0,
+      "runnerSeconds": 4309.0,
+      "allGreen": true
+    },
+    "a2": {
+      "run": 45769915998,
+      "rows": [
+        {
+          "id": 139739810808,
+          "role": "plan",
+          "start": "2026-11-26T06:41:20Z",
+          "end": "2026-11-26T06:41:37Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139739937061,
+          "role": "wallet",
+          "start": "2026-11-26T06:41:39Z",
+          "end": "2026-11-26T06:42:24Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139739937125,
+          "role": "test",
+          "start": "2026-11-26T06:41:39Z",
+          "end": "2026-11-26T07:01:17Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139739937165,
+          "role": "cross (1)",
+          "start": "2026-11-26T06:41:39Z",
+          "end": "2026-11-26T06:54:06Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139739937249,
+          "role": "cross (3)",
+          "start": "2026-11-26T06:41:40Z",
+          "end": "2026-11-26T07:00:04Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139739937464,
+          "role": "cross (2)",
+          "start": "2026-11-26T06:41:39Z",
+          "end": "2026-11-26T07:10:47Z",
+          "conclusion": "success",
+          "status": "completed"
+        }
+      ],
+      "seconds": 1767.0,
+      "runnerSeconds": 4839.0,
+      "allGreen": true
+    },
+    "b2": {
+      "run": 45769915998,
+      "rows": [
+        {
+          "id": 139751159475,
+          "role": "plan",
+          "start": "2026-11-26T07:10:50Z",
+          "end": "2026-11-26T07:11:09Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306467,
+          "role": "quality_cross",
+          "start": "2026-11-26T07:11:12Z",
+          "end": "2026-11-26T07:23:17Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306529,
+          "role": "wallet",
+          "start": "2026-11-26T07:11:11Z",
+          "end": "2026-11-26T07:12:07Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306597,
+          "role": "cross (2)",
+          "start": "2026-11-26T07:11:12Z",
+          "end": "2026-11-26T07:24:16Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306600,
+          "role": "cross (1)",
+          "start": "2026-11-26T07:11:12Z",
+          "end": "2026-11-26T07:22:27Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306607,
+          "role": "cross (3)",
+          "start": "2026-11-26T07:11:12Z",
+          "end": "2026-11-26T07:29:30Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306613,
+          "role": "test",
+          "start": "2026-11-26T07:11:11Z",
+          "end": "2026-11-26T07:28:59Z",
+          "conclusion": "success",
+          "status": "completed"
+        },
+        {
+          "id": 139751306627,
+          "role": "quality_chromium",
+          "start": "2026-11-26T07:11:12Z",
+          "end": "2026-11-26T07:15:46Z",
+          "conclusion": "success",
+          "status": "completed"
+        }
+      ],
+      "seconds": 1120.0,
+      "runnerSeconds": 4699.0,
+      "allGreen": true
+    }
+  },
+  "result": {
+    "gainsSecondsBA_AB": [
+      522.0,
+      647.0
+    ],
+    "controlSpreadSeconds": 92.0,
+    "maxBSeconds": 1153.0,
+    "minASeconds": 1675.0,
+    "historicalSerialRangeSeconds": [
+      1245,
+      1662
+    ],
+    "historicalSerialSpreadSeconds": 417,
+    "runnerSecondsChangeBA_AB": [
+      525.0,
+      -140.0
+    ],
+    "pairedCriterionPassed": true
+  },
+  "prChecks": {
+    "45769694049": {
+      "pr": {
+        "rows": [
+          {
+            "id": 139739098459,
+            "role": "Determine FAST / INTEGRATION / RELEASE",
+            "start": "2026-11-26T06:39:28Z",
+            "end": "2026-11-26T06:39:43Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213369,
+            "role": "test",
+            "start": "2026-11-26T06:39:46Z",
+            "end": "2026-11-26T06:54:01Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213401,
+            "role": "FAST only / UI contract canary — no integration approval",
+            "start": "2026-11-26T06:39:46Z",
+            "end": "2026-11-26T06:41:13Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213415,
+            "role": "quality-chromium",
+            "start": "2026-11-26T06:39:47Z",
+            "end": "2026-11-26T06:44:34Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213418,
+            "role": "quality-cross",
+            "start": "2026-11-26T06:39:45Z",
+            "end": "2026-11-26T06:52:10Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213420,
+            "role": "cross-engine (1)",
+            "start": "2026-11-26T06:39:46Z",
+            "end": "2026-11-26T06:51:16Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213458,
+            "role": "cross-engine (3)",
+            "start": "2026-11-26T06:39:46Z",
+            "end": "2026-11-26T06:56:14Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139739213500,
+            "role": "cross-engine (2)",
+            "start": "2026-11-26T06:39:46Z",
+            "end": "2026-11-26T06:50:06Z",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "id": 139745485475,
+            "role": "live-acceptance",
+            "start": "2026-11-26T06:56:15Z",
+            "end": "2026-11-26T06:56:14Z",
+            "conclusion": "skipped",
+            "status": "completed"
+          },
+          {
+            "id": 139745485807,
+            "role": "deploy",
+            "start": "2026-11-26T06:56:15Z",
+            "end": "2026-11-26T06:56:14Z",
+            "conclusion": "skipped",
+            "status": "completed"
+          }
+        ],
+        "seconds": 1006.0,
+        "runnerSeconds": 4287.0,
+        "allGreen": true
+      }
+    },
+    "45769694024": {
+      "pr-wallet": {
+        "rows": [
+          {
+            "id": 139739097745,
+            "role": "tests",
+            "start": "2026-11-26T06:39:27Z",
+            "end": "2026-11-26T06:40:28Z",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ],
+        "seconds": 61.0,
+        "runnerSeconds": 61.0,
+        "allGreen": true
+      }
+    }
+  },
+  "archiveMethod": "Checked GitHub size, SHA-256 and every ZIP member CRC. Compared fixed paths by their original workflow role. Timestamped storage diagnostic names were matched by engine, repository stack frames, ordered stages, PASS and the final verified service-worker controller. Compared complete per-engine ui-quality.json records (including scan list, checks and status).",
+  "archiveBA": {
+    "byGroup": {
+      "cross-2": {
+        "a": 834,
+        "b": 834,
+        "missing": [],
+        "additional": [],
+        "matchedStorageFixtures": 4
+      },
+      "chromium": {
+        "a": 832,
+        "b": 832,
+        "missing": [],
+        "additional": [],
+        "matchedStorageFixtures": 17
+      },
+      "cross-1": {
+        "a": 508,
+        "b": 508,
+        "missing": [],
+        "additional": [],
+        "matchedStorageFixtures": 8
+      },
+      "cross-3": {
+        "a": 262,
+        "b": 262,
+        "missing": [],
+        "additional": [],
+        "matchedStorageFixtures": 22
+      },
+      "dialog-visual-reference": {
+        "a": 20,
+        "b": 20,
+        "missing": [],
+        "additional": [],
+        "matchedStorageFixtures": 0
+      }
+    },
+    "archives": [
+      {
+        "artifact": 15095237685,
+        "name": "a1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-2",
+        "sha256": "5d3f022bdb24fb58c47b22efe72305fb65703745737f08e33df145c820e07216",
+        "storageFixtures": 4,
+        "files": 838,
+        "json": 87,
+        "png": 744,
+        "c5": [],
+        "ui": {
+          "firefox": 66,
+          "webkit": 66
+        }
+      },
+      {
+        "artifact": 15094981726,
+        "name": "a1-release-gates-c2c672f43de8c570c0993dccb602df3020394807",
+        "sha256": "266c359713fe603b4af5da953d55a856781b58ec8a942ed56793d0ead86cf195",
+        "storageFixtures": 17,
+        "files": 849,
+        "json": 96,
+        "png": 732,
+        "c5": [
+          "ui-positions-390.png",
+          "c5-bookings-390.png",
+          "c5-connections-390.png",
+          "c5-connections-viewport-390.png"
+        ],
+        "ui": {
+          "chromium": 66
+        }
+      },
+      {
+        "artifact": 15094951453,
+        "name": "a1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-1",
+        "sha256": "fe6ddfacbfb39ab63d260a81c03f9e580e192618ecece91366574018c2ed133b",
+        "storageFixtures": 8,
+        "files": 516,
+        "json": 11,
+        "png": 496,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15094662538,
+        "name": "a1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-3",
+        "sha256": "2c3c77460cca987f2c500fa8bf0103a30a43aaa8cdd30fb2d6e2fe4dbb90feb6",
+        "storageFixtures": 22,
+        "files": 284,
+        "json": 39,
+        "png": 222,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15094330732,
+        "name": "b1-dialog-visual-reference",
+        "sha256": "09c6d70a911ec1e07f7836ecc5d220349a67ddbccabce4a150084aeffdd566a6",
+        "storageFixtures": 0,
+        "files": 20,
+        "json": 0,
+        "png": 20,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15094330729,
+        "name": "b1-release-gates-c2c672f43de8c570c0993dccb602df3020394807",
+        "sha256": "af34034315c07b9a91975c56c15ca85597d529516c21c9335923601582ac191e",
+        "storageFixtures": 15,
+        "files": 503,
+        "json": 56,
+        "png": 428,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15093959560,
+        "name": "a1-dialog-visual-reference",
+        "sha256": "f62c3024cdfa22d6aabadc2e6fc14c3c2a1f92a4088b2aecc918d29d8e8e427f",
+        "storageFixtures": 0,
+        "files": 20,
+        "json": 0,
+        "png": 20,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15093935745,
+        "name": "b1-ui-quality-cross",
+        "sha256": "15a9dce476d4c9d5ec24eb21c8ba513b50fbe61a811e70ce56073cbcd9fdf5c3",
+        "storageFixtures": 4,
+        "files": 717,
+        "json": 62,
+        "png": 650,
+        "c5": [],
+        "ui": {
+          "firefox": 66,
+          "webkit": 66
+        }
+      },
+      {
+        "artifact": 15093772103,
+        "name": "b1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-3",
+        "sha256": "a2179358ee9414d3e8152e7f22373a659f4ab0b4143b4a2e9b9e83645ad1984b",
+        "storageFixtures": 22,
+        "files": 284,
+        "json": 39,
+        "png": 222,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15093438718,
+        "name": "b1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-2",
+        "sha256": "d5a1e8fbf87fc04ff1bb1ec246212bfcea5d4f6560bd3a781bdafd99f687deb7",
+        "storageFixtures": 0,
+        "files": 128,
+        "json": 25,
+        "png": 100,
+        "c5": [],
+        "ui": {}
+      },
+      {
+        "artifact": 15092858373,
+        "name": "b1-ui-quality-chromium",
+        "sha256": "99f29cb3b123d0ad89c7e13c6a5b5e1a1ea60625b2b5132826e1d12e992058cf",
+        "storageFixtures": 2,
+        "files": 391,
+        "json": 42,
+        "png": 347,
+        "c5": [
+          "ui-positions-390.png",
+          "c5-bookings-390.png",
+          "c5-connections-390.png",
+          "c5-connections-viewport-390.png"
+        ],
+        "ui": {
+          "chromium": 66
+        }
+      },
+      {
+        "artifact": 15092854872,
+        "name": "b1-cross-engine-gates-c2c672f43de8c570c0993dccb602df3020394807-1",
+        "sha256": "916eb81a6c957d785806df98830300be4a5e6b86eb485bb055da95b2a914957a",
+        "storageFixtures": 8,
+        "files": 516,
+        "json": 11,
+        "png": 496,
+        "c5": [],
+        "ui": {}
+      }
+    ],
+    "perEngine": {
+      "chromium": 66,
+      "firefox": 66,
+      "webkit": 66
+    },
+    "missing": [],
+    "additional": [],
+    "unionFiles": {
+      "a1": 2316,
+      "b1": 2316
+    }
+  },
+  "uiArchivesAB": [
+    {
+      "artifact": 15096051095,
+      "name": "b2-ui-quality-cross",
+      "sha256": "0a3ba493cfc27e31ef3b729e317b0ccfc5268c8fb72a595a705ebebd6ae68fa7",
+      "storageFixtures": 4,
+      "files": 717,
+      "json": 62,
+      "png": 650,
+      "c5": [],
+      "ui": {
+        "firefox": 66,
+        "webkit": 66
+      }
+    },
+    {
+      "artifact": 15095226904,
+      "name": "b2-ui-quality-chromium",
+      "sha256": "2b19d98340a2c76981dda19da73289205dd5c60644e64e5f75a7976a8902ffae",
+      "storageFixtures": 2,
+      "files": 391,
+      "json": 42,
+      "png": 347,
+      "c5": [
+        "ui-positions-390.png",
+        "c5-bookings-390.png",
+        "c5-connections-390.png",
+        "c5-connections-viewport-390.png"
+      ],
+      "ui": {
+        "chromium": 66
+      }
+    },
+    {
+      "artifact": 15094868293,
+      "name": "a2-cross-engine-gates-28ef51b8491bf144e32e46d0335d12bd54d6b2bb-2",
+      "sha256": "426c108f61294baee76752b5ba8848473748b6a390d50b71619acda93e6de014",
+      "storageFixtures": 4,
+      "files": 838,
+      "json": 87,
+      "png": 744,
+      "c5": [],
+      "ui": {
+        "firefox": 66,
+        "webkit": 66
+      }
+    },
+    {
+      "artifact": 15093898556,
+      "name": "a2-release-gates-28ef51b8491bf144e32e46d0335d12bd54d6b2bb",
+      "sha256": "e54afaee16656c5c4da46caef11d543b1596f7da23aaaf059bdec19450145bbe",
+      "storageFixtures": 17,
+      "files": 849,
+      "json": 96,
+      "png": 732,
+      "c5": [
+        "ui-positions-390.png",
+        "c5-bookings-390.png",
+        "c5-connections-390.png",
+        "c5-connections-viewport-390.png"
+      ],
+      "ui": {
+        "chromium": 66
+      }
+    }
+  ],
+  "releaseStatus": "PR qualification only. Actual Main/Pages/live decision is recorded separately in the roadmap."
+}
