@@ -1,0 +1,52 @@
+{
+  "scope": "Technical acceptance of the internal preview in the roadmap row. Public marketing is a separate publication decision.",
+  "decision": "ACCEPTED_INTERNAL_PREVIEW",
+  "publicPromotion": "deferred per existing product decision",
+  "privateMaterials": "The existing internal SW339 text preview was read in full; its illustrative values are identified as a synthetic example. The four privately archived SW346 mobile screens document a separate synthetic portfolio. The original private preview files have not been published.",
+  "independentReview": {
+    "originalRelease": 346,
+    "originalArtifact": 15073140970,
+    "regularLiveRun": 45713556664,
+    "reviewRun": 45748125084,
+    "reviewJob": 139669055515,
+    "indexArtifact": 15084895808,
+    "verifiedExistingPublicScreens": {
+      "ui-positions-390.png": {
+        "bytes": 94403,
+        "sha256": "ee72da5395b340ac78f553b140f3c8fbd53bbccd528188b6e3f25d4ae7a9d2ba"
+      },
+      "ui-history-records-390.png": {
+        "bytes": 42741,
+        "sha256": "01b68beb344d20944dd9e77ff9d0423eaa2f66cad26132762edf175c97eb2154"
+      },
+      "bitpanda-import/chromium-390.png": {
+        "bytes": 67622,
+        "sha256": "731600e601a10df0d6122220f8a3105efa62084a21eb9c70a9f9d8282eb38231"
+      },
+      "recovery-limits/chromium-320.png": {
+        "bytes": 227593,
+        "sha256": "d5605b7b64b3f0a6329b579ea264c2fc0c640069a0653d060f1352da6262dcb0"
+      }
+    }
+  },
+  "featureChecks": [
+    {
+      "area": "Positions",
+      "result": "The actual mobile screen displays the synthetic provider, cash and securities, archive/active filtering, search and management."
+    },
+    {
+      "area": "Historical snapshots",
+      "result": "The actual screen shows dated holdings, prices, EUR conversion and value for distinct days. Historical value is distinguished from a return."
+    },
+    {
+      "area": "Import",
+      "result": "The actual Bitpanda example shows selected rows, account assignment, independent closing balances, preview and cancellation. Provider-specific support remains qualified in the text."
+    },
+    {
+      "area": "Local backup",
+      "result": "The More / Your data screen describes local storage, encrypted file download, optional Google Drive and the effects of restore. The separate size-limit example is labeled as a recovery test. This review does not promise a live Google sign-in."
+    }
+  ],
+  "privacyReview": "Reviewed comparison images contain synthetic providers or positions, test dates and test balances. No personal records or access credentials were found. The screenshot set consists of independent feature examples, not one customer's statement.",
+  "signoff": "Technical development lead. Internal use only. Separate website promotion remains deferred. Project issue #149 keeps its own broader scope."
+}
