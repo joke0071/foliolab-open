@@ -1,0 +1,101 @@
+{
+  "release": 347,
+  "productMain": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+  "state": "PUBLISHED_WITH_VERIFIED_FUNCTIONAL_EVIDENCE_FORMAL_GATE_BLOCKED",
+  "lastRegularLiveAccepted": {
+    "release": 346,
+    "main": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+    "job": 139565401753
+  },
+  "pages": {
+    "artifactId": 15083568731,
+    "independentJob": 139669354022,
+    "verifiedFiles": 161
+  },
+  "regularRun": 45746989122,
+  "failedAttempts": [
+    {
+      "attempt": 1,
+      "jobId": 139675244765,
+      "artifactId": 15085695238,
+      "engine": "chromium",
+      "phase": "FX",
+      "affectedPath": "/src/flatex-review-export.js",
+      "httpStatus": 503
+    },
+    {
+      "attempt": 2,
+      "jobId": 139676569131,
+      "artifactId": 15087465440,
+      "engine": "firefox",
+      "phase": "NEAR start",
+      "httpStatus": 429,
+      "afterRepeatedWait": true,
+      "retryDelaysSeconds": [
+        10,
+        30,
+        65
+      ]
+    }
+  ],
+  "originalArchiveAudit": {
+    "run": 45754638057,
+    "job": 139690275291,
+    "retainedArtifactId": 15087127309,
+    "report": {
+      "sha": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+      "artifactId": 15087465440,
+      "sha256": "sha256:9a17cbfade9ac301a2d4c6dda8737442837b400864f8d4c73410d02a113e5802",
+      "zipCRC": "PASS",
+      "coreResponsesMatchingMain": 162,
+      "archiveEntries": 1743,
+      "trace": "worker-diagnostics/firefox-38316-52.jsonl",
+      "http429": [
+        {
+          "url": "https://foliolab.unperfekt.at/",
+          "status": 429,
+          "at": 1795666595256,
+          "retryAfter": "0"
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/",
+          "status": 429,
+          "at": 1795666605465,
+          "retryAfter": "0"
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/",
+          "status": 429,
+          "at": 1795666635508,
+          "retryAfter": "0"
+        },
+        {
+          "url": "https://foliolab.unperfekt.at/",
+          "status": 429,
+          "at": 1795666700535,
+          "retryAfter": "0"
+        }
+      ],
+      "retryDelaysSeconds": [
+        10,
+        30,
+        65
+      ]
+    }
+  },
+  "supplementalProductionAcceptance": {
+    "release": 347,
+    "main": "ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad",
+    "run": 45744362448,
+    "job": 139656717997,
+    "artifactId": 15083517214,
+    "independentVerificationJob": 139662523843,
+    "exactResponses": 162,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "reopenTrigger": "The authorized regular Main runner can complete the existing direct-origin production suite within the hosting response limits. Complete and independently verify its original artifact before formal package booking."
+}
