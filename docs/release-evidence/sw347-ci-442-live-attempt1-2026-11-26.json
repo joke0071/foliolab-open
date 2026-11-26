@@ -1,0 +1,54 @@
+{
+  "main": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+  "run": 45775837478,
+  "attempt": 1,
+  "job": 139765198464,
+  "failedStep": "Verify published bytes, core flows and targeted UI in Chromium",
+  "failure": "tests/browser-plain-backup-limits.mjs:16 ready() / :19 first navigation; timeout 30000ms before the backup boundary assertions",
+  "prerequisite": {
+    "status": "PASS",
+    "assets": 162,
+    "groups": 11,
+    "axe": 22
+  },
+  "upstream": [
+    {
+      "event": "badResponse",
+      "at": 1795679296227,
+      "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+      "status": 503,
+      "headers": {
+        "x-fastly-request-id": "c01e8438182bdb5cbe94c216c340093ff70a7d5f",
+        "retry-after": "0",
+        "x-timer": "S1795679296.191030,VS0,VE28",
+        "via": "1.1 varnish",
+        "accept-ranges": "bytes",
+        "x-cache": "MISS",
+        "content-length": "54887",
+        "date": "Thu, 26 Nov 2026 07:48:16 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "x-served-by": "cache-chi-kmdw8640060-CHI",
+        "server": "Varnish",
+        "x-cache-hits": "0"
+      }
+    },
+    {
+      "event": "requestfailed",
+      "at": 1795679296227,
+      "url": "https://foliolab.unperfekt.at/src/refresh-ui.js",
+      "failure": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    }
+  ],
+  "diagnosticMember": "worker-diagnostics/chromium-5348-1.jsonl",
+  "artifact": {
+    "id": 15096369827,
+    "bytes": 11572729,
+    "sha256": "e191fcd0f7da387a02577abedd953f87e7e5f08068f2cde955d3d633669802a5",
+    "zipCRC": "PASS"
+  },
+  "retry": "Only the live-acceptance job, same Main and existing Pages deployment.",
+  "retryJob": 139766986818,
+  "finishedChecksBeforeFailure": "Published core, 162 HTTP hashes, 11 core groups, 22 Axe scans, and the first recovery suite succeeded; plain-backup sub-suite had no completed engine in its own report."
+}
