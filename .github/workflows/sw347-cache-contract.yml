@@ -1,0 +1,89 @@
+name: Measure wallet reload traffic and exercise script throttling on the SW347 candidate
+on:
+  push:
+    branches: [qa/sw347-wallet-cache-contract]
+permissions:
+  contents: read
+jobs:
+  wallet:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c9734e686b03dca08c6b1ecadf3ec8d18cc233b1
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare historical and candidate harness against identical product files
+        run: |
+          set -euo pipefail
+          git diff --exit-code ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad HEAD -- src index.html sw.js styles.css
+          git worktree add --detach /tmp/wallet-before ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps chromium firefox webkit
+          ln -s "$PWD/node_modules" /tmp/wallet-before/node_modules
+          mkdir -p evidence
+      - name: Count application requests and reproduce HTTP 200 with a throttled ES module on reload
+        run: |
+          set -euo pipefail
+          cat >/tmp/wallet-host.py <<'PY'
+          import http.server,sys,threading,json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from collections import Counter
+          from functools import partial
+          output,mode,root,port=sys.argv[1:]
+          lock=threading.Lock()
+          counts=Counter()
+          state={'documents':0,'injected':0,'afterReloadRequests':0}
+          class Server(http.server.SimpleHTTPRequestHandler):
+              def do_GET(self):
+                  path=urlsplit(self.path).path
+                  with lock:
+                      if path=='/':state['documents']+=1
+                      if state['documents']==2:state['afterReloadRequests']+=1
+                      fail=mode=='inject' and state['documents']==2 and path=='/src/model.js' and not state['injected']
+                      if fail:state['injected']+=1
+                      counts[path]+=1
+                      Path(output).write_text(json.dumps(dict(state,totalRequests=sum(counts.values()))))
+                  if fail:
+                      self.send_response(429)
+                      self.send_header('Retry-After','0')
+                      self.end_headers()
+                      return
+                  super().do_GET()
+              def end_headers(self):
+                  self.send_header('Cache-Control','no-store' if mode=='inject' else 'public, max-age=600')
+                  super().end_headers()
+              def log_message(self,*args):pass
+          http.server.ThreadingHTTPServer(('127.0.0.1',int(port)),partial(Server,directory=root)).serve_forever()
+          PY
+          port=7810
+          check_wallet(){
+            local engine="$1" mode="$2" label="$3" src="$4"
+            port=$((port+1))
+            python /tmp/wallet-host.py "$PWD/evidence/$label.json" "$mode" "$PWD" "$port" &
+            local pid=$!
+            trap 'kill "$pid" 2>/dev/null || true' RETURN
+            for n in {1..20}; do if curl --silent --head --fail "http://127.0.0.1:$port/index.html" >/dev/null; then break; fi; sleep 0.2; done
+            UI_QUALITY_ENGINES="$engine" UI_QUALITY_BASE="http://127.0.0.1:$port/" node "$src/tests/browser-near-native-precision.mjs" | tee "evidence/$label.log"
+            python - "$mode" "evidence/$label.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[2]))
+          print(sys.argv[2],d)
+          assert d['injected']==(1 if sys.argv[1]=='inject' else 0)
+          PY
+            if [[ "$mode" == inject ]]; then grep -F 'HTTP 429' "evidence/$label.log"; fi
+          }
+          check_wallet firefox cached before /tmp/wallet-before
+          check_wallet firefox cached after "$PWD"
+          for engine in chromium firefox webkit; do check_wallet "$engine" inject "injected-$engine" "$PWD"; done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wallet-cache-and-module-reproduction
+          path: evidence/
+          retention-days: 30
