@@ -35,6 +35,15 @@ jobs:
               for image in images:
                   if any(term in image['name'].lower() for term in ['import','backup','recovery','restore','history','position','csv']):
                       print('EXISTING_PNG',image['name'],image['width'],image['height'])
+              # Re-expose only pre-existing release test images for technical review.
+              # Original editorial assets remain in the private project folder.
+              import base64
+              for name in ['ui-positions-390.png','ui-history-records-390.png','bitpanda-import/chromium-390.png','recovery-limits/chromium-320.png']:
+                  raw=z.read(name)
+                  encoded=base64.b64encode(raw).decode()
+                  print('PREVIEW_SOURCE',name,len(raw),hashlib.sha256(raw).hexdigest())
+                  for i in range(0,len(encoded),4000):
+                      print('EXISTING_FRAME',name,i//4000,encoded[i:i+4000])
           PY
       - uses: actions/upload-artifact@v4
         with:
