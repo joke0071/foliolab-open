@@ -1,8 +1,9 @@
+import {combinedQualityWorkflow} from './ci-stage-quality-jobs.mjs';
 import {historicalCrossEngineLayout} from './ci-cross-engine-layout.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-const workflow=readFileSync(new URL('../.github/workflows/import.yml',import.meta.url),'utf8');
+const workflow=combinedQualityWorkflow(readFileSync(new URL('../.github/workflows/import.yml',import.meta.url),'utf8'));
 const manifest=JSON.parse(readFileSync(new URL('../docs/ci/cross-engine-baseline.v1.json',import.meta.url),'utf8'));
 const v221=JSON.parse(readFileSync(new URL('../docs/ci/cross-engine-v221.v1.json',import.meta.url),'utf8'));
 // Preserve the historical 30-command evidence verbatim; require the new suite in addition.
