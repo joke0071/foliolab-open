@@ -1,0 +1,42 @@
+name: Check the SW347 NEAR path on published bytes
+on:
+  push:
+    branches: [qa/sw347-near-live-reference]
+permissions:
+  contents: read
+jobs:
+  native-near:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_ENGINES: firefox,webkit
+      LIVE_WORKER_DIAGNOSTICS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Match published worker to the release and preserve the normal TLS checks
+        run: |
+          git diff --exit-code HEAD^ HEAD -- src tests index.html styles.css sw.js
+          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js -o /tmp/foliolab-worker.js
+          cmp sw.js /tmp/foliolab-worker.js
+      - name: Install pinned project browser engines
+        run: |
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps firefox webkit
+      - name: Run the unchanged NEAR scan, reopen and encrypted restore in both production browsers
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          NODE_OPTIONS='--import ./tests/live-worker-diagnostics.mjs' node tests/browser-near-native-precision.mjs 2>&1 | tee artifacts/gates/native-near.log
+      - name: Preserve observed responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: isolated-near-production
+          path: artifacts/gates/
