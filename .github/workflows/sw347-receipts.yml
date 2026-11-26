@@ -1,0 +1,70 @@
+name: Verify original SW347 visual evidence and HTTP response counts
+on:
+  push:
+    branches: [qa/sw347-original-receipts]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  receipts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      RELEASE_SHA: ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad
+    steps:
+      - name: Verify and extract original Chromium screenshots and the interrupted Firefox session
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/$GITHUB_REPOSITORY/actions/artifacts/15082640866/zip >/tmp/original.zip
+          echo "08d47185df21238088519cc87e9013785813f6325c9052ab85ccb6cd6cf0d9f1  /tmp/original.zip" | sha256sum -c -
+          mkdir -p artifacts/gates evidence
+          python - <<'PY'
+          import collections,hashlib,json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from zipfile import ZipFile
+          from struct import unpack
+          with ZipFile('/tmp/original.zip') as z:
+              assert z.testzip() is None
+              pictures={}
+              for name in ['ui-positions-390.png','c5-bookings-390.png','c5-connections-390.png','c5-connections-viewport-390.png']:
+                  raw=z.read(name)
+                  assert raw[:8]==b'\x89PNG\r\n\x1a\n'
+                  width,height=unpack('>II',raw[16:24])
+                  assert width==390 and height>0
+                  pictures[name]={'sha256':hashlib.sha256(raw).hexdigest(),'width':width,'height':height,'bytes':len(raw)}
+                  z.extract(name,'artifacts/gates')
+              target=max((i for i in z.infolist() if 'worker-diagnostics/firefox-' in i.filename and i.filename.endswith('.jsonl')),key=lambda i:i.date_time)
+              data=[json.loads(l) for l in z.read(target).splitlines()]
+              same=[e for e in data if e.get('event')=='contextResponse' and urlsplit(e.get('url','')).netloc=='foliolab.unperfekt.at']
+              roots=[i for i,e in enumerate(same) if urlsplit(e['url']).path=='/']
+              failures=[{'path':urlsplit(e['url']).path,'status':e['status'],'retryAfter':e.get('headers',{}).get('retry-after')} for e in data if e.get('event')=='badResponse' and urlsplit(e['url']).netloc=='foliolab.unperfekt.at']
+              out={'sourceArtifact':15082640866,'diagnostic':target.filename,'requestCount':len(same),'rootOffsets':roots,'rootStatus':[same[i]['status'] for i in roots],'afterFinalRoot':dict(collections.Counter(e['status'] for e in same[roots[-1]:])) if roots else {},'failedResponses':failures,'screenshots':pictures}
+              print(json.dumps(out,indent=2)[:2400])
+              Path('evidence/original.json').write_text(json.dumps(out,indent=2)+'\n')
+          PY
+      - name: Expose bounded synthetic screenshots for visual review
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const files=[['c5-positions','artifacts/gates/ui-positions-390.png'],['c5-bookings','artifacts/gates/c5-bookings-390.png'],['c5-connections','artifacts/gates/c5-connections-390.png'],['c5-connections-viewport','artifacts/gates/c5-connections-viewport-390.png']];
+          for(const [id,path]of files){
+            const bytes=readFileSync(path);
+            if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
+            const data=bytes.toString('base64');
+            console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.RELEASE_SHA}));
+            for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
+            console.log('LIVE_IMAGE_END '+id);
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-original-screenshots-and-response-counts
+          path: |
+            evidence/
+            artifacts/gates/*.png
+          retention-days: 30
