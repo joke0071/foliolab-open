@@ -3,9 +3,9 @@
   "version": 347,
   "artifacts": [
     {
-      "kind": "pages",
-      "id": 15083568731,
-      "digest": "sha256:31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc"
+      "kind": "diagnosis",
+      "id": 15087465440,
+      "digest": "sha256:9a17cbfade9ac301a2d4c6dda8737442837b400864f8d4c73410d02a113e5802"
     }
   ]
 }

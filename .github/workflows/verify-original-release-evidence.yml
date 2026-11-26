@@ -33,13 +33,50 @@ jobs:
           subprocess.run(['git','fetch','--no-tags','--depth=1','origin',sha],check=True)
           for request in config['artifacts']:
               artifact_id = int(request['id'])
-              assert request['kind'] in ('pages','live')
+              assert request['kind'] in ('pages','live','diagnosis')
               assert re.fullmatch(r'sha256:[0-9a-f]{64}',request['digest'])
               path = '/tmp/foliolab-evidence-' + str(artifact_id) + '.zip'
               api_path = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{artifact_id}/zip"
               subprocess.run(['curl','--fail','--silent','--show-error','--location','--retry','2',
                   '--header','Authorization: Bearer ' + os.environ['GH_TOKEN'],'--output',path,api_path],check=True)
               digest = request['digest']
+              if request['kind']=='diagnosis':
+                  with open(path,'rb') as uploaded:
+                      assert hashlib.file_digest(uploaded,'sha256').hexdigest()==digest.removeprefix('sha256:')
+                  with ZipFile(path) as original:
+                      assert original.testzip() is None
+                      core = json.loads(original.read('live/report.json'))
+                      assert core['result']=='PASS' and core['sha']==sha and len(core['assetHashes'])==162
+                      for item in core['assetHashes']:
+                          rel = 'index.html' if item['path']=='./' else item['path'].removeprefix('./')
+                          data = subprocess.check_output(['git','show',f'{sha}:{rel}'])
+                          assert hashlib.sha256(data).hexdigest()==item['sha256'],rel
+                      log = original.read('production-ui-cross.log').decode()
+                      assert 'Application document or script remains rate limited (HTTP 429).' in log
+                      for delay in (10000,30000,65000):
+                          assert f'QA navigation HTTP 429; waiting {delay} ms' in log
+                      for engine in ('firefox','webkit'):
+                          assert f'COSMOS_REWARD_PASS {engine} 34044337 0.811172 ATOM' in log
+                          assert f'FRACTIONAL_SETTLEMENT_PASS {engine} 0.609 shares' in log
+                          assert f'USD_FRACTIONAL_SETTLEMENT_PASS {engine} 0.0648 shares' in log
+                      traces=[]
+                      for name in original.namelist():
+                          if name.startswith('worker-diagnostics/firefox-'):
+                              records=[json.loads(row) for row in original.read(name).splitlines()]
+                              if records and 'browser-ui-quality.mjs' in str(records[0]):
+                                  traces.append((records[0]['at'],name,records))
+                      _,trace,events=max(traces)
+                      rejected=[{'url':row['url'],'status':row['status'],'at':row['at'],'retryAfter':row.get('headers',{}).get('retry-after')}
+                                for row in events if row.get('event')=='badResponse' and row.get('status')==429]
+                      assert len(rejected)>=4 and rejected[-1]['at']-rejected[0]['at']>=105000
+                      receipt={'sha':sha,'artifactId':artifact_id,'sha256':digest,'zipCRC':'PASS','coreResponsesMatchingMain':162,
+                               'archiveEntries':len(original.infolist()),'trace':trace,'http429':rejected,'retryDelaysSeconds':[10,30,65]}
+                  output=Path('proof-diagnosis')
+                  output.mkdir(exist_ok=True)
+                  shutil.copyfile(path,output/'github-original.zip')
+                  (output/'diagnosis.json').write_text(json.dumps(receipt,indent=2)+'\n')
+                  print(json.dumps(receipt,indent=2),flush=True)
+                  continue
               if request.get('nested'):
                   with ZipFile(path) as outer:
                       assert hashlib.file_digest(open(path,'rb'),'sha256').hexdigest() == digest.removeprefix('sha256:')
@@ -68,3 +105,10 @@ jobs:
               print(result,flush=True)
           print('ORIGINAL_RELEASE_EVIDENCE_VERIFIED',sha,flush=True)
           PY
+      - name: Retain the byte-identical original and diagnostic receipt
+        if: ${{ hashFiles('proof-diagnosis/diagnosis.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: retained-same-sha-rate-limit-original
+          path: proof-diagnosis/
+          retention-days: 30
