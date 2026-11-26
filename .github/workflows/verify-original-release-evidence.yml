@@ -1,0 +1,43 @@
+name: Verify original release evidence
+on:
+  push:
+    branches:
+      - qa/release-evidence-verification-20261126
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Compare the official ZIP with the exact release tree
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import subprocess
+          from pathlib import Path
+
+          config = json.loads(Path('.github/release-evidence-request.json').read_text())
+          sha = config['sha']
+          assert re.fullmatch(r'[0-9a-f]{40}', sha)
+          subprocess.run(['git','fetch','--no-tags','--depth=1','origin',sha],check=True)
+          for request in config['artifacts']:
+              artifact_id = int(request['id'])
+              assert request['kind'] in ('pages','live')
+              assert re.fullmatch(r'sha256:[0-9a-f]{64}',request['digest'])
+              path = '/tmp/foliolab-evidence-' + str(artifact_id) + '.zip'
+              api_path = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{artifact_id}/zip"
+              subprocess.run(['curl','--fail','--silent','--show-error','--location','--retry','2',
+                  '--header','Authorization: Bearer ' + os.environ['GH_TOKEN'],'--output',path,api_path],check=True)
+              result = subprocess.check_output(['python3','docs/release-evidence/verify-foliolab-release.py',request['kind'],
+                  path,'.',sha,str(config['version']),str(artifact_id),request['digest']],text=True)
+              print(result,flush=True)
+          print('ORIGINAL_RELEASE_EVIDENCE_VERIFIED',sha,flush=True)
+          PY

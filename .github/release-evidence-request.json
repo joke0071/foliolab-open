@@ -1,0 +1,11 @@
+{
+  "sha": "61d67d0d1eb14ed783d7d6b9ce8e2ce9f69e0093",
+  "version": 346,
+  "artifacts": [
+    {
+      "kind": "live",
+      "id": 15073140970,
+      "digest": "sha256:4096171125af32d29163ae51bb81069e346ae1b49566a7d5b909ccc7b24f3155"
+    }
+  ]
+}
