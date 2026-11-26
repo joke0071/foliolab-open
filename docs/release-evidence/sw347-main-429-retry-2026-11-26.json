@@ -1,0 +1,159 @@
+{
+  "main": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+  "run": 45746989122,
+  "job": 139676569131,
+  "attempt": 2,
+  "step": "Verify targeted production UI in Firefox and WebKit",
+  "status": "failure",
+  "source": "tests/browser-near-native-precision.mjs:31:14",
+  "error": "Application document or script remains rate limited (HTTP 429).",
+  "actualBackoffMs": [
+    10000,
+    30000,
+    65000
+  ],
+  "observed": {
+    "source": 15087465440,
+    "observerNote": "Playwright context response events can include cached and service-worker responses; these are not network billing units.",
+    "mostFrequentObservedSuites": [
+      [
+        "webkit",
+        "browser-flatex-net-settlement.mjs",
+        24172
+      ],
+      [
+        "chromium",
+        "browser-ui-quality.mjs",
+        24110
+      ],
+      [
+        "firefox",
+        "browser-flatex-net-settlement.mjs",
+        24029
+      ],
+      [
+        "chromium",
+        "browser-flatex-net-settlement.mjs",
+        23965
+      ],
+      [
+        "webkit",
+        "browser-ui-quality.mjs",
+        19278
+      ],
+      [
+        "firefox",
+        "browser-ui-quality.mjs",
+        19182
+      ],
+      [
+        "webkit",
+        "browser-kraken-import.mjs",
+        11137
+      ],
+      [
+        "firefox",
+        "browser-kraken-import.mjs",
+        11108
+      ],
+      [
+        "chromium",
+        "browser-kraken-import.mjs",
+        11057
+      ],
+      [
+        "chromium",
+        "browser-etf-source-recovery.mjs",
+        6174
+      ],
+      [
+        "webkit",
+        "browser-etf-source-recovery.mjs",
+        6068
+      ],
+      [
+        "firefox",
+        "browser-etf-source-recovery.mjs",
+        6067
+      ]
+    ],
+    "lastThrottledFirefox": [
+      [
+        2026,
+        11,
+        26,
+        4,
+        18,
+        20
+      ],
+      "worker-diagnostics/firefox-38316-52.jsonl",
+      [
+        [
+          "/",
+          429,
+          "0"
+        ],
+        [
+          "/",
+          429,
+          "0"
+        ],
+        [
+          "/",
+          429,
+          "0"
+        ],
+        [
+          "/",
+          429,
+          "0"
+        ]
+      ]
+    ],
+    "core": {
+      "sha": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+      "httpResponses": 162,
+      "checks": 11,
+      "axe": 22
+    },
+    "crossLastPasses": [
+      "COSMOS_REWARD_PASS firefox 34044337 0.811172 ATOM, one reward, idempotent import, rescan, CSV rejection, reopen, encrypted fresh restore",
+      "COSMOS_REWARD_PASS webkit 34044337 0.811172 ATOM, one reward, idempotent import, rescan, CSV rejection, reopen, encrypted fresh restore",
+      "FRACTIONAL_SETTLEMENT_PASS firefox 0.609 shares, 9.46 gross, 0.51 tax, 8.95 net, 1.34 realized, fresh restore",
+      "USD_FRACTIONAL_SETTLEMENT_PASS firefox 0.0648 shares, 1.36 USD, 1.089718 USD per EUR, 1.25 EUR net, -0.13 realized, fresh restore",
+      "FRACTIONAL_SETTLEMENT_PASS webkit 0.609 shares, 9.46 gross, 0.51 tax, 8.95 net, 1.34 realized, fresh restore",
+      "USD_FRACTIONAL_SETTLEMENT_PASS webkit 0.0648 shares, 1.36 USD, 1.089718 USD per EUR, 1.25 EUR net, -0.13 realized, fresh restore"
+    ]
+  },
+  "sourceArchives": [
+    {
+      "id": 15087465440,
+      "bytes": 135073222,
+      "sha256": "sha256:9a17cbfade9ac301a2d4c6dda8737442837b400864f8d4c73410d02a113e5802"
+    },
+    {
+      "id": 15085695238,
+      "bytes": 11017993,
+      "sha256": "sha256:2965b2636588cfed5e878f70cf163f984219e6b83d289a8f48c44afbd013637f"
+    },
+    {
+      "id": 15083568731,
+      "bytes": 586453,
+      "sha256": "sha256:31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc"
+    }
+  ],
+  "preservedBundle": {
+    "run": 45754610224,
+    "job": 139690185220,
+    "id": 15087032865,
+    "sha256": "sha256:98f9bdc57fd3bd46fcda78d97cfe55a2e9f95d11d218bfce668c4e180c2bb5e8",
+    "retentionDays": 90
+  },
+  "continuation": {
+    "run": 45754759429,
+    "head": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+    "genuineCompletedImports": 23,
+    "firstOutstandingImport": "./browser-near-native-precision.mjs",
+    "basis": "SW321_LIVE_CLOSURE_2026-11-16.md"
+  }
+}
