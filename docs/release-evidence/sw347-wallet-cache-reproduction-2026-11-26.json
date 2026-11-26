@@ -1,0 +1,42 @@
+{
+  "release": "SW347",
+  "productionMain": "ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad",
+  "candidate": "c9734e686b03dca08c6b1ecadf3ec8d18cc233b1",
+  "workflow": 45744832743,
+  "job": 139658245545,
+  "archive": {
+    "id": 15082373498,
+    "sha256": "sha256:2e2fefba22cfccdf9858c703248c8102b9c8b95573bc06cdc80e1e3f3abdb3cb"
+  },
+  "productionFiles": "unchanged",
+  "method": "Pinned Playwright 1.64.1 with identical product files on one Ubuntu test host. The host counted GET requests. Both sides used the normal wallet-scan, rescan, reopen and fresh encrypted restore. The failure reproduction returned one HTTP 429 for /src/model.js after HTTP 200 on the second document. No public CDN load was generated.",
+  "firefoxCachePair": {
+    "cacheControl": "public, max-age=600",
+    "before": {
+      "requests": 605,
+      "rescanNavigationRequests": 148
+    },
+    "after": {
+      "requests": 458,
+      "rescanNavigationRequests": 1
+    },
+    "scope": "one controlled pair; no full release duration estimate"
+  },
+  "injected": {
+    "cacheControl": "no-store",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "expectedPerEngine": {
+      "throttledScriptCount": 1,
+      "firstBackoffMs": 10000,
+      "yoctoNEAR": "145768498431409676817125837316",
+      "scan": true,
+      "reopen": true,
+      "freshEncryptedRestore": true
+    },
+    "result": "PASS"
+  }
+}
