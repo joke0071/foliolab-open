@@ -59,3 +59,30 @@ test('height and wallet binding are checked both before saving and on restore',(
  delete wrongChain.walletHistory.sessions[0].walletScopeDigest;
  assert.throws(()=>safeImport(wrongChain),/Wallet-Zuordnung/);
 });
+
+test('four rewards from one transaction retain their event identities across duplicate import and backup',()=>{
+ const model=portfolio();
+ const position=model.positions[0];
+ position.wallet.address='cosmos1tyqmer8ul0l7msewx82wnhu9f0kswd79hxh6ee';
+ position.quantity=4.972381;
+ position.quantityExact='4.972381';
+ const block='34048131';
+ const preview=cosmosRewardPreview(model,position.id,block);
+ const rewards=preview.events.filter(event=>event.type==='staking_reward');
+ assert.deepEqual(rewards.map(event=>[event.locator.index,event.quantityBaseUnits]),
+  [['11','614783'],['17','614783'],['23','614783'],['29','614721']]);
+ assert.equal(new Set(rewards.map(event=>event.id)).size,4);
+ assert.equal(replayWalletHistory(preview).balances[0].quantityBaseUnits,'4972381');
+ const accepted=acceptHistory(model,preview);
+ const {walletHistory,...finance}=accepted;
+ assert.deepEqual(finance,model);
+ assert.equal(acceptHistory(accepted,cosmosRewardPreview(accepted,position.id,block)),accepted);
+ const serialized=backup(accepted,{includeHistory:true});
+ assert.deepEqual(safeImport(JSON.parse(serialized)).walletHistory,walletHistory);
+ const missingReward=JSON.parse(serialized);
+ missingReward.walletHistory.sessions[0].events.splice(2,1);
+ assert.throws(()=>safeImport(missingReward),/Blockhöhe/);
+ const otherWallet=JSON.parse(serialized);
+ otherWallet.positions[0].wallet.address=address;
+ assert.throws(()=>safeImport(otherWallet),/ATOM-Position/);
+});

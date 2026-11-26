@@ -47,12 +47,14 @@ export function createWalletHistoryUI({getModel,commit}){
   const generation=++calculation;calculationController?.abort();calculationController=new AbortController();
   el('output').replaceChildren();if(!session){calculating=false;busy(running);el('accept').hidden=true;return;}
   if(session.chain==='cosmos'){
-   const proof=cosmosRewardProof;
+   const proof=cosmosRewardProof(selected);
+   const rewardRows=proof.rewards.map(([index,amount])=>'<dt>Ausgezahlter Staking-Reward'+
+    (proof.rewards.length>1?' · Ereignis '+esc(index):'')+'</dt><dd>'+rawQuantity(amount,6)+' ATOM</dd>').join('');
    const summary=document.createElement('section');
    summary.innerHTML='<h3>'+(isPreview?'Reward-Vorschau':'Gespeicherte Historie')+'</h3>'+
-    '<p>Cosmos Hub · Block 34.044.337 · '+esc(proof.time)+'</p>'+
+    '<p>Cosmos Hub · Block '+Number(proof.height).toLocaleString('de-DE')+' · '+esc(proof.time)+'</p>'+
     '<dl><dt>Bankbestand vor dem Block</dt><dd>'+rawQuantity(proof.before,6)+' ATOM</dd>'+
-    '<dt>Ausgezahlter Staking-Reward</dt><dd>'+rawQuantity(proof.reward,6)+' ATOM</dd>'+
+    rewardRows+
     '<dt>Gebühr</dt><dd>−'+rawQuantity(proof.fee,6)+' ATOM</dd>'+
     '<dt>Tip</dt><dd>−'+rawQuantity(proof.tip,6)+' ATOM</dd>'+
     '<dt>Bankbestand nach dem Block</dt><dd>'+rawQuantity(proof.after,6)+' ATOM</dd></dl>'+
@@ -94,9 +96,9 @@ export function createWalletHistoryUI({getModel,commit}){
   const key=id(),p=selected,w=p.wallet;
   try{
    if(chain()==='cosmos'){
-    preview=cosmosRewardPreview(model(),p.id,cosmosRewardProof.height);
+    preview=cosmosRewardPreview(model(),p.id,cosmosRewardProof(p).height);
     await show(preview,true);
-    setStatus('Vorschau für einen belegten Block. Übernehmen speichert den Reward in dieser Wallet-Historie.');
+    setStatus('Vorschau für einen belegten Block. Übernehmen speichert die belegten Ereignisse in dieser Wallet-Historie.');
     return;
    }
    const onCheckpoint=state=>{cache.set(key,{state,identity:JSON.stringify([w,model().settings.solanaRpc])});if(cache.size>3)cache.delete(cache.keys().next().value);const count=state.transactions?.length??state.jobs?.reduce((n,j)=>n+j.items.length,0)??state.transactions?.length??0;setStatus(count+' Datensätze abgerufen; Blockchain-Stand wird geprüft.');};
