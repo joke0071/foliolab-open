@@ -1,0 +1,125 @@
+{
+  "scope": "Public Cosmos Hub block 34048131 on the published FolioLab origin",
+  "observedByUtc": "2026-11-26T15:07:16Z",
+  "release": {
+    "worker": "foliolab-open-v348",
+    "main": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+    "tree": "9af3806a8996582a1a8b55d98fb8abb92735d65e",
+    "pr": 443,
+    "prHead": "8c61ce5a8ef500b94a98c97f244c52e0f0e5078c",
+    "mainRun": 45842736002,
+    "pagesJob": 139997776926,
+    "regularLiveJob": 139997957569
+  },
+  "originals": {
+    "archive": "FolioLab_Cosmos_Referenz_34048131.zip",
+    "baseline": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+    "block": "34048131",
+    "transactionSha256": "158299370a3de28ddb8f07dcf3217e70a9dca140bc75a71f2ddabfd28e3b2770",
+    "bankEndpoint": "https://cosmoshub.api.kjnodes.com/cosmos/bank/v1beta1/balances/cosmos1tyqmer8ul0l7msewx82wnhu9f0kswd79hxh6ee/by_denom?denom=uatom",
+    "bankPinHeader": "x-cosmos-block-height: 34048131"
+  },
+  "expected": {
+    "closingMicroAtom": "4972381",
+    "rewards": [
+      [
+        "11",
+        "614783"
+      ],
+      [
+        "17",
+        "614783"
+      ],
+      [
+        "23",
+        "614783"
+      ],
+      [
+        "29",
+        "614721"
+      ]
+    ],
+    "combinedExecutionFeeMicroAtom": "16007"
+  },
+  "publishedSha256": {
+    "index.html": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+    "src/app.js": "7a06091856e03173159e08166618f17fe19217a5546bce6c02ca632aa257a9ab",
+    "src/cosmos-reward-evidence.js": "03c8328308a052761566908866de1f29b67dda5f3bd2fe133f2776d0abe66ae7",
+    "src/wallet-history-ui.js": "7a1898471afee50d07aa39af7dc468fb5e9344bfa6d48d5702cc806fe9e23b98",
+    "sw.js": "761c17def696c8998cbb2cff8ca1d4a65972918acc9a60a0cb90d7d1d16edaa8"
+  },
+  "browser": [
+    {
+      "engine": "chromium",
+      "browser": "141.0.7390.37",
+      "origin": "https://foliolab.unperfekt.at/",
+      "inputArchiveSha256": "8b4be212c67da4098fa506afe8b9422e1416ac97422d120c8d2c6077d3ce54c4",
+      "inputPortfolioSha256": "9e5399d150e1e1058c1434295e57209c6f4c11645fd163645ba87deb2e41f2aa",
+      "acceptedRevision": 3,
+      "amount": "4.972381",
+      "rewardIndices": [
+        "11",
+        "17",
+        "23",
+        "29"
+      ],
+      "distinctEventIds": true,
+      "originalBankSha256": "f1d97eda4be343f97ea319efd7e33f0fe20ced45e71e466203bce950c991717c",
+      "financialModelPreserved": true,
+      "discardPreservedRevision": true,
+      "reimportPreservedRevision": true,
+      "rescanPreservedHistory": true,
+      "encryptedFreshRestore": true
+    },
+    {
+      "engine": "firefox",
+      "browser": "142.0.1",
+      "origin": "https://foliolab.unperfekt.at/",
+      "inputArchiveSha256": "8b4be212c67da4098fa506afe8b9422e1416ac97422d120c8d2c6077d3ce54c4",
+      "inputPortfolioSha256": "9e5399d150e1e1058c1434295e57209c6f4c11645fd163645ba87deb2e41f2aa",
+      "acceptedRevision": 3,
+      "amount": "4.972381",
+      "rewardIndices": [
+        "11",
+        "17",
+        "23",
+        "29"
+      ],
+      "distinctEventIds": true,
+      "originalBankSha256": "f1d97eda4be343f97ea319efd7e33f0fe20ced45e71e466203bce950c991717c",
+      "financialModelPreserved": true,
+      "discardPreservedRevision": true,
+      "reimportPreservedRevision": true,
+      "rescanPreservedHistory": true,
+      "encryptedFreshRestore": true
+    },
+    {
+      "engine": "webkit",
+      "browser": "27.2",
+      "origin": "https://foliolab.unperfekt.at/",
+      "inputArchiveSha256": "8b4be212c67da4098fa506afe8b9422e1416ac97422d120c8d2c6077d3ce54c4",
+      "inputPortfolioSha256": "9e5399d150e1e1058c1434295e57209c6f4c11645fd163645ba87deb2e41f2aa",
+      "acceptedRevision": 3,
+      "amount": "4.972381",
+      "rewardIndices": [
+        "11",
+        "17",
+        "23",
+        "29"
+      ],
+      "distinctEventIds": true,
+      "originalBankSha256": "f1d97eda4be343f97ea319efd7e33f0fe20ced45e71e466203bce950c991717c",
+      "financialModelPreserved": true,
+      "discardPreservedRevision": true,
+      "reimportPreservedRevision": true,
+      "rescanPreservedHistory": true,
+      "encryptedFreshRestore": true
+    }
+  ],
+  "testEnvironment": {
+    "profiles": "Isolated fresh profiles at the production origin with the archived SW347 input restored through the normal file dialog. Each browser then generated and restored its own encrypted post-import backup.",
+    "provider": "The rescan replayed the independently archived Cosmos bank response at the pinned block.",
+    "transport": "Service workers blocked for this targeted replay, with the execution environment proxy certificate exception applied. HTTP asset bytes were independently compared over the same HTTPS origin. Native service worker lifecycle is covered by the regular release workflow."
+  },
+  "privatePortfolioQualified": false
+}
