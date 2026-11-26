@@ -1,0 +1,138 @@
+{
+  "decision": "LIVE_ACCEPTED",
+  "packageDecision": "CI-Effizienz fully accepted for the complete mandatory integration path in the matrix",
+  "release": "SW347",
+  "main": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+  "tree": "31b21414009bcb47d643108eb280d2cc77c0cfc8",
+  "pr": 442,
+  "prIntegrationRun": 45769694049,
+  "prWalletRun": 45769694024,
+  "mainRun": 45775837478,
+  "regularWorkflowConclusion": "failure",
+  "failedAttempts": [
+    {
+      "job": 139765198464,
+      "artifactId": 15096369827,
+      "http": 503,
+      "cause": "refresh-ui.js in the fresh backup test profile",
+      "fullTargetedTest": "docs/release-evidence/sw347-ci-442-first-live-diagnostic-2026-11-26.json"
+    },
+    {
+      "job": 139766986818,
+      "artifactId": 15098179885,
+      "sha256": "32e336f03c5051ffacd90755219bd3e7e6ecf7770b18e60883aecbe1feaf76c4",
+      "http": 429,
+      "boundary": "./browser-near-native-precision.mjs",
+      "originalSuccessfulImports": 23
+    }
+  ],
+  "continuation": {
+    "run": 45783680786,
+    "job": 139785038146,
+    "checkout": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+    "artifactId": 15098959376,
+    "size": 152141697,
+    "githubOuterDigest": "sha256:da85782ed02307f880020ae70345d2037e615407c86e0feffcc325c50e88c93c",
+    "innerReportSHA256": "167244f4397ec6b444010b9f3915646cba1da5030d048d21e81105f7b9cadc0f",
+    "crc": "PASS outer, inner, and original attempt 2",
+    "unalteredProductionLogs": [
+      "production-cash-ux-chromium.log",
+      "production-cash-ux-cross.log",
+      "production-core.log",
+      "production-dialog-native-chromium.log",
+      "production-dialog-native-cross.log",
+      "production-etf-source-chromium.log",
+      "production-etf-source-cross.log",
+      "production-fin-e2e-chromium.log",
+      "production-flatex-net-chromium.log",
+      "production-flatex-net-cross.log",
+      "production-loading-chromium.log",
+      "production-loading-cross.log",
+      "production-pchain-chromium.log",
+      "production-pchain-cross.log",
+      "production-price-csv-tools-chromium.log",
+      "production-price-csv-tools-cross.log",
+      "production-recovery-chromium.log",
+      "production-restore-deposits-chromium.log",
+      "production-restore-deposits-cross.log",
+      "production-sonic-chromium.log",
+      "production-sonic-cross.log",
+      "production-transfers-chromium.log",
+      "production-uh02-chromium.log",
+      "production-uh02-cross.log",
+      "production-uh03-bitpanda-chromium.log",
+      "production-uh03-bitpanda-cross.log",
+      "production-uh03-kraken-chromium.log",
+      "production-uh03-kraken-cross.log",
+      "production-ui-alltag10-chromium.log",
+      "production-ui-alltag10-cross.log",
+      "production-ui-chromium.log",
+      "production-ui-textscale-chromium.log",
+      "production-ui-textscale-cross.log"
+    ],
+    "combinedCrossUiPrefixSHA256": "c20f12b5781ec6a85e69ac62eeca5020afdd071b0e20de78b77434e55655c377",
+    "newlyExecuted": [
+      "native NEAR",
+      "UI main suite",
+      "recovery",
+      "finance",
+      "transfers"
+    ],
+    "finalDirectProductionReadback": 162
+  },
+  "publishedPages": {
+    "git": "74e7a94274ba5191864ffde33b357d90b1940ec4",
+    "files": 161,
+    "artifactId": 15096431278,
+    "sha256": "5acb359f19195bf7ad0b35be7bf96ad7606eac1584ad53ad021c7f7117c79c5d",
+    "zipCRC": "PASS",
+    "matchedAgainstGit": true
+  },
+  "verification": {
+    "http200AssetHashesEqualGit": 162,
+    "coreGroups": 11,
+    "zeroViolationAxeScans": 22,
+    "allWorkflowProductionLogs": 37,
+    "orderedModulesPerGroup": 24,
+    "uiScansPerEngine": {
+      "chromium": 66,
+      "firefox": 66,
+      "webkit": 66
+    },
+    "regressionsAllThreeEngines": [
+      "single Cosmos reward at 34044337",
+      "24-place NEAR",
+      "EUR and USD fractional settlement"
+    ],
+    "pngSha256": {
+      "ui-positions-390.png": "ee72da5395b340ac78f553b140f3c8fbd53bbccd528188b6e3f25d4ae7a9d2ba",
+      "c5-bookings-390.png": "e1ad5ac39dc432247264045a9d9f6c6588873c08b6c42c972ba238b53faf59f0",
+      "c5-connections-390.png": "b837e260804924c618c018e601b8b00a80285a8922eb58796d7671eac2cc02de",
+      "c5-connections-viewport-390.png": "5cc14ddf6bf17461d7d7be25d4b03ca881cf9080f17483c0fff009c83f6e2c41"
+    }
+  },
+  "mandatoryPathSeconds": {
+    "BA_before_after": [
+      1675,
+      1153
+    ],
+    "AB_before_after": [
+      1767,
+      1120
+    ],
+    "savings": [
+      522,
+      647
+    ],
+    "aggregateRunnerTimeDelta": [
+      525,
+      -140
+    ],
+    "actualMergedMainIntegration": 862
+  },
+  "basis": "docs/SW321_LIVE_CLOSURE_2026-11-16.md",
+  "coordination": {
+    "cancelledDuplicate": 45783680300,
+    "acceptedRun": 45783680786
+  }
+}
