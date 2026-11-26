@@ -29,5 +29,62 @@
       "actualGapSeconds": 10.036,
       "restore": "PASS"
     }
-  ]
+  ],
+  "integrationAndProductLineage": {
+    "pr": 439,
+    "head": "fdd6fae13d231a0d99ed2da5eee7673b35f7709d",
+    "mergeRef": "f6cdb59ff162f2527e8eaf4fb097fdab70a2c3d6",
+    "tree": "00d6f0bc6bbb5a48e0d0e287885f77233a2aa0a7",
+    "main": "ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad",
+    "base": "5feb4da4f6dcd090b5279da0479daa6c5ee7b71d",
+    "integration": 45734783074,
+    "wallet": 45734783077,
+    "ci": [
+      [
+        "Determine FAST / INTEGRATION / RELEASE",
+        139625271695,
+        "success"
+      ],
+      [
+        "test",
+        139625389248,
+        "success"
+      ],
+      [
+        "cross-engine (3)",
+        139625389250,
+        "success"
+      ],
+      [
+        "cross-engine (2)",
+        139625389264,
+        "success"
+      ],
+      [
+        "cross-engine (1)",
+        139625389328,
+        "success"
+      ],
+      [
+        "FAST only / UI contract canary \u2014 no integration approval",
+        139625391610,
+        "skipped"
+      ],
+      [
+        "deploy",
+        139633325352,
+        "skipped"
+      ],
+      [
+        "live-acceptance",
+        139633326396,
+        "skipped"
+      ]
+    ],
+    "mainRun": 45737311400,
+    "changedPaths": [
+      "tests/flh04-backup-app.mjs",
+      "tests/qa-rate-limited-navigation.test.mjs"
+    ]
+  }
 }
