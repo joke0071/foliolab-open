@@ -1,0 +1,42 @@
+name: Index existing synthetic release evidence for the internal preview review
+on:
+  push:
+    branches: [qa/sw347-preview-evidence-index]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: List existing mobile screenshots with their original byte hashes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/$GITHUB_REPOSITORY/actions/artifacts/15073140970/zip >/tmp/official.zip
+          gh api repos/$GITHUB_REPOSITORY/actions/artifacts/15073140970 --jq .digest >/tmp/source-digest
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,struct,zipfile
+          p=Path('/tmp/official.zip')
+          assert 'sha256:'+hashlib.file_digest(p.open('rb'),'sha256').hexdigest()==Path('/tmp/source-digest').read_text().strip()
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              images=[]
+              for name in z.namelist():
+                  if name.lower().endswith('.png'):
+                      raw=z.read(name)
+                      w,h=struct.unpack('>II',raw[16:24])
+                      images.append(dict(name=name,width=w,height=h,sha256=hashlib.sha256(raw).hexdigest()))
+              Path('index.json').write_text(json.dumps(images,indent=2)+'\n')
+              print('PNG count',len(images))
+              for image in images:
+                  if any(term in image['name'].lower() for term in ['import','backup','recovery','restore','history','position','csv']):
+                      print('EXISTING_PNG',image['name'],image['width'],image['height'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: existing-public-release-png-index
+          path: index.json
