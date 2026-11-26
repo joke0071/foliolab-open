@@ -18,8 +18,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'PY'
+          import hashlib
           import json
           import os
+          import shutil
+          from zipfile import ZipFile
           import re
           import subprocess
           from pathlib import Path
@@ -36,8 +39,32 @@ jobs:
               api_path = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{artifact_id}/zip"
               subprocess.run(['curl','--fail','--silent','--show-error','--location','--retry','2',
                   '--header','Authorization: Bearer ' + os.environ['GH_TOKEN'],'--output',path,api_path],check=True)
+              digest = request['digest']
+              if request.get('nested'):
+                  with ZipFile(path) as outer:
+                      assert hashlib.file_digest(open(path,'rb'),'sha256').hexdigest() == digest.removeprefix('sha256:')
+                      assert outer.testzip() is None
+                      inner_path = '/tmp/foliolab-combined-reports.zip'
+                      with outer.open('combined-reports.zip') as source, open(inner_path,'wb') as target:
+                          shutil.copyfileobj(source,target)
+                  digest = request['nested']
+                  original = config['original']
+                  original_path = '/tmp/foliolab-failed-orig.zip'
+                  original_url = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{original['id']}/zip"
+                  subprocess.run(['curl','--fail','--silent','--show-error','--location','--retry','2',
+                      '--header','Authorization: Bearer ' + os.environ['GH_TOKEN'],'--output',original_path,original_url],check=True)
+                  assert hashlib.file_digest(open(original_path,'rb'),'sha256').hexdigest() == original['digest']
+                  with ZipFile(original_path) as original_file, ZipFile(inner_path) as combined:
+                      assert original_file.testzip() is None
+                      carry = ['live/report.json','production-ui-chromium.log']
+                      carry += [f'{group}/{engine}.json' for group in ('loading-pwa','navigation-installation') for engine in ('chromium','firefox','webkit')]
+                      for name in carry:
+                          assert original_file.read(name) == combined.read(name),name
+                      assert original_file.read('production-ui-cross.log') != combined.read('production-ui-cross.log')
+                      print('MATCHED_OFFICIAL_ORIGINAL_FILES',len(carry),original['id'],flush=True)
+                  path = inner_path
               result = subprocess.check_output(['python3','docs/release-evidence/verify-foliolab-release.py',request['kind'],
-                  path,'.',sha,str(config['version']),str(artifact_id),request['digest']],text=True)
+                  path,'.',sha,str(config['version']),str(artifact_id),digest],text=True)
               print(result,flush=True)
           print('ORIGINAL_RELEASE_EVIDENCE_VERIFIED',sha,flush=True)
           PY
