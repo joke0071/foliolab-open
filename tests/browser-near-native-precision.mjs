@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
-import {openApp,readAppState,importPasswordFile} from './flh04-backup-app.mjs';
+import {openApp,reloadApp,readAppState,importPasswordFile} from './flh04-backup-app.mjs';
 
 // Public finalized block 226157919. Independent RPC receipts and the SW340
 // rejection are documented in the project’s NEAR precision acceptance record.
@@ -13,17 +13,28 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await engines[engine].launch();
  try{
   const context=await browser.newContext({serviceWorkers:'block'});
-  await context.route('**/*',route=>{
-   const url=new URL(route.request().url());
-   if(url.origin===new URL(base).origin)return route.continue();
-   if(url.hostname==='rpc.mainnet.fastnear.com'&&route.request().method()==='POST'){
-    const {method,params}=route.request().postDataJSON();
-    assert.equal(method,'query');
-    assert.deepEqual(params,{request_type:'view_account',account_id:'aurora',finality:'final'});
-    return route.fulfill({json:{jsonrpc:'2.0',id:1,result:{amount,locked:'0',block_height:226157919,
-     block_hash:'46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH'}},headers:{'access-control-allow-origin':'*'}});
-   }
-   return route.abort();
+  // Mock the archived RPC at the fetch boundary so normal browser caching
+  // remains active for the real application document and its ES modules.
+  let rpcReads=0;
+  await context.exposeBinding('readArchivedNearAccount',(_source,payload)=>{
+   assert.equal(payload.method,'query');
+   assert.deepEqual(payload.params,{request_type:'view_account',account_id:'aurora',finality:'final'});
+   rpcReads++;
+   return {jsonrpc:'2.0',id:payload.id,result:{amount,locked:'0',block_height:226157919,
+    block_hash:'46T9tEfWAKA38k1NSSeH2G5KBuzMCFTmhfv5M13dCFLH'}};
+  });
+  await context.addInitScript(()=>{
+   const nativeFetch=window.fetch.bind(window);
+   window.fetch=async(input,options)=>{
+    const url=new URL(input instanceof Request?input.url:input,location.href);
+    if(url.origin===location.origin)return nativeFetch(input,options);
+    const request=new Request(input,options);
+    if(url.origin!=='https://rpc.mainnet.fastnear.com'||request.method!=='POST'){
+     throw new TypeError('External request outside archived wallet fixture');
+    }
+    const result=await window.readArchivedNearAccount(await request.json());
+    return Response.json(result);
+   };
   });
   const page=await openApp(context,base);
   const errors=[];
@@ -48,9 +59,14 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(initial.positions[0].quantityExact,quantity);
   assert.equal(initial.positions[0].wallet.decimals,24);
   const before=initial.positions[0].id;
-  await scan();await page.reload();
-  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
-  const rescanned=await model();
+  await scan();
+  assert.equal(rpcReads,2);
+  const saved=(await readAppState(page)).portfolio;
+  await reloadApp(page);
+  const reopened=(await readAppState(page)).portfolio;
+  assert.equal(reopened.revision,saved.revision);
+  assert.equal(reopened.raw,saved.raw);
+  const rescanned=JSON.parse(reopened.raw);
   assert.equal(rescanned.positions.length,1);assert.equal(rescanned.positions[0].id,before);
   assert.equal(rescanned.positions[0].quantityExact,quantity);
   assert.equal(rescanned.externalCashFlows.length,0);

@@ -10,22 +10,53 @@ function retryAfterMs(value){
  return Number.isFinite(date)?Math.max(0,date-Date.now()):0;
 }
 
-export async function openApp(context,origin,{waitForRetry=wait}={}){
- const page=await context.newPage();
+async function navigateApp(page,origin,navigate,waitForRetry){
+ const expectedOrigin=new URL(origin).origin;
  for(let attempt=0;;attempt++){
-  const response=await page.goto(origin);
-  if(response?.status()!==429)break;
-  const header=await response.headerValue('retry-after');
+  const limitedScripts=[];
+  function observe(response){
+   if(response.status()!==429||new URL(response.url()).origin!==expectedOrigin)return;
+   const request=response.request();
+   if(request.resourceType()==='script' && !request.serviceWorker?.() && request.frame()===page.mainFrame()){
+    limitedScripts.push(response);
+   }
+  }
+  page.on('response',observe);
+  let limited;
+  try{
+   const document=await navigate();
+   if(document?.status()===429){
+    limited=[document];
+   }else{
+    try{
+     await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+     return page;
+    }catch(error){
+     if(error.name!=='TimeoutError'||!limitedScripts.length)throw error;
+     limited=limitedScripts;
+    }
+   }
+  }finally{
+   page.off('response',observe);
+  }
+  const headers=await Promise.all(limited.map(response=>response.headerValue('retry-after')));
   const backoff=navigationBackoffMs[attempt];
-  const delay=Math.max(backoff??0,retryAfterMs(header));
+  const delay=Math.max(backoff??0,...headers.map(retryAfterMs));
   if(backoff===undefined||delay>120000){
-   throw Error('Application navigation still rate limited (HTTP 429, Retry-After: '+(header??'absent')+').');
+   throw Error('Application navigation still rate limited (HTTP 429). Required delay: '+delay+' ms.');
   }
   console.log('QA navigation HTTP 429; waiting '+delay+' ms before retry '+(attempt+1));
   await waitForRetry(delay);
  }
- await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- return page;
+}
+
+export async function openApp(context,origin,{waitForRetry=wait}={}){
+ const page=await context.newPage();
+ return navigateApp(page,origin,()=>page.goto(origin),waitForRetry);
+}
+
+export function reloadApp(page,{waitForRetry=wait}={}){
+ return navigateApp(page,page.url(),()=>page.reload(),waitForRetry);
 }
 
 export async function readAppState(page){
