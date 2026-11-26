@@ -54,6 +54,13 @@ with zipfile.ZipFile(archive) as z:
             assert observed._replace(query='', fragment='').geturl() == urljoin(core['base'], r['path'])
             assert parse_qs(observed.query).get('release-check') == [sha]
         assert len(set(core['checks'])) == len(core['checks']) == 11
+        test_source = git('show', f'{sha}:tests/browser-live-acceptance.mjs').decode()
+        expected_checks = re.findall(r"report\.checks\.push\('([^'\n]+)'\)", test_source)
+        restore = re.search(r"report\.checks\.push\(label\+'([^'\n]+)'\)", test_source)
+        assert restore and len(expected_checks) == 9
+        expected_checks += [kind + restore.group(1) for kind in ('plain', 'encrypted')]
+        assert set(core['checks']) == set(expected_checks)
+        assert len({scan['label'] for scan in core['scans']}) == 22
         assert len(core['scans']) == 22 and all(x['violations'] == 0 for x in core['scans'])
         engines = ('chromium', 'firefox', 'webkit')
         loading = {e: json.loads(z.read(f'loading-pwa/{e}.json'))['result'] for e in engines}
