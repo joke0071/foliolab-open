@@ -1,21 +1,11 @@
 {
-  "sha": "ed0a1d9f5f149d3d2454fc8fb4abaabd088000ad",
+  "sha": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
   "version": 347,
   "artifacts": [
     {
       "kind": "pages",
-      "id": 15080080836,
-      "digest": "sha256:32f3ea61f8c27c8e7e9e9c6d25110fc1363d1002d7471e6259ccebcffd452310"
-    },
-    {
-      "kind": "live",
-      "id": 15083517214,
-      "digest": "sha256:8615e6a01d1349fc93f90479b20fda56234b5a2149f567474b26ffc1ba77d272",
-      "nested": "f66b3736f65d5c9b18ac42a7bb05c54c9bb1afe31ca3cf91c6030dcc32dbe855"
+      "id": 15083568731,
+      "digest": "sha256:31f486bb2dead61c65d63845877ae8a420ad9de8591789733ff0c1c04c2d7dfc"
     }
-  ],
-  "original": {
-    "id": 15082640866,
-    "digest": "08d47185df21238088519cc87e9013785813f6325c9052ab85ccb6cd6cf0d9f1"
-  }
+  ]
 }
