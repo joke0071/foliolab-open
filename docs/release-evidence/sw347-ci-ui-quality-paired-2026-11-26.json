@@ -77,8 +77,8 @@
           "status": "completed"
         }
       ],
-      "seconds": 1153.0,
-      "runnerSeconds": 4834.0,
+      "seconds": 1153,
+      "runnerSeconds": 4834,
       "allGreen": true
     },
     "a1": {
@@ -133,8 +133,8 @@
           "status": "completed"
         }
       ],
-      "seconds": 1675.0,
-      "runnerSeconds": 4309.0,
+      "seconds": 1675,
+      "runnerSeconds": 4309,
       "allGreen": true
     },
     "a2": {
@@ -189,8 +189,8 @@
           "status": "completed"
         }
       ],
-      "seconds": 1767.0,
-      "runnerSeconds": 4839.0,
+      "seconds": 1767,
+      "runnerSeconds": 4839,
       "allGreen": true
     },
     "b2": {
@@ -261,27 +261,27 @@
           "status": "completed"
         }
       ],
-      "seconds": 1120.0,
-      "runnerSeconds": 4699.0,
+      "seconds": 1120,
+      "runnerSeconds": 4699,
       "allGreen": true
     }
   },
   "result": {
     "gainsSecondsBA_AB": [
-      522.0,
-      647.0
+      522,
+      647
     ],
-    "controlSpreadSeconds": 92.0,
-    "maxBSeconds": 1153.0,
-    "minASeconds": 1675.0,
+    "controlSpreadSeconds": 92,
+    "maxBSeconds": 1153,
+    "minASeconds": 1675,
     "historicalSerialRangeSeconds": [
       1245,
       1662
     ],
     "historicalSerialSpreadSeconds": 417,
     "runnerSecondsChangeBA_AB": [
-      525.0,
-      -140.0
+      525,
+      -140
     ],
     "pairedCriterionPassed": true
   },
@@ -370,8 +370,8 @@
             "status": "completed"
           }
         ],
-        "seconds": 1006.0,
-        "runnerSeconds": 4287.0,
+        "seconds": 1006,
+        "runnerSeconds": 4287,
         "allGreen": true
       }
     },
@@ -387,8 +387,8 @@
             "status": "completed"
           }
         ],
-        "seconds": 61.0,
-        "runnerSeconds": 61.0,
+        "seconds": 61,
+        "runnerSeconds": 61,
         "allGreen": true
       }
     }
@@ -664,5 +664,956 @@
       }
     }
   ],
-  "releaseStatus": "PR qualification only. Actual Main/Pages/live decision is recorded separately in the roadmap."
+  "releaseStatus": "PR qualification only. Actual Main/Pages/live decision is recorded separately in the roadmap.",
+  "queueInclusiveVerification": {
+    "scope": "Original archive readback independently extended to both pairs and PR. Includes the initial plan queue in each phase. For the second A/B phase, starting at the prior job completion instead of next plan creation adds one scheduling second, leaving the decision unchanged.",
+    "measurementRule": "max(B1,B2) < min(A1,A2) and both paired A minus B differences strictly exceed abs(A1 minus A2). Historical comparisons are reported separately.",
+    "timing": {
+      "definition": "Elapsed from plan.created_at (first variant equals run.created_at; second released by completion of prior jobs) through last required job.completed_at. runnerSeconds sums job wall-clock, without rounding or charging assumptions. queueSumSeconds is summed across jobs, not added to elapsed. Historical basis starts at plan.started_at.",
+      "variants": {
+        "b1": {
+          "run": 45768805788,
+          "attempt": 1,
+          "jobReruns": 0,
+          "startUTC": "2026-11-26T06:31:39Z",
+          "endUTC": "2026-11-26T06:50:55Z",
+          "seconds": 1156,
+          "fromPlanStartSeconds": 1153,
+          "runnerSeconds": 4834,
+          "queueSumSeconds": 20,
+          "criticalJob": "b1 / test",
+          "jobs": [
+            {
+              "name": "b1 / plan",
+              "id": 139736169278,
+              "created_at": "2026-11-26T06:31:39Z",
+              "started_at": "2026-11-26T06:31:42Z",
+              "completed_at": "2026-11-26T06:32:02Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 20
+            },
+            {
+              "name": "b1 / test",
+              "id": 139736310812,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:04Z",
+              "completed_at": "2026-11-26T06:50:55Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 1131
+            },
+            {
+              "name": "b1 / cross (1)",
+              "id": 139736310835,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:04Z",
+              "completed_at": "2026-11-26T06:48:06Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 962
+            },
+            {
+              "name": "b1 / quality_cross",
+              "id": 139736310845,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:05Z",
+              "completed_at": "2026-11-26T06:43:27Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 682
+            },
+            {
+              "name": "b1 / wallet",
+              "id": 139736310860,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:04Z",
+              "completed_at": "2026-11-26T06:32:51Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 47
+            },
+            {
+              "name": "b1 / quality_chromium",
+              "id": 139736310885,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:05Z",
+              "completed_at": "2026-11-26T06:37:42Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 337
+            },
+            {
+              "name": "b1 / cross (3)",
+              "id": 139736310923,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:05Z",
+              "completed_at": "2026-11-26T06:46:58Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 893
+            },
+            {
+              "name": "b1 / cross (2)",
+              "id": 139736310933,
+              "created_at": "2026-11-26T06:32:02Z",
+              "started_at": "2026-11-26T06:32:04Z",
+              "completed_at": "2026-11-26T06:44:46Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 762
+            }
+          ]
+        },
+        "a1": {
+          "run": 45768805788,
+          "attempt": 1,
+          "jobReruns": 0,
+          "startUTC": "2026-11-26T06:50:55Z",
+          "endUTC": "2026-11-26T07:18:52Z",
+          "seconds": 1677,
+          "fromPlanStartSeconds": 1675,
+          "runnerSeconds": 4309,
+          "queueSumSeconds": 15,
+          "criticalJob": "a1 / cross (2)",
+          "jobs": [
+            {
+              "name": "a1 / plan",
+              "id": 139743483513,
+              "created_at": "2026-11-26T06:50:55Z",
+              "started_at": "2026-11-26T06:50:57Z",
+              "completed_at": "2026-11-26T06:51:06Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 9
+            },
+            {
+              "name": "a1 / test",
+              "id": 139743552480,
+              "created_at": "2026-11-26T06:51:06Z",
+              "started_at": "2026-11-26T06:51:09Z",
+              "completed_at": "2026-11-26T07:09:22Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 1093
+            },
+            {
+              "name": "a1 / wallet",
+              "id": 139743552503,
+              "created_at": "2026-11-26T06:51:06Z",
+              "started_at": "2026-11-26T06:51:08Z",
+              "completed_at": "2026-11-26T06:52:08Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 60
+            },
+            {
+              "name": "a1 / cross (1)",
+              "id": 139743552510,
+              "created_at": "2026-11-26T06:51:06Z",
+              "started_at": "2026-11-26T06:51:09Z",
+              "completed_at": "2026-11-26T07:02:38Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 689
+            },
+            {
+              "name": "a1 / cross (2)",
+              "id": 139743552557,
+              "created_at": "2026-11-26T06:51:06Z",
+              "started_at": "2026-11-26T06:51:08Z",
+              "completed_at": "2026-11-26T07:18:52Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 1664
+            },
+            {
+              "name": "a1 / cross (3)",
+              "id": 139743552602,
+              "created_at": "2026-11-26T06:51:06Z",
+              "started_at": "2026-11-26T06:51:09Z",
+              "completed_at": "2026-11-26T07:04:23Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 794
+            }
+          ]
+        },
+        "a2": {
+          "run": 45769915998,
+          "attempt": 1,
+          "jobReruns": 0,
+          "startUTC": "2026-11-26T06:41:17Z",
+          "endUTC": "2026-11-26T07:10:47Z",
+          "seconds": 1770,
+          "fromPlanStartSeconds": 1767,
+          "runnerSeconds": 4839,
+          "queueSumSeconds": 14,
+          "criticalJob": "a2 / cross (2)",
+          "jobs": [
+            {
+              "name": "a2 / plan",
+              "id": 139739810808,
+              "created_at": "2026-11-26T06:41:17Z",
+              "started_at": "2026-11-26T06:41:20Z",
+              "completed_at": "2026-11-26T06:41:37Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 17
+            },
+            {
+              "name": "a2 / wallet",
+              "id": 139739937061,
+              "created_at": "2026-11-26T06:41:37Z",
+              "started_at": "2026-11-26T06:41:39Z",
+              "completed_at": "2026-11-26T06:42:24Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 45
+            },
+            {
+              "name": "a2 / test",
+              "id": 139739937125,
+              "created_at": "2026-11-26T06:41:37Z",
+              "started_at": "2026-11-26T06:41:39Z",
+              "completed_at": "2026-11-26T07:01:17Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 1178
+            },
+            {
+              "name": "a2 / cross (1)",
+              "id": 139739937165,
+              "created_at": "2026-11-26T06:41:37Z",
+              "started_at": "2026-11-26T06:41:39Z",
+              "completed_at": "2026-11-26T06:54:06Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 747
+            },
+            {
+              "name": "a2 / cross (3)",
+              "id": 139739937249,
+              "created_at": "2026-11-26T06:41:37Z",
+              "started_at": "2026-11-26T06:41:40Z",
+              "completed_at": "2026-11-26T07:00:04Z",
+              "queueSeconds": 3,
+              "runnerSeconds": 1104
+            },
+            {
+              "name": "a2 / cross (2)",
+              "id": 139739937464,
+              "created_at": "2026-11-26T06:41:37Z",
+              "started_at": "2026-11-26T06:41:39Z",
+              "completed_at": "2026-11-26T07:10:47Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 1748
+            }
+          ]
+        },
+        "b2": {
+          "run": 45769915998,
+          "attempt": 1,
+          "jobReruns": 0,
+          "startUTC": "2026-11-26T07:10:48Z",
+          "endUTC": "2026-11-26T07:29:30Z",
+          "seconds": 1122,
+          "fromPlanStartSeconds": 1120,
+          "runnerSeconds": 4699,
+          "queueSumSeconds": 14,
+          "criticalJob": "b2 / cross (3)",
+          "jobs": [
+            {
+              "name": "b2 / plan",
+              "id": 139751159475,
+              "created_at": "2026-11-26T07:10:48Z",
+              "started_at": "2026-11-26T07:10:50Z",
+              "completed_at": "2026-11-26T07:11:09Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 19
+            },
+            {
+              "name": "b2 / quality_cross",
+              "id": 139751306467,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:12Z",
+              "completed_at": "2026-11-26T07:23:17Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 725
+            },
+            {
+              "name": "b2 / wallet",
+              "id": 139751306529,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:11Z",
+              "completed_at": "2026-11-26T07:12:07Z",
+              "queueSeconds": 1,
+              "runnerSeconds": 56
+            },
+            {
+              "name": "b2 / cross (2)",
+              "id": 139751306597,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:12Z",
+              "completed_at": "2026-11-26T07:24:16Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 784
+            },
+            {
+              "name": "b2 / cross (1)",
+              "id": 139751306600,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:12Z",
+              "completed_at": "2026-11-26T07:22:27Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 675
+            },
+            {
+              "name": "b2 / cross (3)",
+              "id": 139751306607,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:12Z",
+              "completed_at": "2026-11-26T07:29:30Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 1098
+            },
+            {
+              "name": "b2 / test",
+              "id": 139751306613,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:11Z",
+              "completed_at": "2026-11-26T07:28:59Z",
+              "queueSeconds": 1,
+              "runnerSeconds": 1068
+            },
+            {
+              "name": "b2 / quality_chromium",
+              "id": 139751306627,
+              "created_at": "2026-11-26T07:11:10Z",
+              "started_at": "2026-11-26T07:11:12Z",
+              "completed_at": "2026-11-26T07:15:46Z",
+              "queueSeconds": 2,
+              "runnerSeconds": 274
+            }
+          ]
+        }
+      },
+      "referenceSpread": 93,
+      "pairedGains": [
+        521,
+        648
+      ],
+      "bothBFasterThanBothA": true,
+      "historicalSpread": 417,
+      "gainsMinus417": [
+        104,
+        231
+      ],
+      "historicalFastest": 1245,
+      "bBelowHistoricalFastest": [
+        89,
+        123
+      ],
+      "timePass": true
+    },
+    "layout": {
+      "reference": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+      "head": "1b6404fcb64fecf3a4e14f6e958eb53ea5370f37",
+      "identicalGitObjects": {
+        "src": "a826b141afbe5ad87678c45355080fe6fd3e4257",
+        "sw.js": "b96cb5c754e43bbedefda686c56cb3a10aa6c615",
+        "index.html": "0235faeb986d016630ff9d8fc1e5421bdcbff7fa",
+        "styles.css": "e57d787bbeff2bca6b914783c31593f08992b9fc",
+        "manifest.webmanifest": "60f13ef827812f0066043295f65316b6144e618c",
+        "icons": "ad5fbf2a4bfeb726df2ba1c1b187dd2386b28bdc",
+        "LICENSE": "5cfb3a04657aa25d07091672369f791bffe01d8d",
+        "tests/browser-ui-quality.mjs": "7d31e009b1966da759515278837bf490000475c4"
+      },
+      "changedFiles": [
+        ".github/workflows/import.yml",
+        "tests/ci-cross-engine-layout.test.mjs",
+        "tests/ci-cross-engine-manifest.test.mjs",
+        "tests/ci-stage-quality-jobs.mjs",
+        "tests/ci-stage-quality-jobs.test.mjs",
+        "tests/ci-stage-workflow.test.mjs"
+      ],
+      "localBrowserInvocations": 169,
+      "commandInventorySHA256": "dc0b122acfccb933eb6cd1c5e8331fd3db31842b33856d4dc793b54cf40a0c3c",
+      "liveJobUnchanged": true,
+      "measuredVariants": {
+        "b1": {
+          "jobs": 6,
+          "browserInvocations": 169
+        },
+        "a1": {
+          "jobs": 4,
+          "browserInvocations": 169
+        },
+        "a2": {
+          "jobs": 4,
+          "browserInvocations": 169
+        },
+        "b2": {
+          "jobs": 6,
+          "browserInvocations": 169
+        }
+      }
+    },
+    "originals": {
+      "originalArchives": [
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "cross-engine-gates-2",
+          "id": 15095237685,
+          "bytes": 71617796,
+          "sha256": "5d3f022bdb24fb58c47b22efe72305fb65703745737f08e33df145c820e07216",
+          "files": 838,
+          "uiQualitySHA256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+        },
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "release-gates",
+          "id": 15094981726,
+          "bytes": 67984240,
+          "sha256": "266c359713fe603b4af5da953d55a856781b58ec8a942ed56793d0ead86cf195",
+          "files": 849,
+          "testedSHA": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+          "nodePass": 1544,
+          "uiQualitySHA256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+        },
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "cross-engine-gates-1",
+          "id": 15094951453,
+          "bytes": 61095279,
+          "sha256": "fe6ddfacbfb39ab63d260a81c03f9e580e192618ecece91366574018c2ed133b",
+          "files": 516
+        },
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "cross-engine-gates-3",
+          "id": 15094662538,
+          "bytes": 21495566,
+          "sha256": "2c3c77460cca987f2c500fa8bf0103a30a43aaa8cdd30fb2d6e2fe4dbb90feb6",
+          "files": 284
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "dialog-visual-reference",
+          "id": 15094330732,
+          "bytes": 933771,
+          "sha256": "09c6d70a911ec1e07f7836ecc5d220349a67ddbccabce4a150084aeffdd566a6",
+          "files": 20
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "release-gates",
+          "id": 15094330729,
+          "bytes": 43819392,
+          "sha256": "af34034315c07b9a91975c56c15ca85597d529516c21c9335923601582ac191e",
+          "files": 503,
+          "testedSHA": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+          "nodePass": 1544
+        },
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "dialog-visual-reference",
+          "id": 15093959560,
+          "bytes": 933771,
+          "sha256": "f62c3024cdfa22d6aabadc2e6fc14c3c2a1f92a4088b2aecc918d29d8e8e427f",
+          "files": 20
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "ui-quality-cross",
+          "id": 15093935745,
+          "bytes": 59311606,
+          "sha256": "15a9dce476d4c9d5ec24eb21c8ba513b50fbe61a811e70ce56073cbcd9fdf5c3",
+          "files": 717,
+          "uiQualitySHA256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+        },
+        {
+          "run": 45768805788,
+          "variant": "a1",
+          "role": "ci-stage",
+          "id": 15093782840,
+          "bytes": 359,
+          "sha256": "832e3ba64952d2eaeb238b54c30440f494639de6f991e3cc40693ff40f5154de",
+          "files": 1
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "cross-engine-gates-3",
+          "id": 15093772103,
+          "bytes": 21496010,
+          "sha256": "a2179358ee9414d3e8152e7f22373a659f4ab0b4143b4a2e9b9e83645ad1984b",
+          "files": 284
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "ci-stage",
+          "id": 15093635017,
+          "bytes": 359,
+          "sha256": "51717833164a3ced3f0c6b4171480ac66b749ac840ba1972a18063ff4cc64984",
+          "files": 1
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "cross-engine-gates-2",
+          "id": 15093438718,
+          "bytes": 12626695,
+          "sha256": "d5a1e8fbf87fc04ff1bb1ec246212bfcea5d4f6560bd3a781bdafd99f687deb7",
+          "files": 128
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "ui-quality-chromium",
+          "id": 15092858373,
+          "bytes": 27754430,
+          "sha256": "99f29cb3b123d0ad89c7e13c6a5b5e1a1ea60625b2b5132826e1d12e992058cf",
+          "files": 391,
+          "uiQualitySHA256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+        },
+        {
+          "run": 45768805788,
+          "variant": "b1",
+          "role": "cross-engine-gates-1",
+          "id": 15092854872,
+          "bytes": 61098865,
+          "sha256": "916eb81a6c957d785806df98830300be4a5e6b86eb485bb055da95b2a914957a",
+          "files": 516
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "release-gates",
+          "id": 15096411046,
+          "bytes": 43825624,
+          "sha256": "45807ae1ae208675a0e017e76113ae0509f598efcf08109547781a0b647e0725",
+          "files": 503,
+          "testedSHA": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+          "nodePass": 1544
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "ui-quality-cross",
+          "id": 15096051095,
+          "bytes": 59299580,
+          "sha256": "0a3ba493cfc27e31ef3b729e317b0ccfc5268c8fb72a595a705ebebd6ae68fa7",
+          "files": 717,
+          "uiQualitySHA256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "cross-engine-gates-2",
+          "id": 15095841867,
+          "bytes": 12626176,
+          "sha256": "a841e1611b32d0a4fde064e9afb22d4be3258e2fb91652b1462e1b539846dfba",
+          "files": 128
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "dialog-visual-reference",
+          "id": 15095822836,
+          "bytes": 933768,
+          "sha256": "046daca4196419b8022c4f9cd7e03b92e3298b2d86ac5c75375c98402b420f20",
+          "files": 20
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "cross-engine-gates-1",
+          "id": 15095267228,
+          "bytes": 61100558,
+          "sha256": "165d95d2b6a0dfac80bbbedd23cf97a112509ebd382ab7e89f395f9475980225",
+          "files": 516
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "ui-quality-chromium",
+          "id": 15095226904,
+          "bytes": 27751248,
+          "sha256": "2b19d98340a2c76981dda19da73289205dd5c60644e64e5f75a7976a8902ffae",
+          "files": 391,
+          "uiQualitySHA256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "cross-engine-gates-3",
+          "id": 15095183724,
+          "bytes": 21497973,
+          "sha256": "115ed70efb1e4a8aee4fabec43407f1c41062a9ded791bc419a450bb8f38e687",
+          "files": 284
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "cross-engine-gates-2",
+          "id": 15094868293,
+          "bytes": 71623733,
+          "sha256": "426c108f61294baee76752b5ba8848473748b6a390d50b71619acda93e6de014",
+          "files": 838,
+          "uiQualitySHA256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "cross-engine-gates-3",
+          "id": 15094711208,
+          "bytes": 21497720,
+          "sha256": "9d00fa0f7804e10cb79864efedbc669ea9e212c4b9fcbb9cdc7b68da29c3ea6e",
+          "files": 284
+        },
+        {
+          "run": 45769915998,
+          "variant": "b2",
+          "role": "ci-stage",
+          "id": 15094429546,
+          "bytes": 358,
+          "sha256": "cb53834323b85009be505d3ed660bcabb4898c81872462f08a0dae63462af2dd",
+          "files": 1
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "dialog-visual-reference",
+          "id": 15094262253,
+          "bytes": 933768,
+          "sha256": "6ec57c189f42ba74001cd0ccf860855d5bd308992a6420cdc888420367942cc9",
+          "files": 20
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "release-gates",
+          "id": 15093898556,
+          "bytes": 67994232,
+          "sha256": "e54afaee16656c5c4da46caef11d543b1596f7da23aaaf059bdec19450145bbe",
+          "files": 849,
+          "testedSHA": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+          "nodePass": 1544,
+          "uiQualitySHA256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "cross-engine-gates-1",
+          "id": 15093663936,
+          "bytes": 61098897,
+          "sha256": "55d2b7357dc60b9f86eb0cc4d73dbc24788253d41fd7c86ea4d9e5ecf4bed1e0",
+          "files": 516
+        },
+        {
+          "run": 45769915998,
+          "variant": "a2",
+          "role": "ci-stage",
+          "id": 15093477892,
+          "bytes": 358,
+          "sha256": "ce78b9dd50011640f5f645af62c21cc1114267ec3999fc41be1b672e7784478f",
+          "files": 1
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "cross-engine-gates-3",
+          "id": 15094735889,
+          "bytes": 21499577,
+          "sha256": "4871f2dc5dad0bc543612b455c7e054512973a4b1bbfa6f7e37206bc2d21e415",
+          "files": 284
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "release-gates",
+          "id": 15094555873,
+          "bytes": 43813661,
+          "sha256": "0b08e66ddbe06ac5736c2f2da1a849991248bdd240b026fde061e7c7651269e9",
+          "files": 503,
+          "testedSHA": "638e875eae5ac4393c598c6853f3ab9b944e0d62",
+          "nodePass": 1545
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "cross-engine-gates-1",
+          "id": 15094141303,
+          "bytes": 61097413,
+          "sha256": "8dd0931856a461f320e750bfbdff6f9685e84047250a9170af6ad593565ea2be",
+          "files": 516
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "ci-stage",
+          "id": 15093910300,
+          "bytes": 540,
+          "sha256": "52e8a0fdfc1ce499bb7a4a636bfac3abe0393df041edf59acbb0a0d1a4f97286",
+          "files": 1
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "dialog-visual-reference",
+          "id": 15093703681,
+          "bytes": 933771,
+          "sha256": "cce04d3a76bc4bef4226d6b18150eeaa806f7e14cc266546cb97788f68997e92",
+          "files": 20
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "ui-quality-cross",
+          "id": 15093624084,
+          "bytes": 59307371,
+          "sha256": "121ad900c05b8c25f9e3a7464d1b61bcf064911824997a83358c20a9da1748f0",
+          "files": 717,
+          "uiQualitySHA256": "063668df4b84b5f6cbeeb4b6338006435c54f8659d939cc8b3cbb2dc8c8b101e"
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "cross-engine-gates-2",
+          "id": 15093618614,
+          "bytes": 12626707,
+          "sha256": "8a19f5e787344ade608f86574ce61444728dd29ec1419e918034bf888a02ea2e",
+          "files": 128
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "ui-quality-chromium",
+          "id": 15093029806,
+          "bytes": 27753028,
+          "sha256": "a50063fe0a4acdb37f42daeceda169a1456a7ea528155537694817083f91f573",
+          "files": 391,
+          "uiQualitySHA256": "c483801fe3f888cbcd8d2f787d66112d459d3b59a8f95e422b97871952c1ece9"
+        },
+        {
+          "run": 45769694049,
+          "variant": "pr",
+          "role": "fast-only-not-integration",
+          "id": 15092694788,
+          "bytes": 1812213,
+          "sha256": "b9d6ae06804f062f24ad1a514d9aff3c9cfa8094542efcee4bde2933196d3cc1",
+          "files": 27
+        }
+      ],
+      "uiReports": {
+        "a1": {
+          "firefox": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "a94d8ff7a11d7eeb527c6da674880570bdd0d79cdb662a5615298da510b7fc20",
+            "artifact": 15095237685,
+            "runtimeVersion": "157.0"
+          },
+          "webkit": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "f04d0b0a3610d4bf8f1a71a7678eb6deb01321850c9471e6acc8207c90b14dd5",
+            "artifact": 15095237685,
+            "runtimeVersion": "27.2"
+          },
+          "chromium": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "037c3e6ff93102c30741a8faea0ce6b0b233268b811d45419debf0181c10b753",
+            "artifact": 15094981726,
+            "runtimeVersion": "141.0.7390.37"
+          }
+        },
+        "b1": {
+          "firefox": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "a94d8ff7a11d7eeb527c6da674880570bdd0d79cdb662a5615298da510b7fc20",
+            "artifact": 15093935745,
+            "runtimeVersion": "157.0"
+          },
+          "webkit": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "f04d0b0a3610d4bf8f1a71a7678eb6deb01321850c9471e6acc8207c90b14dd5",
+            "artifact": 15093935745,
+            "runtimeVersion": "27.2"
+          },
+          "chromium": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "037c3e6ff93102c30741a8faea0ce6b0b233268b811d45419debf0181c10b753",
+            "artifact": 15092858373,
+            "runtimeVersion": "141.0.7390.37"
+          }
+        },
+        "b2": {
+          "firefox": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "a94d8ff7a11d7eeb527c6da674880570bdd0d79cdb662a5615298da510b7fc20",
+            "artifact": 15096051095,
+            "runtimeVersion": "157.0"
+          },
+          "webkit": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "f04d0b0a3610d4bf8f1a71a7678eb6deb01321850c9471e6acc8207c90b14dd5",
+            "artifact": 15096051095,
+            "runtimeVersion": "27.2"
+          },
+          "chromium": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "037c3e6ff93102c30741a8faea0ce6b0b233268b811d45419debf0181c10b753",
+            "artifact": 15095226904,
+            "runtimeVersion": "141.0.7390.37"
+          }
+        },
+        "a2": {
+          "firefox": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "a94d8ff7a11d7eeb527c6da674880570bdd0d79cdb662a5615298da510b7fc20",
+            "artifact": 15094868293,
+            "runtimeVersion": "157.0"
+          },
+          "webkit": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "f04d0b0a3610d4bf8f1a71a7678eb6deb01321850c9471e6acc8207c90b14dd5",
+            "artifact": 15094868293,
+            "runtimeVersion": "27.2"
+          },
+          "chromium": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "037c3e6ff93102c30741a8faea0ce6b0b233268b811d45419debf0181c10b753",
+            "artifact": 15093898556,
+            "runtimeVersion": "141.0.7390.37"
+          }
+        },
+        "pr": {
+          "firefox": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "a94d8ff7a11d7eeb527c6da674880570bdd0d79cdb662a5615298da510b7fc20",
+            "artifact": 15093624084,
+            "runtimeVersion": "157.0"
+          },
+          "webkit": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "f04d0b0a3610d4bf8f1a71a7678eb6deb01321850c9471e6acc8207c90b14dd5",
+            "artifact": 15093624084,
+            "runtimeVersion": "27.2"
+          },
+          "chromium": {
+            "scans": 66,
+            "checks": 9,
+            "semanticSHA256": "037c3e6ff93102c30741a8faea0ce6b0b233268b811d45419debf0181c10b753",
+            "artifact": 15093029806,
+            "runtimeVersion": "141.0.7390.37"
+          }
+        }
+      },
+      "c5IdenticalPNGs": {
+        "ui-positions-390.png": {
+          "bytes": 94403,
+          "size": [
+            390,
+            1372
+          ],
+          "sha256": "ee72da5395b340ac78f553b140f3c8fbd53bbccd528188b6e3f25d4ae7a9d2ba"
+        },
+        "c5-bookings-390.png": {
+          "bytes": 36154,
+          "size": [
+            360,
+            648
+          ],
+          "sha256": "e1ad5ac39dc432247264045a9d9f6c6588873c08b6c42c972ba238b53faf59f0"
+        },
+        "c5-connections-390.png": {
+          "bytes": 130039,
+          "size": [
+            330,
+            1335
+          ],
+          "sha256": "b837e260804924c618c018e601b8b00a80285a8922eb58796d7671eac2cc02de"
+        },
+        "c5-connections-viewport-390.png": {
+          "bytes": 50192,
+          "size": [
+            390,
+            560
+          ],
+          "sha256": "5cc14ddf6bf17461d7d7be25d4b03ca881cf9080f17483c0fff009c83f6e2c41"
+        }
+      },
+      "baselineArtifactFileCounts": {
+        "cross-engine-gates-2": 838,
+        "release-gates": 849,
+        "cross-engine-gates-1": 516,
+        "cross-engine-gates-3": 284,
+        "dialog-visual-reference": 20,
+        "ci-stage": 1
+      },
+      "pathComparison": "Regrouped isolated jobs with former job. Normalized only millisecond timestamps in storage-fixture file names, preserving multiplicity."
+    },
+    "nestedImports": {
+      "count": 24,
+      "orderedPassMarkers": [
+        "./browser-navigation-installation.mjs",
+        "./browser-header-status.mjs",
+        "./browser-missing-position-value.mjs",
+        "./browser-chart-tooltip.mjs",
+        "./browser-blocked-reasons.mjs",
+        "./browser-ui-small-rests.mjs",
+        "./browser-ui-audit-controls.mjs",
+        "./browser-history-followup.mjs",
+        "./browser-reference-management.mjs",
+        "./browser-kraken-ledger.mjs",
+        "./browser-bitpanda-evidence.mjs",
+        "./browser-bitpanda-preview.mjs",
+        "./browser-flatex-native.mjs",
+        "./browser-flatex-native-ui.mjs",
+        "./browser-flatex-order-links.mjs",
+        "./browser-flatex-native-identity.mjs",
+        "./browser-flatex-native-binding.mjs",
+        "./browser-flatex-native-amounts.mjs",
+        "./browser-flatex-native-projection.mjs",
+        "./browser-flatex-native-simulation-ui.mjs",
+        "./browser-flatex-native-commit.mjs",
+        "./browser-cosmos-reward.mjs",
+        "./browser-fractional-settlement.mjs",
+        "./browser-near-native-precision.mjs"
+      ],
+      "jobIds": [
+        139736310885,
+        139736310845,
+        139743552480,
+        139743552557,
+        139739937125,
+        139739937464,
+        139751306627,
+        139751306467,
+        139739213415,
+        139739213418
+      ],
+      "verified": true,
+      "c5HashesAgreeWithAllFiveJobLogs": true
+    },
+    "pr": {
+      "number": 442,
+      "head": "1b6404fcb64fecf3a4e14f6e958eb53ea5370f37",
+      "base": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+      "testedMerge": "638e875eae5ac4393c598c6853f3ab9b944e0d62",
+      "integration": 45769694049,
+      "wallet": 45769694024,
+      "walletJob": 139739097745,
+      "nodeTests": 1545,
+      "bothAttempt": 1,
+      "reviews": 0,
+      "openReviewThreads": 0
+    },
+    "timeAndCoverageDecision": "QUALIFIED"
+  }
 }
