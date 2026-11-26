@@ -1,0 +1,25 @@
+{
+  "sha": "9803a2c849dbe9aaca88c756daea2d892c8cc56d",
+  "run": 45746989122,
+  "attempt": 1,
+  "job": 139675244765,
+  "step": "Verify published bytes, core flows and targeted UI in Chromium",
+  "precedingSuccess": "FX age chromium: 8 native refresh/reopen cases PASS",
+  "error": "AssertionError [ERR_ASSERTION]: Direct production startup module responses",
+  "source": "tests/browser-fx-age.mjs:69:13",
+  "request": {
+    "path": "/src/flatex-review-export.js",
+    "status": 503,
+    "retryAfter": "0"
+  },
+  "artifact": {
+    "id": 15085695238,
+    "bytes": 11017993,
+    "sha256": "2965b2636588cfed5e878f70cf163f984219e6b83d289a8f48c44afbd013637f"
+  },
+  "nextAttempt": {
+    "attempt": 2,
+    "scope": "failed live job only",
+    "job": 139676569131
+  }
+}
