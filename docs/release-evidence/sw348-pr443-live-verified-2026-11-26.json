@@ -1,0 +1,70 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "acceptedAtUtc": "2026-11-26T15:52:23Z",
+  "main": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+  "tree": "9af3806a8996582a1a8b55d98fb8abb92735d65e",
+  "worker": "foliolab-open-v348",
+  "pullRequest": {
+    "number": 443,
+    "head": "8c61ce5a8ef500b94a98c97f244c52e0f0e5078c",
+    "integrationRun": 45835050752,
+    "walletCiRun": 45835050634,
+    "publicWalletAuditRun": 45835050698
+  },
+  "mainCi": {
+    "run": 45842736002,
+    "startedAtUtc": "2026-11-26T14:48:41Z",
+    "passedNodeTests": 1546,
+    "passedIntegrationJobs": 6
+  },
+  "pages": {
+    "job": 139997776926,
+    "completedAtUtc": "2026-11-26T15:05:12Z",
+    "exactFiles": 161,
+    "artifact": 15129546359,
+    "sha256": "db8db25f62bc71fe33be42b09001244d95b92c361c8ad97c29b67a14532458ed"
+  },
+  "originalLive": {
+    "job": 139997957569,
+    "conclusion": "failure",
+    "reason": "HTTP 429 on the first unverified NEAR cross-engine UI module after three automated retries",
+    "artifact": 15133648047,
+    "sha256": "3a061975cddf558acbe6559f075f243b126ed3f6f31b0e3de6002e5b396fc1af"
+  },
+  "continuation": {
+    "run": 45852139278,
+    "job": 140020961381,
+    "workflowCommit": "6be1093ba9a53f170790aae282555113b6388f55",
+    "conclusion": "success",
+    "verifiedEarlierUiModules": 23,
+    "firstNewUiModule": "./browser-near-native-precision.mjs",
+    "artifact": 15133939270,
+    "artifactSha256": "c328f96c4514e693425cca4d125c54798994927a42af6f8705c307b25bc89207",
+    "combinedReportsSha256": "c1dfb0c1cc3e19f5d30eb07ab8737415b70538e38668abf9920305332ca46609",
+    "verifiedCoreReportSha256": "4eb892fa97df96d12cca0791f6e0019278961ef49df6fbaf949dbe2e1c58b391",
+    "exactLiveResponses": 162,
+    "coreGroups": 11,
+    "axeScans": 22,
+    "additionalSuites": [
+      "NEAR native precision",
+      "Remaining UI quality",
+      "Recovery",
+      "Finance end-to-end",
+      "Transfer states"
+    ]
+  },
+  "originalLiveJobMetadataCorrection": {
+    "file": "resume-boundary.json in artifact 15133939270",
+    "staleOriginalLiveJob": 139766986818,
+    "correctOriginalLiveJob": 139997957569,
+    "verification": "The official original job log confirms creation of archive 15133648047. The archive metadata ties it to run 45842736002 and Main 4e3e4a25. The continuation downloaded and independently verified the correct original via its artifact ID, SHA-256 and ZIP CRC."
+  },
+  "publicCosmos": "sw348-cosmos-four-live-2026-11-26.json",
+  "acceptedFollowUpPackages": {
+    "before": 17,
+    "after": 18,
+    "total": 29,
+    "completed": "Public additional wallets and native precision (#119)"
+  },
+  "privatePortfolioReconciliation": "Separate evidence scope, still awaiting the historical account assignment."
+}
