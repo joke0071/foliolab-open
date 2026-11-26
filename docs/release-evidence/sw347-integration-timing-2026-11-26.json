@@ -1,0 +1,175 @@
+{
+  "scope": "Official integration time from plan job start through the last of test and all three cross-engine jobs; publication and live acceptance are excluded. First attempt only. No additional suite was run for this comparison.",
+  "unit": "seconds",
+  "data": [
+    {
+      "run": 45715151865,
+      "allFourFinished": true,
+      "criticalSeconds": 1649,
+      "criticalPath": "cross-engine (2)",
+      "branches": [
+        {
+          "name": "cross-engine (3)",
+          "seconds": 969,
+          "browserStep": 901
+        },
+        {
+          "name": "cross-engine (1)",
+          "seconds": 651,
+          "browserStep": 586
+        },
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1630,
+          "browserStep": 1564
+        },
+        {
+          "name": "test",
+          "seconds": 1227,
+          "browserStep": 1173
+        }
+      ]
+    },
+    {
+      "run": 45734783074,
+      "allFourFinished": true,
+      "criticalSeconds": 1308,
+      "criticalPath": "cross-engine (2)",
+      "branches": [
+        {
+          "name": "test",
+          "seconds": 1124,
+          "browserStep": 1078
+        },
+        {
+          "name": "cross-engine (3)",
+          "seconds": 848,
+          "browserStep": 716
+        },
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1288,
+          "browserStep": 1176
+        },
+        {
+          "name": "cross-engine (1)",
+          "seconds": 719,
+          "browserStep": 646
+        }
+      ]
+    },
+    {
+      "run": 45744441510,
+      "allFourFinished": true,
+      "criticalSeconds": 1382,
+      "criticalPath": "test",
+      "branches": [
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1075,
+          "browserStep": 1009
+        },
+        {
+          "name": "test",
+          "seconds": 1359,
+          "browserStep": 1304
+        },
+        {
+          "name": "cross-engine (1)",
+          "seconds": 724,
+          "browserStep": 630
+        },
+        {
+          "name": "cross-engine (3)",
+          "seconds": 849,
+          "browserStep": 739
+        }
+      ]
+    },
+    {
+      "run": 45722582039,
+      "allFourFinished": true,
+      "criticalSeconds": 1410,
+      "criticalPath": "cross-engine (2)",
+      "branches": [
+        {
+          "name": "test",
+          "seconds": 1132,
+          "browserStep": 1070
+        },
+        {
+          "name": "cross-engine (1)",
+          "seconds": 920,
+          "browserStep": 850
+        },
+        {
+          "name": "cross-engine (3)",
+          "seconds": 859,
+          "browserStep": 794
+        },
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1396,
+          "browserStep": 1288
+        }
+      ]
+    },
+    {
+      "run": 45737311400,
+      "allFourFinished": true,
+      "criticalSeconds": 1245,
+      "criticalPath": "cross-engine (2)",
+      "branches": [
+        {
+          "name": "test",
+          "seconds": 1089,
+          "browserStep": 1039
+        },
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1232,
+          "browserStep": 1161
+        },
+        {
+          "name": "cross-engine (1)",
+          "seconds": 900,
+          "browserStep": 814
+        },
+        {
+          "name": "cross-engine (3)",
+          "seconds": 814,
+          "browserStep": 736
+        }
+      ]
+    },
+    {
+      "run": 45746989122,
+      "allFourFinished": true,
+      "criticalSeconds": 1662,
+      "criticalPath": "cross-engine (2)",
+      "branches": [
+        {
+          "name": "cross-engine (1)",
+          "seconds": 650,
+          "browserStep": 575
+        },
+        {
+          "name": "cross-engine (3)",
+          "seconds": 1033,
+          "browserStep": 934
+        },
+        {
+          "name": "test",
+          "seconds": 1092,
+          "browserStep": 1042
+        },
+        {
+          "name": "cross-engine (2)",
+          "seconds": 1643,
+          "browserStep": 1550
+        }
+      ]
+    }
+  ],
+  "interpretation": "PR #439 to #440: 1308 to 1382 seconds. The corresponding Main integration stages took 1245 and 1662 seconds. The controlled 148-to-1 Firefox rescan request change is verified; these independent hosted runs do not establish a shorter end-to-end critical path or a monetary saving."
+}
