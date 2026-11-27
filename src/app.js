@@ -200,7 +200,13 @@ function go(next,{review=false,section='',restore=false}={}){const previousPage=
   else history.pushState(null,'',url);
  }
  window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
-function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));const initial=new URL(location.href).searchParams.get('page')||'dashboard';go(initial,{restore:true,section:sectionHash(initial)});}
+function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
+ if(control.matches('a[href]')){
+  if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||event.button!==0)return;
+  event.preventDefault();
+ }
+ go(control.dataset.go);
+}));const initial=new URL(location.href).searchParams.get('page')||'dashboard';go(initial,{restore:true,section:sectionHash(initial)});}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],[data-install-action],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
@@ -2951,11 +2957,12 @@ $('apiSettings').addEventListener('submit',async e=>{
   });
   renderRefreshFrequency();$('autoRefresh').addEventListener('change',async e=>{try{model.settings=refreshSettings({...model.settings,autoRefresh:e.target.value});await save();notify(e.target.value==='off'?'Automatische Aktualisierung deaktiviert.':'Aktualisierungsintervall gespeichert.');}catch{renderRefreshFrequency();}});
   syncApiSettingsForm();
+  installPrompt=window.folioInstallPrompt??null;delete window.folioInstallPrompt;
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
   window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
   document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
    if(installPromptBusy)return;
-   const prompt=installPrompt;if(!prompt){showInstallHelp();return;}
+   const prompt=installPrompt;if(!prompt)return;
    installPromptBusy=true;installPrompt=null;updateInstallControls();
    try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
    finally{installPromptBusy=false;updateInstallControls();restoreInstallFocus(button);}
@@ -3158,12 +3165,6 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
 }
 const standaloneMedia=matchMedia('(display-mode: standalone)');
 const installDesktopMedia=matchMedia('(min-width: 721px)');
-function installHelpHTML(){
- const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
- const steps=ios?'<li>In Safari unten oder oben auf „Teilen“ tippen.</li><li>„Zum Home-Bildschirm“ wählen.</li><li>Mit „Hinzufügen“ bestätigen.</li>':'<li>Im Browsermenü nach „App installieren“ oder „Zum Startbildschirm hinzufügen“ suchen.</li><li>Das Angebot bestätigen, falls es dein Browser anzeigt.</li>';
- return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Je nach Gerät und Browser können installierte App und Browser denselben oder getrennten Speicher nutzen. Sichere vor der Installation ein Backup und prüfe danach deine Daten. Browserdaten bitte nicht löschen und die App nicht deinstallieren, solange deine Sicherung nicht geprüft ist.</p>';
-}
-function showInstallHelp(){showDialog('FolioLab als App verwenden','INSTALLATION',installHelpHTML(),null,{readOnly:true});$('saveDialog').hidden=true;}
 function restoreInstallFocus(origin){
  const target=origin?.isConnected&&origin.getClientRects().length?origin:document.querySelector('#sidebarNav [data-page="more"]:not([hidden]),#mobileNav [data-page="more"]:not([hidden])');
  if(target?.getClientRects().length)target.focus({preventScroll:true});
@@ -3173,12 +3174,12 @@ function updateInstallControls(){
  const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1',direct=Boolean(installPrompt);
  const hint=$('sidebarInstallHint'),active=document.activeElement;
  document.querySelectorAll('[data-install-action]').forEach(button=>{
-  button.hidden=installed;button.disabled=installPromptBusy;
-  const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';
-  button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';
+  button.hidden=installed||!direct;button.disabled=installPromptBusy;
+  const name='FolioLab als App installieren';
+  button.setAttribute('aria-label',name);button.title=name;
  });
  hint.hidden=installed||!direct||installPromptBusy||!installDesktopMedia.matches||installHintPreference.dismissed;
- if((hint.hidden&&hint.contains(active))||(installed&&active?.matches('[data-install-action]')))restoreInstallFocus(null);
+ if((hint.hidden&&hint.contains(active))||(active?.matches('[data-install-action][hidden]')))restoreInstallFocus(null);
 }
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.

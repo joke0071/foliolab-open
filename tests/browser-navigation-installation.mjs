@@ -62,7 +62,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  try{
   const p=await fresh(),before=await record(p);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'no sidebar offer without a direct prompt');
-  await nav(p,'more');assert.equal(await p.locator('#installButton').getAttribute('aria-label'),'Installationshilfe: FolioLab als App verwenden');await p.locator('#installButton').click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');await p.locator('#cancelDialog').click();
+  await nav(p,'more');assert.equal(await p.locator('#installButton').isVisible(),false,'no icon without a browser installation offer');
   assert.equal(await prompt(p),true);await p.locator('#sidebarInstallHint').waitFor({state:'visible'});await scan(p);await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-desktop-install-hint.png`});
   await p.setViewportSize({width:1440,height:360});
   // A resize command acknowledgement is not the native viewport/focus-scroll result.
@@ -88,10 +88,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     assert.equal(await p.locator('#installButton').isDisabled(),true);await p.locator('#installButton').evaluate(e=>e.click());assert.equal(await p.evaluate(()=>window.__installCalls),1,'pending prompt cannot be consumed twice');await p.evaluate(()=>window.__installResolve({outcome:'dismissed'}));
    }
    await p.waitForFunction(()=>!document.getElementById('installButton').disabled);
-   assert.equal(await p.evaluate(()=>window.__installCalls),1);assert.equal(await p.locator('#installButton').getAttribute('data-install-mode'),'help');assert.equal(await p.locator('#installButton').isVisible(),true,'choice alone never claims installed');
+   assert.equal(await p.evaluate(()=>window.__installCalls),1);assert.equal(await p.locator('#installButton').isVisible(),false,'consumed prompt disappears until the browser offers another');
   }
-  await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('#installButton').isVisible(),false);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.deepEqual(await record(p),before);
-  checks.push('late prompt; manual help; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; delivered appinstalled handler with synthetic event; exact IDB record unchanged');
+  await prompt(p);await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('#installButton').isVisible(),false);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.deepEqual(await record(p),before);
+  checks.push('late prompt; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; delivered appinstalled handler with synthetic event; exact IDB record unchanged');
   for(const blocked of ['local','both']){
    const q=await fresh(blocked),stored=await record(q);await prompt(q);await q.locator('#dismissInstallHint').click();await nav(q,'more');await prompt(q);assert.equal(await q.locator('#sidebarInstallHint').isVisible(),false,'blocked preference writes retain memory');
    if(blocked==='local'){await q.reload();await ready(q);await prompt(q);assert.equal(await q.locator('#sidebarInstallHint').isVisible(),false,'session fallback survives reload');}
@@ -116,7 +116,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const content=e.querySelector('.allocation-layout').getBoundingClientRect(),box=e.getBoundingClientRect();return box.bottom-content.bottom<50;}),'allocation has no stretched empty tail');
    if(width===1440){assert.ok(await layout.locator('.dashboard-overview').evaluate(e=>{const history=e.querySelector('.dashboard-history').getBoundingClientRect(),side=e.querySelector('.dashboard-side').getBoundingClientRect();return history.right<=side.left&&Math.abs(history.top-side.top)<2;}));assert.equal(await layout.locator('#sidebarNav button.active').evaluate(e=>getComputedStyle(e).boxShadow),'none');assert.equal(await layout.locator('#sidebarNav button.active span').evaluate(e=>getComputedStyle(e).textDecorationLine),'underline');}
    await layout.locator('#providerOverview details').evaluateAll(es=>es.forEach(e=>e.open=true));
-   assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet\n–','compact summary retains unknown valuation and explicitly unavailable allocation');
+   assert.deepEqual((await layout.locator('[data-position-id=nav-unknown]>summary').innerText()).split(/\n+/).map(line=>line.trim()).filter(Boolean),['Synthetic USD with unknown FX','Nicht bewertet','–'],'compact summary retains unknown valuation and explicitly unavailable allocation');
    const sourceMenus=layout.locator('[data-position-id] .position-period-more');
    await layout.locator('[data-position-id=nav-etf] .position-period-more').waitFor({state:'attached'});
    await layout.locator('[data-position-id=nav-unknown] .position-period-more').waitFor({state:'attached'});

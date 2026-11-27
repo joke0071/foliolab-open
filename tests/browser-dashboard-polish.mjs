@@ -29,13 +29,13 @@ try {
      const result=await page.locator(selector).evaluate(el=>{
        const title=el.querySelector('.panel-title').getBoundingClientRect();
        const actions=el.querySelector('.panel-actions').getBoundingClientRect();
-       const parent=el.closest('.panel').getBoundingClientRect();
+       const parent=el.parentElement.getBoundingClientRect();
        const buttons=[...el.querySelectorAll('.btn')].map(x=>x.getBoundingClientRect());
        const overlap=title.left<actions.right&&title.right>actions.left&&title.top<actions.bottom&&title.bottom>actions.top;
        return {overlap,within:buttons.every(x=>x.left>=parent.left-1&&x.right<=parent.right+1),width:innerWidth,scroll:document.documentElement.scrollWidth};
      });
      assert.equal(result.overlap,false,tab+' title/button collision at '+width+' px');
-     assert.equal(result.within,true,tab+' button escapes card at '+width+' px');
+     assert.equal(result.within,true,tab+' button escapes section at '+width+' px');
      assert.ok(result.scroll<=width+1,tab+' horizontal overflow at '+width+' px');
    }
    await page.locator(nav+' [data-page="history"]').click();

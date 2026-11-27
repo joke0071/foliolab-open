@@ -33,6 +33,11 @@ export async function accountAllocationBrowserContract({p,record,engine,touch=fa
  const rows=p.locator('#providerOverview .has-account-allocation');
  await setup('known');const before=await record();
  assert.equal(await rows.count(),4);
+ const separators=p.locator('#providerOverview :is(.provider-accordion,.provider-row,.provider-account,.provider-position-accordion,.cash-terms-overview)');
+ assert.ok(await separators.evaluateAll(nodes=>nodes.every(node=>{
+  const style=getComputedStyle(node);
+  return style.borderTopWidth==='0px'&&style.borderBottomWidth==='0px';
+ })), 'provider, account, holding and liquidity rows are separated by spacing');
  assert.deepEqual(await rows.locator('.account-allocation>span').allTextContents(),['40 %','30 %','20 %','10 %']);
  assert.equal(await p.locator('#providerOverview .simple-cash-account').count(),1);
  assert.match(await p.locator('#providerOverview').innerText(),/Leeres Depot/);
