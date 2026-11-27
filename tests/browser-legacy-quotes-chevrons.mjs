@@ -53,6 +53,11 @@ try{
   };
   return {provider:opts('#providerSettings summary'),source:opts('#marketSettings>summary')};
  });
+ const labels=await page.locator('#morePage details>summary').evaluateAll(nodes=>nodes.map(summary=>{
+  const label=getComputedStyle(summary.querySelector('strong')||summary),arrow=getComputedStyle(summary,'::after');
+  return [label.fontSize,label.fontWeight,label.color,arrow.content,arrow.width,arrow.height,arrow.borderRightColor, getComputedStyle(summary).listStyleType];
+ }));
+ assert.ok(labels.every(label=>JSON.stringify(label)===JSON.stringify(labels[0])),'all settings and nested help disclosures share one label and arrow style');
  let arrows=await chevron();
  for(const property of ['content','width','height','borderRight','borderBottom','transform'])
   assert.equal(arrows.provider[property],arrows.source[property],'Chevron '+property+' should match');
