@@ -152,12 +152,12 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  return '<div class="chart-interactive"><div class="chart-y-labels" aria-hidden="true">'+labels+'</div>'+
  '<div class="chart-plot" role="group" tabindex="0" aria-label="Interaktiver Vermögensverlauf. Pfeiltasten links und rechts zeigen Stichtage." data-chart-points="'+series+'">'+
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
- [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="var(--chart-grid,#e5eee6)" stroke-dasharray="4 6"/>').join('')+
- (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="var(--chart-area,#e8f2ea)"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="var(--chart-series,#3b8659)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
- (disjoint||display==='points'?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="var(--chart-series,#3b8659)" vector-effect="non-scaling-stroke"/>').join(''):'')+
+ [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" class="series-grid" stroke-dasharray="4 6"/>').join('')+
+ (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="#e8f2ea" class="series-area"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#3b8659" class="series-line" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
+ (disjoint||display==='points'?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" class="series-point" vector-effect="non-scaling-stroke"/>').join(''):'')+
  estimatedPoints.map(({point,path})=>(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#637089" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>')+'<circle cx="'+point.x+'" cy="'+point.y+'" r="3" fill="white" stroke="#637089" stroke-width="2" vector-effect="non-scaling-stroke"/>').join('')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
- '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="var(--chart-series,#3b8659)" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
+ '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" class="series-point" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
  '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+
  (comparePath?'<p class="small-help">Gestrichelt: Startvermögen zuzüglich erfasster externer Nettozuflüsse. Keine Rendite und kein vollständiger Einstandswert.</p>':'')+'</div>';
 }

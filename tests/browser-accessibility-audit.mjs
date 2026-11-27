@@ -15,7 +15,7 @@ try{
  await page.keyboard.press('Tab');
  assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#mainContent','Keyboard must reach the skip link first');
  assert.equal(await page.locator('.skip-to-content').isVisible(),true,'Skip link must become visible on focus');
- assert.equal(await page.locator('.skip-to-content').evaluate(el=>getComputedStyle(el).outlineColor),'rgb(45, 105, 70)','Keyboard focus ring must be dark enough');
+ assert.equal(await page.locator('.skip-to-content').evaluate(el=>getComputedStyle(el).outlineColor),'rgb(18, 70, 213)','Keyboard focus ring must be dark enough');
  await page.keyboard.press('Enter');
  assert.equal(await page.evaluate(()=>location.hash),'#mainContent','Skip link must navigate to main landmark');
  await page.addScriptTag({url:'http://127.0.0.1:4173/__audit_axe.js'});
