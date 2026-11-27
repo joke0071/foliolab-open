@@ -62,7 +62,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  try{
   const p=await fresh(),before=await record(p);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'no sidebar offer without a direct prompt');
-  await nav(p,'more');assert.equal(await p.locator('#installButton').innerText(),'App installieren');await p.locator('#installButton').click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');await p.locator('#cancelDialog').click();
+  await nav(p,'more');assert.equal(await p.locator('#installButton').getAttribute('aria-label'),'Installationshilfe: FolioLab als App verwenden');await p.locator('#installButton').click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');await p.locator('#cancelDialog').click();
   assert.equal(await prompt(p),true);await p.locator('#sidebarInstallHint').waitFor({state:'visible'});await scan(p);await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-desktop-install-hint.png`});
   await p.setViewportSize({width:1440,height:360});
   // A resize command acknowledgement is not the native viewport/focus-scroll result.
@@ -88,9 +88,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     assert.equal(await p.locator('#installButton').isDisabled(),true);await p.locator('#installButton').evaluate(e=>e.click());assert.equal(await p.evaluate(()=>window.__installCalls),1,'pending prompt cannot be consumed twice');await p.evaluate(()=>window.__installResolve({outcome:'dismissed'}));
    }
    await p.waitForFunction(()=>!document.getElementById('installButton').disabled);
-   assert.equal(await p.evaluate(()=>window.__installCalls),1);assert.equal(await p.locator('#installButton').getAttribute('data-install-mode'),'help');assert.equal(await p.locator('#installAppSection').isVisible(),true,'choice alone never claims installed');
+   assert.equal(await p.evaluate(()=>window.__installCalls),1);assert.equal(await p.locator('#installButton').getAttribute('data-install-mode'),'help');assert.equal(await p.locator('#installButton').isVisible(),true,'choice alone never claims installed');
   }
-  await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('#installAppSection').isVisible(),false);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.deepEqual(await record(p),before);
+  await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('#installButton').isVisible(),false);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.deepEqual(await record(p),before);
   checks.push('late prompt; manual help; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; delivered appinstalled handler with synthetic event; exact IDB record unchanged');
   for(const blocked of ['local','both']){
    const q=await fresh(blocked),stored=await record(q);await prompt(q);await q.locator('#dismissInstallHint').click();await nav(q,'more');await prompt(q);assert.equal(await q.locator('#sidebarInstallHint').isVisible(),false,'blocked preference writes retain memory');
@@ -98,8 +98,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.deepEqual(await record(q),stored);
   }
   checks.push('local preference storage failure/session fallback and both stores failing/memory; portfolio bytes unchanged');
-  const standalone=await fresh('none',true),standaloneBefore=await record(standalone);await nav(standalone,'more');await prompt(standalone);assert.equal(await standalone.locator('#installAppSection').isVisible(),false);assert.equal(await standalone.locator('#sidebarInstallHint').isVisible(),false);
-  await standalone.evaluate(()=>window.__setSyntheticStandalone(false));await standalone.locator('#sidebarInstallHint').waitFor({state:'visible'});await standalone.locator('#installButton').focus();await standalone.evaluate(()=>window.__setSyntheticStandalone(true));assert.equal(await standalone.locator('#installAppSection').isVisible(),false);assert.equal(await standalone.evaluate(()=>document.activeElement.dataset.page),'more','hiding an installation control retains visible navigation focus');
+  const standalone=await fresh('none',true),standaloneBefore=await record(standalone);await nav(standalone,'more');await prompt(standalone);assert.equal(await standalone.locator('#installButton').isVisible(),false);assert.equal(await standalone.locator('#sidebarInstallHint').isVisible(),false);
+  await standalone.evaluate(()=>window.__setSyntheticStandalone(false));await standalone.locator('#sidebarInstallHint').waitFor({state:'visible'});await standalone.locator('#installButton').focus();await standalone.evaluate(()=>window.__setSyntheticStandalone(true));assert.equal(await standalone.locator('#installButton').isVisible(),false);assert.equal(await standalone.evaluate(()=>document.activeElement.dataset.page),'more','hiding an installation control retains visible navigation focus');
   assert.deepEqual(await record(standalone),standaloneBefore);checks.push('synthetic initial standalone and media change hide all offers and restore visible focus; exact IDB record unchanged; no hardware claim');
   const layout=await fresh();
   for(const width of [320,390,430,768,1440]){await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');await scan(layout);assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const legend=e.querySelector('.alloc-legend');return legend.children.length>0||legend.getBoundingClientRect().height<20;}),'empty allocation legend reserves no filler height');}

@@ -22,7 +22,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    m.snapshots[0].valuationStatus='legacy-unverified';
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await p.reload();await ready();const before=await record();
-  const ids=['historyCoverage','performanceDetails','snapshotManager'];
+  const ids=['historyCoverage','performanceDetails','snapshotManager','portfolioProjection'];
   await nav('history');for(const id of ids)assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false,'closed default '+id);
   assert.match(await p.locator('#snapshotManager>summary').innerText(),/Historische Referenzwerte/);
   assert.deepEqual(await p.locator('#historyBasis option').evaluateAll(es=>es.map(e=>[e.value,e.textContent])),[['auto','Automatisch – belegte Quellen'],['observed','Erfasste Stichtage'],['partial','Rekonstruierte Positionen'],['model','Modellverlauf · heutiger Bestand']]);
@@ -42,7 +42,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await p.keyboard.press('Escape');
    assert.equal(await more.evaluate(e=>e===document.activeElement),true);
    const icons=await p.locator('.history-disclosure-icon svg').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect(),c=getComputedStyle(e);return [r.width,r.height,e.getAttribute('stroke-width'),c.color,e.getAttribute('aria-hidden')];}));
-   assert.equal(icons.length,3);for(const i of icons){assert.deepEqual(i,icons[0]);assert.deepEqual(i.slice(0,3),[17,17,'1.8']);assert.equal(i[4],'true');}
+   assert.equal(icons.length,ids.length);for(const i of icons){assert.deepEqual(i,icons[0]);assert.deepEqual(i.slice(0,3),[17,17,'1.8']);assert.equal(i[4],'true');}
    for(const id of ids){const summary=p.locator('#'+id+'>summary');await summary.focus();await p.keyboard.press('Enter');assert.equal(await p.locator('#'+id).evaluate(e=>e.open),true);if(id==='snapshotManager')assert.match(await p.locator('#snapshotList').innerText(),/historisch ungeprüft/);await scan();await summary.focus();await p.keyboard.press('Space');assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false);}
    await p.evaluate(()=>{document.activeElement?.blur();scrollTo(0,0);});await scan();await p.screenshot({path:'artifacts/gates/history-followup/'+engine+'-history-'+width+'.png',fullPage:true});
    await more.click();

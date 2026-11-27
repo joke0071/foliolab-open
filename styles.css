@@ -504,13 +504,8 @@
 
 
 /* Compact private-style history controls and accessible two-date calendar. */
-#historyPage .history-sections{display:flex;gap:4px;max-width:100%;overflow-x:auto;padding:4px 4px 8px;margin:0 0 8px}
-.history-sections a{display:flex;align-items:center;min-height:44px;flex:none;padding:0 12px;border-radius:9px;color:#405b4b;font-weight:700;text-decoration:none}
-.history-sections a:is(:hover,[aria-current="location"]){color:#24533b;background:#e3ebe0}
-.history-sections a[aria-current="location"]{text-decoration:underline;text-underline-offset:3px}
-.history-sections a:focus-visible,.history-controls:focus-visible{outline:2px solid #327f52;outline-offset:1px}
+.history-controls:focus-visible{outline:2px solid #327f52;outline-offset:1px}
 #historyPage :is(#historyDiagram,#historyCoverage>summary,#performanceDetails>summary,#snapshotManager>summary,#portfolioProjection>summary){scroll-margin-top:max(calc(82px + env(safe-area-inset-top)),calc(var(--mobile-header-height,0px) + 6px))}
-@media print{#historyPage .history-sections{display:none}}
 #historyPage .history-panel{min-width:0}
 #historyPage .history-controls{position:relative;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0;margin:0 0 14px}
 #historyPage .history-chart-period{display:flex;align-items:center;flex-wrap:nowrap;min-width:0;margin:0;padding:3px;border:1px solid #e1eae2;border-radius:12px;background:#f2f7f2;gap:1px}
@@ -1580,13 +1575,13 @@
    Datenabdeckung & Abgleich, Rendite & Geldflüsse, Historische Referenzwerte. */
 #historyPage #historyCoverage,#historyPage .history-insights{min-width:0}
 #historyPage #historyCoverage{margin:12px 0 0;border-top:1px solid #e4ece5}
-#historyPage #historyCoverage>summary,#historyPage #performanceDetails>summary,#historyPage #snapshotManager>summary{min-height:48px;padding:6px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:2px;cursor:pointer}
+#historyPage #historyCoverage>summary,#historyPage #performanceDetails>summary,#historyPage #snapshotManager>summary,#historyPage #portfolioProjection>summary{min-height:48px;padding:6px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:2px;cursor:pointer}
 #historyPage #historyCoverage>summary{display:grid}
 #historyPage #performanceDetails>summary>small{grid-column:1;grid-row:2;padding-left:25px;font-size:11px;line-height:1.45;color:#4e6955;overflow-wrap:anywhere}
 #historyPage #historyCoverage>summary::after,#historyPage #performanceDetails>summary::after,#historyPage #snapshotManager>summary::after{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:center;margin:0 4px 3px}
 #historyPage #historyCoverage[open]>summary::after,#historyPage #performanceDetails[open]>summary::after,#historyPage #snapshotManager[open]>summary::after{margin:3px 4px 0}
 #historyPage #historyCoverage>summary:focus-visible,#historyPage #performanceDetails>summary:focus-visible,#historyPage #snapshotManager>summary:focus-visible{outline:3px solid #2d6946;outline-offset:-2px;border-radius:10px}
-#historyPage .history-disclosure-title{font-size:13px;font-weight:750;line-height:1.35;overflow-wrap:anywhere}
+#historyPage .history-disclosure-title{margin:0;letter-spacing:normal;font-size:var(--type-label);font-weight:600;line-height:1.35;overflow-wrap:anywhere}
 #historyPage #historyCoverageBody,#historyPage #performanceDetails>.performance-details-body{padding:2px 2px 14px 27px;border-top:0;min-width:0;overflow-wrap:anywhere}
 #historyPage #historyCoverageBody p,#historyPage #performanceInfo p{margin:0 0 8px;line-height:1.6;max-width:72ch}
 #historyPage #historyCoverageBody p:last-child,#historyPage #performanceInfo p:last-child{margin-bottom:0}
@@ -2068,10 +2063,10 @@
 .sidebar-footer{margin-top:auto;display:grid;gap:10px;min-width:0}
 .sidebar-footer .sidebar-bottom{margin-top:0}
 .sidebar-install-hint{display:flex;align-items:center;gap:2px;padding:5px;border:1px solid #e0e9df;border-radius:11px;background:#f5f8f4;color:#345b43}
-#sidebarInstallHint[hidden],#installAppSection[hidden],[data-install-action][hidden]{display:none!important}
+#sidebarInstallHint[hidden],[data-install-action][hidden]{display:none!important}
 .sidebar-install-action,.install-hint-dismiss{border:0;background:transparent;color:inherit;min-height:44px;cursor:pointer}
 .sidebar-install-action{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:6px;text-align:left;font-size:12px;font-weight:650;line-height:1.4;border-radius:7px}
-.sidebar-install-action svg,.install-entry svg{width:20px;height:20px;flex-shrink:0}
+.sidebar-install-action svg{width:20px;height:20px;flex-shrink:0}
 .sidebar-install-action:hover,.install-hint-dismiss:hover{background:#eaf1e8}
 .install-hint-dismiss{width:44px;flex:0 0 44px;display:grid;place-items:center;padding:10px;border-radius:7px}
 .install-hint-dismiss svg{width:16px;height:16px}
@@ -2079,10 +2074,6 @@
 .sidebar .nav button.active span{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
 .sidebar .nav button.active svg{stroke-width:2.4}
 .sidebar .nav button.active:hover{background:#f2f7f2}
-.install-settings-panel{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;padding:18px 22px}
-.install-settings-panel h2{font-size:16px;margin:0}
-.install-settings-panel .small-help{margin:5px 0 0}
-.install-entry{min-height:44px;white-space:normal;flex:0 0 auto}
 #dashboardPage .dashboard-overview{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
 #dashboardPage .dashboard-side{display:grid;gap:16px;min-width:0;align-content:start}
 #dashboardPage .dashboard-overview>.panel,#dashboardPage .dashboard-side>.panel{min-width:0;align-self:start}
@@ -2135,7 +2126,7 @@
 /* Eight desktop period targets need 386px before card padding. Keep accounts
    full width below 1180px, and reserve 430px for their card in the wide grid. */
 @media(min-width:1180px){#dashboardPage .dashboard-overview{grid-template-columns:minmax(0,1.55fr) minmax(430px,1fr)}}
-@media(max-width:720px){.install-settings-panel{align-items:flex-start;flex-wrap:wrap;padding:16px}#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
+@media(max-width:720px){#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
 @media(max-width:420px){#dashboardPage .dashboard-allocation .donut{width:12.8em;height:12.8em;flex-basis:12.8em}#dashboardPage .dashboard-allocation .donut-inner{width:8.8em;height:8.8em}}
 @media(max-width:360px){#dashboardPage .dashboard-allocation .alloc-legend{flex:1 1 auto}}
 
@@ -2209,9 +2200,8 @@
 
 /* Responsive foreground/background crossfades can lose text contrast mid-frame. */
 #positionsPage #addWizard{transition:none}
-.projection-panel{margin-top:16px;min-width:0}
-.projection-panel>summary,.projection-method>summary{cursor:pointer;min-height:44px;align-content:center;font-weight:650}
-.projection-panel>summary h2{display:inline;font:inherit;margin:0;overflow-wrap:anywhere}
+.projection-method>summary{cursor:pointer;min-height:44px;align-content:center;font-weight:650}
+#historyPage #portfolioProjection{border-top:1px solid var(--line)}
 .projection-body{padding-bottom:4px;overflow-wrap:anywhere}
 .projection-inputs,.projection-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
 .projection-inputs .field,.projection-inputs input{min-width:0;width:100%}
@@ -2268,15 +2258,15 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 .sidebar .nav button{border-radius:28px;color:var(--muted)}
 .sidebar .nav button.active,.sidebar .nav button.active:hover{background:var(--tonal);color:var(--on-tonal)}
 .sidebar .nav button:hover,.header-status-button:hover{background:var(--surface)}
-#historyPage .history-sections a,.page .filter-list .filter{color:var(--muted);border-radius:20px}
-#historyPage .history-sections a:is(:hover,[aria-current="location"]),.page .filter-list .filter.active{
+.page .filter-list .filter{color:var(--muted);border-radius:20px}
+.page .filter-list .filter.active{
  background:var(--tonal);color:var(--on-tonal)
 }
 #historyPage .chart-period.history-chart-period,.page .position-period{background:var(--surface)}
 #historyPage .chart-period.history-chart-period button.selected,.page .position-period button.selected,
 #chartPeriods .history-period-options:is([open],.has-active)>summary{background:var(--tonal);color:var(--on-tonal)}
 #morePage .settings-icon,#settingsGear,#accountsIcon,#securityIcon{background:var(--tonal);color:var(--primary)}
-#morePage details>summary,.page .projection-panel>summary,.page .performance-details>summary,
+#morePage details>summary,.page .performance-details>summary,
 .page .snapshot-manager>summary,dialog summary{color:var(--ink)}
 #morePage details>summary:hover,.page .provider-accordion>summary:hover{background:var(--surface)}
 #morePage .advanced-apis,#morePage .more-subdetail{border-color:var(--line)}
@@ -2326,8 +2316,6 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 .portfolio-loader-orbit circle:nth-child(1){stroke:#164cee}
 .portfolio-loader-orbit circle:nth-child(2){stroke:#009d59}
 .portfolio-loader-orbit circle:nth-child(3){stroke:#f4a900}
-#moreSections{display:flex;align-items:center;gap:4px;overflow-x:auto;padding:4px;margin:0 0 12px}
-#moreSections a{border-radius:22px;color:var(--muted)}
 
 #morePage h2[tabindex]{scroll-margin-block-start:calc(var(--mobile-header-height,0px) + 16px)}
 .dashboard-history #dashboardChange[data-direction=up]{background:#b9f4cc;color:#075c30}
@@ -2352,8 +2340,6 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #dashboardPage .dashboard-history .chart-zero{color:var(--muted)}
 #miniChart:has(>.chart-zero){height:auto;min-height:68px;padding-block:12px}
 #dashboardPage .dashboard-review-row{background:#e1eaff;color:#163579;border-radius:12px}
-#moreSections a,#historyPage .history-sections a{font-size:14px}
-#moreSections a[aria-current="location"],#historyPage .history-sections a[aria-current="location"]{text-decoration-thickness:2px}
 #miniChart .series-grid{stroke:var(--chart-grid)}
 #miniChart .series-area{fill:var(--chart-area)}
 #miniChart .series-line{stroke:var(--chart-series)}
@@ -2375,6 +2361,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  --primary:#006b65; --on-tonal:#004e49; --tonal:#bfeee7;
 }
 #positionsPage,:root:has(#positionsPage.active) dialog,[data-page="positions"] {
+ --selection:var(--primary);
  --primary:#7041a4; --on-tonal:#51237e; --tonal:#eddcff;
 }
 #bookingsPage,:root:has(#bookingsPage.active) dialog,[data-page="bookings"] {
@@ -2411,23 +2398,6 @@ dialog .icon-close {
 .toast {pointer-events:none;background:#303239;color:white;border-radius:10px;box-shadow:0 3px 12px #20242a26}
 .toast-error {background:#842e2a}
 
-#moreSections,#historyPage #historySections {
- display:flex;align-items:stretch;gap:0;overflow-x:auto;max-width:100%;
- padding:0;margin:0 0 16px;border-bottom:1px solid var(--line);
- background:var(--canvas);scrollbar-width:none
-}
-.history-sections::-webkit-scrollbar {display:none}
-#moreSections a,#historyPage #historySections a {
- position:relative;justify-content:center;min-height:48px;flex:0 0 auto;padding-inline:14px;
- background:transparent;border-radius:0;color:var(--muted);font-size:14px;font-weight:550;text-decoration:none
-}
-#moreSections a[aria-current],#historyPage #historySections a[aria-current] {color:var(--primary);font-weight:650}
-.history-sections a[aria-current]::after {
- content:"";position:absolute;bottom:0;left:12px;right:12px;height:3px;
- border-radius:3px 3px 0 0;background:currentColor
-}
-#historyPage #historySections a:focus-visible,#moreSections a:focus-visible {outline-offset:-3px}
-/* Section links scroll with the content; a fragment jump clears the status header. */
 @media(max-width:720px) {
  :is(#historyPage,#morePage) :is(button,summary,input,select,textarea,h2[tabindex],#historyDiagram),
  #historyPage :is(#historyCoverage,#performanceDetails,#snapshotManager,#portfolioProjection)>summary {
@@ -2487,7 +2457,6 @@ dialog .icon-close {
 #dashboardPage .alloc-legend-row strong,#dashboardPage .alloc-legend-row b,#dashboardPage .allocation-center strong {color:var(--ink)}
 #dashboardPage .alloc-legend-row[aria-pressed="true"] {background:var(--tonal)}
 @media(forced-colors:active) {
- .history-sections a[aria-current]::after {background:Highlight}
  .chart-plot .series-dot,.chart-plot .series-line {stroke:CanvasText}
  #positionList .selection-mark>input:not(:checked)+.selection-glyph {border-color:ButtonText}
 }
@@ -2532,7 +2501,7 @@ dialog .icon-close {
 #morePage .source-detail>summary::after,#historyPage .history-insights summary::after {border-color:var(--muted)}
 #dashboardPage .alloc-legend-copy small {color:var(--muted);font-size:.75rem}
 
-.selection-mark>input:checked+.selection-glyph {background:#dce7ff;border-color:var(--selection);color:#123879}
+.selection-mark>input:checked+.selection-glyph {background:var(--tonal);border-color:var(--selection);color:var(--on-tonal)}
 .selection-mark>input:checked+.selection-glyph::after {background:var(--selection);border-color:var(--selection)}
 @media(hover:hover) {
  #positionList .selection-mark>input:not(:disabled):not(:checked):hover+.selection-glyph {border-color:var(--asset-ink)}
@@ -2585,3 +2554,12 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
  }
  #historyPage #chartPeriods.history-chart-period{flex-basis:calc(100% + 32px)}
 }
+
+#positionList .selection-mark>input:checked+.selection-glyph {
+ background:linear-gradient(115deg,var(--tonal),color-mix(in srgb,var(--tonal) 45%,white))
+}
+#positionList .selection-glyph::after {border-radius:50%}
+#positionList .selection-glyph svg {stroke:currentColor}
+#positionsPage .selection-master {border-color:var(--line);border-radius:24px;color:var(--on-tonal)}
+#positionsPage .selection-master:has(input:checked,input:indeterminate) {background:var(--tonal);border-color:transparent}
+#positionsPage .selection-danger {color:var(--danger)}
