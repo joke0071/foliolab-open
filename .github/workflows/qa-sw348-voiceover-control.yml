@@ -1,0 +1,38 @@
+name: SW348 Safari and VoiceOver control
+on:
+  push:
+    branches: [qa/sw348-voiceover-control]
+permissions:
+  contents: read
+jobs:
+  voiceover:
+    runs-on: macos-15
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify product bytes and record environment
+        run: |
+          git diff --exit-code 4e3e4a256ce0d81946ed6907b965d1f30aac33fe HEAD -- . ':(exclude).github/workflows/qa-sw348-voiceover-control.yml' ':(exclude)tests/native-safari/sw348-voiceover-control.mjs'
+          mkdir -p artifacts/native-safari
+          (sw_vers; safaridriver --version; node --version) | tee artifacts/native-safari/environment.txt
+      - name: Configure VoiceOver using the Guidepup CLI
+        run: |
+          set -o pipefail
+          npm install --no-save --package-lock=false @guidepup/setup@0.29.3 @guidepup/guidepup@0.40.0
+          npx --no-install @guidepup/setup setup --ci 2>&1 | tee artifacts/native-safari/setup.txt
+          npx --no-install @guidepup/setup install 2>&1 | tee artifacts/native-safari/assets.txt
+      - name: Capture a control announcement and the FolioLab focus sequence
+        run: node tests/native-safari/sw348-voiceover-control.mjs
+      - name: Preserve success or failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sw348-safari-voiceover
+          path: artifacts/native-safari/
+          if-no-files-found: error
