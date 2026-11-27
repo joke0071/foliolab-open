@@ -42,7 +42,9 @@ for(const engine of engines){
   assert.equal(await p.title(),'FolioLab');
   assert.ok(await p.evaluate(async()=>{const {setLoading}=await import('./src/loading-ui.js');const a=document.createElement('p'),b=document.createElement('p');a.textContent='Kurse werden aktualisiert …';b.textContent='Wallet wird geprüft …';document.body.append(a,b);setLoading(a,true);setLoading(a,true);setLoading(b,true);const valid=a.querySelectorAll('svg').length===1&&a.getAttribute('role')==='status'&&a.querySelector('svg').outerHTML===b.querySelector('svg').outerHTML&&a.querySelector('svg').outerHTML===document.querySelector('#appStartup svg').outerHTML&&a.querySelectorAll('[id]').length===0;setLoading(a,false);const ended=!a.querySelector('svg')&&a.textContent==='Kurse werden aktualisiert …';a.remove();b.remove();return valid&&ended;}));
   await p.locator('#mobileNav [data-page="more"]').click();
-  assert.equal(await install.isVisible(),false,'no custom install icon without a browser offer');
+  assert.ok(await install.isVisible(),'mobile icon remains available without a browser offer');
+  await install.click();await p.getByRole('dialog',{name:'FolioLab installieren'}).waitFor();
+  await p.getByRole('button',{name:'Installationshilfe schließen'}).click();
   assert.ok(await p.evaluate(()=>{window.__prompts=0;const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{window.__prompts++;};e.userChoice=Promise.resolve({outcome:'dismissed'});window.dispatchEvent(e);return e.defaultPrevented;}));
   assert.equal(await p.evaluate(()=>window.__prompts),0,'prompt must wait for a user tap');
   assert.ok(await install.evaluate(e=>{
@@ -51,7 +53,7 @@ for(const engine of engines){
   }));assert.equal(await install.getAttribute('aria-label'),'FolioLab als App installieren');
   await install.focus();await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-install-320.png`});
   await p.setViewportSize({width:1440,height:900});const desktopInstall=p.locator('#installButton');assert.ok(await desktopInstall.isVisible());await p.locator('#sidebarInstallHint').waitFor({state:'visible'});assert.equal(await p.locator('[data-install-action]:visible').count(),2,'Brand icon and conditional desktop hint share the existing prompt');assert.ok(await desktopInstall.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44;}));await desktopInstall.focus();await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-install-1440.png`});await p.setViewportSize({width:320,height:740});
-  await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.equal(await install.isVisible(),false,'a consumed offer hides the icon');
+  await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.ok(await install.isVisible(),'mobile help remains available after dismissal');
   await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('[data-install-action]:visible').count(),0,'appinstalled hides installation entry and hint');
   await p.evaluate(()=>{delete document.documentElement.dataset.appInstalled;window.dispatchEvent(new Event('visibilitychange'));});
   await p.evaluate(()=>{Object.defineProperty(navigator,'standalone',{value:true,configurable:true});const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{};e.userChoice=new Promise(()=>{});window.dispatchEvent(e);});assert.equal(await p.locator('[data-install-action]:visible').count(),0,'standalone hides installation entry and hint');
@@ -77,7 +79,7 @@ for(const engine of engines){
   assert.ok(await mobileIcon.evaluate(el=>el===document.activeElement));
   const reportState=async state=>mobile.evaluate(state=>{window.__related=state;document.dispatchEvent(new Event('visibilitychange'));},state);
   for(const state of ['installed','absent','unknown','absent']){
-   await reportState(state);await mobileIcon.waitFor({state:state==='absent'?'visible':'hidden'});
+   await reportState(state);await mobileIcon.waitFor({state:state==='installed'?'hidden':'visible'});
   }
   await mobileIcon.click();await mobile.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));
   await help.waitFor({state:'hidden'});assert.equal(await mobileIcon.isVisible(),false);

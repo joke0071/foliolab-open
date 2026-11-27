@@ -103,6 +103,13 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.deepEqual(await record(standalone),standaloneBefore);checks.push('synthetic initial standalone and media change hide all offers and restore visible focus; exact IDB record unchanged; no hardware claim');
   const layout=await fresh();
   for(const width of [320,390,430,768,1440]){await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');await scan(layout);assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const legend=e.querySelector('.alloc-legend');return legend.children.length>0||legend.getBoundingClientRect().height<20;}),'empty allocation legend reserves no filler height');}
+  await layout.setViewportSize({width:390,height:850});
+  const historyTab=layout.locator('#mobileNav [data-page="history"]');
+  await layout.locator('#mobileNav [data-page="dashboard"]').focus();
+  await layout.keyboard.press('Tab');
+  assert.ok(await historyTab.evaluate(button=>button.matches(':focus-visible')&&getComputedStyle(button.querySelector('svg')).outlineWidth==='2px'),'keyboard ring follows the mobile tab icon');
+  await historyTab.click();await layout.locator('#mobileNav [data-page="bookings"]').click();
+  assert.equal(await historyTab.locator('svg').evaluate(icon=>getComputedStyle(icon).outlineStyle),'none');
   await layout.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'nav-p',name:'Synthetic provider with a deliberately long readable name'}));m.accounts.push(createAccount({id:'nav-a',providerId:'nav-p',name:'Synthetic long securities account name',type:'securities'},m));m.positions.push(createPosition({id:'nav-etf',providerId:'nav-p',accountId:'nav-a',name:'Synthetic ETF with a long security name',kind:'etf',quantity:'123456789.123456789',price:'100'},m));

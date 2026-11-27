@@ -64,11 +64,11 @@ try{
  await page.keyboard.press('Enter');
  assert.equal(await holding.locator('.position-period-more').getAttribute('open'),'');
  const summaryFocus=await more.evaluate(el=>({visible:el.matches(':focus-visible'),width:getComputedStyle(el).outlineWidth}));
- assert.ok(summaryFocus.visible&&summaryFocus.width==='3px');
+ assert.ok(summaryFocus.visible&&summaryFocus.width==='2px');
  const threeYear=additional.locator('[data-position-range="1096"]');
  await page.keyboard.press('Tab');
  const optionFocus=await threeYear.evaluate(el=>({focused:el===document.activeElement,visible:el.matches(':focus-visible'),width:getComputedStyle(el).outlineWidth}));
- assert.ok(optionFocus.focused&&optionFocus.visible&&optionFocus.width==='3px');
+ assert.ok(optionFocus.focused&&optionFocus.visible&&optionFocus.width==='2px');
  await page.keyboard.press('Enter');
  assert.equal(await threeYear.getAttribute('aria-pressed'),'true');
  assert.equal(await more.evaluate(el=>el===document.activeElement),true);

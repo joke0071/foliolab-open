@@ -66,12 +66,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    writeFileSync(`artifacts/gates/ui-quality-${engine}-startup-failure.json`,JSON.stringify({engine,errors,state:await p.evaluate(()=>({url:location.href,timeOrigin:performance.timeOrigin,readyState:document.readyState,controller:navigator.serviceWorker.controller?.scriptURL??null,controllerState:navigator.serviceWorker.controller?.state??null,storage:document.getElementById('portfolioStorageState')?.textContent??null,logos:[...document.querySelectorAll('.logo')].map(e=>e.outerHTML)}))},null,2));
    throw error;
   }
-  assert.ok(await p.locator('#cashTermsOverview').evaluate(e=>e.parentElement.previousElementSibling?.id==='providerOverview'),'liquidity follows the framed providers');
-  assert.ok(await p.locator('#providerOverview').evaluate(e=>parseFloat(getComputedStyle(e).borderLeftWidth)>0),'one outline around all providers');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
+  assert.ok(await p.locator('#cashTermsOverview').evaluate(e=>e.parentElement.previousElementSibling?.id==='providerOverview'),'liquidity follows the accounts inside their panel');
+  assert.ok(await p.locator('.dashboard-providers').evaluate(panel=>parseFloat(getComputedStyle(panel).borderLeftWidth)>0&&['h2','#providerOverview','#cashTermsOverview'].every(selector=>panel.querySelector(selector).closest('.panel')===panel)),'one outline around the heading, providers and liquidity');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
   for(const width of [320,390,430,768,1440]){
    await p.setViewportSize({width,height:560});assert.equal(await p.locator('a.logo:visible').count(),1);if(width<=720)assert.equal(await p.locator('.mobile-header').evaluate(e=>{const a=e.querySelector('.logo').getBoundingClientRect(),b=e.querySelector('.header-status-actions').getBoundingClientRect();return a.right<=b.left;}),true,'Home link does not overlap storage status');
    await nav('bookings');
-   assert.equal(await p.locator('.booking-filter-tools').evaluate(e=>e.closest('.panel')===null),true);
    const brand=p.getByRole('link',{name:'FolioLab – Zur Übersicht'});
    await brand.focus();await p.keyboard.press('Enter');
    assert.equal(await p.locator('#dashboardPage').isVisible(),true);
@@ -87,7 +86,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     if(page==='bookings'){
      assert.equal(await p.locator('#bookingTransferDetails').count(),0,'separate transfer accordion has been replaced');
      assert.equal(await p.locator('#bookingUndoActions').isVisible(),false,'no empty undo strip without an available receipt');
-     assert.ok(await p.locator('#bookingList').evaluate(list=>['bookingIncomeDetails','bookingTransferAction'].every(id=>list.compareDocumentPosition(document.getElementById(id)) & Node.DOCUMENT_POSITION_FOLLOWING)),'secondary booking actions follow the results');
+     const sections=p.locator('#bookingPanel').locator('#bookingIncomeDetails,#bookingTransferAction,#bookingListHead,.booking-filter-tools,#bookingList');
+     assert.deepEqual(await sections.evaluateAll(els=>els.map(el=>el.id||el.className)),['bookingIncomeDetails','bookingTransferAction','bookingListHead','booking-filter-tools','bookingList']);
+     assert.equal(await p.locator('#bookingIncomeDetails').evaluate(el=>el.open),false);
+     const [actions,heading,filters,list]=await Promise.all(['.booking-secondary-actions','#bookingPanel>.panel-head-actions','.booking-filter-tools','#bookingList'].map(selector=>p.locator(selector).boundingBox()));
+     assert.ok(heading.y-actions.y-actions.height>=16&&filters.y-heading.y-heading.height>=10&&list.y-filters.y-filters.height>=16,'space between tools, list heading, filters and results');
      assert.equal(await p.locator('[data-action=transfer-matching]').isVisible(),true);
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#bookingsPage').screenshot({path:'artifacts/gates/c5-bookings-'+width+'.png'});
      for(const id of ['bookingIncomeDetails'])if(!await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();

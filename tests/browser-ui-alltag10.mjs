@@ -30,7 +30,7 @@ const lists={
 const selectionPresentation=async(p,name,c,engine)=>{
  const master=p.locator({positions:'#positionSelectFiltered',bookings:'#bookingSelectFiltered',references:'#referenceSelectVisible'}[name]);
  const box=p.locator(c.box).first();
- assert.equal(await box.evaluate(e=>getComputedStyle(e).accentColor),name==='positions'?'rgb(112, 65, 164)':'rgb(18, 70, 213)',name+' coherent native accent');
+ assert.equal(await box.evaluate(e=>getComputedStyle(e).accentColor),{positions:'rgb(112, 65, 164)',bookings:'rgb(18, 70, 213)',references:'rgb(0, 107, 101)'}[name],name+' coherent native accent');
  if(name==='positions'){
   assert.equal(await box.evaluate(e=>{const s=getComputedStyle(e.nextElementSibling,'::after');return s.content==='""'&&parseFloat(s.width)>=18&&s.borderStyle==='solid';}),true,'unchecked position has a visible empty selection badge');
   assert.equal(await box.locator('..').getByRole('checkbox').count(),1,'one semantic position checkbox');
