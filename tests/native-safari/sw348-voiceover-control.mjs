@@ -4,13 +4,21 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
 import { setTimeout as pause } from 'node:timers/promises';
-import { voiceOver, MacOSKeyCodes, macOSActivateId, voiceOverKeyCodeCommands } from '@guidepup/guidepup';
+import { voiceOver, macOSActivateId, voiceOverKeyCodeCommands } from '@guidepup/guidepup';
 
 const controlPage = `<!doctype html><meta charset="utf-8"><title>VoiceOver control</title>
 <button id="control">FolioLab Kontrollansage Sieben</button><script type="module" src="/__observer.js"></script>`;
 
 const observer = `
 let processed;
+for (const name of ['focusin','keydown','click','hashchange']) {
+  window.addEventListener(name,event => {
+    const target = event.target;
+    const anchor = target?.closest?.('.skip-to-content');
+    if (!anchor && name !== 'hashchange' && target?.id !== 'mainContent') return;
+    void fetch('/__trace',{method:'POST',body:JSON.stringify({name, trusted:event.isTrusted, key:event.key, target:target?.id || target?.className || '', hash:location.hash, active:document.activeElement?.id || document.activeElement?.className || ''})});
+  },true);
+}
 setInterval(async () => {
   const { stage } = await (await fetch('/__state')).json();
   if (!stage || stage === processed || !document.hasFocus()) return;
@@ -32,7 +40,7 @@ setInterval(async () => {
 
 const app = spawn('python3', ['-m', 'http.server', '4187', '--bind', '127.0.0.1'], { stdio: 'ignore' });
 const observations = new Map();
-const report = { product: '4e3e4a256ce0d81946ed6907b965d1f30aac33fe', runnerImage: process.env.ImageVersion, scope: 'Real Safari, top-level local release with only an external focus observer added to HTML, real system VoiceOver.', stages: [] };
+const report = { product: '4e3e4a256ce0d81946ed6907b965d1f30aac33fe', runnerImage: process.env.ImageVersion, scope: 'Real Safari, top-level local release with only an external focus observer added to HTML, real system VoiceOver.', stages: [], trace: [] };
 let stage;
 const server = createServer(async (request, response) => {
   try {
@@ -42,11 +50,12 @@ const server = createServer(async (request, response) => {
       response.writeHead(200, {'Content-Type':'text/javascript; charset=utf-8'}).end(observer);
     } else if (request.url === '/__state') {
       response.writeHead(200, {'Cache-Control':'no-store'}).end(JSON.stringify({stage}));
-    } else if (request.url === '/__observed' && request.method === 'POST') {
+    } else if (['/__observed','/__trace'].includes(request.url) && request.method === 'POST') {
       let body = '';
       for await (const chunk of request) body += chunk;
       const value = JSON.parse(body);
-      observations.set(value.stage, value);
+      if (request.url === '/__trace') report.trace.push(value);
+      else observations.set(value.stage, value);
       response.writeHead(204).end();
     } else if (request.url.startsWith('/app/')) {
       const upstream = await fetch('http://127.0.0.1:4187' + request.url.slice(4));
@@ -68,7 +77,7 @@ async function observe(name, wanted, activate = false) {
   const sample = { name, phrases: [] };
   report.stages.push(sample);
   stage = name;
-  if (activate) await voiceOver.perform({keyCode:MacOSKeyCodes.Return,modifiers:[]}, {capture:true});
+  if (activate) await voiceOver.act({capture:true});
   for (let attempt = 0; attempt < 45 && !observations.has(name); attempt++) await pause(500);
   sample.focus = observations.get(name);
   assert.ok(sample.focus, 'Safari focus receipt missing for ' + name);
@@ -109,11 +118,19 @@ try {
   execFileSync('open', ['-a', 'Safari', 'http://127.0.0.1:' + server.address().port + '/app/index.html']);
   await macOSActivateId('com.apple.Safari');
   await observe('link', /Direkt zum Inhalt/i);
-  await observe('main', /Übersicht|Hauptinhalt|main/i, true);
-  assert.equal(observations.get('main').id, 'mainContent');
-  assert.equal(observations.get('main').hash, '#mainContent');
-  await observe('positions', /Positionen/i);
-  await observe('bookings', /Buchungen/i);
+  report.sequenceErrors = [];
+  for (const [name,phrase] of [['main',/Übersicht|Hauptinhalt|\bmain\b/i],['positions',/Positionen/i],['bookings',/Buchungen/i]]) {
+    try {
+      await observe(name,phrase,name==='main');
+      if (name==='main') {
+        assert.equal(observations.get('main').id,'mainContent');
+        assert.equal(observations.get('main').hash,'#mainContent');
+      }
+    } catch (error) {
+      report.sequenceErrors.push({name,error:String(error)});
+    }
+  }
+  assert.deepEqual(report.sequenceErrors,[]);
   report.result = 'PASS';
 } catch (error) {
   report.error = String(error);
