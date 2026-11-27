@@ -94,6 +94,17 @@ async function observe(name, wanted, activate = false) {
     await voiceOver.perform(voiceOverKeyCodeCommands.moveCursorToKeyboardFocus, {capture:true});
     await capture();
   }
+  if (!sample.spoken && name !== 'control' && sample.phrases.some(phrase => /web content group|enter the web area/i.test(phrase))) {
+    sample.enteredWebArea = true;
+    await voiceOver.interact({capture:true});
+    await voiceOver.perform(voiceOverKeyCodeCommands.moveCursorToKeyboardFocus,{capture:true});
+    await capture();
+    if (!sample.spoken && name === 'main') {
+      sample.usedNextHeading = true;
+      await voiceOver.nextHeading({capture:true});
+      await capture();
+    }
+  }
   if (!sample.spoken) {
     await voiceOver.perform(voiceOverKeyCodeCommands.hearItemDescription, {capture:true});
     await capture();
