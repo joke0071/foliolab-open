@@ -2527,3 +2527,11 @@ dialog .icon-close {
 @media(hover:hover) {
  #positionList .selection-mark>input:not(:disabled):not(:checked):hover+.selection-glyph {border-color:var(--asset-ink)}
 }
+
+/* Nested editor and wizard panels use the same text and disclosure roles. */
+dialog .wizard-group>h3,dialog .csv-import-mapping>h3,dialog .csv-import-review>h3,
+dialog .wizard-mode legend,dialog .wizard-mode label {color:var(--ink)}
+dialog :is(.advanced-apis,.wizard-catalog-tools,.form-disclosure)>summary,
+#editDialog .advanced-apis>summary {color:var(--on-tonal)}
+dialog :is(.advanced-apis,.wizard-catalog-tools)[open]>summary {background:var(--surface)}
+dialog .advanced-apis,dialog .wizard-group {border-color:var(--line)}
