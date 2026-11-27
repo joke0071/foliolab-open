@@ -4,7 +4,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
 import { setTimeout as pause } from 'node:timers/promises';
-import { voiceOver, MacOSKeyCodes } from '@guidepup/guidepup';
+import { voiceOver, MacOSKeyCodes, macOSActivateId, voiceOverKeyCodeCommands } from '@guidepup/guidepup';
 
 const html = `<!doctype html><meta charset="utf-8"><title>VoiceOver control</title>
 <div id="target"></div><script type="module">
@@ -73,18 +73,22 @@ async function observe(name, wanted, activate = false) {
   const sample = { name, phrases: [] };
   report.stages.push(sample);
   stage = name;
-  if (activate) await voiceOver.perform({keyCode:MacOSKeyCodes.Return,modifiers:[]}, {capture:false});
+  if (activate) await voiceOver.perform({keyCode:MacOSKeyCodes.Return,modifiers:[]}, {capture:true});
   for (let attempt = 0; attempt < 18 && !observations.has(name); attempt++) await pause(500);
   sample.focus = observations.get(name);
   assert.ok(sample.focus, 'Safari focus receipt missing for ' + name);
-  for (let attempt = 0; attempt < 6; attempt++) {
-    const phrase = await voiceOver.lastSpokenPhrase();
-    if (phrase && !sample.phrases.includes(phrase)) sample.phrases.push(phrase);
-    if (wanted.test(phrase ?? '')) {
-      sample.spoken = phrase;
-      break;
-    }
-    await pause(350);
+  const capture = async () => {
+    sample.phrases = [...await voiceOver.spokenPhraseLog()];
+    sample.spoken = sample.phrases.find(phrase => wanted.test(phrase));
+  };
+  await capture();
+  if (!sample.spoken) {
+    await voiceOver.perform(voiceOverKeyCodeCommands.moveCursorToKeyboardFocus, {capture:true});
+    await capture();
+  }
+  if (!sample.spoken && name === 'control') {
+    await voiceOver.next({capture:true});
+    await capture();
   }
   assert.ok(sample.spoken, 'VoiceOver did not announce ' + wanted + ' at ' + name);
 }
@@ -98,6 +102,7 @@ try {
   report.phase = 'start VoiceOver';
   await voiceOver.start({timeout:12000,retries:1});
   started = true;
+  await macOSActivateId('com.apple.Safari');
   report.phase = 'control';
   await observe('control', /FolioLab Kontrollansage Sieben/i);
   assert.match(report.stages[0].focus.browser, /Version\/[^ ]+ Safari\//);
