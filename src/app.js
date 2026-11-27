@@ -212,7 +212,9 @@ function trackVisibleSection(){
  sectionJumpY=null;
  const links=[...menu.querySelectorAll('a')];
  const headerBottom=document.querySelector('.mobile-header').getBoundingClientRect().bottom;
- const threshold=headerBottom+menu.offsetHeight+24;
+ const headerHeight=Math.max(0,headerBottom);
+ const menuHeight=Math.max(0,Math.min(menu.offsetHeight,menu.getBoundingClientRect().bottom-headerHeight));
+ const threshold=headerHeight+menuHeight+24;
  let visible=links[0],lastTop=-Infinity;
  for(const link of links){
   const top=$(link.hash.slice(1)).getBoundingClientRect().top;

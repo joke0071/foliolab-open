@@ -103,6 +103,13 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.waitForFunction(()=>document.activeElement?.id==='moreSources');
   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
   await page.waitForFunction(()=>document.querySelector('#moreSections [aria-current]')?.hash==='#moreAccounts');
+  await page.setViewportSize({width:360,height:900});
+  const exportButton=page.locator('#exportBackup');
+  await exportButton.evaluate(button=>window.scrollBy({top:button.getBoundingClientRect().top-68,behavior:'instant'}));
+  assert.ok(await exportButton.evaluate(button=>{
+   const rect=button.getBoundingClientRect();
+   return [4,rect.height/2,rect.height-4].every(y=>button.contains(document.elementFromPoint(rect.left+rect.width/2,rect.top+y)));
+  }),'the backup action remains tappable across its height after scrolling');
   assert.deepEqual(await read(),populated,'reading settings sections must keep the saved portfolio intact');
   assert.deepEqual(failures,[]);
   console.log('History section links: '+engine+' touch, keyboard, fragments, back/forward and offline record preservation PASS');
