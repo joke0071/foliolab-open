@@ -2297,8 +2297,6 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 .dashboard-history #dashboardChange{
  display:inline-block;background:#e3ebff;color:#162b59;padding:3px 10px;border-radius:20px
 }
-#dashboardChange[data-direction=up]{background:#b9f4cc;color:#075c30}
-#dashboardChange[data-direction=down]{background:#ffe1de;color:#8d2025}
 .dashboard-history .chart-plot:focus-visible,.dashboard-history :is(button,summary):focus-visible{outline:3px solid #ffda70;outline-offset:-3px}
 #miniChartPeriods{background:transparent;border:0;gap:2px;margin:12px 0 4px;padding:0}
 #miniChartPeriods>button,#miniChartPeriods .period-more>summary{
@@ -2324,3 +2322,9 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 .portfolio-loader-orbit circle:nth-child(1){stroke:#164cee}
 .portfolio-loader-orbit circle:nth-child(2){stroke:#009d59}
 .portfolio-loader-orbit circle:nth-child(3){stroke:#f4a900}
+#moreSections{display:flex;align-items:center;gap:4px;overflow-x:auto;padding:4px;margin:0 0 12px}
+#moreSections a{border-radius:22px;color:var(--muted)}
+#moreSections a:is(:hover,[aria-current="location"]){color:var(--on-tonal);background:var(--tonal)}
+#morePage h2[tabindex]{scroll-margin-block-start:calc(var(--mobile-header-height,0px) + 16px)}
+.dashboard-history #dashboardChange[data-direction=up]{background:#b9f4cc;color:#075c30}
+.dashboard-history #dashboardChange[data-direction=down]{background:#ffe1de;color:#8d2025}
