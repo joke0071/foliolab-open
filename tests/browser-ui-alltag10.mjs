@@ -30,7 +30,7 @@ const lists={
 const selectionPresentation=async(p,name,c,engine)=>{
  const master=p.locator({positions:'#positionSelectFiltered',bookings:'#bookingSelectFiltered',references:'#referenceSelectVisible'}[name]);
  const box=p.locator(c.box).first();
- assert.equal(await box.evaluate(e=>getComputedStyle(e).accentColor),'rgb(38, 112, 68)',name+' coherent native accent');
+ assert.equal(await box.evaluate(e=>getComputedStyle(e).accentColor),'rgb(18, 70, 213)',name+' coherent native accent');
  if(name==='positions'){
   assert.equal(await box.evaluate(e=>{const s=getComputedStyle(e.nextElementSibling,'::after');return s.content==='""'&&parseFloat(s.width)>=18&&s.borderStyle==='solid';}),true,'unchecked position has a visible empty selection badge');
   assert.equal(await box.locator('..').getByRole('checkbox').count(),1,'one semantic position checkbox');
@@ -40,9 +40,9 @@ const selectionPresentation=async(p,name,c,engine)=>{
     await hover.setContent('<link rel="stylesheet" href="'+base+'styles.css"><label class="selection-mark"><input type="checkbox" aria-label="SYNTHETIC hover probe"><span class="selection-glyph"></span></label>');
     assert.equal(await hover.evaluate(()=>matchMedia('(hover:hover)').matches),true,'desktop hover probe');
     await hover.locator('input').hover();
-    assert.equal(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(237, 245, 239)','position hover is visible');
+    assert.equal(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(234, 240, 255)','position hover is visible');
     await hover.locator('input').evaluate(e=>e.disabled=true);
-    assert.notEqual(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(237, 245, 239)','disabled position has no hover signal');
+    assert.notEqual(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(234, 240, 255)','disabled position has no hover signal');
    }finally{await hover.close();}
   }
   await box.evaluate(e=>e.disabled=true);

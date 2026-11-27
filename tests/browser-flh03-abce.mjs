@@ -61,7 +61,7 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   // C: all relevant nested disclosures actually open, including the six retained help nodes after direct EODHD retirement.
   await nav('more');await p.evaluate(()=>{for(const id of ['marketSettings','blockchainSettings','googleDriveBackupSetup','backupPasswordSetup']){const root=document.getElementById(id);root.open=true;root.querySelectorAll('details').forEach(d=>d.open=true);}});
   const help=await p.locator('.source-detail .field small,.drive-footer-note').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().height).map(n=>({color:getComputedStyle(n).color,text:n.textContent})));
-  assert.equal(await p.locator('[name="eodhdKey"]').count(),0,'Retired direct EODHD field must not return');assert.ok(help.length>=6,'All six retained help nodes are expanded');assert.ok(help.every(n=>n.color==='rgb(77, 103, 86)'));
+  assert.equal(await p.locator('[name="eodhdKey"]').count(),0,'Retired direct EODHD field must not return');assert.ok(help.length>=6,'All six retained help nodes are expanded');assert.ok(help.every(n=>n.color==='rgb(75, 81, 93)'));
   for(const [width,height] of [[320,360],[390,844],[768,500],[1440,900]]){await p.setViewportSize({width,height});await scan('expanded settings '+width);}
   assert.deepEqual(await read(),provenRestored,'Disclosure/summary changes are read-only');
   console.log(engine+': B proven 999→1059 change/no return and C expanded settings/7 help nodes/full axe PASS');
@@ -132,8 +132,15 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   assert.deepEqual(unexpected,[],'Clean saved reload needs no warning');
   await openSavedNavigation();assert.deepEqual(await read(),savedRecord);
   p.on('dialog',async d=>{unexpected.push(d.type());await d.accept();});
+  // A selected destination has its own entry. Back traverses Mehr → Übersicht
+  // before leaving the app. Forward must restore both entries and the saved record.
+  await Promise.all([p.waitForURL(base),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);
+  await p.locator('#dashboardPage.active').waitFor();assert.deepEqual(await read(),savedRecord);
   await Promise.all([p.waitForURL(previous),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.equal(p.url(),previous);
   await Promise.all([p.waitForURL(url=>url.origin===new URL(base).origin),p.evaluate(()=>{setTimeout(()=>history.forward(),0);})]);await p.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
+  await p.locator('#dashboardPage.active').waitFor();
+  await Promise.all([p.waitForURL(url=>url.searchParams.get('page')==='more'),p.evaluate(()=>{setTimeout(()=>history.forward(),0);})]);
+  await p.locator('#morePage.active').waitFor();
   assert.deepEqual(await read(),savedRecord,'Saved state survives native Back/Forward');assert.deepEqual(unexpected,[],'Clean saved navigation needs no discard warning');
   console.log(engine+': baseline dirty local Escape/cancel/focus, zero draft writes, saved Reload/Back/Forward persistence PASS');
   report.engines.push({engine,status:'PASS',checks:['A startup/runtime rescue+restore','B proven/partial history','C expanded contrast','E empty history','baseline local discard+saved navigation']});

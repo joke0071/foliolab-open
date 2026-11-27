@@ -89,7 +89,11 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.locator('#mobileNav [data-page=positions]').click();
   assert.equal(await page.locator('#positionsPage').isVisible(),true);
   await page.goBack();
+  await reached(destinations[4]);
+  await page.goBack();
   await reached(destinations[3]);
+  await page.goForward();
+  await reached(destinations[4]);
   await page.goForward();
   await page.waitForFunction(()=>document.getElementById('positionsPage').classList.contains('active'));
   assert.deepEqual(await read(),populated,'Navigation must not persist portfolio changes');

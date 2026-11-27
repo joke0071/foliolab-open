@@ -14,9 +14,15 @@ function fixture({origin='page',initial='dashboard',removed=false}={}){
  const button={isConnected:true,closest:selector=>selector==='.page'&&origin==='page'?originPage:null};active=button;
  const nodes={pageTitle:{textContent:'',tabIndex:0,focus(){active=this;focusCalls++;}},pageDescription:{},pageKicker:{}};
  const document={get activeElement(){return active;},querySelectorAll:selector=>selector==='.page'?pages:[]};
- const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(){}},location:{pathname:'/'},window:{scrollTo(){}},syncHistorySection(){},render(){if(removed){button.isConnected=false;active=null;}}};
+ const writes=[];
+ const location={pathname:'/',search:initial==='dashboard'?'':'?page='+initial,hash:''};
+ function write(method,url){
+  writes.push({method,url});
+  const next=new URL(url,'https://example.test');location.search=next.search;location.hash=next.hash;
+ }
+ const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(_,__,url){write('replace',url);},pushState(_,__,url){write('push',url);}},location,window:{scrollTo(){}},syncPageSection(){},render(){if(removed){button.isConnected=false;active=null;}}};
  runInNewContext(router+';this.navigate=go;',context);
- return {navigate:context.navigate,heading:nodes.pageTitle,get active(){return active;},button,get focusCalls(){return focusCalls;}};
+ return {writes,navigate:context.navigate,heading:nodes.pageTitle,get active(){return active;},button,get focusCalls(){return focusCalls;}};
 }
 test('leaving a page through its own action puts keyboard focus at the new heading',()=>{
  for(const removed of [false,true]){const f=fixture({removed});f.navigate('history');assert.equal(f.active,f.heading);assert.equal(f.heading.tabIndex,-1);assert.equal(f.focusCalls,1);}
@@ -26,4 +32,10 @@ test('persistent navigation keeps its focused control; same-page rendering does 
 });
 test('a page-local action to an invalid route uses the safe dashboard destination and heading',()=>{
  const f=fixture({initial:'history'});f.navigate('invalid');assert.equal(f.active,f.heading);assert.equal(f.heading.textContent,'Title');
+});
+
+test('destination changes create one Back entry and restoration never pushes a duplicate',()=>{
+ const f=fixture({origin:'navigation'});f.navigate('positions');f.navigate('positions');f.navigate('more');
+ assert.deepEqual(f.writes,[{method:'push',url:'/?page=positions'},{method:'push',url:'/?page=more'}]);
+ f.navigate('positions',{restore:true});assert.equal(f.writes.at(-1).method,'replace');
 });
