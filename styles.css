@@ -2359,3 +2359,6 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  #miniChartPeriods .period-more-list button{background:#294fb6;color:#fff;border-radius:7px}
  #miniChartPeriods .period-more-list button.selected{background:#fff;color:var(--on-tonal)}
 }
+/* Period buttons move into the disclosure when the viewport changes.
+   Apply their new surface and foreground together, including while hidden. */
+#miniChartPeriods button{transition:none}
