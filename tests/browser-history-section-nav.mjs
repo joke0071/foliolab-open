@@ -76,6 +76,10 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await ready();
   await reached(destinations[4]);
   await page.locator('#portfolioProjection [name=start]').fill('1234');
+  await page.locator('.skip-to-content').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(new URL(page.url()).hash,'#portfolioProjection');
+  assert.equal(await page.locator('#mainContent').evaluate(el=>document.activeElement===el),true);
   for(const width of [320,390]){
    await page.setViewportSize({width,height:800});
    for(const dest of destinations){

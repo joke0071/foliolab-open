@@ -3,6 +3,7 @@ export function createSectionViews({back,title,description}){
  let current=null;
  const obscured=[],containers=[];
  const entries=[...document.querySelectorAll('details[data-view-title]')];
+ for(const entry of entries)entry.querySelector(':scope>summary').setAttribute('role','link');
  const resolve=(page,id)=>entries.find(entry=>entry.id===id&&entry.closest('.page').id===page+'Page');
  function show(next,parentTitle,parentDescription){
   if(current)current.open=false;

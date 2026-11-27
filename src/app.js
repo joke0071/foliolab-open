@@ -206,6 +206,10 @@ function enterSection(section){
  history.pushState({sectionParent:parentUrl},'',parentUrl+'#'+section.id);
  showRoute({focus:true});
 }
+document.querySelector('.skip-to-content').addEventListener('click',event=>{
+ if(!sectionViews.current)return;
+ event.preventDefault();$('mainContent').focus();
+});
 document.addEventListener('click',event=>{
  const trigger=event.target.closest('details[data-view-title]>summary');
  if(!trigger)return;
