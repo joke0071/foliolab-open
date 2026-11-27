@@ -1928,6 +1928,10 @@
 #positionList .position-entry .holding-l>.selection-mark{width:44px;height:44px}
 #positionList,#bookingList,#snapshotList{-webkit-touch-callout:none}
 #bookingList .booking-row-tools>.selection-check{padding:0;min-width:44px;justify-content:center}
+#bookingList .selection-check input{appearance:none;display:grid;place-content:center;width:44px;height:44px;margin:0;border:0;border-radius:8px;background:transparent;cursor:pointer}
+#bookingList .selection-check input::before{content:"";box-sizing:border-box;width:20px;height:20px;border:2px solid var(--muted);border-radius:4px}
+#bookingList .selection-check input:checked::before{content:"✓";background:var(--primary);border-color:var(--primary);color:white;font:700 14px/16px system-ui;text-align:center}
+@media(forced-colors:active){#bookingList .selection-check input{appearance:auto;width:24px;height:24px}#bookingList .selection-check input::before{content:none}}
 
 /* UI-ALLTAG10 B: compact install icon, rendered only while a usable install prompt is held. */
 .install-icon[hidden]{display:none}
