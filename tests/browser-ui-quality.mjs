@@ -1,3 +1,4 @@
+import {returnFromSection} from './browser-disclosures.mjs';
 import {accountAllocationBrowserContract} from './account-allocation-browser-contract.mjs';
 import {positionValueFilterBrowserContract} from './position-value-filter-browser-contract.mjs';
 import {combinedFilterAllocationBrowserContract} from './combined-filter-allocation-browser-contract.mjs';
@@ -101,21 +102,24 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      assert.equal(await p.locator('#optionalConnections').evaluate(e=>e.open),false,'expert connections default closed');
      for(const id of ['publicSearchSetup','marketWorkerSetup'])assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false,'nested experts default closed');
      const headers=await p.locator('#marketSettings>summary .settings-summary strong,#optionalConnections>summary .settings-summary strong,#blockchainSettings>summary .settings-summary strong').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e);return [c.fontFamily,c.fontSize,c.fontWeight,c.lineHeight];}));assert.equal(headers.length,3);assert.deepEqual(headers[0],headers[1]);assert.deepEqual(headers[1],headers[2]);
-     for(const id of ['marketSettings','blockchainSettings','optionalConnections','publicSearchSetup','marketWorkerSetup'])if(!await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
-     await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});
-     assert.equal(await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open),false,'technical help starts closed');await p.locator('#optionalConnections>.more-panel-help>summary').click();
+     const arrows=await p.locator('#marketSettings>summary,#optionalConnections>summary,#blockchainSettings>summary').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e,'::after');return [c.width,c.borderRightColor,c.transform];}));
+     for(const arrow of arrows)assert.deepEqual(arrow,arrows[0],'shared navigation chevron');
+     await p.locator('#marketSettings>summary').click();
+     const marketButton=await p.locator('#apiSettings button[type=submit]').boundingBox();
+     await scan('market settings '+width);await returnFromSection(p);
+     await p.locator('#blockchainSettings>summary').click();await scan('blockchain settings '+width);await returnFromSection(p);
      await revealAction(p.locator('#driveOAuthHelp a'));
-     for(const selector of ['#driveOAuthHelp a','#optionalConnections>.more-panel-help a']){
-      const link=p.locator(selector);
-      await link.scrollIntoViewIfNeeded();
-      const box=await link.boundingBox();
-      assert.ok(box && box.height>=44 && box.width>=44,selector+' touch target at '+width);
-      assert.ok(box.x>=0 && box.x+box.width<=width+1,selector+' fits at '+width);
-     }
-     await p.locator('#driveOAuthHelp>summary').click();
-     await p.locator('#googleDriveBackupSetup>summary').click();
-     const arrows=await p.locator('#marketSettings>summary,#optionalConnections>summary,#blockchainSettings>summary,#publicSearchSetup>summary,#marketWorkerSetup>summary').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e,'::after');return [c.width,c.borderRightColor,c.transform];}));for(const arrow of arrows)assert.deepEqual(arrow,arrows[0],'shared settings chevron');
-     const buttons=await p.locator('#apiSettings button[type=submit],#optionalConnections>button[type=submit]').evaluateAll(els=>els.map(e=>e.getBoundingClientRect().x));assert.equal(buttons.length,2);assert.ok(Math.abs(buttons[0]-buttons[1])<=1,'connection save aligned with API save');
+     const driveLink=await p.locator('#driveOAuthHelp a').boundingBox();
+     assert.ok(driveLink.height>=44&&driveLink.width>=44&&driveLink.x>=0&&driveLink.x+driveLink.width<=width+1);
+     await p.locator('#driveOAuthHelp>summary').click();await returnFromSection(p);
+     await p.locator('#optionalConnections>summary').click();
+     for(const id of ['publicSearchSetup','marketWorkerSetup'])await p.locator('#'+id+'>summary').click();
+     assert.equal(await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open),false);
+     await p.locator('#optionalConnections>.more-panel-help>summary').click();
+     const helpLink=await p.locator('#optionalConnections>.more-panel-help a').boundingBox();
+     assert.ok(helpLink.height>=44&&helpLink.width>=44&&helpLink.x>=0&&helpLink.x+helpLink.width<=width+1);
+     const optionalButton=await p.locator('#optionalConnections>button[type=submit]').boundingBox();
+     assert.ok(Math.abs(marketButton.x-optionalButton.x)<=1,'save actions align across settings views');
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#optionalConnections').screenshot({path:'artifacts/gates/c5-connections-'+width+'.png'});
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430].includes(width)){
       console.log('C5_VIEWPORT '+JSON.stringify(await p.evaluate(()=>({active:document.activeElement.className,skip:getComputedStyle(document.querySelector('.skip-to-content')).transform,skipRect:document.querySelector('.skip-to-content').getBoundingClientRect().toJSON(),viewport:{width:innerWidth,height:innerHeight,scrollY}}))));
@@ -123,9 +127,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      }
     }
     await scan(page+' '+width+' with changed disclosures expanded');scans.push({page,width,height:560});
-    if(page==='bookings')for(const id of ['bookingIncomeDetails'])if(await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
-    if(page==='more'&&await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open))await p.locator('#optionalConnections>.more-panel-help>summary').click();
-    if(page==='more')for(const id of ['marketWorkerSetup','publicSearchSetup','optionalConnections','blockchainSettings','marketSettings'])if(await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
+    if(page==='more'){
+     for(const selector of ['#optionalConnections>.more-panel-help','#marketWorkerSetup','#publicSearchSetup'])await p.locator(selector+'>summary').click();
+    }
+    if(page==='bookings'||page==='more')await returnFromSection(p);
    }
    await nav('positions');if(await p.locator('#positionListHead [data-action=cancel-selection]').count())await p.locator('#positionListHead [data-action=cancel-selection]').click();assert.equal(await p.locator('.position-row-actions [data-action=archive-position]:visible').count(),0,'archive is available in management, not as permanent row icons');assert.equal(await p.locator('.position-detail-actions>.detail-edit[data-action=edit-position]:visible').count(),0,'normal rows hide editing; management has explicit editors');assert.equal(await p.locator('.position-row-actions svg').count(),0,'normal row editing uses text rather than icons');assert.equal(await p.locator('.position-actions [data-action=archive-position]').count(),0,'no large archive action');assert.equal(await p.locator('.position-actions button:visible').count(),0,'secondary actions stay collapsed');assert.equal(await p.locator('.position-actions').evaluateAll(groups=>groups.every(g=>g.parentElement.matches('.holding-expand'))),true,'shared detail action grouping');
    if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.screenshot({path:'artifacts/gates/ui-positions-'+width+'.png',fullPage:true});

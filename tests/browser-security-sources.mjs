@@ -1,3 +1,4 @@
+import {returnFromSection} from './browser-disclosures.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -27,10 +28,12 @@ try{
  assert.equal(await row.locator('[data-action="import-price-history"]').count(),1,'Local CSV import remains available');
  assert.equal(await row.locator('.position-chart-options').count(),0,'No extra nested disclosure for one local action');
  await page.locator('#mobileNav [data-page="more"]').click();
- await page.locator('#marketSettings > summary').click();
+ await page.locator('#optionalConnections > summary').click();
  await page.locator('[name="eodhdWorkerEndpoint"]').evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
  await page.locator('[name="eodhdWorkerEndpoint"]').fill('https://own.workers.dev');
  await page.locator('[name="eodhdWorkerAccessToken"]').fill('SYNTHETIC_WORKER_ACCESS_TOKEN_12345');
+ await page.locator('#optionalConnections>button[type=submit]').click();
+ await returnFromSection(page);await page.locator('#marketSettings>summary').click();
  await page.locator('[name="securitySource"]').selectOption('eodhd');
  await page.locator('#apiSettings button[type="submit"]').click();
  await page.route('https://own.workers.dev/api/market/eodhd',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({schemaVersion:1,status:'ok',symbol:'VWCE.XETRA',points:[{date:previous,close:99},{date:today,close:105}]})}));

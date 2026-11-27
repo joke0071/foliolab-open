@@ -1,3 +1,4 @@
+import {returnFromSection} from './browser-disclosures.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -78,7 +79,7 @@ try{
   const size=await manual.evaluate(el=>({h:el.getBoundingClientRect().height,right:el.getBoundingClientRect().right,scroll:document.documentElement.scrollWidth}));
   assert.ok(size.h>=38&&size.right<=width+1&&size.scroll<=width+1,'Manual action remains usable at '+width);
   assert.equal(await page.locator('#historyCalendarDisclosure > summary').isVisible(),false,'Empty history has no date-selection action');
-  await page.locator('#snapshotManager > summary').click();
+  await returnFromSection(page);
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="dashboard"]').click();
@@ -87,10 +88,12 @@ try{
  await page.locator('#historyPage #performanceDetails > summary').click();
  assert.equal(await page.locator('#historyPage #performanceDetails[open]').count(),1,'Renditeauswertung expands');
  assert.equal(await page.locator('#historyPage #snapshotManager[open]').count(),0,'Stichtage remains independently collapsed');
+ assert.equal(await page.locator('#historyChart').isVisible(),false);
+ await returnFromSection(page);
  await page.locator('#historyPage #snapshotManager > summary').click();
- assert.equal(await page.locator('#historyPage .history-insights > details[open]').count(),2,'Both disclosures can expand independently');
- await page.locator('#historyPage #performanceDetails > summary').click();
- await page.locator('#historyPage #snapshotManager > summary').click();
+ assert.ok(await page.locator('#snapshotList').isVisible());
+ assert.equal(await page.locator('#performanceDetails').isVisible(),false);
+ await returnFromSection(page);
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#addWizard').click();
  assert.equal(await page.locator('#wizardDialog').isVisible(),true,'Plus action must retain wizard');

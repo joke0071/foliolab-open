@@ -40,10 +40,12 @@ function assertHistoricalLiveContract(source){
  assert.equal(projectionGate?.length,1);
  assert.equal(createHash('sha256').update(projectionGate[0]).digest('hex'),'bf79687eca2a0e5b9f2d49779847ddfc0b6d7623fb560bcae15a37e5e0a01144');
  source=source.replace(projectionGate[0],'');
- const sectionNavigationGate=source.match(/^ const historicalReference=p.locator\('#snapshotManager > summary'\);\n[\s\S]*?^ report\.checks\.push\('actual controlled offline history disclosures preserve portfolio and projection input'\);\n/gm);
+ const sectionNavigationGate=source.match(/^ await returnFromSection\(p\);\n const historicalReference=p.locator\('#snapshotManager > summary'\);\n[\s\S]*?^ report\.checks\.push\('actual controlled offline history disclosures preserve portfolio and projection input'\);\n/gm);
  assert.equal(sectionNavigationGate?.length,1);
- assert.equal(createHash('sha256').update(sectionNavigationGate[0]).digest('hex'),'a244a3d3312473af350fcedcaea750221206e3fd05696c0e92a0d62bc858344b');
- source=source.replace(sectionNavigationGate[0],'');
+ assert.equal(createHash('sha256').update(sectionNavigationGate[0]).digest('hex'),'3511b6691e8a6e4c0a1c8af4cfc2ac369b49dd06bb9f5b886be5f0b225757bfd');
+ const sectionImport="import {clickDisclosed,returnFromSection} from './browser-disclosures.mjs';";
+ assert.equal(source.split(sectionImport).length,2);
+ source=source.replace(sectionNavigationGate[0],'').replace(sectionImport,"import {clickDisclosed} from './browser-disclosures.mjs';");
  const positionPeriodGate=source.match(/^ const shortHistoryId=h\.ids\[0\];\n[\s\S]*?^ report\.checks\.push\('controlled offline position chart shows only evidenced periods and accessible read-only CSV menu'\);\n/gm);
  assert.equal(positionPeriodGate?.length,1);
  assert.equal(createHash('sha256').update(positionPeriodGate[0]).digest('hex'),'4c6571a74b010b110d65c4586f90604d433da1da91424103d451d4b0976e5ae5');
@@ -85,6 +87,8 @@ test('pre-existing live assertions and deadlines remain byte-identical after sea
 test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
  for(const changed of [
   liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
+  liveSource.replace("node.parentElement.open&&document.activeElement.id==='pageTitle'","node.parentElement.open"),
+  liveSource.replace(" await returnFromSection(p);",""),
   liveSource.replace("#snapshotManager > summary","#performanceDetails > summary"),
   liveSource.replace('data-position-range="365"','data-position-range="30"'),
   liveSource.replace("'70,00','79,00','88,00','97,00'","'70,00','79,00','90,00','97,00'"),

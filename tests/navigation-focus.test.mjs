@@ -20,7 +20,7 @@ function fixture({origin='page',initial='dashboard',removed=false}={}){
   writes.push({method,url});
   const next=new URL(url,'https://example.test');location.search=next.search;location.hash=next.hash;
  }
- const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(_,__,url){write('replace',url);},pushState(_,__,url){write('push',url);}},location,window:{scrollTo(){}},syncPageSection(){},render(){if(removed){button.isConnected=false;active=null;}}};
+ const context={document,$:id=>nodes[id],PAGES:pages.map(p=>[p.id.replace('Page',''),'Title','','Kicker']),PAGE_DESCRIPTIONS:{},page:initial,qualityReviewOpen:false,referenceSelecting:false,selectedReferenceIds:[],history:{replaceState(_,__,url){write('replace',url);},pushState(_,__,url){write('push',url);}},location,window:{scrollTo(){}},showRoute(){nodes.pageTitle.textContent='Title';},render(){if(removed){button.isConnected=false;active=null;}}};
  runInNewContext(router+';this.navigate=go;',context);
  return {writes,navigate:context.navigate,heading:nodes.pageTitle,get active(){return active;},button,get focusCalls(){return focusCalls;}};
 }

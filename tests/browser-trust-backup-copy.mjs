@@ -1,3 +1,4 @@
+import {revealAction,returnFromSection} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -58,7 +59,8 @@ async function password(p,value){
  await p.waitForFunction(()=>document.getElementById('backupPasswordStatus').textContent==='Backup-Passwort eingerichtet');
 }
 async function download(p,selector){
- const event=p.waitForEvent('download');await p.locator(selector).click();
+ const action=p.locator(selector);await revealAction(action);
+ const event=p.waitForEvent('download');await action.click();
  return readFile(await(await event).path(),'utf8');
 }
 async function record(p){
@@ -110,6 +112,7 @@ try{
   const {p,evidence}=await makePage(label,bytes);
   await password(p,devicePassword);
   evidence.vaultBefore=await vault(p);evidence.before=await record(p);
+  if(await p.locator('#sectionBack').isVisible())await returnFromSection(p);
   await p.locator('#googleDriveBackupSetup > summary').click();
   await p.locator('#driveClientId').fill('synthetic-123.apps.googleusercontent.com');
   await p.locator('#driveClientId').blur();

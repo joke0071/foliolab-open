@@ -1,3 +1,4 @@
+import {returnFromSection} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import * as playwright from 'playwright';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
@@ -26,8 +27,11 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    try{return await readPortfolioRecord(db);}finally{db.close();}
   });
   async function reached([label,id,child]){
-   await page.waitForFunction(({id,child})=>document.activeElement===document.querySelector('#'+id+child),{id,child});
-   const measure=await page.locator('#'+id+child).evaluate(node=>({
+   const target=['performanceDetails','snapshotManager','portfolioProjection'].includes(id)?'#pageTitle':'#'+id+child;
+   await page.waitForFunction(selector=>document.activeElement===document.querySelector(selector),target, {timeout:5000}).catch(async error=>{
+    throw new Error('Focus after navigating to '+id+' was '+await page.evaluate(()=>document.activeElement.outerHTML.slice(0,120)),{cause:error});
+   });
+   const measure=await page.locator(target).evaluate(node=>({
     top:node.getBoundingClientRect().top,
     header:document.querySelector('.mobile-header').getBoundingClientRect().bottom,
     width:document.documentElement.clientWidth,
@@ -72,6 +76,10 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await ready();
   await reached(destinations[4]);
   await page.locator('#portfolioProjection [name=start]').fill('1234');
+  await page.locator('.skip-to-content').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(new URL(page.url()).hash,'#portfolioProjection');
+  assert.equal(await page.locator('#mainContent').evaluate(el=>document.activeElement===el),true);
   for(const width of [320,390]){
    await page.setViewportSize({width,height:800});
    for(const dest of destinations){
@@ -80,7 +88,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    }
   }
   const projectionSummary=summary('portfolioProjection');
-  await projectionSummary.press('Enter');
+  await returnFromSection(page);
   assert.equal(await page.locator('#portfolioProjection').evaluate(node=>node.open),false);
   await projectionSummary.press('Enter');
   assert.equal(await page.locator('#portfolioProjection [name=start]').inputValue(),'1234');
@@ -89,7 +97,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.goBack();
   await reached(destinations[4]);
   await page.goBack();
-  await reached(destinations[3]);
+  await projectionSummary.waitFor({state:'visible'});
   await page.goForward();
   await reached(destinations[4]);
   await page.goForward();

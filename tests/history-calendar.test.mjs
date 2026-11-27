@@ -17,11 +17,11 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  assert.match(app,/data-open-history-calendar/);
  assert.match(html,/id="historyCalendarGrid"/);
  assert.match(html,/id="addSnapshot" aria-label="Stichtag hinzufügen"/);
- assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary><span class="history-disclosure-title">[\s\S]*?Historische Referenzwerte<\/span><\/summary>/);
+ assert.match(html,/<details class="snapshot-manager" id="snapshotManager" data-view-title="Historische Referenzwerte"><summary><span class="history-disclosure-title">[\s\S]*?Historische Referenzwerte<\/span><\/summary>/);
  assert.doesNotMatch(html,/<details class="snapshot-manager" id="snapshotManager" open/);
  assert.doesNotMatch(html,/Entwicklung nach Stichtagen/);
  assert.match(html,/class="panel history-panel" role="region" aria-label="Vermögensstände im Zeitverlauf"/);
- assert.match(app,/next==='history'\?'Vermögensentwicklung':title/);
+ assert.match(app,/destination==='history'\?'Vermögensentwicklung'/);
  assert.match(css,/@media\(max-width:380px\)/);
 });
 

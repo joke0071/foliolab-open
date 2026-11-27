@@ -411,8 +411,8 @@
 /* Password reveal controls use the same understated icon language as the settings UI. */
 .credential-control{position:relative;display:block;width:100%;min-width:0}
 .credential-control input{width:100%;padding-right:56px;min-width:0}
-.credential-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:44px;height:44px;min-width:44px;min-height:44px;border:0;border-radius:8px;background:transparent;color:#597664;display:grid;place-items:center;padding:0}
-@media(hover:hover) and (pointer:fine){.credential-toggle:hover{background:#eff5ef;color:#245c3e}}
+.credential-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:44px;height:44px;min-width:44px;min-height:44px;border:0;border-radius:8px;background:transparent;color:var(--muted);display:grid;place-items:center;padding:0}
+@media(hover:hover) and (pointer:fine){.credential-toggle:hover{background:var(--tonal);color:var(--primary)}}
 .credential-toggle:focus-visible{outline:2px solid var(--primary);outline-offset:0}
 .credential-toggle svg{pointer-events:none}
 
@@ -1020,7 +1020,7 @@
 /* Native WebKit selects can paint a long selected label beyond their box. */
 #bookingIncome select{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Keep the native select interaction while bounding WebKit's anonymous text box. */
-#bookingIncome select{-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#4d6756 50%),linear-gradient(135deg,#4d6756 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+#bookingIncome select{-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
 @media(forced-colors:active){#bookingIncome select{-webkit-appearance:menulist;appearance:auto;background-image:none}}
 
 #qualityReviewTools select{min-width:0;max-width:100%;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}#qualityReviewTools .field{min-width:0}.quality-review-actions{margin:8px 0;gap:7px}.quality-review-actions .btn{white-space:normal}#qualityReviewTools p{overflow-wrap:anywhere}
@@ -1052,7 +1052,7 @@
 #historyChart.is-empty{height:auto;min-height:0}
 
 /* Reuse the existing bounded native-select treatment for expanded settings. */
-:is(.data-source-panel,#googleDriveBackupSetup) select{min-width:0;max-width:100%;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#4d6756 50%),linear-gradient(135deg,#4d6756 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+:is(.data-source-panel,#googleDriveBackupSetup) select{min-width:0;max-width:100%;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
 @media(forced-colors:active){:is(.data-source-panel,#googleDriveBackupSetup) select{-webkit-appearance:menulist;appearance:auto;background-image:none}}
 
 /* FLH03-08: controls appear only in the explicit selection mode. */
@@ -1567,7 +1567,11 @@
    Datenabdeckung & Abgleich, Rendite & Geldflüsse, Historische Referenzwerte. */
 #historyPage #historyCoverage,#historyPage .history-insights{min-width:0}
 #historyPage .history-insights{margin-top:16px;padding:0 clamp(8px,2vw,16px)}
-#historyPage .history-insights>#historyCoverage{margin:0;border:0}
+#historyPage .history-panel>#historyCoverage{
+ margin:0;padding:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent
+}
+#historyPage .history-panel>#historyCoverage>summary{padding-inline:0;color:var(--muted)}
+#historyPage .history-panel>#historyCoverage .history-disclosure-title{font-size:var(--type-meta)}
 #historyPage .history-insights>details+details{border-top:1px solid var(--line)}
 #historyPage #historyCoverage>summary,#historyPage #performanceDetails>summary,#historyPage #snapshotManager>summary,#historyPage #portfolioProjection>summary{min-height:48px;padding:6px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:2px;cursor:pointer}
 #historyPage #historyCoverage>summary{display:grid}
@@ -2208,7 +2212,7 @@
 .projection-line-1{stroke:#286143}
 .projection-line-2{stroke:#557543;stroke-dasharray:8 4}
 .projection-result{background:#f3f7f3;border:1px solid #dbe6dc;border-radius:12px;padding:12px;min-width:0}
-.projection-result h4,.projection-result p{margin:0 0 5px}
+.projection-result h3,.projection-result p{margin:0 0 5px}
 .projection-result strong{display:block;margin:6px 0}
 .projection-key{display:inline-block;width:16px;margin-right:7px;border-top:3px solid #286143;vertical-align:middle}
 .projection-key-0{border-top-style:dotted;border-color:#497360}
@@ -2640,3 +2644,18 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 @media(forced-colors:active){
  #mobileNav button:focus-visible svg{outline-color:Highlight}
 }
+
+/* Detail destinations live under their tab. Short explanations stay inline. */
+.section-obscured,.section-current>summary,#sectionBack[hidden],#pageDescription[hidden]{display:none!important}
+.page .section-container{display:block!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important}
+.page details.section-current{display:block;margin:0;border:0;background:transparent;padding:0}
+.section-back{display:inline-flex;align-items:center;gap:8px;padding:0 6px;min-height:44px}
+.section-back::before{content:"";width:7px;height:7px;border:solid currentColor;border-width:0 0 2px 2px;transform:rotate(45deg)}
+#historyPage .history-insights details[data-view-title]>summary::after,
+#bookingsPage #bookingIncomeDetails>summary::after,#morePage .panel details[data-view-title]>summary::after{
+ content:"";width:8px;height:8px;border:solid var(--muted);border-width:0 2px 2px 0;transform:rotate(-45deg)
+}
+#morePage .panel details[data-view-title]>summary::after{transform:translateY(-50%) rotate(-45deg)}
+
+#bookingIncome #incomeRecords{border-color:var(--line)}
+#bookingIncome #incomeRecords>summary{color:var(--ink);font-size:var(--type-body);font-weight:600}

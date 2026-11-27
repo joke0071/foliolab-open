@@ -42,7 +42,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.evaluate(()=>{for(const e of document.querySelectorAll('.mobile-header .logo *')){const s=getComputedStyle(e);e.style.fontSize=(parseFloat(s.fontSize)*1.25)+'px';}});
   assert.ok(await p.locator('.mobile-header').evaluate(e=>e.querySelector('.logo').getBoundingClientRect().right<=e.querySelector('.header-status-actions').getBoundingClientRect().left),'125% logo text remains separate from both touch targets');
   await p.evaluate(()=>document.querySelectorAll('.mobile-header .logo *').forEach(e=>e.style.removeProperty('font-size')));
-  await button('drive').click();assert.equal(await p.locator('#googleDriveBackupSetup').evaluate(e=>e.open),true);assert.equal(await p.locator('#googleDriveBackupSetup>summary').evaluate(e=>e===document.activeElement),true);
+  await button('drive').click();assert.equal(await p.locator('#googleDriveBackupSetup').evaluate(e=>e.open),true);assert.equal(await p.locator('#pageTitle').evaluate(e=>e===document.activeElement&&e.textContent==='Google Drive Backup'),true);
   assert.deepEqual(await record(),before,'opening Drive settings does not change financial data');
   // Real local encryption and real application backend; only Google transport is stubbed.
   await p.evaluate(async()=>{const {configureBackupPassword}=await import('/src/backup-vault.js');await configureBackupPassword('Synthetic header backup 2026!','Synthetic header backup 2026!');localStorage.setItem('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId:'123456789-synthetic.apps.googleusercontent.com',mode:'start',retention:3}));});
@@ -87,6 +87,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(await p.locator('#sidebarPortfolioStatus').getAttribute('hidden'),'','offline local success remains compact');
   await p.setViewportSize({width:1440,height:900});
   // Actual failed IndexedDB write: no successful local status after rollback.
+  await p.locator('#sidebarNav [data-page=more]:visible,#mobileNav [data-page=more]:visible').click();
   await p.locator('#addProvider').click();await p.locator('#editorForm [name=name]').fill('SYNTHETIC failed write');
   await p.evaluate(()=>{window.__headerPut=IDBObjectStore.prototype.put;window.__headerStates=[];window.__sidebarStates=[];new MutationObserver(()=>{const state=document.querySelector('[data-header-status=storage]').dataset.state;window.__headerStates.push(state);window.__sidebarStates.push({state,hidden:document.getElementById('sidebarPortfolioStatus').hidden,text:document.getElementById('localPortfolioStatus').textContent});}).observe(document.querySelector('[data-header-status=storage]'),{attributes:true,attributeFilter:['data-state']});IDBObjectStore.prototype.put=function(...args){if(this.name==='records')throw new DOMException('SYNTHETIC quota','QuotaExceededError');return window.__headerPut.apply(this,args);};});
   await p.locator('#saveDialog').click();await p.waitForFunction(()=>document.querySelector('[data-header-status=storage]').dataset.state==='error');

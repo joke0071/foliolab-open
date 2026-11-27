@@ -1,5 +1,5 @@
 import {manageList} from './browser-management-mode.mjs';
-import {clickDisclosed} from './browser-disclosures.mjs';
+import {clickDisclosed,returnFromSection} from './browser-disclosures.mjs';
 import {observeLiveStartup} from './live-startup-diagnostics.mjs';
 import {seedWealthModelHistory} from './browser-wealth-model-history.mjs';
 import {seedHistoryEstimate,verifyHistoryEstimate} from './browser-history-display-estimates.mjs';
@@ -87,11 +87,13 @@ try{
  await scan(p,'#portfolioProjection','controlled offline projection');
  assert.deepEqual(await state(p),beforeProjection,'projection must not change portfolio or history');
  report.checks.push('actual controlled offline projection changes no portfolio data');
+ await returnFromSection(p);
  const historicalReference=p.locator('#snapshotManager > summary');
  await historicalReference.focus();
  await p.keyboard.press('Enter');
- assert.ok(await historicalReference.evaluate(node=>node.parentElement.open&&document.activeElement===node));
- await projection.locator(':scope > summary').click();
+ assert.ok(await historicalReference.evaluate(node=>node.parentElement.open&&document.activeElement.id==='pageTitle'));
+ await returnFromSection(p);
+ assert.ok(await historicalReference.evaluate(node=>document.activeElement===node));
  await projection.locator(':scope > summary').press('Enter');
  assert.equal(await projection.locator('[name="start"]').inputValue(),'1000');
  assert.deepEqual(await state(p),beforeProjection,'history disclosures must preserve the portfolio and simulation draft');

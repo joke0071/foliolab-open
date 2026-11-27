@@ -59,17 +59,16 @@ try{
  }));
  assert.ok(labels.every(label=>JSON.stringify(label)===JSON.stringify(labels[0])),'all settings and nested help disclosures share one label and arrow style');
  let arrows=await chevron();
- for(const property of ['content','width','height','borderRight','borderBottom','transform'])
+ for(const property of ['content','width','height','borderRight','borderBottom'])
   assert.equal(arrows.provider[property],arrows.source[property],'Chevron '+property+' should match');
  assert.equal(arrows.provider.content,'""','Chevron must be shape, not a Unicode glyph');
+ assert.notEqual(arrows.provider.transform,arrows.source.transform,'Navigation points right, expansion points down');
+ const closedRotation=arrows.provider.transform;
  await provider.locator(':scope > summary').click();
+ await page.waitForFunction(closed=>getComputedStyle(document.querySelector('#providerSettings summary'),'::after').transform!==closed,closedRotation);
  await market.locator(':scope > summary').click();
- // CSS transitions animate over 150 ms. Assert the final shared shape,
- // not two different intermediate animation frames.
- await page.waitForTimeout(220);
- arrows=await chevron();
- assert.equal(arrows.provider.transform,arrows.source.transform,'Both disclosure arrows rotate identically on open');
- assert.notEqual(arrows.provider.transform,'none');
+ assert.equal(await page.locator('#pageTitle').innerText(),await market.getAttribute('data-view-title'));
+ assert.ok(await page.locator('#sectionBack').isVisible());
 
  await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();const audit=page.locator('#legacyQuoteAudit');
  await audit.locator(':scope > summary').click();
