@@ -299,363 +299,7 @@
   "androidInitialMeasurements": {
     "artifact": "https://github.com/joke0071/foliolab-open/actions/runs/45943928269/artifacts/15173673986",
     "zipSHA256": "b0bf8fb549f16ae10daba10b22d43100cb3c426981d6efacd42d4a071aa95066",
-    "device": {
-      "android": "14",
-      "build": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys",
-      "sdk": "34",
-      "chrome": "versionName=113.0.5672.136",
-      "display": "Physical size: 1080x2400",
-      "density": "Physical density: 420"
-    },
-    "fixtureSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
-    "product": {
-      "sha": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
-      "startup": {
-        "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
-        "controller": "http://127.0.0.1:4378/sw.js",
-        "caches": [
-          "foliolab-open-v348"
-        ],
-        "standalone": false
-      },
-      "seed": {
-        "cashEUR": "1000",
-        "bookings": 10000,
-        "journals": 10000,
-        "walletHistory": null,
-        "revision": 2,
-        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-      },
-      "modes": {
-        "cold": {
-          "samples": [
-            {
-              "kind": "cold",
-              "interactiveMs": 5154.399999999994,
-              "firstContentfulPaintMs": 1296,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 7574.901519000006,
-              "safeInteractionObservedMs": 8045.311205000005,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2088\nWaitTime: 2095\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "cold",
-              "interactiveMs": 4406.600000000006,
-              "firstContentfulPaintMs": 861.8999999999942,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6012.623037000012,
-              "safeInteractionObservedMs": 6445.708125000005,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1178\nWaitTime: 1205\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "cold",
-              "interactiveMs": 4494.5,
-              "firstContentfulPaintMs": 1037,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6014.792362999986,
-              "safeInteractionObservedMs": 6412.485386999993,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 943\nWaitTime: 953\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "cold",
-              "interactiveMs": 4567.100000000006,
-              "firstContentfulPaintMs": 998.3999999999942,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6117.671568999998,
-              "safeInteractionObservedMs": 6550.476683000015,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1149\nWaitTime: 1156\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "cold",
-              "interactiveMs": 4405.5,
-              "firstContentfulPaintMs": 819.2999999999884,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 5994.641510000016,
-              "safeInteractionObservedMs": 6481.149340000004,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1224\nWaitTime: 1254\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            }
-          ],
-          "interactiveMs": {
-            "median": 4494.5,
-            "min": 4405.5,
-            "max": 5154.399999999994,
-            "sampleStandardDeviation": 314.10504134763215
-          },
-          "readinessObservedMs": {
-            "median": 6014.792362999986,
-            "min": 5994.641510000016,
-            "max": 7574.901519000006,
-            "sampleStandardDeviation": 690.3942814023823
-          },
-          "safeInteractionObservedMs": {
-            "median": 6481.149340000004,
-            "min": 6412.485386999993,
-            "max": 8045.311205000005,
-            "sampleStandardDeviation": 705.2617120985376
-          }
-        },
-        "warm": {
-          "samples": [
-            {
-              "kind": "warm",
-              "interactiveMs": 3783.1999999999534,
-              "firstContentfulPaintMs": 316.69999999995343,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 3825.6333610000147,
-              "safeInteractionObservedMs": 4203.052498000005,
-              "platformStart": null,
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "warm",
-              "interactiveMs": 3770.7000000000116,
-              "firstContentfulPaintMs": 437.3999999999651,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 3817.7327410000144,
-              "safeInteractionObservedMs": 4152.631325000024,
-              "platformStart": null,
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "warm",
-              "interactiveMs": 4135,
-              "firstContentfulPaintMs": 468.4000000000233,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 4173.719494999998,
-              "safeInteractionObservedMs": 4489.630455999984,
-              "platformStart": null,
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "warm",
-              "interactiveMs": 4382,
-              "firstContentfulPaintMs": 526.8999999999651,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 4424.031454999989,
-              "safeInteractionObservedMs": 4744.866303999996,
-              "platformStart": null,
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "warm",
-              "interactiveMs": 4321.099999999977,
-              "firstContentfulPaintMs": 405.0999999999767,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 4357.190750999987,
-              "safeInteractionObservedMs": 4701.301264999987,
-              "platformStart": null,
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            }
-          ],
-          "interactiveMs": {
-            "median": 4135,
-            "min": 3770.7000000000116,
-            "max": 4382,
-            "sampleStandardDeviation": 289.87158363662047
-          },
-          "readinessObservedMs": {
-            "median": 4173.719494999998,
-            "min": 3817.7327410000144,
-            "max": 4424.031454999989,
-            "sampleStandardDeviation": 287.05269701127094
-          },
-          "safeInteractionObservedMs": {
-            "median": 4489.630455999984,
-            "min": 4152.631325000024,
-            "max": 4744.866303999996,
-            "sampleStandardDeviation": 274.19704818823203
-          }
-        },
-        "offline": {
-          "samples": [
-            {
-              "kind": "offline",
-              "interactiveMs": 4721.5,
-              "firstContentfulPaintMs": 999.0999999999767,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6478.1012969999865,
-              "safeInteractionObservedMs": 6962.643019000039,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1322\nWaitTime: 1352\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "offline",
-              "interactiveMs": 4703.399999999965,
-              "firstContentfulPaintMs": 1028.6999999999534,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6201.076346000016,
-              "safeInteractionObservedMs": 6670.141311000043,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1082\nWaitTime: 1090\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "offline",
-              "interactiveMs": 4654.099999999977,
-              "firstContentfulPaintMs": 1018.5,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6262.195616000041,
-              "safeInteractionObservedMs": 6809.908113000041,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1226\nWaitTime: 1245\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "offline",
-              "interactiveMs": 4620,
-              "firstContentfulPaintMs": 1060.5999999999767,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 5907.969575000054,
-              "safeInteractionObservedMs": 6357.161575000035,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 838\nWaitTime: 867\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            },
-            {
-              "kind": "offline",
-              "interactiveMs": 4715.199999999953,
-              "firstContentfulPaintMs": 1049.5999999999767,
-              "serviceWorker": true,
-              "standalone": false,
-              "readinessObservedMs": 6226.309470999986,
-              "safeInteractionObservedMs": 6711.025053999969,
-              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1071\nWaitTime: 1075\nComplete",
-              "financial": {
-                "cashEUR": "1000",
-                "bookings": 10000,
-                "journals": 10000,
-                "revision": 2,
-                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-              }
-            }
-          ],
-          "android": {
-            "airplaneMode": "1",
-            "wifiOn": "0",
-            "dataOn": "0",
-            "reverseRoutes": "host-20 tcp:4371 tcp:4371"
-          },
-          "interactiveMs": {
-            "median": 4703.399999999965,
-            "min": 4620,
-            "max": 4721.5,
-            "sampleStandardDeviation": 43.98673663730037
-          },
-          "readinessObservedMs": {
-            "median": 6226.309470999986,
-            "min": 5907.969575000054,
-            "max": 6478.1012969999865,
-            "sampleStandardDeviation": 203.73947071136843
-          },
-          "safeInteractionObservedMs": {
-            "median": 6711.025053999969,
-            "min": 6357.161575000035,
-            "max": 6962.643019000039,
-            "sampleStandardDeviation": 223.3767874422739
-          }
-        }
-      }
-    }
+    "outcome": "15 successful SW348 starts prior to the paired comparison. The comparison baseline had not yet completed."
   },
   "archiveDelta": {
     "latestProjectFiles": "No related new entries in authorized Drive and Library metadata since the previous source checkpoint.",
@@ -678,65 +322,812 @@
     "syntax": "PASS"
   },
   "androidComparison": {
-    "status": "RETRY_RUNNING",
-    "failedAsyncBrowserAttachRun": "https://github.com/joke0071/foliolab-open/actions/runs/45945944624",
-    "priorPartial": {
-      "sha": "e272297ab1ba855a2922c1faa4010b83c558a796",
-      "startup": {
-        "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
-        "controller": "http://127.0.0.1:4371/sw.js",
-        "caches": [
-          "foliolab-open-v321"
-        ],
-        "standalone": false
-      },
-      "seed": {
-        "cashEUR": "1000",
-        "bookings": 10000,
-        "journals": 10000,
-        "walletHistory": null,
-        "revision": 2,
-        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
-      },
-      "cold": {
-        "samples": [
-          {
-            "kind": "cold",
-            "interactiveMs": 9781.800000000003,
-            "firstContentfulPaintMs": 1975.300000000003,
-            "readinessObservedMs": 12953.530915000003,
-            "safeInteractionObservedMs": 13605.067516999996
-          },
-          {
-            "kind": "cold",
-            "interactiveMs": 6861.600000000006,
-            "firstContentfulPaintMs": 1323.800000000003,
-            "readinessObservedMs": 9280.545914000002,
-            "safeInteractionObservedMs": 9963.730299999996
-          },
-          {
-            "kind": "cold",
-            "interactiveMs": 10236.300000000017,
-            "firstContentfulPaintMs": 2534.9000000000233,
-            "readinessObservedMs": 13304.325698,
-            "safeInteractionObservedMs": 13964.474220000004
-          }
-        ],
-        "interactiveMs": null,
-        "safeInteractionObservedMs": null
-      },
-      "warm": {
-        "samples": [],
-        "interactiveMs": null,
-        "safeInteractionObservedMs": null
-      },
-      "offline": {
-        "samples": [],
-        "interactiveMs": null,
-        "safeInteractionObservedMs": null,
-        "android": null
-      }
+    "status": "PASS_VIRTUAL_PAIRED",
+    "artifact": "https://github.com/joke0071/foliolab-open/actions/runs/45947703618/artifacts/15175303794",
+    "zipSHA256": "3a449b9ca19a080bd79203c865b1f5e5db1a4db6a5366035dcaa13c3160bd0e4",
+    "sourceCommit": "7764a76a36a8ee9ae85354cbbf3a81bc57ba2098",
+    "baselineChoice": "SW321, previously accepted historical recovery build",
+    "scope": "Foreground Chrome tab on the same x86_64 Android emulator; five process launches, five same-tab reloads and five disconnected process launches per product build. Fixed order SW321 then SW348. Readiness mark and first confirmed Positions touch reported separately. All thirty financial snapshots identical. No standalone launch was exercised.",
+    "diagnostics": {
+      "browserTargetRegistration": "https://github.com/joke0071/foliolab-open/actions/runs/45945944624",
+      "initialDirectTargetRun": "https://github.com/joke0071/foliolab-open/actions/runs/45947042243",
+      "initialDirectTargetResult": "Both cold series passed. Rediscovery of the target for warm reload timed out. Final run reused the last confirmed target through the warm sequence."
     },
-    "directMeasurementCommit": "d1da5a37ca7b1c5e004a496cb4873460a999046e"
+    "result": "PASS",
+    "mode": "source",
+    "avd": {
+      "android": "14",
+      "build": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys",
+      "sdk": "34",
+      "chrome": "versionName=113.0.5672.136",
+      "display": "Physical size: 1080x2400",
+      "density": "Physical density: 420"
+    },
+    "fixtureSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+    "errors": [],
+    "products": {
+      "321": {
+        "sha": "e272297ab1ba855a2922c1faa4010b83c558a796",
+        "startup": {
+          "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+          "controller": "http://127.0.0.1:4371/sw.js",
+          "caches": [
+            "foliolab-open-v321"
+          ],
+          "standalone": false
+        },
+        "seed": {
+          "cashEUR": "1000",
+          "bookings": 10000,
+          "journals": 10000,
+          "walletHistory": null,
+          "revision": 2,
+          "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+        },
+        "cold": {
+          "samples": [
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758542324.1,
+              "interactiveMs": 7718.800000000003,
+              "firstContentfulPaintMs": 1788.8999999999942,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 10522.497162999993,
+              "safeInteractionObservedMs": 11129.169767,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1946\nWaitTime: 1982\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "2"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758560926.1,
+              "interactiveMs": 13710.899999999994,
+              "firstContentfulPaintMs": 2500.2999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 18369.769621999993,
+              "safeInteractionObservedMs": 19086.21236399999,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2300\nWaitTime: 2304\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "3"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758585809.7,
+              "interactiveMs": 11332.5,
+              "firstContentfulPaintMs": 2445.8000000000175,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 15002.372279000003,
+              "safeInteractionObservedMs": 15639.029787999985,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2255\nWaitTime: 2308\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "4"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758604614,
+              "interactiveMs": 7827.6999999999825,
+              "firstContentfulPaintMs": 1995.6999999999825,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 10635.505533999996,
+              "safeInteractionObservedMs": 11305.806836000003,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2167\nWaitTime: 2250\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "5"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758620689.7,
+              "interactiveMs": 9138.800000000017,
+              "firstContentfulPaintMs": 1723,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 12365.77997199999,
+              "safeInteractionObservedMs": 13008.19084699999,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2325\nWaitTime: 2328\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            }
+          ],
+          "interactiveMs": {
+            "median": 9138.800000000017,
+            "min": 7718.800000000003,
+            "max": 13710.899999999994,
+            "sampleStandardDeviation": 2559.103382632284
+          },
+          "readinessObservedMs": {
+            "median": 12365.77997199999,
+            "min": 10522.497162999993,
+            "max": 18369.769621999993,
+            "sampleStandardDeviation": 3326.26306735651
+          },
+          "safeInteractionObservedMs": {
+            "median": 13008.19084699999,
+            "min": 11129.169767,
+            "max": 19086.21236399999,
+            "sampleStandardDeviation": 3355.3811604076463
+          }
+        },
+        "warm": {
+          "samples": [
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758633420.2,
+              "interactiveMs": 5330.3000000000175,
+              "firstContentfulPaintMs": 626.8000000000175,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 5371.841870999982,
+              "safeInteractionObservedMs": 5547.666937000002,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758642129.4,
+              "interactiveMs": 5996.899999999994,
+              "firstContentfulPaintMs": 822.8999999999942,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6005.500788000005,
+              "safeInteractionObservedMs": 6105.396700999991,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758651168.5,
+              "interactiveMs": 4485,
+              "firstContentfulPaintMs": 621.3999999999942,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4499.995043999981,
+              "safeInteractionObservedMs": 4595.899867,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758658552.2,
+              "interactiveMs": 4404.700000000012,
+              "firstContentfulPaintMs": 455.1000000000058,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4417.664141000016,
+              "safeInteractionObservedMs": 4452.541005000006,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758665791.6,
+              "interactiveMs": 4417.599999999977,
+              "firstContentfulPaintMs": 632.5,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4427.128229000024,
+              "safeInteractionObservedMs": 4496.406777000026,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "6"
+            }
+          ],
+          "interactiveMs": {
+            "median": 4485,
+            "min": 4404.700000000012,
+            "max": 5996.899999999994,
+            "sampleStandardDeviation": 713.2647650066582
+          },
+          "readinessObservedMs": {
+            "median": 4499.995043999981,
+            "min": 4417.664141000016,
+            "max": 6005.500788000005,
+            "sampleStandardDeviation": 716.0932109616879
+          },
+          "safeInteractionObservedMs": {
+            "median": 4595.899867,
+            "min": 4452.541005000006,
+            "max": 6105.396700999991,
+            "sampleStandardDeviation": 746.7632770678985
+          }
+        },
+        "offline": {
+          "samples": [
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758676306.3,
+              "interactiveMs": 6596.399999999994,
+              "firstContentfulPaintMs": 1539.8000000000175,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8922.346607999993,
+              "safeInteractionObservedMs": 9119.041873999988,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1648\nWaitTime: 1678\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "7"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758688220.2,
+              "interactiveMs": 6307.799999999988,
+              "firstContentfulPaintMs": 1380.7999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8301.01432799999,
+              "safeInteractionObservedMs": 8694.66630099999,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1527\nWaitTime: 1547\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "8"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758700108,
+              "interactiveMs": 6144.700000000012,
+              "firstContentfulPaintMs": 1430.7000000000116,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8129.508933000005,
+              "safeInteractionObservedMs": 8506.304470000003,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1440\nWaitTime: 1573\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "9"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758711557.7,
+              "interactiveMs": 6290.799999999988,
+              "firstContentfulPaintMs": 1558.7999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8089.490407999983,
+              "safeInteractionObservedMs": 8475.236087999976,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1396\nWaitTime: 1403\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "10"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758723352,
+              "interactiveMs": 6395.700000000012,
+              "firstContentfulPaintMs": 1436.2000000000116,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8396.767011999968,
+              "safeInteractionObservedMs": 8982.362583999988,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4371/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1235\nWaitTime: 1242\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "11"
+            }
+          ],
+          "android": {
+            "airplaneMode": "1",
+            "wifiOn": "0",
+            "dataOn": "0",
+            "reverseRoutes": "host-23 tcp:4378 tcp:4378"
+          },
+          "interactiveMs": {
+            "median": 6307.799999999988,
+            "min": 6144.700000000012,
+            "max": 6596.399999999994,
+            "sampleStandardDeviation": 165.97619407613533
+          },
+          "readinessObservedMs": {
+            "median": 8301.01432799999,
+            "min": 8089.490407999983,
+            "max": 8922.346607999993,
+            "sampleStandardDeviation": 334.3128073315883
+          },
+          "safeInteractionObservedMs": {
+            "median": 8694.66630099999,
+            "min": 8475.236087999976,
+            "max": 9119.041873999988,
+            "sampleStandardDeviation": 286.34609093186515
+          }
+        }
+      },
+      "348": {
+        "sha": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+        "startup": {
+          "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+          "controller": "http://127.0.0.1:4378/sw.js",
+          "caches": [
+            "foliolab-open-v348"
+          ],
+          "standalone": false
+        },
+        "seed": {
+          "cashEUR": "1000",
+          "bookings": 10000,
+          "journals": 10000,
+          "walletHistory": null,
+          "revision": 2,
+          "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+        },
+        "cold": {
+          "samples": [
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758759181.7,
+              "interactiveMs": 6133.5,
+              "firstContentfulPaintMs": 1385.4000000000233,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 7934.7092879999545,
+              "safeInteractionObservedMs": 8308.248239999986,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1236\nWaitTime: 1251\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "13"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758770925.6,
+              "interactiveMs": 5964.200000000012,
+              "firstContentfulPaintMs": 1402.9000000000233,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8110.09017900005,
+              "safeInteractionObservedMs": 8668.933325000049,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1652\nWaitTime: 1675\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "14"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758782318.5,
+              "interactiveMs": 5966.900000000023,
+              "firstContentfulPaintMs": 1544.8000000000466,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 7785.1005000000005,
+              "safeInteractionObservedMs": 7924.248026999994,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1121\nWaitTime: 1145\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "15"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758793557.9,
+              "interactiveMs": 5986.5,
+              "firstContentfulPaintMs": 1425.100000000035,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 7906.868591999984,
+              "safeInteractionObservedMs": 8282.879567999975,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1394\nWaitTime: 1397\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "16"
+            },
+            {
+              "kind": "cold",
+              "timeOrigin": 1795758805482.8,
+              "interactiveMs": 5905.900000000023,
+              "firstContentfulPaintMs": 1454.7999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8205.471935000038,
+              "safeInteractionObservedMs": 8775.906376000028,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1475\nWaitTime: 1483\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            }
+          ],
+          "interactiveMs": {
+            "median": 5966.900000000023,
+            "min": 5905.900000000023,
+            "max": 6133.5,
+            "sampleStandardDeviation": 84.95110358317048
+          },
+          "readinessObservedMs": {
+            "median": 7934.7092879999545,
+            "min": 7785.1005000000005,
+            "max": 8205.471935000038,
+            "sampleStandardDeviation": 167.92071254615868
+          },
+          "safeInteractionObservedMs": {
+            "median": 8308.248239999986,
+            "min": 7924.248026999994,
+            "max": 8775.906376000028,
+            "sampleStandardDeviation": 339.77554979952373
+          }
+        },
+        "warm": {
+          "samples": [
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758814585.6,
+              "interactiveMs": 4569.900000000023,
+              "firstContentfulPaintMs": 683.5,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4582.058780999971,
+              "safeInteractionObservedMs": 4696.586786,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758822143.7,
+              "interactiveMs": 4296.200000000012,
+              "firstContentfulPaintMs": 475.20000000001164,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4311.386826000002,
+              "safeInteractionObservedMs": 4402.312335999974,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758829231.7,
+              "interactiveMs": 4246.400000000023,
+              "firstContentfulPaintMs": 509.20000000001164,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4259.312332000001,
+              "safeInteractionObservedMs": 4371.936993000039,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758836355.3,
+              "interactiveMs": 4582.5,
+              "firstContentfulPaintMs": 508.79999999998836,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4595.948868000007,
+              "safeInteractionObservedMs": 4705.215571000008,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            },
+            {
+              "kind": "warm",
+              "timeOrigin": 1795758843737.3,
+              "interactiveMs": 4354.899999999965,
+              "firstContentfulPaintMs": 443.0999999999767,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4367.46293899999,
+              "safeInteractionObservedMs": 4440.340096,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "17"
+            }
+          ],
+          "interactiveMs": {
+            "median": 4354.899999999965,
+            "min": 4246.400000000023,
+            "max": 4582.5,
+            "sampleStandardDeviation": 156.5851749049068
+          },
+          "readinessObservedMs": {
+            "median": 4367.46293899999,
+            "min": 4259.312332000001,
+            "max": 4595.948868000007,
+            "sampleStandardDeviation": 156.16197640966413
+          },
+          "safeInteractionObservedMs": {
+            "median": 4440.340096,
+            "min": 4371.936993000039,
+            "max": 4705.215571000008,
+            "sampleStandardDeviation": 163.97614402115343
+          }
+        },
+        "offline": {
+          "samples": [
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758853751.3,
+              "interactiveMs": 6291.600000000035,
+              "firstContentfulPaintMs": 1443,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8503.680943999963,
+              "safeInteractionObservedMs": 8878.260263999982,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1556\nWaitTime: 1564\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "18"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758865642.5,
+              "interactiveMs": 6153.799999999988,
+              "firstContentfulPaintMs": 1395.7999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8238.309100000013,
+              "safeInteractionObservedMs": 8827.826570000034,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1541\nWaitTime: 1582\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "19"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758877241.5,
+              "interactiveMs": 6297.700000000012,
+              "firstContentfulPaintMs": 1405.3000000000466,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8033.4425049999845,
+              "safeInteractionObservedMs": 8410.442507,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1260\nWaitTime: 1312\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "20"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758889530.4,
+              "interactiveMs": 5989.5,
+              "firstContentfulPaintMs": 1370.4000000000233,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 8246.681393000006,
+              "safeInteractionObservedMs": 8646.53922200005,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1615\nWaitTime: 1832\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "21"
+            },
+            {
+              "kind": "offline",
+              "timeOrigin": 1795758900494.1,
+              "interactiveMs": 6286.200000000012,
+              "firstContentfulPaintMs": 1598.7000000000116,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 7935.224385000009,
+              "safeInteractionObservedMs": 8323.483191999956,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1126\nWaitTime: 1145\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "walletHistory": null,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              },
+              "target": "22"
+            }
+          ],
+          "android": {
+            "airplaneMode": "1",
+            "wifiOn": "0",
+            "dataOn": "0",
+            "reverseRoutes": "host-23 tcp:4371 tcp:4371"
+          },
+          "interactiveMs": {
+            "median": 6286.200000000012,
+            "min": 5989.5,
+            "max": 6297.700000000012,
+            "sampleStandardDeviation": 133.92189141437203
+          },
+          "readinessObservedMs": {
+            "median": 8238.309100000013,
+            "min": 7935.224385000009,
+            "max": 8503.680943999963,
+            "sampleStandardDeviation": 219.8592601612521
+          },
+          "safeInteractionObservedMs": {
+            "median": 8646.53922200005,
+            "min": 8323.483191999956,
+            "max": 8878.260263999982,
+            "sampleStandardDeviation": 246.16811669261295
+          }
+        }
+      }
+    }
   }
 }
