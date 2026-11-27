@@ -48,7 +48,17 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await more.click();
    for(const basis of ['observed','partial','auto']){await p.locator('#historyBasis').selectOption(basis);assert.ok((await p.locator('#historySourceStatus').innerText()).length);assert.deepEqual(await record(),before,'basis only changes view');}
    await nav('dashboard');const cash=p.locator('#cashTermsOverview');assert.ok(await cash.isVisible());assert.equal(await cash.count(),1);assert.equal(await cash.evaluate(e=>e.open),false);await cash.locator('summary').click();assert.equal(await cash.locator('.cash-term-row').count(),2);await scan();
-   for(const open of [false,true]){for(const summary of await p.locator('.provider-accordion>summary').all())if(await summary.evaluate(e=>e.parentElement.open)!==open)await summary.click();const borders=await p.locator('.provider-accordion').evaluateAll(es=>es.map(e=>({outer:getComputedStyle(e).borderBottomWidth,summary:getComputedStyle(e.querySelector('summary')).borderBottomWidth})));assert.equal(borders[0].outer,'1px','intermediate separator retained');assert.equal(borders[1].outer,'0px','no extra end separator before liquidity');if(!open)for(const b of borders)assert.equal(b.summary,'0px','no duplicate closed summary separator');}
+   for(const open of [false,true]){
+    for(const summary of await p.locator('.provider-accordion>summary').all()){
+     if(await summary.evaluate(e=>e.parentElement.open)!==open)await summary.click();
+    }
+    const providers=p.locator('.provider-accordion');
+    assert.equal(await providers.count(),2);
+    assert.ok(await providers.evaluateAll(nodes=>nodes.every(e=>
+     getComputedStyle(e).borderBottomWidth==='0px'&&getComputedStyle(e.querySelector('summary')).borderBottomWidth==='0px'
+    )), 'both open and closed provider tiles use spacing without rules');
+    assert.ok(await providers.nth(1).evaluate(e=>e.getBoundingClientRect().top-e.previousElementSibling.getBoundingClientRect().bottom>=4));
+   }
    await p.evaluate(()=>{document.activeElement?.blur();scrollTo(0,0);});await scan();await p.screenshot({path:'artifacts/gates/history-followup/'+engine+'-liquidity-'+width+'.png',fullPage:true});await cash.locator('summary').click();assert.equal(await cash.evaluate(e=>e.open),false);assert.deepEqual(await record(),before,'all disclosures preserve canonical record/revision');
   }
   // Empty provider list and source-only observations keep the original render conditions.
