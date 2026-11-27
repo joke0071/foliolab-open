@@ -1,0 +1,62 @@
+name: Android AVD startup and encrypted file recovery
+on:
+  push:
+    branches: [qa/sw348-android-avd]
+permissions:
+  contents: read
+jobs:
+  android-avd:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pin both application builds and verify the original fixture
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/android-avd
+          git fetch --depth=1 origin e272297ab1ba855a2922c1faa4010b83c558a796 e67ba0b5e6c43169fcf51250ed99eca727b67f28 4e3e4a256ce0d81946ed6907b965d1f30aac33fe
+          git worktree add --detach "$RUNNER_TEMP/foliolab-sw321" e272297ab1ba855a2922c1faa4010b83c558a796
+          git worktree add --detach "$RUNNER_TEMP/foliolab-sw348" 4e3e4a256ce0d81946ed6907b965d1f30aac33fe
+          git show e67ba0b5e6c43169fcf51250ed99eca727b67f28:tests/fixtures/windows-k4-originals.json > "$RUNNER_TEMP/windows-k4-originals.json"
+          python3 -c 'import base64, hashlib, json, lzma, pathlib, sys; d=pathlib.Path(sys.argv[1]); b=lzma.decompress(base64.b64decode(json.loads((d/"windows-k4-originals.json").read_text())["original10k"]["xzBase64"])); assert len(b)==9270601 and hashlib.sha256(b).hexdigest()=="67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809"; (d/"portfolio-10000.json").write_bytes(b)' "$RUNNER_TEMP"
+          npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Enable emulator hardware acceleration
+        run: |
+          test -c /dev/kvm
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-foliolab-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: AVD A, paired startups and native encrypted download
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
+        with:
+          api-level: 34
+          target: google_apis_playstore
+          arch: x86_64
+          profile: pixel_6
+          avd-name: foliolab-avd-a
+          emulator-options: -no-window -no-snapshot -wipe-data -noaudio -no-boot-anim -gpu swiftshader_indirect
+          disable-animations: true
+          script: node tests/native-android/sw348-avd.mjs source
+      - name: AVD B, fresh profile and native DocumentsUI selection
+        if: ${{ !cancelled() && hashFiles('artifacts/android-avd/source-transfer.json') != '' }}
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
+        with:
+          api-level: 34
+          target: google_apis_playstore
+          arch: x86_64
+          profile: pixel_6
+          avd-name: foliolab-avd-b
+          emulator-options: -no-window -no-snapshot -wipe-data -noaudio -no-boot-anim -gpu swiftshader_indirect
+          disable-animations: true
+          script: node tests/native-android/sw348-avd.mjs target
+      - name: Preserve Android receipts and diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sw348-android-avd
+          path: artifacts/android-avd/
