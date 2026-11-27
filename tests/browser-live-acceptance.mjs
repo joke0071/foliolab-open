@@ -87,15 +87,15 @@ try{
  await scan(p,'#portfolioProjection','controlled offline projection');
  assert.deepEqual(await state(p),beforeProjection,'projection must not change portfolio or history');
  report.checks.push('actual controlled offline projection changes no portfolio data');
- const sectionLinks=p.getByRole('navigation',{name:'Abschnitte im Verlauf'});
- await sectionLinks.getByRole('link',{name:'Stichtage'}).click();
- assert.ok(new URL(p.url()).hash==='#snapshotManager');
- assert.ok(await p.locator('#snapshotManager > summary').evaluate(node=>node.parentElement.open&&document.activeElement===node));
- assert.equal(await sectionLinks.locator('[aria-current="location"]').innerText(),'Stichtage');
- await sectionLinks.getByRole('link',{name:'Szenarien'}).click();
+ const historicalReference=p.locator('#snapshotManager > summary');
+ await historicalReference.focus();
+ await p.keyboard.press('Enter');
+ assert.ok(await historicalReference.evaluate(node=>node.parentElement.open&&document.activeElement===node));
+ await projection.locator(':scope > summary').click();
+ await projection.locator(':scope > summary').press('Enter');
  assert.equal(await projection.locator('[name="start"]').inputValue(),'1000');
- assert.deepEqual(await state(p),beforeProjection,'section navigation must not change portfolio or history');
- report.checks.push('actual controlled offline history section links preserve portfolio and projection input');
+ assert.deepEqual(await state(p),beforeProjection,'history disclosures must preserve the portfolio and simulation draft');
+ report.checks.push('actual controlled offline history disclosures preserve portfolio and projection input');
  const shortHistoryId=h.ids[0];
  const readRecord=()=>p.evaluate(async()=>{
   const {openPortfolioDB,readPortfolioRecord}=await import('./src/atomic-storage.js');

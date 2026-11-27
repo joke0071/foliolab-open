@@ -41,7 +41,10 @@ for(const engine of engines){
   // One consistent More entry opens existing help or the retained prompt. The
   // optional desktop-sidebar hint is offered only with a direct prompt.
   assert.equal(await p.locator('#pwaHelp').count(),0);
-  const install=p.locator('#installButton');assert.ok(await install.isVisible());assert.equal(await p.locator('#installButtonMobile').count(),0);assert.equal(await p.locator('.mobile-header [data-install-action],.heading-row [data-install-action]').count(),0,'installation has a labeled More entry instead of a detached header glyph');assert.equal(await install.getAttribute('data-install-mode'),'help');assert.match(await install.getAttribute('aria-label'),/^Installationshilfe/);
+  const install=p.locator('#installButtonMobile');
+  assert.ok(await install.isVisible());
+  assert.equal(await p.locator('[data-install-location="header"]:visible').count(),1);
+  assert.equal(await install.getAttribute('data-install-mode'),'help');assert.match(await install.getAttribute('aria-label'),/^Installationshilfe/);
   assert.ok(await install.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.right<=innerWidth;}));
   await install.click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');assert.equal(await p.locator('#saveDialog').isHidden(),true,'help dialog has no save action');
   assert.ok(await p.locator('#dialogFields').innerText().then(t=>t.includes('Browsermenü')||t.includes('Teilen')));

@@ -123,7 +123,7 @@ const refreshPortfolioProjection=bindPortfolioProjection($('portfolioProjection'
 const transferMatchingUI=createTransferMatchingUI({restoreFocus:restoreBookingTransferFocus,getModel:()=>model,assertCurrent:async()=>{assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();},commit:async draft=>{assertBookingWritable();model=draft;await save();},onCreate:kind=>$(kind==='cash'?'addWizard':'addBooking').click(),canCreate:kind=>!$(kind==='cash'?'addWizard':'addBooking').disabled});
 const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
 const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:draft=>save(draft,{resetFilter:false})});
-const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
+const PAGES=[['dashboard','Übersicht','dashboard'],['history','Verlauf','history'],['positions','Positionen','positions'],['bookings','Buchungen','bookings'],['more','Mehr','more']];
 const PAGE_DESCRIPTIONS={history:'Historische Werte und ihre Datenabdeckung ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
 const colors=Object.fromEntries(Object.keys(TYPES).map(kind=>[kind,'var(--asset-'+kind+')']));
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
@@ -169,87 +169,39 @@ function notify(message,error=false){const box=$('toast');box.textContent=messag
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
-const sectionMenus=[$('historySections'),$('moreSections')];
-const sectionLinks=sectionMenus.flatMap(menu=>[...menu.querySelectorAll('a')]);
+const sectionIds={
+ history:['historyDiagram','historyCoverage','performanceDetails','snapshotManager','portfolioProjection'],
+ more:['moreAccounts','moreData','moreSources']
+};
 function sectionHash(destination){
- return sectionLinks.find(link=>link.hash===location.hash&&link.closest('.page').id===destination+'Page')?.hash||'';
+ return sectionIds[destination]?.includes(location.hash.slice(1))?location.hash:'';
 }
-function markSection(link){
- for(const item of sectionLinks){
-  if(item===link)item.setAttribute('aria-current','location');
-  else item.removeAttribute('aria-current');
- }
- if(!link)return;
- const menu=link.parentElement,tab=link.getBoundingClientRect(),bar=menu.getBoundingClientRect();
- if(tab.left<bar.left)menu.scrollLeft+=tab.left-bar.left;
- else if(tab.right>bar.right)menu.scrollLeft+=tab.right-bar.right;
+function revealLinkedSection(){
+ const hash=sectionHash(page);
+ if(!hash)return;
+ const section=$(hash.slice(1));
+ const disclosure=section instanceof HTMLDetailsElement;
+ if(disclosure)section.open=true;
+ const target=disclosure?section.querySelector(':scope > summary'):section;
+ target.scrollIntoView({block:'start',behavior:'instant'});
+ target.focus({preventScroll:true});
 }
-let sectionJumpY=null,lastSectionLink=null;
-function syncPageSection({jump=false,returnFocus=false}={}){
- const menu=sectionMenus.find(item=>item.closest('.page').id===page+'Page');
- const previous=lastSectionLink;
- const link=menu?.querySelector('a[href="'+(sectionHash(page)||'#')+'"]');
- lastSectionLink=link;
- markSection(link||menu?.querySelector('a'));
- sectionJumpY=null;
- if(!jump)return;
- if(!link){
-  if(returnFocus)previous?.focus({preventScroll:true});
-  return;
- }
- const target=$(link.hash.slice(1));
- if(target instanceof HTMLDetailsElement)target.open=true;
- const focusTarget=target instanceof HTMLDetailsElement?target.querySelector(':scope > summary'):target;
- focusTarget.scrollIntoView({block:'start',behavior:'instant'});
- focusTarget.focus({preventScroll:true});
- sectionJumpY=window.scrollY;
-}
-let sectionFrame=0;
-function trackVisibleSection(){
- sectionFrame=0;
- const menu=sectionMenus.find(item=>item.closest('.page').classList.contains('active'));
- if(!menu||sectionJumpY===window.scrollY)return;
- sectionJumpY=null;
- const links=[...menu.querySelectorAll('a')];
- const headerBottom=document.querySelector('.mobile-header').getBoundingClientRect().bottom;
- const headerHeight=Math.max(0,headerBottom);
- const menuHeight=Math.max(0,Math.min(menu.offsetHeight,menu.getBoundingClientRect().bottom-headerHeight));
- const threshold=headerHeight+menuHeight+24;
- let visible=links[0],lastTop=-Infinity;
- for(const link of links){
-  const top=$(link.hash.slice(1)).getBoundingClientRect().top;
-  if(top<=threshold&&(top>lastTop+2||link.hash===location.hash)){
-   visible=link;lastTop=top;
-  }
- }
- if(visible!==menu.querySelector('[aria-current]'))markSection(visible);
-}
-window.addEventListener('scroll',()=>{
- if(!sectionFrame)sectionFrame=requestAnimationFrame(trackVisibleSection);
-},{passive:true});
-for(const menu of sectionMenus)menu.addEventListener('click',event=>{
- const link=event.target.closest('a');
- if(!link||event.defaultPrevented||event.button!==0||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
- event.preventDefault();
- if(link.hash!==location.hash)history.pushState(null,'',link.href);
- syncPageSection({jump:true});
-});
 window.addEventListener('popstate',()=>{
  const restored=new URLSearchParams(location.search).get('page')||'dashboard';
  if(restored!==page){
   go(restored,{restore:true,section:sectionHash(restored)});
-  requestAnimationFrame(()=>syncPageSection({jump:true}));
+  requestAnimationFrame(revealLinkedSection);
  }
 });
-window.addEventListener('hashchange',()=>requestAnimationFrame(()=>syncPageSection({jump:true,returnFocus:!location.hash})));
-function go(next,{review=false,section='',restore=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);const url=location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'||next==='more'?section:'');
+window.addEventListener('hashchange',()=>requestAnimationFrame(revealLinkedSection));
+function go(next,{review=false,section='',restore=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';const url=location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'||next==='more'?section:'');
  if(url!==location.pathname+location.search+location.hash){
   if(restore)history.replaceState(null,'',url);
   else history.pushState(null,'',url);
  }
- syncPageSection();window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
+ window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));const initial=new URL(location.href).searchParams.get('page')||'dashboard';go(initial,{restore:true,section:sectionHash(initial)});}
-function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
+function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],[data-install-action],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  const readbackFailed=loadFailure instanceof RestoreReadbackError;
@@ -995,7 +947,6 @@ function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  dialogOpener=document.activeElement;
  editor={onSave,dirty:false,readOnly};
  $('dialogTitle').textContent=title;
- $('dialogKicker').textContent=kicker;
  $('dialogFields').innerHTML=html;
  $('dialogError').textContent='';
  $('dialogError').classList.add('hidden');
@@ -3220,20 +3171,19 @@ function restoreInstallFocus(origin){
 }
 function updateInstallControls(){
  const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1',direct=Boolean(installPrompt);
- const hint=$('sidebarInstallHint'),section=$('installAppSection'),active=document.activeElement;
+ const hint=$('sidebarInstallHint'),active=document.activeElement;
  document.querySelectorAll('[data-install-action]').forEach(button=>{
   button.hidden=installed;button.disabled=installPromptBusy;
   const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';
   button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';
  });
  hint.hidden=installed||!direct||installPromptBusy||!installDesktopMedia.matches||installHintPreference.dismissed;
- section.hidden=installed;
- if((hint.hidden&&hint.contains(active))||(section.hidden&&section.contains(active)))restoreInstallFocus(null);
+ if((hint.hidden&&hint.contains(active))||(installed&&active?.matches('[data-install-action]')))restoreInstallFocus(null);
 }
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
-syncPageSection({jump:true});
+revealLinkedSection();
 performance.mark('foliolab-interactive');
 window.dispatchEvent(new Event('foliolab:ready'));
 if(!loadFailure&&location.protocol==='https:'&&refreshFrequency(model.settings.autoRefresh)!=='off'){

@@ -44,7 +44,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
 
  const updateValue=(key,val)=>{state[key]=val;};
  const shell=(fields,title)=>{
-  dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle" tabindex="-1">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
+  dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><h2 id="wizardTitle" tabindex="-1">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
   
   '<div id="wizardFields">'+fields+'</div><div class="wizard-feedback" id="wizardError" role="alert" aria-live="polite"></div>'+
    '<div class="dialog-footer"><button class="btn light" type="button" id="wizardPrev">Abbrechen</button><button class="btn primary" type="button" id="wizardNext"'+(state.saved?' hidden':'')+'>Position speichern</button></div></div>';
