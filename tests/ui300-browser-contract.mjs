@@ -26,7 +26,13 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
  const out='artifacts/gates/ui300';await mkdir(out,{recursive:true});
  for(const width of [320,360,390,412,430,768,1440]){
   await p.setViewportSize({width,height:800});await nav('dashboard');
-  assert.equal(await p.locator('.hero,#summaryStats,.logo img').count(),0);
+  assert.equal(await p.locator('.hero,#summaryStats').count(),0);
+  const brand=p.locator('.logo:visible'),flask=brand.locator('img');
+  await flask.evaluate(img=>img.decode());
+  assert.equal(await flask.getAttribute('src'),'./icons/flask.svg');
+  assert.equal(await flask.getAttribute('alt'),width<=720?'FolioLab':'');
+  assert.equal(await brand.getByText('FolioLab.',{exact:true}).count(),width<=720?0:1);
+  assert.ok(await flask.evaluate(img=>img.naturalWidth>0&&img.getBoundingClientRect().width===32));
   assert.equal(await p.locator('#dashboardReview').isVisible(),false,'zero review groups means no chip');
   assert.equal(await p.locator('#pageKicker').isVisible(),false);
   await p.locator('#miniChartPeriods [data-mini-range=all]').click();
