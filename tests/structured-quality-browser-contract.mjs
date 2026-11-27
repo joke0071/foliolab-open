@@ -64,7 +64,13 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
  for(const width of [320,360,390,412,430,768,1440]){
   await p.setViewportSize({width,height:900});await nav('dashboard');
   const toggle=p.locator('#dashboardReview');assert.match(await toggle.innerText(),/4 Positionen prüfen/);assert.equal(await toggle.getAttribute('aria-expanded'),null);
-  assert.ok(await p.locator('#totalValue').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const card=el.closest('.dashboard-metrics').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=card.left&&r.right<=card.right&&r.top>=card.top&&r.bottom<=card.bottom);}),'entire large compact amount fits');
+  const amountFits=await p.locator('#totalValue').evaluate(el=>{
+   const range=document.createRange();
+   range.selectNodeContents(el);
+   const box=el.getBoundingClientRect(),lines=[...range.getClientRects()].filter(rect=>rect.width);
+   return lines.length===1&&lines[0].left>=box.left-1&&lines[0].right<=box.right+1;
+  });
+  assert.ok(amountFits,'full portfolio amount stays on one line at '+width);
   await toggle.focus();await p.keyboard.press('Enter');assert.ok(await p.locator('#qualityReviewPanel').isVisible());assert.equal(await p.locator('#qualityReviewHeading').evaluate(el=>el===document.activeElement),true);
   assert.equal(await p.locator('.quality-review-card').count(),4,'three valuation issues and one additional provenance issue');assert.ok(await p.locator('[data-review-position=quality-missing]').isVisible(),'archived warning is included independently of normal view');
   assert.match(await p.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 3 Positionen/);assert.equal(await p.locator('#positionSearch').inputValue(),'SYNTHETIC unmatched search');assert.equal(await p.locator('#positionSort').inputValue(),'name');assert.equal(await p.locator('#positionArchiveFilter').inputValue(),'active');

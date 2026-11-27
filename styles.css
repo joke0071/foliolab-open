@@ -2292,17 +2292,27 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 }
 
 #dashboardPage .dashboard-history{
- background:#1042dc;color:#fff;border:0;border-radius:24px;
- --chart-grid:#7997ef;--chart-area:transparent;--chart-series:#fff
+ background:var(--canvas);color:var(--ink);border:1px solid var(--line);border-radius:24px;
+ container:wealth-card / inline-size;
+ --chart-grid:var(--line);--chart-area:#e9efff;--chart-series:var(--primary)
 }
 .dashboard-history .compact-panel-head h2,.dashboard-history .dashboard-metric-label,
-#dashboardPage .dashboard-history .link-button,.dashboard-history #totalValue{color:#fff}
-#dashboardPage .dashboard-history :is(.small-help,.chart-zero,.chart-x-labels,.chart-y-labels){color:#e3eaff}
-.dashboard-history #totalValue{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em}
+#dashboardPage .dashboard-history .link-button,.dashboard-history #totalValue{color:var(--ink)}
+#dashboardPage .dashboard-history .link-button{color:var(--primary)}
+#dashboardPage .dashboard-history :is(.small-help,.chart-zero,.chart-x-labels,.chart-y-labels){color:var(--muted)}
+.dashboard-current{container-type:inline-size}
+.dashboard-metrics{display:grid;grid-template-columns:minmax(0,1fr)}
+@container wealth-card (min-width:36rem){
+ .dashboard-metrics{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+}
+.dashboard-history #totalValue{
+ font-size:clamp(1rem,calc(155cqi / var(--amount-length,12)),3rem);
+ font-weight:700;letter-spacing:-.035em;white-space:nowrap;overflow-x:auto
+}
 .dashboard-history #dashboardChange{
  display:inline-block;background:#e3ebff;color:#162b59;padding:3px 10px;border-radius:20px
 }
-.dashboard-history .chart-plot:focus-visible,.dashboard-history :is(button,summary):focus-visible{outline:3px solid #ffda70;outline-offset:-3px}
+.dashboard-history .chart-plot:focus-visible,.dashboard-history :is(button,summary):focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
 #miniChartPeriods{background:transparent;border:0;gap:2px;margin:12px 0 4px;padding:0}
 #dashboardPage .dashboard-side>.panel{border:0}
 #dashboardPage .alloc-legend-row{color:var(--ink);border-color:var(--line)}
@@ -2337,7 +2347,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #positionsPage .filter-list .filter.active{border-color:var(--tonal);color:var(--on-tonal)}
 .page .empty{background:var(--surface);border-color:var(--line);color:var(--muted)}
 .page .empty strong{color:var(--ink)}
-#dashboardPage .dashboard-history .chart-zero{color:#e3eaff}
+#dashboardPage .dashboard-history .chart-zero{color:var(--muted)}
 #miniChart:has(>.chart-zero){height:auto;min-height:68px;padding-block:12px}
 #dashboardPage .dashboard-review-row{background:#e1eaff;color:#163579;border-radius:12px}
 #moreSections a,#historyPage .history-sections a{font-size:14px}
@@ -2423,7 +2433,7 @@ dialog .icon-close {
  }
 }
 
-/* Every time range uses the same control surface, including the blue overview card. */
+/* Every time range uses the same control surface, including the overview card. */
 :is(#dashboardPage,#historyPage,#positionsPage) :is(#chartPeriods,#miniChartPeriods,.position-period) {
  --period-surface:var(--surface);background:var(--period-surface);border-color:transparent;border-radius:28px
 }
@@ -2441,7 +2451,7 @@ dialog .icon-close {
 .chart-plot .series-grid {stroke:var(--chart-grid)}
 .chart-plot .series-line,.chart-plot .series-dot {stroke:var(--chart-series)}
 .chart-plot .series-area {fill:var(--chart-area)}
-#miniChart .chart-plot {--chart-series:white;--chart-area:transparent;--chart-grid:#7997ef}
+#miniChart .chart-plot {--chart-series:var(--primary);--chart-area:#e9efff;--chart-grid:var(--line)}
 .chart-cursor {background:var(--chart-series);box-shadow:0 0 0 2px var(--chart-series)}
 .page .chart-tooltip {color:var(--ink);background:white;border-color:var(--line)}
 .page .chart-tooltip strong,.page .chart-y-labels,.page .chart-x-labels {color:var(--muted)}
@@ -2535,3 +2545,41 @@ dialog :is(.advanced-apis,.wizard-catalog-tools)[open]>summary {background:var(-
 dialog .advanced-apis,dialog .wizard-group {border-color:var(--line)}
 /* Firefox defers transitions inside collapsed disclosures until they open. */
 details:not([open])>:not(summary),details:not([open])>:not(summary) * {transition:none}
+
+
+/* The same five paint servers colour desktop and mobile destination glyphs. */
+.icon-palette{position:absolute;pointer-events:none}
+#sidebarNav button.active,#mobileNav button.active svg{
+ background-image:linear-gradient(105deg,color-mix(in srgb,var(--primary) 22%,white),var(--tonal) 55%,color-mix(in srgb,var(--tonal) 50%,white))
+}
+[data-page="dashboard"],#accountsIcon{--glyph:url(#accent-overview)}
+[data-page="history"],#securityIcon{--glyph:url(#accent-history)}
+[data-page="positions"],#settingsGear{--glyph:url(#accent-positions)}
+[data-page="bookings"]{--glyph:url(#accent-bookings)}
+[data-page="more"]{--glyph:url(#accent-more)}
+:is(#mobileNav,#sidebarNav) button.active svg,
+#morePage :is(#accountsIcon,#securityIcon,#settingsGear) svg{stroke:var(--glyph)}
+#morePage :is(#accountsIcon,#securityIcon,#settingsGear){
+ width:36px;height:36px;border-radius:12px;flex-shrink:0
+}
+#morePage #accountsIcon{background:#e5edff}
+#morePage #securityIcon{background:#dcf5ed}
+#morePage #settingsGear{background:#f0e8fb}
+@media(forced-colors:active){
+ :is(#mobileNav,#sidebarNav) button.active svg,
+ #morePage :is(#accountsIcon,#securityIcon,#settingsGear) svg{stroke:currentColor}
+}
+@media(max-width:720px){
+ #dashboardPage #miniChartPeriods,#historyPage #chartPeriods.history-chart-period{column-gap:0}
+ #dashboardPage #miniChartPeriods :is(button,summary),#historyPage #chartPeriods :is(button,summary),
+ #dashboardPage #miniChartPeriods .period-more,#historyPage #chartPeriods .period-more{
+  min-width:max(48px,3.6em);min-height:48px
+ }
+ #morePage :is(#addAccount,#addProvider){min-height:48px}
+}
+@media(max-width:420px){
+ #dashboardPage #miniChartPeriods,#historyPage #chartPeriods.history-chart-period{
+  margin-inline:-16px;width:calc(100% + 32px);max-width:none
+ }
+ #historyPage #chartPeriods.history-chart-period{flex-basis:calc(100% + 32px)}
+}
