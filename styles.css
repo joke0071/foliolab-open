@@ -2594,7 +2594,8 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 
 /* Booking actions share the title row. Search leads the two related filters. */
 #bookingPanel>.panel-head-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
-#bookingPanel>.panel-head-actions .panel-title{flex:1 1 9rem;min-width:0}
+#bookingPanel>.panel-head-actions .panel-title{flex:1 1 10.75rem;min-width:0}
+#bookingsPage #bookingListHead .btn{flex:0 0 auto}
 #bookingPanel>.panel-head-actions .panel-actions.action-group{width:auto;margin-inline-start:auto;flex:0 0 auto}
 #bookingsPage #bookingIncomeDetails>summary span{color:var(--ink);font-size:var(--type-body);font-weight:600}
 #bookingsPage #bookingIncomeDetails>summary small{color:var(--muted);font-size:var(--type-meta);font-weight:400}
