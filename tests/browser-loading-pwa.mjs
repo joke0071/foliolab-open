@@ -34,11 +34,14 @@ for(const engine of engines){
   const delayedFrames=[];for(let i=0;i<3;i++){delayedFrames.push(await p.locator('.portfolio-loader-orbit').evaluate(e=>getComputedStyle(e).transform));await p.waitForTimeout(160);}
   assert.equal(new Set(delayedFrames).size,3,'large loader keeps moving after watchdog timeout');
   await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-delayed-320.png`});
-  release();await interactive(p);const before=await record(p);await p.reload();await interactive(p);assert.deepEqual(await record(p),before);
+  const install=p.locator('#installButtonMobile');
+  assert.equal(await p.evaluate(()=>!window.dispatchEvent(new Event('beforeinstallprompt',{cancelable:true}))),true);
+  release();await interactive(p);
+  assert.equal(await install.isVisible(),true,'browser offer survives slow startup');
+  const before=await record(p);await p.reload();await interactive(p);assert.deepEqual(await record(p),before);
   assert.equal(await p.title(),'FolioLab');
   assert.ok(await p.evaluate(async()=>{const {setLoading}=await import('./src/loading-ui.js');const a=document.createElement('p'),b=document.createElement('p');a.textContent='Kurse werden aktualisiert …';b.textContent='Wallet wird geprüft …';document.body.append(a,b);setLoading(a,true);setLoading(a,true);setLoading(b,true);const valid=a.querySelectorAll('svg').length===1&&a.getAttribute('role')==='status'&&a.querySelector('svg').outerHTML===b.querySelector('svg').outerHTML&&a.querySelector('svg').outerHTML===document.querySelector('#appStartup svg').outerHTML&&a.querySelectorAll('[id]').length===0;setLoading(a,false);const ended=!a.querySelector('svg')&&a.textContent==='Kurse werden aktualisiert …';a.remove();b.remove();return valid&&ended;}));
   await p.locator('#mobileNav [data-page="more"]').click();
-  const install=p.locator('#installButtonMobile');
   assert.equal(await install.isVisible(),false,'no custom install icon without a browser offer');
   assert.ok(await p.evaluate(()=>{window.__prompts=0;const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{window.__prompts++;};e.userChoice=Promise.resolve({outcome:'dismissed'});window.dispatchEvent(e);return e.defaultPrevented;}));
   assert.equal(await p.evaluate(()=>window.__prompts),0,'prompt must wait for a user tap');
@@ -47,7 +50,7 @@ for(const engine of engines){
    return e.previousElementSibling.matches('a.logo')&&box.width>=44&&box.height>=44&&box.left>=brand.right&&box.left-brand.right<=4;
   }));assert.equal(await install.getAttribute('aria-label'),'FolioLab als App installieren');
   await install.focus();await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-install-320.png`});
-  await p.setViewportSize({width:1440,height:900});const desktopInstall=p.locator('#installButton');assert.ok(await desktopInstall.isVisible());await p.locator('#sidebarInstallHint').waitFor({state:'visible'});assert.equal(await p.locator('[data-install-action]:visible').count(),2,'More entry and conditional desktop hint share the existing prompt');assert.ok(await desktopInstall.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44;}));await desktopInstall.focus();await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-install-1440.png`});await p.setViewportSize({width:320,height:740});
+  await p.setViewportSize({width:1440,height:900});const desktopInstall=p.locator('#installButton');assert.ok(await desktopInstall.isVisible());await p.locator('#sidebarInstallHint').waitFor({state:'visible'});assert.equal(await p.locator('[data-install-action]:visible').count(),2,'Brand icon and conditional desktop hint share the existing prompt');assert.ok(await desktopInstall.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44;}));await desktopInstall.focus();await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-install-1440.png`});await p.setViewportSize({width:320,height:740});
   await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.equal(await install.isVisible(),false,'a consumed offer hides the icon');
   await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('[data-install-action]:visible').count(),0,'appinstalled hides installation entry and hint');
   await p.evaluate(()=>{delete document.documentElement.dataset.appInstalled;window.dispatchEvent(new Event('visibilitychange'));});
