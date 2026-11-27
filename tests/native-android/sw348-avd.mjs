@@ -99,8 +99,7 @@ async function connect(url) {
     return targets.some(target => target.type === 'page' && target.url.startsWith(url));
   }, 'Android Chrome DevTools for '+url);
   const browser = await chromium.connectOverCDP(devtools,{timeout:12000});
-  const page = browser.contexts().flatMap(context => context.pages()).find(tab => tab.url().startsWith(url));
-  assert.ok(page,'Opened Android Chrome tab');
+  const page = await until(() => browser.contexts().flatMap(context => context.pages()).find(tab => tab.url().startsWith(url)), 'Playwright attached to the Android tab '+url,15);
   page.on('dialog', dialog => {
     report.dialogs ??= [];
     report.dialogs.push({type:dialog.type(), message:dialog.message()});
@@ -361,7 +360,7 @@ try {
           }
           const truth = await seed(page);
           report.products[version] = {sha:products[version].sha, startup:await versionInfo(page,version), seed:truth};
-          if (version === 348) {
+          if (version === 348 && process.env.FOLIOLAB_SKIP_RECOVERY !== '1') {
             try { await encryptedExport(page); }
             catch (error) { reportError('AVD A encrypted export',error); }
           }
