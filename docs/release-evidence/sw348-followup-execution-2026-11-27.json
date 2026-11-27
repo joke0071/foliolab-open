@@ -1500,6 +1500,218 @@
       "reviewThreads": 0,
       "conversationComments": 0,
       "requestedReviewers": 0
+    },
+    "qualificationAfter88f5fc83": {
+      "checkpoint": "88f5fc834eb93ee98c1526025e17fe5931c3a36f",
+      "releaseCommit": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+      "recordedAt": "2026-11-27T12:51:54+00:00",
+      "packageCounts": {
+        "coreAccepted": 6,
+        "coreTotal": 6,
+        "followUpBefore": 18,
+        "followUpAfter": 18,
+        "followUpTotal": 29
+      },
+      "repository": {
+        "openPullRequests": [
+          430,
+          429,
+          427,
+          350,
+          348,
+          161
+        ],
+        "queuedRuns": 0,
+        "inProgressRuns": 0,
+        "waitingRuns": 0,
+        "latestCompletedRun": "https://github.com/joke0071/foliolab-open/actions/runs/45947703618"
+      },
+      "production": {
+        "origin": "https://foliolab.unperfekt.at",
+        "httpStatus": 200,
+        "byteComparedWithRelease": [
+          "/",
+          "/index.html",
+          "/sw.js"
+        ],
+        "indexSHA256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+        "workerSHA256": "761c17def696c8998cbb2cff8ca1d4a65972918acc9a60a0cb90d7d1d16edaa8",
+        "workerCache": "foliolab-open-v348",
+        "cspResponseHeader": null,
+        "xFrameOptions": null,
+        "cname": "joke0071.github.io.",
+        "authoritativeDnsProvider": "helloly",
+        "authorizedHeaderRouteAvailable": false
+      },
+      "verification": {
+        "newProductChange": false,
+        "newProductionAcceptanceCount": 0,
+        "newEvidenceOnly": true
+      },
+      "incoming": {
+        "since": "2026-11-27T12:30:41Z",
+        "searched": [
+          "Library",
+          "authorized project Drive",
+          "Gmail",
+          "GitHub review and PRs"
+        ],
+        "newPrivateEthPair": false,
+        "newIndependentReview": false,
+        "eligiblePhysicalAndroid": false,
+        "eligiblePersistentNativeSafari": false
+      },
+      "ledgerStaking": {
+        "status": "PORTFOLIO_DATE_QUALIFIED_HISTORICAL_STATE_OPEN",
+        "originals": {
+          "identicalBackupCopies": 2,
+          "derivedSolBalanceRowsMatchingOriginal": 2,
+          "freeAndNativeStake": true,
+          "matchingDatedSnapshots": 8
+        },
+        "cutoff": {
+          "calendarDate": "2026-10-18",
+          "sourceField": "position.date",
+          "precision": "day",
+          "recordedTimeZone": null,
+          "scope": "Date of the portfolio holding record. Snapshot creation, price refresh and backup export are separate UTC events.",
+          "timestampOrFinalizedSlotForSolHoldings": false,
+          "conditionalWindows": {
+            "Europe/Vienna": {
+              "fromUtcInclusive": "2026-10-17T22:00:00+00:00",
+              "toUtcExclusive": "2026-10-18T22:00:00+00:00",
+              "firstFinalizedSlot": 458194430,
+              "lastFinalizedSlot": 458592880
+            },
+            "UTC": {
+              "fromUtcInclusive": "2026-10-18T00:00:00+00:00",
+              "toUtcExclusive": "2026-10-19T00:00:00+00:00",
+              "firstFinalizedSlot": 458227565,
+              "lastFinalizedSlot": 458626069
+            }
+          },
+          "slotBoundaryChecks": {
+            "2026-10-17T22:00:00+00:00": {
+              "firstAtOrAfter": 458194430,
+              "blockTime": "2026-10-17T22:00:00+00:00",
+              "parentSlot": 458194429,
+              "parentTime": "2026-10-17T21:59:59+00:00"
+            },
+            "2026-10-18T00:00:00+00:00": {
+              "firstAtOrAfter": 458227565,
+              "blockTime": "2026-10-18T00:00:00+00:00",
+              "parentSlot": 458227564,
+              "parentTime": "2026-10-17T23:59:59+00:00"
+            },
+            "2026-10-18T22:00:00+00:00": {
+              "firstAtOrAfter": 458592881,
+              "blockTime": "2026-10-18T22:00:00+00:00",
+              "parentSlot": 458592880,
+              "parentTime": "2026-10-18T21:59:59+00:00"
+            },
+            "2026-10-19T00:00:00+00:00": {
+              "firstAtOrAfter": 458626070,
+              "blockTime": "2026-10-19T00:00:00+00:00",
+              "parentSlot": 458626069,
+              "parentTime": "2026-10-18T23:59:59+00:00"
+            }
+          },
+          "publicQueriesPrivateIdentifiers": false
+        },
+        "archiveChecks": {
+          "localProjectOriginals": {
+            "walletAndStakeStateAtSameSlotFound": false
+          },
+          "solarchive": {
+            "october2026AccountIndexHttp": 404,
+            "cutoffDayTransactionsIndexHttp": 404,
+            "hubAccountPartitionHttp": 404
+          },
+          "gcsReplay": {
+            "fr2": "requester pays",
+            "ny5": "requester pays",
+            "applicableSnapshotAndReplayVerified": false,
+            "documentedExampleSnapshotCompressedGB": 63,
+            "documentedExampleLedgerCompressedGB": 838.6
+          },
+          "oldFaithful": {
+            "blockHistory": true,
+            "sameSlotAccountStateFound": false
+          },
+          "pipe": {
+            "snapshotsIndexHttp": 401,
+            "historyIndexHttp": 401
+          },
+          "alchemy": {
+            "historicalAccountReadsAvailableOnFreeTier": false
+          },
+          "trawl": {
+            "exactSlotStatePaid": true
+          },
+          "bulkArchiveDownloaded": false
+        },
+        "missing": [
+          "freeWalletLamports",
+          "stakeAccountLamports",
+          "historicalStakeStateV2Delegation"
+        ],
+        "sourceReferences": [
+          "https://solana.com/docs/rpc/http/getblocktime",
+          "https://solana.com/developers/docs/rpc/http/getblock",
+          "https://solarchive.org/#download-data",
+          "https://docs.old-faithful.net/usage/rpc-server",
+          "https://pipe.network/solana/services/history-api",
+          "https://github.com/andreisilviudragnea/solana-replay-history",
+          "https://www.alchemy.com/docs/chains/solana/solana-api-endpoints/get-account-info",
+          "https://trawl.run/faq"
+        ]
+      },
+      "brokerFX": {
+        "status": "ORIGINAL_NATIVE_CASH_LEGS_VERIFIED_TRADES_EXPORT_OPEN",
+        "ledgerRows": 1499,
+        "distinctTradeRefs": 229,
+        "directFiatTradeGroups": {
+          "USDToEUR": 1,
+          "EURToUSD": 0
+        },
+        "candidate": {
+          "ledgerLegs": 3,
+          "positiveFeeLeg": true,
+          "feeLedgerAsset": "FEE",
+          "grossFeeLegZero": true,
+          "bookingTimeSame": true,
+          "bookingTimeUtc": true,
+          "bookingPrecision": "second",
+          "independentBookingBalanceDeltasExact": 3,
+          "impliedRateFromBookedFiatLegs": true,
+          "ordertxidAvailable": false,
+          "multipleFillsVerified": false,
+          "separateValueDateAvailable": false
+        },
+        "publicCandidate": {
+          "tradeRows": 65,
+          "ledgerRows": 143,
+          "sameTradeRefWithEURAndUSD": 0,
+          "case": "https://github.com/dcdpr/taxcount/tree/17ff30ea85497e91b01b3112da101ad81d67d0a4/references/kraken-tests"
+        },
+        "sourceReferences": [
+          "https://support.kraken.com/articles/360001184886-how-to-interpret-trades-history-fields",
+          "https://support.kraken.com/articles/360001169383-how-to-interpret-ledger-history-fields"
+        ]
+      },
+      "externalMinimumByPackage": {
+        "#159": "Freier Wallet-Saldo, Lamports des individuellen Stake-Kontos und historische StakeStateV2-Delegation am selben finalisierten Slot des fachlichen Stichtags. Bei weiter offenem Zeitpunkt den unveränderten Zustand über das belegte Tagesfenster nachweisen oder einen zeitlich zugeordneten Originalbeleg verwenden. Danach den regulären Import einschließlich Gebühr, Reward, Wiederimport, Rücknahme und verschlüsseltem Restore prüfen.",
+        "#174": "Nativer Trades-Export zur identifizierten Kraken-Ledgergruppe mit separaten Ausführungs-IDs derselben Order und vollständigem Ledger-ID-Abgleich. Alternativ ein zusammengehöriges natives FX-Order-/Cash-Paar. Danach beide Dateireihenfolgen, Wiederimport, Rücknahme und verschlüsselten Restore prüfen.",
+        "#148": "Nativer App-CSV zur österreichischen Einzelabrechnung aus #6103. Für Bitpanda separat unabhängiger Cash-Saldo und BCI25-Einzelmengen zum selben Stichtag.",
+        "#129": "Jahresreport und zugehörige Einzel-, Quartals- oder Erträgnisaufstellung desselben Depots und Steuerjahrs. Dazu fallbezogene unabhängige Fachprüfung der Kostenbasis.",
+        "#177/#256": "Reservierbarer physischer Android-Geräteplatz für Standalone-PWA, kontrolliertes Prozessende und nachweislich netzlosen Neustart mit der 10.000er-Fixture.",
+        "#44/#254": "Physisches Gerät mit beobachteter OS-Speicherbereinigung und getrenntes physisches Android-Zielgerät für den Restore aus der übertragenen verschlüsselten Datei.",
+        "#298": "Persistentes natives Safari-Profil über reale Nutzungstage für ITP. Separat autorisierter HTTP-Auslieferungsweg für Antwortheader auf exakt foliolab.unperfekt.at.",
+        "#124": "Rechtlich abgedeckte Reihe für IE00BK5BQT80 auf Xetra in EUR ab 25.07.2019 einschließlich Kapitalmaßnahmen oder lizenzierte Teilreihen mit ausreichend belegter Überlappung.",
+        "#405": "Autorisierter CMC-Projektabruf und belegter Anzeigeumfang für den konkreten Pages-Auslieferungsweg. Separat ein offiziell freigegebener CNN-Feed oder Embed mit passendem Anzeigeumfang.",
+        "#268": "Zusammengehöriger erster Provider-Rohbody, Originalcursor und unveränderte Folgeantwort des Privatfalls.",
+        "#160/#427": "Unabhängiger Reviewbefund zum Head 84ef0b3746d48f24a7b130ecce80c6409f579463. Nach Sicherheitsfreigabe autorisierte OAuth-Origin, Testkonto und zwei geeignete Geräte für Schreiben, unabhängigen Readback, Konflikt und Widerruf."
+      }
     }
   }
 }
