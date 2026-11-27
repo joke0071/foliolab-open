@@ -2278,7 +2278,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #morePage details>summary::after{border-color:currentColor}
 .page .projection-result,.page .position-detail-grid{background:var(--surface);border-color:var(--line)}
 @media(max-width:720px){
- .mobile-nav{background:#f7f8fc;border-top:1px solid var(--line)}
+ .mobile-nav{background:#f7f8fc;border-top:0}
  .mobile-nav button{color:var(--muted);min-height:52px}
  .mobile-nav button svg{box-sizing:content-box;padding:3px 9px;border-radius:24px}
  .mobile-nav button.active{color:var(--on-tonal)}
@@ -2292,7 +2292,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 }
 .dashboard-history .compact-panel-head h2,.dashboard-history .dashboard-metric-label,
 #dashboardPage .dashboard-history .link-button,.dashboard-history #totalValue{color:#fff}
-.dashboard-history :is(.small-help,.chart-zero,.chart-x-labels,.chart-y-labels){color:#e3eaff}
+#dashboardPage .dashboard-history :is(.small-help,.chart-zero,.chart-x-labels,.chart-y-labels){color:#e3eaff}
 .dashboard-history #totalValue{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em}
 .dashboard-history #dashboardChange{
  display:inline-block;background:#e3ebff;color:#162b59;padding:3px 10px;border-radius:20px
@@ -2316,7 +2316,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #dashboardPage .allocation-center::before{
  content:'';width:22px;height:22px;flex:none;background:center/contain no-repeat url('./icons/flask.svg')
 }
-#dashboardPage .dashboard-providers .provider-accordion{border:0;margin-block:3px}
+#dashboardPage .dashboard-providers .provider-accordion{border-color:var(--line);margin-block:3px}
 #dashboardPage .dashboard-providers .provider-row{padding-inline:10px;border-radius:12px;background:var(--surface)}
 #dashboardPage .dashboard-providers .provider-row:hover{background:#e7ebf3}
 .dashboard-providers :is(.provider-total,.provider-name){color:var(--ink)}
@@ -2355,3 +2355,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #miniChart .series-area{fill:var(--chart-area)}
 #miniChart .series-line{stroke:var(--chart-series)}
 #miniChart .series-point{fill:var(--chart-series)}
+@media(min-width:721px){
+ #miniChartPeriods .period-more-list button{background:#294fb6;color:#fff;border-radius:7px}
+ #miniChartPeriods .period-more-list button.selected{background:#fff;color:var(--on-tonal)}
+}
