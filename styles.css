@@ -2247,6 +2247,7 @@
 body,.layout,.workspace,.mobile-header,.sidebar{background:var(--canvas);color:var(--ink)}
 .logo,.mobile-header .logo{color:#15171b}
 .logo .logo-dot{color:#00a84f}
+.logo .brand-flask{display:block;width:32px;height:32px;flex:none}
 .logo-beta{background:var(--surface);color:var(--muted)}
 .panel,dialog{color:var(--ink);border-color:var(--line);border-radius:20px}
 .panel-head h2,.page h2,.page h3,.dialog-head h2{color:var(--ink)}
