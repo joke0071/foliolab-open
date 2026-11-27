@@ -1712,6 +1712,139 @@
         "#268": "Zusammengehöriger erster Provider-Rohbody, Originalcursor und unveränderte Folgeantwort des Privatfalls.",
         "#160/#427": "Unabhängiger Reviewbefund zum Head 84ef0b3746d48f24a7b130ecce80c6409f579463. Nach Sicherheitsfreigabe autorisierte OAuth-Origin, Testkonto und zwei geeignete Geräte für Schreiben, unabhängigen Readback, Konflikt und Widerruf."
       }
+    },
+    "qualificationAfter5bb8db3b": {
+      "checkpoint": "5bb8db3b70f88b2533918671fdd5b862258f7278",
+      "releaseCommit": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+      "recordedAt": "2026-11-27T13:54:07+00:00",
+      "packageCounts": {
+        "coreAccepted": 6,
+        "coreTotal": 6,
+        "followUpBefore": 18,
+        "followUpAfter": 18,
+        "followUpTotal": 29
+      },
+      "production": {
+        "version": "SW348",
+        "entryPathsByteEqualToMain": [
+          "/",
+          "/index.html",
+          "/sw.js"
+        ],
+        "productChanged": false,
+        "newProductionAcceptances": 0
+      },
+      "ledgerStaking": {
+        "status": "CUTOFF_DAY_REWARD_VERIFIED_PORTFOLIO_SLOT_UNRESOLVED",
+        "epoch": 1061,
+        "boundarySlot": 458352000,
+        "boundaryBlockHeight": 436387262,
+        "partitions": 551,
+        "partition": 449,
+        "partitionZeroStakingRowsCrossChecked": 2037,
+        "rewardSlot": 458352450,
+        "height": 436387712,
+        "rewardUtc": "2026-10-18T07:31:04+00:00",
+        "precedingFinalizedSlot": 458352449,
+        "precedingSlotSameUtcSecond": true,
+        "rewardType": "Staking",
+        "matchingRewards": 1,
+        "positiveLamportsAndPostBalanceVerifiedLocally": true,
+        "transactionAccountChecks": [
+          {
+            "tx": 380,
+            "slot": 458352449,
+            "walletTransactions": 0,
+            "stakeTransactions": 0
+          },
+          {
+            "tx": 913,
+            "slot": 458352450,
+            "walletTransactions": 0,
+            "stakeTransactions": 0
+          }
+        ],
+        "publicQueriesOnlyBySlotAndEpoch": true,
+        "windowsByAssumedTimezone": {
+          "Europe/Vienna": {
+            "beforeReward": [
+              458194430,
+              458352449
+            ],
+            "fromReward": [
+              458352450,
+              458592880
+            ]
+          },
+          "UTC": {
+            "beforeReward": [
+              458227565,
+              458352449
+            ],
+            "fromReward": [
+              458352450,
+              458626069
+            ]
+          }
+        },
+        "portfolioQualification": {
+          "identicalPrimaryBackupCopies": 2,
+          "snapshotsPerPrimaryCopy": 8,
+          "separateEarlierBackupSnapshots": 4,
+          "earliestManualSnapshotCreatedUtc": "2026-10-18T19:42:00.481000+00:00",
+          "snapshotCreationIsProvenBalanceObservationTime": false,
+          "notesStatedAccountCount": 1,
+          "recordedWalletMatchesDelegationFeePayer": true,
+          "positionAmountMatchesEitherLocalAccountEdge": false,
+          "exactPortfolioCaptureSlotOrSideFound": false,
+          "sameSlotFreeWalletStakeAndDelegationVerified": false
+        },
+        "bulkArchiveDownloaded": false
+      },
+      "brokerFX": {
+        "status": "BOOKED_BALANCES_VERIFIED_ORDER_AND_EXECUTIONS_UNRESOLVED",
+        "sourceArchiveScan": {
+          "sourceFiles": 22,
+          "textMembersChecked": 6970,
+          "nestedZipMembersInspected": 22,
+          "nestedTarMembersInspected": 27,
+          "unreadableZipMembers": 1,
+          "krakenFullHeaders": 0,
+          "krakenPartialHeaders": 0
+        },
+        "krakenLedgerAndFlatexCashChecks": {
+          "ledgerRows": 1499,
+          "tradeGroups": 229,
+          "currencyGroups": 1,
+          "ledgerLegs": 3,
+          "balancesExact": true,
+          "separateFeeAsset": true,
+          "nativeCashRows": 862,
+          "nativeDepotRows": 2676,
+          "currencyOrConversionCashRows": 0,
+          "orderCashRowsWithCurrencyOrConversion": 0,
+          "foreignQuoteTradeRows": 0,
+          "cashOrdersMatchedByExplicitOrderReference": 0,
+          "cashOrdersWithMultipleIdentifiedExecutions": 0
+        },
+        "authorizedKrakenTradesAccessFound": false,
+        "nativeTradesCounterpartFound": false,
+        "ordersExecutionCountVerified": false
+      },
+      "regionalTradeRepublic": {
+        "sourceIssue": "https://github.com/portfolio-performance/portfolio/issues/6103",
+        "nativeAppCsvFixturesCompared": 7,
+        "issuanceReferenceIsinOrQuantityMatched": false
+      },
+      "fearAndGreed": {
+        "cmcIntegratedDisplayRightsForRegisteredPlan": "https://pro.coinmarketcap.com/user-agreement-commercial/",
+        "buildTimeIntegratedDisplayWithoutStandaloneDataRouteChecked": true,
+        "basicAccountConfirmationFound": true,
+        "latestEndpointDocumentedForBasic": true,
+        "authorizedRegisteredPlanAccessFound": false,
+        "cnnOriginalPage": "https://edition.cnn.com/markets/fear-and-greed",
+        "cnnOfficialIndexFrameAncestorsIncludesFolioLab": false
+      }
     }
   }
 }
