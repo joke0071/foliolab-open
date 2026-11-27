@@ -1,4 +1,4 @@
-import {returnFromSection} from './browser-disclosures.mjs';
+import {revealAction,returnFromSection} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -59,7 +59,8 @@ async function password(p,value){
  await p.waitForFunction(()=>document.getElementById('backupPasswordStatus').textContent==='Backup-Passwort eingerichtet');
 }
 async function download(p,selector){
- const event=p.waitForEvent('download');await p.locator(selector).click();
+ const action=p.locator(selector);await revealAction(action);
+ const event=p.waitForEvent('download');await action.click();
  return readFile(await(await event).path(),'utf8');
 }
 async function record(p){

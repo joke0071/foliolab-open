@@ -41,9 +41,11 @@ try{
   page.evaluate(()=>navigator.serviceWorker.dispatchEvent(new Event('controllerchange')))
  ]);
  assert.equal(await page.evaluate(()=>localStorage.getItem('pwa-version-test')),'preserved');
- assert.match(await page.locator('#pageTitle').innerText(),/Vermögensentwicklung/);
+ await page.waitForFunction(()=>document.getElementById('appStartup').hidden);
+ assert.equal(await page.locator('#pageTitle').innerText(),'Historische Referenzwerte');
+ assert.equal(new URL(page.url()).hash,'#snapshotManager');
  assert.equal(await page.locator('#historyPage .history-panel > .panel-head').count(),0,'No redundant title in the chart card');
- assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
+ assert.ok(await page.locator('#snapshotManager').evaluate(el=>el.open));
 
  console.log('PWA UPDATE: idle pages reload, active editor is protected and browser data survives PASS');
 }finally{
