@@ -43,7 +43,7 @@ const verifyTargets=async(root,width)=>{
  const targets=root.locator('button:visible, .period-more > summary:visible');
  const rects=await targets.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height,top:r.top};}));
  assert.equal(rects.length,narrow?6:7,'inline options and the More disclosure remain reachable');
- assert.ok(rects.every(r=>r.width>=44&&r.height>=44),'Touch targets below 44px at '+width+': '+JSON.stringify(rects));
+ assert.ok(rects.every(r=>r.width>=48&&r.height>=48),'Touch targets below 48px at '+width+': '+JSON.stringify(rects));
  assert.equal(new Set(rects.map(r=>Math.round(r.top))).size,1,'Adaptive period row at '+width+': '+JSON.stringify(rects));
  await checkAxe(root,width,'disclosure closed');
  const summary=root.locator('.period-more > summary');
@@ -103,7 +103,7 @@ try{
  assert.equal(await mini.locator('[data-mini-range="month"]').getAttribute('aria-pressed'),'true');
  const monthPoints=await page.locator('#miniChart [data-chart-points]').getAttribute('data-chart-points');
  assert.equal(JSON.parse(monthPoints).length,2);
- for(const width of [320,360,390,430,767,768,1024,1440]){
+ for(const width of [320,360,375,390,430,767,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   await page.locator('#mobileNav [data-page="dashboard"]:visible, #sidebarNav [data-page="dashboard"]:visible').click();
   await verifyTargets(mini,width);
@@ -177,5 +177,5 @@ try{
   {label:'1 J',pressed:'false',range:'365'}
  ]);
  assert.deepEqual(await record(),before,'period selection, responsive relocation and keyboard preserve the entire raw/settings/revision record');
- console.log(engine+': CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/Escape/focus, Axe, active 3/5-year disclosure, 320–1440px, exact IDB preservation and retained screenshots PASS');
+ console.log(engine+': CHART PERIOD CONSISTENCY: filtering, 48px mobile period targets, keyboard/Escape/focus, Axe, active 3/5-year disclosure, 320–1440px, exact IDB preservation and retained screenshots PASS');
 }finally{await browser.close();}

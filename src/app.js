@@ -3081,6 +3081,16 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
  if(!control||recoveryControlAllowed(control))return;
  event.preventDefault();event.stopImmediatePropagation();
 },true);
+// Preserve the full monetary value when large accessibility text exceeds its column.
+function installDashboardAmountSizing(){
+ const amount=$('totalValue');
+ function syncText(){
+  amount.style.setProperty('--amount-length',String(Math.max(1,amount.textContent.length)));
+ }
+ new MutationObserver(syncText).observe(amount,{childList:true,characterData:true,subtree:true});
+ syncText();
+}
+installDashboardAmountSizing();
 initNav();initEvents();installCredentialVisibility();
 headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
