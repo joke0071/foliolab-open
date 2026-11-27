@@ -1131,6 +1131,209 @@
     }
   },
   "executionDelta": {
+    "qualificationAfter74c68fd6": {
+      "checkpoint": "74c68fd64eb3c5d1a7da4c90aa1361b88937f8b5",
+      "releaseCommit": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+      "packageCounts": {
+        "coreAccepted": 6,
+        "coreTotal": 6,
+        "followUpBefore": 18,
+        "followUpAfter": 18,
+        "followUpTotal": 29
+      },
+      "repository": {
+        "openPullRequests": [
+          430,
+          429,
+          427,
+          350,
+          348,
+          161
+        ],
+        "queuedRuns": 0,
+        "inProgressRuns": 0,
+        "waitingRuns": 0,
+        "latestCompletedRun": "https://github.com/joke0071/foliolab-open/actions/runs/45947703618"
+      },
+      "production": {
+        "origin": "https://foliolab.unperfekt.at",
+        "httpStatus": 200,
+        "byteComparedWithRelease": [
+          "/",
+          "/index.html",
+          "/sw.js"
+        ],
+        "indexSHA256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+        "workerSHA256": "761c17def696c8998cbb2cff8ca1d4a65972918acc9a60a0cb90d7d1d16edaa8",
+        "workerCache": "foliolab-open-v348",
+        "cspResponseHeader": null,
+        "xFrameOptions": null,
+        "cname": "joke0071.github.io.",
+        "authoritativeDnsProvider": "helloly",
+        "authorizedHeaderRouteAvailable": false
+      },
+      "brokerFX": {
+        "liveProfile": "SW348",
+        "degiroSharedProfile": false,
+        "flatexSharedMultipleExecutionSupport": "Two or three separately identified EUR executions with one documented EUR cash leg",
+        "authorizedExistingFlatex": {
+          "depotRows": 2676,
+          "accountRows": 862,
+          "classifiedTrades": 401,
+          "foreignCurrencyTrades": 0,
+          "ordersWithMultipleDistinctExecutions": 0,
+          "qualifiedEurPairs": 401
+        },
+        "authorizedExistingKraken": {
+          "ledgerRows": 1499,
+          "tradeRows": 687,
+          "eurOrUsdTradeLegs": 219,
+          "matchingTradesExportAvailable": false,
+          "tradesCsvImportedAsSource": false,
+          "documentedCrossReference": "https://support.kraken.com/articles/360001184886-how-to-interpret-trades-history-fields"
+        }
+      },
+      "archives": {
+        "since": "2026-11-27T05:56:24Z",
+        "checkedSources": [
+          "authorized project Drive",
+          "Library",
+          "mail"
+        ],
+        "newPairedEthRawReplies": false,
+        "newBitpandaCutoffAccountEvidence": false,
+        "newDriveReviewArtifact": false
+      },
+      "regionalImports": {
+        "candidate": "https://github.com/portfolio-performance/portfolio/issues/6103",
+        "austrianBranchExplicit": true,
+        "nativeAppCsvInIssueOrComment": false,
+        "bitpandaMissing": [
+          "independent cash balance",
+          "individual BCI25 quantities for the same cutoff"
+        ]
+      },
+      "austrianTax": {
+        "example": "https://www.broker-test.at/news/steuerreporting-flatex-oesterreich/",
+        "linkedOverview": "https://www.broker-test.at/news/steuerreports-31-maerz/",
+        "issuer": "https://www.flatex.at/service/faqs/detail/steuern/allgemein-zu-steuern/welche-steuerdokumente-werden-ausgegeben/",
+        "sameDepotDetailedDocumentsFound": false,
+        "caseSpecificIndependentReviewAvailable": false
+      },
+      "devices": {
+        "os": "Linux",
+        "cloudBrowser": "Chrome",
+        "localADBAvailable": false,
+        "localUSBDeviceBusAvailable": false,
+        "eligiblePhysicalAndroidSessionAvailable": false,
+        "eligiblePersistentNativeSafariProfileAvailable": false,
+        "projectRunnerApiHttpStatus": 401
+      },
+      "benchmark": {
+        "originalListing": "https://www.cashmarket.deutsche-boerse.com/resource/blob/1591188/a542df1ae2684b5c12f554f0295aabe0/data/Introduction_notice.pdf",
+        "isin": "IE00BK5BQT80",
+        "mic": "XETR",
+        "currency": "EUR",
+        "firstTradingDate": "2019-07-25",
+        "historicRegistry": "https://registry.opendata.aws/deutsche-boerse-pds/",
+        "registryLicense": "Noncommercial",
+        "officialRepositoryHttpStatus": 404,
+        "inspectedPublicMirrors": [
+          "vekonyz/dbg-pds",
+          "jacobumland/vbd-xetra-dbg-pds",
+          "Originate/dbg-pds-tensorflow-demo"
+        ],
+        "requiredSeriesInInspectedMirrors": false,
+        "licensedContinuousDisplaySeriesAvailable": false
+      },
+      "sentiment": {
+        "cmc": {
+          "pricing": "https://coinmarketcap.com/api/pricing/",
+          "cachingGuide": "https://coinmarketcap.com/api/documentation/guides/best-practices",
+          "authorizedProjectCredentialAvailable": false,
+          "publicPagesDataFilePermissionVerified": false,
+          "integratedProductUseDescribedForBasic": true,
+          "cachingDocumentedInProviderGuide": true
+        },
+        "cnn": {
+          "officialHistoricalRightsRoute": "https://commercial.cnn.com/our-solutions/content-sales/",
+          "eligibleOfficialEmbedOrFeedLocated": false
+        }
+      },
+      "drive": {
+        "url": "https://github.com/joke0071/foliolab-open/pull/427",
+        "reviewHead": "84ef0b3746d48f24a7b130ecce80c6409f579463",
+        "reviews": 0,
+        "reviewThreads": 0,
+        "conversationComments": 0,
+        "requestedReviewers": 0
+      },
+      "verification": {
+        "localImportTestsPassed": 27,
+        "localImportTestsFailed": 0,
+        "productChange": false
+      },
+      "ledgerStaking": {
+        "status": "CHAIN_EVIDENCE_ACCEPTED_FOR_ONE_DELEGATION_PORTFOLIO_CUTOFF_OPEN",
+        "sourceReport": {
+          "parsedRows": 357,
+          "stakeObservations": 17,
+          "stakeObservationsWithTimeReferenceAmountAndFee": 17,
+          "delegationsWithOperationAmountEqualToFee": 6
+        },
+        "publicQueriesOnlyByTimeAndSlot": true,
+        "sourceReferences": [
+          "https://solana.com/docs/rpc/http/getblock",
+          "https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0118-partitioned-epoch-reward-distribution.md",
+          "https://docs.rs/solana-epoch-rewards-hasher/latest/src/solana_epoch_rewards_hasher/lib.rs.html",
+          "https://github.com/LedgerHQ/ledger-live/blob/63fab1fa6e64cdf76d9b05ee77d45dd78875b12c/libs/coin-modules/coin-solana/src/logic/listOperations.ts#L591-L597"
+        ],
+        "delegation": {
+          "initialCandidateWindow": 71,
+          "sameSecondCandidates": 2,
+          "exactSignatureMatches": 1,
+          "timeOffsetSeconds": 0,
+          "successful": true,
+          "individualStakeAccountFromInstruction": true,
+          "stakeInitializedAndDelegated": true,
+          "ledgerWalletIsFeePayer": true,
+          "independentFreeAndStakePrePostBalances": true,
+          "openingStakeBalanceZero": true,
+          "feeMatchesLedgerInLamports": true,
+          "operationAmountRepresentsFeeForMatchedDelegation": true,
+          "feeAdjustedFreeOutflowExactlyEqualsStakeFunding": true,
+          "stakeAuthorityMatchesLedgerWallet": true
+        },
+        "rewards": {
+          "firstFollowingEpoch": {
+            "matchingRewards": 0,
+            "partitionMappingValidated": true
+          },
+          "secondFollowingEpoch": {
+            "matchingRewards": 1,
+            "partitionMappingValidated": true,
+            "positiveRewardAndPostBalance": true
+          },
+          "method": "Local stake address hashing using public epoch parent block hash and reward partition count. Query public reward blocks by slot and match locally.",
+          "nearPortfolioCutoff": {
+            "positiveRewardAndPostBalance": true,
+            "partitionMappingValidated": true,
+            "rewardBlockAtOrBeforeCutoff": true,
+            "fullStateAtCutoffVerified": false
+          }
+        },
+        "releasePreviewWriteEnabled": false,
+        "missing": "Independent account state at the later portfolio cutoff: free wallet lamports plus allocated stake account lamports and StakeStateV2 delegation fields for the same slot. Financial product import, undo, and restore remain unevaluated for this original case.",
+        "releasePreview": {
+          "browser": "Chromium 158.0.8127.0",
+          "origin": "loopback",
+          "sourceRows": 357,
+          "writeEnabled": false,
+          "indexedDbRecordUnchanged": true,
+          "externalRequests": 0
+        }
+      }
+    },
     "checkpoint": "ee0c0027b6f4836402be5617626228fc8af752ac",
     "releaseCommit": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
     "packageCounts": {
