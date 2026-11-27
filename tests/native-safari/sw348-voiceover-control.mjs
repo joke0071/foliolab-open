@@ -6,51 +6,43 @@ import { spawn } from 'node:child_process';
 import { setTimeout as pause } from 'node:timers/promises';
 import { voiceOver, MacOSKeyCodes, macOSActivateId, voiceOverKeyCodeCommands } from '@guidepup/guidepup';
 
-const html = `<!doctype html><meta charset="utf-8"><title>VoiceOver control</title>
-<div id="target"></div><script type="module">
+const controlPage = `<!doctype html><meta charset="utf-8"><title>VoiceOver control</title>
+<button id="control">FolioLab Kontrollansage Sieben</button><script type="module" src="/__observer.js"></script>`;
+
+const observer = `
 let processed;
 setInterval(async () => {
-  const { stage } = await (await fetch('/state')).json();
-  if (!stage || stage === processed) return;
-  const root = document.querySelector('#target');
-  if (stage === 'control') {
-    root.innerHTML = '<button id="control">FolioLab Kontrollansage Sieben</button>';
-    root.firstElementChild.focus();
-    processed = stage;
-    await fetch('/observed', {method:'POST',body:JSON.stringify({stage, id:document.activeElement.id, browser:navigator.userAgent})});
-    return;
-  }
-  let frame = root.querySelector('iframe');
-  if (!frame) {
-    root.innerHTML = '<iframe title="FolioLab Open" src="/app/index.html" width="100%" height="700"></iframe>';
-    return;
-  }
-  const doc = frame.contentDocument;
-  if (!doc?.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')) return;
-  const selectors = { link:'.skip-to-content', main:'#mainContent', positions:'nav [data-page="positions"]', bookings:'nav [data-page="bookings"]' };
-  const expected = [...doc.querySelectorAll(selectors[stage])].find(node => node.getBoundingClientRect().width > 0);
+  const { stage } = await (await fetch('/__state')).json();
+  if (!stage || stage === processed || !document.hasFocus()) return;
+  const control = location.pathname === '/';
+  if ((stage === 'control') !== control) return;
+  if (!control && !document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')) return;
+  const selectors = { control:'#control', link:'.skip-to-content', main:'#mainContent', positions:'nav [data-page="positions"]', bookings:'nav [data-page="bookings"]' };
+  const expected = [...document.querySelectorAll(selectors[stage])].find(node => node.getBoundingClientRect().width > 0);
   if (!expected) return;
-  if (stage !== 'main') {
-    frame.contentWindow.focus();
-    expected.focus();
-  }
-  if (doc.activeElement !== expected) return;
+  if (stage !== 'main') expected.focus();
+  if (document.activeElement !== expected) return;
   processed = stage;
-  await fetch('/observed', {method:'POST',body:JSON.stringify({stage, id:expected.id, tag:expected.tagName, browser:navigator.userAgent, hash:frame.contentWindow.location.hash, selector:selectors[stage], label:expected.getAttribute('aria-label') || (stage === 'main' ? doc.getElementById('pageTitle').textContent : expected.textContent.trim())})});
-}, 300);
-</script>`;
+  await fetch('/__observed', {method:'POST',body:JSON.stringify({
+    stage, id:expected.id, tag:expected.tagName, browser:navigator.userAgent, hash:location.hash,
+    selector:selectors[stage], label:expected.getAttribute('aria-label') || (stage === 'main' ? document.getElementById('pageTitle').textContent : expected.textContent.trim()),
+  })});
+}, 250);
+`;
 
 const app = spawn('python3', ['-m', 'http.server', '4187', '--bind', '127.0.0.1'], { stdio: 'ignore' });
 const observations = new Map();
-const report = { product: '4e3e4a256ce0d81946ed6907b965d1f30aac33fe', runnerImage: process.env.ImageVersion, scope: 'Real Safari, unchanged local product bytes in same-origin observation frame, real system VoiceOver.', stages: [] };
+const report = { product: '4e3e4a256ce0d81946ed6907b965d1f30aac33fe', runnerImage: process.env.ImageVersion, scope: 'Real Safari, top-level local release with only an external focus observer added to HTML, real system VoiceOver.', stages: [] };
 let stage;
 const server = createServer(async (request, response) => {
   try {
     if (request.url === '/') {
-      response.writeHead(200, {'Content-Type':'text/html; charset=utf-8'}).end(html);
-    } else if (request.url === '/state') {
+      response.writeHead(200, {'Content-Type':'text/html; charset=utf-8'}).end(controlPage);
+    } else if (request.url === '/__observer.js') {
+      response.writeHead(200, {'Content-Type':'text/javascript; charset=utf-8'}).end(observer);
+    } else if (request.url === '/__state') {
       response.writeHead(200, {'Cache-Control':'no-store'}).end(JSON.stringify({stage}));
-    } else if (request.url === '/observed' && request.method === 'POST') {
+    } else if (request.url === '/__observed' && request.method === 'POST') {
       let body = '';
       for await (const chunk of request) body += chunk;
       const value = JSON.parse(body);
@@ -58,8 +50,11 @@ const server = createServer(async (request, response) => {
       response.writeHead(204).end();
     } else if (request.url.startsWith('/app/')) {
       const upstream = await fetch('http://127.0.0.1:4187' + request.url.slice(4));
-      response.writeHead(upstream.status, {'Content-Type':upstream.headers.get('content-type') || 'application/octet-stream'})
-        .end(Buffer.from(await upstream.arrayBuffer()));
+      const type = upstream.headers.get('content-type') || 'application/octet-stream';
+      const body = request.url === '/app/index.html'
+        ? (await upstream.text()).replace('</body>', '<script type="module" src="/__observer.js"></script></body>')
+        : Buffer.from(await upstream.arrayBuffer());
+      response.writeHead(upstream.status, {'Content-Type':type}).end(body);
     } else {
       response.writeHead(404).end();
     }
@@ -74,7 +69,7 @@ async function observe(name, wanted, activate = false) {
   report.stages.push(sample);
   stage = name;
   if (activate) await voiceOver.perform({keyCode:MacOSKeyCodes.Return,modifiers:[]}, {capture:true});
-  for (let attempt = 0; attempt < 18 && !observations.has(name); attempt++) await pause(500);
+  for (let attempt = 0; attempt < 45 && !observations.has(name); attempt++) await pause(500);
   sample.focus = observations.get(name);
   assert.ok(sample.focus, 'Safari focus receipt missing for ' + name);
   const capture = async () => {
@@ -84,6 +79,10 @@ async function observe(name, wanted, activate = false) {
   await capture();
   if (!sample.spoken) {
     await voiceOver.perform(voiceOverKeyCodeCommands.moveCursorToKeyboardFocus, {capture:true});
+    await capture();
+  }
+  if (!sample.spoken) {
+    await voiceOver.perform(voiceOverKeyCodeCommands.hearItemDescription, {capture:true});
     await capture();
   }
   if (!sample.spoken && name === 'control') {
@@ -107,6 +106,8 @@ try {
   await observe('control', /FolioLab Kontrollansage Sieben/i);
   assert.match(report.stages[0].focus.browser, /Version\/[^ ]+ Safari\//);
   report.phase = 'FolioLab';
+  execFileSync('open', ['-a', 'Safari', 'http://127.0.0.1:' + server.address().port + '/app/index.html']);
+  await macOSActivateId('com.apple.Safari');
   await observe('link', /Direkt zum Inhalt/i);
   await observe('main', /Übersicht|Hauptinhalt|main/i, true);
   assert.equal(observations.get('main').id, 'mainContent');
