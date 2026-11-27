@@ -66,7 +66,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    writeFileSync(`artifacts/gates/ui-quality-${engine}-startup-failure.json`,JSON.stringify({engine,errors,state:await p.evaluate(()=>({url:location.href,timeOrigin:performance.timeOrigin,readyState:document.readyState,controller:navigator.serviceWorker.controller?.scriptURL??null,controllerState:navigator.serviceWorker.controller?.state??null,storage:document.getElementById('portfolioStorageState')?.textContent??null,logos:[...document.querySelectorAll('.logo')].map(e=>e.outerHTML)}))},null,2));
    throw error;
   }
-  assert.equal(await p.locator('#cashTermsOverview').evaluate(e=>!!e.previousElementSibling?.matches('.provider-accordion')),true,'liquidity below providers');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
+  assert.ok(await p.locator('#cashTermsOverview').evaluate(e=>e.parentElement.previousElementSibling?.id==='providerOverview'),'liquidity follows the framed providers');
+  assert.ok(await p.locator('#providerOverview').evaluate(e=>parseFloat(getComputedStyle(e).borderLeftWidth)>0),'one outline around all providers');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
   for(const width of [320,390,430,768,1440]){
    await p.setViewportSize({width,height:560});assert.equal(await p.locator('a.logo:visible').count(),1);if(width<=720)assert.equal(await p.locator('.mobile-header').evaluate(e=>{const a=e.querySelector('.logo').getBoundingClientRect(),b=e.querySelector('.header-status-actions').getBoundingClientRect();return a.right<=b.left;}),true,'Home link does not overlap storage status');
    await nav('bookings');

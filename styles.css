@@ -2297,9 +2297,11 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #dashboardPage .dashboard-side>.panel{border:0}
 #dashboardPage .alloc-legend-row{color:var(--ink);border-color:var(--line)}
 #dashboardPage .alloc-legend-row:is(:hover,.active){background:var(--surface)}
+#providerOverview.portfolio-list-panel{padding:6px}
 .dashboard-providers .provider-accordion+.provider-accordion{margin-top:6px}
 .dashboard-providers .provider-account+.provider-account{margin-top:8px}
-#dashboardPage .dashboard-providers .provider-row{padding-inline:10px;border-radius:12px;background:var(--surface)}
+#dashboardPage .dashboard-providers .provider-row{padding-inline:10px;border-radius:12px;background:transparent}
+#dashboardPage .dashboard-providers .provider-accordion[open]>.provider-row,
 #dashboardPage .dashboard-providers .provider-row:hover{background:#e7ebf3}
 .dashboard-providers :is(.provider-total,.provider-name){color:var(--ink)}
 .portfolio-loader-orbit circle:nth-child(1){stroke:#164cee}

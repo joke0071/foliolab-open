@@ -302,7 +302,8 @@ function renderDashboard(){const total=totalEUR(model);const aggregate=aggregate
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
   const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
-  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions)+renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
+  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
+  $('liquidityOverview').innerHTML=renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=wealth.samples;
   $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
