@@ -1,5 +1,31 @@
 # FolioLab Open · Checkpoint vom 27.11.2026
 
+## Verbindliche Designregeln für FolioLab
+
+**Gestaltungsziel vom 27.11.2026.** Übersicht, Verlauf, Positionen, Buchungen und Mehr sollen sich in Optik und Bedienung möglichst eng an aktuellen Google-Apps orientieren. Der Google-Gradient-Stil prägt die FolioLab-Marke und die Bereichsakzente. Für Navigation, Listen, Formulare und Dialoge gilt Material 3 Expressive. Die Regeln gelten auch für neue und überarbeitete Ansichten. [Gestaltungskandidat SW350](https://github.com/joke0071/foliolab-open/pull/445)
+
+### Visuelle Referenzen und ihre Anwendung
+
+| Gesichtete Referenz | Was FolioLab daraus übernimmt |
+| --- | --- |
+| [Googles Workspace-Icons](https://workspaceupdates.googleblog.com/2026/05/introducing-fresh-visual-identity-for-Google-Workspace-app-icons.html) und [Google-App-Icons vom November 2026](https://blog.google/products-and-platforms/products/messages/updated-icons-messages-phone-contacts/) | Klare Silhouetten und weiche Farbübergänge. Das FolioLab-App-Symbol trägt den mehrfarbigen Verlauf. Die Reiter erhalten unterscheidbare Farbfamilien. Für hervorgehobene Bereichssymbole leitet sich der Verlauf aus ihrer jeweiligen Farbfamilie ab. |
+| [Gmail-Einstellungen auf Android, Screenshot vom November 2026](https://www.androidauthority.com/wp-content/uploads/2026/11/New-Gmail-settings-page-redesign-2.jpg) | Farbige Kategoriesymbole, linksbündige Titel und kurze Erläuterungen gliedern eine ruhige, gerundete Liste. Diese Anordnung gilt als Vorbild für „Mehr“. Der kleine Stift zum Bearbeiten zeigt, wie sich eine lokale Aktion optisch unterordnet. |
+| [Google Drive auf Android, Screenshot der Listenansicht](https://9to5google.com/wp-content/uploads/sites/4/2026/01/Google-Drive-container-1.jpg?quality=82&strip=all) | Eine gemeinsame Fläche fasst die Liste zusammen. Der aktive Navigationspunkt hat eine getönte Kapsel. Das Plus zum Anlegen hebt sich von den wiederkehrenden Zeilenmenüs ab. Das ist das Vorbild für Positionen und Buchungen. |
+| [Google Finance auf Android, offizielle App-Screenshots](https://play.google.com/store/apps/details?id=com.google.android.apps.finance) | In der Kursansicht stehen Betrag und Veränderung über dem Diagramm. Die Datenlinie ist kräftig, die Füllung zurückhaltend und die Zeichenfläche ruhig. Übersicht und Verlauf räumen Zahlen und Einheiten denselben Vorrang ein. |
+
+### Komponenten und Bedienung
+
+- **Farbrollen.** Bereichsakzente aus SW350 durch Navigation, Unterreiter und zugehörige Dialoge führen. Anlageklassen haben eine eigene, feste Zuordnung über Ringsegment, Legende, Positionsliste und Kursdetail hinweg. Gewinn und Verlust sind zusätzlich an Vorzeichen oder Richtung erkennbar. Farbwerte, Verläufe, Abstände und Radien zentral definieren.
+- **Icons und Schaltflächen.** Gleiche Aktionen verwenden überall dasselbe Symbol, dieselbe optische Größe und Strichstärke. Die wichtigste Aktion erhält eine gefüllte Schaltfläche, eine nachgeordnete Aktion eine dezente Tönung oder Textform. Wiederkehrende Zeilenaktionen stehen als einfache Icons. Eine farbige Hinterlegung kennzeichnet eine festgelegte Rolle oder Auswahl. Hover, Tastaturfokus, gedrückter und deaktivierter Zustand bleiben unterscheidbar. [Google zu Schaltflächen](https://developer.android.com/develop/ui/compose/components/button)
+- **Typografie und Daten.** Die lokal verfügbare Roboto folgt einer gemeinsamen Skala für Hauptbetrag, Seitentitel, Abschnittstitel, Fließtext und Beschriftung. Für jede Rolle sind Größe, Gewicht und Zeilenhöhe festgelegt. Vergleichbare Beträge stehen mit ausgerichteten Ziffern untereinander. Lange Eurobeträge und deutsche Beschriftungen müssen mobil und bei 200 % Zoom lesbar bleiben. Das Zentrum des Allokationsrings ist den Finanzdaten vorbehalten. Der Kolben entfällt dort. [Material-Typografie](https://m3.material.io/styles/typography/applying-type)
+- **Navigation und Eingaben.** Hauptreiter, Unterreiter und Zeitraumwähler zeigen die aktive Auswahl eindeutig. Direktlink, Zurück und Vorwärts stellen die passende Ansicht samt Auswahl her. Dialoge führen den Fokus beim Schließen zum Auslöser zurück. Touch-Ziele erhalten auf Mobilgeräten möglichst 48 × 48 CSS-Pixel, auch bei kleinen sichtbaren Symbolen. [Google zu Touch-Zielen auf Android](https://developer.android.com/develop/ui/compose/accessibility/api-defaults)
+
+### Designabnahme
+
+1. Alle fünf Hauptbereiche nacheinander bei 320, 390, 768 und 1440 CSS-Pixeln durchgehen. Übersicht und Verlauf mit befülltem Portfolio prüfen, anschließend Position öffnen, Buchung bearbeiten und Einstellungen aufrufen. Dabei auch Unterreiter, Zeitraumwähler, Dialoge und leere Listen ansehen.
+2. Die Ansichten nebeneinander mit den Referenzbildern vergleichen. Für denselben Vorgang müssen Symbol, Hintergrund, Beschriftung und Bedienung übereinstimmen. Bereichswechsel, Klassenfarben und Wertänderungen müssen sich auf Anhieb unterscheiden lassen. Im Ringzentrum müssen Betrag und Beschriftung auch auf dem kleinsten Bildschirm Platz haben.
+3. Die Kernwege per Touch und Tastatur bedienen und bei 200 % Zoom wiederholen. Abweichungen an der gemeinsam verwendeten Komponente korrigieren und alle betroffenen Ansichten erneut prüfen. Die visuelle Abnahme erfolgt am umgesetzten Stand.
+
 ## Delta ab `5bb8db3b` · 27.11.2026
 
 **SW348 auf [Main `4e3e4a25`](https://github.com/joke0071/foliolab-open/commit/4e3e4a256ce0d81946ed6907b965d1f30aac33fe) produktiv bestätigt. 6/6 Kernbereiche, 18 → 18 von 29 Folgepaketen.** Die drei ausgelieferten Einstiegsdateien stimmen bytegenau mit Main überein. Beim Einstieg gab es sechs offene PRs und keinen aktiven Actions-Lauf. [Strukturierter Prüfbeleg](release-evidence/sw348-followup-execution-2026-11-27.json).
