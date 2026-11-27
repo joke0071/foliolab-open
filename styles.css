@@ -1823,7 +1823,7 @@
 #dashboardPage .stat-value{overflow-wrap:anywhere}
 
 .booking-transfer-actions{padding:12px 0 4px;min-width:0}
-.booking-transfer-actions .btn{min-height:44px;max-width:100%;white-space:normal}
+#bookingsPage .booking-transfer-actions .btn{min-height:48px;max-width:100%;white-space:normal}
 .transfer-counterparts{padding-left:20px;overflow-wrap:anywhere;font-size:14px;line-height:1.6}
 .transfer-booking-context{overflow-wrap:anywhere;font-weight:600}
 #bookingListHead{flex-wrap:wrap}
