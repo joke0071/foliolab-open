@@ -241,6 +241,7 @@ async function connectTarget(url) {
     });
   }
   return {
+    id:target.id,
     send,
     close:() => socket.close(),
     async value(expression) {
@@ -302,59 +303,69 @@ function describe(values) {
 }
 async function benchmark(version, truth) {
   const receipts = report.products[version];
-  for (const kind of ['cold','warm','offline']) {
-    const samples = [];
-    receipts[kind] = {samples};
-    if (kind === 'offline') {
-      shell('cmd','connectivity','airplane-mode','enable');
-      shell('svc','wifi','disable');
-      shell('svc','data','disable');
-      await stopOrigin(version);
-      adb('reverse','--remove','tcp:'+products[version].port);
-      receipts.offline.android = {
-        airplaneMode:shell('settings','get','global','airplane_mode_on'),
-        wifiOn:shell('settings','get','global','wifi_on'),
-        dataOn:shell('settings','get','global','mobile_data'),
-        reverseRoutes:adb('reverse','--list'),
-      };
-      assert.equal(receipts.offline.android.airplaneMode,'1');
-      assert.equal(receipts.offline.android.wifiOn,'0');
-      assert.ok(!receipts.offline.android.reverseRoutes.includes('tcp:'+products[version].port));
-      await assert.rejects(fetch(origin(version)+'/'));
-    }
-    try {
-      for (let index=0;index<5;index++) {
-        if (kind !== 'warm') stopChrome();
-        else assert.ok(shell('pidof '+browserPackage+' || true'),'Warm keeps the browser process');
-        let start = performance.now();
-        const platformStart = kind==='warm' ? null : navigate(origin(version)+'/');
-        const tab = await connectTarget(origin(version));
-        try {
+  let tab;
+  try {
+    for (const kind of ['cold','warm','offline']) {
+      const samples = [];
+      receipts[kind] = {samples};
+      if (kind === 'offline') {
+        tab?.close();
+        tab = null;
+        shell('cmd','connectivity','airplane-mode','enable');
+        shell('svc','wifi','disable');
+        shell('svc','data','disable');
+        await stopOrigin(version);
+        adb('reverse','--remove','tcp:'+products[version].port);
+        receipts.offline.android = {
+          airplaneMode:shell('settings','get','global','airplane_mode_on'),
+          wifiOn:shell('settings','get','global','wifi_on'),
+          dataOn:shell('settings','get','global','mobile_data'),
+          reverseRoutes:adb('reverse','--list'),
+        };
+        assert.equal(receipts.offline.android.airplaneMode,'1');
+        assert.equal(receipts.offline.android.wifiOn,'0');
+        assert.ok(!receipts.offline.android.reverseRoutes.includes('tcp:'+products[version].port));
+        await assert.rejects(fetch(origin(version)+'/'));
+      }
+      try {
+        for (let index=0;index<5;index++) {
+          let start;
           let previous;
-          if (kind==='warm') {
-            previous = await tab.value('performance.timeOrigin');
+          let platformStart = null;
+          if (kind === 'warm') {
+            assert.ok(tab,'Warm reload reuses the last verified Chrome page target');
+            assert.ok(shell('pidof '+browserPackage+' || true'),'Warm reload preserves the browser process');
+            previous = (samples.at(-1)??receipts.cold.samples.at(-1)).timeOrigin;
             start = performance.now();
             await tab.send('Page.reload');
+          } else {
+            tab?.close();
+            tab = null;
+            stopChrome();
+            start = performance.now();
+            platformStart = navigate(origin(version)+'/');
+            tab = await connectTarget(origin(version));
           }
-          samples.push(await takeSample(tab,version,start,platformStart,kind,truth,previous));
-        } finally {
-          tab.close();
+          const sample = await takeSample(tab,version,start,platformStart,kind,truth,previous);
+          samples.push({...sample,target:tab.id});
+          console.log('SW'+version+' '+kind+' sample '+(index+1)+' verified');
+          await save();
         }
-        console.log('SW'+version+' '+kind+' sample '+(index+1)+' verified');
-        await save();
-      }
-      for (const metric of ['interactiveMs','readinessObservedMs','safeInteractionObservedMs']) {
-        receipts[kind][metric] = describe(samples.map(sample => sample[metric]));
-      }
-    } finally {
-      if (kind === 'offline') {
-        shell('cmd','connectivity','airplane-mode','disable');
-        shell('svc','wifi','enable');
-        shell('svc','data','enable');
-        adb('reverse','tcp:'+products[version].port,'tcp:'+products[version].port);
-        await startOrigin(version);
+        for (const metric of ['interactiveMs','readinessObservedMs','safeInteractionObservedMs']) {
+          receipts[kind][metric] = describe(samples.map(sample => sample[metric]));
+        }
+      } finally {
+        if (kind === 'offline') {
+          shell('cmd','connectivity','airplane-mode','disable');
+          shell('svc','wifi','enable');
+          shell('svc','data','enable');
+          adb('reverse','tcp:'+products[version].port,'tcp:'+products[version].port);
+          await startOrigin(version);
+        }
       }
     }
+  } finally {
+    tab?.close();
   }
 }
 async function encryptedExport(page) {
