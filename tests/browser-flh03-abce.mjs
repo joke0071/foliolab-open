@@ -132,8 +132,15 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   assert.deepEqual(unexpected,[],'Clean saved reload needs no warning');
   await openSavedNavigation();assert.deepEqual(await read(),savedRecord);
   p.on('dialog',async d=>{unexpected.push(d.type());await d.accept();});
+  // A selected destination has its own entry. Back traverses Mehr → Übersicht
+  // before leaving the app. Forward must restore both entries and the saved record.
+  await Promise.all([p.waitForURL(base),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);
+  await p.locator('#dashboardPage.active').waitFor();assert.deepEqual(await read(),savedRecord);
   await Promise.all([p.waitForURL(previous),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.equal(p.url(),previous);
   await Promise.all([p.waitForURL(url=>url.origin===new URL(base).origin),p.evaluate(()=>{setTimeout(()=>history.forward(),0);})]);await p.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
+  await p.locator('#dashboardPage.active').waitFor();
+  await Promise.all([p.waitForURL(url=>url.searchParams.get('page')==='more'),p.evaluate(()=>{setTimeout(()=>history.forward(),0);})]);
+  await p.locator('#morePage.active').waitFor();
   assert.deepEqual(await read(),savedRecord,'Saved state survives native Back/Forward');assert.deepEqual(unexpected,[],'Clean saved navigation needs no discard warning');
   console.log(engine+': baseline dirty local Escape/cancel/focus, zero draft writes, saved Reload/Back/Forward persistence PASS');
   report.engines.push({engine,status:'PASS',checks:['A startup/runtime rescue+restore','B proven/partial history','C expanded contrast','E empty history','baseline local discard+saved navigation']});
