@@ -61,6 +61,26 @@ for(const engine of engines){
   const manifest=await p.evaluate(async()=>await(await fetch('./manifest.webmanifest')).json());
   assert.equal(manifest.name,'FolioLab');assert.equal(manifest.short_name,'FolioLab');assert.equal(manifest.start_url,'./');assert.equal(manifest.scope,'./');assert.equal(manifest.display,'standalone');assert.equal(manifest.id,undefined);
   for(const icon of manifest.icons.filter(i=>i.type==='image/png')){const dimensions=await p.evaluate(async src=>{const i=new Image();i.src=src;await i.decode();return [i.naturalWidth,i.naturalHeight];},icon.src);assert.equal(dimensions.join('x'),icon.sizes);}
+  assert.deepEqual(manifest.related_applications,[{platform:'webapp',url:'./manifest.webmanifest'}]);
+  const mobile=await fresh({userAgent:'Mozilla/5.0 (Linux; Android 16) Chrome/147.0.0.0 Mobile Safari/537.36'});
+  await mobile.addInitScript(()=>{
+   window.__related='absent';
+   Object.defineProperty(navigator,'getInstalledRelatedApps',{value:async()=>{
+    if(window.__related==='unknown')throw new Error('Status unavailable');
+    return window.__related==='installed'?[{platform:'webapp',url:new URL('./manifest.webmanifest',location.href).href}]:[];
+   }});
+  });
+  await mobile.goto(base);await interactive(mobile);
+  const mobileIcon=mobile.locator('#installButtonMobile'),help=mobile.locator('#installHelpDialog');
+  await mobileIcon.click();assert.ok(await help.isVisible());
+  await help.getByRole('button',{name:'Installationshilfe schließen'}).click();
+  assert.ok(await mobileIcon.evaluate(el=>el===document.activeElement));
+  const reportState=async state=>mobile.evaluate(state=>{window.__related=state;document.dispatchEvent(new Event('visibilitychange'));},state);
+  for(const state of ['installed','absent','unknown','absent']){
+   await reportState(state);await mobileIcon.waitFor({state:state==='absent'?'visible':'hidden'});
+  }
+  await mobileIcon.click();await mobile.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));
+  await help.waitFor({state:'hidden'});assert.equal(await mobileIcon.isVisible(),false);
   // A real refresh followed by failed persistence ends visibly; exact stored data survives.
   const quota=await fresh();await quota.route('https://api.coingecko.com/**',r=>r.fulfill({contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify({bitcoin:{eur:123,last_updated_at:Math.floor(Date.now()/1000)}})}));await quota.goto(base);await interactive(quota);
   await quota.evaluate(async()=>{const {blankModel,createProvider,createAccount,createPosition}=await import('./src/model.js'),{PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const m=blankModel();m.providers.push(createProvider({id:'loading-p',name:'Synthetic loading provider'}));m.accounts.push(createAccount({id:'loading-a',providerId:'loading-p',name:'Synthetic loading account',type:'exchange'},m));m.positions.push(createPosition({id:'loading-btc',providerId:'loading-p',accountId:'loading-a',kind:'crypto',coinId:'bitcoin',symbol:'BTC',name:'Synthetic Bitcoin',currency:'EUR',quantity:'1',price:'100'},m));m.settings.autoRefresh=false;const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();});

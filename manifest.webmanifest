@@ -4,6 +4,9 @@
   "description": "Dein lokales, unabhängiges Portfolio",
   "start_url": "./",
   "scope": "./",
+  "related_applications": [
+    {"platform": "webapp", "url": "./manifest.webmanifest"}
+  ],
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",

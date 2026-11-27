@@ -96,7 +96,7 @@ import {hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,decr
 import {openingCashInput} from './account-opening.js';
 import {setPositionArchived} from './portfolio-edit-actions.js';
 const installHintPreference=createInstallHintPreference();
-let installPromptBusy=false;
+let installPromptBusy=false,relatedInstallState='unknown',installCheckSequence=0;
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 document.getElementById('appStartupText').textContent='Lokale Daten werden vorbereitet …';
@@ -2963,9 +2963,14 @@ $('apiSettings').addEventListener('submit',async e=>{
   window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
   document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
    if(installPromptBusy)return;
-   const prompt=installPrompt;if(!prompt)return;
+   const prompt=installPrompt;
+   if(!prompt){
+    if(button.id==='installButtonMobile'&&relatedInstallState==='absent'&&!button.hidden)$('installHelpDialog').showModal();
+    return;
+   }
    installPromptBusy=true;installPrompt=null;updateInstallControls();
-   try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
+   try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');
+    if(choice?.outcome==='accepted'){++installCheckSequence;relatedInstallState='unknown';}}catch{notify('Installation konnte nicht gestartet werden.',true);}
    finally{installPromptBusy=false;updateInstallControls();restoreInstallFocus(button);}
   }));
   // Firefox can leave a programmatically focused hint below a short sidebar.
@@ -3171,17 +3176,37 @@ function restoreInstallFocus(origin){
  if(target?.getClientRects().length)target.focus({preventScroll:true});
  else document.querySelector('#mobileNav [data-page="more"]')?.focus({preventScroll:true});
 }
+async function checkMobileInstallation(){
+ const sequence=++installCheckSequence;
+ if(!/Android/i.test(navigator.userAgent)||typeof navigator.getInstalledRelatedApps!=='function')return;
+ try{
+  const related=await navigator.getInstalledRelatedApps();
+  if(sequence!==installCheckSequence)return;
+  // The manifest declares only this PWA as a related web app.
+  relatedInstallState=related.some(app=>app.platform==='webapp')?'installed':'absent';
+ }catch{
+  if(sequence!==installCheckSequence)return;
+  relatedInstallState='unknown';
+ }
+ updateInstallControls();
+}
 function updateInstallControls(){
- const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1',direct=Boolean(installPrompt);
+ const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1'||relatedInstallState==='installed',direct=Boolean(installPrompt);
  const hint=$('sidebarInstallHint'),active=document.activeElement;
  document.querySelectorAll('[data-install-action]').forEach(button=>{
-  button.hidden=installed||!direct;button.disabled=installPromptBusy;
+  const manual=button.id==='installButtonMobile'&&relatedInstallState==='absent'&&!direct;
+  button.hidden=installed||(!direct&&!manual);button.disabled=installPromptBusy;
+  if(manual)button.setAttribute('aria-haspopup','dialog');else button.removeAttribute('aria-haspopup');
   const name='FolioLab als App installieren';
   button.setAttribute('aria-label',name);button.title=name;
  });
+ if(installed&&$('installHelpDialog').open)$('installHelpDialog').close();
  hint.hidden=installed||!direct||installPromptBusy||!installDesktopMedia.matches||installHintPreference.dismissed;
  if((hint.hidden&&hint.contains(active))||(active?.matches('[data-install-action][hidden]')))restoreInstallFocus(null);
 }
+void checkMobileInstallation();
+window.addEventListener('pageshow',checkMobileInstallation);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void checkMobileInstallation();});
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
