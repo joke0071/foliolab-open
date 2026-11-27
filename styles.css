@@ -1576,7 +1576,7 @@
 #historyPage #historyCoverage>summary::after,#historyPage #performanceDetails>summary::after,#historyPage #snapshotManager>summary::after{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:center;margin:0 4px 3px}
 #historyPage #historyCoverage[open]>summary::after,#historyPage #performanceDetails[open]>summary::after,#historyPage #snapshotManager[open]>summary::after{margin:3px 4px 0}
 #historyPage #historyCoverage>summary:focus-visible,#historyPage #performanceDetails>summary:focus-visible,#historyPage #snapshotManager>summary:focus-visible{outline:3px solid #2d6946;outline-offset:-2px;border-radius:10px}
-#historyPage .history-disclosure-title{margin:0;letter-spacing:normal;font-size:var(--type-label);font-weight:600;line-height:1.35;overflow-wrap:anywhere}
+#historyPage .history-disclosure-title,#historyPage .projection-method>summary{margin:0;letter-spacing:normal;font-size:var(--type-label);font-weight:600;line-height:1.35;overflow-wrap:anywhere}
 #historyPage #historyCoverageBody,#historyPage #performanceDetails>.performance-details-body{padding:2px 2px 14px 27px;border-top:0;min-width:0;overflow-wrap:anywhere}
 #historyPage #historyCoverageBody p,#historyPage #performanceInfo p{margin:0 0 8px;line-height:1.6;max-width:72ch}
 #historyPage #historyCoverageBody p:last-child,#historyPage #performanceInfo p:last-child{margin-bottom:0}
@@ -1655,11 +1655,11 @@
  overflow-wrap:anywhere;
  line-height:1.35;
 }
-.portfolio-list-panel>.empty{
+:is(#positionList,#providerOverview,#bookingList)>.empty{
  max-width:56ch;margin:0 auto;padding:18px 8px;
  line-height:1.5;overflow-wrap:anywhere;text-align:center
 }
-.portfolio-list-panel>.booking-onboarding>p{margin:4px 0 0;max-width:none}
+#bookingList>.booking-onboarding>p{margin:4px 0 0;max-width:none}
 @media(min-width:1250px){
  #dashboardPage #onboarding>.toolbar-buttons{
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -2180,7 +2180,7 @@
 
 /* Responsive foreground/background crossfades can lose text contrast mid-frame. */
 #positionsPage #addWizard{transition:none}
-.projection-method>summary{cursor:pointer;min-height:44px;align-content:center;font-weight:650}
+.projection-method>summary{cursor:pointer;min-height:44px;align-content:center}
 #historyPage #portfolioProjection{border-top:1px solid var(--line)}
 .projection-body{padding-bottom:4px;overflow-wrap:anywhere}
 .projection-inputs,.projection-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
@@ -2294,10 +2294,12 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 }
 .dashboard-history .chart-plot:focus-visible,.dashboard-history :is(button,summary):focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
 #miniChartPeriods{background:transparent;border:0;gap:2px;margin:12px 0 4px;padding:0}
-#dashboardPage .dashboard-side>.panel{border:0}
+#dashboardPage .dashboard-allocation{border:0}
 #dashboardPage .alloc-legend-row{color:var(--ink);border-color:var(--line)}
 #dashboardPage .alloc-legend-row:is(:hover,.active){background:var(--surface)}
-#providerOverview.portfolio-list-panel{padding:6px}
+#dashboardPage .dashboard-providers{padding:12px}
+#liquidityOverview:not(:empty){margin-top:12px;border-top:1px solid var(--line)}
+#liquidityOverview .cash-terms-overview{margin:0}
 .dashboard-providers .provider-accordion+.provider-accordion{margin-top:6px}
 .dashboard-providers .provider-account+.provider-account{margin-top:8px}
 #dashboardPage .dashboard-providers .provider-row{padding-inline:10px;border-radius:12px;background:transparent}
@@ -2349,7 +2351,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  --selection:#1246d5; --danger:#ac322b; --primary:#174eb6; --on-tonal:#123879; --tonal:#dce7ff;
 }
 #historyPage,:root:has(#historyPage.active) dialog,[data-page="history"] {
- --primary:#006b65; --on-tonal:#004e49; --tonal:#bfeee7;
+ --selection:var(--primary); --primary:#006b65; --on-tonal:#004e49; --tonal:#bfeee7;
 }
 #positionsPage,:root:has(#positionsPage.active) dialog,[data-page="positions"] {
  --selection:var(--primary);
@@ -2547,8 +2549,8 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 }
 #positionList .selection-glyph::after {border-radius:50%}
 #positionList .selection-glyph svg {stroke:currentColor}
-#positionsPage .selection-master {border-color:var(--line);border-radius:24px;color:var(--on-tonal)}
-#positionsPage .selection-master:has(input:checked,input:indeterminate) {background:var(--tonal);border-color:transparent}
+:is(#positionsPage,#snapshotManager) .selection-master {border-color:var(--line);border-radius:24px;color:var(--on-tonal)}
+:is(#positionsPage,#snapshotManager) .selection-master:has(input:checked,input:indeterminate) {background:var(--tonal);border-color:transparent}
 #positionsPage .selection-danger {color:var(--danger)}
 
 /* Wealth charts share the page gutter with the figures and range controls. */
@@ -2556,7 +2558,7 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
  padding:0;border:0;border-radius:0;background:transparent;box-shadow:none
 }
 #dashboardPage .dashboard-history{box-shadow:none}
-#dashboardPage .dashboard-side>.panel{padding-inline:0}
+#dashboardPage .dashboard-allocation{padding-inline:0}
 :is(#miniChart,#historyChart) .chart-interactive{
  grid-template-columns:fit-content(28%) minmax(0,1fr);column-gap:8px;padding-inline-end:4px
 }
@@ -2591,10 +2593,29 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #morePage .panel .provider-settings-group>summary::after{right:112px}
 
 /* Booking actions share the title row. Search leads the two related filters. */
-#bookingsPage>.panel-head-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
-#bookingsPage>.panel-head-actions .panel-title{flex:1 1 9rem;min-width:0}
-#bookingsPage>.panel-head-actions .panel-actions.action-group{width:auto;margin-inline-start:auto;flex:0 0 auto}
+#bookingPanel>.panel-head-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+#bookingPanel>.panel-head-actions .panel-title{flex:1 1 9rem;min-width:0}
+#bookingPanel>.panel-head-actions .panel-actions.action-group{width:auto;margin-inline-start:auto;flex:0 0 auto}
 #bookingsPage #bookingIncomeDetails>summary span{color:var(--ink);font-size:var(--type-body);font-weight:600}
 #bookingsPage #bookingIncomeDetails>summary small{color:var(--muted);font-size:var(--type-meta);font-weight:400}
 #bookingsPage #bookingIncomeDetails>summary::after{border-color:var(--muted)}
-.booking-secondary-actions{margin-top:16px}
+#bookingPanel>.panel-head-actions{margin-block:12px 8px}
+#positionListHead{margin-block:12px}
+#bookingPanel>.panel-head-actions h2{margin:0}
+.booking-secondary-actions{
+ display:grid;gap:8px;padding-block:8px 16px;border-bottom:1px solid var(--line)
+}
+#bookingsPage #bookingIncomeDetails>summary{display:grid;padding-inline:0 4px}
+#bookingIncomeDetails>.performance-details-body{padding-inline:0}
+#bookingTransferAction{justify-self:start}
+#bookingListHead{margin-block:20px 12px}
+#bookingsPage .booking-filter-tools{gap:12px;margin-block:0 18px}
+#bookingsPage .booking-filter-tools .field{gap:4px}
+#bookingsPage .booking-filter-tools .field>span{margin:0}
+#bookingList>.booking-onboarding{background:transparent}
+
+#snapshotManager #addSnapshot{background:var(--primary);color:white;border-color:transparent}
+#snapshotManager #manageReferences[aria-pressed="true"]{background:var(--primary);color:white}
+#snapshotManager .btn.outline:not(:disabled,.selection-danger,#addSnapshot){border-color:var(--primary)}
+#snapshotManager .btn.selection-danger:not(:disabled){color:var(--danger);border-color:var(--danger)}
+#historyPage #snapshotManager :focus-visible,#historyPage #snapshotManager>summary:focus-visible{outline-color:var(--primary)}

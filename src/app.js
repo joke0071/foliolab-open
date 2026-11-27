@@ -2965,7 +2965,10 @@ $('apiSettings').addEventListener('submit',async e=>{
    if(installPromptBusy)return;
    const prompt=installPrompt;
    if(!prompt){
-    if(button.id==='installButtonMobile'&&relatedInstallState==='absent'&&!button.hidden)$('installHelpDialog').showModal();
+    if(button.id==='installButtonMobile'&&!button.hidden){
+     button.focus({preventScroll:true});
+     $('installHelpDialog').showModal();
+    }
     return;
    }
    installPromptBusy=true;installPrompt=null;updateInstallControls();
@@ -3194,7 +3197,7 @@ function updateInstallControls(){
  const installed=standaloneMedia.matches||navigator.standalone===true||document.documentElement.dataset.appInstalled==='1'||relatedInstallState==='installed',direct=Boolean(installPrompt);
  const hint=$('sidebarInstallHint'),active=document.activeElement;
  document.querySelectorAll('[data-install-action]').forEach(button=>{
-  const manual=button.id==='installButtonMobile'&&relatedInstallState==='absent'&&!direct;
+  const manual=button.id==='installButtonMobile'&&!direct;
   button.hidden=installed||(!direct&&!manual);button.disabled=installPromptBusy;
   if(manual)button.setAttribute('aria-haspopup','dialog');else button.removeAttribute('aria-haspopup');
   const name='FolioLab als App installieren';

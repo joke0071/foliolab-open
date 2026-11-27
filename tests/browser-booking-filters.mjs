@@ -11,11 +11,11 @@ const listFrame=async id=>page.locator('#'+id).evaluate(el=>{
 const expectMatchingLists=async()=>{
  await page.locator('#mobileNav [data-page="positions"]').click();
  assert.equal(await page.locator('#positionListHead h3').innerText(),'Positionen');
- const frame=await listFrame('positionList');
+ const frame=await listFrame('positionPanel');
  assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','visible positions outline');
  await page.locator('#mobileNav [data-page="bookings"]').click();
  assert.equal(await page.locator('#bookingListHead h3').innerText(),'Buchungen');
- assert.deepEqual(await listFrame('bookingList'),frame,'matching result card outline, radius, padding and width');
+ assert.deepEqual(await listFrame('bookingPanel'),frame,'matching result card outline, radius, padding and width');
 };
 try{
  await page.goto('http://127.0.0.1:4173/');
