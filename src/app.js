@@ -757,9 +757,9 @@ function restoreBookingTransferFocus(button){
 function renderBookingManagement(rows=bookingHistoryRows(model)){
  const root=$('bookingManagementTools'),head=$('bookingListHead');
  $('bookingTransferAction').disabled=!bookingWritable();
- if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML='<h3>Buchungen</h3>';root.innerHTML='';return;}
+ if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML='<h2>Buchungen</h2>';root.innerHTML='';return;}
  const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
- head.innerHTML='<h3>Buchungen</h3>'+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
+ head.innerHTML='<h2>Buchungen</h2>'+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
  if(!bookingSelecting)root.innerHTML='';
  else{
   const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;

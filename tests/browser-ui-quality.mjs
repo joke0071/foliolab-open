@@ -89,7 +89,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      const sections=p.locator('#bookingPanel').locator('#bookingIncomeDetails,#bookingTransferAction,#bookingListHead,.booking-filter-tools,#bookingList');
      assert.deepEqual(await sections.evaluateAll(els=>els.map(el=>el.id||el.className)),['bookingIncomeDetails','bookingTransferAction','bookingListHead','booking-filter-tools','bookingList']);
      assert.equal(await p.locator('#bookingIncomeDetails').evaluate(el=>el.open),false);
-     const [actions,heading,filters,list]=await Promise.all(['.booking-secondary-actions','#bookingListHead','.booking-filter-tools','#bookingList'].map(selector=>p.locator(selector).boundingBox()));
+     const [actions,heading,filters,list]=await Promise.all(['.booking-secondary-actions','#bookingPanel>.panel-head-actions','.booking-filter-tools','#bookingList'].map(selector=>p.locator(selector).boundingBox()));
      assert.ok(heading.y-actions.y-actions.height>=16&&filters.y-heading.y-heading.height>=10&&list.y-filters.y-filters.height>=16,'space between tools, list heading, filters and results');
      assert.equal(await p.locator('[data-action=transfer-matching]').isVisible(),true);
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#bookingsPage').screenshot({path:'artifacts/gates/c5-bookings-'+width+'.png'});

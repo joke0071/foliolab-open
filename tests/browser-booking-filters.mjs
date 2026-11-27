@@ -14,7 +14,7 @@ const expectMatchingLists=async()=>{
  const frame=await listFrame('positionPanel');
  assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','visible positions outline');
  await page.locator('#mobileNav [data-page="bookings"]').click();
- assert.equal(await page.locator('#bookingListHead h3').innerText(),'Buchungen');
+ assert.equal(await page.locator('#bookingListHead h2').innerText(),'Buchungen');
  assert.deepEqual(await listFrame('bookingPanel'),frame,'matching result card outline, radius, padding and width');
 };
 try{
