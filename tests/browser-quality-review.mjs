@@ -18,6 +18,9 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
   for(const width of [320,360,390,412,430,768,1440]){
    await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();
    assert.match(await page.locator('[data-filter="__review"]').innerText(),/\(3\)/);assert.equal(await page.locator('#qualityReviewList .quality-review-card').count(),3);
+   const typeStyle=el=>{const s=getComputedStyle(el);return [s.fontFamily,s.fontSize,s.fontWeight,s.lineHeight];};
+   assert.deepEqual(await page.locator('.quality-review-card h3').first().evaluate(typeStyle),await page.locator('#positionList .holding-name').first().evaluate(typeStyle),'review titles use position name typography');
+   assert.deepEqual(await page.locator('.quality-review-card li span').first().evaluate(typeStyle),await page.locator('.quality-review-card .small-help').first().evaluate(typeStyle),'review sources use the metadata scale');
    await page.locator('#qualityReviewKind').selectOption('history');assert.equal(await page.locator('#qualityReviewList .quality-review-card').count(),1);
    await page.locator('#qualityReviewAccount').selectOption(setup.other);assert.equal(await page.locator('#qualityReviewList .quality-review-card').count(),0);
    await page.locator('[data-action="reset-quality-review"]').click();assert.equal(await page.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await page.locator('#qualityReviewAccount').inputValue(),'');assert.equal(await page.locator('#qualityReviewList .quality-review-card').count(),3);
