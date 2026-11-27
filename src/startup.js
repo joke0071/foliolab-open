@@ -2,6 +2,15 @@
 (()=>{
  const startup=document.getElementById('appStartup'),text=document.getElementById('appStartupText'),help=document.getElementById('appStartupHelp');
  let ready=false,startupFailed=false;
+ // Capture browser offers that arrive while the module graph or local store is loading.
+ window.addEventListener('beforeinstallprompt',event=>{
+  if(ready)return;
+  event.preventDefault();window.folioInstallPrompt=event;
+ });
+ window.addEventListener('appinstalled',()=>{
+  if(ready)return;
+  delete window.folioInstallPrompt;document.documentElement.dataset.appInstalled='1';
+ });
  const fail=(message,{failed=false}={})=>{
   if(ready||startupFailed)return;
   startup.classList.add('startup-delayed');

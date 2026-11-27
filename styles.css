@@ -79,9 +79,7 @@
 }
 
 /* Provider details replace static rows, with grouped accounts/positions underneath. */
-.provider-accordion{border-bottom:1px solid #edf2ed}
-.provider-accordion:not(:has(~ .provider-accordion)){border-bottom:0}
-.provider-accordion:not([open])>.provider-row{border-bottom:0}
+.provider-accordion>.provider-row{border-bottom:0}
 .provider-accordion summary{list-style:none;cursor:pointer}
 .provider-accordion summary::-webkit-details-marker{display:none}
 .provider-accordion summary:hover,.provider-accordion[open] summary{background:#f8fbf8}
@@ -90,8 +88,7 @@
 .provider-chevron{width:10px;height:10px;border-right:2px solid #819b86;border-bottom:2px solid #819b86;transform:rotate(45deg);margin:0 7px 4px 3px;transition:transform .15s ease;flex-shrink:0}
 .provider-accordion[open] .provider-chevron{transform:rotate(225deg);margin-bottom:0;margin-top:5px}
 .provider-detail{margin:0 6px 12px 36px;padding-left:13px;border-left:2px solid #e5eee5}
-.provider-account{padding:10px 0;border-top:1px solid #eff4ef}
-.provider-account:first-child{border-top:0}
+.provider-account{padding:10px 0}
 .provider-account-head{display:flex;justify-content:space-between;gap:12px;align-items:start;font-size:12px}
 .provider-account-head>div{min-width:0}
 .provider-account-head strong{overflow-wrap:anywhere}
@@ -145,8 +142,7 @@
 
 
 /* Position drilldowns inside account/provider hierarchy, without floating controls. */
-.provider-position-accordion{min-width:0;border-top:1px solid #edf2ed}
-.provider-position-accordion:first-child{border-top:0}
+.provider-position-accordion{min-width:0}
 .provider-position-accordion>summary{list-style:none;cursor:pointer;padding:10px 7px;margin:0 -7px;border-radius:8px;min-height:43px}
 .provider-position-accordion>summary::-webkit-details-marker{display:none}
 .provider-position-accordion>summary:hover,.provider-position-accordion[open]>summary{background:#f4f8f4}
@@ -1075,7 +1071,7 @@
 .position-actions .btn{min-height:44px;white-space:normal;text-align:center}
 .position-entry .holding-expand{margin-bottom:6px}
 .position-entry .holding-expand>summary{min-height:44px}
-.cash-terms-overview{margin:14px 0 0;padding:0 2px;border:0;border-top:1px solid #e4ece5;border-radius:0;background:transparent}
+.cash-terms-overview{margin:16px 0 0;padding:0 2px;border:0;border-radius:0;background:transparent}
 .cash-terms-overview>summary{font-size:12px;line-height:1.5;padding:12px 2px}
 .cash-terms-overview>summary>small{font-weight:450}
 #historyCoverage>summary{padding:12px 2px}
@@ -1104,9 +1100,7 @@
 
 
 /* Small, quiet beta marker for the shared desktop/mobile brand. */
-.logo-beta{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;padding:3px 6px 2px;border:1px solid #d7e4d9;border-radius:6px;background:#edf5ee;color:#466951;font-size:9px;font-weight:800;line-height:1;letter-spacing:.08em;white-space:nowrap}
 @media(max-width:720px){.mobile-header .logo{gap:7px;white-space:nowrap}}
-@media(max-width:360px){.mobile-header .logo{gap:6px}.mobile-header .logo-beta{font-size:8px;padding:3px 4px}}
 /* Transfer empty/choice states reuse the existing dialog and controls. */
 #transferMatchingDialog.transfer-is-empty{width:min(560px,calc(100vw - 24px))}
 #transferMatchingDialog .transfer-empty-actions{margin:12px 0 0}
@@ -2238,7 +2232,15 @@ body,.layout,.workspace,.mobile-header,.sidebar{background:var(--canvas);color:v
 .logo,.mobile-header .logo{color:#15171b}
 .logo .logo-dot{color:#00a84f}
 .logo .brand-flask{display:block;width:32px;height:32px;flex:none}
-.logo-beta{background:var(--surface);color:var(--muted)}
+.logo{width:fit-content;min-width:48px;min-height:48px;text-decoration:none;border-radius:12px}
+.logo:focus-visible{outline:2px solid var(--selection);outline-offset:2px}
+@media(hover:hover){.logo:hover{background:var(--surface)}}
+.mobile-header .logo{justify-content:center}
+.brand-actions{display:flex;align-items:center;gap:2px}
+.brand-install{display:grid;place-items:center;width:44px;height:44px;flex:none;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted)}
+.brand-install svg{width:16px;height:16px}
+@media(hover:hover){.brand-install:hover{background:var(--surface)}}
+.brand-install:focus-visible{outline:2px solid var(--selection);outline-offset:-2px}
 .panel,dialog{color:var(--ink);border-color:var(--line);border-radius:20px}
 .panel-head h2,.page h2,.page h3,.dialog-head h2{color:var(--ink)}
 .heading-row h1{font-size:clamp(26px,3vw,34px);font-weight:660;letter-spacing:-.035em}
@@ -2309,7 +2311,8 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #dashboardPage .dashboard-side>.panel{border:0}
 #dashboardPage .alloc-legend-row{color:var(--ink);border-color:var(--line)}
 #dashboardPage .alloc-legend-row:is(:hover,.active){background:var(--surface)}
-#dashboardPage .dashboard-providers .provider-accordion{border-color:var(--line);margin-block:3px}
+.dashboard-providers .provider-accordion+.provider-accordion{margin-top:6px}
+.dashboard-providers .provider-account+.provider-account{margin-top:8px}
 #dashboardPage .dashboard-providers .provider-row{padding-inline:10px;border-radius:12px;background:var(--surface)}
 #dashboardPage .dashboard-providers .provider-row:hover{background:#e7ebf3}
 .dashboard-providers :is(.provider-total,.provider-name){color:var(--ink)}
