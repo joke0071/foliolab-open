@@ -14,16 +14,20 @@ export function classifyMarketFailure(error){
  return {code:'other',label:'Abfrage fehlgeschlagen',help:'API-Zugang und Datenquelle prüfen; gespeicherte Kurse bleiben erhalten.'};
 }
 /** Saved observations are evidence of a previous fetch, not a connectivity test. */
-export function marketSupplySummary(settings={},positions=[]){
+export function marketSupplyReport(settings={},positions=[]){
  const list=positions.filter(active);
- if(!list.length)return 'Automatische Wertpapierkurse: noch keine Notierungen. Manuelle Kurse und CSV stehen zur Verfügung.';
+ if(!list.length)return {status:'Noch keine Wertpapiernotierungen. Manuelle Kurse und CSV stehen zur Verfügung.',evidence:[]};
  const confirmed=list.filter(p=>['verified-listing','configured-listing'].includes(p.quoteQuality)&&p.quoteSource&&/^\d{4}-\d{2}-\d{2}/.test(p.quoteAsOf||''));
  const current=confirmed.filter(p=>{const age=Date.now()-Date.parse(p.quoteAsOf.slice(0,10)+'T12:00:00Z');return age>=-864e5&&age<=8*864e5;});
  const usable=list.filter(p=>{try{return marketSourcePlan(p,settings).some(x=>x.ready);}catch{return false;}});
  const state=current.length===list.length&&usable.length===list.length?'funktioniert (zuletzt bestätigt)':usable.length?'eingeschränkt':'nicht verfügbar';
- const evidence=confirmed.slice(0,4).map(p=>p.symbol+': '+p.quoteSource+' · '+p.quoteAsOf.slice(0,10)).join(' · ');
- return 'Automatische Wertpapierkurse: '+state+'. '+current.length+' von '+list.length+' Notierungen mit aktuellem bestätigtem Kurs. '+
-  (evidence?'Gespeicherte Kursstände: '+evidence+'. ':'')+(usable.length?'Verbindung bei Bedarf prüfen; Zugang und Börsenabdeckung hängen vom Tarif ab.':'Alpha Vantage, Marketstack oder optionalen EODHD-Worker einrichten. Manuelle Kurse und CSV bleiben verfügbar.');
+ const evidence=confirmed.map(p=>p.symbol+' · '+p.quoteSource+' · '+p.quoteAsOf.slice(0,10));
+ const guidance=usable.length?'':' Alpha Vantage, Marketstack oder den EODHD-Worker einrichten.';
+ return {status:'Automatische Wertpapierkurse: '+state+'. '+current.length+' von '+list.length+' Notierungen mit aktuellem bestätigtem Kurs.'+guidance,evidence};
+}
+export function marketSupplySummary(settings,positions){
+ const {status,evidence}=marketSupplyReport(settings,positions);
+ return status+(evidence.length?' Gespeicherte Kursstände: '+evidence.join(' · '):'');
 }
 export async function diagnoseMarketSources(settings={},positions=[],fetcher=globalThis.fetch){
  const list=positions.filter(active).slice(0,4);

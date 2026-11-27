@@ -25,8 +25,7 @@ export async function navigationFocusBrowserContract({p,nav,record,engine}){
    assert.equal(await more.evaluate(e=>e===document.activeElement),true,'Mehr follows Buchungen in the mobile navigation');
    await p.keyboard.press('Enter');
    assert.equal(await more.getAttribute('aria-current'),'page');
-   const install=p.locator('#morePage #installButton');
-   const firstControl=await install.isVisible()?install:p.locator('#moreSections a').first();
+   const firstControl=p.locator('#moreSections a').first();
    await p.keyboard.press('Tab');
    assert.equal(await firstControl.evaluate(e=>e===document.activeElement&&e.matches(':focus-visible')),true,'Tab from the final mobile navigation button reaches a visible keyboard focus in Mehr');
    await p.keyboard.press('Shift+Tab');

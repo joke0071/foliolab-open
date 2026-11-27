@@ -54,7 +54,12 @@ export async function wealthModelHistoryBrowserContract({browser,base,axe}){
   assert.deepEqual((await path.getAttribute('d')).match(/[ML]/g),['M','L','M','L']);
   await style.selectOption('points');
   assert.equal(await path.count(),0);
-  assert.equal(await plot.locator('circle[r="2"]').count(),4);
+  const markers=plot.locator('.series-observation');
+  assert.equal(await markers.count(),4,'each observed date has its own marker');
+  assert.ok(await markers.evaluateAll(nodes=>nodes.every(node=>{
+   const style=getComputedStyle(node);
+   return style.strokeLinecap==='round'&&style.vectorEffect==='non-scaling-stroke'&&parseFloat(style.strokeWidth)>=5;
+  })),'markers stay round and legible on narrow charts');
   await style.selectOption('line');
   assert.deepEqual((await path.getAttribute('d')).match(/[ML]/g),['M','L','M','L']);
   await page.keyboard.press('Escape');

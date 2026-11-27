@@ -71,7 +71,7 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
   ' transform="rotate(-90 100 100)" stroke="'+esc(colors[item.key]||'#a2a3b2')+'" stroke-dasharray="'+item.percent.toFixed(8)+' '+(100-item.percent).toFixed(8)+'" stroke-dashoffset="'+(-start).toFixed(8)+'"></circle>';
  }).join('');
  const rows=slices.map((item,index)=>'<button class="alloc-legend-row" type="button" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" aria-pressed="'+(chosen?.key===item.key)+'">'+
-  '<span class="legend-left"><span class="legend-dot" style="background:'+esc(colors[item.key]||'#a2a3b2')+'"></span>'+
+  '<span class="legend-left"><span class="legend-dot"></span>'+
   '<span class="alloc-legend-copy"><strong>'+esc(item.name)+'</strong><small>'+esc(money(item.value))+'</small></span></span>'+
   '<b>'+esc(formatAllocationShare(item.percent))+'</b></button>').join('');
  const explanatory=liabilities>0?'<p class="allocation-note">Anteile der positiven Anlagen. Verbindlichkeiten: '+esc(money(-liabilities))+' (vom Netto abgezogen).</p>':'';
