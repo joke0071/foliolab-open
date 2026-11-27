@@ -2415,13 +2415,11 @@ dialog .icon-close {
  border-radius:3px 3px 0 0;background:currentColor
 }
 #historyPage #historySections a:focus-visible,#moreSections a:focus-visible {outline-offset:-3px}
-/* Keep settings and history actions fully tappable while reading long sections.
-   The bottom navigation remains available as the two top rows scroll away. */
+/* Section links scroll with the content; a fragment jump clears the status header. */
 @media(max-width:720px) {
- .workspace:has(.page.active .history-sections)>.mobile-header {position:static}
  :is(#historyPage,#morePage) :is(button,summary,input,select,textarea,h2[tabindex],#historyDiagram),
  #historyPage :is(#historyCoverage,#performanceDetails,#snapshotManager,#portfolioProjection)>summary {
-  scroll-margin-top:16px
+  scroll-margin-top:calc(var(--mobile-header-height,56px) + 12px)
  }
 }
 
