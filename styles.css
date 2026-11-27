@@ -2362,3 +2362,6 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 /* Period buttons move into the disclosure when the viewport changes.
    Apply their new surface and foreground together, including while hidden. */
 #miniChartPeriods button{transition:none}
+@media(max-width:374px){
+ #miniChartPeriods{column-gap:0;margin-inline:-4px;width:calc(100% + 8px)}
+}
