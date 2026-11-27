@@ -38,7 +38,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
     const u=new URL(route.request().url());
     if(u.origin===origin){
      transport.sameOriginRequests++;
-     if(replay){const bytes=replay.files.get(u.pathname);assert.ok(bytes,'Unverified application resource '+u.pathname);transport.replayedRequests++;return route.fulfill({body:bytes,contentType:u.pathname.endsWith('.js')?'text/javascript':u.pathname.endsWith('.css')?'text/css':u.pathname.endsWith('.png')?'image/png':u.pathname.endsWith('.svg')?'image/svg+xml':u.pathname.endsWith('.webmanifest')?'application/manifest+json':'text/html'});}
+     if(replay){const bytes=replay.files.get(u.pathname);assert.ok(bytes,'Unverified application resource '+u.pathname);transport.replayedRequests++;return route.fulfill({body:bytes,contentType:u.pathname.endsWith('.js')?'text/javascript':u.pathname.endsWith('.css')?'text/css':u.pathname.endsWith('.png')?'image/png':u.pathname.endsWith('.svg')?'image/svg+xml':u.pathname.endsWith('.woff2')?'font/woff2':u.pathname.endsWith('.webmanifest')?'application/manifest+json':'text/html'});}
      if(origin===new URL(base).origin){transport.productionRequests.push({url:u.href,at:Date.now()});return route.continue();}
      return route.fulfill({path:process.cwd()+(u.pathname==='/'?'/index.html':u.pathname)});
     }

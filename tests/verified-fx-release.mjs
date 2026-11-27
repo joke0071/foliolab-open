@@ -34,7 +34,7 @@ export function verifiedFixtureRelease(base){
 
 const fixtureTypes=new Map([
  ['.js','text/javascript'],['.css','text/css'],['.png','image/png'],
- ['.svg','image/svg+xml'],['.webmanifest','application/manifest+json']
+ ['.svg','image/svg+xml'],['.woff2','font/woff2'],['.webmanifest','application/manifest+json']
 ]);
 export async function replayVerifiedFixtureAssets(workerBlockedContext,base,published){
  let reused=0;

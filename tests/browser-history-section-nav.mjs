@@ -97,6 +97,13 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.goForward();
   await page.waitForFunction(()=>document.getElementById('positionsPage').classList.contains('active'));
   assert.deepEqual(await read(),populated,'Navigation must not persist portfolio changes');
+  await page.locator('#mobileNav [data-page=more]').click();
+  const more=page.locator('#moreSections');
+  await more.getByRole('link',{name:'Datenquellen'}).tap();
+  await page.waitForFunction(()=>document.activeElement?.id==='moreSources');
+  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  await page.waitForFunction(()=>document.querySelector('#moreSections [aria-current]')?.hash==='#moreAccounts');
+  assert.deepEqual(await read(),populated,'reading settings sections must keep the saved portfolio intact');
   assert.deepEqual(failures,[]);
   console.log('History section links: '+engine+' touch, keyboard, fragments, back/forward and offline record preservation PASS');
  }finally{await browser.close();}

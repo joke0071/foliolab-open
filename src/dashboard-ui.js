@@ -154,7 +154,7 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" class="series-grid" stroke-dasharray="4 6"/>').join('')+
  (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="#e8f2ea" class="series-area"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#3b8659" class="series-line" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
- (disjoint||display==='points'?points.map(p=>'<path d="M'+p.x+' '+p.y+'h0" class="series-dot" stroke-linecap="round" stroke-width="6" vector-effect="non-scaling-stroke"/>').join(''):'')+
+ (disjoint||display==='points'?points.map(p=>'<path d="M'+p.x+' '+p.y+'h0" class="series-dot series-observation" stroke-linecap="round" stroke-width="6" vector-effect="non-scaling-stroke"/>').join(''):'')+
  estimatedPoints.map(({point,path})=>(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#637089" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>')+'<circle cx="'+point.x+'" cy="'+point.y+'" r="3" fill="white" stroke="#637089" stroke-width="2" vector-effect="non-scaling-stroke"/>').join('')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
  '<path d="M'+points.at(-1).x+' '+points.at(-1).y+'h0" class="series-dot" stroke-linecap="round" stroke-width="8" vector-effect="non-scaling-stroke"/></svg>'+
