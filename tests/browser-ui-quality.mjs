@@ -77,12 +77,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.equal(await p.evaluate(()=>window.scrollY),0);
    for(const page of ['dashboard','history','positions','bookings','more']){
     await nav(page);
-    if(page==='dashboard')await p.locator('#cashTermsOverview').evaluate(e=>e.open=true);
+    if(page==='dashboard'){
+     const titleStyle=el=>{const s=getComputedStyle(el);return [s.fontSize,s.fontWeight,s.lineHeight,s.letterSpacing];};
+     assert.deepEqual(await p.locator('#cashTermsOverview>summary>span').evaluate(titleStyle),await p.locator('.dashboard-providers .panel-head h2').evaluate(titleStyle),'liquidity uses the overview section typography');
+     await p.locator('#cashTermsOverview').evaluate(e=>e.open=true);
+    }
     if(page==='history')await p.locator('#historyCoverage').evaluate(e=>e.open=true);
     if(page==='bookings'){
      assert.equal(await p.locator('#bookingTransferDetails').count(),0,'separate transfer accordion has been replaced');
      assert.equal(await p.locator('#bookingUndoActions').isVisible(),false,'no empty undo strip without an available receipt');
-     assert.equal(await p.locator('#bookingTransferAction').evaluate(e=>e.parentElement.id),'bookingListHead','transfer entry belongs to ordinary booking management');
+     assert.ok(await p.locator('#bookingList').evaluate(list=>['bookingIncomeDetails','bookingTransferAction'].every(id=>list.compareDocumentPosition(document.getElementById(id)) & Node.DOCUMENT_POSITION_FOLLOWING)),'secondary booking actions follow the results');
      assert.equal(await p.locator('[data-action=transfer-matching]').isVisible(),true);
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#bookingsPage').screenshot({path:'artifacts/gates/c5-bookings-'+width+'.png'});
      for(const id of ['bookingIncomeDetails'])if(!await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
