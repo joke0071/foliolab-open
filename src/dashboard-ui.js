@@ -63,7 +63,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
       const cash=simpleCashHolding(account,positions);
       if(cash){
         const id=esc(cash.id),opened=expandedPositions.has(cash.id),balance=money(Number(cash.quantityExact??cash.quantity),cash.currency);
-        return '<details class="provider-account provider-position-accordion simple-cash-account" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
+        return '<details class="provider-account provider-position-accordion simple-cash-account" data-asset-kind="cash" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
           '<summary class="provider-holding" aria-label="'+esc(account.name)+': Kontodetails '+(opened?'einklappen':'aufklappen')+'"><span class="simple-cash-label"><strong>'+esc(account.name)+'</strong>'+
           '<small>'+esc(cash.currency)+(cash.archived?' · Archiviert':'')+'</small>'+(cashTermsAccountHint(account,esc)||'<span class="liquidity-status liquidity-unknown">Verfügbarkeit nicht hinterlegt</span>')+'</span>'+
           '<span class="provider-holding-right"><strong>'+esc(balance)+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
@@ -76,7 +76,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
       const holdings=positions.map(p=>{
         const id=esc(p.id),opened=expandedPositions.has(p.id);
         const share=allocation.shares.get(p);
-        return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
+        return '<details class="provider-position-accordion" data-asset-kind="'+esc(p.kind)+'" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
           '<summary class="provider-holding has-account-allocation" aria-label="'+esc(p.name)+': Details '+(opened?'einklappen':'aufklappen')+' · '+esc(share.name)+'"><span class="provider-holding-name">'+esc(p.name)+'</span>'+
           '<span class="provider-holding-right"><strong>'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+renderAccountAllocation(share,esc)+'<span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
@@ -154,10 +154,10 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" class="series-grid" stroke-dasharray="4 6"/>').join('')+
  (disjoint||display!=='auto'?'':'<path d="'+fill+'" fill="#e8f2ea" class="series-area"/>')+(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#3b8659" class="series-line" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>')+
- (disjoint||display==='points'?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" class="series-point" vector-effect="non-scaling-stroke"/>').join(''):'')+
+ (disjoint||display==='points'?points.map(p=>'<path d="M'+p.x+' '+p.y+'h0" class="series-dot" stroke-linecap="round" stroke-width="6" vector-effect="non-scaling-stroke"/>').join(''):'')+
  estimatedPoints.map(({point,path})=>(display==='points'?'':'<path d="'+path+'" fill="none" stroke="#637089" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>')+'<circle cx="'+point.x+'" cy="'+point.y+'" r="3" fill="white" stroke="#637089" stroke-width="2" vector-effect="non-scaling-stroke"/>').join('')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
- '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" class="series-point" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
+ '<path d="M'+points.at(-1).x+' '+points.at(-1).y+'h0" class="series-dot" stroke-linecap="round" stroke-width="8" vector-effect="non-scaling-stroke"/></svg>'+
  '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+
  (comparePath?'<p class="small-help">Gestrichelt: Startvermögen zuzüglich erfasster externer Nettozuflüsse. Keine Rendite und kein vollständiger Einstandswert.</p>':'')+'</div>';
 }

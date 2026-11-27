@@ -47,7 +47,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.goBack();
   await page.waitForFunction(()=>location.hash==='');
   await page.waitForFunction(()=>document.activeElement?.textContent==='Datenabdeckung');
-  assert.equal(await nav.locator('[aria-current="location"]').count(),0);
+  assert.equal(await nav.locator('[aria-current="location"]').innerText(),'Diagramm');
   await page.goForward();
   await reached(destinations[1]);
   assert.deepEqual(await read(),empty,'Empty portfolio record must stay untouched');

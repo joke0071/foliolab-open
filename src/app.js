@@ -65,7 +65,7 @@ import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFrequency,refreshSettings,beginAutoRefresh,refreshScope,REFRESH_LOCK} from './refresh-frequency.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
-import {diagnoseMarketSources,marketSupplySummary} from './market-diagnostics.js';
+import {diagnoseMarketSources,marketSupplyReport} from './market-diagnostics.js';
 import {displayQuotePrice,priceQuality,positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
@@ -125,7 +125,7 @@ const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async d
 const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:draft=>save(draft,{resetFilter:false})});
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const PAGE_DESCRIPTIONS={history:'Historische Werte und ihre Datenabdeckung ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
-const colors={etf:'#164cee',stock:'#7849b8',fund:'#008096',crypto:'#f4a900',cash:'#009d59',other:'#687387'};
+const colors=Object.fromEntries(Object.keys(TYPES).map(kind=>[kind,'var(--asset-'+kind+')']));
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
@@ -156,7 +156,16 @@ async function save(replacement,{resetFilter=true}={}){
   throw error;
  }finally{saving=false;try{syncPortfolioState();if(page==='history')renderReferences();if(page==='bookings'&&!loadFailure)renderBookingManagement();}catch(error){if(committed)displayFailure(error);else throw error;}}
 }
-function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
+function renderMarketSupply(){
+ const {status,evidence}=marketSupplyReport(model.settings,model.positions);
+ $('marketSupplyStatus').textContent=status;
+ const details=$('marketQuoteEvidence'),list=details.querySelector('ul');
+ list.replaceChildren(...evidence.map(text=>{
+  const item=document.createElement('li');item.textContent=text;return item;
+ }));
+ details.hidden=!evidence.length;
+}
+function notify(message,error=false){const box=$('toast');box.textContent=message;box.classList.toggle('toast-error',error);box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
@@ -165,11 +174,24 @@ const sectionLinks=sectionMenus.flatMap(menu=>[...menu.querySelectorAll('a')]);
 function sectionHash(destination){
  return sectionLinks.find(link=>link.hash===location.hash&&link.closest('.page').id===destination+'Page')?.hash||'';
 }
+function markSection(link){
+ for(const item of sectionLinks){
+  if(item===link)item.setAttribute('aria-current','location');
+  else item.removeAttribute('aria-current');
+ }
+ if(!link)return;
+ const menu=link.parentElement,tab=link.getBoundingClientRect(),bar=menu.getBoundingClientRect();
+ if(tab.left<bar.left)menu.scrollLeft+=tab.left-bar.left;
+ else if(tab.right>bar.right)menu.scrollLeft+=tab.right-bar.right;
+}
+let sectionJumpY=null,lastSectionLink=null;
 function syncPageSection({jump=false,returnFocus=false}={}){
- const previous=sectionLinks.find(item=>item.hasAttribute('aria-current'));
- const hash=sectionHash(page);
- const link=sectionLinks.find(item=>item.hash===hash);
- for(const item of sectionLinks)if(item===link)item.setAttribute('aria-current','location');else item.removeAttribute('aria-current');
+ const menu=sectionMenus.find(item=>item.closest('.page').id===page+'Page');
+ const previous=lastSectionLink;
+ const link=menu?.querySelector('a[href="'+(sectionHash(page)||'#')+'"]');
+ lastSectionLink=link;
+ markSection(link||menu?.querySelector('a'));
+ sectionJumpY=null;
  if(!jump)return;
  if(!link){
   if(returnFocus)previous?.focus({preventScroll:true});
@@ -178,9 +200,31 @@ function syncPageSection({jump=false,returnFocus=false}={}){
  const target=$(link.hash.slice(1));
  if(target instanceof HTMLDetailsElement)target.open=true;
  const focusTarget=target instanceof HTMLDetailsElement?target.querySelector(':scope > summary'):target;
- focusTarget.scrollIntoView({block:'start'});
+ focusTarget.scrollIntoView({block:'start',behavior:'instant'});
  focusTarget.focus({preventScroll:true});
+ sectionJumpY=window.scrollY;
 }
+let sectionFrame=0;
+function trackVisibleSection(){
+ sectionFrame=0;
+ const menu=sectionMenus.find(item=>item.closest('.page').classList.contains('active'));
+ if(!menu||sectionJumpY===window.scrollY)return;
+ sectionJumpY=null;
+ const links=[...menu.querySelectorAll('a')];
+ const headerBottom=document.querySelector('.mobile-header').getBoundingClientRect().bottom;
+ const threshold=headerBottom+menu.offsetHeight+24;
+ let visible=links[0],lastTop=-Infinity;
+ for(const link of links){
+  const top=$(link.hash.slice(1)).getBoundingClientRect().top;
+  if(top<=threshold&&(top>lastTop+2||link.hash===location.hash)){
+   visible=link;lastTop=top;
+  }
+ }
+ if(visible!==menu.querySelector('[aria-current]'))markSection(visible);
+}
+window.addEventListener('scroll',()=>{
+ if(!sectionFrame)sectionFrame=requestAnimationFrame(trackVisibleSection);
+},{passive:true});
 for(const menu of sectionMenus)menu.addEventListener('click',event=>{
  const link=event.target.closest('a');
  if(!link||event.defaultPrevented||event.button!==0||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
@@ -510,7 +554,7 @@ function renderHistory(){
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
   '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button>'+(modelAvailable?'<button type="button" class="btn outline" data-history-show-model>Heutigen Bestand als Modellverlauf anzeigen</button>':'')+'</div>':drawChart(data,comparisonToggle.checked?reference:null,historyChartStyle,estimates);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
- $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
+ renderMarketSupply();
  $('positionArchiveFilter').value=positionArchiveView;
  $('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
  const review=structuredQualityReview(model),quality=review.quoteSummary,q=quality.counts,uncertain=quality.total-q.confirmed;
@@ -571,7 +615,7 @@ function renderPositions(){
   const source=p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Zuletzt gespeicherter Wert':'');
   // Quote date takes precedence: do not print an unrelated position-edit timestamp beside it.
   const caption=[provider?.name||'Unbekannt',account?.name||'',source,quoteDate].filter(Boolean).map(esc).join(' · ');
-  const tags=(p.archived?'<span class="tag neutral">Archiviert · Bewertung unverändert</span>':'')+'<span class="tag">'+esc(p.kind==='cash'&&account?.cashTerms?.fixedTerm===true?'Festgeld':TYPES[p.kind])+'</span>'+
+  const tags=(p.archived?'<span class="tag neutral">Archiviert · Bewertung unverändert</span>':'')+'<span class="tag asset-kind">'+esc(p.kind==='cash'&&account?.cashTerms?.fixedTerm===true?'Festgeld':TYPES[p.kind])+'</span>'+
    (p.symbol?'<span class="tag neutral">'+esc(p.symbol)+'</span>':'')+
    (p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':'')+
    (p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':'')+
@@ -595,7 +639,7 @@ function renderPositions(){
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   const h=historyAction(model,p);
   const secondaryActions=(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry" data-position-id="'+esc(p.id)+'"><div class="position-card-tools"></div><div class="holding-row">'+
+  return '<div class="position-entry" data-asset-kind="'+esc(p.kind)+'" data-position-id="'+esc(p.id)+'"><div class="position-card-tools"></div><div class="holding-row">'+
    '<div class="holding-l">'+(positionSelecting?'<label class="holding-mark selection-check selection-mark"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'"><span class="selection-glyph" aria-hidden="true">'+svg(positionIconName(p,account),21)+'</span></label>':'<div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>')+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
@@ -831,7 +875,7 @@ function renderAccountEvidence(row,account,expanded){
 }
 function renderSettings(){
  renderHistoricalPriceCSVTools();
- $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
+ renderMarketSupply();
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
  const evidence=new Map(accountEvidenceRows(model).map(row=>[row.accountId,row]));
@@ -2735,7 +2779,10 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   notify('Backup wiederhergestellt.'+changes+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
  }catch(err){
   notify(restoreCommitted&&!(err instanceof RestoreReadbackError)?'Portfolio wiederhergestellt. '+followUp+' prüfen: '+err.message+'. Portfolio nicht erneut importieren.':err.message,true);
- }finally{$('restoreProgress').close();setLoading(restoreStatus,false);renderBackupStatus();}
+ }finally{
+  $('restoreProgress').close();setLoading(restoreStatus,false);renderBackupStatus();
+  if(restoreCommitted&&!loadFailure)$('importBackup')?.focus?.({preventScroll:true});
+ }
 });
   // Drive only receives an encrypted package. API/RPC credentials are added to
   // that package exclusively when the user has enabled full backups.
@@ -2924,7 +2971,7 @@ $('apiSettings').addEventListener('submit',async e=>{
   for(const key of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey'])
    if(f.has(key))changes[key]=String(f.get(key)||'').trim();
   Object.assign(model.settings,changes);
-  await save();$('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);notify('Datenquellen und Zugänge lokal gespeichert.');
+  await save();renderMarketSupply();notify('Datenquellen und Zugänge lokal gespeichert.');
  }catch(error){notify(error.message,true);}
 });$('solanaRpc').addEventListener('change',async e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();await save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
