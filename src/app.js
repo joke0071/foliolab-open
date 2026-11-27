@@ -125,7 +125,7 @@ const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async d
 const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:draft=>save(draft,{resetFilter:false})});
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const PAGE_DESCRIPTIONS={history:'Historische Werte und ihre Datenabdeckung ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
-const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
+const colors={etf:'#164cee',stock:'#7849b8',fund:'#008096',crypto:'#f4a900',cash:'#009d59',other:'#687387'};
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
@@ -187,13 +187,18 @@ historySections.addEventListener('click',event=>{
 window.addEventListener('popstate',()=>{
  const restored=new URLSearchParams(location.search).get('page')||'dashboard';
  if(restored!==page){
-  go(restored,{section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});
+  go(restored,{restore:true,section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});
   requestAnimationFrame(()=>syncHistorySection({jump:true}));
  }
 });
 window.addEventListener('hashchange',()=>requestAnimationFrame(()=>syncHistorySection({jump:true,returnFocus:!location.hash})));
-function go(next,{review=false,section=''}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'?section:''));syncHistorySection();window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
-function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard',{section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});}
+function go(next,{review=false,section='',restore=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);const url=location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'?section:'');
+ if(url!==location.pathname+location.search+location.hash){
+  if(restore)history.replaceState(null,'',url);
+  else history.pushState(null,'',url);
+ }
+ syncHistorySection();window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
+function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard',{restore:true,section:historySectionLinks.some(link=>link.hash===location.hash)?location.hash:''});}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
@@ -295,6 +300,7 @@ function renderDashboard(){const total=totalEUR(model);const aggregate=aggregate
   $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
   const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
+  $('dashboardChange').dataset.direction=change.delta===null?'unknown':change.delta.startsWith('-')?'down':change.delta==='0'?'flat':'up';
   $('dashboardChange').textContent=change.value;$('dashboardChangeHint').textContent=change.note;
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
