@@ -21,11 +21,11 @@ for (const name of ['focusin','keydown','click','hashchange']) {
 }
 setInterval(async () => {
   const { stage } = await (await fetch('/__state')).json();
-  if (!stage || stage === processed || !document.hasFocus()) return;
+  if (!stage || stage === processed) return;
   const control = location.pathname === '/';
   if ((stage === 'control') !== control) return;
   if (!control && !document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')) return;
-  const selectors = { control:'#control', link:'.skip-to-content', main:'#mainContent', positions:'nav [data-page="positions"]', bookings:'nav [data-page="bookings"]' };
+  const selectors = { control:'#control', link:'.skip-to-content', main:'#mainContent', positions:'#sidebarNav [data-page="positions"],#mobileNav [data-page="positions"]', bookings:'#sidebarNav [data-page="bookings"],#mobileNav [data-page="bookings"]' };
   const expected = [...document.querySelectorAll(selectors[stage])].find(node => node.getBoundingClientRect().width > 0);
   if (!expected) return;
   if (stage !== 'main') expected.focus();
@@ -77,7 +77,11 @@ async function observe(name, wanted, activate = false) {
   const sample = { name, phrases: [] };
   report.stages.push(sample);
   stage = name;
-  if (activate) await voiceOver.act({capture:true});
+  if (activate) {
+    await voiceOver.act({capture:true});
+    const observed = report.trace.findLast(event => event.name==='focusin' && event.trusted && event.target==='mainContent' && event.active==='mainContent');
+    if (observed) observations.set(name,{stage:name,id:observed.target,hash:observed.hash,source:'trusted focusin'});
+  }
   for (let attempt = 0; attempt < 45 && !observations.has(name); attempt++) await pause(500);
   sample.focus = observations.get(name);
   assert.ok(sample.focus, 'Safari focus receipt missing for ' + name);
