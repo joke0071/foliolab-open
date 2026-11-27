@@ -264,7 +264,7 @@ function syncPortfolioState(){
  headerStatus?.refresh();
  $('portfolioStorageState').textContent=readbackFailed?restoreReadbackHint:unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
-  displayDashboardTotal('–');$('totalHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardChange').textContent='–';$('dashboardChangeHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardReview').hidden=true;
+  $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardChange').textContent='–';$('dashboardChangeHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardReview').hidden=true;
   $('onboarding').classList.add('hidden');$('onboarding').replaceChildren();
   $('providerSettings').textContent='Anbieter und Konten derzeit nicht verfügbar.';
   for(const id of ['dashboardPage','historyPage','positionsPage','bookingsPage']){
@@ -279,7 +279,7 @@ function syncPortfolioState(){
   });
  }else{
   const aggregate=aggregateValuePresentation(model.positions,totalEUR(model),money);
-  displayDashboardTotal(aggregate.value);
+  $('totalValue').textContent=aggregate.value;
   $('dashboardValueLabel').textContent=(aggregate.allUnknown?'Vermögen nicht bewertet':aggregate.missing?'Bekannte Teilsumme':'Gesamtvermögen');
   document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
   document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
@@ -326,12 +326,7 @@ function renderQualityReview(review,items){
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
-function displayDashboardTotal(value){
- const amount=$('totalValue');
- amount.textContent=value;
- amount.style.setProperty('--amount-length',String(value.length));
-}
-function renderDashboard(){const total=totalEUR(model);const aggregate=aggregateValuePresentation(model.positions,total,money);displayDashboardTotal(aggregate.value);
+function renderDashboard(){const total=totalEUR(model);const aggregate=aggregateValuePresentation(model.positions,total,money);$('totalValue').textContent=aggregate.value;
   $('totalHint').textContent=aggregate.note||'';
   const review=structuredQualityReview(model),chip=$('dashboardReview');
   chip.hidden=!review.groups.length;
@@ -3086,6 +3081,22 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
  if(!control||recoveryControlAllowed(control))return;
  event.preventDefault();event.stopImmediatePropagation();
 },true);
+// Preserve the full monetary value when large accessibility text exceeds its column.
+function installDashboardAmountSizing(){
+ const amount=$('totalValue');
+ function syncKeyboardAccess(){
+  if(amount.scrollWidth>amount.clientWidth+1)amount.tabIndex=0;
+  else amount.removeAttribute('tabindex');
+ }
+ function syncText(){
+  amount.style.setProperty('--amount-length',String(Math.max(1,amount.textContent.length)));
+  syncKeyboardAccess();
+ }
+ new MutationObserver(syncText).observe(amount,{childList:true,characterData:true,subtree:true});
+ new ResizeObserver(syncKeyboardAccess).observe(amount);
+ syncText();
+}
+installDashboardAmountSizing();
 initNav();initEvents();installCredentialVisibility();
 headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
