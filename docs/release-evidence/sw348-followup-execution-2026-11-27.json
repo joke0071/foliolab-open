@@ -1,0 +1,742 @@
+{
+  "main": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+  "planBase": "578c99d661cfeb05fe9d0129b66dde7efdd0fde1",
+  "release": "https://github.com/joke0071/foliolab-open/pull/443",
+  "packageCounts": {
+    "core": [
+      6,
+      6
+    ],
+    "followUpBefore": 18,
+    "followUpAfter": 18,
+    "totalFollowUp": 29
+  },
+  "production": {
+    "origin": "https://foliolab.unperfekt.at",
+    "sameBytes": [
+      "/",
+      "/index.html",
+      "/sw.js"
+    ],
+    "indexSHA256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+    "workerSHA256": "761c17def696c8998cbb2cff8ca1d4a65972918acc9a60a0cb90d7d1d16edaa8",
+    "workerCache": "foliolab-open-v348"
+  },
+  "framing": {
+    "browser": "Chromium 158.0.8127.0",
+    "parentOrigin": "http://127.0.0.1:6199",
+    "responseStatus": 200,
+    "headers": {
+      "contentSecurityPolicy": null,
+      "xFrameOptions": null
+    },
+    "childHeading": "Übersicht",
+    "domainCname": "joke0071.github.io.",
+    "authoritativeDnsProvider": "helloly",
+    "observedProviderState": "Login",
+    "result": "FRAMING_ALLOWED"
+  },
+  "sourceCases": {
+    "brokerFX": {
+      "source": "https://github.com/portfolio-performance/portfolio/commit/0f640515583efc158549c90bf931d698a8c99b52",
+      "name": "FlatExDegiroSammelabrechnung12.txt",
+      "sha256": "48de7e08c8219130172a7bd638112ea14a6d208f8b5453a4bd852c56d8fdf4ee",
+      "provenance": "Public anonymized PDFBox text from flatex Germany, not the native FolioLab AT CSV profile. Checked against the issuer and broker execution fields in the extracted settlement.",
+      "tradeDate": "2026-09-29",
+      "valueDate": "2026-09-30",
+      "isin": "US0389231087",
+      "currencyPair": "USD per EUR",
+      "fills": [
+        {
+          "quantity": 272,
+          "priceUSD": "3.96",
+          "fx": "1.138763",
+          "grossEUR": "945.87",
+          "feesEUR": "5.92",
+          "taxRefundEUR": "605.20",
+          "statedNetEUR": "1545.15"
+        },
+        {
+          "quantity": 28,
+          "priceUSD": "3.96",
+          "fx": "1.138743",
+          "grossEUR": "97.37",
+          "feesEUR": "0.00",
+          "taxRefundEUR": "64.22",
+          "statedNetEUR": "161.59"
+        }
+      ],
+      "totalStatedNetEUR": "1706.74",
+      "relatedBankStatement": "FlatExDegiroKontoauszug11.txt is a separate flatex AT case. No matches for execution date, order reference, ISIN or cash amounts.",
+      "missing": "Independent posted cash entry keyed to this order on a supported profile, or an equivalent original pair."
+    },
+    "regional": {
+      "forum": "https://forum.portfolio-performance.info/t/import-trade-republic-csv-transaktionsexport/39126/52",
+      "sourcePR": "https://github.com/portfolio-performance/portfolio/pull/6149",
+      "sha256": "739780b2460fb475a99e86cae22a53a506a81ffb272231096d95e5d379bcc68a",
+      "nativeRows": 111,
+      "attachmentType": "Portfolio Performance import preview screenshot",
+      "regionVerified": false,
+      "livePreview": {
+        "browser": "Chromium 158.0.8127.0",
+        "format": "auto/generic",
+        "ready": 0,
+        "duplicate": 0,
+        "toReview": 111,
+        "commitEnabled": false
+      },
+      "reasonExcludedPDF": "The June 2024 single statement from a different author uses a different position size and credited total."
+    },
+    "austrianTax": {
+      "annual": "https://www.broker-test.at/news/steuerreporting-flatex-oesterreich/",
+      "candidate": "https://github.com/portfolio-performance/portfolio/issues/5242",
+      "missing": "Annual tax report and detail or period reports from the same account and tax year, and independent case-specific review of basis."
+    },
+    "benchmark": {
+      "product": "VWCE Xetra EUR IE00BK5BQT80",
+      "licenseCheck": "https://www.onvista.de/nutzungsbedingungen",
+      "coverage": "https://www.xetra.com/resource/blob/1654464/f57ea84e63b45b4814901a765d1d994a/data/Xetra_Circular_074_19_en_Attach.pdf",
+      "missing": "Display rights plus complete corporate-action-adjusted VWCE / Xetra / EUR valuation series."
+    },
+    "sentiment": {
+      "cmcEndpoint": "https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest",
+      "cmcObservedHttp": 429,
+      "cmcUsage": "https://pro.coinmarketcap.com/user-agreement-commercial/",
+      "cmcProduction": "Authorized server-side Basic access and project registration",
+      "cnnLicensing": "https://commercial.cnn.com/our-solutions/content-sales/",
+      "cnnMissing": "Licensed official feed and display rights."
+    }
+  },
+  "safari": {
+    "result": "PASS",
+    "runnerOS": "macOS 15.8.2",
+    "browser": "Safari 27.2",
+    "guidepupSetup": "0.29.3",
+    "guidepup": "0.40.0",
+    "sourceCommit": "608da67c09957bcad2c8e68fabc4b8d725a1b024",
+    "artifact": "https://github.com/joke0071/foliolab-open/actions/runs/45946083164/artifacts/15174233578",
+    "zipSHA256": "0d89fc27bf57ee05d6d98ac1bff47b88f8cf8cad4fce8a95f583e452df9c823c",
+    "scope": "Real Safari, top-level local release with only an external focus observer added to HTML, real system VoiceOver.",
+    "stages": [
+      {
+        "name": "control",
+        "phrases": [
+          "FolioLab Kontrollansage Sieben button"
+        ],
+        "focus": {
+          "stage": "control",
+          "id": "control",
+          "tag": "BUTTON",
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "hash": "",
+          "selector": "#control",
+          "label": "FolioLab Kontrollansage Sieben"
+        },
+        "spoken": "FolioLab Kontrollansage Sieben button"
+      },
+      {
+        "name": "link",
+        "phrases": [
+          "link Direkt zum Inhalt"
+        ],
+        "focus": {
+          "stage": "link",
+          "id": "",
+          "tag": "A",
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "hash": "",
+          "selector": ".skip-to-content",
+          "label": "Direkt zum Inhalt"
+        },
+        "spoken": "link Direkt zum Inhalt"
+      },
+      {
+        "name": "main",
+        "phrases": [
+          "FolioLab web content group. You are currently on web content. To enter the web area, press Control-Option-Shift-Down Arrow.",
+          "FolioLab web content group",
+          "In FolioLab web content visited link Direkt zum Inhalt",
+          "visited link Direkt zum Inhalt",
+          "heading level 1 Übersicht. You are currently on a heading level 1."
+        ],
+        "focus": {
+          "stage": "main",
+          "id": "mainContent",
+          "hash": "#mainContent",
+          "source": "trusted focusin"
+        },
+        "spoken": "heading level 1 Übersicht. You are currently on a heading level 1.",
+        "enteredWebArea": true,
+        "usedNextHeading": true
+      },
+      {
+        "name": "positions",
+        "phrases": [
+          "Positionen button. You are currently on a button. To click this button, press Control-Option-Space."
+        ],
+        "focus": {
+          "stage": "positions",
+          "id": "",
+          "tag": "BUTTON",
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "hash": "#mainContent",
+          "selector": "#sidebarNav [data-page=\"positions\"],#mobileNav [data-page=\"positions\"]",
+          "label": "Positionen"
+        },
+        "spoken": "Positionen button. You are currently on a button. To click this button, press Control-Option-Space."
+      },
+      {
+        "name": "bookings",
+        "phrases": [
+          "Positionen button",
+          "You are currently on a button. To click this button, press Control-Option-Space.",
+          "Buchungen button. You are currently on a button. To click this button, press Control-Option-Space."
+        ],
+        "focus": {
+          "stage": "bookings",
+          "id": "",
+          "tag": "BUTTON",
+          "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "hash": "#mainContent",
+          "selector": "#sidebarNav [data-page=\"bookings\"],#mobileNav [data-page=\"bookings\"]",
+          "label": "Buchungen"
+        },
+        "spoken": "Buchungen button. You are currently on a button. To click this button, press Control-Option-Space.",
+        "usedNextItem": 1
+      }
+    ],
+    "trace": [
+      {
+        "name": "click",
+        "trusted": true,
+        "target": "skip-to-content",
+        "hash": "",
+        "active": "skip-to-content"
+      },
+      {
+        "name": "focusin",
+        "trusted": true,
+        "target": "mainContent",
+        "hash": "#mainContent",
+        "active": "mainContent"
+      },
+      {
+        "name": "hashchange",
+        "trusted": true,
+        "target": "",
+        "hash": "#mainContent",
+        "active": "mainContent"
+      },
+      {
+        "name": "focusin",
+        "trusted": true,
+        "target": "skip-to-content",
+        "hash": "#mainContent",
+        "active": "skip-to-content"
+      }
+    ],
+    "itp": "OPEN_PERSISTENT_NATIVE_PROFILE_REQUIRED"
+  },
+  "androidRecovery": {
+    "result": "PASS_VIRTUAL_TWO_AVD",
+    "fixtureSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+    "avd": {
+      "android": "14",
+      "build": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys",
+      "sdk": "34",
+      "chrome": "versionName=113.0.5672.136",
+      "display": "Physical size: 1080x2400",
+      "density": "Physical density: 420"
+    },
+    "source": {
+      "filename": "foliolab-verschluesselt-2026-11-27.json",
+      "bytes": 12361784,
+      "sha256": "f762615e9f6c90a22b57faf0eec572cb52ddcfa1c00893282fc10e9ba377056f",
+      "source": {
+        "cashEUR": "1000",
+        "bookings": 10000,
+        "journals": 10000,
+        "walletHistory": null,
+        "revision": 2,
+        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+      }
+    },
+    "restore": {
+      "chooser": "Android DocumentsUI",
+      "transferredSHA256": "f762615e9f6c90a22b57faf0eec572cb52ddcfa1c00893282fc10e9ba377056f",
+      "targetRevisionBefore": 1,
+      "state": {
+        "cashEUR": "1000",
+        "bookings": 10000,
+        "journals": 10000,
+        "walletHistory": null,
+        "revision": 2,
+        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+      }
+    },
+    "reopen": {
+      "cashEUR": "1000",
+      "bookings": 10000,
+      "journals": 10000,
+      "walletHistory": null,
+      "revision": 2,
+      "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+    },
+    "dialogKinds": [
+      "prompt",
+      "confirm",
+      "confirm"
+    ],
+    "artifact": "https://github.com/joke0071/foliolab-open/actions/runs/45944970160/artifacts/15174901169",
+    "zipSHA256": "c6ad1faa8eec25c20249db08b98fee9f7481730443cc152dad476712e4fffa5d",
+    "fixtureWalletHistory": "empty, carried over exactly",
+    "physicalLab": {
+      "samsungCatalog": "https://developer.samsung.com/remotetestlab/devices",
+      "availability": "Device catalog shows available devices with sign-in required for reservation",
+      "activeReservation": false
+    }
+  },
+  "androidInitialMeasurements": {
+    "artifact": "https://github.com/joke0071/foliolab-open/actions/runs/45943928269/artifacts/15173673986",
+    "zipSHA256": "b0bf8fb549f16ae10daba10b22d43100cb3c426981d6efacd42d4a071aa95066",
+    "device": {
+      "android": "14",
+      "build": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.036.A4/12096271:user/release-keys",
+      "sdk": "34",
+      "chrome": "versionName=113.0.5672.136",
+      "display": "Physical size: 1080x2400",
+      "density": "Physical density: 420"
+    },
+    "fixtureSHA256": "67d9526811d4065448b777ba2ba304f928c253a3096792ed37b0153e18afb809",
+    "product": {
+      "sha": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+      "startup": {
+        "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+        "controller": "http://127.0.0.1:4378/sw.js",
+        "caches": [
+          "foliolab-open-v348"
+        ],
+        "standalone": false
+      },
+      "seed": {
+        "cashEUR": "1000",
+        "bookings": 10000,
+        "journals": 10000,
+        "walletHistory": null,
+        "revision": 2,
+        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+      },
+      "modes": {
+        "cold": {
+          "samples": [
+            {
+              "kind": "cold",
+              "interactiveMs": 5154.399999999994,
+              "firstContentfulPaintMs": 1296,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 7574.901519000006,
+              "safeInteractionObservedMs": 8045.311205000005,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 2088\nWaitTime: 2095\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "cold",
+              "interactiveMs": 4406.600000000006,
+              "firstContentfulPaintMs": 861.8999999999942,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6012.623037000012,
+              "safeInteractionObservedMs": 6445.708125000005,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1178\nWaitTime: 1205\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "cold",
+              "interactiveMs": 4494.5,
+              "firstContentfulPaintMs": 1037,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6014.792362999986,
+              "safeInteractionObservedMs": 6412.485386999993,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 943\nWaitTime: 953\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "cold",
+              "interactiveMs": 4567.100000000006,
+              "firstContentfulPaintMs": 998.3999999999942,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6117.671568999998,
+              "safeInteractionObservedMs": 6550.476683000015,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1149\nWaitTime: 1156\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "cold",
+              "interactiveMs": 4405.5,
+              "firstContentfulPaintMs": 819.2999999999884,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 5994.641510000016,
+              "safeInteractionObservedMs": 6481.149340000004,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1224\nWaitTime: 1254\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            }
+          ],
+          "interactiveMs": {
+            "median": 4494.5,
+            "min": 4405.5,
+            "max": 5154.399999999994,
+            "sampleStandardDeviation": 314.10504134763215
+          },
+          "readinessObservedMs": {
+            "median": 6014.792362999986,
+            "min": 5994.641510000016,
+            "max": 7574.901519000006,
+            "sampleStandardDeviation": 690.3942814023823
+          },
+          "safeInteractionObservedMs": {
+            "median": 6481.149340000004,
+            "min": 6412.485386999993,
+            "max": 8045.311205000005,
+            "sampleStandardDeviation": 705.2617120985376
+          }
+        },
+        "warm": {
+          "samples": [
+            {
+              "kind": "warm",
+              "interactiveMs": 3783.1999999999534,
+              "firstContentfulPaintMs": 316.69999999995343,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 3825.6333610000147,
+              "safeInteractionObservedMs": 4203.052498000005,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "warm",
+              "interactiveMs": 3770.7000000000116,
+              "firstContentfulPaintMs": 437.3999999999651,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 3817.7327410000144,
+              "safeInteractionObservedMs": 4152.631325000024,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "warm",
+              "interactiveMs": 4135,
+              "firstContentfulPaintMs": 468.4000000000233,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4173.719494999998,
+              "safeInteractionObservedMs": 4489.630455999984,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "warm",
+              "interactiveMs": 4382,
+              "firstContentfulPaintMs": 526.8999999999651,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4424.031454999989,
+              "safeInteractionObservedMs": 4744.866303999996,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "warm",
+              "interactiveMs": 4321.099999999977,
+              "firstContentfulPaintMs": 405.0999999999767,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 4357.190750999987,
+              "safeInteractionObservedMs": 4701.301264999987,
+              "platformStart": null,
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            }
+          ],
+          "interactiveMs": {
+            "median": 4135,
+            "min": 3770.7000000000116,
+            "max": 4382,
+            "sampleStandardDeviation": 289.87158363662047
+          },
+          "readinessObservedMs": {
+            "median": 4173.719494999998,
+            "min": 3817.7327410000144,
+            "max": 4424.031454999989,
+            "sampleStandardDeviation": 287.05269701127094
+          },
+          "safeInteractionObservedMs": {
+            "median": 4489.630455999984,
+            "min": 4152.631325000024,
+            "max": 4744.866303999996,
+            "sampleStandardDeviation": 274.19704818823203
+          }
+        },
+        "offline": {
+          "samples": [
+            {
+              "kind": "offline",
+              "interactiveMs": 4721.5,
+              "firstContentfulPaintMs": 999.0999999999767,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6478.1012969999865,
+              "safeInteractionObservedMs": 6962.643019000039,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1322\nWaitTime: 1352\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "offline",
+              "interactiveMs": 4703.399999999965,
+              "firstContentfulPaintMs": 1028.6999999999534,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6201.076346000016,
+              "safeInteractionObservedMs": 6670.141311000043,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1082\nWaitTime: 1090\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "offline",
+              "interactiveMs": 4654.099999999977,
+              "firstContentfulPaintMs": 1018.5,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6262.195616000041,
+              "safeInteractionObservedMs": 6809.908113000041,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1226\nWaitTime: 1245\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "offline",
+              "interactiveMs": 4620,
+              "firstContentfulPaintMs": 1060.5999999999767,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 5907.969575000054,
+              "safeInteractionObservedMs": 6357.161575000035,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 838\nWaitTime: 867\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            },
+            {
+              "kind": "offline",
+              "interactiveMs": 4715.199999999953,
+              "firstContentfulPaintMs": 1049.5999999999767,
+              "serviceWorker": true,
+              "standalone": false,
+              "readinessObservedMs": 6226.309470999986,
+              "safeInteractionObservedMs": 6711.025053999969,
+              "platformStart": "Starting: Intent { act=android.intent.action.VIEW dat=http://127.0.0.1:4378/... cmp=com.android.chrome/com.google.android.apps.chrome.Main }\nStatus: ok\nLaunchState: COLD\nActivity: com.android.chrome/org.chromium.chrome.browser.ChromeTabbedActivity\nTotalTime: 1071\nWaitTime: 1075\nComplete",
+              "financial": {
+                "cashEUR": "1000",
+                "bookings": 10000,
+                "journals": 10000,
+                "revision": 2,
+                "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+              }
+            }
+          ],
+          "android": {
+            "airplaneMode": "1",
+            "wifiOn": "0",
+            "dataOn": "0",
+            "reverseRoutes": "host-20 tcp:4371 tcp:4371"
+          },
+          "interactiveMs": {
+            "median": 4703.399999999965,
+            "min": 4620,
+            "max": 4721.5,
+            "sampleStandardDeviation": 43.98673663730037
+          },
+          "readinessObservedMs": {
+            "median": 6226.309470999986,
+            "min": 5907.969575000054,
+            "max": 6478.1012969999865,
+            "sampleStandardDeviation": 203.73947071136843
+          },
+          "safeInteractionObservedMs": {
+            "median": 6711.025053999969,
+            "min": 6357.161575000035,
+            "max": 6962.643019000039,
+            "sampleStandardDeviation": 223.3767874422739
+          }
+        }
+      }
+    }
+  },
+  "archiveDelta": {
+    "latestProjectFiles": "No related new entries in authorized Drive and Library metadata since the previous source checkpoint.",
+    "latestProjectMail": "Only GitHub QA notifications in the targeted period and subject search.",
+    "ledger": "Two independently previewed native exports remain linked to the base SOL account. The archive lacks individually matched stake account, delegation and archival chain balances.",
+    "eth": "Public cursor replay remains accepted. Private first response and its original follow-up page are unavailable.",
+    "bitpanda": "No dated independently issued cash balance and per-asset BCI25 amounts for one common date."
+  },
+  "driveReview": {
+    "url": "https://github.com/joke0071/foliolab-open/pull/427",
+    "head": "84ef0b3746d48f24a7b130ecce80c6409f579463",
+    "reviews": 0,
+    "reviewThreads": 0,
+    "conversationComments": 0,
+    "requestedReviewers": 0
+  },
+  "localRegression": {
+    "selectedTests": 24,
+    "passed": 24,
+    "syntax": "PASS"
+  },
+  "androidComparison": {
+    "status": "RETRY_RUNNING",
+    "failedAsyncBrowserAttachRun": "https://github.com/joke0071/foliolab-open/actions/runs/45945944624",
+    "priorPartial": {
+      "sha": "e272297ab1ba855a2922c1faa4010b83c558a796",
+      "startup": {
+        "ua": "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36",
+        "controller": "http://127.0.0.1:4371/sw.js",
+        "caches": [
+          "foliolab-open-v321"
+        ],
+        "standalone": false
+      },
+      "seed": {
+        "cashEUR": "1000",
+        "bookings": 10000,
+        "journals": 10000,
+        "walletHistory": null,
+        "revision": 2,
+        "rawSHA256": "7479b66725d282d3540da58566a22ec8fcbd17b4d3362a67fb80e6d4e8ab05c7"
+      },
+      "cold": {
+        "samples": [
+          {
+            "kind": "cold",
+            "interactiveMs": 9781.800000000003,
+            "firstContentfulPaintMs": 1975.300000000003,
+            "readinessObservedMs": 12953.530915000003,
+            "safeInteractionObservedMs": 13605.067516999996
+          },
+          {
+            "kind": "cold",
+            "interactiveMs": 6861.600000000006,
+            "firstContentfulPaintMs": 1323.800000000003,
+            "readinessObservedMs": 9280.545914000002,
+            "safeInteractionObservedMs": 9963.730299999996
+          },
+          {
+            "kind": "cold",
+            "interactiveMs": 10236.300000000017,
+            "firstContentfulPaintMs": 2534.9000000000233,
+            "readinessObservedMs": 13304.325698,
+            "safeInteractionObservedMs": 13964.474220000004
+          }
+        ],
+        "interactiveMs": null,
+        "safeInteractionObservedMs": null
+      },
+      "warm": {
+        "samples": [],
+        "interactiveMs": null,
+        "safeInteractionObservedMs": null
+      },
+      "offline": {
+        "samples": [],
+        "interactiveMs": null,
+        "safeInteractionObservedMs": null,
+        "android": null
+      }
+    },
+    "directMeasurementCommit": "d1da5a37ca7b1c5e004a496cb4873460a999046e"
+  }
+}
