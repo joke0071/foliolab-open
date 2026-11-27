@@ -1129,5 +1129,174 @@
         }
       }
     }
+  },
+  "executionDelta": {
+    "checkpoint": "ee0c0027b6f4836402be5617626228fc8af752ac",
+    "releaseCommit": "4e3e4a256ce0d81946ed6907b965d1f30aac33fe",
+    "packageCounts": {
+      "coreAccepted": 6,
+      "coreTotal": 6,
+      "followUpBefore": 18,
+      "followUpAfter": 18,
+      "followUpTotal": 29
+    },
+    "github": {
+      "mainMatchesCheckpoint": true,
+      "workBranchMatchesCheckpointBeforeRecording": true,
+      "openPullRequests": [
+        430,
+        429,
+        427,
+        350,
+        348,
+        161
+      ],
+      "queuedRuns": 0,
+      "inProgressRuns": 0,
+      "waitingRuns": 0,
+      "latestCompletedRun": "https://github.com/joke0071/foliolab-open/actions/runs/45947703618"
+    },
+    "production": {
+      "origin": "https://foliolab.unperfekt.at",
+      "httpStatus": 200,
+      "byteComparedWithRelease": [
+        "/",
+        "/index.html",
+        "/sw.js"
+      ],
+      "indexSHA256": "48ae17df3f0ea22e990923568df8140c1f92cbe5b70d775a52f5c0e933d2f67a",
+      "workerSHA256": "761c17def696c8998cbb2cff8ca1d4a65972918acc9a60a0cb90d7d1d16edaa8"
+    },
+    "brokerFX": {
+      "status": "SOURCE_PROVENANCE_CONFIRMED_INDEPENDENT_POSTING_MISSING",
+      "importerPullRequests": [
+        "https://github.com/portfolio-performance/portfolio/pull/5998",
+        "https://github.com/portfolio-performance/portfolio/pull/6116",
+        "https://github.com/portfolio-performance/portfolio/pull/6037"
+      ],
+      "forumOrigin": "https://forum.portfolio-performance.info/t/pdf-import-von-flatex/1752/400",
+      "originalAttachmentSHA256": "a8e922d967fc5cf4f68e8755198a181c16da679f3f24460439b21f3b15ca3c58",
+      "settlementExcerptsShareOrderPrefix": true,
+      "separateExecutionSuffixes": [
+        1,
+        2
+      ],
+      "fillQuantities": [
+        272,
+        28
+      ],
+      "tradeCurrency": "USD",
+      "settlementCurrency": "EUR",
+      "settlementDate": "2026-09-30",
+      "totalStatedNetEUR": "1706.74",
+      "attachmentSaysPostingOccursOnValueDate": true,
+      "independentlyBookedCashObserved": false,
+      "publicDiscoursePostsScanned": {
+        "flatexDE": 373,
+        "flatexAT": 144,
+        "consorsbank": 351,
+        "tradeRepublic": 61
+      },
+      "uniqueTextCsvAndPdfAttachmentsFetched": 34,
+      "textlessPdfs": {
+        "count": 4,
+        "sourcePost": "https://forum.portfolio-performance.info/t/pdf-import-von-flatex/1752/299",
+        "sourcePublicationDate": "2025-09-08"
+      },
+      "otherDocumentWithMatchingOrderOrAmountsFound": false,
+      "missing": "On the strongest flatex source trail, the independently posted cash statement is missing. Full acceptance requires an original pair for a supported FolioLab profile.",
+      "isin": "US0389231087"
+    },
+    "safari": {
+      "framing": {
+        "productionCSPResponseHeader": null,
+        "productionXFrameOptions": null,
+        "cname": "joke0071.github.io.",
+        "dnsProvider": "helloly",
+        "authorizedHeaderRouteAvailable": false
+      },
+      "itp": {
+        "eligiblePersistentProfileAvailable": false,
+        "githubRunnerJobMaxHours": 6,
+        "githubRunnerFreshInstancePerJob": true,
+        "limits": "https://docs.github.com/en/actions/reference/limits",
+        "observedVoiceOverEvidence": "https://github.com/joke0071/foliolab-open/actions/runs/45946083164/artifacts/15174233578"
+      }
+    },
+    "physicalAndroid": {
+      "sourceFixtureAndVirtualRunsReused": true,
+      "localUSBDevices": 0,
+      "awsDeviceFarm": {
+        "source": "https://aws.amazon.com/device-farm/pricing/",
+        "remoteADB": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/remote-access.html",
+        "trialDeviceMinutes": 1000,
+        "eligibleAuthorizedSessionAvailable": false
+      },
+      "androidDeviceStreaming": {
+        "source": "https://developer.android.com/studio/run/android-device-streaming",
+        "requiresAuthorizedFirebaseProject": true,
+        "eligibleAuthorizedProjectAvailable": false
+      },
+      "recoveryRunScope": "The recovery artifact passed the two-AVD file scenario. Its outer workflow run failed, with the virtual startup comparison passing separately on run 45947703618."
+    },
+    "regionalImports": {
+      "originalThread": "https://forum.portfolio-performance.info/t/import-trade-republic-csv-transaktionsexport/39126/52",
+      "postsScanned": 61,
+      "onlyDocumentAttachment": "transactions_realty_income.csv",
+      "originalSingleStatementFound": false,
+      "importerPullRequest": "https://github.com/portfolio-performance/portfolio/pull/6149",
+      "laterPostsContainMatchingStatement": false,
+      "bitpandaCashAndBCI25ArchiveDelta": false
+    },
+    "austrianTax": {
+      "originalTrail": "https://github.com/portfolio-performance/portfolio/issues/5242",
+      "primarySource": "https://www.flatex.at/service/faqs/detail/steuern/allgemein-zu-steuern/welche-steuerdokumente-werden-ausgegeben/",
+      "issuerDistinguishesAnnualTaxReportingAndDetailedStatement": true,
+      "relatedAnnualReportInThread": false
+    },
+    "archives": {
+      "modifiedAfter": "2026-11-27T05:56:24Z",
+      "matchingNewAuthorizedDriveLibraryOrMailEntries": 0,
+      "privateRawEthResponsePair": false,
+      "privateMatchedSolStakeAccountAndChainEvidence": false
+    },
+    "benchmark": {
+      "provider": "Twelve Data",
+      "terms": "https://twelvedata.com/terms",
+      "xetraSource": "https://live.deutsche-boerse.com/en/etf/vanguard-ftse-all-world-ucits-etf-usd-accumulating?mic=XETR",
+      "qualifyingFreeDisplayRightsFound": false,
+      "fullRangeReadbackStarted": false
+    },
+    "sentiment": {
+      "cmc": {
+        "endpoint": "https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest",
+        "serverRequest": {
+          "httpStatus": 200,
+          "sourceTimestamp": "2026-11-27T06:53:10.024Z",
+          "responseTimestamp": "2026-11-27T07:03:33.160Z",
+          "responseSHA256": "275b48517ade806502014967bf2aa89646874b5abb416234a29bfceb28e9da84",
+          "numericValue": true,
+          "classificationPresent": true
+        },
+        "requestWithFolioLabOrigin": {
+          "origin": "https://foliolab.unperfekt.at",
+          "httpStatus": 429,
+          "observedAt": "2026-11-27T07:02:45Z"
+        },
+        "productionPlan": "https://coinmarketcap.com/api/pricing/",
+        "productionAdmission": false
+      },
+      "cnn": {
+        "officialLicensingRoute": "https://commercial.cnn.com/our-solutions/content-sales/",
+        "officialFreeFeedWithDisplayRightsLocated": false
+      }
+    },
+    "drive": {
+      "reviewHead": "84ef0b3746d48f24a7b130ecce80c6409f579463",
+      "reviews": 0,
+      "reviewThreads": 0,
+      "conversationComments": 0,
+      "requestedReviewers": 0
+    }
   }
 }
