@@ -302,7 +302,8 @@ function renderDashboard(){const total=totalEUR(model);const aggregate=aggregate
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
   const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
-  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions)+renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
+  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
+  $('liquidityOverview').innerHTML=renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=wealth.samples;
   $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
@@ -625,7 +626,7 @@ function selectionMaster(id,coverage,disabled){
 }
 function renderPositionSelection(){
  const tools=$('positionSelectionTools'),status=$('positionSelectionStatus'),head=$('positionListHead');
- if(!model.positions.length){positionSelecting=false;selectedPositionIds=[];head.innerHTML='';tools.innerHTML='';status.textContent='';return;}
+ if(!model.positions.length){positionSelecting=false;selectedPositionIds=[];head.innerHTML='<h3>Positionen</h3>';tools.innerHTML='';status.textContent='';return;}
  head.innerHTML='<h3>Positionen</h3><button type="button" class="btn light" data-action="'+(positionSelecting?'cancel-selection':'select-positions')+'" aria-controls="positionSelectionTools positionList" aria-pressed="'+positionSelecting+'">'+(positionSelecting?'Fertig':'Verwalten')+'</button>';
  if(!positionSelecting){tools.innerHTML='';status.textContent='';return;}
  const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds),scope=positionSelectionScope();
@@ -748,7 +749,6 @@ function bookingManagementRow(row,archived,lookups){
  const counterpartLabel=match?[match.outgoingId,...match.incomingIds].filter(id=>id!==row.id).map(id=>{const b=lookups.bookings.get(id),p=b&&lookups.positions.get(b.positionId),a=p&&lookups.accounts.get(p.accountId);return [calendarDateLabel(b?.date),a?.name,exactQuantityLabel(b?.quantityExact??b?.quantity),p?.currency,id].filter(x=>x!=null).join(' · ');}).join(' / '):'';
  return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?edit:'',transferAction,counterpartLabel,detailsAvailable:bookingSelecting})+'</article>';
 }
-function bookingTransferShortcut(){return '<button id="bookingTransferAction" type="button" class="btn outline" data-action="transfer-matching" aria-describedby="bookingTransferHint" '+(!bookingWritable()?'disabled':'')+'>Transfers prüfen</button>';}
 function restoreBookingTransferFocus(button){
  if(button?.isConnected){button.focus({preventScroll:true});return;}
  const row=[...$('bookingList').querySelectorAll('[data-booking-id]')].find(el=>el.dataset.bookingId===button?.dataset.id),summary=row?.querySelector('.booking-meta>summary');
@@ -756,9 +756,10 @@ function restoreBookingTransferFocus(button){
 }
 function renderBookingManagement(rows=bookingHistoryRows(model)){
  const root=$('bookingManagementTools'),head=$('bookingListHead');
- if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML=bookingTransferShortcut();root.innerHTML='';return;}
+ $('bookingTransferAction').disabled=!bookingWritable();
+ if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML='<h3>Buchungen</h3>';root.innerHTML='';return;}
  const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
- head.innerHTML='<h3>Buchungen</h3>'+bookingTransferShortcut()+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
+ head.innerHTML='<h3>Buchungen</h3>'+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
  if(!bookingSelecting)root.innerHTML='';
  else{
   const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;

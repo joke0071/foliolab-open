@@ -32,6 +32,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(390));
   for(const width of [320,390,768,1024,1440]){
    await p.setViewportSize({width,height:900});await nav('history');
+   const detailsGroup=p.locator('#historyPage .history-insights');
+   assert.deepEqual(await detailsGroup.locator(':scope > details').evaluateAll(nodes=>nodes.map(node=>node.id)),ids);
+   assert.ok(await detailsGroup.evaluate(el=>parseFloat(getComputedStyle(el).borderLeftWidth)>0&&!el.contains(document.getElementById('historyChart'))),'outline groups the disclosures below the chart');
    assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(width),'history presets and mobile calendar at '+width);
    const more=p.locator('#chartPeriods .period-more>summary');
    assert.equal(await p.locator('#historyBasis').isVisible(),false);

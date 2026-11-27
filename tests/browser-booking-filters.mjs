@@ -4,9 +4,22 @@ import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
+const listFrame=async id=>page.locator('#'+id).evaluate(el=>{
+ const css=getComputedStyle(el),box=el.getBoundingClientRect();
+ return [css.borderTopWidth,css.borderTopStyle,css.borderTopColor,css.borderRadius,css.paddingInlineStart,box.left,box.width];
+});
+const expectMatchingLists=async()=>{
+ await page.locator('#mobileNav [data-page="positions"]').click();
+ assert.equal(await page.locator('#positionListHead h3').innerText(),'Positionen');
+ const frame=await listFrame('positionList');
+ assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','visible positions outline');
+ await page.locator('#mobileNav [data-page="bookings"]').click();
+ assert.equal(await page.locator('#bookingListHead h3').innerText(),'Buchungen');
+ assert.deepEqual(await listFrame('bookingList'),frame,'matching result card outline, radius, padding and width');
+};
 try{
  await page.goto('http://127.0.0.1:4173/');
- await page.locator('#mobileNav [data-page="bookings"]').click();
+ await expectMatchingLists();
  assert.equal(await page.locator('#bookingsPage #addBooking').count(),1);
  assert.equal(await page.locator('#bookingsPage #openCSVImport').count(),1);
  assert.equal(await page.locator('#bookingsPage .booking-onboarding button').count(),0);
@@ -23,7 +36,7 @@ try{
   ];
   persist(m);
  });
- await page.reload();await page.locator('#mobileNav [data-page="bookings"]').click();
+ await page.reload();await expectMatchingLists();
  assert.equal(await page.locator('#bookingList .history-row').count(),2);
  await page.locator('#bookingFilterType').selectOption('buy');
  assert.equal(await page.locator('#bookingList .history-row').count(),1);
