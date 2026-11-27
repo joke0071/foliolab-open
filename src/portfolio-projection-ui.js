@@ -48,15 +48,15 @@ export function bindPortfolioProjection(section,getModel){
    const years=scenarios[0].points.at(-1).year;
    const cards=scenarios.map((s,i)=>{
     const end=s.points.at(-1);
-    return '<div class="projection-result"><h4><span class="projection-key projection-key-'+i+'" aria-hidden="true"></span>'+labels[i]+'</h4>'+
+    return '<div class="projection-result"><h3><span class="projection-key projection-key-'+i+'" aria-hidden="true"></span>'+labels[i]+'</h3>'+
       '<p class="small-help">'+s.rate.toLocaleString('de-AT')+' % p. a.</p>'+
       '<strong>'+money(end.nominal)+'</strong><p class="small-help">Kaufkraft heute: '+money(end.real)+'</p>'+
       (s.unfunded>0?'<p class="small-help">Ungedeckte Entnahmen: '+money(s.unfunded)+'</p>':'')+'</div>';
    }).join('');
    message.textContent='';
    status.textContent='Drei Szenarien berechnet.';
-   output.innerHTML='<h3>Simulierter Vermögensverlauf</h3><div class="projection-chart">'+projectionChart(scenarios)+'</div>'+
-    '<h3>Endwerte nach '+years+(years===1?' Jahr':' Jahren')+'</h3><div class="projection-results-grid">'+cards+'</div>';
+   output.innerHTML='<h2>Simulierter Vermögensverlauf</h2><div class="projection-chart">'+projectionChart(scenarios)+'</div>'+
+    '<h2>Endwerte nach '+years+(years===1?' Jahr':' Jahren')+'</h2><div class="projection-results-grid">'+cards+'</div>';
   }catch(error){
    output.replaceChildren();
    status.textContent='';

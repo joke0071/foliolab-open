@@ -1,3 +1,4 @@
+import {createSectionViews} from './section-views.js';
 import {units,exact as exactDecimal,div,SCALE} from './decimal.js';
 import {createInstallHintPreference} from './install-hint-preference.js';
 import {createSharedImportUI} from './shared-import-ui.js';
@@ -173,33 +174,76 @@ const sectionIds={
  history:['historyDiagram','historyCoverage','performanceDetails','snapshotManager','portfolioProjection'],
  more:['moreAccounts','moreData','moreSources']
 };
+const sectionViews=createSectionViews({back:$('sectionBack'),title:$('pageTitle'),description:$('pageDescription')});
 function sectionHash(destination){
- return sectionIds[destination]?.includes(location.hash.slice(1))?location.hash:'';
+ const id=location.hash.slice(1);
+ return sectionIds[destination]?.includes(id)||sectionViews.resolve(destination,id)?location.hash:'';
 }
-function revealLinkedSection(){
- const hash=sectionHash(page);
- if(!hash)return;
- const section=$(hash.slice(1));
- const disclosure=section instanceof HTMLDetailsElement;
- if(disclosure)section.open=true;
- const target=disclosure?section.querySelector(':scope > summary'):section;
- target.scrollIntoView({block:'start',behavior:'instant'});
- target.focus({preventScroll:true});
+function parentTitle(destination){
+ return destination==='history'?'Vermögensentwicklung':PAGES.find(entry=>entry[0]===destination)[1];
 }
+function showRoute({focus=false,restoreEntry=null}={}){
+ const id=sectionHash(page).slice(1),section=sectionViews.resolve(page,id);
+ sectionViews.show(section,parentTitle(page),PAGE_DESCRIPTIONS[page]||'');
+ if(section){
+  window.scrollTo({top:0,behavior:'instant'});
+  if(focus){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
+ }else if(!id&&restoreEntry?.isConnected&&restoreEntry.closest('.page.active')){
+  const trigger=restoreEntry.querySelector('summary');
+  trigger.focus({preventScroll:true});
+  if(Number.isFinite(history.state?.sectionScroll))window.scrollTo({top:history.state.sectionScroll,behavior:'instant'});
+  else trigger.scrollIntoView({block:'center',behavior:'instant'});
+ }else if(id){
+  const target=$(id);
+  if(target instanceof HTMLDetailsElement)target.open=true;
+  const focusTarget=target instanceof HTMLDetailsElement?target.querySelector('summary'):target;
+  focusTarget.scrollIntoView({block:'start',behavior:'instant'});focusTarget.focus({preventScroll:true});
+ }
+}
+function enterSection(section){
+ const parentUrl=location.pathname+location.search;
+ history.replaceState({...history.state,sectionScroll:window.scrollY},'',location.href);
+ history.pushState({sectionParent:parentUrl},'',parentUrl+'#'+section.id);
+ showRoute({focus:true});
+}
+document.addEventListener('click',event=>{
+ const trigger=event.target.closest('details[data-view-title]>summary');
+ if(!trigger)return;
+ event.preventDefault();enterSection(trigger.parentElement);
+});
+$('sectionBack').addEventListener('click',()=>{
+ const current=sectionViews.current;if(!current)return;
+ const parentUrl=location.pathname+location.search;
+ if(history.state?.sectionParent===parentUrl){history.back();return;}
+ history.replaceState(null,'',parentUrl);showRoute({restoreEntry:current});
+});
+let restoredUrl='';
 window.addEventListener('popstate',()=>{
  const restored=new URLSearchParams(location.search).get('page')||'dashboard';
- if(restored!==page){
-  go(restored,{restore:true,section:sectionHash(restored)});
-  requestAnimationFrame(revealLinkedSection);
- }
+ const previous=sectionViews.current;
+ if(restored!==page)go(restored,{restore:true,section:sectionHash(restored)});
+ showRoute({focus:true,restoreEntry:previous});restoredUrl=location.href;
 });
-window.addEventListener('hashchange',()=>requestAnimationFrame(revealLinkedSection));
-function go(next,{review=false,section='',restore=false}={}){const previousPage=page,originPage=document.activeElement?.closest('.page');qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';const url=location.pathname+(next==='dashboard'?'':`?page=${next}`)+(next==='history'||next==='more'?section:'');
+window.addEventListener('hashchange',()=>{
+ if(sectionHash(page)||restoredUrl!==location.href)requestAnimationFrame(()=>showRoute({focus:true}));
+ restoredUrl='';
+});
+function go(next,{review=false,section='',restore=false}={}){
+ const previousPage=page,originPage=document.activeElement?.closest('.page');
+ qualityReviewOpen=next==='positions'&&review;
+ if(!PAGES.some(x=>x[0]===next))next='dashboard';
+ if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}
+ page=next;
+ document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));
+ document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});
+ const url=location.pathname+(next==='dashboard'?'':`?page=${next}`)+section;
  if(url!==location.pathname+location.search+location.hash){
-  if(restore)history.replaceState(null,'',url);
-  else history.pushState(null,'',url);
+  if(restore)history.replaceState(null,'',url);else history.pushState(null,'',url);
  }
- window.scrollTo({top:0,behavior:'instant'});render();if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}}
+ showRoute();
+ window.scrollTo({top:0,behavior:'instant'});render();
+ if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
+}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
  if(control.matches('a[href]')){
   if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||event.button!==0)return;
@@ -207,7 +251,7 @@ function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<bu
  }
  go(control.dataset.go);
 }));const initial=new URL(location.href).searchParams.get('page')||'dashboard';go(initial,{restore:true,section:sectionHash(initial)});}
-function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],[data-install-action],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
+function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],[data-install-action],.header-status-dialog button,.icon-close')||['sectionBack','downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  const readbackFailed=loadFailure instanceof RestoreReadbackError;
@@ -3063,7 +3107,7 @@ headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
  readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure instanceof RestoreReadbackError?restoreReadbackHint:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,displayError:lastDisplayError,indexedDB:portfolioStore.isIndexedDB}),
  onStorageHelp:()=>{if(!loadFailure){go('more');$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
- onDriveSettings:()=>{go('more');const panel=$('googleDriveBackupSetup');for(let parent=panel;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;panel.scrollIntoView({block:'start'});panel.querySelector('summary').focus();}
+ onDriveSettings:()=>{go('more');enterSection($('googleDriveBackupSetup'));}
 });
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
@@ -3213,7 +3257,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);installDesktopMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
-revealLinkedSection();
+showRoute({focus:Boolean(sectionHash(page))});
 performance.mark('foliolab-interactive');
 window.dispatchEvent(new Event('foliolab:ready'));
 if(!loadFailure&&location.protocol==='https:'&&refreshFrequency(model.settings.autoRefresh)!=='off'){
