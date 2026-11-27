@@ -18,6 +18,7 @@ jobs:
           node-version: '22'
       - name: Verify product bytes and record environment
         run: |
+          git fetch --depth=1 origin 4e3e4a256ce0d81946ed6907b965d1f30aac33fe
           git diff --exit-code 4e3e4a256ce0d81946ed6907b965d1f30aac33fe HEAD -- . ':(exclude).github/workflows/qa-sw348-voiceover-control.yml' ':(exclude)tests/native-safari/sw348-voiceover-control.mjs'
           mkdir -p artifacts/native-safari
           (sw_vers; safaridriver --version; node --version) | tee artifacts/native-safari/environment.txt
