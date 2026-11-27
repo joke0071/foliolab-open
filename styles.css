@@ -2359,16 +2359,16 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  --asset-crypto:#d59100; --asset-cash:#008653; --asset-other:#657387;
  --selection:#1246d5; --danger:#ac322b; --primary:#174eb6; --on-tonal:#123879; --tonal:#dce7ff;
 }
-:root:has(#historyPage.active),[data-page="history"] {
+#historyPage,:root:has(#historyPage.active) dialog,[data-page="history"] {
  --primary:#006b65; --on-tonal:#004e49; --tonal:#bfeee7;
 }
-:root:has(#positionsPage.active),[data-page="positions"] {
+#positionsPage,:root:has(#positionsPage.active) dialog,[data-page="positions"] {
  --primary:#7041a4; --on-tonal:#51237e; --tonal:#eddcff;
 }
-:root:has(#bookingsPage.active),[data-page="bookings"] {
+#bookingsPage,:root:has(#bookingsPage.active) dialog,[data-page="bookings"] {
  --primary:#8c4900; --on-tonal:#693600; --tonal:#ffdfb8;
 }
-:root:has(#morePage.active),[data-page="more"] {
+#morePage,:root:has(#morePage.active) dialog,[data-page="more"] {
  --primary:#405b80; --on-tonal:#223e62; --tonal:#dae6fa;
 }
 [data-page="dashboard"] {--on-tonal:#123879;--tonal:#dce7ff}
@@ -2533,3 +2533,5 @@ dialog :is(.advanced-apis,.wizard-catalog-tools,.form-disclosure)>summary,
 #editDialog .advanced-apis>summary {color:var(--on-tonal)}
 dialog :is(.advanced-apis,.wizard-catalog-tools)[open]>summary {background:var(--surface)}
 dialog .advanced-apis,dialog .wizard-group {border-color:var(--line)}
+/* Firefox defers transitions inside collapsed disclosures until they open. */
+details:not([open])>:not(summary),details:not([open])>:not(summary) * {transition:none}
