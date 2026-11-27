@@ -3084,16 +3084,10 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
 // Preserve the full monetary value when large accessibility text exceeds its column.
 function installDashboardAmountSizing(){
  const amount=$('totalValue');
- function syncKeyboardAccess(){
-  if(amount.scrollWidth>amount.clientWidth+1)amount.tabIndex=0;
-  else amount.removeAttribute('tabindex');
- }
  function syncText(){
   amount.style.setProperty('--amount-length',String(Math.max(1,amount.textContent.length)));
-  syncKeyboardAccess();
  }
  new MutationObserver(syncText).observe(amount,{childList:true,characterData:true,subtree:true});
- new ResizeObserver(syncKeyboardAccess).observe(amount);
  syncText();
 }
 installDashboardAmountSizing();

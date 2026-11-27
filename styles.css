@@ -2309,6 +2309,7 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  font-size:clamp(1rem,calc(155cqi / var(--amount-length,12)),3rem);
  font-weight:700;letter-spacing:-.035em;white-space:nowrap;overflow-x:auto
 }
+.dashboard-history #totalValue:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
 .dashboard-history #dashboardChange{
  display:inline-block;background:#e3ebff;color:#162b59;padding:3px 10px;border-radius:20px
 }
