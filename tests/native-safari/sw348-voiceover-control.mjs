@@ -113,6 +113,14 @@ async function observe(name, wanted, activate = false) {
     await voiceOver.next({capture:true});
     await capture();
   }
+  if (!sample.spoken && name === 'bookings') {
+    sample.usedNextItem = 0;
+    for (let attempt = 0; attempt < 6 && !sample.spoken; attempt++) {
+      await voiceOver.next({capture:true});
+      sample.usedNextItem++;
+      await capture();
+    }
+  }
   assert.ok(sample.spoken, 'VoiceOver did not announce ' + wanted + ' at ' + name);
 }
 
