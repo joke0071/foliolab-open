@@ -99,7 +99,13 @@ async function connect(url) {
     return targets.some(target => target.type === 'page' && target.url.startsWith(url));
   }, 'Android Chrome DevTools for '+url);
   const browser = await chromium.connectOverCDP(devtools,{timeout:12000});
-  const page = await until(() => browser.contexts().flatMap(context => context.pages()).find(tab => tab.url().startsWith(url)), 'Playwright attached to the Android tab '+url,15);
+  let page;
+  try {
+    page = await until(() => browser.contexts().flatMap(context => context.pages()).find(tab => tab.url().startsWith(url)), 'Playwright attached to the Android tab '+url,15);
+  } catch (error) {
+    await browser.close();
+    throw error;
+  }
   page.on('dialog', dialog => {
     report.dialogs ??= [];
     report.dialogs.push({type:dialog.type(), message:dialog.message()});
@@ -187,27 +193,107 @@ async function versionInfo(page, version) {
   assert.ok(receipt.caches.includes('foliolab-open-v'+version));
   return receipt;
 }
-async function takeSample(session, version, start, platformStart, kind, truth) {
-  const {page} = session;
-  await ready(page);
+async function connectTarget(url) {
+  const target = await until(async () => {
+    const targets = await (await fetch(devtools+'/json/list')).json();
+    return targets.find(tab => tab.type==='page' && tab.url.startsWith(url) && tab.webSocketDebuggerUrl);
+  },'visible Chrome page target for '+url,35);
+  const endpoint = new URL(target.webSocketDebuggerUrl);
+  endpoint.hostname = '127.0.0.1';
+  endpoint.port = '9222';
+  const socket = new WebSocket(endpoint);
+  const pending = new Map();
+  let sequence = 0;
+  socket.addEventListener('message', event => {
+    const message = JSON.parse(event.data);
+    const entry = pending.get(message.id);
+    if (!entry) return;
+    pending.delete(message.id);
+    clearTimeout(entry.timeout);
+    if (message.error) entry.reject(Error(message.error.message));
+    else entry.resolve(message.result);
+  });
+  const fail = event => {
+    for (const entry of pending.values()) {
+      clearTimeout(entry.timeout);
+      entry.reject(Error('Chrome page DevTools connection closed: '+event.type));
+    }
+    pending.clear();
+  };
+  socket.addEventListener('close',fail);
+  socket.addEventListener('error',fail);
+  try {
+    await until(() => socket.readyState===WebSocket.OPEN,'Chrome page socket',10);
+  } catch (error) {
+    socket.close();
+    throw error;
+  }
+  function send(method, params={}) {
+    return new Promise((resolve,reject) => {
+      if (socket.readyState!==WebSocket.OPEN) return reject(Error('Closed Chrome page socket'));
+      const id = ++sequence;
+      const timeout = setTimeout(() => {
+        pending.delete(id);
+        reject(Error('CDP timeout: '+method));
+      },20000);
+      pending.set(id,{resolve,reject,timeout});
+      socket.send(JSON.stringify({id,method,params}));
+    });
+  }
+  return {
+    send,
+    close:() => socket.close(),
+    async value(expression) {
+      const response = await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});
+      if (response.exceptionDetails) throw Error(response.exceptionDetails.exception?.description??response.exceptionDetails.text);
+      return response.result.value;
+    },
+  };
+}
+async function takeSample(tab, version, start, platformStart, kind, truth, previous) {
+  const doc = await until(() => tab.value(`(() => {
+    const mark = performance.getEntriesByName('foliolab-interactive').at(-1);
+    if (!mark || document.querySelector('.layout')?.inert || !document.getElementById('appStartup')?.hidden ||
+        !document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')) return null;
+    return {
+      timeOrigin:performance.timeOrigin, interactiveMs:mark.startTime,
+      firstContentfulPaintMs:performance.getEntriesByName('first-contentful-paint')[0]?.startTime??null,
+      serviceWorker:!!navigator.serviceWorker.controller,
+      standalone:matchMedia('(display-mode: standalone)').matches,
+    };
+  })()`).then(receipt => receipt?.timeOrigin!==previous && receipt), 'interactive SW'+version+' '+kind,45);
   const readinessObservedMs = performance.now() - start;
-  const doc = await page.evaluate(() => ({
-    interactiveMs:performance.getEntriesByName('foliolab-interactive').at(-1).startTime,
-    firstContentfulPaintMs:performance.getEntriesByName('first-contentful-paint')[0]?.startTime??null,
-    serviceWorker:!!navigator.serviceWorker.controller,
-    standalone:matchMedia('(display-mode: standalone)').matches,
-  }));
-  const safeNav = page.locator('#mobileNav [data-page="positions"],#sidebarNav [data-page="positions"]').filter({visible:true}).first();
-  await safeNav.click();
-  await page.waitForFunction(() => document.getElementById('pageTitle')?.textContent.includes('Positionen'));
+  const point = await tab.value(`(() => {
+    const buttons = document.querySelectorAll('#mobileNav [data-page="positions"],#sidebarNav [data-page="positions"]');
+    const button = Array.from(buttons).find(node => {
+      const bounds = node.getBoundingClientRect();
+      return bounds.width>0 && bounds.height>0 && bounds.x>=0 && bounds.y>=0 && bounds.bottom<=innerHeight;
+    });
+    if (!button) return null;
+    const bounds = button.getBoundingClientRect();
+    return {x:bounds.x+bounds.width/2,y:bounds.y+bounds.height/2};
+  })()`);
+  assert.ok(point,'An in-viewport Positions control is available');
+  await tab.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});
+  await tab.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  await until(() => tab.value("document.getElementById('pageTitle')?.textContent.includes('Positionen')"),'first safe Positions navigation',12);
   const safeInteractionObservedMs = performance.now() - start;
-  const value = reference(await portfolio(page));
-  assert.deepEqual(value,truth,'Read-only interaction leaves complete financial state and revision unchanged');
-  if (kind === 'offline') {
+  const state = await tab.value(`(async () => {
+    const storage = await import('/src/atomic-storage.js');
+    const model = await import('/src/model.js');
+    const db = await storage.openPortfolioDB();
+    try {
+      const record = await storage.readPortfolioRecord(db);
+      return {record,total:model.totalExactEUR(model.safeImport(JSON.parse(record.raw)))};
+    } finally { db.close(); }
+  })()`);
+  const value = reference(state);
+  assert.deepEqual(value,truth,'Read-only navigation leaves financial state and revision unchanged');
+  if (kind==='offline') {
     assert.ok(doc.serviceWorker,'Offline start is controlled by the application worker');
     assert.equal(shell('settings','get','global','airplane_mode_on'),'1');
   }
-  return {kind, ...doc, readinessObservedMs, safeInteractionObservedMs, platformStart, financial:value};
+  return {kind,...doc,readinessObservedMs,safeInteractionObservedMs,platformStart,financial:value};
 }
 function describe(values) {
   const sorted = [...values].sort((a,b) => a-b);
@@ -240,22 +326,19 @@ async function benchmark(version, truth) {
       for (let index=0;index<5;index++) {
         if (kind !== 'warm') stopChrome();
         else assert.ok(shell('pidof '+browserPackage+' || true'),'Warm keeps the browser process');
-        const begin = performance.now();
-        let platformStart = null;
-        if (kind === 'warm') {
-          const session = await connect(origin(version));
-          const previous = await session.page.evaluate(() => performance.timeOrigin);
-          const start = performance.now();
-          try {
-            await session.page.reload({waitUntil:'commit',timeout:30000});
-            assert.notEqual(await session.page.evaluate(() => performance.timeOrigin),previous);
-            samples.push(await takeSample(session,version,start,null,kind,truth));
-          } finally { await session.browser.close(); }
-        } else {
-          platformStart = navigate(origin(version)+'/');
-          const session = await connect(origin(version));
-          try { samples.push(await takeSample(session,version,begin,platformStart,kind,truth)); }
-          finally { await session.browser.close(); }
+        let start = performance.now();
+        const platformStart = kind==='warm' ? null : navigate(origin(version)+'/');
+        const tab = await connectTarget(origin(version));
+        try {
+          let previous;
+          if (kind==='warm') {
+            previous = await tab.value('performance.timeOrigin');
+            start = performance.now();
+            await tab.send('Page.reload');
+          }
+          samples.push(await takeSample(tab,version,start,platformStart,kind,truth,previous));
+        } finally {
+          tab.close();
         }
         console.log('SW'+version+' '+kind+' sample '+(index+1)+' verified');
         await save();
@@ -345,6 +428,7 @@ try {
   if (mode === 'source') {
     for (const version of [321,348]) {
       try {
+        if (version!==321) stopChrome();
         navigate(origin(version)+'/?page=more');
         const {browser,page} = await connect(origin(version));
         try {
@@ -388,6 +472,7 @@ try {
   reportError(mode,error);
 } finally {
   try { report.finalWindow = shell("dumpsys activity activities | grep -m 1 -E 'topResumedActivity|mResumedActivity'"); } catch {}
+  try { stopChrome(); } catch {}
   for (const version of servers.keys()) await stopOrigin(version);
   report.result = report.errors.length ? 'FAIL' : 'PASS';
   if (report.startupFailure || report.downloadDiagnostic) console.log(JSON.stringify({startupFailure:report.startupFailure,downloadDiagnostic:report.downloadDiagnostic,pageErrors:report.pageErrors}));

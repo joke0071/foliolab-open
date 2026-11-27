@@ -7,7 +7,7 @@ permissions:
 jobs:
   android-avd:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
         with:
