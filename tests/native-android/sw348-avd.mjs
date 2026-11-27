@@ -106,6 +106,10 @@ async function connect(url) {
     report.dialogs.push({type:dialog.type(), message:dialog.message()});
     return dialog.accept(dialog.type()==='prompt' ? password : undefined);
   });
+  page.on('pageerror', error => {
+    report.pageErrors ??= [];
+    report.pageErrors.push({url:page.url(), error:String(error)});
+  });
   page.setDefaultTimeout(25000);
   return {browser,page};
 }
@@ -254,6 +258,7 @@ async function benchmark(version, truth) {
           try { samples.push(await takeSample(session,version,begin,platformStart,kind,truth)); }
           finally { await session.browser.close(); }
         }
+        console.log('SW'+version+' '+kind+' sample '+(index+1)+' verified');
         await save();
       }
       for (const metric of ['interactiveMs','readinessObservedMs','safeInteractionObservedMs']) {
@@ -280,13 +285,25 @@ async function encryptedExport(page) {
   await page.locator('#fullBackupIncludeHistory').check();
   await page.locator('#fullBackupIncludeSettings').check();
   const before = await portfolio(page);
+  const browserCDP = await page.context().newCDPSession(page);
+  await browserCDP.send('Browser.setDownloadBehavior',{behavior:'default',eventsEnabled:true});
   const names = () => shell('ls','-1','/sdcard/Download').split('\n').filter(Boolean);
   const existing = names();
-  await page.locator('#exportEncryptedBackup').click();
-  const filename = await until(() => {
+  const findBackup = () => {
     const added = names().filter(name => !existing.includes(name) && name.endsWith('.json'));
     return added.length === 1 && added[0];
-  },'Android Chrome completed native download',120);
+  };
+  await page.locator('#exportEncryptedBackup').click();
+  let filename;
+  try {
+    filename = await until(findBackup,'Android Chrome completed native download',25);
+  } catch {
+    const toast = await page.locator('#toast').textContent();
+    const ui = xml();
+    report.downloadDiagnostic = {toast, files:names(), nativeVisibleText:[...ui.matchAll(/text="([^"]+)"/g)].map(match => match[1]).slice(0,24)};
+    tapNode(/text="(?:Download anyway|Download|Save)"/i,ui);
+    filename = await until(findBackup,'Android Chrome completed native download with UI confirmation',35);
+  }
   adb('pull','/sdcard/Download/'+filename,transfer);
   const backup = await readFile(transfer);
   assert.equal(JSON.parse(backup).format,'foliolab-open-encrypted-v2');
@@ -324,15 +341,24 @@ async function nativeRestore(page) {
 try {
   await configureChrome();
   await startOrigin(348);
-  await firstChrome(origin(348)+'/?page=more');
+  if (mode === 'source') await startOrigin(321);
+  await firstChrome(origin(mode === 'source' ? 321 : 348)+'/?page=more');
   if (mode === 'source') {
-    await startOrigin(321);
-    for (const version of [348,321]) {
+    for (const version of [321,348]) {
       try {
         navigate(origin(version)+'/?page=more');
         const {browser,page} = await connect(origin(version));
         try {
-          await ready(page);
+          await page.goto(origin(version)+'/?page=more', {waitUntil:'domcontentloaded'});
+          try { await ready(page); } catch (error) {
+            report.startupFailure ??= {};
+            report.startupFailure[version] = await page.evaluate(() => ({
+              url:location.href, title:document.title, startup:document.getElementById('appStartupText')?.textContent,
+              storage:document.getElementById('portfolioStorageState')?.textContent,
+              mark:performance.getEntriesByName('foliolab-interactive').length,
+            }));
+            throw error;
+          }
           const truth = await seed(page);
           report.products[version] = {sha:products[version].sha, startup:await versionInfo(page,version), seed:truth};
           if (version === 348) {
@@ -365,6 +391,7 @@ try {
   try { report.finalWindow = shell("dumpsys activity activities | grep -m 1 -E 'topResumedActivity|mResumedActivity'"); } catch {}
   for (const version of servers.keys()) await stopOrigin(version);
   report.result = report.errors.length ? 'FAIL' : 'PASS';
+  if (report.startupFailure || report.downloadDiagnostic) console.log(JSON.stringify({startupFailure:report.startupFailure,downloadDiagnostic:report.downloadDiagnostic,pageErrors:report.pageErrors}));
   await save();
   console.log(JSON.stringify({result:report.result,device:report.avd,export:report.export,restore:report.restore,reopen:report.reopen,errors:report.errors}));
   if (report.errors.length) process.exitCode = 1;
