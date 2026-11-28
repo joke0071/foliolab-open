@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -55,10 +56,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   window.dispatchEvent(e);return e.defaultPrevented;
  },outcome);
  const scan=async p=>{
-  const offset=await p.evaluate(()=>{const y=scrollY;scrollTo({top:0,behavior:'instant'});return y;});
-  const violations=await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+  const violations=await p.evaluate(scanPageAccessibility);
   if(violations.length){writeFileSync(`artifacts/gates/navigation-installation/${engine}-a11y-failure.json`,JSON.stringify({engine,result:'FAIL',violations},null,2));await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-a11y-failure.png`});console.error('NAVIGATION_A11Y_FAILURE',JSON.stringify(violations));}
-  assert.deepEqual(violations.map(v=>v.id),[]);await p.evaluate(top=>scrollTo({top,behavior:'instant'}),offset);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  assert.deepEqual(violations.map(v=>v.id),[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  };
  try{
   const p=await fresh(),before=await record(p);

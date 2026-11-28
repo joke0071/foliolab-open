@@ -35,7 +35,6 @@ export function createSectionViews({nav,title,description}){
    const parent=target.parentElement.closest('details[data-view-title]');
    const parentId=parent?.id||selected;
    back.href='?page='+page+'#'+parentId;
-   back.dataset.section=parentId;
    back.textContent='‹ '+(parent?.dataset.viewTitle||label);
   }
   title.textContent=detail?target.dataset.viewTitle:label||parentTitle;

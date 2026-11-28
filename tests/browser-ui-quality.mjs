@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import {returnFromSection} from './browser-disclosures.mjs';
 import {accountAllocationBrowserContract} from './account-allocation-browser-contract.mjs';
 import {positionValueFilterBrowserContract} from './position-value-filter-browser-contract.mjs';
@@ -51,7 +52,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const nav=async page=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+page+'"]').click();
  const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
- const scan=async label=>{await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' page overflow');};
+ const scan=async label=>{await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});assert.deepEqual((await p.evaluate(scanPageAccessibility)).map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[],label);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' page overflow');};
  try{
   await p.goto(base);await ready();
   // Complete the application's real first worker claim before fixture reload.

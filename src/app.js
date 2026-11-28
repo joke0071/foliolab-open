@@ -225,9 +225,9 @@ $('sectionNav').addEventListener('keydown',event=>{
  event.preventDefault();links[next].focus();
 });
 function followSectionLink(event){
- const link=event.target.closest('a[data-section]');
+ const link=event.target.closest('a[href]');
  if(!link||event.ctrlKey||event.shiftKey||event.metaKey||event.altKey||event.button!==0)return;
- event.preventDefault();enterSection($(link.dataset.section));
+ event.preventDefault();enterSection($(link.hash.slice(1)));
 }
 $('sectionNav').addEventListener('click',followSectionLink);
 $('sectionParent').addEventListener('click',followSectionLink);
