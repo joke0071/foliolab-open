@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';import {annualFixture} from './annual-overview-fixture.mjs';import {readFile,mkdir} from 'node:fs/promises';import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
 for(const engine of (process.env.ANNUAL_ENGINES||'chromium').split(',')){
@@ -16,7 +17,7 @@ for(const engine of (process.env.ANNUAL_ENGINES||'chromium').split(',')){
    await mkdir('artifacts/gates/annual',{recursive:true});await page.screenshot({path:'artifacts/gates/annual/'+engine+'-'+width+'-layout.png'});
    const overflow=await page.locator('#bookingIncome').evaluate(el=>({width:el.clientWidth,scroll:el.scrollWidth,children:[...el.querySelectorAll('*')].filter(x=>x.getBoundingClientRect().right>el.getBoundingClientRect().right+1||x.scrollWidth>x.clientWidth+1).slice(0,10).map(x=>({tag:x.tagName,id:x.id,cls:x.className,width:x.getBoundingClientRect().width,client:x.clientWidth,scroll:x.scrollWidth,display:getComputedStyle(x).display,text:x.textContent.slice(0,70)}))}));
    assert.ok(overflow.scroll<=overflow.width+1,engine+' width '+width+': '+JSON.stringify(overflow));
-   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#bookingIncome',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))),[]);
+   assert.deepEqual((await page.evaluate(scanPageAccessibility,'#bookingIncome')).map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),[]);
    await mkdir('artifacts/gates/annual',{recursive:true});await page.screenshot({path:'artifacts/gates/annual/'+engine+'-'+width+'.png'});
    await page.locator('[data-action="reset-income-filters"]').click();assert.equal(await page.locator('#incomeYear').inputValue(),'');assert.equal(await page.locator('#incomeAccount').inputValue(),'');assert.match(await page.locator('#bookingIncome').innerText(),/15,00/);
   }
