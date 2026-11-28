@@ -89,6 +89,7 @@ for(const engine of (process.env.CASH_UX_ENGINES||'chromium').split(',')){
    assert.deepEqual(await record(),baseline);
   }
   await p.setViewportSize({width:390,height:844});await nav('more');
+  await p.locator('[data-section="moreData"]').click();
   const dl=p.waitForEvent('download');await p.locator('#exportBackup').click();const text=readFileSync(await (await dl).path(),'utf8');
   assert.deepEqual(await record(),baseline,'export does not rewrite portfolio');
   const restoreContext=await browser.newContext(),rp=await restoreContext.newPage();

@@ -35,6 +35,7 @@ for(const name of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
   // The actual download button still produces a valid encrypted complete backup after a rejected export.
   await page.reload();await page.locator('#mobileNav [data-page="more"]').click();
   await page.waitForFunction(()=>!document.getElementById('exportEncryptedBackup').disabled);
+ await page.locator('[data-section="moreData"]').click();
   await page.locator('#backupPasswordSetup').evaluate(el=>el.open=true);
   const download=page.waitForEvent('download');await page.locator('#exportEncryptedBackup').click();
   const envelope=JSON.parse(await readFile(await(await download).path(),'utf8'));

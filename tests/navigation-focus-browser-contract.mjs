@@ -10,7 +10,7 @@ export async function navigationFocusBrowserContract({p,nav,record,engine}){
   const link=p.locator('#dashboardPage [data-go="history"]');
   await link.focus();await p.keyboard.press('Enter');
   assert.equal(await p.evaluate(()=>document.activeElement?.id),'pageTitle','page-local navigation must focus its new heading');
-  assert.equal(await p.locator('#pageTitle').innerText(),'Vermögensentwicklung');
+  assert.equal(await p.locator('#pageTitle').innerText(),'Vermögensverlauf');
   assert.equal(await p.locator('#pageTitle').evaluate(e=>e.getBoundingClientRect().width>0),true);
   assert.equal(await p.locator('#pageTitle').getAttribute('tabindex'),'-1','heading is programmatically focusable without a new tab stop');
   await p.keyboard.press('Tab');
@@ -25,11 +25,14 @@ export async function navigationFocusBrowserContract({p,nav,record,engine}){
    assert.equal(await more.evaluate(e=>e===document.activeElement),true,'Mehr follows Buchungen in the mobile navigation');
    await p.keyboard.press('Enter');
    assert.equal(await more.getAttribute('aria-current'),'page');
-   const firstControl=p.locator('#addAccount');
+   const firstControl=p.locator('#sectionNav [data-section=moreAccounts]');
    await p.keyboard.press('Tab');
    assert.equal(await firstControl.evaluate(e=>e===document.activeElement&&e.matches(':focus-visible')),true,'Tab from the final mobile navigation button reaches a visible keyboard focus in Mehr');
    await p.keyboard.press('Shift+Tab');
    assert.equal(await more.evaluate(e=>e===document.activeElement),true,'Shift+Tab from the first control returns to Mehr');
+   await p.locator('#sectionNav a').last().focus();
+   await p.keyboard.press('Tab');
+   assert.equal(await p.locator('#addAccount').evaluate(e=>e===document.activeElement),true,'Tab from the last settings tab enters the account controls');
   }
   assert.deepEqual(await record(),before,'navigation does not change canonical data or revision');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow');

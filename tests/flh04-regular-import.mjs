@@ -91,6 +91,7 @@ async function visibleDeposit(page,expected,amount,balance){
 
 async function checkTargetExports(page,directory,label,password,expected){
  await page.locator('#sidebarNav [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
  const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#exportBackup').click()]);
  const plainFile=join(directory,label+'-plain.json');
  await download.saveAs(plainFile);

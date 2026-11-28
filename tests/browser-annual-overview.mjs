@@ -8,7 +8,7 @@ for(const engine of (process.env.ANNUAL_ENGINES||'chromium').split(',')){
   await page.goto('http://127.0.0.1:4173/');
   const state=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}}),before=await state();
   for(const width of [320,390,430,768,1440]){
-   await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="bookings"]').click();await page.locator('#bookingIncomeDetails').evaluate(el=>el.open=true);
+   await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="bookings"]').click();await page.locator('[data-section="bookingIncomeDetails"]').click();
    await page.locator('#incomeYear').selectOption('2025');await page.locator('#incomeAccount').selectOption(custody.id);
    assert.match(await page.locator('#bookingIncome').innerText(),/-\s*€\s*7,00/);assert.match(await page.locator('#incomeRecords summary').first().innerText(),/\(2\)/);
    await page.locator('#incomeRecords').evaluate(el=>el.open=true);await page.locator('.annual-record summary').first().click();assert.match(await page.locator('#incomeRecords').innerText(),/Kaufbeleg SYN-TRADE/);

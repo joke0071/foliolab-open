@@ -39,7 +39,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });
   await p.reload();await ready();const before=await record();
-  await nav('history');await p.locator('#snapshotManager').evaluate(e=>e.open=true);await p.locator('#manageReferences').click();await p.locator('#referenceSelectVisible').click();
+  await nav('history');await p.locator('[data-section="snapshotManager"]').click();await p.locator('#manageReferences').click();await p.locator('#referenceSelectVisible').click();
   assert.match(await p.locator('#referenceSelectionStatus').innerText(),/^8 ausgewählt · 8 gefiltert · 0 ausgeblendet · 0 archiviert · 8 auf aktueller Seite$/);
   assert.match(await p.locator('#referenceDeleteReason').innerText(),/8 geschützte Originalwerte/);
   assert.equal(await p.locator('#referenceDeleteReason>details').evaluate(e=>e.open),false);assert.ok(await p.locator('[data-reference-manage=remove]').isDisabled());assert.equal(await p.locator('[data-reference-manage=remove]').getAttribute('aria-describedby'),'referenceDeleteReasonSummary');

@@ -12,7 +12,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const failureDiagnostics=observeBrowserFailures(p);
  const ready=page=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const record=(page=p)=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
- const history=async()=>{await p.locator('#mobileNav [data-page=history]:visible,#sidebarNav [data-page=history]:visible').click();if(!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('#snapshotManager>summary').click();};
+ const history=async()=>{await p.locator('#mobileNav [data-page=history]:visible,#sidebarNav [data-page=history]:visible').click();if(!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('[data-section="snapshotManager"]').click();};
  const manage=async()=>{if(await p.locator('#manageReferences').innerText()==='Verwalten')await p.locator('#manageReferences').click();};
  const action=key=>p.locator('[data-reference-manage="'+key+'"]');
  const row=id=>p.locator('[data-reference-id="'+id+'"]');

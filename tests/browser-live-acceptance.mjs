@@ -46,7 +46,7 @@ try{
  for(const r of observed){const url=new URL(r.url()),path='./'+url.pathname.slice(new URL(base).pathname.length);if(paths.includes(path)){assert.equal(hash(await r.body()),hash(await local(path)),'loaded '+path);report.loadedAssets.push(path);}}
  assert.ok(report.loadedAssets.includes('./src/app.js'));assert.ok(report.loadedAssets.includes('./styles.css'));
  report.checks.push('all published precache files + service worker and actual loaded application bytes match checkout');
- await nav(p,'more');assert.match(await p.locator('#portfolioStorageState').innerText(),/IndexedDB aktiv/);await p.locator('#autoRefresh').selectOption('off');await p.waitForFunction(()=>document.getElementById('autoRefresh').value==='off');
+ await nav(p,'more');await p.locator('[data-section="moreSources"]').click();assert.match(await p.locator('#portfolioStorageState').innerText(),/IndexedDB aktiv/);await p.locator('#autoRefresh').selectOption('off');await p.waitForFunction(()=>document.getElementById('autoRefresh').value==='off');
  // Actual UI account and position creation, edit and reload in a new installation.
  await nav(p,'positions');await p.locator('#addWizard').click();await p.locator('#wizardProvider').selectOption('__new__');await p.locator('#wizardProviderName').fill('SYNTHETIC Live Broker');await p.locator('#wizardAccountName').fill('SYNTHETIC Live Depot');await p.locator('#wizardName').fill('SYNTHETIC Live ETF');await p.locator('#wizardSymbol').fill('SYN');await p.locator('#wizardQuantity').fill('2.5');await p.locator('#wizardNext').click();await p.waitForFunction(()=>document.getElementById('wizardTitle')?.textContent==='Anlage hinzugefügt');await p.locator('#wizardPortfolio').click();
  let created=await state(p);assert.equal(created.positions[0].quantityExact,'2.5');assert.equal(created.accounts[0].name,'SYNTHETIC Live Depot');
@@ -67,10 +67,10 @@ try{
  await nav(p,'positions');const hist=p.locator('[data-action="booking-history"][data-id="'+h.ids[0]+'"]');await clickDisclosed(hist);await p.locator('#bookingHistoryDialog').waitFor({state:'visible'});assert.match(await p.locator('#bookingHistoryDialog').innerText(),/6.200/);await scan(p,'#bookingHistoryDialog','ETF history');await p.keyboard.press('Escape');assert.ok(await hist.evaluate(el=>document.activeElement===el));
  await clickDisclosed(p.locator('[data-action="wallet-history"][data-id="'+synthetic.wallet+'"]'));await p.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="output"]').textContent.includes('Gespeicherte Historie'));await scan(p,'#walletHistoryDialog','saved synthetic crypto history');await p.keyboard.press('Escape');
  await p.locator('[data-filter="__review"]').click();assert.ok(await p.locator('#qualityReviewTools').isVisible());
- await nav(p,'bookings');await p.locator('#bookingIncomeDetails').evaluate(el=>el.open=true);assert.ok(await p.locator('#incomeYear').isVisible());
+ await nav(p,'bookings');await p.locator('[data-section="bookingIncomeDetails"]').click();assert.ok(await p.locator('#incomeYear').isVisible());
  await clickDisclosed(p.locator('[data-action="transfer-matching"]'));await p.locator('[data-transfer="out"]').selectOption('out');await p.locator('[data-transfer-in][value="in"]').check();await p.locator('[data-transfer-in][value="in2"]').check();assert.match(await p.locator('[data-transfer="preview"]').innerText(),/Mengen stimmen überein/);await scan(p,'#transferMatchingDialog','split transfer preview');await p.keyboard.press('Escape');
  report.checks.push('five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus');
- await nav(p,'more');const plainDownload=p.waitForEvent('download');await p.locator('#exportBackup').click();const plain=await readFile(await(await plainDownload).path(),'utf8');assert.equal(JSON.parse(plain).positions.length,m.positions.length+1);assert.equal(JSON.parse(plain).walletHistory,undefined);
+ await nav(p,'more');await p.locator('[data-section="moreData"]').click();const plainDownload=p.waitForEvent('download');await p.locator('#exportBackup').click();const plain=await readFile(await(await plainDownload).path(),'utf8');assert.equal(JSON.parse(plain).positions.length,m.positions.length+1);assert.equal(JSON.parse(plain).walletHistory,undefined);
  await p.locator('#backupPasswordSetup').evaluate(el=>el.open=true);const password='synthetic-release-password-2026';await p.locator('#backupPassword').fill(password);await p.locator('#backupPasswordConfirm').fill(password);await p.locator('#saveBackupPassword').click();await p.locator('#exportEncryptedBackup').waitFor({state:'visible'});await p.waitForFunction(()=>!document.getElementById('exportEncryptedBackup').disabled);await p.locator('#fullBackupIncludeHistory').check();await p.locator('#fullBackupIncludeSettings').check();const encryptedDownload=p.waitForEvent('download');await p.locator('#exportEncryptedBackup').click();const encrypted=await readFile(await(await encryptedDownload).path(),'utf8');assert.equal(encrypted.includes('SYNTHETIC Live ETH'),false);
  for(const [label,bytes,pwd] of [['plain',plain,null],['encrypted',encrypted,password]]){const rc=await context(),rp=await rc.newPage();rp.on('pageerror',e=>errors.push(e.message));await rp.goto(base);await restore(rp,bytes,pwd);await rp.reload();const restored=await state(rp);assert.equal(restored.positions.length,m.positions.length+1);assert.deepEqual(restored.bookings,(await state(p)).bookings);if(pwd){assert.equal(restored.walletHistory.sessions.length,1);assert.equal(restored.settings.autoRefresh,'off');}else assert.equal(restored.walletHistory,undefined);report.checks.push(label+' actual UI download -> fresh profile UI restore -> reload, exact bookings');}
  await p.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';},null,{timeout:60000});await p.reload();await p.waitForFunction(()=>!!navigator.serviceWorker.controller);const reg=await p.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();return {url:r.active.scriptURL,caches:await caches.keys()};});assert.ok(reg.caches.includes(cache));assert.equal(reg.caches.filter(k=>k.startsWith('foliolab-open-')).length,1);
@@ -78,7 +78,7 @@ try{
  const beforeProjection=await state(p);
  await nav(p,'history');
  const projection=p.locator('#portfolioProjection');
- await projection.locator(':scope > summary').click();
+ await p.locator('[data-section="portfolioProjection"]').click();
  await projection.locator('[name="start"]').fill('1000');
  await projection.locator('[name="monthly"]').fill('25');
  await projection.getByRole('button',{name:'Szenarien berechnen'}).click();
@@ -88,13 +88,13 @@ try{
  assert.deepEqual(await state(p),beforeProjection,'projection must not change portfolio or history');
  report.checks.push('actual controlled offline projection changes no portfolio data');
  await returnFromSection(p);
- const historicalReference=p.locator('#snapshotManager > summary');
+ const historicalReference=p.locator('[data-section="snapshotManager"]');
  await historicalReference.focus();
  await p.keyboard.press('Enter');
- assert.ok(await historicalReference.evaluate(node=>node.parentElement.open&&document.activeElement.id==='pageTitle'));
+ assert.ok(await historicalReference.evaluate(node=>document.getElementById('snapshotManager').open&&document.activeElement===node));
  await returnFromSection(p);
- assert.ok(await historicalReference.evaluate(node=>document.activeElement===node));
- await projection.locator(':scope > summary').press('Enter');
+ assert.ok(await p.locator('[data-section="historyDiagram"]').evaluate(node=>document.activeElement===node));
+ await p.locator('[data-section="portfolioProjection"]').press('Enter');
  assert.equal(await projection.locator('[name="start"]').inputValue(),'1000');
  assert.deepEqual(await state(p),beforeProjection,'history disclosures must preserve the portfolio and simulation draft');
  report.checks.push('actual controlled offline history disclosures preserve portfolio and projection input');

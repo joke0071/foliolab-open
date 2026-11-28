@@ -6,6 +6,7 @@ const page=await legacyPage(browser,{viewport:{width:320,height:590},acceptDownl
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
  // Google Drive stays compact even when expanded with the setup instructions and restore controls.
  const drive=page.locator('#googleDriveBackupSetup');
  assert.equal(await drive.getAttribute('open'),null,'Drive settings must be collapsed initially');
@@ -33,6 +34,7 @@ try{
  await drive.evaluate(el=>el.open=false);
  assert.match(await page.locator('#backupStatus').innerText(),/Noch kein Backup/);
  const downloadPromise=page.waitForEvent('download');
+ await page.locator('[data-section="moreData"]').click();
  await page.locator('#exportBackup').click();
  const download=await downloadPromise;
  assert.match(download.suggestedFilename(),/foliolab-backup/);
@@ -41,9 +43,11 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.match(await page.locator('#backupStatus').innerText(),/für einen Download erstellt/);
  assert.equal(await page.locator('#solanaRpc').isVisible(),false);
+ await page.locator('[data-section="moreSources"]').click();
  await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  await page.locator('#solanaRpc').evaluate(el=>el.closest('details').querySelector('summary').click());
  assert.equal(await page.locator('#solanaRpc').isVisible(),true);
+ await page.locator('[data-section="moreAccounts"]').click();
  await page.locator('#addProvider').click();
  const result=await page.locator('#editDialog').evaluate(el=>{
   const rect=el.getBoundingClientRect(),fields=el.querySelector('#dialogFields').getBoundingClientRect();
@@ -70,6 +74,7 @@ try{
    return window.__originalSetItem.call(this,key,value);
   };
  });
+ await page.locator('[data-section="moreSources"]').click();
  await page.locator('#autoRefresh').selectOption('off'); // Failed save restores the committed frequency.
  await page.waitForFunction(()=>document.getElementById('toast').textContent.includes('Änderung nicht gespeichert'));
  assert.match(await page.locator('#toast').innerText(),/Änderung nicht gespeichert/);
@@ -79,6 +84,7 @@ try{
   Storage.prototype.setItem=window.__originalSetItem;
   delete window.__originalSetItem;
  });
+ await page.locator('[data-section="moreSources"]').click();
  await page.locator('#autoRefresh').selectOption('off');
  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh==='off');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh),'off','Saving must recover after storage becomes writable');

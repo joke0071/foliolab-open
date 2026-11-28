@@ -185,6 +185,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   await checkReimport(page);
   await nav(page,'more');
   const download=page.waitForEvent('download');
+ await page.locator('[data-section="moreData"]').click();
   await page.locator('#exportBackup').click();
   const bytes=await readFile(await (await download).path());
   const freshContext=await context(),fresh=await open(freshContext);

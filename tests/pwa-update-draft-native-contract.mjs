@@ -9,7 +9,7 @@ export async function pwaUpdateDraftNativeContract({browser,base,setGeneration,c
   await p.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated');
   await p.evaluate(async()=>{const {blankModel}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=blankModel();m.settings.autoRefresh=false;const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();});
   await p.reload({waitUntil:'networkidle'});await ready();
-  await p.locator('#mobileNav [data-page=more]').click();
+  await p.locator('#mobileNav [data-page=more]').click();await p.locator('[data-section=moreSources]').click();
   await p.locator('[name=coinGeckoKey]').evaluate(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});
   await p.locator('[name=coinGeckoKey]').fill('SYNTHETIC_UNSAVED_UPDATE_DRAFT');
   await p.locator('#pageTitle').evaluate(el=>{el.tabIndex=-1;el.focus();});

@@ -21,7 +21,7 @@ for(const engine of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
   await page.locator('#backupFile').setInputFiles({name:'synthetic-legacy-revision.json',mimeType:'application/json',buffer:Buffer.from(fixture.compact)});
   await page.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('Backup wiederhergestellt'));
   const before=await read(page);await page.locator('#mobileNav [data-page="more"]').click();
-  const download=page.waitForEvent('download');await page.locator('#exportBackup').click();
+  const download=page.waitForEvent('download');await page.locator('[data-section="moreData"]').click();await page.locator('#exportBackup').click();
   const bytes=readFileSync(await(await download).path());
   assert.deepEqual(await read(page),before,'export does not write canonical bytes/revision');
   assert.ok(bytes.length<=LOCAL_BACKUP_FILE_BYTES,'every advertised plain backup fits the unchanged reader');
@@ -40,7 +40,7 @@ for(const engine of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
   });
   await page.reload();await ready(page);await page.locator('#mobileNav [data-page="more"]').click();
   await page.evaluate(()=>{localStorage.setItem('foliolab-open-last-backup-at','2025-01-01T00:00:00.000Z');localStorage.setItem('foliolab-open-unbacked-changes','7');window.__plainURLs=0;const original=URL.createObjectURL;URL.createObjectURL=function(...args){window.__plainURLs++;return original.apply(this,args);};});
-  const oversized=await read(page);await page.locator('#exportBackup').click();
+  const oversized=await read(page);await page.locator('[data-section="moreData"]').click();await page.locator('#exportBackup').click();
   await page.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('max. 20 MB'));
   assert.deepEqual(await read(page),oversized);
   assert.deepEqual(await page.evaluate(()=>({urls:window.__plainURLs,last:localStorage.getItem('foliolab-open-last-backup-at'),pending:localStorage.getItem('foliolab-open-unbacked-changes')})),{urls:0,last:'2025-01-01T00:00:00.000Z',pending:'7'});
@@ -48,7 +48,7 @@ for(const engine of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
   // A mandatory safety backup cannot acknowledge an unportable file or unlock
   // the subsequent economic/reference mutation, including an explicit submit.
   await page.locator('#mobileNav [data-page="history"]').click();
-  if(!await page.locator('#snapshotManager').evaluate(e=>e.open))await page.locator('#snapshotManager>summary').click();
+  if(!await page.locator('#snapshotManager').evaluate(e=>e.open))await page.locator('[data-section="snapshotManager"]').click();
   await manageList(page,'references');await page.locator('[data-reference-select="SYN-LEGACY-REVISION"]').check();
   await page.locator('[data-reference-manage="remove"]').click();
   await page.locator('#referenceRemovalBackup').click();

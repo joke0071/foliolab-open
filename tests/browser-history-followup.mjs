@@ -24,7 +24,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await p.reload();await ready();const before=await record();
   const ids=['historyCoverage','performanceDetails','snapshotManager','portfolioProjection'];
-  await nav('history');for(const id of ids)assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false,'closed default '+id);
+  await nav('history');for(const id of ids)assert.equal(await p.locator('#'+id).evaluate(e=>e.open),id==='historyCoverage','initial visibility '+id);
   assert.match(await p.locator('#snapshotManager>summary').innerText(),/Historische Referenzwerte/);
   assert.deepEqual(await p.locator('#historyBasis option').evaluateAll(es=>es.map(e=>[e.value,e.textContent])),[['auto','Automatisch – belegte Quellen'],['observed','Erfasste Stichtage'],['partial','Rekonstruierte Positionen'],['model','Modellverlauf · heutiger Bestand']]);
   assert.equal(await p.locator('#historyBasis').inputValue(),'auto');
@@ -35,8 +35,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await p.setViewportSize({width,height:900});await nav('history');
    const detailsGroup=p.locator('#historyPage .history-insights');
    assert.deepEqual(await detailsGroup.locator(':scope > details').evaluateAll(nodes=>nodes.map(node=>node.id)),ids.slice(1));
-   assert.ok(await p.locator('#historyCoverage').evaluate(el=>el.previousElementSibling?.id==='historyChart'&&el.nextElementSibling.matches('.history-insights')),'coverage belongs to the chart before the other analyses');
-   assert.ok(await detailsGroup.evaluate(el=>parseFloat(getComputedStyle(el).borderLeftWidth)>0&&!el.contains(document.getElementById('historyChart'))),'outline groups the disclosures below the chart');
+   assert.ok(await p.locator('#historyCoverage').evaluate(el=>el.previousElementSibling?.id==='historyChart'&&el.parentElement.nextElementSibling.matches('.history-insights')),'coverage belongs to the chart before the other analyses');
+   assert.ok(await detailsGroup.evaluate(el=>el.classList.contains('section-obscured')&&!el.contains(document.getElementById('historyChart'))),'outline groups the disclosures below the chart');
    assert.deepEqual(await p.locator('#chartPeriods button').allTextContents(),expectedPeriods(width),'history presets and mobile calendar at '+width);
    const more=p.locator('#chartPeriods .period-more>summary');
    assert.equal(await p.locator('#historyBasis').isVisible(),false);
@@ -46,9 +46,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(control.width<=331&&control.height<=74&&control.selectHeight>=44&&control.right<=width,'compact accessible source control '+JSON.stringify(control));
    await p.keyboard.press('Escape');
    assert.equal(await more.evaluate(e=>e===document.activeElement),true);
-   const icons=await p.locator('.history-disclosure-icon svg').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect(),c=getComputedStyle(e);return [r.width,r.height,e.getAttribute('stroke-width'),c.color,e.getAttribute('aria-hidden')];}));
-   assert.equal(icons.length,ids.length);for(const i of icons){assert.deepEqual(i,icons[0]);assert.deepEqual(i.slice(0,3),[17,17,'1.8']);assert.equal(i[4],'true');}
-   for(const id of ids){const summary=p.locator('#'+id+'>summary');await summary.focus();await p.keyboard.press('Enter');assert.equal(await p.locator('#'+id).evaluate(e=>e.open),true);if(id==='snapshotManager')assert.match(await p.locator('#snapshotList').innerText(),/historisch ungeprüft/);await scan();if(id==='historyCoverage'){await summary.focus();await p.keyboard.press('Space');}else await returnFromSection(p);assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false);}
+   const coverage=p.locator('#historyCoverage>summary');
+   await coverage.focus();await p.keyboard.press('Enter');
+   const covered=await p.locator('#historyCoverage').evaluate(e=>e.open);
+   await coverage.press('Space');assert.notEqual(await p.locator('#historyCoverage').evaluate(e=>e.open),covered);
+   for(const id of ids.slice(1)){
+    const link=p.locator('[data-section="'+id+'"]');await link.focus();await p.keyboard.press('Enter');
+    assert.equal(await p.locator('#'+id).evaluate(e=>e.open),true);
+    if(id==='snapshotManager')assert.match(await p.locator('#snapshotList').innerText(),/historisch ungeprüft/);
+    await scan();await returnFromSection(p);assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false);
+   }
    await p.evaluate(()=>{document.activeElement?.blur();scrollTo(0,0);});await scan();await p.screenshot({path:'artifacts/gates/history-followup/'+engine+'-history-'+width+'.png',fullPage:true});
    await more.click();
    for(const basis of ['observed','partial','auto']){await p.locator('#historyBasis').selectOption(basis);assert.ok((await p.locator('#historySourceStatus').innerText()).length);assert.deepEqual(await record(),before,'basis only changes view');}

@@ -72,7 +72,7 @@ try{
   assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
   assert.equal(await page.locator('.history-controls #addSnapshot').count(),0,'Manual action must not dominate the chart toolbar');
   assert.equal(await page.locator('#snapshotManager').evaluate(el=>el.open),false,'Manual controls start closed');
-  await page.locator('#snapshotManager > summary').click();
+  await page.locator('[data-section="snapshotManager"]').click();
   const manual=page.locator('#addSnapshot');assert.equal(await manual.isVisible(),true);
   assert.equal(await manual.getAttribute('aria-label'),'Stichtag hinzufügen');
   assert.ok(!(await manual.getAttribute('class')).includes('primary'),'Manual checkpoint is secondary');
@@ -85,12 +85,12 @@ try{
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  assert.equal((await page.locator('#pageDescription').textContent()).trim(),'','Dashboard does not need an action subtitle');
  await page.locator('#mobileNav [data-page="history"]').click();
- await page.locator('#historyPage #performanceDetails > summary').click();
+ await page.locator('[data-section="performanceDetails"]').click();
  assert.equal(await page.locator('#historyPage #performanceDetails[open]').count(),1,'Renditeauswertung expands');
  assert.equal(await page.locator('#historyPage #snapshotManager[open]').count(),0,'Stichtage remains independently collapsed');
  assert.equal(await page.locator('#historyChart').isVisible(),false);
  await returnFromSection(page);
- await page.locator('#historyPage #snapshotManager > summary').click();
+ await page.locator('[data-section="snapshotManager"]').click();
  assert.ok(await page.locator('#snapshotList').isVisible());
  assert.equal(await page.locator('#performanceDetails').isVisible(),false);
  await returnFromSection(page);

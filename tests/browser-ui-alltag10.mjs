@@ -84,7 +84,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
  await p.goto(base);await ready(p);await seed(p);await p.reload();await ready(p);
  const stored=await record(p),result={};
  for(const [name,c] of Object.entries(lists)){if(process.env.UI_ONLY&&process.env.UI_ONLY!==name)continue;
-  await nav(p,c.nav);if(name==='references'&&!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('#snapshotManager>summary').click();
+  await nav(p,c.nav);if(name==='references'&&!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('[data-section="snapshotManager"]').click();
   const checkedIds=()=>p.locator(c.box+':checked').evaluateAll(es=>es.map(e=>e.getAttribute(Object.keys(e.dataset).includes('positionSelect')?'data-position-select':Object.keys(e.dataset).includes('bookingSelect')?'data-booking-select':'data-reference-select')));
   const selecting=()=>p.locator(c.box).count();
   // short tap: no management mode, no selection

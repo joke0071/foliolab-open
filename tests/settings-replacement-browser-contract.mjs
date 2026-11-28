@@ -15,7 +15,7 @@ export async function settingsReplacementBrowserContract({p:parent,engine}){
  const field=name=>p.locator('#apiSettings').locator('[name='+name+']').or(p.locator('[form=apiSettings][name='+name+']'));
  const more=async()=>{await p.locator('#mobileNav [data-page=more]').click();await p.locator('#deleteAll').evaluate(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});for(const name of ['coinGeckoKey','eodhdWorkerAccessToken'])await field(name).evaluate(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});};
  const dialogAction=async(action,accept)=>{const pending=p.waitForEvent('dialog'),result=action();const d=await pending;if(accept)await d.accept();else await d.dismiss();await result;};
- const draft=async()=>{await field('coinGeckoKey').fill('SYNTHETIC_DRAFT');await field('coinGeckoKey').evaluate(el=>{if(el.type==='password')el.closest('.credential-control').querySelector('.credential-toggle').click();});};
+ const draft=async()=>{await p.locator('[data-section=moreSources]').click();await field('coinGeckoKey').fill('SYNTHETIC_DRAFT');await field('coinGeckoKey').evaluate(el=>{if(el.type==='password')el.closest('.credential-control').querySelector('.credential-toggle').click();});};
  const assertMasked=async()=>{for(const key of keys){assert.equal(await field(key).getAttribute('type'),'password',key);assert.equal(await field(key).evaluate(el=>el.closest('.credential-control').querySelector('.credential-toggle').getAttribute('aria-pressed')),'false',key);}};
  const restore=async(file,{acceptSettings=true,cancelPassword=false,cancelRestore=false,password='SYNTHETIC backup password 308'}={})=>{
   const seen=[];
@@ -29,6 +29,7 @@ export async function settingsReplacementBrowserContract({p:parent,engine}){
   await p.goto(base);await ready();
   await p.evaluate(async()=>{const {blankModel}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=blankModel();m.settings.autoRefresh=false;for(const key of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'])m.settings[key]='SYNTHETIC_STORED';const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();});
   await p.reload();await ready();await more();await draft();const before=await record(),values=await formValues();
+  await p.locator('[data-section=moreData]').click();
   await dialogAction(()=>p.locator('#deleteAll').click(),false);assert.deepEqual(await record(),before);assert.deepEqual(await formValues(),values);
   // An actual failed IDB write must retain the entire draft/canonical record.
   await p.evaluate(()=>{const original=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(...args){IDBObjectStore.prototype.put=original;throw new DOMException('SYNTHETIC reset failure','QuotaExceededError');};});

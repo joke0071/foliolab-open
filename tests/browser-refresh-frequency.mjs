@@ -37,7 +37,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
  const ready=p=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const record=p=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  const storedState=()=>page.evaluate(key=>JSON.parse(localStorage.getItem(key)),stateKey);
- const more=async()=>{await page.locator(innerNav()).click();};
+ const more=async()=>{await page.locator(innerNav()).click();await page.locator('[data-section="moreSources"]').click();};
  const innerNav=()=>page.viewportSize().width<1000?'#mobileNav [data-page="more"]':'#sidebarNav [data-page="more"]';
  const seed=async(frequency='daily',coins=[])=>{
   await page.evaluate(async({frequency,coins,key})=>{

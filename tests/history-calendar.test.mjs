@@ -21,7 +21,7 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  assert.doesNotMatch(html,/<details class="snapshot-manager" id="snapshotManager" open/);
  assert.doesNotMatch(html,/Entwicklung nach Stichtagen/);
  assert.match(html,/class="panel history-panel" role="region" aria-label="Vermögensstände im Zeitverlauf"/);
- assert.match(app,/destination==='history'\?'Vermögensentwicklung'/);
+ assert.match(readFileSync(new URL('../src/section-views.js',import.meta.url),'utf8'),/\['historyDiagram','Vermögensverlauf'\]/);
  assert.match(css,/@media\(max-width:380px\)/);
 });
 

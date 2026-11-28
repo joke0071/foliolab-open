@@ -27,7 +27,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    try{return await readPortfolioRecord(db);}finally{db.close();}
   });
   async function reached([label,id,child]){
-   const target=['performanceDetails','snapshotManager','portfolioProjection'].includes(id)?'#pageTitle':'#'+id+child;
+   const target=id==='historyCoverage'?'#historyCoverage > summary':'[data-section="'+id+'"]';
    await page.waitForFunction(selector=>document.activeElement===document.querySelector(selector),target, {timeout:5000}).catch(async error=>{
     throw new Error('Focus after navigating to '+id+' was '+await page.evaluate(()=>document.activeElement.outerHTML.slice(0,120)),{cause:error});
    });
@@ -46,8 +46,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await ready();
   await controlledStorageFixture(page,ready,read);
   const empty=await read();
-  assert.equal(await page.locator('#historyPage nav').count(),0);
-  await summary('historyCoverage').tap();
+  assert.equal(await page.locator('#sectionNav a').count(),4);
   assert.equal(await page.locator('#historyCoverage').evaluate(node=>node.open),true);
   await summary('historyCoverage').tap();
   assert.deepEqual(await read(),empty,'Empty portfolio record must stay untouched');
@@ -87,7 +86,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
     await reached(dest);
    }
   }
-  const projectionSummary=summary('portfolioProjection');
+  const projectionSummary=page.locator('[data-section="portfolioProjection"]');
   await returnFromSection(page);
   assert.equal(await page.locator('#portfolioProjection').evaluate(node=>node.open),false);
   await projectionSummary.press('Enter');
@@ -104,12 +103,13 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await page.waitForFunction(()=>document.getElementById('positionsPage').classList.contains('active'));
   assert.deepEqual(await read(),populated,'Navigation must not persist portfolio changes');
   await page.locator('#mobileNav [data-page=more]').click();
-  assert.equal(await page.locator('#morePage nav').count(),0);
+  assert.equal(await page.locator('#sectionNav a').count(),3);
   await page.evaluate(()=>{location.hash='moreSources';});
-  await page.waitForFunction(()=>document.activeElement?.id==='moreSources');
+  await page.waitForFunction(()=>document.activeElement?.dataset.section==='moreSources');
   await page.setViewportSize({width:360,height:900});
+  await page.locator('[data-section="moreData"]').click();
   const exportButton=page.locator('#exportBackup');
-  await exportButton.evaluate(button=>window.scrollBy({top:button.getBoundingClientRect().top-68,behavior:'instant'}));
+  await exportButton.evaluate(button=>window.scrollBy({top:button.getBoundingClientRect().top-document.getElementById('sectionNav').getBoundingClientRect().bottom-8,behavior:'instant'}));
   assert.ok(await exportButton.evaluate(button=>{
    const rect=button.getBoundingClientRect();
    return [4,rect.height/2,rect.height-4].every(y=>button.contains(document.elementFromPoint(rect.left+rect.width/2,rect.top+y)));

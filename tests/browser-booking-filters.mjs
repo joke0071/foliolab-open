@@ -14,7 +14,8 @@ const expectMatchingLists=async()=>{
  const frame=await listFrame('positionPanel');
  assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','visible positions outline');
  await page.locator('#mobileNav [data-page="bookings"]').click();
- assert.equal(await page.locator('#bookingListHead h2').innerText(),'Buchungen');
+ assert.equal(await page.locator('#sectionNav [aria-current]').innerText(),'Buchungen');
+ assert.equal(await page.locator('#bookingListHead h2').isVisible(),false);
  assert.deepEqual(await listFrame('bookingPanel'),frame,'matching result card outline, radius, padding and width');
 };
 try{
@@ -23,7 +24,7 @@ try{
  assert.equal(await page.locator('#bookingsPage #addBooking').count(),1);
  assert.equal(await page.locator('#bookingsPage #openCSVImport').count(),1);
  assert.equal(await page.locator('#bookingsPage .booking-onboarding button').count(),0);
- assert.equal(await page.locator('#bookingsPage .body-copy').count(),0);
+ assert.equal(await page.locator('#bookingPanel .body-copy').count(),0);
  assert.match(await page.locator('#bookingList').innerText(),/Noch keine Buchungen erfasst/);
  await page.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');

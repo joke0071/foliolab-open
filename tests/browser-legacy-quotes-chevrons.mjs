@@ -66,9 +66,9 @@ try{
  const closedRotation=arrows.provider.transform;
  await provider.locator(':scope > summary').click();
  await page.waitForFunction(closed=>getComputedStyle(document.querySelector('#providerSettings summary'),'::after').transform!==closed,closedRotation);
- await market.locator(':scope > summary').click();
+ await page.locator('[data-section="moreSources"]').click();await market.locator(':scope > summary').click();
  assert.equal(await page.locator('#pageTitle').innerText(),await market.getAttribute('data-view-title'));
- assert.ok(await page.locator('#sectionBack').isVisible());
+ assert.ok(await page.locator('[data-section="moreSources"][aria-current]').isVisible());
 
  await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();const audit=page.locator('#legacyQuoteAudit');
  await audit.locator(':scope > summary').click();

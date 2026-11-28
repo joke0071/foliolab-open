@@ -40,7 +40,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    for(const [symbol,isin]of pairs)m.positions.push(createPosition({id:symbol,providerId:'p',accountId:'a',name:'SYNTHETIC '+symbol,kind:'etf',symbol,isin,currency:'EUR',mic:'XETR',exchange:'Xetra',quantity:'3.141592653589793238',price:0},m));
    m.settings.autoRefresh=false;const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   },pairs);
-  await idbProbe.capture('before-reload');await p.reload();await nav('more');await p.locator('#marketSettings').evaluate(e=>e.open=true);
+  await idbProbe.capture('before-reload');await p.reload();await nav('more');await p.locator('[data-section="moreSources"]').click();await p.locator('#marketSettings').evaluate(e=>e.open=true);
   assert.equal(await p.locator('[name=alphaVantageKey]').getAttribute('type'),'password');await p.locator('[name=alphaVantageKey]').fill('SYNTHETIC_ALPHA_KEY');
   await p.locator('#apiSettings button[type=submit]').click();await p.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
   const saved=await record();assert.equal(saved.settings.alphaVantageKey,'SYNTHETIC_ALPHA_KEY');assert.ok(!saved.raw.includes('SYNTHETIC_ALPHA_KEY'));
@@ -53,7 +53,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   await idbProbe.capture('before-reload');await p.reload();await refresh();assert.equal(calls.length,4,'Cache survives reload');
   const cache=await p.evaluate(async()=>{const {alphaCache,alphaKeyId}=await import('/src/alpha-vantage.js');const s=alphaCache();return {budget:await s.read('budget:'+await alphaKeyId('SYNTHETIC_ALPHA_KEY')),quote:await s.read('daily:VWCE.DEX')};});
   assert.equal(cache.budget.used,4);assert.ok(!JSON.stringify(cache).includes('SYNTHETIC_ALPHA_KEY'));
-  await nav('more');await p.locator('#marketSettings').evaluate(e=>e.open=true);await p.locator('#checkMarketSources').click();await p.waitForFunction(()=>document.getElementById('marketDiagnosticStatus')?.textContent.includes('Diagnose beendet'));
+  await nav('more');await p.locator('[data-section="moreSources"]').click();await p.locator('#marketSettings').evaluate(e=>e.open=true);await p.locator('#checkMarketSources').click();await p.waitForFunction(()=>document.getElementById('marketDiagnosticStatus')?.textContent.includes('Diagnose beendet'));
   const baseline=await record();assert.match(await p.locator('#marketDiagnosticStatus').innerText(),/Alpha Vantage · Tageskurs aus lokalem Cache/);assert.equal(calls.length,4);
   for(const width of [320,360,390,412,430,768,1440]){
    await p.setViewportSize({width,height:844});assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));

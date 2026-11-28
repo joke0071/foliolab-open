@@ -120,6 +120,7 @@ for(const engine of engines){
   await page.evaluate(async password=>{const {configureBackupPassword}=await import('/src/backup-vault.js');await configureBackupPassword(password,password);},password);
   await page.reload();await ready(page);await page.setViewportSize({width:390,height:844});await page.locator('#mobileNav [data-page="more"]').click();
   await page.waitForFunction(()=>!document.getElementById('exportEncryptedBackup').disabled);
+ await page.locator('[data-section="moreData"]').click();
   await page.locator('#backupPasswordSetup').evaluate(el=>el.open=true);
   const download=page.waitForEvent('download');await page.locator('#exportEncryptedBackup').click();
   const encrypted=readFileSync(await(await download).path());assert.equal(JSON.parse(encrypted).format,'foliolab-open-encrypted-v2');assert.deepEqual(await record(page),winner,'export never mutates portfolio');

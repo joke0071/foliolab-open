@@ -7,9 +7,9 @@ const page=await legacyPage(browser,{viewport:{width:320,height:700}});
 page.on('dialog',dialog=>dialog.accept());
 try{
  await page.goto('http://127.0.0.1:4173/');
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  for(const id of ['marketSettings','publicSearchSetup','blockchainSettings','dataPrivacyNotes']){
-  assert.equal(await page.locator('#'+id).evaluate(el=>el.open),false,id+' should start collapsed');
+  assert.equal(await page.locator('#'+id).evaluate(el=>el.open),['publicSearchSetup','dataPrivacyNotes'].includes(id),id+' default visibility');
  }
  assert.equal(await page.locator('#autoRefresh').isVisible(),true);
  assert.equal(await page.getByText('Powered by Binplorer').count(),0);
@@ -43,7 +43,7 @@ try{
  assert.equal(settings.etherscanKey,'TEST_ETH_KEY');
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev');
  await page.reload();
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#publicSearchSetup').evaluate(el=>el.open=true);
  assert.equal(await page.locator('[name="publicInstrumentEndpoint"]').inputValue(),'https://test-worker.workers.dev');
  await page.locator('#marketSettings').evaluate(el=>el.open=true);

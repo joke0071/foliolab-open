@@ -100,6 +100,7 @@ try{
  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv'),null,{timeout:15000});
  // Clear all app data in IDB mode; this writes a durable tombstone first.
  await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
  await page.locator('#deleteAll').click();
  await page.waitForTimeout(700);
  const resetState=await page.evaluate(async()=>{

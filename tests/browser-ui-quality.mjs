@@ -75,7 +75,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const brand=p.getByRole('link',{name:'FolioLab – Zur Übersicht'});
    await brand.focus();await p.keyboard.press('Enter');
    assert.equal(await p.locator('#dashboardPage').isVisible(),true);
-   assert.equal(await p.evaluate(()=>window.scrollY),0);
+   await p.waitForFunction(()=>window.scrollY===0,null,{timeout:5000});
    for(const page of ['dashboard','history','positions','bookings','more']){
     await nav(page);
     if(page==='dashboard'){
@@ -87,20 +87,22 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     if(page==='bookings'){
      assert.equal(await p.locator('#bookingTransferDetails').count(),0,'separate transfer accordion has been replaced');
      assert.equal(await p.locator('#bookingUndoActions').isVisible(),false,'no empty undo strip without an available receipt');
-     const sections=p.locator('#bookingPanel').locator('#bookingIncomeDetails,#bookingTransferAction,#bookingListHead,.booking-filter-tools,#bookingList');
-     assert.deepEqual(await sections.evaluateAll(els=>els.map(el=>el.id||el.className)),['bookingIncomeDetails','bookingTransferAction','bookingListHead','booking-filter-tools','bookingList']);
-     assert.equal(await p.locator('#bookingIncomeDetails').evaluate(el=>el.open),false);
-     const [actions,heading,filters,list]=await Promise.all(['.booking-secondary-actions','#bookingPanel>.panel-head-actions','.booking-filter-tools','#bookingList'].map(selector=>p.locator(selector).boundingBox()));
-     assert.ok(heading.y-actions.y-actions.height>=16&&filters.y-heading.y-heading.height>=10&&list.y-filters.y-filters.height>=16,'space between tools, list heading, filters and results');
-     assert.equal(await p.locator('[data-action=transfer-matching]').isVisible(),true);
+     assert.deepEqual(await p.locator('#sectionNav a').allTextContents(),['Buchungen','Erträge und Abzüge','Interne Transfers']);
+     assert.equal(await p.locator('#bookingIncomeDetails').isVisible(),false);
+     assert.equal(await p.locator('#bookingTransferAction').isVisible(),false);
+     const [heading,filters,list]=await Promise.all(['#bookingPanel>.panel-head-actions','.booking-filter-tools','#bookingList'].map(selector=>p.locator(selector).boundingBox()));
+     assert.ok(filters.y-heading.y-heading.height>=10&&list.y-filters.y-filters.height>=16);
+     await p.locator('[data-section="internalTransfers"]').click();
+     assert.ok(await p.locator('#bookingTransferAction').isVisible());
      if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.locator('#bookingsPage').screenshot({path:'artifacts/gates/c5-bookings-'+width+'.png'});
-     for(const id of ['bookingIncomeDetails'])if(!await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
+     await p.locator('[data-section="bookingIncomeDetails"]').click();
      assert.match(await p.locator('#bookingTransferHint').innerText(),/Keine offenen Geldkonto-Auszahlungen/);
      assert.equal(await p.locator('.income-totals>div').count(),5);assert.equal(await p.locator('.income-totals').evaluate(e=>e.scrollWidth<=e.clientWidth+1),true,'expanded income metrics fit');
     }
     if(page==='more'){
+     await p.locator('[data-section="moreSources"]').click();
      assert.equal(await p.locator('#optionalConnections').evaluate(e=>e.open),false,'expert connections default closed');
-     for(const id of ['publicSearchSetup','marketWorkerSetup'])assert.equal(await p.locator('#'+id).evaluate(e=>e.open),false,'nested experts default closed');
+     for(const id of ['publicSearchSetup','marketWorkerSetup'])assert.equal(await p.locator('#'+id).evaluate(e=>e.open),true,'connection inputs open directly');
      const headers=await p.locator('#marketSettings>summary .settings-summary strong,#optionalConnections>summary .settings-summary strong,#blockchainSettings>summary .settings-summary strong').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e);return [c.fontFamily,c.fontSize,c.fontWeight,c.lineHeight];}));assert.equal(headers.length,3);assert.deepEqual(headers[0],headers[1]);assert.deepEqual(headers[1],headers[2]);
      const arrows=await p.locator('#marketSettings>summary,#optionalConnections>summary,#blockchainSettings>summary').evaluateAll(els=>els.map(e=>{const c=getComputedStyle(e,'::after');return [c.width,c.borderRightColor,c.transform];}));
      for(const arrow of arrows)assert.deepEqual(arrow,arrows[0],'shared navigation chevron');
@@ -112,8 +114,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      const driveLink=await p.locator('#driveOAuthHelp a').boundingBox();
      assert.ok(driveLink.height>=44&&driveLink.width>=44&&driveLink.x>=0&&driveLink.x+driveLink.width<=width+1);
      await p.locator('#driveOAuthHelp>summary').click();await returnFromSection(p);
-     await p.locator('#optionalConnections>summary').click();
-     for(const id of ['publicSearchSetup','marketWorkerSetup'])await p.locator('#'+id+'>summary').click();
+     await p.locator('[data-section="moreSources"]').click();await p.locator('#optionalConnections>summary').click();
+     for(const id of ['publicSearchSetup','marketWorkerSetup'])assert.ok(await p.locator('#'+id+' input').first().isVisible());
      assert.equal(await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open),false);
      await p.locator('#optionalConnections>.more-panel-help>summary').click();
      const helpLink=await p.locator('#optionalConnections>.more-panel-help a').boundingBox();
@@ -128,7 +130,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     }
     await scan(page+' '+width+' with changed disclosures expanded');scans.push({page,width,height:560});
     if(page==='more'){
-     for(const selector of ['#optionalConnections>.more-panel-help','#marketWorkerSetup','#publicSearchSetup'])await p.locator(selector+'>summary').click();
+     for(const selector of ['#optionalConnections>.more-panel-help'])await p.locator(selector+'>summary').click();
     }
     if(page==='bookings'||page==='more')await returnFromSection(p);
    }
@@ -180,7 +182,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(await unitOutput.locator('td[data-label="Positionswert"]').filter({hasText:'Unbekannt'}).count(),2,'missing historical FX is never replaced by zero');
   for(const width of [320,390,430,768,1440]){await p.setViewportSize({width,height:560});await unitDialog.locator('[data-booking-history=view]').selectOption('price');await scan('USD price units '+width);assert.match(await unitOutput.locator('h3').innerText(),/Kurs \(USD\)/,'ISO currency remains explicit in the existing heading');const labels=await unitOutput.locator('.chart-y-labels span').allTextContents();assert.equal(labels.length,3);for(const label of labels){assert.match(label,/^\$\s*[\d,]+E-\d+$/,'tiny actual USD price, not EUR or zero');assert.doesNotMatch(label,/€|EUR/);}assert.equal(await unitOutput.locator('.chart-y-labels').evaluate(e=>[...e.children].every(c=>c.getBoundingClientRect().width<=e.clientWidth+1)),true,'unit labels fit their existing axis column');const points=JSON.parse(await unitOutput.locator('.chart-plot').getAttribute('data-chart-points'));assert.deepEqual(points.map(x=>x.value),['1E-9 USD','1,1E-9 USD'],'full significant display retains tiny nonzero price');for(const key of ['Home','End']){await unitOutput.locator('.chart-plot').focus();await p.keyboard.press(key);assert.equal(await unitOutput.locator('.chart-plot').evaluate(plot=>{const t=plot.querySelector('.chart-tooltip'),a=plot.getBoundingClientRect(),b=t.getBoundingClientRect();return b.left>=a.left-1&&b.right<=a.right+1&&t.scrollWidth<=t.clientWidth+1&&b.width>=Math.min(plot.clientWidth,200)-1&&t.children[0].getBoundingClientRect().height<=22;}),true,'full historical tooltip stays inside plot at both ends');assert.match(await unitOutput.locator('.chart-tooltip').innerText(),/USD/);assert.doesNotMatch(await unitOutput.locator('.chart-tooltip').innerText(),/Bestand unbekannt|EUR-Faktor/,'price observation tooltip does not invent quantity or FX uncertainty');}await scan('visible USD tooltip '+width);if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&width===390){await unitOutput.locator('.chart-plot').focus();await p.screenshot({path:'artifacts/gates/ui-history-price-usd-390.png'});}await unitDialog.locator('[data-booking-history=view]').selectOption('balances');assert.doesNotMatch(await unitOutput.locator('.chart-y-labels').innerText(),/€|EUR|USD/,'quantities remain currency-free even for USD security');}
   await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.dataset.action),'booking-history');assert.deepEqual(await record(),unitBefore,'axis/metric choices leave exact USD evidence and portfolio unchanged');console.log(engine+': quantity/actual USD price axis units, tiny nonzero prices, five widths/Axe and zero writes PASS');
-  await nav('bookings');assert.equal(await p.locator('#bookingTransferDetails').count(),0);assert.ok(await p.locator('#bookingTransferAction').isVisible());assert.match(await p.locator('#bookingTransferHint').innerText(),/Guthabenposition auf einem eigenen Geldkonto/,'an existing account without cash position is not falsely called absent');assert.deepEqual(await record(),unitBefore,'support disclosure remains read-only');
+  await nav('bookings');await p.locator('[data-section="internalTransfers"]').click();assert.equal(await p.locator('#bookingTransferDetails').count(),0);assert.ok(await p.locator('#bookingTransferAction').isVisible());assert.match(await p.locator('#bookingTransferHint').innerText(),/Guthabenposition auf einem eigenen Geldkonto/,'an existing account without cash position is not falsely called absent');assert.deepEqual(await record(),unitBefore,'support disclosure remains read-only');
   await structuredQualityBrowserContract({p,nav,record,scan,engine,scans});
   await ui300BrowserContract({p,nav,record,scan,engine,scans});
   await localeDisplayBrowserContract({p,nav,record,scan,engine,scans});

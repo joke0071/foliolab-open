@@ -37,7 +37,7 @@ try{
     assert.equal(comparison.nested,true,'Capital comparison must be inside return details');
     assert.match(comparison.title,/Rendite & Geldflüsse/);
     if(width===320)assert.equal(comparison.closed,true,'Performance section should remain collapsed by default');
-    await page.locator('#performanceDetails').evaluate(el=>el.open=true);
+    await page.locator('[data-section="performanceDetails"]').click();
    }
    const dimensions=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));
    assert.ok(dimensions.scroll<=dimensions.width+1,section+' horizontal overflow at '+width+': '+JSON.stringify(dimensions));

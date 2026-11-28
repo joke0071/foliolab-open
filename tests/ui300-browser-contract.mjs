@@ -22,7 +22,7 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
  assert.equal(await p.locator('#sidebarPortfolioStatus').getAttribute('hidden'),'','healthy sidebar has no permanent success card');
  assert.equal(await p.locator('.sidebar-bottom:visible').count(),0,'no visible success replacement');
  assert.equal(await p.getByText('Unabhängig · Ohne Benutzerkonto',{exact:true}).count(),0,'redundant account subtitle removed');
- const compactTitles=['Vermögensverlauf','Nach Anlageklasse','Meine Konten und Depots','Datenquellen & Aktualisierung'];
+ const compactTitles=['Vermögensverlauf','Nach Anlageklasse','Meine Konten und Depots'];
  const out='artifacts/gates/ui300';await mkdir(out,{recursive:true});
  for(const width of [320,360,390,412,430,768,1440]){
   await p.setViewportSize({width,height:800});await nav('dashboard');
@@ -53,12 +53,15 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
   }
   const headings=p.locator('#dashboardPage .compact-panel-head');assert.equal(await headings.count(),3);
   assert.equal(await headings.locator('.panel-kicker').count(),0);
-  assert.deepEqual(await headings.locator('h2').allTextContents(),compactTitles.slice(0,3));
+  assert.deepEqual(await headings.locator('h2').allTextContents(),compactTitles);
   assert.equal(await headings.locator('h2').evaluateAll(nodes=>nodes.every(n=>n.scrollWidth<=n.clientWidth+1)),true,'main headings reflow without clipping');
   assert.equal(await p.locator('#sidebarPortfolioStatus').isVisible(),false,'no permanent success card at any width');
-  await nav('more');const sourceHead=p.locator('#dataSourcesPanel>.compact-panel-head');
-  assert.equal(await sourceHead.locator('.panel-kicker').count(),0);assert.equal(await sourceHead.locator('h2').innerText(),compactTitles[3]);
-  assert.equal(await sourceHead.locator('h2').evaluate(e=>e.scrollWidth<=e.clientWidth+1),true);
+  await nav('more');
+  const sources=p.locator('[data-section="moreSources"]');
+  await sources.click();
+  assert.equal(await sources.getAttribute('aria-current'),'page');
+  assert.equal(await sources.innerText(),'Datenquellen und Aktualisierungen');
+  assert.equal(await p.locator('#dataSourcesPanel>.compact-panel-head').isVisible(),false);
   await scan('UI300 compact settings '+width);await p.screenshot({path:`${out}/${engine}-settings-${width}.png`,fullPage:true});await nav('dashboard');
   await scan('UI300 compact dashboard/navigation '+width);scans.push({page:'UI300',width,height:800});
   await p.screenshot({path:`${out}/${engine}-${width}.png`,fullPage:true});

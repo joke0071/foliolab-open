@@ -48,6 +48,7 @@ try{
    const outer=document.documentElement.scrollWidth;
    return {pieLeft:pie.left,pieRight:pie.right,legendLeft:legend.left,legendRight:legend.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:outer};
   });
+  if(width<=430)assert.ok(rect.pieRight<=rect.legendLeft,'Mobile legend must sit beside the ring at '+width);
   assert.ok(rect.scrollWidth<=width+1,'Horizontal overflow at '+width+': '+JSON.stringify(rect));
   assert.ok(rect.pieLeft>=rect.panelLeft-1&&rect.pieRight<=rect.panelRight+1,'Pie escapes card at '+width);
   assert.ok(rect.legendLeft>=rect.panelLeft-1&&rect.legendRight<=rect.panelRight+1,'Legend escapes card at '+width);
