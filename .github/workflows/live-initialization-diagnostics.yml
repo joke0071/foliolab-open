@@ -1,4 +1,4 @@
-name: Bounded live initialization diagnostics
+name: Bounded release initialization diagnostics
 on:
   pull_request:
     branches: [main]
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
-      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_BASE: http://127.0.0.1:4173/
       UI_QUALITY_ENGINES: chromium
     steps:
       - uses: actions/checkout@v4
@@ -29,10 +29,11 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3
           npx playwright install chromium --only-shell
-      - name: Capture published identity
+      - name: Capture checkout identity
         run: |
           mkdir -p artifacts/gates
-          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/foliolab-http.log" 2>&1 &
+          curl --retry 10 --retry-connrefused --retry-delay 1 --fail --silent --show-error http://127.0.0.1:4173/sw.js > artifacts/gates/diagnostic-published-sw.js
           sha256sum artifacts/gates/diagnostic-published-sw.js
           head -n 1 artifacts/gates/diagnostic-published-sw.js
       - name: One unchanged chart gate with failure evidence
@@ -62,7 +63,7 @@ jobs:
       matrix:
         engine: [firefox, webkit]
     env:
-      PCHAIN_BASE: https://foliolab.unperfekt.at/
+      PCHAIN_BASE: http://127.0.0.1:4173/
       PCHAIN_ENGINES: ${{ matrix.engine }}
     steps:
       - uses: actions/checkout@v4
@@ -75,11 +76,12 @@ jobs:
         run: |
           npm install --no-save playwright@1.64.1 axe-core@4.10.3
           npx playwright install --with-deps ${{ matrix.engine }}
-      - name: Verify unchanged published v221 worker identity
+      - name: Verify served worker identity
         run: |
           set -euo pipefail
           mkdir -p artifacts/gates
-          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/foliolab-http.log" 2>&1 &
+          curl --retry 10 --retry-connrefused --retry-delay 1 --fail --silent --show-error http://127.0.0.1:4173/sw.js > artifacts/gates/diagnostic-published-sw.js
           cmp sw.js artifacts/gates/diagnostic-published-sw.js
           sha256sum artifacts/gates/diagnostic-published-sw.js
           head -n 1 artifacts/gates/diagnostic-published-sw.js

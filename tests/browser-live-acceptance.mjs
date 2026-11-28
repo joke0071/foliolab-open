@@ -14,7 +14,7 @@ import {historyFixture} from './booking-history-fixture.mjs';
 import {annualFixture} from './annual-overview-fixture.mjs';
 import {transferFixture} from './transfer-matching-fixture.mjs';
 import {event,stream,NOW} from './wallet-history-fixtures.mjs';
-const base=process.env.ACCEPTANCE_BASE||'https://joke0071.github.io/foliolab-open/',sha=process.env.RELEASE_SHA;
+const base=process.env.ACCEPTANCE_BASE||'http://127.0.0.1:4173/',sha=process.env.RELEASE_SHA;
 assert.match(sha||'',/^[0-9a-f]{40}$/,'Specify the actual matching release SHA');
 const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
 const sw=await readFile('sw.js','utf8'),cache=sw.match(/const CACHE='([^']+)'/)[1],assets=JSON.parse(sw.match(/const ASSETS=(\[[^\n]+\]);/)[1].replaceAll("'",'"'));

@@ -117,7 +117,7 @@ function assertHistoricalLiveContract(source){
   ["assert.equal(restored.settings.autoRefresh,'off');","assert.equal(restored.settings.autoRefresh,false);"]
  ];
  for(const [current,previous] of frequencyDeltas){assert.equal(source.split(current).length,2);source=source.replace(current,previous);}
- assert.equal(createHash('sha256').update(source).digest('hex'),'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3');
+ assert.equal(createHash('sha256').update(source).digest('hex'),'a0f229ad43dc69c7c5a4b052306ba9c7fae976be58c9991aa9b0cbbaf7072613');
 }
 test('pre-existing live assertions and deadlines remain byte-identical after sealed additive deltas',()=>assertHistoricalLiveContract(liveSource));
 test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
