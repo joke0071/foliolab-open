@@ -236,7 +236,8 @@ function go(next,{review=false,section='',restore=false}={}){
   if(restore)history.replaceState(null,'',url);else history.pushState(null,'',url);
  }
  showRoute();
- window.scrollTo({top:0,behavior:'instant'});render();
+ render();
+ window.scrollTo({top:0,left:0,behavior:'instant'});
  if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
 }
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
