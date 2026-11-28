@@ -1845,6 +1845,177 @@
         "cnnOriginalPage": "https://edition.cnn.com/markets/fear-and-greed",
         "cnnOfficialIndexFrameAncestorsIncludesFolioLab": false
       }
+    },
+    "cloudflare20261128": {
+      "date": "2026-11-28",
+      "origin": "https://foliolab.pages.dev/",
+      "entry": {
+        "main": "1c7c2b78720e46c5f3e0ffe120ba7e1537417c24",
+        "checkpoint": "fb034d0794e7b7badadc5f186c6bd2ff11ab0810",
+        "openPRs": [
+          457,
+          456,
+          430,
+          429,
+          427,
+          350,
+          348,
+          161
+        ],
+        "inProgressRun": 46139716664
+      },
+      "counts": {
+        "core": [
+          6,
+          6
+        ],
+        "before": 18,
+        "after": 18,
+        "total": 29
+      },
+      "releases": {
+        "457": {
+          "main": "bca54d0a01b9f8ba56a463a02c141e84bf747c8d",
+          "checkRunId": 140966358753,
+          "checkURL": "https://github.com/joke0071/foliolab-open/runs/140966358753",
+          "buildDetails": "https://dash.cloudflare.com/?to=/ef58d4cc7260c10bb149888155c47c3b/pages/view/foliolab/202c84e9-779d-402e-ae2a-e1cfebb962bd",
+          "deployment": "https://202c84e9.foliolab.pages.dev/",
+          "loginChecks": [
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "202c84e9.foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/202c84e9.foliolab.pages.dev"
+            },
+            {
+              "host": "202c84e9.foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/202c84e9.foliolab.pages.dev"
+            }
+          ],
+          "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
+          "pr": 457,
+          "prRequiredRun": 46139716664,
+          "walletRun": 46139716777,
+          "mainAccessJob": 140969842531
+        }
+      },
+      "betaFix": {
+        "originalFailedJob": "https://github.com/joke0071/foliolab-open/actions/runs/46133920723/job/140944970290",
+        "firefox390": {
+          "playwrightBoundingBoxHeight": 43.999969482421875,
+          "domRectHeight": 44,
+          "cssMinHeight": "44px"
+        },
+        "pagesOffline": {
+          "server": "Wrangler Pages 4.169.0, local",
+          "redirect": "GET /index.html -> HTTP 308 /",
+          "previousCachedRootRedirected": false,
+          "previousCachedIndexRedirected": true,
+          "previousOfflineNavigation": "net::ERR_FAILED with activated controller and 163 cached entries",
+          "fix": "When cached index.html is redirected, serve the directly cached scope root for a navigation."
+        },
+        "prCI": "https://github.com/joke0071/foliolab-open/actions/runs/46141692680",
+        "head": "dd4cf75c0a62660a2164fcc849d33fe51e771cc9",
+        "localNodePassed": 1547,
+        "localBrowsers": [
+          "Chromium",
+          "Firefox",
+          "WebKit"
+        ],
+        "appEntryLocal": "Notice above portfolio values at 320/390/768/1440, hidden in Positions, visible on return and after offline reload."
+      },
+      "framingQualification": {
+        "service": "Wrangler Pages 4.169.0 on loopback",
+        "appOrigin": "http://127.0.0.1:4595",
+        "foreignOrigin": "http://127.0.0.1:4596",
+        "engine": "Chromium 141 headless",
+        "build": "mkdir -p _site && cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/",
+        "headerFile": "_site/_headers",
+        "headerFileSHA256": "8054fb6ced38f23c0d4573d29a1ac318e253cb1eb1e1767db66878d9983f014b",
+        "before": "SW362 was frameable locally",
+        "firstVisit": "SW363 direct 200 with frame-ancestors none and X-Frame-Options DENY; beta visible; foreign frame blocked",
+        "update": "Old cache cleared, new active controller, both headers and foreign-frame refusal",
+        "offline": "SW363 cached navigation with both headers and visible beta",
+        "nativeSafariITP": "No persistent native Safari profile or day sequence available",
+        "testedBrowsers": [
+          "Chromium 141",
+          "Firefox (Playwright 1.64.1)",
+          "WebKit (Playwright 1.64.1 on Linux)"
+        ],
+        "branchHead": "7013f0518dcf810b80f06218e6e9f59c1bf4a45d",
+        "firefoxOrigins": [
+          "http://127.0.0.1:4695",
+          "http://127.0.0.1:4696"
+        ],
+        "webkitOrigins": [
+          "http://127.0.0.1:4795",
+          "http://127.0.0.1:4796"
+        ],
+        "realPackageOnLocalPages": {
+          "origin": "http://127.0.0.1:4895/",
+          "browser": "Chromium",
+          "assetHashesMatched": 165,
+          "acceptanceGroups": 11,
+          "axeScans": 22,
+          "finance": "16 steps, USD partial fills and historical FX, CAS/quota/abort/offline, encrypted restore"
+        },
+        "note": "All local Pages results are distinct from the protected production and from native Safari ITP."
+      },
+      "inputs": {
+        "channels": [
+          "Project GitHub, review submissions, inline threads and conversation",
+          "Drive modified files",
+          "Library project files and recent matching uploads",
+          "Project-related mail and available browser profiles"
+        ],
+        "android": "No physical device, active reservation or suitable existing authorized session in available project inputs",
+        "sourceDocuments": "No new matched primary document, order/fill data, independent same-date balance, tax pair or private cursor pair identified",
+        "tradeRepublic": "The public #6103 report and conversation provide no matching native CSV.",
+        "licensedXetraArchive": "NC display terms at AWS registry. First-day bucket listing returned HTTP 403.",
+        "cmc": "Basic account previously confirmed; no authorized project request established.",
+        "cnn": "Official content licensing page, no project feed or embed grant identified.",
+        "driveReview": {
+          "head": "84ef0b3746d48f24a7b130ecce80c6409f579463",
+          "reviews": 0,
+          "reviewThreads": 0,
+          "conversationComments": 0
+        },
+        "previousDelivery": {
+          "foliolab.unperfekt.at": "NXDOMAIN (DNS RCODE 3)",
+          "joke0071.github.io/foliolab-open/": "HTTP 404"
+        },
+        "xetraDelayedAlternative": {
+          "source": "https://www.mds.deutsche-boerse.com/mds-en/real-time-data/Delayed-data",
+          "availability": "Provider makes minute files available until midnight of the following business day. This does not supply the missing 2019 history or an overlap with it."
+        }
+      },
+      "nextInputByPackage": {
+        "159": "Original mit Ablesezeit oder Slot und Umfang der Stake-Position. Danach freier Wallet-Saldo, Stake-Lamports und damalige Delegation am selben finalisierten Slot.",
+        "174": "Native Kraken-Trades zur belegten USD→EUR-Ledgergruppe oder autorisierter TradesHistory-Abruf mit consolidate_taker=false. Ein Fill schließt diesen Kandidaten als Einzelausführung ab.",
+        "177/256": "Reservierbares physisches Android-Gerät A mit kostenloser Zeit für 30 Starts, installierter Standalone-PWA, kontrolliertem Prozessende und tatsächlichem Offlinebetrieb.",
+        "44/254": "Physisches Gerät B für verschlüsselten Dateiübertrag und Restore von A. Für den getrennten Bereinigungsfall ein beobachtetes OS-Ereignis auf A.",
+        "298": "Beständige native Safari-Sitzung mit tatsächlichen Nutzungstagen für ITP. Für Live-Framing und Offline-Update eine angemeldete FolioLab-Sitzung auf https://foliolab.pages.dev/.",
+        "148": "Nativer Trade-Republic-App-CSV genau zur AT-Abrechnung #6103. Bei Bitpanda unabhängiger Cash-Saldo und BCI25-Einzelmengen desselben Stichtags.",
+        "129": "Jahresreport und Detailbeleg desselben Depots und Steuerjahrs. Unabhängiger Fachbefund zur daraus abgeleiteten konkreten Kostenbasis.",
+        "405": "Autorisierter CoinMarketCap-Projektabruf. Für CNN explizit freigegebener Originalfeed oder Embed. Danach Datenstand, Cache und Ausfallanzeige auf Produktion.",
+        "124": "Abrufbare und zur Anzeige freigegebene Xetra/EUR-Reihe für IE00BK5BQT80 ab 25.07.2019, einschließlich Kapitalmaßnahmen. Bei Teilreihen gemeinsame Handelstage.",
+        "268": "Neu eingehender erster unveränderter Privat-Rohbody mit Originalcursor und unveränderte Folgeantwort.",
+        "160/427": "Unabhängiger Reviewbefund zu 84ef0b3746d48f24a7b130ecce80c6409f579463. Nach Freigabe autorisierte OAuth-Origin und zwei Geräte für Schreiben, Readback, Konflikt und Widerruf."
+      }
     }
   }
 }
