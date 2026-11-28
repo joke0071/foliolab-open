@@ -2659,3 +2659,25 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 
 #bookingIncome #incomeRecords{border-color:var(--line)}
 #bookingIncome #incomeRecords>summary{color:var(--ink);font-size:var(--type-body);font-weight:600}
+
+/* Secondary navigation stays available on subpages and in settings details. */
+#sectionNav{position:relative;display:flex;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;border-bottom:1px solid var(--line);margin-bottom:16px;scrollbar-width:thin}
+#sectionNav[hidden]{display:none}
+#sectionNav a{position:relative;display:grid;place-items:center;flex:none;min-height:48px;padding:8px 12px;font-weight:550;font-size:.9375rem;color:var(--muted);text-decoration:none;line-height:1.35}
+#sectionNav a[aria-current]{color:var(--primary);font-weight:700}
+#sectionNav a[aria-current]::after{position:absolute;content:"";height:3px;background:currentColor;inset:auto 8px 0;border-radius:3px 3px 0 0}
+#sectionNav a:focus-visible{outline-offset:-3px}
+#sectionNav:not([hidden])+.heading-row:has(.visually-hidden){margin-block:0;min-height:0}
+#morePage .panel-head:has(#moreAccounts) .panel-title,#morePage .panel-head:has(:is(#moreData,#moreSources)),#bookingListHead h2{display:none}
+#historyPage #historyCoverage{margin-block-start:32px}
+#internalTransfers .body-copy{margin-block:0 16px}
+#bookingIncomeDetails.section-current{padding:0}
+@media(max-width:720px){
+ #sectionNav{position:sticky;top:var(--mobile-header-height,64px);background:var(--surface,#fff);z-index:7;scrollbar-width:none}
+ #sectionNav:not([hidden])+.heading-row:has(.visually-hidden){display:none}
+ #dashboardPage .dashboard-allocation .allocation-layout{display:flex;flex-flow:row wrap;gap:clamp(8px,2vw,14px)}
+ #dashboardPage .dashboard-allocation .donut{width:clamp(100px,29vw,140px);height:auto;aspect-ratio:1;flex:0 0 auto}
+ #dashboardPage .dashboard-allocation .donut-inner{width:70%;height:70%}
+ #dashboardPage .dashboard-allocation .alloc-legend{width:auto;flex:1 1 9rem}
+ #dashboardPage .dashboard-allocation .alloc-legend-row{gap:4px;padding-inline:5px}
+}
