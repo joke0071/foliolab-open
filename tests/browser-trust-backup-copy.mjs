@@ -1,4 +1,4 @@
-import {revealAction,returnFromSection} from './browser-disclosures.mjs';
+import {revealAction} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -52,7 +52,6 @@ async function makePage(label,bytes=null){
  return {p,evidence};
 }
 async function password(p,value){
- await p.locator('[data-section="moreData"]').click();
  await p.locator('#backupPasswordSetup > summary').click();
  await p.locator('#backupPassword').fill(value);
  await p.locator('#backupPasswordConfirm').fill(value);
@@ -114,7 +113,6 @@ try{
   await password(p,devicePassword);
   evidence.vaultBefore=await vault(p);evidence.before=await record(p);
   await p.locator('[data-section="moreData"]').click();
- await p.locator('[data-section="moreData"]').click();
   await p.locator('#googleDriveBackupSetup > summary').click();
   await p.locator('#driveClientId').fill('synthetic-123.apps.googleusercontent.com');
   await p.locator('#driveClientId').blur();

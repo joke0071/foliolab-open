@@ -183,7 +183,7 @@ function showRoute({focus=false}={}){
   if(focus)summary.focus({preventScroll:true});
  }else if(focus){
   window.scrollTo({top:0,behavior:'instant'});
-  const target=$('sectionNav').querySelector('[aria-current]')||$('pageTitle');
+  const target=$('sectionNav').querySelector('[aria-current="page"]')||$('pageTitle');
   target.tabIndex=target.tagName==='A'?0:-1;target.focus({preventScroll:true});
  }
 }

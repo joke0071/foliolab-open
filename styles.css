@@ -1045,7 +1045,9 @@
 
 /* Recovery exposes safe rescue actions, never a valid empty portfolio. */
 .portfolio-unavailable .page:not(#morePage)>:not(.portfolio-unavailable-message),
-.restore-readback-failed #morePage>.settings-grid{display:none}
+.restore-readback-failed #morePage>.settings-grid,
+.restore-readback-failed #sectionNav,
+.portfolio-unavailable:has(.page.active:not(#morePage)) #sectionNav{display:none}
 
 .mobile-header .portfolio-status{font-size:11px;color:var(--muted);margin-left:auto;text-align:right;max-width:50%}
 
@@ -2647,7 +2649,7 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 
 /* Detail destinations live under their tab. Short explanations stay inline. */
 .section-obscured,.section-current>summary,#pageDescription[hidden]{display:none!important}
-.page .section-container{display:block!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important}
+.page .section-container{display:block;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important}
 .page details.section-current{display:block;margin:0;border:0;background:transparent;padding:0}
 #historyPage .history-insights details[data-view-title]>summary::after,
 #bookingsPage #bookingIncomeDetails>summary::after,#morePage .panel details[data-view-title]>summary::after{
