@@ -1911,6 +1911,46 @@
           "prRequiredRun": 46139716664,
           "walletRun": 46139716777,
           "mainAccessJob": 140969842531
+        },
+        "456": {
+          "main": "94cb83206ea2125b087f2ee387e0e359e90bd4ed",
+          "checkRunId": 140980104593,
+          "checkURL": "https://github.com/joke0071/foliolab-open/runs/140980104593",
+          "buildDetails": "https://dash.cloudflare.com/?to=/ef58d4cc7260c10bb149888155c47c3b/pages/view/foliolab/9d858eba-bbb1-4a28-b305-ce8d900ca476",
+          "deployment": "https://9d858eba.foliolab.pages.dev/",
+          "loginChecks": [
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "9d858eba.foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/9d858eba.foliolab.pages.dev"
+            },
+            {
+              "host": "9d858eba.foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/9d858eba.foliolab.pages.dev"
+            }
+          ],
+          "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
+          "pr": 456,
+          "worker": 362,
+          "prHead": "dd4cf75c0a62660a2164fcc849d33fe51e771cc9",
+          "mainRun": 46145323789,
+          "mainConclusion": "failure",
+          "failedJobURL": "https://github.com/joke0071/foliolab-open/actions/runs/46145323789/job/140980053267"
         }
       },
       "betaFix": {
@@ -1936,7 +1976,17 @@
           "Firefox",
           "WebKit"
         ],
-        "appEntryLocal": "Notice above portfolio values at 320/390/768/1440, hidden in Positions, visible on return and after offline reload."
+        "appEntryLocal": "Notice above portfolio values at 320/390/768/1440, hidden in Positions, visible on return and after offline reload.",
+        "followup459": {
+          "pr": 459,
+          "candidate": "8e82bc74ecd8d9552beefa5ffd9b9ccca58c7cc0",
+          "requiredRun": 46147990149,
+          "walletRun": 46147990150,
+          "originalLocalScrollY": 135,
+          "width": 390,
+          "afterFocusFixOnly": "Firefox queued scroll after click handler. Observed 0 → 135 before keyup.",
+          "candidateChecks": "60 keyboard returns on Chromium, Firefox, WebKit; two Firefox interaction sequences over 15 widths each."
+        }
       },
       "framingQualification": {
         "service": "Wrangler Pages 4.169.0 on loopback",
@@ -1973,7 +2023,12 @@
           "axeScans": 22,
           "finance": "16 steps, USD partial fills and historical FX, CAS/quota/abort/offline, encrypted restore"
         },
-        "note": "All local Pages results are distinct from the protected production and from native Safari ITP."
+        "note": "All local Pages results are distinct from the protected production and from native Safari ITP.",
+        "stagedFollowup": {
+          "pr": 458,
+          "waitFor": 459,
+          "cacheAfterRecovery": "SW364"
+        }
       },
       "inputs": {
         "channels": [
