@@ -223,7 +223,7 @@ window.addEventListener('hashchange',()=>{
  if(sectionHash(page)||restoredUrl!==location.href)requestAnimationFrame(()=>showRoute({focus:true}));
  restoredUrl='';
 });
-function go(next,{review=false,section='',restore=false}={}){
+function go(next,{review=false,section='',restore=false,focusTitle=false}={}){
  const previousPage=page,originPage=document.activeElement?.closest('.page');
  qualityReviewOpen=next==='positions'&&review;
  if(!PAGES.some(x=>x[0]===next))next='dashboard';
@@ -237,15 +237,23 @@ function go(next,{review=false,section='',restore=false}={}){
  }
  showRoute();
  render();
- window.scrollTo({top:0,left:0,behavior:'instant'});
- if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
+ if(focusTitle||(previousPage!==next&&originPage)){
+  $('pageTitle').tabIndex=-1;
+  $('pageTitle').focus({preventScroll:true});
+ }
+ if(focusTitle){
+  // Firefox can apply a queued focus scroll after the logo's Enter handler.
+  requestAnimationFrame(()=>{
+   if(page===next&&document.activeElement===$('pageTitle'))window.scrollTo({top:0,left:0,behavior:'instant'});
+  });
+ }else window.scrollTo({top:0,left:0,behavior:'instant'});
 }
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
  if(control.matches('a[href]')){
   if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||event.button!==0)return;
   event.preventDefault();
  }
- go(control.dataset.go);
+ go(control.dataset.go,{focusTitle:control.matches('a.logo')});
 }));const initial=new URL(location.href).searchParams.get('page')||'dashboard';go(initial,{restore:true,section:sectionHash(initial)});}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],[data-install-action],.header-status-dialog button,.icon-close')||['downloadRaw','reloadPortfolio','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
