@@ -1621,7 +1621,7 @@
 /* UI-VISUAL06: scoped, presentation-only first-run and empty-list refinements.
    No global .empty/.panel/.btn overrides, no new actions, no state change. */
 #dashboardPage #onboarding{
- margin:16px 0 12px;
+ margin:20px 0 12px;
  padding:clamp(16px,2.3vw,24px);
  background:linear-gradient(135deg,#f5faf5,#fff 75%);
  border-color:#dce8df;
