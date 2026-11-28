@@ -76,7 +76,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await brand.focus();await p.keyboard.press('Enter');
    assert.equal(await p.evaluate(()=>document.activeElement?.id),'pageTitle','Home link focuses the overview heading');
    assert.equal(await p.locator('#dashboardPage').isVisible(),true);
-   await p.waitForFunction(()=>window.scrollY===0,null,{timeout:5000});
+   // Read after the browser has applied keyboard-focus scrolling and painted the new page.
+   await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   assert.equal(await p.evaluate(()=>window.scrollY),0,'Home link leaves the overview at the top');
    for(const page of ['dashboard','history','positions','bookings','more']){
     await nav(page);
     if(page==='dashboard'){
