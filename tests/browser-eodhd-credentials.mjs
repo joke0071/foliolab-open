@@ -5,7 +5,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await legacyPage(browser,{viewport:{width:390,height:844}});
 try{
  await page.goto('http://127.0.0.1:4173/');
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  for(const section of ['marketSettings','blockchainSettings'])
   await page.locator('#'+section).evaluate(el=>el.open=true);
  const fields=['marketstackKey','etherscanKey','coinGeckoKey','etherscanKey','binplorerKey'];
@@ -37,7 +37,7 @@ try{
  // A click is not the completion of an asynchronous locked storage write.
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  await page.reload();
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  assert.equal(await page.locator('[name="marketstackKey"]').getAttribute('type'),'password');
  assert.equal(await page.locator('[name="marketstackKey"]').inputValue(),'SYNTHETIC_marketstackKey');
@@ -54,7 +54,7 @@ try{
  try{
   const touch=await touchContext.newPage();
   await touch.goto('http://127.0.0.1:4173/');
-  await touch.locator('#mobileNav [data-page="more"]').click();
+  await touch.locator('#mobileNav [data-page="more"]').click();await touch.locator('[data-section="moreSources"]').click();
   await touch.locator('#marketSettings').evaluate(el=>el.open=true);
   const eye=touch.locator('[name="marketstackKey"] + .credential-toggle');
   await eye.click();

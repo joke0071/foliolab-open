@@ -54,6 +54,7 @@ try{
  page.once('dialog',dialog=>dialog.accept()); // Explicitly discard invalid wallet draft.
  await page.locator('#closeDialog').click();
  await page.locator('#sidebarNav [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
  const [dl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportBackup').click()]);
  const exported=JSON.parse(await fs.readFile(await dl.path(),'utf8'));
  assert.equal(exported.version,3);assert.equal(exported.accounts.length,1);

@@ -40,6 +40,7 @@ for(const [name,engine] of [['Firefox',firefox],['WebKit',webkit]]){
   await page.locator(nav+' [data-page="dashboard"]').click();
   assert.match(await page.locator('#totalValue').innerText(),/200/,name+' portfolio not restored after reload');
   await page.locator(nav+' [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
   const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#exportBackup').click()]);
   assert.match(download.suggestedFilename(),/foliolab-backup/,name+' backup export failed');
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).positions.length),1);

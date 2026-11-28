@@ -48,10 +48,11 @@ async function makePage(label,bytes=null){
  p.on('dialog',async d=>{evidence.dialogs.push({type:d.type(),message:d.message()});await d.accept(d.type()==='prompt'?sourcePassword:undefined);});
  await p.goto(base);
  await p.waitForFunction(()=>document.getElementById('appStartup')?.hidden===true);
- await p.locator('#sidebarNav [data-page="more"]').click();
+ await p.locator('#sidebarNav [data-page="more"]').click();await p.locator('[data-section="moreData"]').click();
  return {p,evidence};
 }
 async function password(p,value){
+ await p.locator('[data-section="moreData"]').click();
  await p.locator('#backupPasswordSetup > summary').click();
  await p.locator('#backupPassword').fill(value);
  await p.locator('#backupPasswordConfirm').fill(value);
@@ -112,7 +113,8 @@ try{
   const {p,evidence}=await makePage(label,bytes);
   await password(p,devicePassword);
   evidence.vaultBefore=await vault(p);evidence.before=await record(p);
-  if(await p.locator('#sectionBack').isVisible())await returnFromSection(p);
+  await p.locator('[data-section="moreData"]').click();
+ await p.locator('[data-section="moreData"]').click();
   await p.locator('#googleDriveBackupSetup > summary').click();
   await p.locator('#driveClientId').fill('synthetic-123.apps.googleusercontent.com');
   await p.locator('#driveClientId').blur();

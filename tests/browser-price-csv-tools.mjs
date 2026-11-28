@@ -16,7 +16,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    for(const [id,isin]of [['csv-a','IE00BK5BQT80'],['csv-b','IE00B4L5Y983']])m.positions.push(createPosition({id,name:'SYNTHETIC '+id,providerId:'p',accountId:'a',kind:'etf',symbol:id,isin,exchange:'Xetra',mic:'XETR',currency:'EUR',quantity:10,price:100},m));
    captureOpenings(m);const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await p.reload();await ready();
-  await p.locator('#mobileNav [data-page=more]:visible,#sidebarNav [data-page=more]:visible').click();
+  await p.locator('#mobileNav [data-page=more]:visible,#sidebarNav [data-page=more]:visible').click();await p.locator('[data-section="moreSources"]').click();
   const root=p.locator('#historicalPriceCSVTools'),select=root.locator('#priceCSVPosition');await revealAction(select);
   const before=await record();assert.equal(await select.inputValue(),'','No inferred position or source choice');assert.ok(await root.locator('[data-action=import-price-history]').isDisabled());
   await select.selectOption('csv-a');assert.match(await root.innerText(),/IE00BK5BQT80.*EUR/);for(const control of [select,root.locator('[data-action=import-price-history]')]){const box=await control.boundingBox();assert.ok(box.width>=44&&box.height>=44,'central CSV controls retain44px targets: '+JSON.stringify(box));}assert.deepEqual(await record(),before,'Choosing and reading a source is read-only');

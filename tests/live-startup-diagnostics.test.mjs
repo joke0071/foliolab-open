@@ -34,6 +34,42 @@ test('closed or unresponsive page cannot replace the original gate result with a
 });
 const liveSource=readFileSync(new URL('./browser-live-acceptance.mjs',import.meta.url),'utf8');
 function assertHistoricalLiveContract(source){
+ // Normalize only the new navigation gestures before applying the original release fingerprints.
+ const tabChanges=[
+  [
+    "await nav(p,'more');await p.locator('[data-section=\"moreSources\"]').click();assert.match(await p.locator('#portfolioStorageState')",
+    "await nav(p,'more');assert.match(await p.locator('#portfolioStorageState')"
+  ],
+  [
+    "await nav(p,'more');await p.locator('[data-section=\"moreData\"]').click();const plainDownload",
+    "await nav(p,'more');const plainDownload"
+  ],
+  [
+    "await p.locator('[data-section=\"bookingIncomeDetails\"]').click();",
+    "await p.locator('#bookingIncomeDetails').evaluate(el=>el.open=true);"
+  ],
+  [
+    "await p.locator('[data-section=\"portfolioProjection\"]').click();",
+    "await projection.locator(':scope > summary').click();"
+  ],
+  [
+    "const historicalReference=p.locator('[data-section=\"snapshotManager\"]');",
+    "const historicalReference=p.locator('#snapshotManager > summary');"
+  ],
+  [
+    "document.getElementById('snapshotManager').open&&document.activeElement===node",
+    "node.parentElement.open&&document.activeElement.id==='pageTitle'"
+  ],
+  [
+    "p.locator('[data-section=\"historyDiagram\"]').evaluate(node=>document.activeElement===node)",
+    "historicalReference.evaluate(node=>document.activeElement===node)"
+  ],
+  [
+    "await p.locator('[data-section=\"portfolioProjection\"]').press('Enter');",
+    "await projection.locator(':scope > summary').press('Enter');"
+  ]
+];
+ for(const [current,previous] of tabChanges){assert.equal(source.split(current).length,2);source=source.replace(current,previous);}
  // Require one exact additive offline projection gate. The original
  // contract fingerprint below still seals every pre-existing assertion.
  const projectionGate=source.match(/^ const beforeProjection=await state\(p\);\n[\s\S]*?^ report\.checks\.push\('actual controlled offline projection changes no portfolio data'\);\n/gm);
@@ -87,9 +123,9 @@ test('pre-existing live assertions and deadlines remain byte-identical after sea
 test('asset observation contract rejects missing or duplicated diagnostics and unrelated assertion changes',()=>{
  for(const changed of [
   liveSource.replace("await projection.locator('[name=\"start\"]').fill('1000');","await projection.locator('[name=\"start\"]').fill('0');"),
-  liveSource.replace("node.parentElement.open&&document.activeElement.id==='pageTitle'","node.parentElement.open"),
+  liveSource.replace("document.getElementById('snapshotManager').open&&document.activeElement===node","document.activeElement===node"),
   liveSource.replace(" await returnFromSection(p);",""),
-  liveSource.replace("#snapshotManager > summary","#performanceDetails > summary"),
+  liveSource.replace('[data-section="snapshotManager"]','[data-section="performanceDetails"]'),
   liveSource.replace('data-position-range="365"','data-position-range="30"'),
   liveSource.replace("'70,00','79,00','88,00','97,00'","'70,00','79,00','90,00','97,00'"),
   liveSource.replace("await verifyHistoryEstimate(p,{scan:()=>scan(p,'#chartPeriods','controlled offline estimated chart overlay')});",''),

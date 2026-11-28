@@ -70,7 +70,7 @@ try {
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="history"]').click();
- assert.match(await page.locator('#pageTitle').innerText(),/Vermögensentwicklung/);
+ assert.match(await page.locator('#pageTitle').innerText(),/Vermögensverlauf/);
  await page.locator('#chartPeriods .period-more>summary').click();
  await page.locator('#chartPeriods [data-open-history-calendar]').click();
  assert.ok(await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').count());
@@ -84,7 +84,7 @@ try {
  await page.locator('#historyCalendarReset').click();
  assert.equal(await page.locator('#chartPeriods [data-range="all"]').getAttribute('aria-pressed'),'true');
  assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
- await page.locator('#snapshotManager>summary').click();
+ await page.locator('[data-section="snapshotManager"]').click();
  assert.ok(await page.locator('#snapshotList .history-row').count()>=2);
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  const accordion=page.locator('#providerOverview details').first();

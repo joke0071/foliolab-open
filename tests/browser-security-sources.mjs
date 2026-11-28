@@ -27,7 +27,7 @@ try{
  assert.equal(await row.locator('iframe[src*="tradingview"]').count(),0,'No vendor iframe');
  assert.equal(await row.locator('[data-action="import-price-history"]').count(),1,'Local CSV import remains available');
  assert.equal(await row.locator('.position-chart-options').count(),0,'No extra nested disclosure for one local action');
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  await page.locator('#optionalConnections > summary').click();
  await page.locator('[name="eodhdWorkerEndpoint"]').evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
  await page.locator('[name="eodhdWorkerEndpoint"]').fill('https://own.workers.dev');

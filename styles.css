@@ -2674,10 +2674,15 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #bookingIncomeDetails.section-current{padding:0}
 @media(max-width:720px){
  #sectionNav{position:sticky;top:var(--mobile-header-height,64px);background:var(--surface,#fff);z-index:7;scrollbar-width:none}
- #sectionNav:not([hidden])+.heading-row:has(.visually-hidden){display:none}
+ #sectionNav:not([hidden])+.heading-row:has(.visually-hidden){height:0;padding:0}
  #dashboardPage .dashboard-allocation .allocation-layout{display:flex;flex-flow:row wrap;gap:clamp(8px,2vw,14px)}
- #dashboardPage .dashboard-allocation .donut{width:clamp(100px,29vw,140px);height:auto;aspect-ratio:1;flex:0 0 auto}
- #dashboardPage .dashboard-allocation .donut-inner{width:70%;height:70%}
+ #dashboardPage .dashboard-allocation .donut{width:clamp(10.8em,29vw,14em);height:auto;aspect-ratio:1;flex:0 0 auto}
+ #dashboardPage .dashboard-allocation .donut-inner{width:72%;height:72%;padding:2px;gap:1px}
  #dashboardPage .dashboard-allocation .alloc-legend{width:auto;flex:1 1 9rem}
  #dashboardPage .dashboard-allocation .alloc-legend-row{gap:4px;padding-inline:5px}
 }
+
+#historyValueMetric:not([hidden]){display:grid;gap:3px;margin-bottom:12px}
+#historyValueLabel,#historyValueChange{color:var(--muted);font-size:.875rem}
+#historyValueAmount{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;overflow-wrap:anywhere}
+#historyPage #historyCoverage>summary{scroll-margin-top:calc(var(--mobile-header-height,0px) + 58px)}

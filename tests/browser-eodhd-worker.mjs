@@ -35,7 +35,7 @@ try{
   })});
  });
  await page.reload();
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  assert.equal(await page.locator('#marketWorkerSetup').evaluate(el=>el.open),false);
  assert.equal(await page.locator('#marketWorkerSetup').textContent().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
  await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#marketWorkerSetup').evaluate(el=>el.open=true);
@@ -78,7 +78,7 @@ try{
  await perf.locator('summary').click();
  assert.match(await page.locator('#performanceInfo').innerText(),/XIRR/);
  assert.equal(await page.locator('#startPerformance').isVisible(),true);
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  assert.doesNotMatch(await page.locator('#blockchainSettings').innerText(),/Entwicklungszugang gelten enge Limits\. Binplorer/);
  assert.equal(await page.locator('#dataSourcesPanel #legacyQuoteAudit').count(),0,'Precision diagnosis belongs in concrete data-quality review');

@@ -15,7 +15,7 @@ try{
   m.settings.eodhdWorkerEndpoint='https://own.workers.dev';m.settings.eodhdWorkerAccessToken='SYNTHETIC_ONLY_FOR_TEST_1234567890';m.settings.autoRefresh=false;persist(m);
  });
  await page.reload();
- await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  let calls=0;

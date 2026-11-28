@@ -13,7 +13,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   const p=await browser.newPage({serviceWorkers:'block'});await p.goto(base);await ready(p);await seed(p);await p.reload();await ready(p);const before=await record(p);
   for(const width of [320,768])for(const tab of ['positions','bookings','history','more']){
    await p.setViewportSize({width,height:900});await nav(p,tab);
-   if(tab==='history'&&!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('#snapshotManager>summary').click();
+   if(tab==='history'&&!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('[data-section="snapshotManager"]').click();
    const category={positions:'positions',bookings:'bookings',history:'references'}[tab];
    for(const mode of category?['normal','management']:['normal']){
     if(mode==='management')await manageList(p,category);

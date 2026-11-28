@@ -31,7 +31,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    for(const [symbol,isin]of pairs)m.positions.push(createPosition({id:symbol,providerId:'p',accountId:'a',name:'SYNTHETIC '+symbol,kind:'etf',symbol,isin,currency:'EUR',mic:'XETR',exchange:'Xetra',quantity:'3.141592653589793238',price:0},m));
    m.settings.autoRefresh=false;m.settings.securitySource='marketstack';const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
   },pairs);
-  await page.reload();await nav('more');
+  await page.reload();await nav('more');await page.locator('[data-section="moreSources"]').click();
   // Every real secret field, including opt-in backup passwords and worker/RPC
   // inputs, receives the same local-only button. No value/event/storage effects.
   const beforeEyes=await record();
@@ -72,7 +72,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   const history=await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js');const s=new PortfolioStorage();try{const m=await s.initialize();return await fetchSecurityHistory(m.positions[0],m.settings,30);}finally{s.close();}});
   assert.equal(history.priceType,'close');assert.equal(history.points.at(-1).total,110);assert.equal(calls.length,4);
   await page.reload();await refresh();assert.equal(calls.length,4);
-  await nav('more');await page.locator('#marketSettings').evaluate(el=>el.open=true);
+  await nav('more');await page.locator('[data-section="moreSources"]').click();await page.locator('#marketSettings').evaluate(el=>el.open=true);
   assert.equal(await page.locator('[name=marketstackKey]').getAttribute('type'),'password');
   await page.locator('#checkMarketSources').click();await page.waitForFunction(()=>document.getElementById('marketDiagnosticStatus').textContent.includes('Diagnose beendet'));
   assert.match(await page.locator('#marketDiagnosticStatus').innerText(),/Marketstack · Tageskurs aus lokalem Cache/);assert.equal(calls.length,4);
@@ -100,11 +100,11 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   assert.deepEqual((await Promise.all([race(page,'VWCE'),race(other,'XDEM')])).sort(),['blocked','reserved']);assert.equal(calls.length,5);assert.deepEqual(await record(),beforeRace);await other.close();
   if(engine==='chromium'){
    const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
-   try{const touch=await touchContext.newPage();await touch.goto(base);await touch.locator('#mobileNav [data-page="more"]').click();await touch.locator('#marketSettings').evaluate(el=>el.open=true);const input=touch.locator('[name=alphaVantageKey]');await input.fill('SYNTHETIC_TOUCH_SECRET');await touch.locator('[name=alphaVantageKey] + button').tap();assert.equal(await input.inputValue(),'SYNTHETIC_TOUCH_SECRET');assert.equal(await input.getAttribute('type'),'text');await touch.locator('[name=alphaVantageKey] + button').tap();assert.equal(await input.getAttribute('type'),'password');}finally{await touchContext.close();}
+   try{const touch=await touchContext.newPage();await touch.goto(base);await touch.locator('#mobileNav [data-page="more"]').click();await touch.locator('[data-section="moreSources"]').click();await touch.locator('#marketSettings').evaluate(el=>el.open=true);const input=touch.locator('[name=alphaVantageKey]');await input.fill('SYNTHETIC_TOUCH_SECRET');await touch.locator('[name=alphaVantageKey] + button').tap();assert.equal(await input.inputValue(),'SYNTHETIC_TOUCH_SECRET');assert.equal(await input.getAttribute('type'),'text');await touch.locator('[name=alphaVantageKey] + button').tap();assert.equal(await input.getAttribute('type'),'password');}finally{await touchContext.close();}
   }
   // The RPC has an existing blur/change autosave. Revealing an unfinished
   // address must preserve its draft and must not invoke that handler.
-  await nav('more');await page.locator('#blockchainSettings').evaluate(el=>el.open=true);await page.locator('#solanaRpcSetup').evaluate(el=>el.open=true);
+  await nav('more');await page.locator('[data-section="moreSources"]').click();await page.locator('#blockchainSettings').evaluate(el=>el.open=true);await page.locator('#solanaRpcSetup').evaluate(el=>el.open=true);
   const beforeRPC=await record(),rpc=page.locator('#solanaRpc');await rpc.fill('SYNTHETIC_UNFINISHED_RPC');
   await page.locator('#solanaRpc + button').click();assert.equal(await rpc.inputValue(),'SYNTHETIC_UNFINISHED_RPC');assert.deepEqual(await record(),beforeRPC);
   assert.deepEqual(errors,[]);report.engines.push({engine,pass:true,secretFields:secretCount,secretTogglesPreserveValuesEventsFormDataAndIDB:true,keyboard:true,fourQuotes:true,sharedHistory:true,persistentCache:true,monthlyBudget:true,historicalGapsBlocked:true,widths:7,axeScans:7});

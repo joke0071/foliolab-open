@@ -212,7 +212,7 @@ window.addEventListener('popstate',()=>{
  showRoute({focus:true});restoredUrl=location.href;
 });
 window.addEventListener('hashchange',()=>{
- if(restoredUrl!==location.href)showRoute({focus:true});
+ if(sectionHash(page)||restoredUrl!==location.href)requestAnimationFrame(()=>showRoute({focus:true}));
  restoredUrl='';
 });
 function go(next,{review=false,section='',restore=false}={}){
@@ -229,7 +229,7 @@ function go(next,{review=false,section='',restore=false}={}){
  }
  showRoute();
  window.scrollTo({top:0,behavior:'instant'});render();
- if(previousPage!==next&&originPage)showRoute({focus:true});
+ if(previousPage!==next&&originPage){$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
 }
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
  if(control.matches('a[href]')){
@@ -529,6 +529,14 @@ function renderHistory(){
   data=data.filter(x=>x.date>=from&&x.date<=to);
  }else if(range!=='calendar'){
   data=filterChartPeriod(data,'wealth',range);
+ }
+ const latest=data.at(-1),metric=$('historyValueMetric');
+ metric.hidden=!latest;
+ if(latest){
+  $('historyValueLabel').textContent=modelHistorySelected?'Modellwert':wealth.basis==='partial'||latest.valuationStatus==='partial'?'Bekannte Teilsumme':'Gesamtvermögen';
+  $('historyValueAmount').textContent=money(Number(latest.totalEURExact??latest.total));
+  const change=wealthChangePresentation(wealth,data,money,dateLabel,{period:true});
+  $('historyValueChange').textContent=!modelHistorySelected&&change.delta!==null?change.value+' im Zeitraum':'';
  }
  const estimateOption=$('historyEstimates'),eligibleForEstimates=!modelHistorySelected&&wealthBasis==='auto';
  if(eligibleForEstimates&&historyEstimateKey!==wealthKey){historyEstimateCache=historyDisplayEstimates(wealth,model);historyEstimateKey=wealthKey;}
@@ -3094,7 +3102,7 @@ headerStatus=installHeaderStatus({
  checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
  readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure instanceof RestoreReadbackError?restoreReadbackHint:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,displayError:lastDisplayError,indexedDB:portfolioStore.isIndexedDB}),
  onStorageHelp:()=>{if(!loadFailure){go('more',{section:'#moreData'});$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
- onDriveSettings:()=>{go('more',{section:'#googleDriveBackupSetup'});}
+ onDriveSettings:()=>{go('more',{section:'#googleDriveBackupSetup'});$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
 });
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
