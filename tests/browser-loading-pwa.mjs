@@ -22,6 +22,11 @@ for(const engine of engines){
   await p.clock.install();await p.goto(base,{waitUntil:'commit'});await waiting;await waitForStartupRevealWindow(p);
   assert.ok(await p.locator('#appStartup').isVisible());assert.ok(await p.locator('.layout').evaluate(e=>e.inert));
   assert.equal(await p.locator('#appStartup .portfolio-loader-orbit circle').count(),3);
+  const gradients=await p.locator('#appStartup .portfolio-loader-orbit circle').evaluateAll(nodes=>nodes.map(node=>{
+   const id=node.getAttribute('stroke').match(/^url\(#([^)]+)\)/)?.[1];
+   return Boolean(id&&getComputedStyle(node).stroke.includes('#'+id)&&document.getElementById(id)?.querySelectorAll('stop').length>=2);
+  }));
+  assert.deepEqual(gradients,[true,true,true],'every segment uses a local gradient');
   const frames=[];for(let i=0;i<3;i++){frames.push(await p.locator('.portfolio-loader-orbit').evaluate(e=>getComputedStyle(e).transform));await p.waitForTimeout(160);}
   assert.equal(new Set(frames).size,3,'portfolio segments visibly rotate across separate frames');
   for(const width of [320,360,390,430,768,1024,1440]){await p.setViewportSize({width,height:900});assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await p.screenshot({path:`artifacts/gates/loading-pwa/${engine}-donut-${width}.png`});}

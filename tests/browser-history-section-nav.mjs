@@ -33,7 +33,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    });
    const measure=await page.locator(target).evaluate(node=>({
     top:node.getBoundingClientRect().top,
-    header:document.querySelector('.mobile-header').getBoundingClientRect().bottom,
+    header:document.querySelector(node.matches('summary')?'#sectionNav':'#mobileNav').getBoundingClientRect().bottom,
     width:document.documentElement.clientWidth,
     scroll:document.documentElement.scrollWidth,
    }));
@@ -106,6 +106,13 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   assert.equal(await page.locator('#sectionNav a').count(),3);
   await page.evaluate(()=>{location.hash='moreSources';});
   await page.waitForFunction(()=>document.activeElement?.dataset.section==='moreSources');
+  await page.locator('#marketSettings > summary').click();
+  assert.equal(new URL(page.url()).hash,'#marketSettings');
+  const parent=page.locator('#sectionParent');
+  assert.equal(await parent.getAttribute('href'),'?page=more#moreSources');
+  await parent.click();
+  assert.equal(new URL(page.url()).hash,'#moreSources');
+  assert.equal(await parent.isVisible(),false);
   await page.setViewportSize({width:360,height:900});
   await page.locator('[data-section="moreData"]').click();
   const exportButton=page.locator('#exportBackup');

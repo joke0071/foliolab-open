@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -55,7 +56,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   window.dispatchEvent(e);return e.defaultPrevented;
  },outcome);
  const scan=async p=>{
-  const violations=await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+  const violations=await p.evaluate(scanPageAccessibility);
   if(violations.length){writeFileSync(`artifacts/gates/navigation-installation/${engine}-a11y-failure.json`,JSON.stringify({engine,result:'FAIL',violations},null,2));await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-a11y-failure.png`});console.error('NAVIGATION_A11Y_FAILURE',JSON.stringify(violations));}
   assert.deepEqual(violations.map(v=>v.id),[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  };
@@ -192,7 +193,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await s.save(m);s.close();
   });await layout.reload();await ready(layout);await nav(layout,'dashboard');const large=await record(layout);
   assert.equal(await layout.locator('#providerOverview>.provider-accordion').count(),12);assert.equal(await layout.locator('#providerOverview [data-position-id]').count(),90,'large list retains every position');
-  await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();await last.locator('[data-position-id=nav-large-11-7] .position-period-more>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});assert.ok(await lastCsv.isVisible());await scan(layout);
+  await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();await last.locator('[data-position-id=nav-large-11-7] .position-period-more>summary').click();const lastCsv=last.locator('[data-action=import-price-history][data-id=nav-large-11-7]');await lastCsv.waitFor({state:'visible',timeout:5000});await lastCsv.evaluate(button=>button.scrollIntoView({block:'center'}));
+  assert.ok(await lastCsv.evaluate(button=>{const r=button.getBoundingClientRect();return button.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),'CSV action in the last expanded holding is tappable');
+  await scan(layout);
   await layout.locator('#dashboardPage').evaluate(root=>{const sizes=[...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const[e,size]of sizes)e.style.fontSize=size*1.5+'px';});await scan(layout);assert.ok(await layout.locator('.donut-inner').evaluate(e=>e.scrollWidth<=e.clientWidth+1&&e.scrollHeight<=e.clientHeight+1),'large amount remains inside the scaled donut centre');assert.deepEqual(await record(layout),large,'large list, actual disclosures and synthetic text scale preserve canonical record');
   checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
   if(published){

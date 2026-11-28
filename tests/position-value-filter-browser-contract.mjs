@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {mkdirSync,writeFileSync} from 'node:fs';
@@ -75,7 +76,7 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   assert.equal(await p.locator('#positionValueFilter').inputValue(),'999999999999.123456789012345678');
   assert.equal(await p.locator('#positionValueFilter').getAttribute('aria-invalid'),'false');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  const readShortView=()=>p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('header')?.getBoundingClientRect();return {pass:document.activeElement===el&&r.top>=Math.max(0,header?.bottom||0)&&r.bottom<=nav.top&&r.height>=44,activeElement:document.activeElement?.id,field:r.toJSON(),navigation:nav.toJSON(),header:header?.toJSON(),viewport:{width:innerWidth,height:innerHeight,scrollY},css:{font:getComputedStyle(el).font,scrollMarginTop:getComputedStyle(el).scrollMarginTop,scrollMarginBottom:getComputedStyle(el).scrollMarginBottom}};});
+  const readShortView=()=>p.locator('#positionValueFilter').evaluate(el=>{const r=el.getBoundingClientRect(),nav=document.getElementById('mobileNav').getBoundingClientRect(),header=document.querySelector('#sectionNav')?.getBoundingClientRect();return {pass:document.activeElement===el&&r.top>=Math.max(0,nav.bottom,header?.bottom||0)&&r.bottom<=innerHeight&&r.height>=44,activeElement:document.activeElement?.id,field:r.toJSON(),navigation:nav.toJSON(),header:header?.toJSON(),viewport:{width:innerWidth,height:innerHeight,scrollY},css:{font:getComputedStyle(el).font,scrollMarginTop:getComputedStyle(el).scrollMarginTop,scrollMarginBottom:getComputedStyle(el).scrollMarginBottom}};});
   const shortView=await readShortView();
   if(!shortView.pass){
    writeFileSync(dir+'/'+engine+'-short-focus.json',JSON.stringify(shortView,null,2));console.log('POSITION_VALUE_FILTER_SHORT_FAILURE '+JSON.stringify(shortView));
@@ -86,7 +87,7 @@ export async function positionValueFilterBrowserContract({p,nav,record,scan,engi
   await p.locator('#positionArchiveFilter').focus();await p.keyboard.press('Tab');
   const keyboardView=await readShortView();report.shortView=shortView;report.keyboardView=keyboardView;
   assert.ok(keyboardView.pass,'native Tab focus clears sticky bars in short enlarged-text view');
-  assert.deepEqual(await p.evaluate(async()=>(await axe.run('#positionsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
+  assert.deepEqual((await p.evaluate(scanPageAccessibility,'#positionsPage')).map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[]);
   await p.screenshot({path:'artifacts/gates/position-value-filter/'+engine+'-320x360-text200.png'});
   assert.deepEqual(await record(),filterBefore,'display filtering preserves exact raw/revision/settings');
   stage('offline');await p.context().setOffline(true);await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await p.locator('#mobileNav [data-page=positions]:visible,#sidebarNav [data-page=positions]:visible').click();assert.equal(await p.locator('#positionValueFilter').inputValue(),'');assert.deepEqual(await record(),filterBefore,'fresh offline session defaults all visible without canonical mutation');

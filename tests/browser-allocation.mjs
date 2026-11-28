@@ -38,17 +38,25 @@ try{
  assert.equal(await page.locator('#donutLabel').innerText(),'Krypto');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#donutLabel').innerText(),'Portfolio');
+ const widths=await page.locator('#donut rect[data-allocation-key]').evaluateAll(parts=>parts.map(p=>Number(p.getAttribute('width'))));
+ assert.ok(Math.abs(widths.reduce((a,b)=>a+b,0)-100)<1e-8);
+ assert.ok(await page.locator('#mobilePortfolioHead #totalValue').isVisible());
+ await page.evaluate(()=>window.scrollTo({top:500,behavior:'instant'}));
+ await page.waitForFunction(()=>Math.abs(document.querySelector('#mobileNav').getBoundingClientRect().top)<=1&&document.querySelector('#mobilePortfolioHead').getBoundingClientRect().bottom<=1);
+ await page.locator('#mobileNav [data-page="history"]').click();
+ assert.ok(await page.locator('#sectionNav').evaluate(el=>el.getBoundingClientRect().top>=document.getElementById('mobileNav').getBoundingClientRect().bottom-1));
+ await page.locator('#mobileNav [data-page="dashboard"]').click();
  const saved=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  for(const width of [320,360,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const rect=await page.evaluate(()=>{
-   const pie=document.querySelector('#donut').getBoundingClientRect();
+   const pie=document.querySelector('#donut svg').getBoundingClientRect();
    const legend=document.querySelector('#allocationLegend').getBoundingClientRect();
    const panel=document.querySelector('#donut').closest('.panel').getBoundingClientRect();
    const outer=document.documentElement.scrollWidth;
-   return {pieLeft:pie.left,pieRight:pie.right,legendLeft:legend.left,legendRight:legend.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:outer};
+   return {barBottom:pie.bottom,barHeight:pie.height,barWidth:pie.width,legendTop:legend.top,pieLeft:pie.left,pieRight:pie.right,legendLeft:legend.left,legendRight:legend.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:outer};
   });
-  if(width<=430)assert.ok(rect.pieRight<=rect.legendLeft,'Mobile legend must sit beside the ring at '+width);
+  assert.ok(rect.barHeight>0&&rect.barWidth>rect.barHeight&&rect.barBottom<=rect.legendTop,'Horizontal bar must sit above the legend at '+width);
   assert.ok(rect.scrollWidth<=width+1,'Horizontal overflow at '+width+': '+JSON.stringify(rect));
   assert.ok(rect.pieLeft>=rect.panelLeft-1&&rect.pieRight<=rect.panelRight+1,'Pie escapes card at '+width);
   assert.ok(rect.legendLeft>=rect.panelLeft-1&&rect.legendRight<=rect.panelRight+1,'Legend escapes card at '+width);

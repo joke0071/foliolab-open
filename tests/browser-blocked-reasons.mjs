@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
@@ -26,7 +27,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   }
   assert.ok(fits,label+' overflow');
   assert.ok(await p.locator('.blocked-reasons summary,#positionRemovalItems>summary').evaluateAll(es=>es.filter(e=>e.checkVisibility()).every(e=>{const r=e.getBoundingClientRect();return r.height>=44&&r.width>=44;})),label+' visible disclosure44px');
-  assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label+' Axe');
+  assert.deepEqual((await p.evaluate(scanPageAccessibility)).map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[],label+' Axe');
  };
  try{
   await p.goto(base);const worker=await controlledStorageFixture(p,ready,record);
@@ -62,7 +63,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    // Inspect the actionable management heading, rather than a previous tab's
    // inherited scroll offset leaving this row underneath the sticky header.
    const done=p.locator('[data-booking-manage=cancel]');await done.evaluate(e=>e.scrollIntoView({block:'center'}));await done.focus();
-   assert.ok(await done.evaluate(e=>{const r=e.getBoundingClientRect(),header=document.querySelector('.mobile-header'),nav=document.getElementById('mobileNav'),top=header.checkVisibility()?header.getBoundingClientRect().bottom:0,bottom=nav.checkVisibility()?nav.getBoundingClientRect().top:innerHeight;return r.top>=top&&r.bottom<=bottom&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('button')===e;}),'management action is truly visible and clickable between fixed bars');
+   assert.ok(await done.evaluate(e=>{const r=e.getBoundingClientRect(),header=document.querySelector('#sectionNav'),nav=document.getElementById('mobileNav'),top=Math.max(0,header.getBoundingClientRect().bottom,nav.getBoundingClientRect().bottom),bottom=innerHeight;return r.top>=top&&r.bottom<=bottom&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('button')===e;}),'management action is truly visible and clickable between fixed bars');
    await scan('bookings '+width);await p.locator('#bookingBlocked-remove').scrollIntoViewIfNeeded();await p.screenshot({path:out+'/'+engine+'-bookings-'+width+'.png'});}
   await p.locator('#bookingSelectFiltered').click();assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^205 ausgewählt/);assert.match(await p.locator('#bookingBlocked-remove').innerText(),/Höchstens 200/);assert.ok(await p.locator('[data-booking-manage=remove]').isDisabled());
   await p.locator('#bookingSelectFiltered').click();assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^0 ausgewählt/);

@@ -1,3 +1,4 @@
+import {scanPageAccessibility} from './browser-page-accessibility.mjs';
 import assert from 'node:assert/strict';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {chromium,firefox,webkit} from 'playwright';
@@ -53,7 +54,7 @@ for(const name of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
    await page.setViewportSize({width,height:900});
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' overflow '+width);
    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-   const violations=await page.evaluate(async()=>(await axe.run('#morePage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));
+   const violations=(await page.evaluate(scanPageAccessibility,'#morePage')).map(v=>v.id);
    assert.deepEqual(violations,[],name+' axe '+width);
    if([320,1440].includes(width))await page.screenshot({path:'artifacts/gates/recovery-limits/'+name+'-'+width+'.png',fullPage:true});
   }

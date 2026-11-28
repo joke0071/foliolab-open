@@ -1621,7 +1621,7 @@
 /* UI-VISUAL06: scoped, presentation-only first-run and empty-list refinements.
    No global .empty/.panel/.btn overrides, no new actions, no state change. */
 #dashboardPage #onboarding{
- margin:16px 0 12px;
+ margin:20px 0 12px;
  padding:clamp(16px,2.3vw,24px);
  background:linear-gradient(135deg,#f5faf5,#fff 75%);
  border-color:#dce8df;
@@ -1884,13 +1884,13 @@
 .simple-cash-actions .btn{min-height:44px;min-width:44px;white-space:normal}
 .simple-cash-account .simple-cash-label span{white-space:normal;overflow-wrap:anywhere}
 
-/* UI-R1: portfolio segments rotate together; transform only, no JS animation loop. */
+/* The branded progress ring shares its artwork across startup and inline operations. */
 .portfolio-loader{width:32px;height:32px;flex:none;vertical-align:middle}
 .portfolio-loader-orbit{transform-box:view-box;transform-origin:32px 32px;animation:portfolio-loader-turn 2.4s linear infinite}
 @keyframes portfolio-loader-turn{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
 .lab-loading>.portfolio-loader{margin-right:8px}
-.app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
-.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.portfolio-loader{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
+.app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:radial-gradient(ellipse 17rem 12rem at 50% 47%,#edf4ff 0%,#f7fbfc 55%,#fff 100%);color:var(--ink);overflow:auto;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
+.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.portfolio-loader{width:96px;height:96px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
 .startup-failed .portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}
 @media(prefers-reduced-motion:reduce){.portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}}
@@ -2320,9 +2320,14 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
 #dashboardPage .dashboard-providers .provider-accordion[open]>.provider-row,
 #dashboardPage .dashboard-providers .provider-row:hover{background:#e7ebf3}
 .dashboard-providers :is(.provider-total,.provider-name){color:var(--ink)}
-.portfolio-loader-orbit circle:nth-child(1){stroke:#164cee}
-.portfolio-loader-orbit circle:nth-child(2){stroke:#009d59}
-.portfolio-loader-orbit circle:nth-child(3){stroke:#f4a900}
+.lab-loading .loader-brand{display:none}
+#appStartupText{margin:16px 0 0;font-size:1.0625rem;font-weight:550;color:var(--ink);text-wrap:balance}
+#appStartupHelp{margin-top:20px;color:var(--muted)}
+@media(forced-colors:active){
+ .app-startup{background:Canvas}
+ .portfolio-loader .loader-track{stroke:GrayText}
+ .portfolio-loader-orbit circle{stroke:Highlight}
+}
 
 #morePage h2[tabindex]{scroll-margin-block-start:calc(var(--mobile-header-height,0px) + 16px)}
 .dashboard-history #dashboardChange[data-direction=up]{background:#b9f4cc;color:#075c30}
@@ -2689,3 +2694,57 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #historyValueLabel,#historyValueChange{color:var(--muted);font-size:.875rem}
 #historyValueAmount{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;overflow-wrap:anywhere}
 #historyPage #historyCoverage>summary{scroll-margin-top:calc(var(--mobile-header-height,0px) + 58px)}
+
+/* A frame belongs to the chart or list, while page-wide actions stay outside. */
+:root{--module-line:1px solid var(--line);--module-radius:16px;--module-inset:clamp(10px,2vw,18px)}
+#dashboardPage :is(.dashboard-history,.dashboard-allocation,.dashboard-providers),
+#historyOverview,.list-frame,#morePage .settings-grid>.panel:not(.section-container),#morePage details[data-view-title].section-current,
+#historyPage :is(#snapshotManager,#performanceDetails,#portfolioProjection).section-current,
+#bookingsPage :is(#bookingIncomeDetails.section-current,#internalTransfers){
+ border:var(--module-line);border-radius:var(--module-radius);padding:var(--module-inset);
+ background:var(--canvas);box-shadow:none;min-width:0
+}
+#historyPage #historyOverview{padding:var(--module-inset)}
+#positionsPage .portfolio-list-panel,#bookingsPage #bookingPanel{
+ border:0;box-shadow:none;padding:0;background:transparent
+}
+.list-section{min-width:0;margin-block:14px 20px}
+.list-section>h3{font-size:1rem;margin:0 0 8px;color:var(--ink)}
+.list-frame{padding-block:0}
+.list-frame>:last-child{border-bottom:0}
+#morePage .settings-grid>.panel:not(.section-container) .advanced-apis{box-shadow:none;border:0;border-block-start:var(--module-line);border-radius:0}
+#dashboardPage .dashboard-allocation .allocation-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:4px}
+#dashboardPage .dashboard-allocation #donut{display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;height:auto;aspect-ratio:auto;border-radius:0}
+#donut .allocation-svg{position:static;width:100%;height:14px;overflow:hidden;border-radius:7px}
+#donut .allocation-segment:focus-visible{outline:3px solid var(--ink);outline-offset:-3px;stroke:var(--ink);stroke-width:2px;vector-effect:non-scaling-stroke}
+#dashboardPage .dashboard-allocation .donut-inner{
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px 8px;
+ width:100%;height:auto;min-height:44px;padding:6px;border-radius:8px;text-align:start
+}
+#dashboardPage .dashboard-allocation .alloc-legend{width:100%;gap:0}
+#dashboardPage .dashboard-allocation .alloc-legend-row{min-height:48px;border:0;border-block-start:var(--module-line);border-radius:0}
+#sectionParent:not([hidden]){display:inline-flex;align-items:center;min-height:48px;color:var(--primary);font-weight:550;text-decoration:none}
+#mobilePortfolioHead{display:none}
+@media(max-width:720px){
+ .mobile-header{position:relative}
+ #mobilePortfolioHead{display:block;padding:0 max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left));background:var(--canvas)}
+ #mobilePortfolioHead .dashboard-metrics{margin:0;min-width:0}
+ #mobilePortfolioHead #totalValue{color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+ .portfolio-unavailable #mobilePortfolioHead,body:not(:has(#dashboardPage.active)) #mobilePortfolioHead #dashboardReview{display:none}
+ .mobile-nav{position:sticky;inset:0 auto auto;z-index:100;padding-block:env(safe-area-inset-top) 0;border-block-end:var(--module-line);box-shadow:none}
+ #sectionNav{position:sticky;top:var(--mobile-nav-height,54px);z-index:89;background:var(--canvas);margin-bottom:12px}
+ .content{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+ html{scroll-padding-top:calc(var(--mobile-nav-height,54px) + var(--section-nav-height,0px))}
+ .content :is(button,input,select,textarea,summary,a,[tabindex]),#historyPage #historyCoverage>summary,#morePage h2[tabindex]{scroll-margin-block:8px}
+ #mobilePortfolioHead #dashboardChange[data-direction=down]{color:var(--danger)}
+ #mobilePortfolioHead .dashboard-metrics{grid-template-columns:repeat(auto-fit,minmax(min(8.5rem,100%),1fr));gap:8px 16px}
+ #mobilePortfolioHead .dashboard-metric-label,#mobilePortfolioHead .small-help{color:var(--muted)}
+ #mobilePortfolioHead #totalValue{font-size:clamp(1rem,calc(150cqi / var(--amount-length,12)),1.65rem)}
+ #mobilePortfolioHead #dashboardChange{font-size:1rem}
+ #historyPage #historyOverview,.dashboard-overview>.dashboard-history{
+  margin-inline:calc(0px - var(--module-inset));padding-inline:var(--module-inset)
+ }
+ #historyPage .history-calendar-panel{z-index:110}
+ .workspace>.content{min-height:calc(100dvh - var(--mobile-nav-height,54px))}
+ .workspace>.content:has(#sectionNav:not([hidden])){padding-block-start:0}
+}

@@ -137,7 +137,7 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
     // off-screen controls are not mistaken for targets inside the sticky header.
     await p.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
     await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-    assert.ok(await p.locator('#addWizard,#refreshAll,#addWallet').evaluateAll(bs=>bs.every(b=>{const r=b.getBoundingClientRect(),h=document.querySelector('.mobile-header'),n=document.getElementById('mobileNav');return r.width>=44&&r.height>=44&&r.top>=(h.checkVisibility()?h.getBoundingClientRect().bottom:0)&&r.bottom<=(n.checkVisibility()?n.getBoundingClientRect().top:innerHeight);})),engine+' '+width+' position actions remain visible between fixed bars');
+    assert.ok(await p.locator('#addWizard,#refreshAll,#addWallet').evaluateAll(bs=>bs.every(b=>{const r=b.getBoundingClientRect(),h=document.querySelector('#sectionNav'),n=document.getElementById('mobileNav');return r.width>=44&&r.height>=44&&r.top>=(Math.max(0,h.getBoundingClientRect().bottom,n.getBoundingClientRect().bottom))&&r.bottom<=(innerHeight);})),engine+' '+width+' position actions remain visible between fixed bars');
     const viewViolations=await p.evaluate(async()=> (await axe.run(document.getElementById('positionsPage'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
     assert.deepEqual(viewViolations,[],engine+' '+width+' archive view accessibility in selection mode '+selecting);
    }

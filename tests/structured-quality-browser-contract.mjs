@@ -29,7 +29,7 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
     // Firefox can lose precision when Playwright subtracts viewport coordinates.
     const target=await entry.evaluate(el=>{const {width,height}=el.getBoundingClientRect();return {width,height};});
     assert.ok(target.height>=44&&target.width>=44,'whole row has a sufficient touch target');
-    assert.ok(await entry.evaluate(el=>{const b=el.getBoundingClientRect(),v=document.getElementById('totalValue').getBoundingClientRect(),card=el.closest('.panel').getBoundingClientRect();return b.top>=v.bottom&&b.left>=card.left&&b.right<=card.right;}),'entry follows amount and stays within wealth card');
+    assert.ok(await entry.evaluate(el=>{const b=el.getBoundingClientRect(),v=document.getElementById('totalValue').getBoundingClientRect(),card=el.closest('.dashboard-metrics').getBoundingClientRect();return b.top>=v.bottom&&b.left>=card.left&&b.right<=card.right;}),'entry follows the amount and stays within the portfolio summary');
     await p.keyboard.press('Tab');await entry.focus();assert.ok(await entry.evaluate(el=>el.matches(':focus-visible')&&getComputedStyle(el).outlineStyle!=='none'),'visible keyboard focus');
     await p.keyboard.press(width===390?'Space':'Enter');assert.equal(await p.locator('.quality-review-card').count(),count);assert.equal(await p.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await p.locator('#qualityReviewAccount').inputValue(),'');
     assert.ok(await p.locator('#qualityReviewHeading').evaluate(el=>el===document.activeElement));
@@ -40,7 +40,7 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
    if(width===390||width===1440)await p.screenshot({path:`${out}/${engine}-r3-${count}-${width}.png`,fullPage:true});
   }
   await p.setViewportSize({width:320,height:800});
-  await p.evaluate(()=>{const nodes=[...document.querySelectorAll('#dashboardPage, #dashboardPage *')],sizes=nodes.map(el=>parseFloat(getComputedStyle(el).fontSize));nodes.forEach((el,i)=>el.style.fontSize=sizes[i]*2+'px');});
+  await p.evaluate(()=>{const nodes=[...document.querySelectorAll('#dashboardPage, #dashboardPage *, #mobilePortfolioHead, #mobilePortfolioHead *')],sizes=nodes.map(el=>parseFloat(getComputedStyle(el).fontSize));nodes.forEach((el,i)=>el.style.fontSize=sizes[i]*2+'px');});
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'200% computed text reflows without horizontal overflow');
   if(count)assert.ok(await entry.evaluate(el=>el.scrollWidth<=el.clientWidth+1),'200% review text remains fully visible');
   assert.ok(await p.locator('#miniChartPeriods').evaluate(el=>[...el.querySelectorAll('button,summary')].filter(n=>n.getBoundingClientRect().width&&n.getBoundingClientRect().height).every(n=>{const b=n.getBoundingClientRect(),r=document.createRange();r.selectNodeContents(n);return [...r.getClientRects()].every(t=>t.width===0||t.left>=b.left-1&&t.right<=b.right+1);})), '200% period labels stay inside their own targets');
