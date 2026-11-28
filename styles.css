@@ -2718,6 +2718,7 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 }
 #dashboardPage .dashboard-allocation .alloc-legend{width:100%;gap:0}
 #dashboardPage .dashboard-allocation .alloc-legend-row{min-height:48px;border:0;border-block-start:var(--module-line);border-radius:0}
+#sectionParent:not([hidden]){display:inline-flex;align-items:center;min-height:48px;color:var(--primary);font-weight:550;text-decoration:none}
 #mobilePortfolioHead{display:none}
 @media(max-width:720px){
  .mobile-header{position:relative}
@@ -2731,11 +2732,14 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
  html{scroll-padding-top:calc(var(--mobile-nav-height,54px) + var(--section-nav-height,0px))}
  .content :is(button,input,select,textarea,summary,a,[tabindex]),#historyPage #historyCoverage>summary,#morePage h2[tabindex]{scroll-margin-block:8px}
  #mobilePortfolioHead #dashboardChange[data-direction=down]{color:var(--danger)}
-}
-#sectionParent:not([hidden]){display:inline-flex;align-items:center;min-height:48px;color:var(--primary);font-weight:550;text-decoration:none}
-@media(max-width:720px){
  #mobilePortfolioHead .dashboard-metrics{grid-template-columns:repeat(auto-fit,minmax(min(8.5rem,100%),1fr));gap:8px 16px}
  #mobilePortfolioHead .dashboard-metric-label,#mobilePortfolioHead .small-help{color:var(--muted)}
  #mobilePortfolioHead #totalValue{font-size:clamp(1rem,calc(150cqi / var(--amount-length,12)),1.65rem)}
  #mobilePortfolioHead #dashboardChange{font-size:1rem}
+ #historyPage #historyOverview,.dashboard-overview>.dashboard-history{
+  margin-inline:calc(0px - var(--module-inset));padding-inline:var(--module-inset)
+ }
+ #historyPage .history-calendar-panel{z-index:110}
+ .workspace>.content{min-height:calc(100dvh - var(--mobile-nav-height,54px))}
+ .workspace>.content:has(#sectionNav:not([hidden])){padding-block-start:0}
 }
