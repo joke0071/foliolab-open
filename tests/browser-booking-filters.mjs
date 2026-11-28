@@ -4,19 +4,26 @@ import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
-const listFrame=async id=>page.locator('#'+id).evaluate(el=>{
+const listFrame=async selector=>page.locator(selector).first().evaluate(el=>{
  const css=getComputedStyle(el),box=el.getBoundingClientRect();
  return [css.borderTopWidth,css.borderTopStyle,css.borderTopColor,css.borderRadius,css.paddingInlineStart,box.left,box.width];
 });
-const expectMatchingLists=async()=>{
+const expectMatchingLists=async(filled=false)=>{
  await page.locator('#mobileNav [data-page="positions"]').click();
  assert.equal(await page.locator('#positionListHead h3').innerText(),'Positionen');
- const frame=await listFrame('positionPanel');
- assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','visible positions outline');
+ assert.equal((await listFrame('#positionPanel'))[0],'0px','position controls are unframed');
+ assert.equal(await page.locator('#positionList .list-frame').count(),filled?1:0);
+ const frame=filled?await listFrame('#positionList .list-frame'):null;
+ if(filled)assert.ok(parseFloat(frame[0])>0&&frame[1]==='solid','the asset class has one outline');
  await page.locator('#mobileNav [data-page="bookings"]').click();
  assert.equal(await page.locator('#sectionNav [aria-current]').innerText(),'Buchungen');
  assert.equal(await page.locator('#bookingListHead h2').isVisible(),false);
- assert.deepEqual(await listFrame('bookingPanel'),frame,'matching result card outline, radius, padding and width');
+ assert.equal((await listFrame('#bookingPanel'))[0],'0px','booking controls are unframed');
+ assert.equal(await page.locator('#bookingList .list-frame').count(),filled?2:0);
+ if(filled){
+  assert.deepEqual(await page.locator('#bookingList .list-section>h3').allTextContents(),['Oktober 2026','September 2026']);
+  assert.deepEqual(await listFrame('#bookingList .list-frame'),frame,'groups share outline, radius, padding and width');
+ }
 };
 try{
  await page.goto('http://127.0.0.1:4173/');
@@ -33,11 +40,11 @@ try{
   const position=createPosition({providerId:p.id,accountId:a.id,name:'Synthetic Equity',kind:'stock',symbol:'SYN',quantity:10,price:2},m);m.positions.push(position);
   m.bookings=[
    {id:'one',positionId:position.id,positionName:position.name,type:'buy',date:'2026-10-20',quantity:5,amountEUR:10,notes:'Brokerausführung'},
-   {id:'two',positionId:position.id,positionName:position.name,type:'sell',date:'2026-10-19',quantity:2,amountEUR:4,notes:'Verkauf'}
+   {id:'two',positionId:position.id,positionName:position.name,type:'sell',date:'2026-09-19',quantity:2,amountEUR:4,notes:'Verkauf'}
   ];
   persist(m);
  });
- await page.reload();await expectMatchingLists();
+ await page.reload();await expectMatchingLists(true);
  assert.equal(await page.locator('#bookingList .history-row').count(),2);
  await page.locator('#bookingFilterType').selectOption('buy');
  assert.equal(await page.locator('#bookingList .history-row').count(),1);
