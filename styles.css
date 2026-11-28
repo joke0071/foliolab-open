@@ -2724,27 +2724,61 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #dashboardPage .dashboard-allocation .alloc-legend{width:100%;gap:0}
 #dashboardPage .dashboard-allocation .alloc-legend-row{min-height:48px;border:0;border-block-start:var(--module-line);border-radius:0}
 #sectionParent:not([hidden]){display:inline-flex;align-items:center;min-height:48px;color:var(--primary);font-weight:550;text-decoration:none}
-#mobilePortfolioHead{display:none}
+#mobilePortfolioHead,.status-caption,#mobileRefreshStatus,#mobileBackupTime{display:none}
 @media(max-width:720px){
- .mobile-header{position:relative}
- #mobilePortfolioHead{display:block;padding:0 max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left));background:var(--canvas)}
- #mobilePortfolioHead .dashboard-metrics{margin:0;min-width:0}
- #mobilePortfolioHead #totalValue{color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
- .portfolio-unavailable #mobilePortfolioHead,body:not(:has(#dashboardPage.active)) #mobilePortfolioHead #dashboardReview{display:none}
+ .mobile-header{
+  position:relative;align-items:center;justify-content:flex-start;gap:0;
+  padding:calc(6px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));
+  border:0;box-shadow:none
+ }
+ .mobile-header .brand-actions{flex:1 1 6rem;min-width:0;gap:4px}
+ #mobileHeaderTitle{font-size:1.125rem;font-weight:680;line-height:1.2;letter-spacing:-.02em;overflow-wrap:anywhere}
+ .mobile-status-actions{margin:0}
+ #mobilePortfolioHead{display:block;flex:0 0 100%;min-width:0;padding-block-start:8px}
+ #mobilePortfolioHead .dashboard-metrics{display:block;margin:0}
+ #mobilePortfolioHead .dashboard-metric-label,#mobilePortfolioHead .small-help,#mobileContext span{color:var(--muted)}
+ #mobilePortfolioHead #totalValue{
+  font-size:clamp(1.3rem,calc(155cqi / var(--amount-length,12)),2.15rem);line-height:1.15;
+  letter-spacing:-.035em;margin:3px 0 0;color:var(--ink)
+ }
+ #mobilePortfolioHead .dashboard-change{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;margin-top:10px}
+ #mobilePortfolioHead #dashboardChange{margin:0;font-size:.9375rem}
+ #mobilePortfolioHead .dashboard-change .small-help{flex-basis:100%;margin:0}
+ #mobilePortfolioHead .small-help:empty{display:none}
+ #mobilePortfolioHead #dashboardReview{width:fit-content;max-width:100%;margin-top:10px;border-radius:14px;background:var(--surface);color:var(--on-tonal)}
+ #mobileContext{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;margin:0;line-height:1.45}
+ #mobileContext strong{font-size:1.15rem}
+ #mobileContext span{font-size:.875rem}
+ #mobileHeader[data-section=dashboard] #mobileContext,#mobileHeader:not([data-section=dashboard]) .dashboard-metrics,
+ #mobileHeader[data-section=more] #mobilePortfolioHead,.portfolio-unavailable #mobilePortfolioHead{display:none}
+ #mobileHeader[data-section=more] .mobile-status-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;flex:0 0 100%;margin-top:8px}
+ #mobileHeader[data-section=more] .header-status-button{width:100%;height:auto;min-height:48px;gap:8px;padding:8px 10px;justify-content:flex-start;text-align:left;background:var(--surface);border-radius:12px}
+ #mobileHeader[data-section=more] .header-status-button svg{flex-shrink:0}
+ #mobileHeader[data-section=more] .status-caption{display:block;font-size:.8125rem;line-height:1.35;overflow-wrap:anywhere}
+ #mobileHeader[data-section=more] .status-caption :is(small,strong){display:block}
+ #mobileHeader[data-section=more] .status-caption small{font-size:.75rem;font-weight:450;color:var(--muted)}
+ #mobileHeader[data-section=more] .status-caption strong{color:var(--ink)}
+ #mobileHeader[data-section=more] [data-state=saved] svg,#mobileHeader[data-section=more] [data-state=connected] svg{color:#00705c}
+ #mobileHeader[data-section=more] :is([data-state=busy],[data-state=connecting],[data-state=saving]) svg{color:var(--primary)}
+ #mobileHeader[data-section=more] .header-status-mark{display:none}
+ #mobileHeader[data-section=more] #mobileRefreshStatus.lab-loading{display:flex;align-items:center;gap:8px;flex-basis:100%;margin:8px 0 0;font-size:.8125rem}
+ #mobileRefreshStatus .portfolio-loader{width:20px;height:20px;flex:none}
+ #mobileHeader[data-section=more] #mobileBackupTime:not([hidden]){display:block;flex-basis:100%;margin:8px 0 0;color:var(--muted);font-size:.8125rem}
  .mobile-nav{position:sticky;inset:0 auto auto;z-index:100;padding-block:env(safe-area-inset-top) 0;border-block-end:var(--module-line);box-shadow:none}
  #sectionNav{position:sticky;top:var(--mobile-nav-height,54px);z-index:89;background:var(--canvas);margin-bottom:12px}
  .content{padding-bottom:max(24px,env(safe-area-inset-bottom))}
  html{scroll-padding-top:calc(var(--mobile-nav-height,54px) + var(--section-nav-height,0px))}
  .content :is(button,input,select,textarea,summary,a,[tabindex]),#historyPage #historyCoverage>summary,#morePage h2[tabindex]{scroll-margin-block:8px}
  #mobilePortfolioHead #dashboardChange[data-direction=down]{color:var(--danger)}
- #mobilePortfolioHead .dashboard-metrics{grid-template-columns:repeat(auto-fit,minmax(min(8.5rem,100%),1fr));gap:8px 16px}
- #mobilePortfolioHead .dashboard-metric-label,#mobilePortfolioHead .small-help{color:var(--muted)}
- #mobilePortfolioHead #totalValue{font-size:clamp(1rem,calc(150cqi / var(--amount-length,12)),1.65rem)}
- #mobilePortfolioHead #dashboardChange{font-size:1rem}
- #historyPage #historyOverview,.dashboard-overview>.dashboard-history{
-  margin-inline:calc(0px - var(--module-inset));padding-inline:var(--module-inset)
- }
  #historyPage .history-calendar-panel{z-index:110}
  .workspace>.content{min-height:calc(100dvh - var(--mobile-nav-height,54px))}
  .workspace>.content:has(#sectionNav:not([hidden])){padding-block-start:0}
+}
+
+/* At narrow widths the touch targets can use the card's inner padding. */
+@media(max-width:389px){
+ #dashboardPage #miniChartPeriods,#historyPage #chartPeriods.history-chart-period{
+  margin-inline:calc(-1 * var(--module-inset));width:calc(100% + 2 * var(--module-inset));
+  max-width:none;flex-basis:calc(100% + 2 * var(--module-inset))
+ }
 }

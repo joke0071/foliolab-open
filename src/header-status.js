@@ -19,6 +19,11 @@ export function drivePresentation(s={}){
  return {state:'connected',label:'Google Drive verbunden · '+(s.lastBackupAt?'Letzte erfolgreiche Sicherung: '+new Date(s.lastBackupAt).toLocaleString('de-AT'):'Noch keine erfolgreiche Sicherung'),mark:''};
 }
 
+const statusCaptions={
+ storage:{checking:'Prüfung läuft',saving:'Speichert …',saved:'Gespeichert',conflict:'Konflikt',warning:'Hinweis',error:'Speicherfehler'},
+ drive:{setup:'Einrichten',busy:'Vorgang läuft',connecting:'Verbindet …',error:'Fehler',offline:'Offline',auth:'Verbinden',due:'Verbunden · Sicherung fällig',connected:'Verbunden'}
+};
+
 export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{},onStorageHelp,onDriveSettings}){
  const dialog=document.getElementById('headerStatusDialog'),title=document.getElementById('headerStatusTitle'),body=document.getElementById('headerStatusBody'),actions=document.getElementById('headerStatusActions'),feedback=document.getElementById('headerStatusFeedback');
  let opened='',opener=null,returnFocus=true,openingStorage=false;
@@ -45,11 +50,17 @@ export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{}
   if(focused){const next=[...actions.children].find(b=>b.textContent===focused&&!b.disabled);(next||document.getElementById('headerStatusClose')).focus({preventScroll:true});}
  }
  function refresh(){
+  const remote=drive(),storage=storagePresentation(readStorage()),cloud=drivePresentation(remote);
   for(const b of document.querySelectorAll('[data-header-status]')){
-   const kind=b.dataset.headerStatus,p=kind==='storage'?storagePresentation(readStorage()):drivePresentation(drive());
+   const kind=b.dataset.headerStatus,p=kind==='storage'?storage:cloud;
    b.disabled=false;b.dataset.state=p.state;b.setAttribute('aria-label',p.label);b.title=p.label;
+   const caption=b.querySelector('.status-caption strong');
+   if(caption)caption.textContent=statusCaptions[kind][p.state];
    b.querySelector('.header-status-mark').textContent=p.mark;
   }
+  const last=document.getElementById('mobileBackupTime');
+  last.hidden=!remote.lastBackupAt;
+  last.textContent=remote.lastBackupAt?'Letzte Drive-Sicherung am '+new Date(remote.lastBackupAt).toLocaleString('de-AT',{dateStyle:'short',timeStyle:'short'}):'';
   if(dialog.open)contents();
  }
  function connectionResult(button,error=null){

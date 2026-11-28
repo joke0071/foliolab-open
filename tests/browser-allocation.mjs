@@ -41,6 +41,24 @@ try{
  const widths=await page.locator('#donut rect[data-allocation-key]').evaluateAll(parts=>parts.map(p=>Number(p.getAttribute('width'))));
  assert.ok(Math.abs(widths.reduce((a,b)=>a+b,0)-100)<1e-8);
  assert.ok(await page.locator('#mobilePortfolioHead #totalValue').isVisible());
+ for(const width of [320,360,390,430,720]){
+  await page.setViewportSize({width,height:850});
+  const bounds=el=>{const rect=el.getBoundingClientRect(),style=getComputedStyle(el);return [rect.left,rect.right,style.borderInlineStartWidth,style.borderRadius];};
+  const card=await page.locator('.dashboard-allocation').evaluate(bounds);
+  assert.deepEqual(await page.locator('.dashboard-history').evaluate(bounds),card,'overview chart frame at '+width);
+  assert.ok(await page.locator('#mobileHeader #dashboardChange').evaluate(el=>el.getBoundingClientRect().top>=document.getElementById('totalValue').getBoundingClientRect().bottom));
+  for(const [route,label] of [['history',/Stichtag/],['positions',/4 Positionen/],['bookings',/0 Buchungen/]]){
+   await page.locator('#mobileNav [data-page='+route+']').click();
+   assert.match(await page.locator('#mobileContext').innerText(),label);
+   assert.equal(await page.locator('#totalValue').isVisible(),false);
+   if(route==='history')assert.deepEqual(await page.locator('#historyOverview').evaluate(bounds),card,'history chart frame at '+width);
+  }
+  await page.locator('#mobileNav [data-page=more]').click();
+  assert.match(await page.locator('.mobile-status-actions').innerText(),/Lokaler Speicher/);
+  assert.match(await page.locator('.mobile-status-actions').innerText(),/Google Drive/);
+  await page.locator('#mobileNav [data-page=dashboard]').click();
+ }
+ await page.setViewportSize({width:390,height:850});
  await page.evaluate(()=>window.scrollTo({top:500,behavior:'instant'}));
  await page.waitForFunction(()=>Math.abs(document.querySelector('#mobileNav').getBoundingClientRect().top)<=1&&document.querySelector('#mobilePortfolioHead').getBoundingClientRect().bottom<=1);
  await page.locator('#mobileNav [data-page="history"]').click();
