@@ -43,6 +43,7 @@ originals/
 
 # Generated local output; tracked historical evidence remains tracked.
 /artifacts/
-/_site/
+/_site/*
+!/_site/_headers
 /test-results/
 /playwright-report/
