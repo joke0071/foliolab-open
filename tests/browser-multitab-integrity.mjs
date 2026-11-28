@@ -44,6 +44,7 @@ try{
  first.on('dialog',d=>d.accept());
  await first.reload();
  await more(first).click();
+ await first.locator('[data-section="moreData"]').click();
  await first.locator('#deleteAll').click();
  await second.locator('#notice').waitFor({state:'visible'});
  assert.equal(await second.evaluate(()=>localStorage.getItem('foliolab-open-v1')),null);
