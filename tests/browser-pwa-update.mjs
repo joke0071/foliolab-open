@@ -25,6 +25,9 @@ let failedAssetRequest;
 const requests=[];
 const server=createServer((req,res)=>{
  const path=new URL(req.url,'http://localhost').pathname;
+ if(generation==='current'&&path==='/index.html'){
+  res.writeHead(308,{Location:'/','Cache-Control':'no-store'});res.end();return;
+ }
  const key=path==='/'?'/index.html':path;
  if(generation==='failed'&&key==='/styles.css'){
   failedAssetRequest?.();res.writeHead(503,{'Cache-Control':'no-store'});res.end('SYNTHETIC unavailable release asset');return;
