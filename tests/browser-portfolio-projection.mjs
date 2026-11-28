@@ -41,7 +41,7 @@ for(const engine of (process.env.PROJECTION_ENGINES||'chromium').split(',')){
   await page.reload();
   await ready();
   const projection=page.locator('#portfolioProjection');
-  await projection.locator(':scope > summary').click();
+  await page.locator('[data-section="portfolioProjection"]').click();
   const copy=projection.getByRole('button',{name:'Belegten Portfoliowert übernehmen'});
   await copy.click();
   assert.equal(await projection.locator('[name="start"]').inputValue(),'1000,00');

@@ -121,6 +121,7 @@ export async function restoreDownload({browserType,target,origin,file,password,e
 
 export async function openBackupControls(page){
  await page.locator('#sidebarNav [data-page="more"]').click();
+ await page.locator('[data-section="moreData"]').click();
  const panel=page.locator('#backupPasswordSetup');
  if(!await panel.evaluate(el=>el.open))await panel.locator(':scope > summary').click();
 }

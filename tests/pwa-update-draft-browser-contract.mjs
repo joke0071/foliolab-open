@@ -9,7 +9,7 @@ export async function pwaUpdateDraftBrowserContract({p:parent,engine}){
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  const documentIdentity=()=>p.evaluate(()=>{const key=Symbol.for('foliolab.test.update-draft-document');if(!Object.hasOwn(document,key))Object.defineProperty(document,key,{value:crypto.randomUUID()});return document[key];});
- const more=async()=>{await p.locator('#mobileNav [data-page=more]').click();for(const name of ['publicInstrumentEndpoint','coinGeckoKey'])await p.locator('[name='+name+']').evaluate(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});};
+ const more=async()=>{await p.locator('#mobileNav [data-page=more]').click();await p.locator('[data-section=moreSources]').click();for(const name of ['publicInstrumentEndpoint','coinGeckoKey'])await p.locator('[name='+name+']').evaluate(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;});};
  const blur=()=>p.locator('#pageTitle').evaluate(el=>{el.tabIndex=-1;el.focus();});
  const update=()=>p.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.dispatchEvent(new Event('controllerchange')),0);});
  const cleanReload=async()=>{await blur();const before=await record(),old=await documentIdentity();await Promise.all([p.waitForNavigation({waitUntil:'networkidle'}),update()]);await ready();assert.notEqual(await documentIdentity(),old);assert.deepEqual(await record(),before);};
