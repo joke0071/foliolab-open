@@ -2660,6 +2660,9 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #bookingIncome #incomeRecords{border-color:var(--line)}
 #bookingIncome #incomeRecords>summary{color:var(--ink);font-size:var(--type-body);font-weight:600}
 
+/* Page swaps manage their own scroll position. */
+.content>.page{overflow-anchor:none}
+
 /* Secondary navigation stays available on subpages and in settings details. */
 #sectionNav{position:relative;display:flex;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;border-bottom:1px solid var(--line);margin-bottom:16px;scrollbar-width:thin}
 #sectionNav[hidden]{display:none}

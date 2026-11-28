@@ -75,7 +75,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const brand=p.getByRole('link',{name:'FolioLab – Zur Übersicht'});
    await brand.focus();await p.keyboard.press('Enter');
    assert.equal(await p.locator('#dashboardPage').isVisible(),true);
-   assert.equal(await p.evaluate(()=>window.scrollY),0);
+   await p.waitForFunction(()=>window.scrollY===0,null,{timeout:5000});
    for(const page of ['dashboard','history','positions','bookings','more']){
     await nav(page);
     if(page==='dashboard'){
