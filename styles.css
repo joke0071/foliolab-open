@@ -2711,7 +2711,7 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #dashboardPage .dashboard-allocation .allocation-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:4px}
 #dashboardPage .dashboard-allocation #donut{display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;height:auto;aspect-ratio:auto;border-radius:0}
 #donut .allocation-svg{position:static;width:100%;height:14px;overflow:hidden;border-radius:7px}
-#donut .allocation-segment:focus-visible{outline:0;stroke:var(--ink);stroke-width:2px;vector-effect:non-scaling-stroke}
+#donut .allocation-segment:focus-visible{outline:3px solid var(--ink);outline-offset:-3px;stroke:var(--ink);stroke-width:2px;vector-effect:non-scaling-stroke}
 #dashboardPage .dashboard-allocation .donut-inner{
  display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px 8px;
  width:100%;height:auto;min-height:44px;padding:6px;border-radius:8px;text-align:start

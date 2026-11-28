@@ -189,7 +189,12 @@ function scrollToPageStart(compact){
  window.scrollTo({top,behavior:'instant'});
 }
 placePortfolioMetrics();
-phoneLayout.addEventListener('change',()=>{placePortfolioMetrics();render();});
+phoneLayout.addEventListener('change',()=>{
+ const focused=metrics.contains(document.activeElement)?document.activeElement:null;
+ placePortfolioMetrics();
+ focused?.focus({preventScroll:true});
+ if(phoneLayout.matches&&!loadFailure&&page!=='dashboard'&&page!=='history')renderMobilePeriodChange();
+});
 function showRoute({focus=false}={}){
  const compact=mobileMenuPinned();
  const id=sectionHash(page).slice(1);
@@ -313,7 +318,7 @@ function syncPortfolioState(){
  }
 }
 function render(){syncPortfolioState();if(loadFailure)return;
- if(phoneLayout.matches&&page!=='dashboard'&&page!=='history'){const wealth=wealthView();renderPeriodChange(wealth,filterChartPeriod(wealth.samples,'wealth',miniRange));}
+ if(phoneLayout.matches&&page!=='dashboard'&&page!=='history')renderMobilePeriodChange();
  if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
 function openQualityReview(){
  if(!qualityReviewOpen){qualityReviewOrigin=page;qualityReviewInitialIds=new Set(valuationIssues(model).map(i=>i.id));reviewKind='all';reviewAccount='';qualityReviewLimit=50;}
@@ -354,6 +359,10 @@ function renderQualityReview(review,items){
    '<p class="small-help">Kursquelle: '+esc(p.quoteSource||'Nicht angegeben')+' · Kursstand: '+esc(p.quoteAsOf?dateLabel(p.quoteAsOf.slice(0,10)):'Nicht angegeben')+'</p><div class="quality-review-actions">'+actions.map(i=>'<button type="button" class="btn outline" data-action="'+esc(i.action)+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+esc(i.actionLabel)+'</button>').join('')+'</div></article>';
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
+}
+function renderMobilePeriodChange(){
+ const wealth=wealthView();
+ renderPeriodChange(wealth,filterChartPeriod(wealth.samples,'wealth',miniRange));
 }
 function renderPeriodChange(wealth,visible){
   const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
@@ -574,7 +583,7 @@ function renderHistory(){
   data=filterChartPeriod(data,'wealth',range);
  }
  const latest=data.at(-1),metric=$('historyValueMetric');
- if(phoneLayout.matches&&page==='history'){
+ if(page==='history'){
   if(modelHistorySelected){$('dashboardChange').textContent='–';$('dashboardChange').dataset.direction='unknown';$('dashboardChangeHint').textContent='Modellverlauf · keine persönliche Rendite';}
   else renderPeriodChange(wealth,data);
  }

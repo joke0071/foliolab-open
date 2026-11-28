@@ -26,7 +26,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   }
   assert.ok(fits,label+' overflow');
   assert.ok(await p.locator('.blocked-reasons summary,#positionRemovalItems>summary').evaluateAll(es=>es.filter(e=>e.checkVisibility()).every(e=>{const r=e.getBoundingClientRect();return r.height>=44&&r.width>=44;})),label+' visible disclosure44px');
+  // Scan the entire page at its start. Targets above the visible content can
+  // otherwise intersect the two sticky menus after scrolling to a disclosure.
+  const offset=await p.evaluate(()=>{const y=scrollY;scrollTo({top:0,behavior:'instant'});return y;});
   assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label+' Axe');
+  await p.evaluate(top=>scrollTo({top,behavior:'instant'}),offset);
  };
  try{
   await p.goto(base);const worker=await controlledStorageFixture(p,ready,record);
