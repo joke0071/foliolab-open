@@ -1908,9 +1908,18 @@
           ],
           "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
           "pr": 457,
+          "prHead": "4ffc57e24ab72a9abab348edce54beb5cad52c74",
+          "worker": 360,
           "prRequiredRun": 46139716664,
           "walletRun": 46139716777,
-          "mainAccessJob": 140969842531
+          "mainRun": 46140881649,
+          "mainConclusion": "success",
+          "packageScope": "Release package on runner; deployed authenticated page not observed",
+          "mainAccessJob": 140969842531,
+          "mainAccessURL": "https://github.com/joke0071/foliolab-open/actions/runs/46140881649/job/140969842531",
+          "mainPackageJob": 140969875771,
+          "mainPackageURL": "https://github.com/joke0071/foliolab-open/actions/runs/46140881649/job/140969875771",
+          "mergeTreeMatchesPR": true
         },
         "456": {
           "main": "94cb83206ea2125b087f2ee387e0e359e90bd4ed",
@@ -1946,11 +1955,159 @@
           ],
           "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
           "pr": 456,
-          "worker": 362,
           "prHead": "dd4cf75c0a62660a2164fcc849d33fe51e771cc9",
+          "worker": 362,
+          "prRequiredRun": 46141692680,
+          "walletRun": 46141692678,
           "mainRun": 46145323789,
           "mainConclusion": "failure",
-          "failedJobURL": "https://github.com/joke0071/foliolab-open/actions/runs/46145323789/job/140980053267"
+          "packageScope": "Release package on runner; deployed authenticated page not observed",
+          "failedJobURL": "https://github.com/joke0071/foliolab-open/actions/runs/46145323789/job/140980053267",
+          "correctedIn": 459,
+          "mergeTreeMatchesPR": true
+        },
+        "frame": {
+          "main": "55fee40a6d8a5b60d79c7ac8f7789c0536e75aaf",
+          "checkRunId": 141007437107,
+          "checkURL": "https://github.com/joke0071/foliolab-open/runs/141007437107",
+          "buildDetails": "https://dash.cloudflare.com/?to=/ef58d4cc7260c10bb149888155c47c3b/pages/view/foliolab/e15b923e-9a25-42a0-8660-6325ef6032e2",
+          "deployment": "https://e15b923e.foliolab.pages.dev/",
+          "loginChecks": [
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "e15b923e.foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/e15b923e.foliolab.pages.dev"
+            },
+            {
+              "host": "e15b923e.foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/e15b923e.foliolab.pages.dev"
+            }
+          ],
+          "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
+          "pr": 458,
+          "prHead": "65a9b4065275e1b54f86fe6a296fa65a26ad187d",
+          "worker": 364,
+          "prRequiredRun": 46149451862,
+          "walletRun": 46149449070,
+          "mainRun": 46154286794,
+          "mainConclusion": "cancelled",
+          "packageScope": "Release package on runner; deployed authenticated page not observed",
+          "failedJobURL": "https://github.com/joke0071/foliolab-open/actions/runs/46154286794/job/141011382842",
+          "mainAccessJob": 141011342180,
+          "mainAccessURL": "https://github.com/joke0071/foliolab-open/actions/runs/46154286794/job/141011342180",
+          "packageChromiumStep": "success",
+          "reason": "Concurrent main merge #460 superseded SW364 during Firefox/WebKit package verification.",
+          "supersededBy": 460,
+          "mergeTreeMatchesPR": true
+        },
+        "459": {
+          "main": "97f0ca069135790d50bc64a047ddb35836ce25b8",
+          "checkRunId": 140992390184,
+          "checkURL": "https://github.com/joke0071/foliolab-open/runs/140992390184",
+          "buildDetails": "https://dash.cloudflare.com/?to=/ef58d4cc7260c10bb149888155c47c3b/pages/view/foliolab/cb037957-1ac6-45c7-8c84-80e525f4fb88",
+          "deployment": "https://cb037957.foliolab.pages.dev/",
+          "loginChecks": [
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "cb037957.foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/cb037957.foliolab.pages.dev"
+            },
+            {
+              "host": "cb037957.foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/cb037957.foliolab.pages.dev"
+            }
+          ],
+          "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
+          "pr": 459,
+          "prHead": "8e82bc74ecd8d9552beefa5ffd9b9ccca58c7cc0",
+          "worker": 363,
+          "prRequiredRun": 46147990149,
+          "walletRun": 46147990150,
+          "mainRun": 46149349587,
+          "mainConclusion": "success",
+          "packageScope": "Release package on runner; deployed authenticated page not observed",
+          "mainAccessJob": 140996849772,
+          "mainAccessURL": "https://github.com/joke0071/foliolab-open/actions/runs/46149349587/job/140996849772",
+          "mainPackageJob": 140996912746,
+          "mainPackageURL": "https://github.com/joke0071/foliolab-open/actions/runs/46149349587/job/140996912746",
+          "mergeTreeMatchesPR": true
+        },
+        "460": {
+          "main": "950f8512accc1978e290d1f70cd259e5ba22d095",
+          "checkRunId": 141018654387,
+          "checkURL": "https://github.com/joke0071/foliolab-open/runs/141018654387",
+          "buildDetails": "https://dash.cloudflare.com/?to=/ef58d4cc7260c10bb149888155c47c3b/pages/view/foliolab/ba934d04-01c3-46be-8d59-2a48c195d63b",
+          "deployment": "https://ba934d04.foliolab.pages.dev/",
+          "loginChecks": [
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/foliolab.pages.dev"
+            },
+            {
+              "host": "ba934d04.foliolab.pages.dev",
+              "path": "/",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/ba934d04.foliolab.pages.dev"
+            },
+            {
+              "host": "ba934d04.foliolab.pages.dev",
+              "path": "/sw.js",
+              "status": 302,
+              "login": "foliolab.cloudflareaccess.com/cdn-cgi/access/login/ba934d04.foliolab.pages.dev"
+            }
+          ],
+          "authenticatedProductionApp": "UNOBSERVED: current project browser displayed Cloudflare Access email PIN sign-in",
+          "pr": 460,
+          "prHead": "c8541af95eda7a98797201cf8f619299376bac4f",
+          "worker": 365,
+          "prRequiredRun": 46156618093,
+          "walletRun": 46156618320,
+          "mainRun": 46157935924,
+          "mainConclusion": "in_progress",
+          "packageScope": "Release package on runner; deployed authenticated page not observed",
+          "mainAccessURL": "https://github.com/joke0071/foliolab-open/actions/runs/46157935924/job/141022883588",
+          "mainPackageURL": "https://github.com/joke0071/foliolab-open/actions/runs/46157935924/job/141022922938",
+          "mainAccessJob": 141022883588,
+          "mainPackageJob": 141022922938,
+          "mergeTreeMatchesPR": true
         }
       },
       "betaFix": {
@@ -1977,15 +2134,39 @@
           "WebKit"
         ],
         "appEntryLocal": "Notice above portfolio values at 320/390/768/1440, hidden in Positions, visible on return and after offline reload.",
+        "postDeployEntry": "SW362 production browser showed Log in to foliolab - Cloudflare Pages, Email and Send login code. The protected app remained unobserved.",
         "followup459": {
-          "pr": 459,
-          "candidate": "8e82bc74ecd8d9552beefa5ffd9b9ccca58c7cc0",
-          "requiredRun": 46147990149,
-          "walletRun": 46147990150,
-          "originalLocalScrollY": 135,
-          "width": 390,
-          "afterFocusFixOnly": "Firefox queued scroll after click handler. Observed 0 → 135 before keyup.",
-          "candidateChecks": "60 keyboard returns on Chromium, Firefox, WebKit; two Firefox interaction sequences over 15 widths each."
+          "failedMainJob": "https://github.com/joke0071/foliolab-open/actions/runs/46145323789/job/140980053267",
+          "localReproduction": {
+            "browser": "Firefox",
+            "width": 390,
+            "activePage": "dashboardPage",
+            "focus": "logo",
+            "scrollY": 135
+          },
+          "firstCandidateFailedJob": "https://github.com/joke0071/foliolab-open/actions/runs/46146748651/job/140984409701",
+          "timingTrace": "Keydown, click, heading focus, JS scroll at 0, subsequent native scroll to 135 before keyup.",
+          "fix": "Scroll on the next rendering frame while the heading still has focus on the same route. Assert exact zero after two animation frames.",
+          "repeatedFirefoxViewportSequences": [
+            15,
+            15
+          ],
+          "browserKeyboardChecks": {
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "attemptsPerEngine": 20,
+            "passed": 60,
+            "browsers": [
+              "Chromium",
+              "Firefox",
+              "WebKit"
+            ]
+          }
         }
       },
       "framingQualification": {
@@ -2024,10 +2205,53 @@
           "finance": "16 steps, USD partial fills and historical FX, CAS/quota/abort/offline, encrypted restore"
         },
         "note": "All local Pages results are distinct from the protected production and from native Safari ITP.",
-        "stagedFollowup": {
-          "pr": 458,
-          "waitFor": 459,
-          "cacheAfterRecovery": "SW364"
+        "anonymousLoginDocument": {
+          "sequence": [
+            302,
+            200
+          ],
+          "document": "Cloudflare Access login page, observed on SW362 production",
+          "frameAncestors": "frame-ancestors 'none'",
+          "xFrameOptions": "DENY",
+          "authenticatedAppHeadersObserved": false
+        },
+        "repeatedCoreOnSW364": {
+          "packageBuild": "Wrangler Pages 4.169.0",
+          "origin": "http://127.0.0.1:4895/",
+          "assetHashesMatched": 165,
+          "acceptanceGroups": 11,
+          "axeScans": 22,
+          "financeSteps": 16,
+          "encryptedRestore": "passed"
+        },
+        "webkitUpdateObservation": "On SW364 an initial probe on the reloaded document retained a worker handle in activating state. The project lifecycle observer recorded the actual activated event and automatic page reload. An explicit reload then verified the current controller, the foreign-frame refusal, the retired cache and the offline response.",
+        "successor365": {
+          "main": "950f8512accc1978e290d1f70cd259e5ba22d095",
+          "origins": "Local Wrangler Pages 4.169.0 on the same loopback origin pairs as the SW364 qualification.",
+          "engines": [
+            "Chromium",
+            "Firefox",
+            "Linux WebKit"
+          ],
+          "scope": "Exact old and new project output directories. SW364 protected before upgrade. SW365 fresh and updated direct entry, foreign frame refused, retired old cache, offline directly visible portfolio and no beta notice; both response headers persisted offline."
+        },
+        "finalPR": 458,
+        "finalPRHead": "65a9b4065275e1b54f86fe6a296fa65a26ad187d",
+        "deployedCommit": "55fee40a6d8a5b60d79c7ac8f7789c0536e75aaf",
+        "deployedWorker": 364,
+        "protectedProductionApp": "No authenticated first visit, update, offline start or app framing on this origin was observed.",
+        "finalWranglerUpgrade": {
+          "from": 363,
+          "to": 364,
+          "normalFirstVisit": true,
+          "foreignFrameBlockedBeforeAndAfterWorkerActivation": true,
+          "oldCacheRemoved": true,
+          "offlineRootWithBothHeadersAndBeta": true,
+          "engines": [
+            "Chromium",
+            "Firefox",
+            "Linux WebKit"
+          ]
         }
       },
       "inputs": {
@@ -2056,6 +2280,38 @@
         "xetraDelayedAlternative": {
           "source": "https://www.mds.deutsche-boerse.com/mds-en/real-time-data/Delayed-data",
           "availability": "Provider makes minute files available until midnight of the following business day. This does not supply the missing 2019 history or an overlap with it."
+        },
+        "samsungDeviceCatalog": "Samsung Remote Test Lab Device List visited. Current browser showed Sign in; no authorized reservation.",
+        "cmcPortal": "Existing CMC developer portal URL opened in current browser and showed Log In and Sign Up. No signed-in project dashboard or authorized project request.",
+        "concurrentCheckpoint": {
+          "sha": "c9f51051665bbc3bd0a45dcf0971297c5eaae879",
+          "scope": "Independent visual-work-plan update, including 20 local SW362 area changes with unchanged stored portfolio and revision. Preserved in the execution plan."
+        },
+        "finalProductionBrowser": {
+          "origin": "https://foliolab.pages.dev/",
+          "workerInDeployment": 364,
+          "pageTitle": "Sign in ・ Cloudflare Access",
+          "heading": "Log in to foliolab - Cloudflare Pages",
+          "fields": [
+            "Email",
+            "Send login code"
+          ],
+          "protectedBetaOrAppObserved": false
+        },
+        "parallelDesignPlan": {
+          "scrollAndAllocationPlan": "c9f51051665bbc3bd0a45dcf0971297c5eaae879",
+          "protectedEntryPlan": "344babe",
+          "loadingPlan": "affd0c249c3c9b94bae0f661cba602dffe307492",
+          "observation": "SW365 from the separate PR removed the beta banner after its deployment in #456 and #459. Valuation and simulation notices are part of the revised entry design.",
+          "separatePR": 460,
+          "headWhenObserved": "f380cbc250cb698ea0802bfcd5798ba2ff8a8de4",
+          "finalHead": "c8541af95eda7a98797201cf8f619299376bac4f",
+          "mergedMain": "950f8512accc1978e290d1f70cd259e5ba22d095"
+        },
+        "successor365PublicEntry": {
+          "origin": "https://foliolab.pages.dev/",
+          "normalGETFollowRedirect": "HTTP 302 then Cloudflare Access email PIN (Send login code)",
+          "authenticatedAppObserved": false
         }
       },
       "nextInputByPackage": {
@@ -2070,7 +2326,11 @@
         "124": "Abrufbare und zur Anzeige freigegebene Xetra/EUR-Reihe für IE00BK5BQT80 ab 25.07.2019, einschließlich Kapitalmaßnahmen. Bei Teilreihen gemeinsame Handelstage.",
         "268": "Neu eingehender erster unveränderter Privat-Rohbody mit Originalcursor und unveränderte Folgeantwort.",
         "160/427": "Unabhängiger Reviewbefund zu 84ef0b3746d48f24a7b130ecce80c6409f579463. Nach Freigabe autorisierte OAuth-Origin und zwei Geräte für Schreiben, Readback, Konflikt und Widerruf."
-      }
+      },
+      "productionCommit": "950f8512accc1978e290d1f70cd259e5ba22d095",
+      "productionWorker": 365,
+      "productionDeployment": "https://ba934d04.foliolab.pages.dev/",
+      "releaseVerificationUTC": "2026-11-28T15:21:56+00:00"
     }
   }
 }
