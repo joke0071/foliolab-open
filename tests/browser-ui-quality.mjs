@@ -74,6 +74,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await nav('bookings');
    const brand=p.getByRole('link',{name:'FolioLab – Zur Übersicht'});
    await brand.focus();await p.keyboard.press('Enter');
+   assert.equal(await p.evaluate(()=>document.activeElement?.id),'pageTitle','Home link focuses the overview heading');
    assert.equal(await p.locator('#dashboardPage').isVisible(),true);
    await p.waitForFunction(()=>window.scrollY===0,null,{timeout:5000});
    for(const page of ['dashboard','history','positions','bookings','more']){
