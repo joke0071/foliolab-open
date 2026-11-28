@@ -174,7 +174,24 @@ const sectionViews=createSectionViews({nav:$('sectionNav'),title:$('pageTitle'),
 function sectionHash(destination){
  return sectionViews.resolve(destination,location.hash.slice(1))?location.hash:'';
 }
+const phoneLayout=matchMedia('(max-width:720px)');
+const metrics=document.querySelector('.dashboard-metrics');
+const desktopMetricsParent=metrics.parentElement;
+function placePortfolioMetrics(){
+ if(phoneLayout.matches)$('mobilePortfolioHead').append(metrics);
+ else desktopMetricsParent.insertBefore(metrics,$('miniChartPeriods'));
+}
+function mobileMenuPinned(){
+ return phoneLayout.matches&&scrollY>0&&$('mobileNav').getBoundingClientRect().top<=1;
+}
+function scrollToPageStart(compact){
+ const top=compact?Math.max(0,$('mobilePortfolioHead').getBoundingClientRect().bottom+scrollY):0;
+ window.scrollTo({top,behavior:'instant'});
+}
+placePortfolioMetrics();
+phoneLayout.addEventListener('change',()=>{placePortfolioMetrics();render();});
 function showRoute({focus=false}={}){
+ const compact=mobileMenuPinned();
  const id=sectionHash(page).slice(1);
  sectionViews.show(page,id,PAGES.find(entry=>entry[0]===page)[1],PAGE_DESCRIPTIONS[page]||'');
  if(id==='historyCoverage'){
@@ -182,7 +199,7 @@ function showRoute({focus=false}={}){
   summary.scrollIntoView({block:'start'});
   if(focus)summary.focus({preventScroll:true});
  }else if(focus){
-  window.scrollTo({top:0,behavior:'instant'});
+  scrollToPageStart(compact);
   const target=$('sectionNav').querySelector('[aria-current="page"]')||$('pageTitle');
   target.tabIndex=target.tagName==='A'?0:-1;target.focus({preventScroll:true});
  }
@@ -202,11 +219,13 @@ $('sectionNav').addEventListener('keydown',event=>{
  if(next===undefined)return;
  event.preventDefault();links[next].focus();
 });
-$('sectionNav').addEventListener('click',event=>{
+function followSectionLink(event){
  const link=event.target.closest('a[data-section]');
  if(!link||event.ctrlKey||event.shiftKey||event.metaKey||event.altKey||event.button!==0)return;
  event.preventDefault();enterSection($(link.dataset.section));
-});
+}
+$('sectionNav').addEventListener('click',followSectionLink);
+$('sectionParent').addEventListener('click',followSectionLink);
 document.addEventListener('click',event=>{
  const trigger=event.target.closest('details[data-view-title]>summary');
  if(!trigger)return;
@@ -224,6 +243,7 @@ window.addEventListener('hashchange',()=>{
  restoredUrl='';
 });
 function go(next,{review=false,section='',restore=false,focusTitle=false}={}){
+ const compact=mobileMenuPinned();
  const previousPage=page,originPage=document.activeElement?.closest('.page');
  qualityReviewOpen=next==='positions'&&review;
  if(!PAGES.some(x=>x[0]===next))next='dashboard';
@@ -246,7 +266,7 @@ function go(next,{review=false,section='',restore=false,focusTitle=false}={}){
   requestAnimationFrame(()=>{
    if(page===next&&document.activeElement===$('pageTitle'))window.scrollTo({top:0,left:0,behavior:'instant'});
   });
- }else window.scrollTo({top:0,left:0,behavior:'instant'});
+ }else scrollToPageStart(compact);
 }
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(control=>control.addEventListener('click',event=>{
  if(control.matches('a[href]')){
@@ -286,12 +306,15 @@ function syncPortfolioState(){
  }else{
   const aggregate=aggregateValuePresentation(model.positions,totalEUR(model),money);
   $('totalValue').textContent=aggregate.value;
+  $('totalHint').textContent=aggregate.note||'';
   $('dashboardValueLabel').textContent=(aggregate.allUnknown?'Vermögen nicht bewertet':aggregate.missing?'Bekannte Teilsumme':'Gesamtvermögen');
   document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
   document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
  }
 }
-function render(){syncPortfolioState();if(loadFailure)return;if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
+function render(){syncPortfolioState();if(loadFailure)return;
+ if(phoneLayout.matches&&page!=='dashboard'&&page!=='history'){const wealth=wealthView();renderPeriodChange(wealth,filterChartPeriod(wealth.samples,'wealth',miniRange));}
+ if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
 function openQualityReview(){
  if(!qualityReviewOpen){qualityReviewOrigin=page;qualityReviewInitialIds=new Set(valuationIssues(model).map(i=>i.id));reviewKind='all';reviewAccount='';qualityReviewLimit=50;}
  go('positions',{review:true});
@@ -332,6 +355,11 @@ function renderQualityReview(review,items){
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
+function renderPeriodChange(wealth,visible){
+  const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
+  $('dashboardChange').dataset.direction=change.delta===null?'unknown':change.delta.startsWith('-')?'down':change.delta==='0'?'flat':'up';
+  $('dashboardChange').textContent=change.value;$('dashboardChangeHint').textContent=change.note;
+}
 function renderDashboard(){const total=totalEUR(model);const aggregate=aggregateValuePresentation(model.positions,total,money);$('totalValue').textContent=aggregate.value;
   $('totalHint').textContent=aggregate.note||'';
   const review=structuredQualityReview(model),chip=$('dashboardReview');
@@ -356,9 +384,7 @@ function renderDashboard(){const total=totalEUR(model);const aggregate=aggregate
   const shots=wealth.samples;
   $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
-  const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
-  $('dashboardChange').dataset.direction=change.delta===null?'unknown':change.delta.startsWith('-')?'down':change.delta==='0'?'flat':'up';
-  $('dashboardChange').textContent=change.value;$('dashboardChangeHint').textContent=change.note;
+  renderPeriodChange(wealth,visible);
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
   syncChartPeriodButtons($('miniChartPeriods'),'data-mini-range',miniRange,
@@ -548,6 +574,10 @@ function renderHistory(){
   data=filterChartPeriod(data,'wealth',range);
  }
  const latest=data.at(-1),metric=$('historyValueMetric');
+ if(phoneLayout.matches&&page==='history'){
+  if(modelHistorySelected){$('dashboardChange').textContent='–';$('dashboardChange').dataset.direction='unknown';$('dashboardChangeHint').textContent='Modellverlauf · keine persönliche Rendite';}
+  else renderPeriodChange(wealth,data);
+ }
  metric.hidden=!latest;
  if(latest){
   $('historyValueLabel').textContent=modelHistorySelected?'Modellwert':wealth.basis==='partial'||latest.valuationStatus==='partial'?'Bekannte Teilsumme':'Gesamtvermögen';
@@ -665,7 +695,9 @@ function renderPositions(){
    '</div></div>'+
    '<div class="detail-action-row position-detail-actions"'+(positionSelecting?'':' hidden')+'><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
  });
- $('positionList').innerHTML=visible.length?list.join('')+
+ const grouped=$('positionSort').value==='kind';
+ const positionRows=grouped?groupedList(visible.slice(0,positionLimit),p=>TYPES[p.kind]||'Sonstiges',(_,i)=>list[i]):'<div class="list-frame">'+list.join('')+'</div>';
+ $('positionList').innerHTML=visible.length?positionRows+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
   empty(matching.length?'Keine Positionen ab dieser Anzeigegrenze. Leere die Grenze, um alle Treffer zu sehen.':filter==='all'?(model.positions.length?(positionArchiveView==='archived'?'Keine archivierten Treffer.':positionArchiveView==='all'?'Keine Treffer in dieser Ansicht.':'Keine aktiven Treffer. Bei Bedarf unter „Ansicht“ archivierte Positionen anzeigen.'):'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
    'Keine Positionen bei diesem Anbieter.');
@@ -771,6 +803,26 @@ function openPositionRemoval(requestedIds=selectedPositionIds){
  });
  $('cancelDialog').focus({preventScroll:true});
 }
+function groupedList(rows,labelFor,renderRow){
+ const parts=[];
+ let previous;
+ rows.forEach((row,index)=>{
+  const label=labelFor(row);
+  if(index===0||label!==previous){
+   if(index)parts.push('</div></section>');
+   parts.push('<section class="list-section"><h3>'+esc(label)+'</h3><div class="list-frame">');
+   previous=label;
+  }
+  parts.push(renderRow(row,index));
+ });
+ if(rows.length)parts.push('</div></section>');
+ return parts.join('');
+}
+const bookingMonthFormat=new Intl.DateTimeFormat('de-AT',{month:'long',year:'numeric',timeZone:'UTC'});
+function bookingMonthLabel(row){
+ const month=String(row.date||'').slice(0,7);
+ return /^\d{4}-(0[1-9]|1[0-2])$/.test(month)?bookingMonthFormat.format(new Date(month+'-01T00:00:00Z')):'Ohne Datum';
+}
 function renderBookings(){
  const undoAvailable=canUndoCSV(model,csvReceipt);
  $('undoCSVImport').classList.toggle('hidden',!undoAvailable);
@@ -787,7 +839,7 @@ function renderBookings(){
  const lookups={rowReasons,bookings:new Map(model.bookings.map(b=>[b.id,b])),positions:new Map(model.positions.map(p=>[p.id,p])),accounts:new Map(model.accounts.map(a=>[a.id,a]))};
  bookingMatchingIds=list.map(b=>b.id);renderBookingManagement(historyRows);
  $('bookingList').innerHTML=historyRows.length?(
-  list.length?visible.map(b=>bookingManagementRow(b,archived.has(b.id),lookups)).join('')+
+  list.length?groupedList(visible,bookingMonthLabel,b=>bookingManagementRow(b,archived.has(b.id),lookups))+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
    empty('Keine Buchungen zu diesem Filter gefunden.')):
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Neue Buchungen und CSV-Importe erscheinen hier.</p></div>';
@@ -3046,23 +3098,21 @@ $('apiSettings').addEventListener('submit',async e=>{
   const revealMobileControlFocus=()=>{
    const target=document.activeElement;
    if((!$('miniChartPeriods').contains(target)&&target!==$('positionValueFilter'))||!target?.getClientRects().length)return;
-   const header=document.querySelector('.mobile-header'),nav=$('mobileNav');
-   const headerVisible=Boolean(header?.getClientRects().length),navVisible=Boolean(nav?.getClientRects().length);
-   if(!headerVisible&&!navVisible)return;
-   const top=(headerVisible?Math.max(0,header.getBoundingClientRect().bottom):0)+6;
-   const bottom=(navVisible?Math.min(innerHeight,nav.getBoundingClientRect().top):innerHeight)-6;
+   if(!phoneLayout.matches)return;
+   const top=Math.max(0,$('mobileNav').getBoundingClientRect().bottom,$('sectionNav').getBoundingClientRect().bottom)+6;
+   const bottom=innerHeight-6;
    const r=target.getBoundingClientRect(),delta=r.top<top?r.top-top:r.bottom>bottom?r.bottom-bottom:0;
    if(delta)window.scrollBy({top:delta,left:0,behavior:'auto'});
   };
   // Enlarged labels can wrap in both mobile bars. Keep focused content clear of their actual heights.
   const mobileBarObserver=new ResizeObserver(entries=>{
    for(const {target} of entries){
-    const property=target.id==='mobileNav'?'--mobile-nav-height':'--mobile-header-height';
+    const property=target.id==='mobileNav'?'--mobile-nav-height':'--section-nav-height';
     document.documentElement.style.setProperty(property,target.getBoundingClientRect().height+'px');
    }
   });
   mobileBarObserver.observe($('mobileNav'));
-  mobileBarObserver.observe(document.querySelector('.mobile-header'));
+  mobileBarObserver.observe($('sectionNav'));
   $('miniChartPeriods').addEventListener('focusin',revealMobileControlFocus);
   $('positionValueFilter').addEventListener('focusin',revealMobileControlFocus);
   window.addEventListener('resize',revealMobileControlFocus);

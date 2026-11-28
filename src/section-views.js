@@ -29,6 +29,15 @@ export function createSectionViews({nav,title,description}){
   const detail=entries.includes(target)&&!roots.has(id);
   current=detail?target:selected?roots.get(selected):null;
   const label=items?.find(([key])=>key===selected)?.[1];
+  const back=byId('sectionParent');
+  back.hidden=!detail;
+  if(detail){
+   const parent=target.parentElement.closest('details[data-view-title]');
+   const parentId=parent?.id||selected;
+   back.href='?page='+page+'#'+parentId;
+   back.dataset.section=parentId;
+   back.textContent='‹ '+(parent?.dataset.viewTitle||label);
+  }
   title.textContent=detail?target.dataset.viewTitle:label||parentTitle;
   title.classList.toggle('visually-hidden',Boolean(items&&!detail));
   description.textContent=parentDescription;

@@ -2689,3 +2689,53 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 #historyValueLabel,#historyValueChange{color:var(--muted);font-size:.875rem}
 #historyValueAmount{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;overflow-wrap:anywhere}
 #historyPage #historyCoverage>summary{scroll-margin-top:calc(var(--mobile-header-height,0px) + 58px)}
+
+/* A frame belongs to the chart or list, while page-wide actions stay outside. */
+:root{--module-line:1px solid var(--line);--module-radius:16px;--module-inset:clamp(10px,2vw,18px)}
+#dashboardPage :is(.dashboard-history,.dashboard-allocation,.dashboard-providers),
+#historyOverview,.list-frame,#morePage .settings-grid>.panel:not(.section-container),#morePage details[data-view-title].section-current,
+#historyPage :is(#snapshotManager,#performanceDetails,#portfolioProjection).section-current,
+#bookingsPage :is(#bookingIncomeDetails.section-current,#internalTransfers){
+ border:var(--module-line);border-radius:var(--module-radius);padding:var(--module-inset);
+ background:var(--canvas);box-shadow:none;min-width:0
+}
+#historyPage #historyOverview{padding:var(--module-inset)}
+#positionsPage .portfolio-list-panel,#bookingsPage #bookingPanel{
+ border:0;box-shadow:none;padding:0;background:transparent
+}
+.list-section{min-width:0;margin-block:14px 20px}
+.list-section>h3{font-size:1rem;margin:0 0 8px;color:var(--ink)}
+.list-frame{padding-block:0}
+.list-frame>:last-child{border-bottom:0}
+#morePage .settings-grid>.panel:not(.section-container) .advanced-apis{box-shadow:none;border:0;border-block-start:var(--module-line);border-radius:0}
+#dashboardPage .dashboard-allocation .allocation-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:4px}
+#dashboardPage .dashboard-allocation #donut{display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;height:auto;aspect-ratio:auto;border-radius:0}
+#donut .allocation-svg{position:static;width:100%;height:14px;overflow:hidden;border-radius:7px}
+#donut .allocation-segment:focus-visible{outline:0;stroke:var(--ink);stroke-width:2px;vector-effect:non-scaling-stroke}
+#dashboardPage .dashboard-allocation .donut-inner{
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px 8px;
+ width:100%;height:auto;min-height:44px;padding:6px;border-radius:8px;text-align:start
+}
+#dashboardPage .dashboard-allocation .alloc-legend{width:100%;gap:0}
+#dashboardPage .dashboard-allocation .alloc-legend-row{min-height:48px;border:0;border-block-start:var(--module-line);border-radius:0}
+#mobilePortfolioHead{display:none}
+@media(max-width:720px){
+ .mobile-header{position:relative}
+ #mobilePortfolioHead{display:block;padding:0 max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left));background:var(--canvas)}
+ #mobilePortfolioHead .dashboard-metrics{margin:0;min-width:0}
+ #mobilePortfolioHead #totalValue{color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+ .portfolio-unavailable #mobilePortfolioHead,body:not(:has(#dashboardPage.active)) #mobilePortfolioHead #dashboardReview{display:none}
+ .mobile-nav{position:sticky;inset:0 auto auto;z-index:100;padding-block:env(safe-area-inset-top) 0;border-block-end:var(--module-line);box-shadow:none}
+ #sectionNav{position:sticky;top:var(--mobile-nav-height,54px);z-index:89;background:var(--canvas);margin-bottom:12px}
+ .content{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+ html{scroll-padding-top:calc(var(--mobile-nav-height,54px) + var(--section-nav-height,0px))}
+ .content :is(button,input,select,textarea,summary,a,[tabindex]),#historyPage #historyCoverage>summary,#morePage h2[tabindex]{scroll-margin-block:8px}
+ #mobilePortfolioHead #dashboardChange[data-direction=down]{color:var(--danger)}
+}
+#sectionParent:not([hidden]){display:inline-flex;align-items:center;min-height:48px;color:var(--primary);font-weight:550;text-decoration:none}
+@media(max-width:720px){
+ #mobilePortfolioHead .dashboard-metrics{grid-template-columns:repeat(auto-fit,minmax(min(8.5rem,100%),1fr));gap:8px 16px}
+ #mobilePortfolioHead .dashboard-metric-label,#mobilePortfolioHead .small-help{color:var(--muted)}
+ #mobilePortfolioHead #totalValue{font-size:clamp(1rem,calc(150cqi / var(--amount-length,12)),1.65rem)}
+ #mobilePortfolioHead #dashboardChange{font-size:1rem}
+}

@@ -39,7 +39,7 @@ export function renderAccountAllocation(share,esc){
  const arc=share.percent===null?'':'<circle cx="20" cy="20" r="16" pathLength="100" fill="none" stroke="currentColor" stroke-width="4" transform="rotate(-90 20 20)" stroke-dasharray="'+share.percent.toFixed(8)+' '+(100-share.percent).toFixed(8)+'"/>';
  return '<span class="account-allocation" role="img" aria-label="'+esc(share.name)+'"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="4" class="account-allocation-track"/>'+arc+'</svg><span aria-hidden="true">'+esc(share.label)+'</span></span>';
 }
-/** Pie shares represent positive asset values, never net worth after liabilities. */
+/** Allocation shares represent positive asset values, never net worth after liabilities. */
 /** Accessible name always starts with the visible label and share (WCAG 2.5.3). */
 // Visible text order is label, share, total; the name repeats it so it contains the visible text (WCAG 2.5.3).
 export function allocationCenterName(label,share,value,incomplete=false,visible=''){return label+', '+share+': '+(visible&&visible!==value?visible+' ('+value+')':value)+' · '+(incomplete?'Bekannte Werte anzeigen':'Gesamtwert des Portfolios anzeigen');}
@@ -61,14 +61,13 @@ export function allocationBreakdown(model,valueEUR,types){
  return {slices,gross,liabilities};
 }
 export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKey=null,valuation=null}){
- const {slices,liabilities,gross}=data;
+ const {slices,liabilities}=data;
  const chosen=slices.find(x=>x.key===selectedKey);
  let offset=0;
  const segments=slices.map((item,index)=>{
   const start=offset;offset+=item.percent;
   const title=esc(item.name+': '+money(item.value)+' ('+formatAllocationShare(item.percent)+')');
-  return '<circle class="allocation-segment" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" tabindex="0" role="button" aria-label="'+title+'" aria-pressed="'+(chosen?.key===item.key)+'" cx="100" cy="100" r="84" pathLength="100" stroke-width="30" fill="none"'+
-  ' transform="rotate(-90 100 100)" stroke="'+esc(colors[item.key]||'#a2a3b2')+'" stroke-dasharray="'+item.percent.toFixed(8)+' '+(100-item.percent).toFixed(8)+'" stroke-dashoffset="'+(-start).toFixed(8)+'"></circle>';
+  return '<rect class="allocation-segment" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" tabindex="0" role="button" aria-label="'+title+'" aria-pressed="'+(chosen?.key===item.key)+'" x="'+start+'" y="0" width="'+item.percent+'" height="10" fill="'+esc(colors[item.key]||'#657387')+'"></rect>';
  }).join('');
  const rows=slices.map((item,index)=>'<button class="alloc-legend-row" type="button" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" aria-pressed="'+(chosen?.key===item.key)+'">'+
   '<span class="legend-left"><span class="legend-dot"></span>'+
@@ -79,8 +78,8 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
  const value=chosen?money(chosen.value):(valuation?.value??money(netTotal));
  const label=chosen?chosen.name:'Portfolio';
  const share=chosen?formatAllocationShare(chosen.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):liabilities>0?'Nettovermögen':'Gesamtwert';
- return {donut:'<svg class="allocation-svg" viewBox="0 0 200 200" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
-  '<circle class="allocation-track" cx="100" cy="100" r="84" stroke="#e8efe9" stroke-width="30" fill="none"/>'+segments+'</svg>'+
+ return {donut:'<svg class="allocation-svg" viewBox="0 0 100 10" preserveAspectRatio="none" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
+  '<rect class="allocation-track" width="100" height="10" fill="#e8efe9"/>'+segments+'</svg>'+
   '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value,Boolean(valuation?.missing),!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal)))+'" title="'+esc(valuation?.value??money(netTotal))+'">'+
   '<span id="donutLabel">'+esc(label)+'</span> <small id="donutShare">'+esc(share)+'</small> '+
   '<strong id="donutTotal" title="'+esc(value)+'">'+esc(!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal))+'</strong></button>',

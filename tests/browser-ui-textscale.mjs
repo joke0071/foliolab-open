@@ -47,7 +47,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
    const fonts=Array.from(nodes,el=>[el,parseFloat(getComputedStyle(el).fontSize)]);
    for(const [el,size] of fonts)el.style.fontSize=2*size+'px';
   });
-  await p.waitForFunction(()=>parseFloat(getComputedStyle(document.querySelector('.content')).paddingBottom)>=document.querySelector('#mobileNav').getBoundingClientRect().height);
+  await p.waitForFunction(()=>parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)>=document.querySelector('#mobileNav').getBoundingClientRect().height);
   const mobileBars=await p.evaluate(()=>{
    const links=[...document.querySelectorAll('#mobileNav button')];
    const labelsFit=links.every(button=>{
