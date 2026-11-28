@@ -177,15 +177,21 @@ function sectionHash(destination){
 const phoneLayout=matchMedia('(max-width:720px)');
 const metrics=document.querySelector('.dashboard-metrics');
 const desktopMetricsParent=metrics.parentElement;
+const periodChange=metrics.querySelector('.dashboard-change');
 function placePortfolioMetrics(){
- if(phoneLayout.matches)$('mobilePortfolioHead').append(metrics);
- else desktopMetricsParent.insertBefore(metrics,$('miniChartPeriods'));
+ if(phoneLayout.matches){
+  $('mobilePortfolioHead').append(metrics);
+  $('dashboardReview').before(periodChange);
+ }else{
+  metrics.append(periodChange);
+  desktopMetricsParent.insertBefore(metrics,$('miniChartPeriods'));
+ }
 }
 function mobileMenuPinned(){
  return phoneLayout.matches&&scrollY>0&&$('mobileNav').getBoundingClientRect().top<=1;
 }
 function scrollToPageStart(compact){
- const top=compact?Math.max(0,$('mobilePortfolioHead').getBoundingClientRect().bottom+scrollY):0;
+ const top=compact?Math.max(0,$('mobileHeader').getBoundingClientRect().bottom+scrollY):0;
  window.scrollTo({top,behavior:'instant'});
 }
 placePortfolioMetrics();
@@ -193,10 +199,11 @@ phoneLayout.addEventListener('change',()=>{
  const focused=metrics.contains(document.activeElement)?document.activeElement:null;
  placePortfolioMetrics();
  focused?.focus({preventScroll:true});
- if(phoneLayout.matches&&!loadFailure&&page!=='dashboard'&&page!=='history')renderMobilePeriodChange();
 });
 function showRoute({focus=false}={}){
  const compact=mobileMenuPinned();
+ $('mobileHeader').dataset.section=page;
+ $('mobileHeaderTitle').textContent={dashboard:'Portfolio',history:'Verlauf',positions:'Bestand',bookings:'Journal',more:'Einstellungen'}[page];
  const id=sectionHash(page).slice(1);
  sectionViews.show(page,id,PAGES.find(entry=>entry[0]===page)[1],PAGE_DESCRIPTIONS[page]||'');
  if(id==='historyCoverage'){
@@ -318,7 +325,6 @@ function syncPortfolioState(){
  }
 }
 function render(){syncPortfolioState();if(loadFailure)return;
- if(phoneLayout.matches&&page!=='dashboard'&&page!=='history')renderMobilePeriodChange();
  if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
 function openQualityReview(){
  if(!qualityReviewOpen){qualityReviewOrigin=page;qualityReviewInitialIds=new Set(valuationIssues(model).map(i=>i.id));reviewKind='all';reviewAccount='';qualityReviewLimit=50;}
@@ -360,9 +366,14 @@ function renderQualityReview(review,items){
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
-function renderMobilePeriodChange(){
- const wealth=wealthView();
- renderPeriodChange(wealth,filterChartPeriod(wealth.samples,'wealth',miniRange));
+function showMobileContext(section,summary,detail){
+ if(page!==section)return;
+ const context=$('mobileContext');
+ context.firstElementChild.textContent=summary;
+ context.lastElementChild.textContent=detail;
+}
+function countLabel(count,singular,plural){
+ return count+' '+(count===1?singular:plural);
 }
 function renderPeriodChange(wealth,visible){
   const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
@@ -583,10 +594,9 @@ function renderHistory(){
   data=filterChartPeriod(data,'wealth',range);
  }
  const latest=data.at(-1),metric=$('historyValueMetric');
- if(page==='history'){
-  if(modelHistorySelected){$('dashboardChange').textContent='–';$('dashboardChange').dataset.direction='unknown';$('dashboardChangeHint').textContent='Modellverlauf · keine persönliche Rendite';}
-  else renderPeriodChange(wealth,data);
- }
+ const periodDates=range==='calendar'&&calendarSelection.length===2?calendarSelection:[data[0]?.date,latest?.date];
+ const periodLabel=[...new Set(periodDates.filter(Boolean))].map(dateLabel).join(' – ');
+ showMobileContext('history',modelHistorySelected?countLabel(data.length,'Modellwert','Modellwerte'):countLabel(data.length,'Stichtag','Stichtage'),periodLabel);
  metric.hidden=!latest;
  if(latest){
   $('historyValueLabel').textContent=modelHistorySelected?'Modellwert':wealth.basis==='partial'||latest.valuationStatus==='partial'?'Bekannte Teilsumme':'Gesamtvermögen';
@@ -661,6 +671,8 @@ function renderPositions(){
  const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const matching=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
  const visible=filterSmallPositionValues(matching,positionValueFilterExact);
+ const scopeCount=qualityReviewOpen?reviewItems.length:visible.length;
+ showMobileContext('positions',countLabel(scopeCount,'Position','Positionen'),qualityReviewOpen?'im Prüfbereich':allReview.length?allReview.length+' mit Prüfhinweis im Portfolio':'');
  $('positionValueFilter').value=positionValueFilterRaw;
  $('positionValueFilter').setAttribute('aria-invalid',String(Boolean(positionValueFilterError)));
  $('positionValueFilterHint').textContent=(positionValueFilterError?positionValueFilterError+' ':'')+(matching.length-visible.length)+' von '+matching.length+' Treffern ausgeblendet. Nur Anzeige; Summen unverändert. Nicht bewertete Positionen und Verbindlichkeiten bleiben sichtbar.';
@@ -844,6 +856,7 @@ function renderBookings(){
  const list=historyRows.filter(b=>(archiveFilter==='all'||archived.has(b.id)===(archiveFilter==='archived'))).filter(b=>(!type||b.type===type||(type==='transfer'&&b.transferMatch))&&(!query||
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date,calendarDateLabel(b.date),b.transferMatch?'Interner Transfer '+b.transferMatch.reference:'']
    .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
+ showMobileContext('bookings',countLabel(list.length,'Buchung','Buchungen'),list[0]?.date?'Zuletzt am '+dateLabel(list[0].date):'');
  const visible=list.slice(0,bookingLimit),rowReasons=bookingRowsActionReasons(model,visible.map(b=>b.id));
  const lookups={rowReasons,bookings:new Map(model.bookings.map(b=>[b.id,b])),positions:new Map(model.positions.map(p=>[p.id,p])),accounts:new Map(model.accounts.map(a=>[a.id,a]))};
  bookingMatchingIds=list.map(b=>b.id);renderBookingManagement(historyRows);
@@ -2399,9 +2412,10 @@ async function refreshAll({automatic=false}={}){
    if(automatic&&!attempt)return;
    await refreshSources(attempt);
   }catch(error){notify(error.message,true);}
- });}finally{busy=false;setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
+ });}finally{busy=false;setLoading($('mobileRefreshStatus'),false);setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
 }
 async function refreshSources(attempt=null){
+ setLoading($('mobileRefreshStatus'),true);
  $('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';setLoading($('priceInfo'),true);
  const errors=[];let successes=0,saved=false;const now=new Date().toISOString();
  const due=key=>!attempt||attempt.due(key),done=key=>attempt?.success(key);

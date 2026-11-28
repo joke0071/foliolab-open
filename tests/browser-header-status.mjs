@@ -75,6 +75,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.reload();await ready();await readyDriveAuth();before=await record();assert.deepEqual(before,concurrentRecord);
   await button('drive').click();await p.waitForFunction(()=>{const s=window.FolioDriveBackup.getStatus();return !s.connecting&&Boolean(s.lastBackupAt||s.error);});const connectedState=await p.evaluate(()=>window.FolioDriveBackup.getStatus());assert.equal(connectedState.error,false,JSON.stringify(connectedState));assert.ok(connectedState.lastBackupAt,'upload is explicitly confirmed');
   await p.locator('#headerStatusDialog[open]').waitFor();assert.match(await p.locator('#headerStatusBody').innerText(),/Letzte erfolgreiche Sicherung/);assert.equal(await p.evaluate(()=>window.__syntheticOAuthRequests),1,'one explicit successful request in the refreshed document');await closeStatus();assert.equal(await uploads(),1);const postBody=await p.evaluate(()=>window.__syntheticDrive.postBody);assert.match(postBody,/foliolab-open-encrypted-v2/);assert.ok(!postBody.includes('SYNTHETIC header provider')&&!postBody.includes('SYNTHETIC concurrent revision'),'Drive receives encrypted data');
+  assert.match(await button('drive').locator('.status-caption').innerText(),/Verbunden/);
+  assert.ok(await p.locator('#mobileBackupTime').isVisible());
+  assert.match(await p.locator('#mobileBackupTime').innerText(),/Letzte Drive-Sicherung am/);
   assert.deepEqual(await record(),before,'backup cannot mutate portfolio records or revision');
   await p.evaluate(()=>window.scrollTo({top:700,behavior:'instant'}));assert.ok(await p.evaluate(()=>scrollY>100),'start with the portfolio header collapsed');
   await button('drive').scrollIntoViewIfNeeded();
