@@ -193,7 +193,14 @@ function enterSection(section){
  showRoute({focus:true});
 }
 document.querySelector('.skip-to-content').addEventListener('click',event=>{
- event.preventDefault();$('mainContent').focus();
+ if(sectionHash(page)){event.preventDefault();$('mainContent').focus();}
+});
+$('sectionNav').addEventListener('keydown',event=>{
+ const links=[...event.currentTarget.children],index=links.indexOf(event.target);
+ if(index<0)return;
+ const next={ArrowLeft:(index+links.length-1)%links.length,ArrowRight:(index+1)%links.length,Home:0,End:links.length-1}[event.key];
+ if(next===undefined)return;
+ event.preventDefault();links[next].focus();
 });
 $('sectionNav').addEventListener('click',event=>{
  const link=event.target.closest('a[data-section]');
@@ -212,6 +219,7 @@ window.addEventListener('popstate',()=>{
  showRoute({focus:true});restoredUrl=location.href;
 });
 window.addEventListener('hashchange',()=>{
+ if(location.hash==='#mainContent')return;
  if(sectionHash(page)||restoredUrl!==location.href)requestAnimationFrame(()=>showRoute({focus:true}));
  restoredUrl='';
 });
@@ -791,7 +799,7 @@ function bookingManagementRow(row,archived,lookups){
 function restoreBookingTransferFocus(button){
  if(button?.isConnected){button.focus({preventScroll:true});return;}
  const row=[...$('bookingList').querySelectorAll('[data-booking-id]')].find(el=>el.dataset.bookingId===button?.dataset.id),summary=row?.querySelector('.booking-meta>summary');
- (summary||$('bookingTransferAction'))?.focus({preventScroll:true});
+ (summary||$('sectionNav').querySelector('[aria-current]')||$('bookingSearch')).focus({preventScroll:true});
 }
 function renderBookingManagement(rows=bookingHistoryRows(model)){
  const root=$('bookingManagementTools'),head=$('bookingListHead');

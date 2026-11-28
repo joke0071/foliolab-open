@@ -83,7 +83,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Nicht gespeichert'));
   const latest=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));assert.equal(latest.providers[0].name,'Other tab history');assert.equal(latest.walletHistory.sessions.find(s=>s.chain==='btc').quotes.length,2);await other.close();
   // The user's history opt-in must survive reload before automatic Drive/local backups.
-  await page.goto('http://127.0.0.1:4173/?page=more');
+  await page.goto('http://127.0.0.1:4173/?page=more#moreData');
   const historyOption=page.locator('#fullBackupIncludeHistory');
   await historyOption.evaluate(el=>el.closest('details').open=true);
   assert.equal(await historyOption.isChecked(),false);

@@ -47,6 +47,7 @@ try{
  await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  await page.locator('#solanaRpc').evaluate(el=>el.closest('details').querySelector('summary').click());
  assert.equal(await page.locator('#solanaRpc').isVisible(),true);
+ await page.locator('[data-section="moreAccounts"]').click();
  await page.locator('#addProvider').click();
  const result=await page.locator('#editDialog').evaluate(el=>{
   const rect=el.getBoundingClientRect(),fields=el.querySelector('#dialogFields').getBoundingClientRect();

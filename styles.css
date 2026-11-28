@@ -2362,17 +2362,17 @@ dialog::backdrop{background:rgb(21 29 49 / .36)}
  --asset-crypto:#d59100; --asset-cash:#008653; --asset-other:#657387;
  --selection:#1246d5; --danger:#ac322b; --primary:#174eb6; --on-tonal:#123879; --tonal:#dce7ff;
 }
-#historyPage,:root:has(#historyPage.active) :is(dialog,.heading-row),[data-page="history"] {
+#historyPage,:root:has(#historyPage.active) :is(dialog,.heading-row,#sectionNav),[data-page="history"] {
  --selection:var(--primary); --primary:#006b65; --on-tonal:#004e49; --tonal:#bfeee7;
 }
-#positionsPage,:root:has(#positionsPage.active) :is(dialog,.heading-row),[data-page="positions"] {
+#positionsPage,:root:has(#positionsPage.active) :is(dialog,.heading-row,#sectionNav),[data-page="positions"] {
  --selection:var(--primary);
  --primary:#7041a4; --on-tonal:#51237e; --tonal:#eddcff;
 }
-#bookingsPage,:root:has(#bookingsPage.active) :is(dialog,.heading-row),[data-page="bookings"] {
+#bookingsPage,:root:has(#bookingsPage.active) :is(dialog,.heading-row,#sectionNav),[data-page="bookings"] {
  --primary:#8c4900; --on-tonal:#693600; --tonal:#ffdfb8;
 }
-#morePage,:root:has(#morePage.active) :is(dialog,.heading-row),[data-page="more"] {
+#morePage,:root:has(#morePage.active) :is(dialog,.heading-row,#sectionNav),[data-page="more"] {
  --primary:#405b80; --on-tonal:#223e62; --tonal:#dae6fa;
 }
 [data-page="dashboard"] {--on-tonal:#123879;--tonal:#dce7ff}
@@ -2646,11 +2646,9 @@ details:not([open])>:not(summary),details:not([open])>:not(summary) * {transitio
 }
 
 /* Detail destinations live under their tab. Short explanations stay inline. */
-.section-obscured,.section-current>summary,#sectionBack[hidden],#pageDescription[hidden]{display:none!important}
+.section-obscured,.section-current>summary,#pageDescription[hidden]{display:none!important}
 .page .section-container{display:block!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important}
 .page details.section-current{display:block;margin:0;border:0;background:transparent;padding:0}
-.section-back{display:inline-flex;align-items:center;gap:8px;padding:0 6px;min-height:44px}
-.section-back::before{content:"";width:7px;height:7px;border:solid currentColor;border-width:0 0 2px 2px;transform:rotate(45deg)}
 #historyPage .history-insights details[data-view-title]>summary::after,
 #bookingsPage #bookingIncomeDetails>summary::after,#morePage .panel details[data-view-title]>summary::after{
  content:"";width:8px;height:8px;border:solid var(--muted);border-width:0 2px 2px 0;transform:rotate(-45deg)

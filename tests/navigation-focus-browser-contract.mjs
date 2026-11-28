@@ -10,7 +10,7 @@ export async function navigationFocusBrowserContract({p,nav,record,engine}){
   const link=p.locator('#dashboardPage [data-go="history"]');
   await link.focus();await p.keyboard.press('Enter');
   assert.equal(await p.evaluate(()=>document.activeElement?.id),'pageTitle','page-local navigation must focus its new heading');
-  assert.equal(await p.locator('#pageTitle').innerText(),'Vermögensentwicklung');
+  assert.equal(await p.locator('#pageTitle').innerText(),'Vermögensverlauf');
   assert.equal(await p.locator('#pageTitle').evaluate(e=>e.getBoundingClientRect().width>0),true);
   assert.equal(await p.locator('#pageTitle').getAttribute('tabindex'),'-1','heading is programmatically focusable without a new tab stop');
   await p.keyboard.press('Tab');

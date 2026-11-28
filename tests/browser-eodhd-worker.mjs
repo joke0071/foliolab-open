@@ -36,7 +36,7 @@ try{
  });
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();
- assert.equal(await page.locator('#marketWorkerSetup').evaluate(el=>el.open),false);
+ assert.equal(await page.locator('#marketWorkerSetup').evaluate(el=>el.open),true);
  assert.equal(await page.locator('#marketWorkerSetup').textContent().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
  await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#marketWorkerSetup').evaluate(el=>el.open=true);
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
@@ -75,7 +75,8 @@ try{
  const perf=page.locator('#performanceDetails');
  assert.equal(await perf.getAttribute('open'),null,'Returns are quiet and collapsed by default');
  assert.equal(await page.locator('#performanceSummary').textContent(),'','Unavailable return is explained only on opening');
- await perf.locator('summary').click();
+ await page.locator('[data-section="performanceDetails"]').click();
+ assert.equal(await perf.evaluate(el=>el.open),true);
  assert.match(await page.locator('#performanceInfo').innerText(),/XIRR/);
  assert.equal(await page.locator('#startPerformance').isVisible(),true);
  await page.locator('#mobileNav [data-page="more"]').click();await page.locator('[data-section="moreSources"]').click();

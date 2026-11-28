@@ -31,6 +31,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
    assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-storage-mode')),null);
    const empty=await page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});assert.equal(empty,null);
    if(encrypted){
+    await page.locator('[data-section="moreData"]').click();
     await page.locator('#fullBackupIncludeSettings').locator('xpath=ancestor::details').evaluateAll(els=>els.forEach(el=>el.open=true));
     await page.locator('#fullBackupIncludeSettings').check();
     page.once('dialog',d=>d.accept());await page.locator('#migrateToIDB').click();
