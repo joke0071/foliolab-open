@@ -115,14 +115,14 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      await scan('market settings '+width);await returnFromSection(p);
      await p.locator('#blockchainSettings>summary').click();await scan('blockchain settings '+width);await returnFromSection(p);
      await revealAction(p.locator('#driveOAuthHelp a'));
-     const driveLink=await p.locator('#driveOAuthHelp a').boundingBox();
+     const driveLink=await p.locator('#driveOAuthHelp a').evaluate(link=>link.getBoundingClientRect().toJSON());
      assert.ok(driveLink.height>=44&&driveLink.width>=44&&driveLink.x>=0&&driveLink.x+driveLink.width<=width+1);
      await p.locator('#driveOAuthHelp>summary').click();await returnFromSection(p);
      await p.locator('[data-section="moreSources"]').click();await p.locator('#optionalConnections>summary').click();
      for(const id of ['publicSearchSetup','marketWorkerSetup'])assert.ok(await p.locator('#'+id+' input').first().isVisible());
      assert.equal(await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open),false);
      await p.locator('#optionalConnections>.more-panel-help>summary').click();
-     const helpLink=await p.locator('#optionalConnections>.more-panel-help a').boundingBox();
+     const helpLink=await p.locator('#optionalConnections>.more-panel-help a').evaluate(link=>link.getBoundingClientRect().toJSON());
      assert.ok(helpLink.height>=44&&helpLink.width>=44&&helpLink.x>=0&&helpLink.x+helpLink.width<=width+1);
      const optionalButton=await p.locator('#optionalConnections>button[type=submit]').boundingBox();
      assert.ok(Math.abs(marketButton.x-optionalButton.x)<=1,'save actions align across settings views');
