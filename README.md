@@ -124,9 +124,7 @@ Die bisherige private Foliolab-App wird **nicht** eingebunden und dieses Reposit
 
 ## Deployment
 
-Empfohlen: neues, eigenständiges GitHub-Repository und anschließend **GitHub Pages** oder **Cloudflare Pages** mit dem Repository-Root als statischem Webverzeichnis. Die App verwendet relative Pfade und läuft auch unter einem GitHub-Pages-Unterpfad.
-
-Für eine Anbindung an `unperfekt.at` bietet sich eine Subdomain wie `foliolab.unperfekt.at` an, die über DNS auf das Pages-Deployment zeigt. Die bestehende Framer-Website muss dafür nicht umgebaut werden; von dort kann auf die App verlinkt werden. Eine DNS-Änderung und die Hosting-Einrichtung sind separate Schritte und müssen unter dem Domain-/Hosting-Account vorgenommen werden.
+Die Projektinstanz läuft unter https://foliolab.pages.dev/ mit Cloudflare Access. Cloudflare Pages veröffentlicht den Branch `main` über seine Git-Integration. Eigene Instanzen lassen sich mit einem statischen HTTPS-Webserver betreiben.
 
 ### Sicherheitskontrolle vor öffentlicher Freigabe
 
@@ -340,7 +338,7 @@ python3 -m http.server 4173
 # In einer zweiten Konsole die Browser-Skripte aus .github/workflows/import.yml ausführen.
 \`\`\`
 
-Der Workflow testet die Kompatibilität von Backups, Wallets, Krypto-/ETF-Datenquellen, Buchungsjournal, UI und responsive Ansichten. Er veröffentlicht GitHub Pages erst nach einem erfolgreichen Testjob auf \`main\`. Der Worker wird nicht auf Pages ausgeliefert oder im Frontend vorinstalliert.
+Der Workflow testet die Kompatibilität von Backups, Wallets, Krypto-/ETF-Datenquellen, Buchungsjournal, UI und responsive Ansichten. Auf `main` kontrolliert er den erfolgreichen Cloudflare-Build für denselben Commit und die Login-Weiterleitungen der Haupt- und Deployment-Adresse. Die Browserprüfungen laufen mit synthetischen Daten gegen das lokal bereitgestellte Release-Paket. Der Worker wird nicht auf Pages ausgeliefert oder im Frontend vorinstalliert.
 
 Rollback: Frühere \`main\`-Commits bleiben erhalten und können bei kritischen Fehlern gezielt per Revert-Commit wiederhergestellt werden. Alte lokale Datenbestände und Backups werden nicht aktiv migriert oder extern gespeichert, solange sie nicht geladen werden.
 

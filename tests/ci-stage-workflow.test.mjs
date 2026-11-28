@@ -8,67 +8,13 @@ import {createHash} from 'node:crypto';
 const source = combinedQualityWorkflow(readFileSync(new URL('../.github/workflows/import.yml', import.meta.url), 'utf8'));
 const uiSuite = readFileSync(new URL('./browser-ui-quality.mjs', import.meta.url), 'utf8');
 const liveUiFlatexModules = ['./browser-flatex-native-ui.mjs', './browser-flatex-native-commit.mjs'];
-const hashes = {"test": "ff07928ba1afb9b46963a14c07070f667bf11656e3b5d015791371c6c660329c", "cross-engine": "968e44c353136e18f3e108d30ab40a00b54acc4a58ef4e3758704160e44070d9", "deploy": "568af6de8fc542f67cdfb8255b00a38f7e06f0f8ca04d15f314d90fa8b5ac459", "live-acceptance": "650739b764551d00bf7529d17662f8369eddabf38f5473842fe80af2c75f856e"};
+const hashes = {"test": "ff07928ba1afb9b46963a14c07070f667bf11656e3b5d015791371c6c660329c", "cross-engine": "968e44c353136e18f3e108d30ab40a00b54acc4a58ef4e3758704160e44070d9", "cloudflare-access": "b89452badaf997b9e4d67fe00aee51840442c4a294bafd8cc6f4719c1f1c6ce4", "live-acceptance": "a0c6c07f7d7de08167f0cc02153e883ac108fb63a175ece857bb4bec5dbc8df8"};
 const originalUbuntuMirrorSetup = "          # Keep Ubuntu signatures/TLS verification; avoid the observed stalling Azure mirror.\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
 const boundedUbuntuMirrorSetup = "          # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.\n          archive_mirror=''\n          security_mirror=''\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            archive_mirror=\"$(bash tools/select-ubuntu-mirror.sh archive noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            security_mirror=\"$(bash tools/select-ubuntu-mirror.sh security noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' \"$archive_mirror\" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' \"$security_mirror\" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
 function normalizeUbuntuMirrorSetup(source) {
  assert.equal(source.split(boundedUbuntuMirrorSetup).length,3,'Both exact bounded mirror selections required');
  assert.equal(source.split(originalUbuntuMirrorSetup).length,1,'Old forced single mirror must be replaced in both paths');
  return source.split(boundedUbuntuMirrorSetup).join(originalUbuntuMirrorSetup);
-}
-const pagesArtifactName='github-pages-attempt-${{ github.run_attempt }}';
-const originalPagesUpload='      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: _site\n';
-const originalPagesDeploy='      - id: deployment\n        uses: actions/deploy-pages@v4\n';
-const retryPagesDeploy=originalPagesDeploy+`        with:\n          artifact_name: ${pagesArtifactName}\n`;
-const originalPagesPreparation = [
- "      - name: Prepare static site",
- "        run: |",
- "          mkdir -p _site",
- "          cp -R index.html styles.css manifest.webmanifest sw.js src icons _site/"
-].join('\n')+'\n';
-const qualifiedUpload = [
- "      - name: Prepare static site",
- "        run: |",
- "          set -euo pipefail",
- "          mkdir -p _site",
- "          cp -R index.html styles.css manifest.webmanifest sw.js LICENSE src icons _site/",
- "          cmp LICENSE _site/LICENSE",
- "      - id: pages_upload",
- "        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'",
- "        uses: actions/upload-pages-artifact@v3",
- "        with:",
- "          name: github-pages-attempt-${{ github.run_attempt }}",
- "          path: _site"
-].join('\n')+'\n';
-const pagesOutputs = [
- "    outputs:",
- "      pages_artifact_id: ${{ steps.pages_upload.outputs.artifact_id }}",
- "      pages_artifact_attempt: ${{ github.run_attempt }}"
-].join('\n')+'\n';
-const verifyPagesReceipt = [
- "      - name: Verify the Pages upload for this tested commit",
- "        id: pages_receipt",
- "        env:",
- "          GH_TOKEN: ${{ github.token }}",
- "          ARTIFACT_ID: ${{ needs.test.outputs.pages_artifact_id }}",
- "          PRODUCER_ATTEMPT: ${{ needs.test.outputs.pages_artifact_attempt }}",
- "        run: |",
- "          set -euo pipefail",
- "          name=$(gh api \"repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID\" | node tools/pages-artifact-receipt.mjs \"$GITHUB_RUN_ID\" \"$GITHUB_SHA\" \"$PRODUCER_ATTEMPT\" \"$ARTIFACT_ID\")",
- "          echo \"Verified Pages artifact $ARTIFACT_ID ($name) on $GITHUB_SHA\"",
- "          echo \"name=$name\" >> \"$GITHUB_OUTPUT\""
-].join('\n')+'\n';
-function normalizePagesArtifactName(source){
- const verifiedDeploy=retryPagesDeploy.replace(pagesArtifactName,'${{ steps.pages_receipt.outputs.name }}');
- const configure='      - uses: actions/configure-pages@v5\n';
- const oldPermission='    permissions:\n      contents: read\n      pages: write';
- const receiptPermission=oldPermission.replace('      pages:', '      actions: read\n      pages:');
- for(const block of [qualifiedUpload,pagesOutputs,configure+verifyPagesReceipt,verifiedDeploy,receiptPermission]){
-  assert.equal(source.split(block).length,2,'Pages producer, verification and deploy must each occur exactly once');
- }
- assert.ok(source.includes(qualifiedUpload+'      - name: Verify standalone application\n'));
- return source.replace(qualifiedUpload,'').replace(pagesOutputs,'').replace(receiptPermission,oldPermission)
-  .replace(configure+verifyPagesReceipt,originalPagesPreparation+configure+originalPagesUpload).replace(verifiedDeploy,originalPagesDeploy);
 }
 const pinnedCacheSteps = [
  [
@@ -100,15 +46,13 @@ const pinnedCacheSteps = [
  * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
  const diagnostics="          LIVE_WORKER_DIAGNOSTICS: '1'\n          NODE_OPTIONS: '--import ./tests/live-worker-diagnostics.mjs'\n";
- for(const name of ['Verify published bytes, core flows and targeted UI in Chromium','Verify targeted production UI in Firefox and WebKit']){
+ for(const name of ['Verify release package bytes, core flows and targeted UI in Chromium','Verify release package UI in Firefox and WebKit']){
   const original='      - name: '+name+'\n        env:\n';
   const observed=original+diagnostics;
   assert.equal(source.split(observed).length,2,'Exact worker observation required once in each live engine path');
   source=source.replace(observed,original);
  }
- source=normalizePagesArtifactName(normalizeUbuntuMirrorSetup(source));
- assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
- let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
+ let reduced=normalizeUbuntuMirrorSetup(source);
  const additions=[
   '          node tests/browser-restore-deposits.mjs\n',
   '            RESTORE_ENGINES=firefox,webkit node tests/browser-restore-deposits.mjs\n',
@@ -189,7 +133,7 @@ function validate(s) {
   assert.match(s, /run: node tests\/ci-stage-plan.mjs/);
   assert.match(s, /fetch-depth: 0/);
   assert.match(s, /needs: \[test, cross-engine\]/);
-  for (const [name, next] of [['test','cross-engine'], ['cross-engine','deploy'], ['deploy','live-acceptance'], ['live-acceptance', null]]) {
+  for (const [name, next] of [['test','cross-engine'], ['cross-engine','cloudflare-access'], ['cloudflare-access','live-acceptance'], ['live-acceptance', null]]) {
     let part = sealed.slice(sealed.indexOf('  '+name+':\n'), next ? sealed.indexOf('  '+next+':\n') : undefined);
     if (['test','cross-engine'].includes(name)) part = part.slice(part.indexOf(name === 'test' ? '    runs-on:' : '    strategy:'));
     assert.equal(createHash('sha256').update(part).digest('hex'), hashes[name], name+' full regression/deployment body must remain byte-identical');
@@ -233,16 +177,11 @@ test('superseded PR runs share one concurrency group while main remains separate
   assert.match(source, /cancel-in-progress: true/);
 });
 
-test('Pages is packaged before browser tests and deploy verifies the exact producer receipt',()=>{
- for(const changed of [
-  source.replace(qualifiedUpload,''),source.replace(qualifiedUpload,qualifiedUpload+qualifiedUpload),
-  source.replace('sw.js LICENSE src icons','sw.js src icons'),
-  source.replace('          cmp LICENSE _site/LICENSE\n',''),
-  source.replace('steps.pages_upload.outputs.artifact_id','github.run_id'),
-  source.replace('needs.test.outputs.pages_artifact_attempt','github.run_attempt'),
-  source.replace('artifact_name: ${{ steps.pages_receipt.outputs.name }}','artifact_name: github-pages'),
-  source.replace('      actions: read\n',''),source.replace('node tools/pages-artifact-receipt.mjs','echo')
- ]) {assert.notEqual(changed,source);assert.throws(()=>validate(changed));}
+test('release checks keep GitHub Pages disabled and verify Cloudflare before package acceptance',()=>{
+ assert.doesNotMatch(source, /actions\/(?:configure-pages|deploy-pages|upload-pages-artifact)@|pages: write|foliolab\.unperfekt\.at/);
+ assert.match(source,/needs: \[cloudflare-access\]/);
+ assert.match(source,/run: python3 tools\/check-cloudflare-access\.py/);
+ assert.match(source,/cp -R index\.html styles\.css manifest\.webmanifest sw\.js LICENSE src icons _site\//);
 });
 
 test('UH03 Kraken additions are mandatory without changing any sealed earlier gate',()=>{

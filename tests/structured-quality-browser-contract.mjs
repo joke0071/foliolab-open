@@ -26,7 +26,9 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
     assert.equal((await entry.innerText()).trim(),count+' Position'+(count===1?'':'en')+' prüfen');
     assert.equal(await entry.getAttribute('aria-label'),count+' Position'+(count===1?'':'en')+' prüfen · Prüfbereich öffnen');
     assert.equal(await entry.locator('svg[aria-hidden=true]').count(),2,'warning and navigation icon are decorative');
-    assert.ok(box.height>=44&&box.width>=44,'whole row has a sufficient touch target');
+    // Firefox can lose precision when Playwright subtracts viewport coordinates.
+    const target=await entry.evaluate(el=>{const {width,height}=el.getBoundingClientRect();return {width,height};});
+    assert.ok(target.height>=44&&target.width>=44,'whole row has a sufficient touch target');
     assert.ok(await entry.evaluate(el=>{const b=el.getBoundingClientRect(),v=document.getElementById('totalValue').getBoundingClientRect(),card=el.closest('.panel').getBoundingClientRect();return b.top>=v.bottom&&b.left>=card.left&&b.right<=card.right;}),'entry follows amount and stays within wealth card');
     await p.keyboard.press('Tab');await entry.focus();assert.ok(await entry.evaluate(el=>el.matches(':focus-visible')&&getComputedStyle(el).outlineStyle!=='none'),'visible keyboard focus');
     await p.keyboard.press(width===390?'Space':'Enter');assert.equal(await p.locator('.quality-review-card').count(),count);assert.equal(await p.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await p.locator('#qualityReviewAccount').inputValue(),'');
